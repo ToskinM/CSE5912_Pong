@@ -15,11 +15,11 @@ public class PlayerTestController : MonoBehaviour
     void Update()
     {
         Vector3 velocity = Vector3.zero;
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             velocity.x = -speed;
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             velocity.x = speed;
         }
