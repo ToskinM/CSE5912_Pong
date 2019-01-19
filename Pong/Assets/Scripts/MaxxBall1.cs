@@ -10,16 +10,18 @@ public class MaxxBall1 : MonoBehaviour
     public Vector3 velocity;
 
     private Rigidbody rigidbody;
+    private GameStateManager gameStateManager;
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
-
+        gameStateManager = GameObject.Find("Game State Manager").GetComponent<GameStateManager>();
         velocity = new Vector3(0f, speed, 0f);
     }
 
     void Update()
     {
+        if (gameStateManager.Paused) return;
 
         transform.position += velocity * Time.deltaTime;
     }

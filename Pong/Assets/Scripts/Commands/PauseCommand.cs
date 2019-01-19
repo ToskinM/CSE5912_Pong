@@ -1,0 +1,18 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PauseCommand : ICommand
+{
+    GameStateManager gameStateManager;
+
+    public PauseCommand()
+    {
+        gameStateManager = GameObject.Find("Game State Manager").GetComponent<GameStateManager>();
+    }
+
+    public void Execute()
+    {
+        gameStateManager.TogglePause();
+    }
+}
