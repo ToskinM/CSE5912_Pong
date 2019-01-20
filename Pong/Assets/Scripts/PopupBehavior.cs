@@ -13,7 +13,7 @@ public class PopupBehavior : MonoBehaviour
         yes.onClick.AddListener(Quit);
         no.onClick.AddListener(Continue);
 
-        cont = new ReturnMenuCommand();
+        cont = new KillNagCommand();
     }
 
     public void Quit()
@@ -24,6 +24,7 @@ public class PopupBehavior : MonoBehaviour
 
     public void Continue()
     {
+        //SceneManager.UnloadScene(SceneManager.GetActiveScene().buildIndex);
         cont.Execute();
     }
 

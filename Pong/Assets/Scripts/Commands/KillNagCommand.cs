@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NagCommand : ICommand
+public class KillNagCommand : ICommand
 {
     public void Execute()
     {
-        SceneManager.LoadScene("Quit Nag Popup",LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync("Quit Nag Popup");
     }
 }
