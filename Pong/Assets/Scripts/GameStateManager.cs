@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameStateManager : MonoBehaviour
+public class GameStateManager : MonoBehaviour, IGameState
 {
     public bool Paused { get; set; }
 
@@ -12,7 +12,7 @@ public class GameStateManager : MonoBehaviour
         Paused = false;
     }
 
-    public void TogglePause()
+    public void Pause()
     {
         Paused = !Paused;
     }
