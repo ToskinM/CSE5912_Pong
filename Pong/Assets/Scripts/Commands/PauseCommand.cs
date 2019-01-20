@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseCommand : ICommand
 {
@@ -9,6 +10,7 @@ public class PauseCommand : ICommand
 
     public PauseCommand()
     {
+
         gameStateManager = GameObject.Find("Game State Manager").GetComponent<GameStateManager>();
 
     }

@@ -13,7 +13,8 @@ public class KeyboardController : MonoBehaviour
         {
             { KeyCode.Escape, new ReturnMenuCommand() },
             { KeyCode.P, new PauseCommand() },
-            { KeyCode.ScrollLock, new ScreenCaptureCommand() }
+            { KeyCode.ScrollLock, new ScreenCaptureCommand() },
+            { KeyCode.Q, new NagCommand() }
         };
     }
 
