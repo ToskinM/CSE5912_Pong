@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IGameState
 {
-    void Pause();
+    void TogglePause();
 }
