@@ -5,26 +5,41 @@ using UnityEngine;
 public class MaxxBall1 : MonoBehaviour
 {
     private Vector3 startSpeed = new Vector3(3,1,0);
+    private Vector3 startPosition = new Vector3(0, 0, 0); 
     private float bounceMultiplier = 1.05f;
     private float maxSpeed = 20f;
     private Vector3 velocity;
-    private Rigidbody rigidbody;
+    private Rigidbody rigidBody;
     private GameStateManager gameStateManager;
 
     void Start()
     {
 
-        rigidbody = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
         gameStateManager = GameObject.Find("Game State Manager").GetComponent<GameStateManager>();
-        velocity = startSpeed;
+        Spawn();
+
     }
 
     void Update()
     {
-        Debug.Log(velocity);
+        //Debug.Log(velocity);
         if (gameStateManager.Paused) return;
 
         transform.position += velocity * Time.deltaTime;
+    }
+
+    void Spawn()
+    {
+        transform.position = new Vector3(0, 0, 0);
+        if (Random.Range(0.0f, 1.0f) > 0.5f)
+        {
+            velocity = startSpeed;
+        }
+        else
+        {
+            velocity = -1.0f * startSpeed; 
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -35,6 +50,17 @@ public class MaxxBall1 : MonoBehaviour
             //velocity = Vector3.Reflect(new Vector3(0f, Mathf.Clamp(bounceMultiplier * speed, -maxSpeed, maxSpeed), 0f), other.cont);
             //speed *= -bounceMultiplier;
             //speed = Mathf.Clamp(speed, -maxSpeed, maxSpeed);
+        }
+        if (other.gameObject.CompareTag("WinGoal"))
+        {
+            gameStateManager.Win();
+            Spawn();
+        }
+
+        if (other.gameObject.CompareTag("LoseGoal"))
+        {
+            gameStateManager.Lose();
+            Spawn(); 
         }
     }
 
@@ -57,9 +83,6 @@ public class MaxxBall1 : MonoBehaviour
             velocity = newVelocity;
         }
 
-        if (collision.collider.gameObject.CompareTag("WinGoal"))
-        {
 
-        }
     }
 }

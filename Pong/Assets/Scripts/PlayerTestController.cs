@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerTestController : MonoBehaviour
 {
     private float speed = 11f;
+    private GameStateManager gameStateManager;
     // Start is called before the first frame update
     void Start()
     {
+        gameStateManager = GameObject.Find("Game State Manager").GetComponent<GameStateManager>();
 
     }
 
@@ -33,6 +35,8 @@ public class PlayerTestController : MonoBehaviour
             rotation.z = -4;
         }
         transform.Rotate(rotation);
-        transform.position += velocity * Time.deltaTime;
+        Vector3 temp = transform.position + velocity * Time.deltaTime;
+        transform.position = gameStateManager.OutOfBounds(temp); 
+
     }
 }
