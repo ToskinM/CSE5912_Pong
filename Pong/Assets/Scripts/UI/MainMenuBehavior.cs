@@ -12,22 +12,18 @@ public class MainMenuBehavior : MonoBehaviour
     public ICommand play, nag; 
     void Start()
     {
-        MusicSource.clip = MusicClip;
         start.onClick.AddListener(PlayGame);
         quit.onClick.AddListener(QuitGame);
+        MusicSource.clip = MusicClip;
         play = new PlayCommand();
         nag = new NagCommand(); 
     }
     public void PlayGame()
     {
         MusicSource.Play();
-        Invoke("DelayMethod", 1f);
-    }
-    void DelayMethod()
-    {
-        //if no delay sound won't play for "start"
         play.Execute();
     }
+
     public void QuitGame()
     {
         MusicSource.Play();
