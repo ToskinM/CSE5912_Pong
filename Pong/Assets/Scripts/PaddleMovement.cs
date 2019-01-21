@@ -5,12 +5,12 @@ using UnityEngine;
 public class PaddleMovement : MonoBehaviour
 {
     public GameObject ball;
-    public float speed = 5f;
+    private float speed = 9f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log(speed);
     }
 
     // Update is called once per frame

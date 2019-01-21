@@ -4,23 +4,24 @@ using UnityEngine;
 
 public class MaxxBall1 : MonoBehaviour
 {
-    public float speed = 3f;
-    public float bounceMultiplier = 2f;
-    public float maxSpeed = 20f;
-    public Vector3 velocity;
-
+    private Vector3 startSpeed = new Vector3(1,3,0);
+    private float bounceMultiplier = 1.05f;
+    private float maxSpeed = 20f;
+    private Vector3 velocity;
     private Rigidbody rigidbody;
     private GameStateManager gameStateManager;
 
     void Start()
     {
+
         rigidbody = GetComponent<Rigidbody>();
         gameStateManager = GameObject.Find("Game State Manager").GetComponent<GameStateManager>();
-        velocity = new Vector3(0f, speed, 0f);
+        velocity = startSpeed;
     }
 
     void Update()
     {
+        Debug.Log(velocity);
         if (gameStateManager.Paused) return;
 
         transform.position += velocity * Time.deltaTime;
@@ -46,6 +47,19 @@ public class MaxxBall1 : MonoBehaviour
             newVelocity += collision.collider.gameObject.GetComponent<Rigidbody>().velocity;
             velocity = newVelocity;
                 
+        }
+
+        if (collision.collider.gameObject.CompareTag("Wall"))
+        {
+            Vector3 newVelocity;
+            newVelocity = Vector3.ClampMagnitude(bounceMultiplier * Vector3.Reflect(velocity, collision.GetContact(0).normal), maxSpeed);
+            newVelocity += collision.collider.gameObject.GetComponent<Rigidbody>().velocity;
+            velocity = newVelocity;
+        }
+
+        if (collision.collider.gameObject.CompareTag("WinGoal"))
+        {
+
         }
     }
 }
