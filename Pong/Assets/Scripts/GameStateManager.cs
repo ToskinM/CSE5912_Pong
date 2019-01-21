@@ -24,20 +24,12 @@ public class GameStateManager : MonoBehaviour, IGameState
         Paused = false;
     }
 
-    private void OnGUI()
-    {
-        if (GUI.Button(new Rect(10, Screen.height - 60, 150, 50), "View Video"))
-        {
-
-        }
-    }
-
     public void TogglePause()
     {
         Paused = !Paused;
     }
 
-    // Should probably separate UI stuff to another script
+    // Should probably separate UI-related stuff to another script
 
     public void TogglePauseText()
     {
