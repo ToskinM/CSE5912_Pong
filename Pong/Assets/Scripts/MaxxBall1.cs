@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MaxxBall1 : MonoBehaviour
 {
-    private Vector3 startSpeed = new Vector3(3,1,0);
+    private Vector3 startSpeed = new Vector3(5,1,0);
     private Vector3 startPosition = new Vector3(0, 0, 0); 
     private float bounceMultiplier = 1.05f;
     private float maxSpeed = 20f;
@@ -23,7 +23,7 @@ public class MaxxBall1 : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(velocity);
+        Debug.Log(velocity);
         if (gameStateManager.Paused) return;
 
         transform.position += velocity * Time.deltaTime;
