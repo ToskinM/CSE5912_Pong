@@ -16,13 +16,13 @@ public class PlayerTestController : MonoBehaviour
     {
         Vector3 velocity = Vector3.zero;
         Vector3 rotation = Vector3.zero;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
-            velocity.x = -speed;
+            velocity.y = speed;
         }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
-            velocity.x = speed;
+            velocity.y = -speed;
         }
         if (Input.GetKey(KeyCode.J))
         {

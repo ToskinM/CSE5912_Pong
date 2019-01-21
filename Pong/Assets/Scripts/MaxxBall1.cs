@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MaxxBall1 : MonoBehaviour
 {
-    private Vector3 startSpeed = new Vector3(1,3,0);
+    private Vector3 startSpeed = new Vector3(3,1,0);
     private float bounceMultiplier = 1.05f;
     private float maxSpeed = 20f;
     private Vector3 velocity;
