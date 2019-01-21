@@ -21,6 +21,11 @@ public class MainMenuBehavior : MonoBehaviour
     public void PlayGame()
     {
         MusicSource.Play();
+        Invoke("DelayMethod", 1f);
+    }
+    void DelayMethod()
+    {
+        //if no delay sound won't play for "start"
         play.Execute();
     }
 
