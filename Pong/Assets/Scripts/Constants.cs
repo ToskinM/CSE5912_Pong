@@ -9,6 +9,7 @@ public static class Constants
     public const string SCENE_PERSISTENT = "Persistent";
     public const string SCENE_MAINMENU = "Main Menu";
     public const string SCENE_LOADING = "Loading";
+    public const string SCENE_STARTUP = "StartUp";
 
     // SaveData Keys
     public const string SAVE_BALL_POSITION = "BallPosition";

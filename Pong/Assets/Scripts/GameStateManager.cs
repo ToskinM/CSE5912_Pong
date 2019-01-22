@@ -63,7 +63,11 @@ public class GameStateManager : MonoBehaviour, IGameState
     }
     public void ResetGame()
     {
-        FindObjectOfType<SceneController>().FadeAndLoadScene(Constants.SCENE_PONG);
+        SceneController sceneController = FindObjectOfType<SceneController>();
+        if (sceneController != null)
+        {
+            sceneController.FadeAndLoadScene(Constants.SCENE_PONG);
+        }
     }
 
     // Should probably separate UI stuff to another script
