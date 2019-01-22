@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -254,6 +254,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BottomWall
       objectReference: {fileID: 0}
+    - target: {fileID: 1288715513292353212, guid: 648b732e4c62a4f33a7906725171732b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     - target: {fileID: 7086170664590164674, guid: 648b732e4c62a4f33a7906725171732b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -327,7 +332,7 @@ PrefabInstance:
     - target: {fileID: 4261620248986780584, guid: 648b732e4c62a4f33a7906725171732b,
         type: 3}
       propertyPath: m_Constraints
-      value: 0
+      value: 126
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 648b732e4c62a4f33a7906725171732b, type: 3}
@@ -786,7 +791,7 @@ Transform:
   m_GameObject: {fileID: 482456316}
   m_LocalRotation: {x: 1, y: -0, z: -0, w: 0}
   m_LocalPosition: {x: -0, y: -9.5, z: 0}
-  m_LocalScale: {x: 1.91748, y: 1, z: 0.37206373}
+  m_LocalScale: {x: 2.5, y: 1, z: 0.37206373}
   m_Children: []
   m_Father: {fileID: 1049338795}
   m_RootOrder: 5
@@ -1467,6 +1472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1051950632}
   - component: {fileID: 1051950631}
+  - component: {fileID: 1051950633}
   m_Layer: 0
   m_Name: VideoCaptureCtrl
   m_TagString: Untagged
@@ -1507,6 +1513,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1051950633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051950630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 272662756dac7084f8832ee87f881d93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1055869936
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1518,6 +1536,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TopWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1288715513292353212, guid: 648b732e4c62a4f33a7906725171732b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     - target: {fileID: 7086170664590164674, guid: 648b732e4c62a4f33a7906725171732b,
         type: 3}
@@ -1587,7 +1610,7 @@ PrefabInstance:
     - target: {fileID: 4261620248986780584, guid: 648b732e4c62a4f33a7906725171732b,
         type: 3}
       propertyPath: m_Constraints
-      value: 0
+      value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 4261620248986780584, guid: 648b732e4c62a4f33a7906725171732b,
         type: 3}
@@ -2899,6 +2922,11 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3487179694735342657, guid: 018a04e96f66e6649b862308cd4b7a96,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 018a04e96f66e6649b862308cd4b7a96, type: 3}
 --- !u!1 &2116130493
@@ -2988,7 +3016,7 @@ Transform:
   m_GameObject: {fileID: 2116130493}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 9.5, z: 0}
-  m_LocalScale: {x: 1.9836, y: 1, z: 0.37206373}
+  m_LocalScale: {x: 2.5, y: 1, z: 0.37206373}
   m_Children: []
   m_Father: {fileID: 1049338795}
   m_RootOrder: 4
@@ -3178,6 +3206,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_CollisionDetection
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3487179694735342657, guid: 018a04e96f66e6649b862308cd4b7a96,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 122
       objectReference: {fileID: 0}
     - target: {fileID: 3487179694735342660, guid: 018a04e96f66e6649b862308cd4b7a96,
         type: 3}

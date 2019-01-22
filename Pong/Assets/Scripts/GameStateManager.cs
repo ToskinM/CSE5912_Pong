@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using TMPro; 
 using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour, IGameState
@@ -10,6 +10,7 @@ public class GameStateManager : MonoBehaviour, IGameState
     public TextMeshProUGUI AIScoreDisplay;
     public TextMeshProUGUI PlayerScoreDisplay;
     public Canvas GeneralCanvas;
+    public ICommand end;
 
     public SaveData pongSaveData;
     public GameObject ball;
@@ -28,14 +29,7 @@ public class GameStateManager : MonoBehaviour, IGameState
         topwall = GameObject.Find("TopWall");
         bottomwall = GameObject.Find("BottomWall"); 
         Paused = false;
-    }
-
-    private void OnGUI()
-    {
-        if (GUI.Button(new Rect(10, Screen.height - 60, 150, 50), "View Video"))
-        {
-
-        }
+        end = new ReturnMenuCommand();
     }
 
     public void TogglePause()
@@ -108,11 +102,19 @@ public class GameStateManager : MonoBehaviour, IGameState
     {
         playerScore++;
         PlayerScoreDisplay.text = "" + playerScore;
+        if(playerScore == 3)
+        {
+            end.Execute();
+    }
     }
     public void Lose()
     {
         AIscore++;
         AIScoreDisplay.text = "" + AIscore;
+        if(AIscore == 3)
+        {
+            end.Execute();
+    }
     }
 
     public Vector3 OutOfBounds(Vector3 v)
