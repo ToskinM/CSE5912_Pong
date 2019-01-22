@@ -11,8 +11,9 @@ public class SceneController : MonoBehaviour
     public event Action AfterSceneLoad;
     public CanvasGroup faderCanvasGroup;
     public float fadeDuration = 1f;
-    public string startingSceneName = Constants.SCENE_MAINMENU;
+    public string startingSceneName = Constants.SCENE_STARTUP;
     public SaveData ballSaveData;
+    public bool isThePersistentController = false;
 
     public GameObject loadingUI;
     public GameObject loadingBar;
@@ -20,8 +21,13 @@ public class SceneController : MonoBehaviour
     private bool isFading;
     private IEnumerator Start()
     {
+        // Only allow one scene controller at a time
+        if (!isThePersistentController && FindObjectOfType<SceneController>() != null)
+        {
+            Destroy(gameObject);
+        }
+
         faderCanvasGroup.alpha = 1f;
-        yield return StartCoroutine(ShowLoadingScreen());
         yield return StartCoroutine(LoadSceneAndSetActive(startingSceneName));
         StartCoroutine(Fade(0f));
     }
@@ -44,6 +50,15 @@ public class SceneController : MonoBehaviour
             AfterSceneLoad();
 
         yield return StartCoroutine(Fade(0f));
+    }
+    private IEnumerator SwitchScenesNoFadeNoLoad(string sceneName)
+    {
+        if (BeforeSceneUnload != null)
+            BeforeSceneUnload();
+        yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        yield return StartCoroutine(LoadSceneAndSetActive(sceneName));
+        if (AfterSceneLoad != null)
+            AfterSceneLoad();
     }
     private IEnumerator ShowLoadingScreen()
     {
