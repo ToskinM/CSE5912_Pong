@@ -9,10 +9,16 @@ public class MainMenuBehavior : MonoBehaviour
     public Button start, quit;
     public AudioClip MusicClip;
     public AudioSource MusicSource;
-    public ICommand play, nag; 
+    public ICommand play, nag;
+
+    private SceneController sceneController;    // Reference to the SceneController to actually do the loading and unloading of scenes.
+
     void Start()
     {
-        start.onClick.AddListener(PlayGame);
+        //start.onClick.AddListener(PlayGame);
+        sceneController = FindObjectOfType<SceneController>();
+        start.onClick.AddListener(StartGame);
+
         quit.onClick.AddListener(QuitGame);
         MusicSource.clip = MusicClip;
         play = new PlayCommand();
@@ -22,6 +28,11 @@ public class MainMenuBehavior : MonoBehaviour
     {
         MusicSource.Play();
         Invoke("DelayMethod", 1f);
+    }
+    public void StartGame()
+    {
+        MusicSource.Play();
+        sceneController.FadeAndLoadScene(Constants.SCENE_PONG);
     }
     void DelayMethod()
     {

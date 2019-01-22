@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro; 
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour, IGameState
 {
@@ -9,6 +10,11 @@ public class GameStateManager : MonoBehaviour, IGameState
     public TextMeshProUGUI AIScoreDisplay;
     public TextMeshProUGUI PlayerScoreDisplay;
     public Canvas GeneralCanvas;
+
+    public SaveData pongSaveData;
+    public GameObject ball;
+    public GameObject playerPaddle;
+    public GameObject cpuPaddle;
 
     GameObject topwall;
     GameObject bottomwall;
@@ -35,6 +41,35 @@ public class GameStateManager : MonoBehaviour, IGameState
     public void TogglePause()
     {
         Paused = !Paused;
+    }
+
+    public void SaveState()
+    {
+        pongSaveData.Save(Constants.SAVE_BALL_POSITION, ball.transform.position);
+        pongSaveData.Save(Constants.SAVE_BALL_VELOCITY, ball.GetComponent<MaxxBall1>().velocity);
+        pongSaveData.Save(Constants.SAVE_PLAYER_POSITION, playerPaddle.transform.position);
+        pongSaveData.Save(Constants.SAVE_CPU_POSITION, cpuPaddle.transform.position);
+    }
+    public void LoadState()
+    {
+        Vector3 fetchVector3 = new Vector3();
+
+        if (pongSaveData.Load(Constants.SAVE_BALL_POSITION, ref fetchVector3))
+        {
+            ball.transform.position = fetchVector3;
+
+            pongSaveData.Load(Constants.SAVE_BALL_VELOCITY, ref ball.GetComponent<MaxxBall1>().velocity);
+
+            pongSaveData.Load(Constants.SAVE_PLAYER_POSITION, ref fetchVector3);
+            playerPaddle.transform.position = fetchVector3;
+
+            pongSaveData.Load(Constants.SAVE_CPU_POSITION, ref fetchVector3);
+            cpuPaddle.transform.position = fetchVector3;
+        }
+    }
+    public void ResetGame()
+    {
+        FindObjectOfType<SceneController>().FadeAndLoadScene(Constants.SCENE_PONG);
     }
 
     // Should probably separate UI stuff to another script

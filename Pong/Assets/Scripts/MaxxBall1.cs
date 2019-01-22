@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class MaxxBall1 : MonoBehaviour
 {
+    public Vector3 velocity;
+
     private Vector3 startSpeed = new Vector3(5,1,0);
     private Vector3 startPosition = new Vector3(0, 0, 0); 
     private float bounceMultiplier = 1.05f;
     private float maxSpeed = 20f;
-    private Vector3 velocity;
     private Rigidbody rigidBody;
     private GameStateManager gameStateManager;
 
@@ -18,7 +19,6 @@ public class MaxxBall1 : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
         gameStateManager = GameObject.Find("Game State Manager").GetComponent<GameStateManager>();
         Spawn();
-
     }
 
     void Update()
@@ -29,8 +29,13 @@ public class MaxxBall1 : MonoBehaviour
         transform.position += velocity * Time.deltaTime;
     }
 
-    void Spawn()
+    public void Spawn()
     {
+        if (gameStateManager.ball != null)
+        {
+            gameStateManager.ball = gameObject;
+        }
+
         transform.position = new Vector3(0, 0, 0);
         if (Random.Range(0.0f, 1.0f) > 0.5f)
         {
