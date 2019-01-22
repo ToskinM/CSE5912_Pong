@@ -17,6 +17,10 @@ public class GameStateManager : MonoBehaviour, IGameState
     public GameObject playerPaddle;
     public GameObject cpuPaddle;
 
+    public AudioClip LoseClip;
+    public AudioClip WinClip;
+    public AudioSource MusicSource;
+
     GameObject topwall;
     GameObject bottomwall;
     float offset = 1.4f; 
@@ -104,6 +108,8 @@ public class GameStateManager : MonoBehaviour, IGameState
 
     public void Win()
     {
+        MusicSource.clip = WinClip;
+        MusicSource.Play();
         playerScore++;
         PlayerScoreDisplay.text = "" + playerScore;
         if(playerScore == 3)
@@ -113,6 +119,8 @@ public class GameStateManager : MonoBehaviour, IGameState
     }
     public void Lose()
     {
+        MusicSource.clip = LoseClip;
+        MusicSource.Play();
         AIscore++;
         AIScoreDisplay.text = "" + AIscore;
         if(AIscore == 3)

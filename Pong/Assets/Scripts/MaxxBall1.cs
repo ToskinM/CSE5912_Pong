@@ -16,7 +16,6 @@ public class MaxxBall1 : MonoBehaviour
     public AudioSource MusicSource;
     void Start()
     {
-        MusicSource.clip = MusicClip;
         rigidBody = GetComponent<Rigidbody>();
         gameStateManager = GameObject.Find("Game State Manager").GetComponent<GameStateManager>();
         Spawn();
@@ -71,6 +70,7 @@ public class MaxxBall1 : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        MusicSource.clip = MusicClip;
         if (collision.collider.gameObject.CompareTag("Paddle"))
         {
             MusicSource.Play();

@@ -10,13 +10,14 @@ public class Music : MonoBehaviour
     void Start()
     {
         MusicSource.clip = MusicClip;
-        //MusicSource.volume=0.5f;
         MusicSource.Play();
+        //MusicSource.volume=0.5f;
+        ;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
