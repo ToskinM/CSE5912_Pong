@@ -33,7 +33,14 @@ public class MainMenuBehavior : MonoBehaviour
     public void StartGame()
     {
         MusicSource.Play();
-        sceneController.FadeAndLoadScene(Constants.SCENE_PONG);
+        if (sceneController != null)
+        {
+            sceneController.FadeAndLoadScene(Constants.SCENE_PONG);
+        }
+        else
+        {
+            Invoke("DelayMethod", 1f);
+        }
     }
     void DelayMethod()
     {
