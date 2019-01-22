@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class MainMenuBehavior : MonoBehaviour
 {
+
     public Button start, quit;
     public AudioClip MusicClip;
     public AudioSource MusicSource;
@@ -16,7 +17,7 @@ public class MainMenuBehavior : MonoBehaviour
         quit.onClick.AddListener(QuitGame);
         MusicSource.clip = MusicClip;
         play = new PlayCommand();
-        nag = new NagCommand(); 
+        nag = new NagCommand();
     }
     public void PlayGame()
     {
@@ -27,6 +28,16 @@ public class MainMenuBehavior : MonoBehaviour
     {
         //if no delay sound won't play for "start"
         play.Execute();
+    }
+
+    public void Win()
+    {
+        //todo to display win
+    }
+
+    public void Lose()
+    {
+        //todo to display lose
     }
 
     public void QuitGame()

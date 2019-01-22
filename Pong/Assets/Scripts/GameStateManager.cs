@@ -9,7 +9,7 @@ public class GameStateManager : MonoBehaviour, IGameState
     public TextMeshProUGUI AIScoreDisplay;
     public TextMeshProUGUI PlayerScoreDisplay;
     public Canvas GeneralCanvas;
-
+    public ICommand end;
     GameObject topwall;
     GameObject bottomwall;
     float offset = 1.4f; 
@@ -22,6 +22,7 @@ public class GameStateManager : MonoBehaviour, IGameState
         topwall = GameObject.Find("TopWall");
         bottomwall = GameObject.Find("BottomWall"); 
         Paused = false;
+        end = new ReturnMenuCommand();
     }
 
     public void TogglePause()
@@ -65,11 +66,19 @@ public class GameStateManager : MonoBehaviour, IGameState
     {
         playerScore++;
         PlayerScoreDisplay.text = "" + playerScore;
+        if(playerScore == 3)
+        {
+            end.Execute();
+        }
     }
     public void Lose()
     {
         AIscore++;
         AIScoreDisplay.text = "" + AIscore;
+        if(AIscore == 3)
+        {
+            end.Execute();
+        }
     }
 
     public Vector3 OutOfBounds(Vector3 v)
