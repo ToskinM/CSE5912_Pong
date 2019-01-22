@@ -32,6 +32,7 @@ public class VideoCaptureUIBehavior : MonoBehaviour
         else if (VideoCaptureCtrl.instance.status == VideoCaptureCtrl.StatusType.STOPPED)
         {
             GUI.Label(new Rect(10, 20, 150, 50), "Saving..");
+            elapsedTime = 0f;
         }
     }
 }
