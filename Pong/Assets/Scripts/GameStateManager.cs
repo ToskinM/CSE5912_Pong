@@ -23,10 +23,10 @@ public class GameStateManager : MonoBehaviour, IGameState
 
     GameObject topwall;
     GameObject bottomwall;
-    float offset = 1.4f;
+    const float offset = 1.4f;
     int AIscore = 0;
     int playerScore = 0;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -82,14 +82,14 @@ public class GameStateManager : MonoBehaviour, IGameState
 
     // Should probably separate UI stuff to another script
 
-    public void TogglePauseText()
-    {
-        GameObject hotkeyUICanvas = GeneralCanvas.transform.GetChild(1).gameObject;
-        GameObject pauseText = hotkeyUICanvas.transform.GetChild(0).gameObject;
+    //public void TogglePauseText()
+    //{
+    //    GameObject hotkeyUICanvas = GeneralCanvas.transform.GetChild(1).gameObject;
+    //    GameObject pauseText = hotkeyUICanvas.transform.GetChild(0).gameObject;
 
-        bool isActive = Paused ? true : false;
-        pauseText.SetActive(isActive);
-    }
+    //    bool isActive = Paused ? true : false;
+    //    pauseText.SetActive(isActive);
+    //}
 
     public void DisplayScreencapText()
     {

@@ -24,7 +24,11 @@ public class MaxxBall1 : MonoBehaviour
     void Update()
     {
         //Debug.Log(velocity);
-        if (gameStateManager.Paused) return;
+        if (gameStateManager.Paused)
+        {
+            rigidBody.velocity = new Vector3(0, 0, 0); 
+            return;
+        }
 
         transform.position += velocity * Time.deltaTime;
     }
