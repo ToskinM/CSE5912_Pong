@@ -14,7 +14,17 @@ public class PauseCommand : ICommand
 
     public void Execute()
     {
-        gameStateManager.TogglePause();
-        gameStateManager.TogglePauseText();
+
+        if (gameStateManager.Paused)
+        {
+            SceneManager.UnloadSceneAsync("Pause Menu");
+            gameStateManager.TogglePause();
+        }
+        else if (SceneManager.GetActiveScene().name == "PongTest")
+        {
+            SceneManager.LoadScene("Pause Menu", LoadSceneMode.Additive);
+            gameStateManager.TogglePause();
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Pause Menu"));
+        }
     }
 }

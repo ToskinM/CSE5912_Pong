@@ -11,10 +11,8 @@ public class KeyboardController : MonoBehaviour
     {
         keyMapping = new Dictionary<KeyCode, ICommand>
         {
-            { KeyCode.Escape, new ReturnMenuCommand() },
-            { KeyCode.P, new PauseCommand() },
+            { KeyCode.Escape, new PauseCommand() },
             { KeyCode.ScrollLock, new ScreenCaptureCommand() },
-            { KeyCode.Q, new NagCommand() },
             { KeyCode.F12, new VideoCaptureCommand() }
         };
     }

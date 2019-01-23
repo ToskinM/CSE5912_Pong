@@ -7,10 +7,10 @@ public class KillNagCommand : ICommand
 {
     public void Execute()
     {
-        if (SceneManager.GetActiveScene().name == "PongTest")
-        {
-            new PauseCommand().Execute();
-        }
+        //if (SceneManager.GetActiveScene().name == "PongTest")
+        //{
+        //    new PauseCommand().Execute();
+        //}
 
         SceneManager.UnloadSceneAsync("Quit Nag Popup");
     }

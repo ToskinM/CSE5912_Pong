@@ -21,7 +21,7 @@ public class PopupBehavior : MonoBehaviour
     public void Quit()
     {
         MusicSource.Play();
-        Debug.Log("Quit");
+        //Debug.Log("Quit");
         Application.Quit(); // this doesn't affect the unity editor, only a built application
     }
 
