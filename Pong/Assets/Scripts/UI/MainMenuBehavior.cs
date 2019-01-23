@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class MainMenuBehavior : MonoBehaviour
 {
-
-    public Button start, quit;
+    public GameObject MainMenu, OptionsMenu; 
+    public Button start, options, quit, back;
     public AudioClip MusicClip;
     public AudioSource MusicSource;
     public ICommand play, nag;
@@ -19,8 +19,10 @@ public class MainMenuBehavior : MonoBehaviour
         //start.onClick.AddListener(PlayGame);
         
         start.onClick.AddListener(StartGame);
-
+        options.onClick.AddListener(Options);
         quit.onClick.AddListener(QuitGame);
+        back.onClick.AddListener(GoBack);
+
         MusicSource.clip = MusicClip;
         play = new PlayCommand();
         nag = new NagCommand();
@@ -57,6 +59,21 @@ public class MainMenuBehavior : MonoBehaviour
     public void Lose()
     {
         //todo to display lose
+    }
+
+    public void GoBack()
+    {
+        MusicSource.Play();
+        MainMenu.SetActive(true);
+        OptionsMenu.SetActive(false);
+    }
+
+    public void Options()
+    {
+        MusicSource.Play();
+        MainMenu.SetActive(false);
+        OptionsMenu.SetActive(true);
+        //goOption.Execute();
     }
 
     public void QuitGame()
