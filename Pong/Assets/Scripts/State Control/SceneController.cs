@@ -19,7 +19,7 @@ public class SceneController : MonoBehaviour
     public GameObject loadingBar;
 
     private bool isFading;
-    private IEnumerator Start()
+    private void Start()
     {
         // Only allow one scene controller at a time
         if (!isThePersistentController && FindObjectOfType<SceneController>() != null)
@@ -28,7 +28,7 @@ public class SceneController : MonoBehaviour
         }
 
         faderCanvasGroup.alpha = 1f;
-        yield return StartCoroutine(LoadSceneAndSetActive(startingSceneName));
+        //yield return StartCoroutine(LoadSceneAndSetActive(startingSceneName));
         StartCoroutine(Fade(0f));
     }
     public void FadeAndLoadScene(String sceneName)

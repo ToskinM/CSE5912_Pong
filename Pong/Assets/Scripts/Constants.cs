@@ -16,4 +16,6 @@ public static class Constants
     public const string SAVE_BALL_VELOCITY = "BallVelocity";
     public const string SAVE_PLAYER_POSITION = "PlayerPosition";
     public const string SAVE_CPU_POSITION = "CPUPosition";
+    public const string SAVE_PLAYER_SCORE = "PlayerScore";
+    public const string SAVE_CPU_SCORE = "CPUScore";
 }

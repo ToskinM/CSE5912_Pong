@@ -11,14 +11,14 @@ public class StartupSequence : MonoBehaviour
 
     private IEnumerator Start()
     {
-        sceneController = FindObjectOfType<SceneController>();
 
         for (int i = 0; i < slides.Length; i++)
         {
             yield return StartCoroutine(PlaySlide(slides[i]));
         }
 
-        sceneController.FadeAndLoadScene(Constants.SCENE_MAINMENU);
+        sceneController = FindObjectOfType<SceneController>();
+        sceneController?.FadeAndLoadScene(Constants.SCENE_MAINMENU);
     }
 
     private IEnumerator PlaySlide(CanvasGroup slide)

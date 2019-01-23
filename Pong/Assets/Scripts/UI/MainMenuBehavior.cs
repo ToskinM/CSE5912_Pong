@@ -17,7 +17,7 @@ public class MainMenuBehavior : MonoBehaviour
     void Start()
     {
         //start.onClick.AddListener(PlayGame);
-        sceneController = FindObjectOfType<SceneController>();
+        
         start.onClick.AddListener(StartGame);
 
         quit.onClick.AddListener(QuitGame);
@@ -33,6 +33,7 @@ public class MainMenuBehavior : MonoBehaviour
     public void StartGame()
     {
         MusicSource.Play();
+        sceneController = FindObjectOfType<SceneController>();
         if (sceneController != null)
         {
             sceneController.FadeAndLoadScene(Constants.SCENE_PONG);
