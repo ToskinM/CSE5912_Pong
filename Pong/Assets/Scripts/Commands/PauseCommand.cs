@@ -19,6 +19,7 @@ public class PauseCommand : ICommand
         {
             SceneManager.UnloadSceneAsync("Pause Menu");
             gameStateManager.TogglePause();
+
         }
         else if (SceneManager.GetActiveScene().name == "PongTest")
         {

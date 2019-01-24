@@ -8,33 +8,25 @@ public class MainMenuBehavior : MonoBehaviour
 {
     public GameObject MainMenu, OptionsMenu; 
     public Button start, options, quit, back;
-    public AudioClip MusicClip;
-    public AudioSource MusicSource;
+    //public AudioClip MusicClip;
+    //public AudioSource MusicSource;
     public ICommand play, nag;
 
     private SceneController sceneController;    // Reference to the SceneController to actually do the loading and unloading of scenes.
 
     void Start()
     {
-        //start.onClick.AddListener(PlayGame);
-        
         start.onClick.AddListener(StartGame);
         options.onClick.AddListener(Options);
         quit.onClick.AddListener(QuitGame);
         back.onClick.AddListener(GoBack);
 
-        MusicSource.clip = MusicClip;
         play = new PlayCommand();
         nag = new NagCommand();
     }
-    public void PlayGame()
-    {
-        MusicSource.Play();
-        Invoke("DelayMethod", 1f);
-    }
     public void StartGame()
     {
-        MusicSource.Play();
+        FindObjectOfType<AudioManager>().Play("Menu");
         sceneController = FindObjectOfType<SceneController>();
         if (sceneController != null)
         {
@@ -63,14 +55,14 @@ public class MainMenuBehavior : MonoBehaviour
 
     public void GoBack()
     {
-        MusicSource.Play();
+        FindObjectOfType<AudioManager>().Play("Menu");
         MainMenu.SetActive(true);
         OptionsMenu.SetActive(false);
     }
 
     public void Options()
     {
-        MusicSource.Play();
+        FindObjectOfType<AudioManager>().Play("Menu");
         MainMenu.SetActive(false);
         OptionsMenu.SetActive(true);
         //goOption.Execute();
@@ -78,10 +70,10 @@ public class MainMenuBehavior : MonoBehaviour
 
     public void QuitGame()
     {
-        MusicSource.Play();
+        FindObjectOfType<AudioManager>().Play("Menu");
         nag.Execute();
 
         //Application.Quit(); // this doesn't affect the unity editor, only a built application
     }
-
+ 
 }

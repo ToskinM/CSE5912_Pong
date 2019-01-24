@@ -17,10 +17,6 @@ public class GameStateManager : MonoBehaviour, IGameState
     public GameObject playerPaddle;
     public GameObject cpuPaddle;
 
-    public AudioClip LoseClip;
-    public AudioClip WinClip;
-    public AudioSource MusicSource;
-
     GameObject topwall;
     GameObject bottomwall;
     const float offset = 1.4f;
@@ -34,13 +30,22 @@ public class GameStateManager : MonoBehaviour, IGameState
         bottomwall = GameObject.Find("BottomWall");
         Paused = false;
         end = new ReturnMenuCommand();
+        FindObjectOfType<AudioManager>().Play("Background");
     }
 
     public void TogglePause()
     {
         Paused = !Paused;
+        PauseMusic();
     }
 
+    private void PauseMusic()
+    {
+        if (Paused)
+            FindObjectOfType<AudioManager>().Pause("Background");
+        else
+            FindObjectOfType<AudioManager>().Play("Background");
+    }
     public void SaveState()
     {
         pongSaveData.Save(Constants.SAVE_BALL_POSITION, ball.transform.position);
@@ -114,8 +119,7 @@ public class GameStateManager : MonoBehaviour, IGameState
 
     public void Win()
     {
-        MusicSource.clip = WinClip;
-        MusicSource.Play();
+        FindObjectOfType<AudioManager>().Play("Win");
         playerScore++;
         UpdateScores();
         if (playerScore == 3)
@@ -125,8 +129,7 @@ public class GameStateManager : MonoBehaviour, IGameState
     }
     public void Lose()
     {
-        MusicSource.clip = LoseClip;
-        MusicSource.Play();
+        FindObjectOfType<AudioManager>().Play("Lose");
         AIscore++;
         UpdateScores();
         if (AIscore == 3)

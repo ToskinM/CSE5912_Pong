@@ -12,10 +12,9 @@ public class MaxxBall1 : MonoBehaviour
     private float maxSpeed = 20f;
     private Rigidbody rigidBody;
     private GameStateManager gameStateManager;
-    public AudioClip MusicClip;
-    public AudioSource MusicSource;
     void Start()
     {
+        FindObjectOfType<AudioManager>().Play("Background");
         rigidBody = GetComponent<Rigidbody>();
         gameStateManager = GameObject.Find("Game State Manager").GetComponent<GameStateManager>();
         Spawn();
@@ -26,6 +25,7 @@ public class MaxxBall1 : MonoBehaviour
         //Debug.Log(velocity);
         if (gameStateManager.Paused)
         {
+            FindObjectOfType<AudioManager>().Pause("Background");
             rigidBody.velocity = new Vector3(0, 0, 0); 
             return;
         }
@@ -74,10 +74,9 @@ public class MaxxBall1 : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        MusicSource.clip = MusicClip;
         if (collision.collider.gameObject.CompareTag("Paddle"))
         {
-            MusicSource.Play();
+            FindObjectOfType<AudioManager>().Play("Collision");
             Vector3 newVelocity;
             newVelocity = Vector3.ClampMagnitude(bounceMultiplier * Vector3.Reflect(velocity, collision.GetContact(0).normal), maxSpeed);
             newVelocity += collision.collider.gameObject.GetComponent<Rigidbody>().velocity;
@@ -87,7 +86,7 @@ public class MaxxBall1 : MonoBehaviour
 
         if (collision.collider.gameObject.CompareTag("Wall"))
         {
-            MusicSource.Play();
+            FindObjectOfType<AudioManager>().Play("Collision");
             Vector3 newVelocity;
             newVelocity = Vector3.ClampMagnitude(bounceMultiplier * Vector3.Reflect(velocity, collision.GetContact(0).normal), maxSpeed);
             newVelocity += collision.collider.gameObject.GetComponent<Rigidbody>().velocity;
