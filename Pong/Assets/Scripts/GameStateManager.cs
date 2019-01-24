@@ -17,11 +17,12 @@ public class GameStateManager : MonoBehaviour, IGameState
     public GameObject playerPaddle;
     public GameObject cpuPaddle;
 
-    GameObject topwall;
-    GameObject bottomwall;
-    const float offset = 1.4f;
-    int AIscore = 0;
-    int playerScore = 0;
+    private AudioManager audioManager;
+    private GameObject topwall;
+    private GameObject bottomwall;
+    private const float offset = 1.4f;
+    private int AIscore = 0;
+    private int playerScore = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -30,7 +31,17 @@ public class GameStateManager : MonoBehaviour, IGameState
         bottomwall = GameObject.Find("BottomWall");
         Paused = false;
         end = new ReturnMenuCommand();
-        FindObjectOfType<AudioManager>().Play("Background");
+        StartCoroutine(GetAudioManager());
+    }
+
+    private IEnumerator GetAudioManager()
+    {
+        while (audioManager == null)
+        {
+            audioManager = FindObjectOfType<AudioManager>();
+            yield return null;
+        }
+        audioManager.Play("Background");
     }
 
     public void TogglePause()
