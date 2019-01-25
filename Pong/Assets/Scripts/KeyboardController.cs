@@ -13,10 +13,7 @@ public class KeyboardController : MonoBehaviour
         {
             { KeyCode.Escape, new PauseCommand() },
             { KeyCode.ScrollLock, new ScreenCaptureCommand() },
-            { KeyCode.F12, new VideoCaptureCommand() },
-            { KeyCode.F5, new QuickSaveCommand() },
-            { KeyCode.F9, new QuickLoadCommand() },
-            { KeyCode.F11, new ResetPongCommand() }
+            { KeyCode.F12, new VideoCaptureCommand() }
         };
     }
 

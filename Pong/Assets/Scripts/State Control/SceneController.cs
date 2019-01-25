@@ -19,19 +19,16 @@ public class SceneController : MonoBehaviour
     public GameObject loadingBar;
 
     private bool isFading;
-    private IEnumerator Start()
+    private void Start()
     {
         // Only allow one scene controller at a time
         if (!isThePersistentController && FindObjectOfType<SceneController>() != null)
         {
             Destroy(gameObject);
         }
+
         faderCanvasGroup.alpha = 1f;
-
-        // Load the starting scene if this is the only scene
-        if (SceneManager.sceneCount == 1 && SceneManager.GetSceneAt(0).name == Constants.SCENE_PERSISTENT)
-            yield return StartCoroutine(LoadSceneAndSetActive(startingSceneName));
-
+        //yield return StartCoroutine(LoadSceneAndSetActive(startingSceneName));
         StartCoroutine(Fade(0f));
     }
     public void FadeAndLoadScene(String sceneName)
