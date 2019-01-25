@@ -42,21 +42,22 @@ public class GameStateManager : MonoBehaviour, IGameState
             yield return null;
         }
         audioManager.Play("Background");
+
     }
 
     public void TogglePause()
     {
         Paused = !Paused;
-        PauseMusic();
+        //PauseMusic();
     }
 
-    private void PauseMusic()
-    {
-        if (Paused)
-            FindObjectOfType<AudioManager>().Pause("Background");
-        else
-            FindObjectOfType<AudioManager>().Play("Background");
-    }
+    //private void PauseMusic()
+    //{
+    //    if (Paused)
+    //        FindObjectOfType<AudioManager>().Pause("Background");
+    //    else
+    //        FindObjectOfType<AudioManager>().Play("Background");
+    //}
     public void SaveState()
     {
         pongSaveData.Save(Constants.SAVE_BALL_POSITION, ball.transform.position);

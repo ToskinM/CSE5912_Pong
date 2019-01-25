@@ -33,16 +33,28 @@ public class AudioManager : MonoBehaviour
     public void Play (string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.source.Play();
-        if (s == null)
-        { Debug.Log("can't find"); }
+        if (s != null)
+        {
+            s.source.Play();
+        }
+        else
+        { Debug.Log("there is no music source"); }
+    }
+    public void PlayTest(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s != null)
+        {
+            s.source.PlayOneShot(s.source.clip);
+        }
+        else
+        { Debug.Log("there is no music source"); }
     }
     public void Pause (string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.Pause();
     }
-
     public void ChangeVolume(string name,float vol)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);

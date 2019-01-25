@@ -66,13 +66,11 @@ public class PauseMenuBehavior : MonoBehaviour
 
     public void Slider()
     {
-
         FindObjectOfType<AudioManager>().ChangeVolume("Background", slider.value);
-        Debug.Log(slider.value);
-        if (Mathf.Abs(slider.value-originalVolume)>=0.01)
-        {
-            FindObjectOfType<AudioManager>().Play("Background");
-        }
+        //if (Mathf.Abs(slider.value-originalVolume)>=0.01)
+        //{
+        //    FindObjectOfType<AudioManager>().PlayTest("Background");
+        //}
     }
     void Update()
     {
