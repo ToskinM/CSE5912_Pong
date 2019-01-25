@@ -11,8 +11,16 @@ public class MainMenuBehavior : MonoBehaviour
     //public AudioClip MusicClip;
     //public AudioSource MusicSource;
     public ICommand play, nag;
+    public Slider slider;
 
+    private AudioManager audioManager;
+    private float originalVolume;
     private SceneController sceneController;    // Reference to the SceneController to actually do the loading and unloading of scenes.
+
+    void Awake()
+    {
+        StartCoroutine(GetAudioManager());
+    }
 
     void Start()
     {
@@ -20,9 +28,11 @@ public class MainMenuBehavior : MonoBehaviour
         options.onClick.AddListener(Options);
         quit.onClick.AddListener(QuitGame);
         back.onClick.AddListener(GoBack);
-
+        slider.value = FindObjectOfType<AudioManager>().GetVolume("Backgroud");
+        originalVolume = slider.value;
         play = new PlayCommand();
         nag = new NagCommand();
+
     }
     public void StartGame()
     {
@@ -75,5 +85,30 @@ public class MainMenuBehavior : MonoBehaviour
 
         //Application.Quit(); // this doesn't affect the unity editor, only a built application
     }
- 
+    public void Slider()
+    {
+        FindObjectOfType<AudioManager>().ChangeVolume("Background", slider.value);
+        //if (Mathf.Abs(slider.value-originalVolume)>=0.01)
+        //{
+        //    FindObjectOfType<AudioManager>().PlayTest("Background");
+        //}
+    }
+
+    private IEnumerator GetAudioManager()
+    {
+        while (audioManager == null)
+        {
+            audioManager = FindObjectOfType<AudioManager>();
+            yield return null;
+        }
+        audioManager.Play("Background");
+
+    }
+
+    void Update()
+    {
+        if (OptionsMenu.activeInHierarchy == true)
+            Slider();
+    }
+
 }
