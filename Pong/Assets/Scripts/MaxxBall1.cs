@@ -34,7 +34,12 @@ public class MaxxBall1 : MonoBehaviour
 
     void Update()
     {
+        
+        if(Mathf.Abs(velocity.y) > 2* Mathf.Abs(velocity.x))
+        {
+            velocity.x = velocity.x * 1.5f;
 
+        }
         //Debug.Log(velocity);
         if (gameStateManager.Paused)
         {
