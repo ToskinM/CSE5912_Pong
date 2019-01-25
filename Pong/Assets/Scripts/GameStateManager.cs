@@ -17,7 +17,7 @@ public class GameStateManager : MonoBehaviour, IGameState
     public GameObject playerPaddle;
     public GameObject cpuPaddle;
 
-    private AudioManager audioManager;
+    //private AudioManager audioManager;
     private GameObject topwall;
     private GameObject bottomwall;
     private const float offset = 1.4f;
@@ -31,19 +31,19 @@ public class GameStateManager : MonoBehaviour, IGameState
         bottomwall = GameObject.Find("BottomWall");
         Paused = false;
         end = new ReturnMenuCommand();
-        StartCoroutine(GetAudioManager());
+        //StartCoroutine(GetAudioManager());
     }
 
-    private IEnumerator GetAudioManager()
-    {
-        while (audioManager == null)
-        {
-            audioManager = FindObjectOfType<AudioManager>();
-            yield return null;
-        }
-        audioManager.Play("Background");
+    //private IEnumerator GetAudioManager()
+    //{
+    //    while (audioManager == null)
+    //    {
+    //        audioManager = FindObjectOfType<AudioManager>();
+    //        yield return null;
+    //    }
+    //    audioManager.Play("Background");
 
-    }
+    //}
 
     public void TogglePause()
     {
