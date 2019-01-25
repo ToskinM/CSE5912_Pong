@@ -52,7 +52,6 @@ public class PauseMenuBehavior : MonoBehaviour
         Menu.SetActive(false);
         OptionsMenu.SetActive(true);
         FindObjectOfType<AudioManager>().Play("Menu");
-        slider.value = FindObjectOfType<AudioManager>().
         slider.value = FindObjectOfType<AudioManager>().GetVolume("Backgroud");
         originalVolume = slider.value;
     }
