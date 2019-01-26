@@ -17,9 +17,21 @@ public class FollowCamera : MonoBehaviour
     private Vector3 offset;
     private Quaternion rotation;
 
+    private float xRotation;
+    private float yRotation;
+    private readonly float yRotationMax = 50f;
+    private readonly float yRotationMin = 0f;
+
     void Start()
     {
         offset = target.transform.position - transform.position;
+    }
+
+    void Update()
+    {
+        xRotation += Input.GetAxis("Mouse X") * rotateSpeed;
+        yRotation += Input.GetAxis("Mouse Y") * rotateSpeed;
+        yRotation = Mathf.Clamp(yRotation, yRotationMin, yRotationMax);
     }
 
     void LateUpdate()
@@ -31,20 +43,21 @@ public class FollowCamera : MonoBehaviour
         }
         else
         {
-            if (dampen)
-            {
-                // Rotate WITH target (Dampened)
-                float currentAngle = transform.eulerAngles.y;
-                float targetAngle = target.transform.eulerAngles.y;
-                float angle = Mathf.LerpAngle(currentAngle, targetAngle, Time.deltaTime * damping);
-                rotation = Quaternion.Euler(0, angle, 0);
-            }
-            else
-            {
-                // Rotate WITH target
-                float angle = target.transform.eulerAngles.y;
-                rotation = Quaternion.Euler(0, angle, 0);
-            }
+            rotation = Quaternion.Euler(yRotation, xRotation, 0);
+            //if (dampen)
+            //{
+            //    // Rotate WITH target (Dampened)
+            //    float currentAngle = transform.eulerAngles.y;
+            //    float targetAngle = target.transform.eulerAngles.y;
+            //    float angle = Mathf.LerpAngle(currentAngle, targetAngle, Time.deltaTime * damping);
+            //    rotation = Quaternion.Euler(0, angle, 0);
+            //}
+            //else
+            //{
+            //    // Rotate WITH target
+            //    float angle = target.transform.eulerAngles.y;
+            //    rotation = Quaternion.Euler(0, angle, 0);
+            //}
 
             // Stay behind player, in range
             transform.position = target.transform.position - (rotation * offset * followDistanceMultiplier);
