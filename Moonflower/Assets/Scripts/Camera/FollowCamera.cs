@@ -11,16 +11,16 @@ public class FollowCamera : MonoBehaviour
     public bool dampen = false;
 
     private bool freeRoam;
-    private readonly float freeRoamRotateSpeed = 2.5f;
-    private readonly float freeRoamMoveSpeed = 0.5f;
-
     private Vector3 offset;
     private Quaternion rotation;
-
     private float xRotation;
     private float yRotation;
-    private readonly float yRotationMax = 50f;
-    private readonly float yRotationMin = 0f;
+
+    private readonly float freeRoamMoveSpeed = 0.4f;
+    private readonly float yRotationMax = 60f;
+    private readonly float yRotationMin = -10f;
+    private readonly float followDistanceMax = 3f;
+    private readonly float followDistanceMin = 0.5f;
 
     void Start()
     {
@@ -29,9 +29,15 @@ public class FollowCamera : MonoBehaviour
 
     void Update()
     {
+        // Rotation adjustment
         xRotation += Input.GetAxis("Mouse X") * rotateSpeed;
-        yRotation += Input.GetAxis("Mouse Y") * rotateSpeed;
-        yRotation = Mathf.Clamp(yRotation, yRotationMin, yRotationMax);
+        yRotation += -Input.GetAxis("Mouse Y") * rotateSpeed;
+        if (!freeRoam)
+            yRotation = Mathf.Clamp(yRotation, yRotationMin, yRotationMax);
+
+        // Follow distance adjustment
+        followDistanceMultiplier += -Input.GetAxis("Mouse ScrollWheel");
+        followDistanceMultiplier = Mathf.Clamp(followDistanceMultiplier, followDistanceMin, followDistanceMax);
     }
 
     void LateUpdate()
@@ -44,6 +50,8 @@ public class FollowCamera : MonoBehaviour
         else
         {
             rotation = Quaternion.Euler(yRotation, xRotation, 0);
+
+            //// If we want camera locked to player's rotation
             //if (dampen)
             //{
             //    // Rotate WITH target (Dampened)
@@ -68,10 +76,7 @@ public class FollowCamera : MonoBehaviour
     }
     private void UpdateFreeRotation()
     {
-        if (Input.GetKey(KeyCode.UpArrow)) transform.Rotate(-freeRoamRotateSpeed, 0, 0);
-        if (Input.GetKey(KeyCode.DownArrow)) transform.Rotate(freeRoamRotateSpeed, 0, 0);
-        if (Input.GetKey(KeyCode.LeftArrow)) transform.Rotate(0, -freeRoamRotateSpeed, 0);
-        if (Input.GetKey(KeyCode.RightArrow)) transform.Rotate(0, freeRoamRotateSpeed, 0);
+        transform.rotation = Quaternion.Euler(yRotation, xRotation, 0);
     }
 
     private void UpdateFreeMovement()
@@ -87,11 +92,5 @@ public class FollowCamera : MonoBehaviour
     public void SetFreeRoam(bool enabled)
     {
         freeRoam = enabled;
-
-        //if (!freeRoam)
-        //{
-        //    transform.position = defaultPosOffset;
-        //    transform.rotation = defaultRotation;
-        //}
     }
 }

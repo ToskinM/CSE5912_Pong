@@ -27,7 +27,8 @@ public class GameStateController : MonoBehaviour
     {
         DebugModeOn = !DebugModeOn;
 
-        CameraController camControl = MainCamera.GetComponent<CameraController>();
+        //CameraController camControl = MainCamera.GetComponent<CameraController>();
+        FollowCamera camControl = MainCamera.GetComponent<FollowCamera>();
 
         camControl.SetFreeRoam(DebugModeOn);
         EnablePlayerMovement(!DebugModeOn);

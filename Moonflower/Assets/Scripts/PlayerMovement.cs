@@ -6,6 +6,9 @@ public class PlayerMovement : MonoBehaviour
 {
     private float moveSpeed;
 
+    public GameObject camera;
+    public float rotateSpeed = 15f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +18,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Match camera y rotation
+        Quaternion rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+
         if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
