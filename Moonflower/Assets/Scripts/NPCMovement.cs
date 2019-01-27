@@ -11,10 +11,10 @@ public class NPCMovement : MonoBehaviour
     public GameObject plane;
 
     Vector3 dest;
-    const float bufferDist = 0.2f;
+    const float bufferDist = .2f;
     int count = 0;
     int threshhold;
-    const int smallPause = 30, largePause = 80;
+    const int smallPause = 1, largePause = 5;
 
     private void Start()
     {
@@ -24,35 +24,56 @@ public class NPCMovement : MonoBehaviour
         threshhold = getRandomPause(); 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Debug.Log(dest);
-        Debug.Log(transform.position); 
-
         if (Wandering)
         {
-            if (Vector3.Distance(agent.transform.position, dest) <= bufferDist)
+            bool atDest = getXZDist(agent.transform.position, dest) <= bufferDist;
+            if (atDest && !agent.isStopped)
             {
-                Debug.Log("New Dest");
-                dest = getRandomDest();
-                agent.SetDestination(dest);
+                agent.isStopped = true;
             }
-        }
+            else if(atDest)
+            {
+
+                if (count == threshhold)
+                {
+                    agent.isStopped = false; 
+                    dest = getRandomDest();
+                    agent.SetDestination(dest);
+
+                    threshhold = getRandomPause();
+                    count = 0; 
+                    Debug.Log("New Dest");
+                }
+                else
+                {
+                    count++; 
+                }
+
+            }
+        } 
     }
 
-    Vector3 getRandomDest()
+    private Vector3 getRandomDest()
     {
-        float x = Random.Range(plane.transform.position.x - plane.transform.localScale.x,
-            plane.transform.position.x + plane.transform.localScale.x);
-        float z = Random.Range(plane.transform.position.z - plane.transform.localScale.z,
-            plane.transform.position.z + plane.transform.localScale.z);
+        Renderer planeRend = plane.GetComponent<Renderer>();
+        Vector3 extent = planeRend.bounds.extents;
+        float x = planeRend.bounds.center.x + Random.Range(-extent.x, extent.x);
+        float z = planeRend.bounds.center.z + Random.Range(-extent.z, extent.z); 
         return new Vector3(x, 0, z); 
     }
 
-    int getRandomPause()
+    private int getRandomPause()
     {
-        return Random.Range(smallPause, largePause); 
+        return Random.Range(smallPause*60, largePause*60); 
     }
+
+    private float getXZDist(Vector3 a, Vector3 b)
+    {
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.z - b.z);
     
+    }
+
+
 }
