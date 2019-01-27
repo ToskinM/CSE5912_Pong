@@ -44,7 +44,6 @@ public class NPCMovement : MonoBehaviour
 
                     threshhold = getRandomPause();
                     count = 0; 
-                    Debug.Log("New Dest");
                 }
                 else
                 {
