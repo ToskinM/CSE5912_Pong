@@ -5,10 +5,9 @@ using UnityEngine.AI;
 
 public class NPCMovement : MonoBehaviour
 {
-    public bool Wandering { get; set; }
-
     public NavMeshAgent agent;
     public GameObject plane;
+    public bool Wandering { get; set; }
 
     Vector3 dest;
     const float bufferDist = .2f;
@@ -54,6 +53,27 @@ public class NPCMovement : MonoBehaviour
         } 
     }
 
+    public void Chill()
+    {
+        agent.isStopped = true;
+    }
+
+    public void GoHere(Vector3 loc)
+    {
+        agent.isStopped = false;
+        agent.SetDestination(loc); 
+    }
+
+    public void ResumeWandering()
+    {
+        agent.isStopped = false;
+        Wandering = true;
+        dest = getRandomDest();
+        agent.SetDestination(dest);
+        threshhold = getRandomPause();
+        count = 0;
+    }
+
     private Vector3 getRandomDest()
     {
         Renderer planeRend = plane.GetComponent<Renderer>();
@@ -73,6 +93,7 @@ public class NPCMovement : MonoBehaviour
         return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.z - b.z);
     
     }
+
 
 
 }
