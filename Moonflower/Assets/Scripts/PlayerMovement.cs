@@ -18,9 +18,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Match camera y rotation
-        Quaternion rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+        // Match camera y rotation if moving
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            Quaternion rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+        }
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -40,11 +43,11 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.Rotate(Vector3.up * 10 * Time.deltaTime * moveSpeed);
+            transform.Rotate(Vector3.up * 10 * Time.deltaTime * rotateSpeed);
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.Rotate(-Vector3.up * 10 * Time.deltaTime * moveSpeed);
+            transform.Rotate(-Vector3.up * 10 * Time.deltaTime * rotateSpeed);
         }
     }
 }
