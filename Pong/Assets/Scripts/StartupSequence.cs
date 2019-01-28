@@ -11,6 +11,11 @@ public class StartupSequence : MonoBehaviour
     private IEnumerator Start()
     {
 
+        foreach (CanvasGroup slide in slides)
+        {
+            slide.alpha = 0f;
+        }
+
         for (int i = 0; i < slides.Length; i++)
         {
             yield return StartCoroutine(PlaySlide(slides[i]));
