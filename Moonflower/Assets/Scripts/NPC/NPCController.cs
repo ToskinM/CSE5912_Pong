@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI; 
+using UnityEngine.AI;
+using TMPro;
 
 public class NPCController : MonoBehaviour
 {
     public GameObject player; 
     public GameObject plane;
+    public TextMeshPro DialogueText;
 
     const float engagementRadius = 15f;
     const float bufferRadius = 3f;
     bool engaging = false;
     NPCMovement npc;
-    NavMeshAgent agent;
+    NavMeshAgent agent; 
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +23,7 @@ public class NPCController : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>(); 
         npc.agent = agent;
-        npc.plane = plane; 
+        npc.plane = plane;
         
     }
 
@@ -37,6 +39,8 @@ public class NPCController : MonoBehaviour
                 npc.Chill(); 
             else
                 npc.GoHere(player.transform.position);
+
+
 
         }
         else if(!npc.Wandering)

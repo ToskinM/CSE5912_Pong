@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro; 
 
 public class PlayerMovement : MonoBehaviour
 {
     private float moveSpeed;
+
 
     public GameObject camera;
     public float rotateSpeed = 15f;
@@ -49,5 +51,7 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.Rotate(-Vector3.up * 10 * Time.deltaTime * rotateSpeed);
         }
+
+        
     }
 }

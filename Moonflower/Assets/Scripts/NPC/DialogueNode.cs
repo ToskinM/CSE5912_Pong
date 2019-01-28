@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueNode
+public interface DialogueNode 
 {
-    public int NodeID { get; set; }
-    public List<DialogueOption> Options { get; set; }
-    public string prompt; 
+    //DialogueNode Parent { get; set; } 
+    //List<DialogueNode> Children { get; set; }
+    string Words { get; set; }
+    bool IsOption { get; }
 
-    public DialogueNode() { }
-
-    public DialogueNode(int id, List<DialogueOption> opts)
-    {
-        NodeID = id;
-        Options = opts;
-    }
+    DialogueNode GetCopy(); 
 
 }
