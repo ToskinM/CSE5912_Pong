@@ -11,9 +11,16 @@ public class PaddleMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Debug.Log(speed);
-        gameStateManager = GameObject.Find("Game State Manager").GetComponent<GameStateManager>();
+        StartCoroutine(GetGameStateManager());
+    }
 
+    private IEnumerator GetGameStateManager()
+    {
+        while (gameStateManager == null)
+        {
+            gameStateManager = GameObject.Find("Game State Manager").GetComponent<GameStateManager>();
+            yield return null;
+        }
     }
 
     // Update is called once per frame

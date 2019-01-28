@@ -13,6 +13,7 @@ public class GameStateManager : MonoBehaviour, IGameState
     public ICommand end;
 
     public SaveData pongSaveData;
+    public SaveData pongInitialState;
     public GameObject ball;
     public GameObject playerPaddle;
     public GameObject cpuPaddle;
@@ -31,6 +32,7 @@ public class GameStateManager : MonoBehaviour, IGameState
         bottomwall = GameObject.Find("BottomWall");
         Paused = false;
         end = new ReturnMenuCommand();
+        SaveInitialState();
         //StartCoroutine(GetAudioManager());
     }
 
@@ -67,6 +69,15 @@ public class GameStateManager : MonoBehaviour, IGameState
         pongSaveData.Save(Constants.SAVE_PLAYER_SCORE, playerScore);
         pongSaveData.Save(Constants.SAVE_CPU_SCORE, AIscore);
     }
+    public void SaveInitialState()
+    {
+        pongInitialState.Save(Constants.SAVE_BALL_POSITION, Vector3.zero);
+        pongInitialState.Save(Constants.SAVE_BALL_VELOCITY, Vector3.zero);
+        pongInitialState.Save(Constants.SAVE_PLAYER_POSITION, playerPaddle.transform.position);
+        pongInitialState.Save(Constants.SAVE_CPU_POSITION, cpuPaddle.transform.position);
+        pongInitialState.Save(Constants.SAVE_PLAYER_SCORE, 0);
+        pongInitialState.Save(Constants.SAVE_CPU_SCORE, 0);
+    }
     public void LoadState()
     {
         Vector3 fetchVector3 = new Vector3();
@@ -90,10 +101,28 @@ public class GameStateManager : MonoBehaviour, IGameState
     }
     public void ResetGame()
     {
-        SceneController sceneController = FindObjectOfType<SceneController>();
-        if (sceneController != null)
+        //SceneController sceneController = FindObjectOfType<SceneController>();
+        //if (sceneController != null)
+        //{
+        //    sceneController.FadeAndLoadScene(Constants.SCENE_PONG);
+        //}
+
+        Vector3 fetchVector3 = new Vector3();
+
+        if (pongInitialState.Load(Constants.SAVE_BALL_POSITION, ref fetchVector3))
         {
-            sceneController.FadeAndLoadScene(Constants.SCENE_PONG);
+            ball.transform.position = fetchVector3;
+
+            pongInitialState.Load(Constants.SAVE_PLAYER_POSITION, ref fetchVector3);
+            playerPaddle.transform.position = fetchVector3;
+
+            pongInitialState.Load(Constants.SAVE_CPU_POSITION, ref fetchVector3);
+            cpuPaddle.transform.position = fetchVector3;
+
+            playerScore = 0;
+            AIscore = 0;
+            UpdateScores();
+            ball.GetComponent<MaxxBall1>().Spawn();
         }
     }
 
