@@ -1842,6 +1842,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObject: {fileID: 2019780890}
   smoothTime: 2
+  playing: 0
 --- !u!136 &875445468
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3149,6 +3150,7 @@ GameObject:
   - component: {fileID: 2019780891}
   - component: {fileID: 2019780895}
   - component: {fileID: 2019780896}
+  - component: {fileID: 2019780897}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -3267,6 +3269,19 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2019780897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019780890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcbe66fc6a152453abcebdedd5d358f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playing: 1
 --- !u!1001 &2048575683
 PrefabInstance:
   m_ObjectHideFlags: 0
