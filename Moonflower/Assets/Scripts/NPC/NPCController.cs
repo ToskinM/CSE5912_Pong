@@ -19,7 +19,7 @@ public class NPCController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.AddComponent<NPCMovement>();
+        npc = gameObject.AddComponent<NPCMovement>();
 
         agent = GetComponent<NavMeshAgent>(); 
         npc.agent = agent;
