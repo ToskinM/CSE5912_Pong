@@ -12,7 +12,7 @@ public class NagCommand : ICommand
         //    new PauseCommand().Execute();
         //}
 
-        SceneManager.LoadScene("Quit Nag Popup",LoadSceneMode.Additive);
+        SceneManager.LoadScene(Constants.SCENE_QUITPOP,LoadSceneMode.Additive);
         
     }
 }

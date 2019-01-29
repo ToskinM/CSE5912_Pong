@@ -10,6 +10,7 @@ public static class Constants
     public const string SCENE_MAINMENU = "Main Menu";
     public const string SCENE_LOADING = "Loading";
     public const string SCENE_STARTUP = "StartUp";
+    public const string SCENE_QUITPOP = "Quit Nag Popup"; 
 
     // SaveData Keys
     public const string SAVE_BALL_POSITION = "BallPosition";
