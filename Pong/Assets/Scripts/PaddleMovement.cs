@@ -24,7 +24,7 @@ public class PaddleMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         float deltaX = (ball.transform.position - transform.position).y;
         Vector3 targetLocation = new Vector3(transform.position.x, ball.transform.position.y, transform.position.z);
