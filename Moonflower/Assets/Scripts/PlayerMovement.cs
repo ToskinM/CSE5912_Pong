@@ -16,11 +16,8 @@ public class PlayerMovement : MonoBehaviour
     {
         moveSpeed = 5f;
     }
-
-    // Update is called once per frame
-    void Update()
+    void KeyInput()
     {
-        // Match camera y rotation if moving
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             Quaternion rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
@@ -51,6 +48,12 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.Rotate(-Vector3.up * 10 * Time.deltaTime * rotateSpeed);
         }
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        // Match camera y rotation if moving
+        KeyInput();
 
         
     }
