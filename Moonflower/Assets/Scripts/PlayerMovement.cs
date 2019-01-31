@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private float moveSpeed;
 
-
+    public bool playing = true;
     public GameObject camera;
     public float rotateSpeed = 15f;
 
@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void KeyInput()
     {
+        // Match camera y rotation if moving
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             Quaternion rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
@@ -52,8 +53,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Match camera y rotation if moving
-        KeyInput();
+        if (Input.GetButtonDown("Switch"))
+        { playing = !playing; }
+        if(playing)
+            KeyInput();
 
         
     }
