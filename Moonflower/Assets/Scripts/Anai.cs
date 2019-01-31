@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Anai : MonoBehaviour
 {
-    public bool playing = true;
+    //public bool playing = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,8 +14,8 @@ public class Anai : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        { playing = !playing; }
+        //if (Input.GetButtonDown("Switch"))
+        //{ playing = !playing; }
         //if (playing)
             //Debug.Log("I AM USING ANAI");
     }
