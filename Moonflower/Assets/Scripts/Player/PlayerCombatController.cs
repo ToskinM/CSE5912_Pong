@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCombatController : MonoBehaviour
+public class PlayerCombatController : MonoBehaviour, ICombatant
 {
+    public CharacterStats Stats { get; private set; }
+
+    public bool IsBlocking { get; private set; }
     public bool hasWeaponOut;
     public bool inCombat;
-    public bool isBlocking;
+    //public bool isBlocking;
 
     public GameObject weapon;
     public GameObject weaponHitbox;
@@ -18,10 +21,10 @@ public class PlayerCombatController : MonoBehaviour
     private const string ATTACK_AXIS = "Attack";
     private const string SHEATHE_AXIS = "Sheathe/Unsheathe";
 
-
-    // Start is called before the first frame update
     void Start()
     {
+        Stats = gameObject.GetComponent<CharacterStats>();
+
         if (hasWeaponOut)
         {
             weapon.SetActive(true);
@@ -32,7 +35,6 @@ public class PlayerCombatController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         // Detect attack input (on button down)

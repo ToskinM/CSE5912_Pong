@@ -1,19 +1,22 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class NPCCombatController : MonoBehaviour
+public class NPCCombatController : MonoBehaviour, ICombatant
 {
     public enum Aggression { Passive, Unaggressive, Aggressive, Frenzied };
     public Aggression aggression;
 
+    public bool IsBlocking { get; private set; }
     public bool hasWeaponOut;
     public bool inCombat;
-    public bool isBlocking;
+    //public bool isBlocking;
     public bool isAttacking;
+
+    public CharacterStats Stats { get; private set; }
 
     void Start()
     {
-        
+        Stats = gameObject.GetComponent<CharacterStats>();
     }
 
     void Update()
@@ -26,7 +29,8 @@ public class NPCCombatController : MonoBehaviour
         Debug.Log("Trigger enter. Tag = " + other.tag);
         if (other.tag == "WeaponHitbox")
         {
-            gameObject.SetActive(false);
+            //Stats.TakeDamage(1);
+            //gameObject.SetActive(false);
             //StartCoroutine(Respawn());
         }
     }
@@ -35,5 +39,10 @@ public class NPCCombatController : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         gameObject.SetActive(true);
+    }
+
+    private void Attack()
+    {
+        throw new System.NotImplementedException();
     }
 }
