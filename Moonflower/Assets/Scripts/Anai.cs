@@ -14,7 +14,7 @@ public class Anai : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        if (Input.GetButtonDown("Switch"))
         { playing = !playing; }
         //if (playing)
             //Debug.Log("I AM USING ANAI");
