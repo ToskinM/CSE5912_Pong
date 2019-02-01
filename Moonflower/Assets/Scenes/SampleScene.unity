@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.45127374, g: 0.5000928, b: 0.56872845, a: 1}
+  m_IndirectSpecularColor: {r: 0.45127404, g: 0.5000933, b: 0.56872874, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7355,7 +7355,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1269331566
 Transform:
   m_ObjectHideFlags: 0
@@ -15431,6 +15431,7 @@ GameObject:
   - component: {fileID: 2019780896}
   - component: {fileID: 2019780897}
   - component: {fileID: 2019780898}
+  - component: {fileID: 2019780900}
   - component: {fileID: 2019780899}
   m_Layer: 10
   m_Name: Player
@@ -15604,6 +15605,20 @@ MonoBehaviour:
   inCombat: 0
   weapon: {fileID: 933837727}
   weaponHitbox: {fileID: 493617693}
+--- !u!114 &2019780900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019780890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3837fea0be4f7439ea05122dbcde121e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Pickable: 0
+  pickupArea: {fileID: 1269331565}
 --- !u!1001 &2031876810
 PrefabInstance:
   m_ObjectHideFlags: 0
