@@ -16,8 +16,6 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 
     private bool isAttacking;
 
-    private bool fireButtonDown;
-    private bool sheatheButtonDown;
     private const string ATTACK_AXIS = "Attack";
     private const string SHEATHE_AXIS = "Sheathe/Unsheathe";
 
@@ -38,33 +36,15 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     void Update()
     {
         // Detect attack input (on button down)
-        if (Input.GetAxisRaw(ATTACK_AXIS) != 0)
+        if (Input.GetButtonDown(ATTACK_AXIS))
         {
-            if (fireButtonDown == false)
-            {
-                Attack();
-                
-                fireButtonDown = true;
-            }
-        }
-        if (Input.GetAxisRaw(ATTACK_AXIS) == 0)
-        {
-            fireButtonDown = false;
+            Attack();
         }
 
         // Detect sheathing input (on button down)
-        if (Input.GetAxisRaw(SHEATHE_AXIS) != 0)
+        if (Input.GetButtonDown(SHEATHE_AXIS))
         {
-            if (sheatheButtonDown == false)
-            {
-                SetWeaponSheathed(hasWeaponOut);
-
-                sheatheButtonDown = true;
-            }
-        }
-        if (Input.GetAxisRaw(SHEATHE_AXIS) == 0)
-        {
-            sheatheButtonDown = false;
+            SetWeaponSheathed(hasWeaponOut);
         }
     }
 

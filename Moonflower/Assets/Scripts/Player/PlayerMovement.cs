@@ -6,7 +6,7 @@ using TMPro;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed;
-    public float rotateSpeed = 15f;
+    public float rotateSpeed = 20f;
     public bool playing;
     public bool inputDetected = false;
     public GameObject camera;

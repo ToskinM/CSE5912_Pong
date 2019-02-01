@@ -12,10 +12,11 @@ public class FollowCamera : MonoBehaviour
 
     private PlayerMovement playerMovement;
     private bool freeRoam;
+    private bool lockedOn;
     private bool mouseInput;
     private bool movementInput;
     private Vector3 offset;
-    private Quaternion rotation;
+    private Quaternion rotation = Quaternion.identity;
     private float xRotation;
     private float yRotation;
 
@@ -41,7 +42,7 @@ public class FollowCamera : MonoBehaviour
     {
         if (playerMovement == null)
         {
-            Debug.Log("playerMovement null");
+            //Debug.Log("playerMovement null");
             playerMovement = gameObject.GetComponent<PlayerMovement>();
             movementInput = true;
         }
@@ -56,11 +57,15 @@ public class FollowCamera : MonoBehaviour
             mouseInput = true;
         else
             mouseInput = false;
+        //Debug.Log(Input.GetAxis("Mouse X"));
 
-        xRotation += Input.GetAxis("Mouse X") * rotateSpeed;
-        yRotation += -Input.GetAxis("Mouse Y") * rotateSpeed;
-        if (!freeRoam)
-            yRotation = Mathf.Clamp(yRotation, yRotationMin, yRotationMax);
+        if (!Input.GetButtonDown("LockOn")) { 
+            xRotation += Input.GetAxis("Mouse X") * rotateSpeed;
+            yRotation += -Input.GetAxis("Mouse Y") * rotateSpeed;
+            if (!freeRoam)
+                yRotation = Mathf.Clamp(yRotation, yRotationMin, yRotationMax);
+        }
+
 
         // Follow distance adjustment
         followDistanceMultiplier += -Input.GetAxis("Mouse ScrollWheel");
@@ -94,7 +99,20 @@ public class FollowCamera : MonoBehaviour
             //}
             //else
             //{
-            rotation = Quaternion.Euler(yRotation, xRotation, 0);
+            //rotation = Quaternion.Euler(yRotation, xRotation, 0);
+            //}
+
+            if (Input.GetButtonDown("LockOn") && !freeRoam)
+            {
+                //rotation = Quaternion.Euler(0, target.transform.eulerAngles.y, 0);
+                StartCoroutine(LockOn());
+            }
+            //else
+            //{
+                //if (!lockedOn)
+                //{
+                    rotation = Quaternion.Euler(yRotation, xRotation, 0);
+                //}
             //}
 
             // Stay behind player, in range
@@ -122,5 +140,35 @@ public class FollowCamera : MonoBehaviour
     public void SetFreeRoam(bool enabled)
     {
         freeRoam = enabled;
+    }
+
+    private IEnumerator LockOn()
+    {
+        Debug.Log("Lock");
+        lockedOn = true;
+
+        float currentAngleY = transform.eulerAngles.y;
+        float currentAngleX = transform.eulerAngles.x;
+        float targetAngle = target.transform.eulerAngles.y;
+
+        //xRotation += targetAngle - currentAngleY;
+        //yRotation += 15f - currentAngleX;
+
+        float x = xRotation;
+        float y = yRotation;
+        float t = 0;
+        while (t < 1)
+        {
+            Debug.Log("lerp");
+            xRotation = Mathf.LerpAngle(xRotation, x + (targetAngle - currentAngleY), t);
+            yRotation = Mathf.LerpAngle(yRotation, y + (15f - currentAngleX), t);
+
+            t += Time.deltaTime * 5;
+            yield return null;
+        }
+
+        lockedOn = false;
+        Debug.Log("Unlock");
+
     }
 }
