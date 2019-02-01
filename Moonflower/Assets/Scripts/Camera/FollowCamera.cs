@@ -10,7 +10,10 @@ public class FollowCamera : MonoBehaviour
     public float damping = 1f;
     public bool dampen = false;
 
+    private PlayerMovement playerMovement;
     private bool freeRoam;
+    private bool mouseInput;
+    private bool movementInput;
     private Vector3 offset;
     private Quaternion rotation;
     private float xRotation;
@@ -22,14 +25,38 @@ public class FollowCamera : MonoBehaviour
     private readonly float followDistanceMax = 3f;
     private readonly float followDistanceMin = 0.5f;
 
+    private void Awake()
+    {
+        // Get player movement script
+        playerMovement = gameObject.GetComponent<PlayerMovement>();
+    }
+
     void Start()
     {
+        // Get a base distance from player from starting positions
         offset = target.transform.position - transform.position;
     }
 
     void Update()
     {
+        if (playerMovement == null)
+        {
+            Debug.Log("playerMovement null");
+            playerMovement = gameObject.GetComponent<PlayerMovement>();
+            movementInput = true;
+        }
+        else
+        {
+            movementInput = playerMovement.inputDetected;
+        }
+        
+
         // Rotation adjustment
+        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+            mouseInput = true;
+        else
+            mouseInput = false;
+
         xRotation += Input.GetAxis("Mouse X") * rotateSpeed;
         yRotation += -Input.GetAxis("Mouse Y") * rotateSpeed;
         if (!freeRoam)
@@ -44,15 +71,20 @@ public class FollowCamera : MonoBehaviour
     {
         if (freeRoam)
         {
+            // Free-roam camera
             UpdateFreeMovement();
             UpdateFreeRotation();
         }
         else
         {
-            rotation = Quaternion.Euler(yRotation, xRotation, 0);
+            //if (playerMovement != null)
+            //{
+            //    Debug.Log("playerMovement found");
 
-            //// If we want camera locked to player's rotation
-            //if (dampen)
+            //}
+
+            // If we want camera locked to player's rotation
+            //if (!mouseInput && movementInput)
             //{
             //    // Rotate WITH target (Dampened)
             //    float currentAngle = transform.eulerAngles.y;
@@ -62,9 +94,7 @@ public class FollowCamera : MonoBehaviour
             //}
             //else
             //{
-            //    // Rotate WITH target
-            //    float angle = target.transform.eulerAngles.y;
-            //    rotation = Quaternion.Euler(0, angle, 0);
+            rotation = Quaternion.Euler(yRotation, xRotation, 0);
             //}
 
             // Stay behind player, in range
