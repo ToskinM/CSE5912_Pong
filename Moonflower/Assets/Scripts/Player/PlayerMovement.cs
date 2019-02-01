@@ -5,7 +5,7 @@ using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float moveSpeed;
+    public float moveSpeed;
 
     public bool playing;
     public GameObject camera;
@@ -17,38 +17,27 @@ public class PlayerMovement : MonoBehaviour
         playing = true;
         moveSpeed = 5f;
     }
-    void KeyInput()
+    void DetectKeyInput()
     {
         // Match camera y rotation if moving
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (Input.GetAxis("Vertical") != 0f || Input.GetAxis("Horizontal") != 0f)
         {
             Quaternion rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.W))
+        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxis("Horizontal");
+
+        if (verticalInput != 0f)
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
+            Vector3 vertDirection = new Vector3(0, 0, Mathf.Sign(verticalInput));
+            transform.Translate(vertDirection * Time.deltaTime * moveSpeed);
         }
-        if (Input.GetKey(KeyCode.S))
+        if (horizontalInput != 0f)
         {
-            transform.Translate(Vector3.back * Time.deltaTime * moveSpeed);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(Vector3.left * Time.deltaTime * moveSpeed);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(Vector3.right * Time.deltaTime * moveSpeed);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            transform.Rotate(Vector3.up * 10 * Time.deltaTime * rotateSpeed);
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            transform.Rotate(-Vector3.up * 10 * Time.deltaTime * rotateSpeed);
+            Vector3 horiDirection = new Vector3(Mathf.Sign(horizontalInput), 0, 0);
+            transform.Translate(horiDirection * Time.deltaTime * moveSpeed);
         }
     }
     // Update is called once per frame
@@ -57,8 +46,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Switch"))
         { playing = !playing; }
         if(playing)
-            KeyInput();
-
-        
+            DetectKeyInput();
     }
 }

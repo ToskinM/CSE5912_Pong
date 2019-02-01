@@ -27,9 +27,9 @@ public class CharacterStats : MonoBehaviour
 
     // Not sure how combat/interactions are going to be implemented beforehand (script-wise) so just leaving general methods for now
 
-    public void DealDamage()
+    public int DealDamage()
     {
-        // 
+        return Attack;
     }
 
     public void TakeDamage(int damage)
@@ -37,18 +37,18 @@ public class CharacterStats : MonoBehaviour
         CurrentHealth -= damage;
     }
 
-    public void CompareCunning()
+    public bool CompareCunning(int otherCunning)
     {
-
+        return Cunning >= otherCunning;
     }
 
-    public void CompareCharisma()
+    public bool CompareCharisma(int otherCharisma)
     {
-
+        return Charisma >= otherCharisma;
     }
 
-    public void CompareStealth()
+    public bool CompareStealth(int otherStealth)
     {
-
+        return Stealth >= otherStealth;
     }
 }
