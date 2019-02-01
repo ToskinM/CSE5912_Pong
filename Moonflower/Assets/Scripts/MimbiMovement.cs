@@ -9,10 +9,11 @@ public class MimbiMovement : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     public float smoothTime = 2f;
     public float rotateSpeed = 15f;
-    public bool playing = false;
+    public bool playing;
     // Start is called before the first frame update
     void Start()
     {
+        playing = false;
         moveSpeed = 5f;
         //targetObject = GameObject.FindGameObjectWithTag("Pyayer");
         //if (targetObject==null)
