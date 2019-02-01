@@ -7,13 +7,14 @@ public class PlayerMovement : MonoBehaviour
 {
     private float moveSpeed;
 
-    public bool playing = true;
+    public bool playing;
     public GameObject camera;
     public float rotateSpeed = 15f;
 
     // Start is called before the first frame update
     void Start()
     {
+        playing = true;
         moveSpeed = 5f;
     }
     void KeyInput()
