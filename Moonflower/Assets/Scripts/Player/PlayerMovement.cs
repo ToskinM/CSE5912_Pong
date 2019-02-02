@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     public bool running;
     public GameObject pickupArea;
 
+    private Quaternion rotation = Quaternion.identity;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,9 +31,7 @@ public class PlayerMovement : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
 
-        // Match camera y rotation if moving
-
-        Quaternion rotation = Quaternion.identity;
+        // If we're LOCKED ON
         if (camera.GetComponent<FollowCamera>().lockOnTarget != null)
         {
             rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
@@ -79,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.Translate(horiDirection * Time.deltaTime * moveSpeed);
             }
         }
+        // If we're NOT locked on (also when the camera is resetting behind the player)
         else
         {
             if (verticalInput != 0f || horizontalInput != 0f)
