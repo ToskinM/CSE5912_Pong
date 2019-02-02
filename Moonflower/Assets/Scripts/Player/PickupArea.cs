@@ -5,36 +5,24 @@ using UnityEngine;
 public class PickupArea : MonoBehaviour
 {
     public CharacterStats Stats { get; private set; }
-    public bool Pickable;
 
-    public GameObject pickupArea;
+
+    private InventoryManager inventoryManager;
 
     //private const string PICKUP_AXIS = "Pickup";
     // Start is called before the first frame update
     void Start()
     {
-        Pickable = false;
-        pickupArea.SetActive(false);
+        inventoryManager = FindObjectOfType<InventoryManager>();
     }
 
-    public void DecidePickable()
-    {
-        if (Input.GetButton("Pickup"))
-        {
-            pickupArea.SetActive(true);
-            Pickable = true;
-        }
-        if (Input.GetButtonUp("Pickup"))
-        {
-            pickupArea.SetActive(false);
-            Pickable = false;
-        }
-    }
+   
+
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("in trigger Enter");
-        Debug.Log(other.gameObject.name + " is collected ");
-        Destroy(other.gameObject,1);
+        float health = inventoryManager.getHealth(other.gameObject.tag);
+        Debug.Log(other.gameObject.tag + " is collected, " + health + " were add to anai");
+        Destroy(other.gameObject);
     }
     //void RaycastCollision()
     //{
@@ -72,6 +60,6 @@ public class PickupArea : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DecidePickable();
+      
     }
 }

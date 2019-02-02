@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject camera;
     public bool walking;
     public bool running;
+    public GameObject pickupArea;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
         moveSpeed = 3f;
         walkSpeed = 3f;
         runSpeed = 7f;
+        pickupArea.SetActive(false);
     }
     void DetectKeyInput()
     {
@@ -113,7 +115,17 @@ public class PlayerMovement : MonoBehaviour
             transform.Translate(new Vector3(0f, 0f, Vector3.Magnitude(direction)) * Time.deltaTime * moveSpeed);
         }
     }
-
+    public void DecidePickable()
+    {
+        if (Input.GetButton("Pickup"))
+        {
+            pickupArea.SetActive(true);
+        }
+        if (Input.GetButtonUp("Pickup"))
+        {
+            pickupArea.SetActive(false);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -121,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
         { playing = !playing; }
         if (playing)
         {
+            DecidePickable();
             DetectKeyInput();
         }
     }
