@@ -5,11 +5,12 @@ using UnityEngine;
 public class FollowCamera : MonoBehaviour
 {
     public GameObject target;
+    [HideInInspector]
     public GameObject lockOnTarget;
     public float followDistanceMultiplier = 1f;
     public float rotateSpeed = 5f;
-    public float damping = 1f;
-    public bool dampen = false;
+    //public float damping = 1f;
+    //public bool dampen = false;
 
     private PlayerMovement playerMovement;
     private bool freeRoam;
@@ -35,6 +36,7 @@ public class FollowCamera : MonoBehaviour
     void Start()
     {
         // Get a base distance from player from starting positions
+        transform.position = target.transform.position + new Vector3(0, 1, -5);
         offset = target.transform.position - transform.position;
     }
 
