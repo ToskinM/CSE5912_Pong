@@ -20,9 +20,12 @@ public class PickupArea : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        float health = inventoryManager.getHealth(other.gameObject.tag);
-        Debug.Log(other.gameObject.tag + " is collected, " + health + " were add to anai");
-        Destroy(other.gameObject);
+        if (other.gameObject.tag == "WolfApple" || other.gameObject.tag == "MoonFlower")
+        {
+            float health = inventoryManager.getHealth(other.gameObject.tag);
+            Debug.Log(other.gameObject.tag + " is collected, " + health + " were add to anai");
+            Destroy(other.gameObject);
+        }
     }
     //void RaycastCollision()
     //{
