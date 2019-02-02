@@ -37,11 +37,42 @@ public class PlayerMovement : MonoBehaviour
 
             if (verticalInput != 0f)
             {
+                if (Input.GetKeyDown(KeyCode.LeftShift))
+                {
+                    running = true;
+                    walking = false;
+                    moveSpeed = runSpeed;
+                }
+                else
+                {
+                    if (!running ||Input.GetKeyUp(KeyCode.LeftShift))
+                    {
+                        walking = true;
+                        running = false;
+                        moveSpeed = walkSpeed;
+                    }
+
+                }
                 Vector3 vertDirection = new Vector3(0, 0, Mathf.Sign(verticalInput));
                 transform.Translate(vertDirection * Time.deltaTime * moveSpeed);
             }
             if (horizontalInput != 0f)
-            {
+            {   if (Input.GetKeyDown(KeyCode.LeftShift))
+                {
+                    running = true;
+                    walking = false;
+                    moveSpeed = runSpeed;
+                }
+                else
+                {
+                    if (!running ||Input.GetKeyUp(KeyCode.LeftShift))
+                    {
+                        walking = true;
+                        running = false;
+                        moveSpeed = walkSpeed;
+                    }
+
+                }
                 Vector3 horiDirection = new Vector3(Mathf.Sign(horizontalInput), 0, 0);
                 transform.Translate(horiDirection * Time.deltaTime * moveSpeed);
             }
@@ -52,11 +83,29 @@ public class PlayerMovement : MonoBehaviour
             {
                 //Quaternion rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
                 //transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+                if (Input.GetKeyDown(KeyCode.LeftShift))
+                {
+                    running = true;
+                    walking = false;
+                    moveSpeed = runSpeed;
+                }
+                else
+                {
+                    if (!running ||Input.GetKeyUp(KeyCode.LeftShift))
+                    {
+                        walking = true;
+                        running = false;
+                        moveSpeed = walkSpeed;
+                    }
 
+                }
                 float angle = Mathf.Atan2(horizontalInput, verticalInput) * (180 / Mathf.PI);
                 angle += camera.transform.rotation.eulerAngles.y;
                 //Debug.Log(angle);
                 rotation = Quaternion.AngleAxis(angle, Vector3.up);
+            }else{
+                running = false;
+                walking = false;
             }
 
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
