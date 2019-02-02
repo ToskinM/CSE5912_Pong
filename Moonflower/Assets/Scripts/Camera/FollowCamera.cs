@@ -5,6 +5,7 @@ using UnityEngine;
 public class FollowCamera : MonoBehaviour
 {
     public GameObject target;
+    public GameObject lockOnTarget;
     public float followDistanceMultiplier = 1f;
     public float rotateSpeed = 5f;
     public float damping = 1f;
@@ -14,7 +15,6 @@ public class FollowCamera : MonoBehaviour
     private bool freeRoam;
     private bool lockedOn;
     private bool mouseInput;
-    private bool movementInput;
     private Vector3 offset;
     private Quaternion rotation = Quaternion.identity;
     private float xRotation;
@@ -40,18 +40,6 @@ public class FollowCamera : MonoBehaviour
 
     void Update()
     {
-        if (playerMovement == null)
-        {
-            //Debug.Log("playerMovement null");
-            playerMovement = gameObject.GetComponent<PlayerMovement>();
-            movementInput = true;
-        }
-        else
-        {
-            movementInput = playerMovement.inputDetected;
-        }
-        
-
         // Rotation adjustment
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
             mouseInput = true;
@@ -109,10 +97,22 @@ public class FollowCamera : MonoBehaviour
             }
             //else
             //{
-                //if (!lockedOn)
+            //if (!lockedOn)
+            //{
+            if (lockOnTarget == null)
+            {
+                rotation = Quaternion.Euler(yRotation, xRotation, 0);
+            }
+            else
+            {
+                //if (lockOnTarget != null)
                 //{
-                    rotation = Quaternion.Euler(yRotation, xRotation, 0);
+                    Vector3 relative = lockOnTarget.transform.position - target.transform.position;
+                    float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+                    rotation = Quaternion.Euler(yRotation, angle, 0);
                 //}
+            }
+            //}
             //}
 
             // Stay behind player, in range
@@ -144,31 +144,43 @@ public class FollowCamera : MonoBehaviour
 
     private IEnumerator LockOn()
     {
-        Debug.Log("Lock");
-        lockedOn = true;
-
-        float currentAngleY = transform.eulerAngles.y;
-        float currentAngleX = transform.eulerAngles.x;
-        float targetAngle = target.transform.eulerAngles.y;
-
-        //xRotation += targetAngle - currentAngleY;
-        //yRotation += 15f - currentAngleX;
-
-        float x = xRotation;
-        float y = yRotation;
-        float t = 0;
-        while (t < 1)
+        List<Transform> targetsInView = gameObject.GetComponent<FieldOfView>().visibleTargets;
+        if (lockedOn && lockOnTarget != null)
         {
-            Debug.Log("lerp");
-            xRotation = Mathf.LerpAngle(xRotation, x + (targetAngle - currentAngleY), t);
-            yRotation = Mathf.LerpAngle(yRotation, y + (15f - currentAngleX), t);
-
-            t += Time.deltaTime * 5;
-            yield return null;
+            // unlock if locked on
+            Debug.Log("Unlock");
+            lockedOn = false;
+            lockOnTarget = null;
         }
+        else if (targetsInView.Count > 0 && !lockedOn)
+        {
+            // lock on to a target
+            Debug.Log("Lock");
+            lockedOn = true;
+            lockOnTarget = targetsInView[0].gameObject;
+        }
+        else
+        {
+            // Reset camera behind player
+            lockedOn = true;
 
-        lockedOn = false;
-        Debug.Log("Unlock");
+            float currentAngleY = transform.eulerAngles.y;
+            float currentAngleX = transform.eulerAngles.x;
+            float targetAngleY = target.transform.eulerAngles.y;
 
+            float x = xRotation;
+            float y = yRotation;
+            float t = 0;
+            while (t < 1)
+            {
+                xRotation = Mathf.LerpAngle(xRotation, x + (targetAngleY - currentAngleY), t);
+                yRotation = Mathf.LerpAngle(yRotation, y + (15f - currentAngleX), t);
+
+                t += Time.deltaTime * 5;
+                yield return null;
+            }
+
+            lockedOn = false;
+        }
     }
 }
