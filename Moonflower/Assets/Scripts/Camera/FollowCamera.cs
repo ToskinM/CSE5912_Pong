@@ -5,11 +5,10 @@ using UnityEngine;
 public class FollowCamera : MonoBehaviour
 {
     public GameObject target;
+    [HideInInspector]
     public GameObject lockOnTarget;
     public float followDistanceMultiplier = 1f;
     public float rotateSpeed = 5f;
-    public float damping = 1f;
-    public bool dampen = false;
 
     private PlayerMovement playerMovement;
     private bool freeRoam;
