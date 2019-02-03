@@ -3734,6 +3734,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587748400}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &587814822 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7298912431453931981, guid: 3e191d953f9f69b468286e1cae6a7f57,
+    type: 3}
+  m_PrefabInstance: {fileID: 1702550769}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &614596174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15328,7 +15334,9 @@ MonoBehaviour:
   isAttacking: 0
   attack: 0
   weapon: {fileID: 933837727}
-  weaponHitbox: {fileID: 493617693}
+  attackHurtboxes:
+  - {fileID: 587814822}
+  - {fileID: 1982641587}
 --- !u!1001 &1773309451
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16539,6 +16547,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1965224443}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1982641587 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7298912431453931981, guid: 3e191d953f9f69b468286e1cae6a7f57,
+    type: 3}
+  m_PrefabInstance: {fileID: 1238732621}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1985475503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16938,7 +16952,7 @@ MonoBehaviour:
   isAttacking: 0
   attack: 0
   weapon: {fileID: 933837727}
-  weaponHitbox: {fileID: 493617693}
+  attackHurtboxes: []
 --- !u!114 &2019780900
 MonoBehaviour:
   m_ObjectHideFlags: 0
