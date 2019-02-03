@@ -7,14 +7,16 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     public CharacterStats Stats { get; private set; }
 
     public bool IsBlocking { get; private set; }
-    public bool hasWeaponOut;
-    public bool inCombat;
+    [HideInInspector] public bool hasWeaponOut;
+    [HideInInspector] public bool inCombat;
+    [HideInInspector] public bool isAttacking;
+    [HideInInspector] public int attack = 0;
+
     //public bool isBlocking;
 
     public GameObject weapon;
-    public GameObject weaponHitbox;
+    public GameObject[] attackHurtboxes;
 
-    private bool isAttacking;
 
     private const string ATTACK_AXIS = "Attack";
     private const string SHEATHE_AXIS = "Sheathe/Unsheathe";
@@ -97,11 +99,22 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     private IEnumerator Swing()
     {
         isAttacking = true;
-        weaponHitbox.SetActive(true);
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.1f);
 
-        weaponHitbox.SetActive(false);
         isAttacking = false;
+        yield return new WaitForSeconds(0.2f);
+
+        attack = (attack + 1) % 2;
+    }
+
+    public void EnableHurtbox(int index)
+    {
+        Debug.Log("DDDDDDDDD");
+        attackHurtboxes[index].SetActive(true);
+    }
+    public void DisableHurtbox(int index)
+    {
+        attackHurtboxes[index].SetActive(false);
     }
 }

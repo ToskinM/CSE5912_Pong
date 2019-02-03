@@ -25,14 +25,25 @@ public class PlayerAnimatorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (combatController.inCombat)
+        if (combatController.isAttacking)
         {
-            animator.SetBool(key_isAttack02, true);
+            if (combatController.attack == 0)
+            {
+                animator.SetBool(key_isAttack02, false);
+                animator.SetBool(key_isAttack01, true);
+            }
+            else if (combatController.attack == 1)
+            {
+                animator.SetBool(key_isAttack01, false);
+                animator.SetBool(key_isAttack02, true);
+            }
         }
         else
         {
+            animator.SetBool(key_isAttack01, false);
             animator.SetBool(key_isAttack02, false);
         }
+
         if (movement.walking)
         {
             animator.SetBool(key_isWalk, true);
