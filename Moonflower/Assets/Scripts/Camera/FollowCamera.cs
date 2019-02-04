@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
-    public GameObject target;
-    [HideInInspector]
-    public GameObject lockOnTarget;
+    public Transform targetTransform;
+    [HideInInspector] public Transform lockOnTarget;
     public float followDistanceMultiplier = 1f;
     public float rotateSpeed = 5f;
+    public bool useCombatAngle;
     //public float damping = 1f;
     //public bool dampen = false;
 
+    private Transform target;
+    private Transform targetCombatTransform;
     private PlayerMovement playerMovement;
     private bool freeRoam;
     private bool lockedOn;
@@ -31,13 +33,27 @@ public class FollowCamera : MonoBehaviour
     {
         // Get player movement script
         playerMovement = gameObject.GetComponent<PlayerMovement>();
+
+        target = targetTransform;
+        if (useCombatAngle)
+        {
+            // Find the target to use in combat
+            foreach (Transform transform in targetTransform)
+            {
+                if (transform.tag == "CameraCombatTarget")
+                {
+                    targetCombatTransform = transform;
+                    break;
+                }
+            }
+        }
     }
 
     void Start()
     {
         // Get a base distance from player from starting positions
-        transform.position = target.transform.position + new Vector3(0, 1, -5);
-        offset = target.transform.position - transform.position;
+        transform.position = target.position + new Vector3(0, 1, -5);
+        offset = target.position - transform.position;
     }
 
     void Update()
@@ -109,7 +125,7 @@ public class FollowCamera : MonoBehaviour
             {
                 //if (lockOnTarget != null)
                 //{
-                    Vector3 relative = lockOnTarget.transform.position - target.transform.position;
+                    Vector3 relative = lockOnTarget.transform.position - target.position;
                     float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
                     rotation = Quaternion.Euler(yRotation, angle, 0);
                 //}
@@ -118,10 +134,10 @@ public class FollowCamera : MonoBehaviour
             //}
 
             // Stay behind player, in range
-            transform.position = target.transform.position - (rotation * offset * followDistanceMultiplier);
+            transform.position = target.position - (rotation * offset * followDistanceMultiplier);
 
             // Look at the targer
-            transform.LookAt(target.transform);
+            transform.LookAt(target);
         }
     }
     private void UpdateFreeRotation()
@@ -150,20 +166,25 @@ public class FollowCamera : MonoBehaviour
         if (lockedOn && lockOnTarget != null)
         {
             // unlock if locked on
-            Debug.Log("Unlock");
+            //Debug.Log("Unlock");
 
             // Adjust xRotation to match where we're currently looking (so it doesn't snap back to the pre-lockOn direction)
             xRotation = xRotation + (transform.eulerAngles.y - xRotation);
 
+            if (useCombatAngle)
+                target = targetTransform;
             lockedOn = false;
             lockOnTarget = null;
         }
         else if (targetInView != null && !lockedOn)
         {
             // lock on to a target
-            Debug.Log("Lock");
+            //Debug.Log("Lock");
             lockedOn = true;
-            lockOnTarget = targetInView.gameObject;
+
+            if (useCombatAngle)
+                target = targetCombatTransform;
+            lockOnTarget = targetInView;
         }
         else
         {
@@ -172,7 +193,7 @@ public class FollowCamera : MonoBehaviour
 
             float currentAngleY = transform.eulerAngles.y;
             float currentAngleX = transform.eulerAngles.x;
-            float targetAngleY = target.transform.eulerAngles.y;
+            float targetAngleY = target.eulerAngles.y;
 
             float x = xRotation;
             float y = yRotation;

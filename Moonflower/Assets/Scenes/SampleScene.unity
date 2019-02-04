@@ -10500,7 +10500,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52c121f99fa15fa40a8ba63ccb961636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1831599492}
+  target: {fileID: 1769887635}
+  targetCombatTransform: {fileID: 0}
   lockOnTarget: {fileID: 0}
   followDistanceMultiplier: 1
   rotateSpeed: 5
@@ -10526,6 +10527,7 @@ MonoBehaviour:
     m_Bits: 2048
   visibleTargets: []
   closestTarget: {fileID: 0}
+  focusedTarget: {fileID: 0}
 --- !u!1001 &539533387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22628,7 +22630,7 @@ PrefabInstance:
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1552688
+      value: 0.27
       objectReference: {fileID: 0}
     - target: {fileID: 4727384469266215699, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
@@ -31135,6 +31137,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wolf Apple Tree
       objectReference: {fileID: 0}
+    - target: {fileID: 1646885935188752, guid: dafad5d52cd284f4b8229a896f9a966f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4196735912448918, guid: dafad5d52cd284f4b8229a896f9a966f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 318.0327
@@ -34946,12 +34952,12 @@ PrefabInstance:
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.15526934
+      value: 0.37
       objectReference: {fileID: 0}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.15526934
+      value: 0.37
       objectReference: {fileID: 0}
     - target: {fileID: 4727384469266215699, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
@@ -35660,7 +35666,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 405880, guid: c3dea81905538c54abf92c51fc0cee1a, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 405880, guid: c3dea81905538c54abf92c51fc0cee1a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -37707,8 +37713,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1831599493}
   m_Layer: 10
-  m_Name: CameraTarget
-  m_TagString: Untagged
+  m_Name: CameraCombatTarget
+  m_TagString: CameraCombatTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41748,6 +41754,7 @@ MonoBehaviour:
     m_Bits: 2048
   visibleTargets: []
   closestTarget: {fileID: 0}
+  focusedTarget: {fileID: 0}
 --- !u!1001 &2025620852
 PrefabInstance:
   m_ObjectHideFlags: 0
