@@ -110,7 +110,6 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 
     public void EnableHurtbox(int index)
     {
-        Debug.Log("DDDDDDDDD");
         attackHurtboxes[index].SetActive(true);
     }
     public void DisableHurtbox(int index)

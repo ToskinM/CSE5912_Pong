@@ -12,8 +12,9 @@ public class FieldOfView : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
-    [HideInInspector]
-    public List<Transform> visibleTargets = new List<Transform>();
+    [HideInInspector] public List<Transform> visibleTargets = new List<Transform>();
+    [HideInInspector] public Transform closestTarget = null;
+    [HideInInspector] public Transform focusedTarget = null;
 
     void Start()
     {
@@ -27,6 +28,8 @@ public class FieldOfView : MonoBehaviour
         {
             yield return new WaitForSeconds(delay);
             FindVisibleTargets();
+            //GetClosestTarget();
+            GetFocusedTarget();
         }
     }
 
@@ -51,6 +54,46 @@ public class FieldOfView : MonoBehaviour
         }
     }
 
+    void GetClosestTarget()
+    {
+        closestTarget = null;
+        if (visibleTargets.Count > 0)
+        {
+            Transform closest = visibleTargets[0];
+            float closestDistance = Vector3.Distance(visibleTargets[0].position, gameObject.transform.position);
+            for (int i = 1; i < visibleTargets.Count; i++)
+            {
+                float distance = Vector3.Distance(visibleTargets[i].position, gameObject.transform.position);
+                if (distance < closestDistance)
+                {
+                    closest = visibleTargets[i];
+                    closestDistance = distance;
+                }
+            }
+            closestTarget = closest;
+        }
+    }
+
+    void GetFocusedTarget()
+    {
+        focusedTarget = null;
+        Vector3 cameraDirection = gameObject.transform.forward;
+        if (visibleTargets.Count > 0)
+        {
+            Transform closest = visibleTargets[0];
+            float closestAngle = Vector3.Angle(visibleTargets[0].transform.position - gameObject.transform.position, cameraDirection);
+            for (int i = 1; i < visibleTargets.Count; i++)
+            {
+                float angle = Vector3.Angle(visibleTargets[i].transform.position - gameObject.transform.position, cameraDirection);
+                if (angle < closestAngle)
+                {
+                    closest = visibleTargets[i];
+                    closestAngle = angle;
+                }
+            }
+            focusedTarget = closest;
+        }
+    }
 
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
     {

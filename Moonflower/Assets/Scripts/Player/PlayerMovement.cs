@@ -36,7 +36,12 @@ public class PlayerMovement : MonoBehaviour
         // If we're LOCKED ON
         if (camera.GetComponent<FollowCamera>().lockOnTarget != null)
         {
-            rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
+            // look at target
+            Vector3 relative = camera.GetComponent<FollowCamera>().lockOnTarget.transform.position - transform.position;
+            float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+            rotation = Quaternion.Euler(0, angle, 0);
+
+            //rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
 
             if (verticalInput != 0f)
@@ -88,6 +93,11 @@ public class PlayerMovement : MonoBehaviour
             } else
             {
                 jumping = false;
+            }
+            if (Mathf.Approximately(horizontalInput + verticalInput, 0f))
+            {
+                walking = false;
+                running = false;
             }
         }
         // If we're NOT locked on (also when the camera is resetting behind the player)

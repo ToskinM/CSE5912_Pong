@@ -26,9 +26,10 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger enter. Tag = " + other.tag);
-        if (other.tag == "WeaponHitbox")
+        
+        if (other.tag == "Hurtbox")
         {
+            Debug.Log(gameObject.name + ": \"OOF\"");
             //Stats.TakeDamage(1);
             //gameObject.SetActive(false);
             //StartCoroutine(Respawn());

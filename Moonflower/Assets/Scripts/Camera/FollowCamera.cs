@@ -146,20 +146,24 @@ public class FollowCamera : MonoBehaviour
 
     private IEnumerator LockOn()
     {
-        List<Transform> targetsInView = gameObject.GetComponent<FieldOfView>().visibleTargets;
+        Transform targetInView = gameObject.GetComponent<FieldOfView>().focusedTarget;
         if (lockedOn && lockOnTarget != null)
         {
             // unlock if locked on
             Debug.Log("Unlock");
+
+            // Adjust xRotation to match where we're currently looking (so it doesn't snap back to the pre-lockOn direction)
+            xRotation = xRotation + (transform.eulerAngles.y - xRotation);
+
             lockedOn = false;
             lockOnTarget = null;
         }
-        else if (targetsInView.Count > 0 && !lockedOn)
+        else if (targetInView != null && !lockedOn)
         {
             // lock on to a target
             Debug.Log("Lock");
             lockedOn = true;
-            lockOnTarget = targetsInView[0].gameObject;
+            lockOnTarget = targetInView.gameObject;
         }
         else
         {
@@ -172,6 +176,8 @@ public class FollowCamera : MonoBehaviour
 
             float x = xRotation;
             float y = yRotation;
+
+            // Smoothly reset the camera behind player
             float t = 0;
             while (t < 1)
             {

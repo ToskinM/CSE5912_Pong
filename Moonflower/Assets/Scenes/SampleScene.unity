@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.45127374, g: 0.5000928, b: 0.56872845, a: 1}
+  m_IndirectSpecularColor: {r: 0.4512738, g: 0.5000926, b: 0.5687288, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10525,6 +10525,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   visibleTargets: []
+  closestTarget: {fileID: 0}
 --- !u!1001 &539533387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22617,17 +22618,22 @@ PrefabInstance:
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.30252695
+      value: 0.32
       objectReference: {fileID: 0}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.15526874
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.1552688
+      objectReference: {fileID: 0}
+    - target: {fileID: 4727384469266215699, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e191d953f9f69b468286e1cae6a7f57, type: 3}
@@ -34880,7 +34886,7 @@ PrefabInstance:
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.048
+      value: 0.021
       objectReference: {fileID: 0}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
@@ -34890,7 +34896,7 @@ PrefabInstance:
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
@@ -34935,7 +34941,7 @@ PrefabInstance:
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3025268
+      value: 0.43
       objectReference: {fileID: 0}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
@@ -34946,6 +34952,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.15526934
+      objectReference: {fileID: 0}
+    - target: {fileID: 4727384469266215699, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e191d953f9f69b468286e1cae6a7f57, type: 3}
@@ -36869,6 +36880,7 @@ MonoBehaviour:
   runSpeed: 0
   walkSpeed: 0
   rotateSpeed: 20
+  jumpTimer: 0
   playing: 0
   camera: {fileID: 534669902}
   jumping: 0
@@ -37709,7 +37721,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1831599492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.408, y: 0.755, z: 0}
+  m_LocalPosition: {x: 0.245, y: 0.755, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1769887635}
@@ -41623,6 +41635,7 @@ MonoBehaviour:
   runSpeed: 0
   walkSpeed: 0
   rotateSpeed: 20
+  jumpTimer: 0
   playing: 0
   camera: {fileID: 534669902}
   jumping: 0
@@ -41734,6 +41747,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   visibleTargets: []
+  closestTarget: {fileID: 0}
 --- !u!1001 &2025620852
 PrefabInstance:
   m_ObjectHideFlags: 0
