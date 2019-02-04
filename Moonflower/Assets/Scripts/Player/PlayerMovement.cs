@@ -9,8 +9,10 @@ public class PlayerMovement : MonoBehaviour
     public float runSpeed;
     public float walkSpeed;
     public float rotateSpeed = 20f;
+    public float jumpTimer = 0;
     public bool playing;
     public GameObject camera;
+    public bool jumping;
     public bool walking;
     public bool running;
     public GameObject pickupArea;
@@ -30,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float verticalInput = Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
-
+        float jumpInput = Input.GetAxis("Jump");
         // If we're LOCKED ON
         if (camera.GetComponent<FollowCamera>().lockOnTarget != null)
         {
@@ -78,6 +80,15 @@ public class PlayerMovement : MonoBehaviour
                 Vector3 horiDirection = new Vector3(Mathf.Sign(horizontalInput), 0, 0);
                 transform.Translate(horiDirection * Time.deltaTime * moveSpeed);
             }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                jumping = true;
+                walking = false;
+                running = false;
+            } else
+            {
+                jumping = false;
+            }
         }
         // If we're NOT locked on (also when the camera is resetting behind the player)
         else
@@ -110,8 +121,32 @@ public class PlayerMovement : MonoBehaviour
                 running = false;
                 walking = false;
             }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                jumping = true;
+                walking = false;
+                running = false;
+                jumpTimer = 100;
+            }
+            else
+            {
+                jumping = false;
+            }
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+           /* if(jumpTimer != 0)
+            {
+                print("help");
+                if(jumpTimer > 50)
+                {
+                    transform.Translate(new Vector3(0f, 1000f, 0f) * Time.deltaTime);
+                } else
+                {
+                    transform.Translate(new Vector3(0f, -1000f, 0f) * Time.deltaTime);
+                }
+                jumpTimer--;
+            }
+            */
+             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
             Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput);
             transform.Translate(new Vector3(0f, 0f, Vector3.Magnitude(direction)) * Time.deltaTime * moveSpeed);
         }
