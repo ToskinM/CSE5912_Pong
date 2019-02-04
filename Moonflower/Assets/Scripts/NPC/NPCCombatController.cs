@@ -11,6 +11,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     public bool inCombat;
     //public bool isBlocking;
     public bool isAttacking;
+    //public GameObject hitIndicator;
 
     public CharacterStats Stats { get; private set; }
 

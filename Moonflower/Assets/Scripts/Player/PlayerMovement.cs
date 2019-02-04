@@ -33,132 +33,141 @@ public class PlayerMovement : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
         float jumpInput = Input.GetAxis("Jump");
-        // If we're LOCKED ON
-        if (camera.GetComponent<FollowCamera>().lockOnTarget != null)
+
+        // Don't move in camera free roam
+        if (!camera.GetComponent<FollowCamera>().freeRoam)
         {
-            // look at target
-            Vector3 relative = camera.GetComponent<FollowCamera>().lockOnTarget.transform.position - transform.position;
-            float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
-            rotation = Quaternion.Euler(0, angle, 0);
-
-            //rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
-
-            if (verticalInput != 0f)
+            // If we're LOCKED ON
+            if (camera.GetComponent<FollowCamera>().lockOnTarget != null)
             {
-                if (Input.GetKeyDown(KeyCode.LeftShift))
+                // look at lock on target
+                Vector3 relative = camera.GetComponent<FollowCamera>().lockOnTarget.transform.position - transform.position;
+                float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+                rotation = Quaternion.Euler(0, angle, 0);
+
+                //rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+
+                if (verticalInput != 0f)
                 {
-                    running = true;
+                    if (Input.GetKeyDown(KeyCode.LeftShift))
+                    {
+                        running = true;
+                        walking = false;
+                        moveSpeed = runSpeed;
+                    }
+                    else
+                    {
+                        if (!running || Input.GetKeyUp(KeyCode.LeftShift))
+                        {
+                            walking = true;
+                            running = false;
+                            moveSpeed = walkSpeed;
+                        }
+
+                    }
+                    Vector3 vertDirection = new Vector3(0, 0, Mathf.Sign(verticalInput));
+                    transform.Translate(vertDirection * Time.deltaTime * moveSpeed);
+                }
+                if (horizontalInput != 0f)
+                {
+                    if (Input.GetKeyDown(KeyCode.LeftShift))
+                    {
+                        running = true;
+                        walking = false;
+                        moveSpeed = runSpeed;
+                    }
+                    else
+                    {
+                        if (!running || Input.GetKeyUp(KeyCode.LeftShift))
+                        {
+                            walking = true;
+                            running = false;
+                            moveSpeed = walkSpeed;
+                        }
+
+                    }
+                    Vector3 horiDirection = new Vector3(Mathf.Sign(horizontalInput), 0, 0);
+                    transform.Translate(horiDirection * Time.deltaTime * moveSpeed);
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    jumping = true;
                     walking = false;
-                    moveSpeed = runSpeed;
+                    running = false;
                 }
                 else
                 {
-                    if (!running ||Input.GetKeyUp(KeyCode.LeftShift))
-                    {
-                        walking = true;
-                        running = false;
-                        moveSpeed = walkSpeed;
-                    }
-
+                    jumping = false;
                 }
-                Vector3 vertDirection = new Vector3(0, 0, Mathf.Sign(verticalInput));
-                transform.Translate(vertDirection * Time.deltaTime * moveSpeed);
-            }
-            if (horizontalInput != 0f)
-            {   if (Input.GetKeyDown(KeyCode.LeftShift))
+                if (Mathf.Approximately(horizontalInput + verticalInput, 0f))
                 {
-                    running = true;
                     walking = false;
-                    moveSpeed = runSpeed;
+                    running = false;
                 }
-                else
-                {
-                    if (!running ||Input.GetKeyUp(KeyCode.LeftShift))
-                    {
-                        walking = true;
-                        running = false;
-                        moveSpeed = walkSpeed;
-                    }
-
-                }
-                Vector3 horiDirection = new Vector3(Mathf.Sign(horizontalInput), 0, 0);
-                transform.Translate(horiDirection * Time.deltaTime * moveSpeed);
             }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                jumping = true;
-                walking = false;
-                running = false;
-            } else
-            {
-                jumping = false;
-            }
-            if (Mathf.Approximately(horizontalInput + verticalInput, 0f))
-            {
-                walking = false;
-                running = false;
-            }
-        }
-        // If we're NOT locked on (also when the camera is resetting behind the player)
-        else
-        {
-            if (verticalInput != 0f || horizontalInput != 0f)
-            {
-                //Quaternion rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
-                //transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
-                if (Input.GetKeyDown(KeyCode.LeftShift))
-                {
-                    running = true;
-                    walking = false;
-                    moveSpeed = runSpeed;
-                }
-                else
-                {
-                    if (!running ||Input.GetKeyUp(KeyCode.LeftShift))
-                    {
-                        walking = true;
-                        running = false;
-                        moveSpeed = walkSpeed;
-                    }
-
-                }
-                float angle = Mathf.Atan2(horizontalInput, verticalInput) * (180 / Mathf.PI);
-                angle += camera.transform.rotation.eulerAngles.y;
-                //Debug.Log(angle);
-                rotation = Quaternion.AngleAxis(angle, Vector3.up);
-            }else{
-                running = false;
-                walking = false;
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                jumping = true;
-                walking = false;
-                running = false;
-                jumpTimer = 100;
-            }
+            // If we're NOT locked on (also when the camera is resetting behind the player)
             else
             {
-                jumping = false;
-            }
+                if (verticalInput != 0f || horizontalInput != 0f)
+                {
+                    //Quaternion rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
+                    //transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+                    if (Input.GetKeyDown(KeyCode.LeftShift))
+                    {
+                        running = true;
+                        walking = false;
+                        moveSpeed = runSpeed;
+                    }
+                    else
+                    {
+                        if (!running || Input.GetKeyUp(KeyCode.LeftShift))
+                        {
+                            walking = true;
+                            running = false;
+                            moveSpeed = walkSpeed;
+                        }
 
-           /* if(jumpTimer != 0)
-            {
-                print("help");
-                if(jumpTimer > 50)
-                {
-                    transform.Translate(new Vector3(0f, 1000f, 0f) * Time.deltaTime);
-                } else
-                {
-                    transform.Translate(new Vector3(0f, -1000f, 0f) * Time.deltaTime);
+                    }
+                    float angle = Mathf.Atan2(horizontalInput, verticalInput) * (180 / Mathf.PI);
+                    angle += camera.transform.rotation.eulerAngles.y;
+                    //Debug.Log(angle);
+                    rotation = Quaternion.AngleAxis(angle, Vector3.up);
                 }
-                jumpTimer--;
+                else
+                {
+                    running = false;
+                    walking = false;
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    jumping = true;
+                    walking = false;
+                    running = false;
+                    jumpTimer = 100;
+                }
+                else
+                {
+                    jumping = false;
+                }
+
+                /* if(jumpTimer != 0)
+                 {
+                     print("help");
+                     if(jumpTimer > 50)
+                     {
+                         transform.Translate(new Vector3(0f, 1000f, 0f) * Time.deltaTime);
+                     } else
+                     {
+                         transform.Translate(new Vector3(0f, -1000f, 0f) * Time.deltaTime);
+                     }
+                     jumpTimer--;
+                 }
+                 */
+                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+                Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput);
+                transform.Translate(new Vector3(0f, 0f, Vector3.Magnitude(direction)) * Time.deltaTime * moveSpeed);
             }
-            */
-             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
-            Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput);
-            transform.Translate(new Vector3(0f, 0f, Vector3.Magnitude(direction)) * Time.deltaTime * moveSpeed);
         }
     }
     public void DecidePickable()

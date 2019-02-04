@@ -9,19 +9,20 @@ public class FollowCamera : MonoBehaviour
     public float followDistanceMultiplier = 1f;
     public float rotateSpeed = 5f;
     public bool useCombatAngle;
-    //public float damping = 1f;
-    //public bool dampen = false;
+    public GameObject lockonIndicator;
+    [HideInInspector] public bool freeRoam;
+
+    private PlayerMovement playerMovement;
 
     private Transform target;
     private Transform targetCombatTransform;
-    private PlayerMovement playerMovement;
-    private bool freeRoam;
+
     private bool lockedOn;
-    private bool mouseInput;
-    private Vector3 offset;
+
     private Quaternion rotation = Quaternion.identity;
     private float xRotation;
     private float yRotation;
+    private Vector3 offset;
 
     private readonly float freeRoamMoveSpeed = 0.4f;
     private readonly float yRotationMax = 60f;
@@ -59,12 +60,6 @@ public class FollowCamera : MonoBehaviour
     void Update()
     {
         // Rotation adjustment
-        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
-            mouseInput = true;
-        else
-            mouseInput = false;
-        //Debug.Log(Input.GetAxis("Mouse X"));
-
         if (!Input.GetButtonDown("LockOn")) { 
             xRotation += Input.GetAxis("Mouse X") * rotateSpeed;
             yRotation += -Input.GetAxis("Mouse Y") * rotateSpeed;
@@ -166,7 +161,6 @@ public class FollowCamera : MonoBehaviour
         if (lockedOn && lockOnTarget != null)
         {
             // unlock if locked on
-            //Debug.Log("Unlock");
 
             // Adjust xRotation to match where we're currently looking (so it doesn't snap back to the pre-lockOn direction)
             xRotation = xRotation + (transform.eulerAngles.y - xRotation);
@@ -175,16 +169,17 @@ public class FollowCamera : MonoBehaviour
                 target = targetTransform;
             lockedOn = false;
             lockOnTarget = null;
+            ToggleLockonIndicator(false);
         }
         else if (targetInView != null && !lockedOn)
         {
             // lock on to a target
-            //Debug.Log("Lock");
             lockedOn = true;
 
             if (useCombatAngle)
                 target = targetCombatTransform;
             lockOnTarget = targetInView;
+            ToggleLockonIndicator(true);
         }
         else
         {
@@ -211,5 +206,23 @@ public class FollowCamera : MonoBehaviour
 
             lockedOn = false;
         }
+    }
+
+    private void ToggleLockonIndicator(bool enable)
+    {
+        if (enable)
+        {
+            // place indicator above target
+            lockonIndicator.SetActive(true);
+            lockonIndicator.transform.parent = lockOnTarget;
+            lockonIndicator.transform.localPosition = new Vector3(0, 1, 0);
+        }
+        else
+        {
+            // take indicator off target and hide it
+            lockonIndicator.transform.parent = transform;
+            lockonIndicator.SetActive(false);
+        }
+
     }
 }
