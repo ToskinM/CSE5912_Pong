@@ -14,6 +14,9 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     public CharacterStats Stats { get; private set; }
 
+    private float timeSinceLastHurt;
+    private float hurtDelay = 0.5f;
+
     void Start()
     {
         Stats = gameObject.GetComponent<CharacterStats>();
@@ -21,19 +24,38 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     void Update()
     {
-        
+        timeSinceLastHurt += Time.deltaTime;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        
-        if (other.tag == "Hurtbox")
+        // Get Tag
+        string tag = other.tag;
+
+        // Handle Hurtboxes
+        if (tag == "Hurtbox")
         {
-            Debug.Log(gameObject.name + ": \"OOF\"");
-            //Stats.TakeDamage(1);
-            //gameObject.SetActive(false);
-            //StartCoroutine(Respawn());
+            if (timeSinceLastHurt > hurtDelay)
+            {
+                // Get hurtbox information
+                HurtboxController hurtboxController = other.gameObject.GetComponent<HurtboxController>();
+                GameObject source = hurtboxController.source;
+                int damage = hurtboxController.damage;
+
+                if (IsBlocking)
+                {
+                    Debug.Log(gameObject.name + ": \"Hah, blocked ya.\"");
+                }
+                else
+                {
+                    Debug.Log(gameObject.name + " took " + damage + " damage from " + source.name);
+                    Stats.TakeDamage(damage);
+                    CheckDeath();
+                }
+            }
         }
+
+        timeSinceLastHurt = 0f;
     }
 
     private IEnumerator Respawn()
@@ -45,5 +67,16 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     private void Attack()
     {
         throw new System.NotImplementedException();
+    }
+    private void CheckDeath()
+    {
+        if (Stats.CurrentHealth <= 0)
+        {
+            Die();
+        }
+    }
+    private void Die()
+    {
+        gameObject.SetActive(false);
     }
 }

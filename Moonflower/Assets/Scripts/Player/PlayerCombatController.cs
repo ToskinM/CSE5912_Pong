@@ -18,6 +18,8 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     public GameObject[] attackHurtboxes;
 
 
+    private const float attackDelay = 0.35f;
+
     private const string ATTACK_AXIS = "Attack";
     private const string SHEATHE_AXIS = "Sheathe/Unsheathe";
 
@@ -100,11 +102,9 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     {
         isAttacking = true;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(attackDelay);
 
         isAttacking = false;
-        yield return new WaitForSeconds(0.2f);
-
         attack = (attack + 1) % 2;
     }
 
