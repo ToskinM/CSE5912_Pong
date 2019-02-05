@@ -8,7 +8,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     public bool IsBlocking { get; private set; }
     public bool hasWeaponOut;
-    public bool inCombat;
+    public bool inCombat; // (aggrod)
     //public bool isBlocking;
     public bool isAttacking;
     //public GameObject hitIndicator;
@@ -18,14 +18,44 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     private float timeSinceLastHurt;
     private float hurtDelay = 0.5f;
 
+    private FieldOfView fieldOfView;
+    private GameObject combatTarget;
+
     void Start()
     {
         Stats = gameObject.GetComponent<CharacterStats>();
+        fieldOfView = GetComponent<FieldOfView>();
     }
 
     void Update()
     {
         timeSinceLastHurt += Time.deltaTime;
+
+        // Ensure weapon state is correct based on aggro
+        if (inCombat && !hasWeaponOut)
+            SetWeaponSheathed(false);
+        else if (!inCombat && hasWeaponOut)
+            SetWeaponSheathed(true);
+
+        if (fieldOfView.closestTarget != null)
+        {
+            switch (aggression)
+            {
+                case (Aggression.Aggressive):
+                    {
+                        combatTarget = fieldOfView.closestTarget.gameObject;
+                        break;
+                    }
+                case (Aggression.Frenzied):
+                    {
+                        combatTarget = fieldOfView.closestTarget.gameObject;
+                        break;
+                    }
+
+                default:
+                    break;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -65,10 +95,33 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         gameObject.SetActive(true);
     }
 
+    // Sheathe/Unsheathe weapon
+    private void SetWeaponSheathed(bool sheathed)
+    {
+        if (sheathed)
+            Sheathe();
+        else
+            Unsheathe();
+    }
+    private void Sheathe()
+    {
+        if (hasWeaponOut)
+        {
+            hasWeaponOut = false;
+        }
+    }
+    private void Unsheathe()
+    {
+        if (!hasWeaponOut)
+        {
+            hasWeaponOut = true;
+        }
+    }
     private void Attack()
     {
         throw new System.NotImplementedException();
     }
+
     private void CheckDeath()
     {
         if (Stats.CurrentHealth <= 0)
