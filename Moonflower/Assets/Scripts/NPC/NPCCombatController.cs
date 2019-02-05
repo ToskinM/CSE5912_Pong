@@ -9,6 +9,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     public bool IsBlocking { get; private set; }
     public bool hasWeaponOut;
     public bool inCombat; // (aggrod)
+    public bool isHit;
     //public bool isBlocking;
     public bool isAttacking;
     //public GameObject hitIndicator;
@@ -19,12 +20,14 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     private float hurtDelay = 0.5f;
 
     private FieldOfView fieldOfView;
+    private NPCAnimationController npcAnimationController;
     private GameObject combatTarget;
 
     void Start()
     {
         Stats = gameObject.GetComponent<CharacterStats>();
         fieldOfView = GetComponent<FieldOfView>();
+        npcAnimationController = GetComponent<NPCAnimationController>();
     }
 
     void Update()
@@ -79,6 +82,8 @@ public class NPCCombatController : MonoBehaviour, ICombatant
                 }
                 else
                 {
+                    npcAnimationController.SetHit(1);
+
                     Debug.Log(gameObject.name + " took " + damage + " damage from " + source.name);
                     Stats.TakeDamage(damage);
                     CheckDeath();
