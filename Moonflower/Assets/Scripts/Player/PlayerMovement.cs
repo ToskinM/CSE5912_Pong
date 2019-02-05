@@ -16,12 +16,14 @@ public class PlayerMovement : MonoBehaviour
     public bool walking;
     public bool running;
     public GameObject pickupArea;
+    public Rigidbody body;
 
     private Quaternion rotation = Quaternion.identity;
 
     // Start is called before the first frame update
     void Start()
     {
+        body = GetComponent<Rigidbody>();
         playing = true;
         moveSpeed = 3f;
         walkSpeed = 3f;
@@ -66,6 +68,12 @@ public class PlayerMovement : MonoBehaviour
                         }
 
                     }
+                    if (Input.GetKeyDown(KeyCode.Mouse1))
+                    {
+                        body.velocity = Vector3.zero;
+                        body.AddRelativeForce(new Vector3(0f, 0f,Mathf.Sign(verticalInput) * 10f), ForceMode.VelocityChange);
+                        body.velocity = Vector3.zero;
+                    }
                     Vector3 vertDirection = new Vector3(0, 0, Mathf.Sign(verticalInput));
                     transform.Translate(vertDirection * Time.deltaTime * moveSpeed);
                 }
@@ -87,14 +95,22 @@ public class PlayerMovement : MonoBehaviour
                         }
 
                     }
+                    if (Input.GetKeyDown(KeyCode.Mouse1))
+                    {
+                        body.velocity = Vector3.zero;
+                        body.AddRelativeForce(new Vector3(Mathf.Sign(horizontalInput) * 12f,0f,0f), ForceMode.VelocityChange);
+                        body.velocity = Vector3.zero;
+                    }
                     Vector3 horiDirection = new Vector3(Mathf.Sign(horizontalInput), 0, 0);
                     transform.Translate(horiDirection * Time.deltaTime * moveSpeed);
                 }
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space) && jumpTimer == 0)
                 {
                     jumping = true;
                     walking = false;
                     running = false;
+                    body.AddForce(new Vector3(0f, 8f, 0f), ForceMode.Impulse);
+                    jumpTimer = 40;
                 }
                 else
                 {
@@ -129,6 +145,12 @@ public class PlayerMovement : MonoBehaviour
                         }
 
                     }
+                    if (Input.GetKeyDown(KeyCode.Mouse1))
+                    {
+                        body.velocity = Vector3.zero;
+                        body.AddRelativeForce(new Vector3(0f,0f,10f), ForceMode.VelocityChange);
+                        body.velocity = Vector3.zero;
+                    }
                     float angle = Mathf.Atan2(horizontalInput, verticalInput) * (180 / Mathf.PI);
                     angle += camera.transform.rotation.eulerAngles.y;
                     //Debug.Log(angle);
@@ -139,34 +161,25 @@ public class PlayerMovement : MonoBehaviour
                     running = false;
                     walking = false;
                 }
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space) && jumpTimer == 0)
                 {
                     jumping = true;
                     walking = false;
                     running = false;
-                    jumpTimer = 100;
+                    body.AddForce(new Vector3(0f, 8f,0f), ForceMode.Impulse);
+                    jumpTimer = 40;
                 }
                 else
                 {
                     jumping = false;
                 }
-
-                /* if(jumpTimer != 0)
-                 {
-                     print("help");
-                     if(jumpTimer > 50)
-                     {
-                         transform.Translate(new Vector3(0f, 1000f, 0f) * Time.deltaTime);
-                     } else
-                     {
-                         transform.Translate(new Vector3(0f, -1000f, 0f) * Time.deltaTime);
-                     }
-                     jumpTimer--;
-                 }
-                 */
                 transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
                 Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput);
                 transform.Translate(new Vector3(0f, 0f, Vector3.Magnitude(direction)) * Time.deltaTime * moveSpeed);
+            }
+            if (jumpTimer != 0)
+            {
+                jumpTimer--;
             }
         }
     }
