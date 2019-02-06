@@ -14,7 +14,7 @@ public class InventoryManager : MonoBehaviour
 
     }
 
-    public float getHealth(string name)
+    public int getHealth(string name)
     {
         Inventory i = Array.Find(items, Inventory => Inventory.name == name);
         if (i == null)

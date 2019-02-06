@@ -51,4 +51,10 @@ public class CharacterStats : MonoBehaviour
     {
         return Stealth >= otherStealth;
     }
+    public void AddHealth (int amount)
+    {
+        CurrentHealth += amount;
+        if (CurrentHealth >= MaxHealth)
+            CurrentHealth = MaxHealth;
+    }
 }
