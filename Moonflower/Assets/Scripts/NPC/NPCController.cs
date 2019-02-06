@@ -9,7 +9,7 @@ public class NPCController : MonoBehaviour
     public GameObject Anai;
     public GameObject WalkArea;
     public GameObject DialoguePanel;
-    public TextMeshProUGUI DialogueText;
+    //public TextMeshProUGUI DialogueText;
 
     const float engagementRadius = 15f;
     const float bufferRadius = 3f;
@@ -26,7 +26,7 @@ public class NPCController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         npc.agent = agent;
         npc.plane = WalkArea;
-        talkTrig = new AmaruDialogueTrigger(DialoguePanel, DialogueText);
+        talkTrig = new AmaruDialogueTrigger(DialoguePanel);
     }
 
 
@@ -35,7 +35,7 @@ public class NPCController : MonoBehaviour
     {
         talkTrig.Update(); 
         float distFromPlayer = Vector3.Distance(Anai.transform.position, transform.position);
-        if (distFromPlayer <= engagementRadius)
+        if (distFromPlayer <= engagementRadius && !talkTrig.Complete)
         {
             npc.Wandering = false;
             startEngagement();
