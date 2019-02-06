@@ -5,15 +5,14 @@ using UnityEngine;
 public class PickupArea : MonoBehaviour
 {
     public CharacterStats Stats { get; private set; }
-
-
+    public GameObject Player;
+    private CharacterStats playerStat;
     private InventoryManager inventoryManager;
 
-    //private const string PICKUP_AXIS = "Pickup";
-    // Start is called before the first frame update
     void Start()
     {
         inventoryManager = FindObjectOfType<InventoryManager>();
+        playerStat = Player.GetComponent<CharacterStats>();
     }
 
    
@@ -22,9 +21,10 @@ public class PickupArea : MonoBehaviour
     {
         if (other.gameObject.tag == "WolfApple" || other.gameObject.tag == "MoonFlower")
         {
-            float health = inventoryManager.getHealth(other.gameObject.tag);
+            int health = inventoryManager.getHealth(other.gameObject.tag);
             Debug.Log(other.gameObject.tag + " is collected, " + health + " were add to anai");
             Destroy(other.gameObject);
+            playerStat.AddHealth(health);
         }
     }
     //void RaycastCollision()

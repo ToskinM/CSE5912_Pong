@@ -72,7 +72,7 @@ public class MimbiMovement : MonoBehaviour
         }
         else
         {
-            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetObject.transform.position.x + 1, targetObject.transform.position.y - 0.5f, targetObject.transform.position.z - 1), ref velocity, smoothTime);
+            transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetObject.transform.position.x + 1, targetObject.transform.position.y+0.5f, targetObject.transform.position.z - 1), ref velocity, smoothTime);
         }
 }
 }
