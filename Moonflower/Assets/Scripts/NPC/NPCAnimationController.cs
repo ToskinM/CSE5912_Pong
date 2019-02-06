@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NPCAnimationController : MonoBehaviour
 {
-    private const string key_isHit = "IsHit";
+    private const string key_IsHit = "IsHit";
 
     private Animator animator;
     private NPCCombatController combatController;
@@ -25,11 +25,11 @@ public class NPCAnimationController : MonoBehaviour
     {
         if (hit == 1)
         {
-            animator.SetBool(key_isHit, true);
+            animator.SetBool(key_IsHit, true);
         }
         else
         {
-            animator.SetBool(key_isHit, false);
+            animator.SetBool(key_IsHit, false);
         }
     }
 }
