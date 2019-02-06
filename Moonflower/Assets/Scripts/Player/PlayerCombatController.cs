@@ -21,6 +21,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     private const float attackDelay = 0.35f;
 
     private const string ATTACK_AXIS = "Attack";
+    private const string BLOCK_AXIS = "Block";
     private const string SHEATHE_AXIS = "Sheathe/Unsheathe";
 
     void Start()
@@ -41,9 +42,13 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     {
         // Detect attack input (on button down)
         if (Input.GetButtonDown(ATTACK_AXIS))
-        {
             Attack();
-        }
+
+        // Detect attack input (on button down)
+        if (Input.GetButtonDown(BLOCK_AXIS))
+            Block(true);
+        else if (Input.GetButtonUp(BLOCK_AXIS))
+            Block(false);
 
         // Detect sheathing input (on button down)
         if (Input.GetButtonDown(SHEATHE_AXIS))
@@ -106,6 +111,20 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 
         isAttacking = false;
         attack = (attack + 1) % 2;
+    }
+
+    private void Block(bool block)
+    {
+        if (block)
+        {
+            Debug.Log(gameObject.name + " started blocking.");
+            IsBlocking = true;
+        }
+        else
+        {
+            Debug.Log(gameObject.name + " stopped blocking.");
+            IsBlocking = false;
+        }
     }
 
     public void EnableHurtbox(int index)
