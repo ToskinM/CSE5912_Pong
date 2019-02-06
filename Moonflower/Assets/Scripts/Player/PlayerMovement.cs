@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
         if (!camera.GetComponent<FollowCamera>().freeRoam)
         {
             // If we're LOCKED ON
-            if (camera.GetComponent<FollowCamera>().lockOnTarget != null)
+            if (camera.GetComponent<FollowCamera>().lockOnTarget != null && !running)
             {
                 // look at lock on target
                 Vector3 relative = camera.GetComponent<FollowCamera>().lockOnTarget.transform.position - transform.position;
@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
                     running = false;
                 }
             }
-            // If we're NOT locked on (also when the camera is resetting behind the player)
+            // If we're NOT locked on  OR we're Locked on + sprinting (also when the camera is resetting behind the player)
             else
             {
                 if (verticalInput != 0f || horizontalInput != 0f)
@@ -151,6 +151,8 @@ public class PlayerMovement : MonoBehaviour
                         body.AddRelativeForce(new Vector3(0f,0f,10f), ForceMode.VelocityChange);
                         body.velocity = Vector3.zero;
                     }
+
+                    // Dertermine angle we should face from input angle
                     float angle = Mathf.Atan2(horizontalInput, verticalInput) * (180 / Mathf.PI);
                     angle += camera.transform.rotation.eulerAngles.y;
                     //Debug.Log(angle);
@@ -173,7 +175,12 @@ public class PlayerMovement : MonoBehaviour
                 {
                     jumping = false;
                 }
-                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+
+                // Only rotate with camera while we have movement input
+                if (walking || running)
+                    transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+
+                // Move foreward in the direction of input
                 Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput);
                 transform.Translate(new Vector3(0f, 0f, Vector3.Magnitude(direction)) * Time.deltaTime * moveSpeed);
             }
@@ -194,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
             pickupArea.SetActive(false);
         }
     }
-    // Update is called once per frame
+
     void Update()
     {
         if (Input.GetButtonDown("Switch"))
