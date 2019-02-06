@@ -113,18 +113,22 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     private void CheckAggression()
     {
-        if (fieldOfView.closestTarget != null)
+        Transform possibleTarget = fieldOfView.closestTarget;
+        if (possibleTarget != null)
         {
             switch (aggression)
             {
                 case (Aggression.Aggressive):
                     {
-                        Aggro(fieldOfView.closestTarget.gameObject, false);
+                        if (possibleTarget.tag == "Player")
+                        {
+                            Aggro(possibleTarget.gameObject, false);
+                        }
                         break;
                     }
                 case (Aggression.Frenzied):
                     {
-                        Aggro(fieldOfView.closestTarget.gameObject, false);
+                        Aggro(possibleTarget.gameObject, false);
                         break;
                     }
 

@@ -28,7 +28,7 @@ public class FieldOfView : MonoBehaviour
         {
             yield return new WaitForSeconds(delay);
             FindVisibleTargets();
-            //GetClosestTarget();
+            GetClosestTarget();
             GetFocusedTarget();
         }
     }
