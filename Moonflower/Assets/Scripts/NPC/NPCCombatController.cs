@@ -37,25 +37,25 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         else if (!inCombat && hasWeaponOut)
             SetWeaponSheathed(true);
 
-        if (fieldOfView.closestTarget != null)
-        {
-            switch (aggression)
-            {
-                case (Aggression.Aggressive):
-                    {
-                        combatTarget = fieldOfView.closestTarget.gameObject;
-                        break;
-                    }
-                case (Aggression.Frenzied):
-                    {
-                        combatTarget = fieldOfView.closestTarget.gameObject;
-                        break;
-                    }
+        //if (fieldOfView.closestTarget != null)
+        //{
+            //switch (aggression)
+            //{
+            //    case (Aggression.Aggressive):
+            //        {
+            //            combatTarget = fieldOfView.closestTarget.gameObject;
+            //            break;
+            //        }
+            //    case (Aggression.Frenzied):
+            //        {
+            //            combatTarget = fieldOfView.closestTarget.gameObject;
+            //            break;
+            //        }
 
-                default:
-                    break;
-            }
-        }
+            //    default:
+            //        break;
+            //}
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
