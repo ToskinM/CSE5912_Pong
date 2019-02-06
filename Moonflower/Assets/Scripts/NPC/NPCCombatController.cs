@@ -40,25 +40,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         else if (!inCombat && hasWeaponOut)
             SetWeaponSheathed(true);
 
-        if (fieldOfView.closestTarget != null)
-        {
-            switch (aggression)
-            {
-                case (Aggression.Aggressive):
-                    {
-                        combatTarget = fieldOfView.closestTarget.gameObject;
-                        break;
-                    }
-                case (Aggression.Frenzied):
-                    {
-                        combatTarget = fieldOfView.closestTarget.gameObject;
-                        break;
-                    }
-
-                default:
-                    break;
-            }
-        }
+        CheckAggression();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -69,12 +51,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         // Handle Hurtboxes
         if (tag == "Hurtbox")
         {
-            if (aggression > Aggression.Passive)
-            {
-                inCombat = true;
-                combatTarget = other.gameObject;
-                Debug.Log(gameObject.name + " started combat with " + other.gameObject.name);
-            }
+            Aggro(other.gameObject.transform.root.gameObject, false);
 
             if (timeSinceLastHurt > hurtDelay)
             {
@@ -134,6 +111,45 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         throw new System.NotImplementedException();
     }
 
+    private void CheckAggression()
+    {
+        if (fieldOfView.closestTarget != null)
+        {
+            switch (aggression)
+            {
+                case (Aggression.Aggressive):
+                    {
+                        Aggro(fieldOfView.closestTarget.gameObject, false);
+                        break;
+                    }
+                case (Aggression.Frenzied):
+                    {
+                        Aggro(fieldOfView.closestTarget.gameObject, false);
+                        break;
+                    }
+
+                default:
+                    break;
+            }
+        }
+
+
+    }
+    private void Aggro(GameObject aggroTarget, bool forceAggression)
+    {
+        if (aggression > Aggression.Passive || forceAggression)
+        {
+            if (combatTarget != aggroTarget)
+            {
+                if (!inCombat)
+                    inCombat = true;
+
+                combatTarget = aggroTarget;
+                Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
+            }
+        }
+    }
+
     private void CheckDeath()
     {
         if (Stats.CurrentHealth <= 0)
@@ -144,5 +160,6 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     private void Die()
     {
         gameObject.SetActive(false);
+        Debug.Log(gameObject.name + " has died");
     }
 }

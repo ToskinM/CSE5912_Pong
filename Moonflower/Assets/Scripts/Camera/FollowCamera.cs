@@ -59,6 +59,11 @@ public class FollowCamera : MonoBehaviour
 
     void Update()
     {
+        if (lockedOn && !lockOnTarget.gameObject.activeInHierarchy)
+        {
+            LockOff();
+        }
+
         // Rotation adjustment
         if (!Input.GetButtonDown("LockOn")) { 
             xRotation += Input.GetAxis("Mouse X") * rotateSpeed;
@@ -106,7 +111,7 @@ public class FollowCamera : MonoBehaviour
             if (Input.GetButtonDown("LockOn") && !freeRoam)
             {
                 //rotation = Quaternion.Euler(0, target.transform.eulerAngles.y, 0);
-                StartCoroutine(LockOn());
+                ManageLockOn();
             }
             //else
             //{
@@ -155,57 +160,69 @@ public class FollowCamera : MonoBehaviour
         freeRoam = enabled;
     }
 
-    private IEnumerator LockOn()
+    private void ManageLockOn()
     {
         Transform targetInView = gameObject.GetComponent<FieldOfView>().focusedTarget;
         if (lockedOn && lockOnTarget != null)
         {
-            // unlock if locked on
-
-            // Adjust xRotation to match where we're currently looking (so it doesn't snap back to the pre-lockOn direction)
-            xRotation = xRotation + (transform.eulerAngles.y - xRotation);
-
-            if (useCombatAngle)
-                target = targetTransform;
-            lockedOn = false;
-            lockOnTarget = null;
-            ToggleLockonIndicator(false);
+            LockOff();
         }
         else if (targetInView != null && !lockedOn)
         {
-            // lock on to a target
-            lockedOn = true;
-
-            if (useCombatAngle)
-                target = targetCombatTransform;
-            lockOnTarget = targetInView;
-            ToggleLockonIndicator(true);
+            LockOn(targetInView);
         }
         else
         {
-            // Reset camera behind player
-            lockedOn = true;
-
-            float currentAngleY = transform.eulerAngles.y;
-            float currentAngleX = transform.eulerAngles.x;
-            float targetAngleY = target.eulerAngles.y;
-
-            float x = xRotation;
-            float y = yRotation;
-
-            // Smoothly reset the camera behind player
-            float t = 0;
-            while (t < 1)
-            {
-                xRotation = Mathf.LerpAngle(xRotation, x + (targetAngleY - currentAngleY), t);
-                yRotation = Mathf.LerpAngle(yRotation, y + (15f - currentAngleX), t);
-
-                t += Time.deltaTime * 5;
-                yield return null;
-            }
-
-            lockedOn = false;
+            ResetCamera();
         }
+    }
+    private void LockOn(Transform targetToLockTo)
+    {
+        // lock on to a target
+        lockedOn = true;
+
+        if (useCombatAngle)
+            target = targetCombatTransform;
+        lockOnTarget = targetToLockTo;
+        ToggleLockonIndicator(true);
+    }
+    private void LockOff()
+    {
+        // unlock if locked on
+
+        // Adjust xRotation to match where we're currently looking (so it doesn't snap back to the pre-lockOn direction)
+        xRotation = xRotation + (transform.eulerAngles.y - xRotation);
+
+        if (useCombatAngle)
+            target = targetTransform;
+        lockedOn = false;
+        lockOnTarget = null;
+        ToggleLockonIndicator(false);
+    }
+    private IEnumerator ResetCamera()
+    {
+        // Reset camera behind player
+        lockedOn = true;
+
+        float currentAngleY = transform.eulerAngles.y;
+        float currentAngleX = transform.eulerAngles.x;
+        float targetAngleY = target.eulerAngles.y;
+
+        float x = xRotation;
+        float y = yRotation;
+
+        // Smoothly reset the camera behind player
+        float t = 0;
+        while (t < 1)
+        {
+            xRotation = Mathf.LerpAngle(xRotation, x + (targetAngleY - currentAngleY), t);
+            yRotation = Mathf.LerpAngle(yRotation, y + (15f - currentAngleX), t);
+
+            t += Time.deltaTime * 5;
+            yield return null;
+        }
+
+        lockedOn = false;
     }
 
     private void ToggleLockonIndicator(bool enable)
