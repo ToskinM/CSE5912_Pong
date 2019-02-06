@@ -58,6 +58,13 @@ public class Node
     {
         return children[options.IndexOf(option)];
     }
+    public Node GetNext()
+    {
+        if (children.Count > 0)
+            return children[0];
+        else
+            return null; 
+    }
 
     public void AddOption(string op)
     {
@@ -74,6 +81,7 @@ public class Node
         Node n = new Node(resp);
         children.Insert(options.IndexOf(op), n);
     }
+
     public void AddNext(string s)
     {
         Node n = new Node(s);

@@ -40,6 +40,7 @@ public class GameStateController : MonoBehaviour
         Paused = !Paused;
 
         EnablePlayerMovement(!Paused);
+
     }
 
     private void EnablePlayerMovement(bool enabled)
