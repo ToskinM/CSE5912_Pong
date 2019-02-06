@@ -53,8 +53,10 @@ public class CharacterStats : MonoBehaviour
     }
     public void AddHealth (int amount)
     {
-        CurrentHealth += amount;
+        Debug.Log(CurrentHealth);
+        CurrentHealth = CurrentHealth + amount;
         if (CurrentHealth >= MaxHealth)
             CurrentHealth = MaxHealth;
+        Debug.Log(CurrentHealth);
     }
 }
