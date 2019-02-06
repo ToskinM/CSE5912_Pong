@@ -8,14 +8,13 @@ public class NPCController : MonoBehaviour
 {
     public GameObject player; 
     public GameObject plane;
-    //public TextMeshPro DialogueText;
+    public TextMeshPro DialogueText;
 
     const float engagementRadius = 15f;
     const float bufferRadius = 3f;
     bool engaging = false;
     NPCMovement npc;
-    NavMeshAgent agent;
-    AmaruDialogueTrigger talkTrig; 
+    NavMeshAgent agent; 
 
     // Start is called before the first frame update
     void Start()
@@ -25,30 +24,21 @@ public class NPCController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>(); 
         npc.agent = agent;
         npc.plane = plane;
-        talkTrig = new AmaruDialogueTrigger(); 
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("looking...");
         float distFromPlayer = Vector3.Distance(player.transform.position, transform.position);
         if (distFromPlayer <= engagementRadius)
         {
-            Debug.Log("She's here!");
-            if(!talkTrig.DialogueActive())
-                talkTrig.StartDialogue();
-
             npc.Wandering = false;
             startEngagement();
             if (distFromPlayer < bufferRadius)
-            {
-                npc.Chill();
-            }
+                npc.Chill(); 
             else
-            { 
                 npc.GoHere(player.transform.position);
-            }
 
 
 
@@ -56,7 +46,6 @@ public class NPCController : MonoBehaviour
         else if(!npc.Wandering)
         {
             npc.ResumeWandering();
-            talkTrig.EndDialogue();
         }
 
     }
