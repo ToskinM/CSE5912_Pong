@@ -11,9 +11,13 @@ public class PlayerAnimatorController : MonoBehaviour
     private const string key_isJump = "IsJump";
     private const string key_isDamage = "IsDamage";
     private const string key_isDead = "IsDead";
+
     private Animator animator;
     private PlayerCombatController combatController;
     private PlayerMovement movement;
+
+    public GameObject[] attackHurtboxes;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,5 +73,14 @@ public class PlayerAnimatorController : MonoBehaviour
         {
             animator.SetBool(key_isJump, false);
         }
+    }
+
+    public void EnableHurtbox(int index)
+    {
+        attackHurtboxes[index].SetActive(true);
+    }
+    public void DisableHurtbox(int index)
+    {
+        attackHurtboxes[index].SetActive(false);
     }
 }

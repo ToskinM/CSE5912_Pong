@@ -15,12 +15,13 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     //public bool isBlocking;
 
     public GameObject weapon;
-    public GameObject[] attackHurtboxes;
+    public GameObject blockPlaceholder;
 
 
     private const float attackDelay = 0.35f;
 
     private const string ATTACK_AXIS = "Attack";
+    private const string BLOCK_AXIS = "Block";
     private const string SHEATHE_AXIS = "Sheathe/Unsheathe";
 
     void Start()
@@ -35,6 +36,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         {
             weapon.SetActive(false);
         }
+        blockPlaceholder.SetActive(false);
     }
 
     void Update()
@@ -50,6 +52,16 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         {
             SetWeaponSheathed(hasWeaponOut);
         }
+
+        // Detect blocking input (on button down)
+        if (Input.GetButtonDown(BLOCK_AXIS))
+        {
+            SetBlock(true);
+        }
+        else if (Input.GetButtonUp(BLOCK_AXIS))
+        {
+            SetBlock(false);
+        }
     }
 
     // Sheathe/Unsheathe weapon
@@ -60,6 +72,22 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         else
             Unsheathe();
     }
+
+    // Block
+    private void SetBlock(bool blocking)
+    {
+        if (blocking)
+        {
+            IsBlocking = true;
+            blockPlaceholder.SetActive(true);
+        }
+        else
+        {
+            IsBlocking = false;
+            blockPlaceholder.SetActive(false);
+        }
+    }
+
     private void Sheathe()
     {
         Debug.Log("Sheathing");
@@ -108,12 +136,5 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         attack = (attack + 1) % 2;
     }
 
-    public void EnableHurtbox(int index)
-    {
-        attackHurtboxes[index].SetActive(true);
-    }
-    public void DisableHurtbox(int index)
-    {
-        attackHurtboxes[index].SetActive(false);
-    }
+
 }
