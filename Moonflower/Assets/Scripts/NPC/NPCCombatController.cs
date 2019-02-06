@@ -69,6 +69,13 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         // Handle Hurtboxes
         if (tag == "Hurtbox")
         {
+            if (aggression > Aggression.Passive)
+            {
+                inCombat = true;
+                combatTarget = other.gameObject;
+                Debug.Log(gameObject.name + " started combat with " + other.gameObject.name);
+            }
+
             if (timeSinceLastHurt > hurtDelay)
             {
                 // Get hurtbox information

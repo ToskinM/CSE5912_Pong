@@ -16,7 +16,6 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 
     public GameObject weapon;
     public GameObject blockPlaceholder;
-    public GameObject[] attackHurtboxes;
 
 
     private const float attackDelay = 0.35f;
@@ -137,12 +136,5 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         attack = (attack + 1) % 2;
     }
 
-    public void EnableHurtbox(int index)
-    {
-        attackHurtboxes[index].SetActive(true);
-    }
-    public void DisableHurtbox(int index)
-    {
-        attackHurtboxes[index].SetActive(false);
-    }
+
 }
