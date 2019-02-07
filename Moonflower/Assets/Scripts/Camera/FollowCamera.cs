@@ -11,6 +11,7 @@ public class FollowCamera : MonoBehaviour
     public bool useCombatAngle;
     public GameObject lockonIndicator;
     [HideInInspector] public bool freeRoam;
+    public bool frozen = false; 
 
     private PlayerMovement playerMovement;
 
@@ -65,12 +66,15 @@ public class FollowCamera : MonoBehaviour
         }
 
         // Rotation adjustment
-        if (!Input.GetButtonDown("LockOn"))
+        if (!frozen)
         {
+            if (!Input.GetButtonDown("LockOn"))
+            {
             xRotation += Input.GetAxis("Mouse X") * rotateSpeed;
             yRotation += -Input.GetAxis("Mouse Y") * rotateSpeed;
             if (!freeRoam)
                 yRotation = Mathf.Clamp(yRotation, yRotationMin, yRotationMax);
+        }
         }
 
 
@@ -99,9 +103,9 @@ public class FollowCamera : MonoBehaviour
             }
             else
             {
-                Vector3 relative = lockOnTarget.transform.position - target.position;
-                float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
-                rotation = Quaternion.Euler(yRotation, angle, 0);
+                    Vector3 relative = lockOnTarget.transform.position - target.position;
+                    float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+                    rotation = Quaternion.Euler(yRotation, angle, 0);
             }
 
             // Stay behind player, in range
@@ -213,4 +217,9 @@ public class FollowCamera : MonoBehaviour
         }
 
     }
+
+    public void ToggleFreeze()
+    {
+        frozen = !frozen; 
+}
 }

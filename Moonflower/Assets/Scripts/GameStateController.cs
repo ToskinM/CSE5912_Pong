@@ -40,7 +40,13 @@ public class GameStateController : MonoBehaviour
         Paused = !Paused;
 
         EnablePlayerMovement(!Paused);
+        FreezeCamera(); 
 
+    }
+
+    public void FreezeCamera()
+    {
+        MainCamera.GetComponent<FollowCamera>().ToggleFreeze(); 
     }
 
     private void EnablePlayerMovement(bool enabled)

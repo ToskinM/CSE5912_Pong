@@ -16,6 +16,7 @@ public class AmaruDialogueTrigger : MonoBehaviour
     bool active = false;
     Node dialogue;
     Node currNode;
+    ICommand freezeCommand; 
 
 
     public AmaruDialogueTrigger(GameObject p)
@@ -23,7 +24,8 @@ public class AmaruDialogueTrigger : MonoBehaviour
         panel = p; //GameObject.Find("Dialogue Panel");
         text = panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         buttons = new Queue<Button>();
-        templateButton = panel.transform.GetChild(1).GetComponent<Button>(); 
+        templateButton = panel.transform.GetChild(1).GetComponent<Button>();
+        freezeCommand = new FreezeCameraCommand();  
 
         dialogue = new Node("Hello");
         string s = "Hi!";
@@ -80,6 +82,7 @@ public class AmaruDialogueTrigger : MonoBehaviour
     {
         panel.SetActive(true);
         active = true;
+        freezeCommand.Execute(); 
     }
 
     public void EndDialogue()
@@ -87,6 +90,7 @@ public class AmaruDialogueTrigger : MonoBehaviour
         panel.SetActive(false);
         buttons.Clear(); 
         active = false;
+        freezeCommand.Execute();
     }
 
     public bool DialogueActive()
