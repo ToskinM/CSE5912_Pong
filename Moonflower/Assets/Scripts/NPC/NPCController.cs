@@ -9,10 +9,10 @@ public class NPCController : MonoBehaviour
     public GameObject Anai;
     public GameObject WalkArea;
     public GameObject DialoguePanel;
-    //public TextMeshProUGUI DialogueText;
 
     const float engagementRadius = 15f;
     const float bufferRadius = 3f;
+    const float tooCloseRadius = 2.5f; 
     bool engaging = false;
     NPCMovement npc;
     NavMeshAgent agent;
@@ -34,17 +34,32 @@ public class NPCController : MonoBehaviour
     void Update()
     {
         talkTrig.Update(); 
+
         float distFromPlayer = Vector3.Distance(Anai.transform.position, transform.position);
         if (distFromPlayer <= engagementRadius && !talkTrig.Complete)
         {
             npc.Wandering = false;
             startEngagement();
             if (distFromPlayer < bufferRadius)
-                npc.Chill(); 
+            {
+                if (distFromPlayer < tooCloseRadius)
+                {
+                    Vector3 targetDirection = transform.position - Anai.transform.position;
+                    //Vector3 targetPosition = playerDirection.normalized * 20f + transform.position;
+                    //if (agent.CalculatePath(targetPosition, new NavMeshPath()))
+                    {
+                        //agent.destination = targetPosition;
+                        transform.Translate(targetDirection.normalized * agent.speed * Time.deltaTime);
+                    }
+                }
+                else
+                {
+                    Debug.Log("chill"); 
+                    npc.Chill();
+                }
+            }
             else
                 npc.GoHere(Anai.transform.position);
-
-
 
         }
         else if(!npc.Wandering)
