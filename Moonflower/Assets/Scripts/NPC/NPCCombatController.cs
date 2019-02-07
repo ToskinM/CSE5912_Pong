@@ -12,12 +12,15 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     public bool isHit;
     //public bool isBlocking;
     public bool isAttacking;
+    [HideInInspector] public int attack;
+
     //public GameObject hitIndicator;
 
     public CharacterStats Stats { get; private set; }
 
     private float timeSinceLastHurt;
     private float hurtDelay = 0.5f;
+    private float attackDistance = 2.6f;
 
     private FieldOfView fieldOfView;
     private NPCAnimationController npcAnimationController;
@@ -41,6 +44,17 @@ public class NPCCombatController : MonoBehaviour, ICombatant
             SetWeaponSheathed(true);
 
         CheckAggression();
+
+        if (attack > 0)
+            isAttacking = true;
+        else
+            isAttacking = false;
+
+        // If we're in combat..
+        if (inCombat)
+        {
+            ManageCombat();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -49,7 +63,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         string tag = other.tag;
 
         // Handle Hurtboxes
-        if (tag == "Hurtbox")
+        if (tag == "PlayerHurtbox")
         {
             Aggro(other.gameObject.transform.root.gameObject, false);
 
@@ -68,8 +82,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
                 {
                     npcAnimationController.SetHit(1);
 
-                    Debug.Log(gameObject.name + " took " + damage + " damage from " + source.name);
-                    Stats.TakeDamage(damage);
+                    Stats.TakeDamage(damage, source.name);
                     CheckDeath();
                 }
             }
@@ -106,9 +119,22 @@ public class NPCCombatController : MonoBehaviour, ICombatant
             hasWeaponOut = true;
         }
     }
+
+    private void ManageCombat()
+    {
+        // Attack if we can see the target and they're close enough
+        if (fieldOfView.IsInFieldOfView(combatTarget.transform) && Vector3.Distance(combatTarget.transform.position, transform.position) < attackDistance)
+        {
+            Attack();
+        }
+
+    }
     private void Attack()
     {
-        throw new System.NotImplementedException();
+        if (attack <= 0)
+        {
+            npcAnimationController.SetAttack(1);
+        }
     }
 
     private void CheckAggression()

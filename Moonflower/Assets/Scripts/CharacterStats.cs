@@ -32,9 +32,10 @@ public class CharacterStats : MonoBehaviour
         return Attack;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, string sourceName)
     {
         CurrentHealth -= damage;
+        Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
     }
 
     public bool CompareCunning(int otherCunning)

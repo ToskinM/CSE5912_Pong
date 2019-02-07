@@ -17,9 +17,10 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     public GameObject weapon;
     public GameObject blockPlaceholder;
 
+    private float timeSinceLastHurt;
+    private float hurtDelay = 0.5f;
 
     private const float attackDelay = 0.35f;
-
     private const string ATTACK_AXIS = "Attack";
     private const string BLOCK_AXIS = "Block";
     private const string SHEATHE_AXIS = "Sheathe/Unsheathe";
@@ -41,6 +42,8 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 
     void Update()
     {
+        timeSinceLastHurt += Time.deltaTime;
+
         // Detect attack input (on button down)
         if (Input.GetButtonDown(ATTACK_AXIS))
         {
@@ -136,5 +139,33 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         attack = (attack + 1) % 2;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        // Get Tag
+        string tag = other.tag;
 
+        // Handle Hurtboxes
+        if (tag == "Hurtbox")
+        {
+            if (timeSinceLastHurt > hurtDelay)
+            {
+                // Get hurtbox information
+                HurtboxController hurtboxController = other.gameObject.GetComponent<HurtboxController>();
+                GameObject source = hurtboxController.source;
+                int damage = hurtboxController.damage;
+
+                if (IsBlocking)
+                {
+                    Debug.Log(gameObject.name + ": \"Hah, blocked ya.\"");
+                }
+                else
+                {
+                    Stats.TakeDamage(damage, source.name);
+                    //CheckDeath();
+                }
+            }
+        }
+
+        timeSinceLastHurt = 0f;
+    }
 }
