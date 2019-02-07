@@ -23,15 +23,15 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (freeRoam)
-        {
-            UpdateFreeMovement();
-            UpdateFreeRotation();
-        }
-        else
-        {
-            transform.position = player.transform.position + defaultPosOffset;
-        }
+        //if (freeRoam)
+        //{
+        //    UpdateFreeMovement();
+        //    UpdateFreeRotation();
+        //}
+        //else
+        //{
+        //    transform.position = player.transform.position + defaultPosOffset;
+        //}
     }
 
     private void UpdateFreeRotation()
