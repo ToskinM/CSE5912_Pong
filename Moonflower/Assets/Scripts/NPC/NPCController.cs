@@ -49,12 +49,11 @@ public class NPCController : MonoBehaviour
                     //if (agent.CalculatePath(targetPosition, new NavMeshPath()))
                     {
                         //agent.destination = targetPosition;
-                        transform.Translate(targetDirection.normalized * agent.speed * Time.deltaTime);
+                        transform.Translate(targetDirection.normalized * agent.speed*2 * Time.deltaTime);
                     }
                 }
                 else
                 {
-                    Debug.Log("chill"); 
                     npc.Chill();
                 }
             }

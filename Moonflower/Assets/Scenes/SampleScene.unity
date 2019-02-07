@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.45127374, g: 0.5000928, b: 0.56872845, a: 1}
+  m_IndirectSpecularColor: {r: 0.45127422, g: 0.50009334, b: 0.56872916, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -14828,6 +14828,28 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 899378616}
   m_PrefabAsset: {fileID: 0}
+--- !u!195 &574423206
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574423205}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!4 &574423207 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 421720, guid: 0bff5de0452ee2b4ab4d0603fe171d7b,
@@ -14846,7 +14868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0f4154f23b245e1a9b6d53a675a31c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetObject: {fileID: 1769887628}
+  Anai: {fileID: 1769887628}
   smoothTime: 2
   rotateSpeed: 15
   playing: 0
@@ -22569,7 +22591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0f4154f23b245e1a9b6d53a675a31c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetObject: {fileID: 1769887628}
+  Anai: {fileID: 0}
   smoothTime: 2
   rotateSpeed: 15
   playing: 0
