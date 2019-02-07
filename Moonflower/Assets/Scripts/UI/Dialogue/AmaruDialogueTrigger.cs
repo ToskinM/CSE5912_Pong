@@ -51,9 +51,9 @@ public class AmaruDialogueTrigger : MonoBehaviour
             if (currNode.HasOptions() && buttons.Count == 0)
             {
                 int currOffset = 0;
-                int offset = 12;
-                int sideMargin = 25;
-                int topMargin = 5; 
+                int offset = Screen.height/19;
+                int sideMargin = Screen.width/16;
+                int topMargin = Screen.height/60; 
                 for (int i = 0; i < currNode.Options().Count; i++)
                 {
                     Button b = Instantiate(templateButton, templateButton.transform.position, templateButton.transform.rotation);
