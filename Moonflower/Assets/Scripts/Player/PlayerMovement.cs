@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Physics.gravity = Physics.gravity * 3;
         body = GetComponent<Rigidbody>();
         playing = true;
         moveSpeed = 3f;
@@ -109,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
                     jumping = true;
                     walking = false;
                     running = false;
-                    body.AddForce(new Vector3(0f, 8f, 0f), ForceMode.Impulse);
+                    body.AddForce(new Vector3(0f, 5f, 0f), ForceMode.Impulse);
                     jumpTimer = 40;
                 }
                 else
@@ -163,13 +164,12 @@ public class PlayerMovement : MonoBehaviour
                     running = false;
                     walking = false;
                 }
-                if (Input.GetKeyDown(KeyCode.Space) && jumpTimer == 0)
+                if (Input.GetKeyDown(KeyCode.Space) && body.velocity.y == 0)
                 {
                     jumping = true;
                     walking = false;
                     running = false;
-                    body.AddForce(new Vector3(0f, 8f,0f), ForceMode.Impulse);
-                    jumpTimer = 40;
+                    body.AddForce(new Vector3(0f, 25,0f), ForceMode.Impulse);
                 }
                 else
                 {
@@ -183,10 +183,6 @@ public class PlayerMovement : MonoBehaviour
                 // Move foreward in the direction of input
                 Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput);
                 transform.Translate(new Vector3(0f, 0f, Vector3.Magnitude(direction)) * Time.deltaTime * moveSpeed);
-            }
-            if (jumpTimer != 0)
-            {
-                jumpTimer--;
             }
         }
     }
