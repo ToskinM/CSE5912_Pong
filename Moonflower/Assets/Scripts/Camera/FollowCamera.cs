@@ -65,7 +65,8 @@ public class FollowCamera : MonoBehaviour
         }
 
         // Rotation adjustment
-        if (!Input.GetButtonDown("LockOn")) { 
+        if (!Input.GetButtonDown("LockOn"))
+        {
             xRotation += Input.GetAxis("Mouse X") * rotateSpeed;
             yRotation += -Input.GetAxis("Mouse Y") * rotateSpeed;
             if (!freeRoam)
@@ -88,50 +89,20 @@ public class FollowCamera : MonoBehaviour
         }
         else
         {
-            //if (playerMovement != null)
-            //{
-            //    Debug.Log("playerMovement found");
-
-            //}
-
-            // If we want camera locked to player's rotation
-            //if (!mouseInput && movementInput)
-            //{
-            //    // Rotate WITH target (Dampened)
-            //    float currentAngle = transform.eulerAngles.y;
-            //    float targetAngle = target.transform.eulerAngles.y;
-            //    float angle = Mathf.LerpAngle(currentAngle, targetAngle, Time.deltaTime * damping);
-            //    rotation = Quaternion.Euler(0, angle, 0);
-            //}
-            //else
-            //{
-            //rotation = Quaternion.Euler(yRotation, xRotation, 0);
-            //}
-
             if (Input.GetButtonDown("LockOn") && !freeRoam)
             {
-                //rotation = Quaternion.Euler(0, target.transform.eulerAngles.y, 0);
                 ManageLockOn();
             }
-            //else
-            //{
-            //if (!lockedOn)
-            //{
             if (lockOnTarget == null)
             {
                 rotation = Quaternion.Euler(yRotation, xRotation, 0);
             }
             else
             {
-                //if (lockOnTarget != null)
-                //{
-                    Vector3 relative = lockOnTarget.transform.position - target.position;
-                    float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
-                    rotation = Quaternion.Euler(yRotation, angle, 0);
-                //}
+                Vector3 relative = lockOnTarget.transform.position - target.position;
+                float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+                rotation = Quaternion.Euler(yRotation, angle, 0);
             }
-            //}
-            //}
 
             // Stay behind player, in range
             transform.position = target.position - (rotation * offset * followDistanceMultiplier);

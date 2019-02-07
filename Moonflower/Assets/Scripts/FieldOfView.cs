@@ -110,6 +110,15 @@ public class FieldOfView : MonoBehaviour
         }
     }
 
+    public bool IsInFieldOfView(Transform transform)
+    {
+        for (int i = 0; i < visibleTargets.Count; i++)
+            if (visibleTargets[i] == transform)
+                return true;
+
+        return false;
+    }
+
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
     {
         if (!angleIsGlobal)
@@ -191,7 +200,6 @@ public class FieldOfView : MonoBehaviour
         viewMesh.RecalculateNormals();
     }
 
-
     EdgeInfo FindEdge(ViewCastInfo minViewCast, ViewCastInfo maxViewCast)
     {
         float minAngle = minViewCast.angle;
@@ -219,7 +227,6 @@ public class FieldOfView : MonoBehaviour
 
         return new EdgeInfo(minPoint, maxPoint);
     }
-
 
     ViewCastInfo ViewCast(float globalAngle)
     {

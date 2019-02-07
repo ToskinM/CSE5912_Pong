@@ -6,7 +6,7 @@ public class UtilityCommands : MonoBehaviour
 {
     GameStateController gameStateController;
 
-    ICommand screencapCmd, videocapCmd, pauseCmd;
+    ICommand screencapCmd, videocapCmd, pauseCmd, DebugViewCmd;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +15,7 @@ public class UtilityCommands : MonoBehaviour
         screencapCmd = new ScreenCaptureCommand();
         videocapCmd = new VideoCaptureCommand();
         pauseCmd = new PauseCommand();
+        DebugViewCmd = new DebugViewCommand();
     }
 
     // Update is called once per frame
@@ -35,6 +36,10 @@ public class UtilityCommands : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F11))
         {
             videocapCmd.Execute();
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            DebugViewCmd.Execute();
         }
     }
 }
