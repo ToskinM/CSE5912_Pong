@@ -52,13 +52,13 @@ public class AmaruDialogueTrigger : MonoBehaviour
             {
                 int currOffset = 0;
                 int offset = Screen.height/19;
-                int sideMargin = Screen.width/16;
+                int sideMargin = Screen.width/2 - Screen.width/16;
                 int topMargin = Screen.height/60; 
                 for (int i = 0; i < currNode.Options().Count; i++)
                 {
                     Button b = Instantiate(templateButton, templateButton.transform.position, templateButton.transform.rotation);
                     b.transform.SetParent(panel.transform,false);
-                    b.transform.position = new Vector3(b.transform.position.x - (Screen.width/2.0f) + sideMargin, b.transform.position.y - currOffset - topMargin);
+                    b.transform.position = new Vector3(b.transform.position.x - sideMargin, b.transform.position.y - currOffset - topMargin);
                     currOffset += offset; 
 
                     buttons.Enqueue(b); 
