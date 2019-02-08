@@ -6,13 +6,13 @@ using TMPro;
 
 public class NPCController : MonoBehaviour
 {
-    public GameObject Anai;
+    public GameObject Player;
     public GameObject WalkArea;
     public GameObject DialoguePanel;
 
     const float engagementRadius = 15f;
-    const float bufferRadius = 3f;
-    const float tooCloseRadius = 2.5f; 
+    //const float bufferRadius = 3f;
+    //const float tooCloseRadius = 2.5f; 
     bool engaging = false;
     NPCMovement npc;
     NavMeshAgent agent;
@@ -21,11 +21,13 @@ public class NPCController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        npc = gameObject.AddComponent<NPCMovement>();
-
+        //npc = gameObject.AddComponent<NPCMovement>();
+        float walkRad = WalkArea.GetComponent<Renderer>().bounds.size.x;
+        Vector3 walkOrigin = WalkArea.GetComponent<Renderer>().bounds.center;
         agent = GetComponent<NavMeshAgent>();
-        npc.agent = agent;
-        npc.plane = WalkArea;
+
+        npc = new NPCMovement(gameObject, Player, walkOrigin, walkRad, engagementRadius);
+
         talkTrig = new AmaruDialogueTrigger(DialoguePanel);
     }
 
@@ -33,33 +35,12 @@ public class NPCController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        talkTrig.Update(); 
+        talkTrig.Update();
+        npc.Update(); 
 
-        float distFromPlayer = Vector3.Distance(Anai.transform.position, transform.position);
-        if (distFromPlayer <= engagementRadius && !talkTrig.Complete)
+        if(npc.Engaging && !talkTrig.Complete)
         {
-            npc.Wandering = false;
-            startEngagement();
-            if (distFromPlayer < bufferRadius)
-            {
-                if (distFromPlayer < tooCloseRadius)
-                {
-                    Vector3 targetDirection = transform.position - Anai.transform.position;
-                    //Vector3 targetPosition = playerDirection.normalized * 20f + transform.position;
-                    //if (agent.CalculatePath(targetPosition, new NavMeshPath()))
-                    {
-                        //agent.destination = targetPosition;
-                        transform.Translate(targetDirection.normalized * agent.speed*2 * Time.deltaTime);
-                    }
-                }
-                else
-                {
-                    npc.Chill();
-                }
-            }
-            else
-                npc.GoHere(Anai.transform.position);
-
+            startEngagement(); 
         }
         else if(!npc.Wandering)
         {
