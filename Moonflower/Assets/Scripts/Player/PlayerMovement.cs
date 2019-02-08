@@ -11,16 +11,15 @@ public class PlayerMovement : MonoBehaviour
     public float walkSpeed;
     public float rotateSpeed = 20f;
     public float jumpTimer = 0;
-    public bool playing;
-    private GameObject camera;
-    public bool jumping;
+    [HideInInspector] public bool playing;
+    [HideInInspector] public bool jumping;
     public bool isAnai;
-    public bool walking;
-    public bool running;
+    [HideInInspector] public bool walking;
+    [HideInInspector] public bool running;
     public GameObject pickupArea;
     public Rigidbody body;
 
-
+    private Camera camera;
 
     //follow variables
     private NavMeshAgent agent;
@@ -43,16 +42,17 @@ public class PlayerMovement : MonoBehaviour
         pickupArea.SetActive(false);
         agent = GetComponent<NavMeshAgent>();
         boxCollider = GetComponent<BoxCollider>();
+
         if (this.gameObject.name == "Anai")
         {
             playing = true;
-            boxCollider.enabled = true;
+            //boxCollider.enabled = true;
             agent.enabled = false;
-            this.camera = GameObject.Find("Main Camera");
+            this.camera = Camera.main;
         }
         else
         {
-            boxCollider.enabled = false;
+            //boxCollider.enabled = false;
             this.camera = null;
             agent.enabled = true;
             playing = false;
@@ -232,16 +232,20 @@ public class PlayerMovement : MonoBehaviour
             playing = !playing;
             if (playing)
             {
-                camera = GameObject.Find("Main Camera");
-                boxCollider.enabled = true;
+                GetComponent<PlayerCombatController>().enabled = true;
+                tag = "Player";
+                camera = Camera.main;
+                //boxCollider.enabled = true;
                 agent.enabled = false;
 
             }
             else
             {
+                GetComponent<PlayerCombatController>().enabled = false;
+                tag = "Companion";
                 agent.enabled = true;
                 running = false;
-                boxCollider.enabled = false;
+                //boxCollider.enabled = false;
                 jumping = false;
 
             }

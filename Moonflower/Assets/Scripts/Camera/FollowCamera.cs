@@ -37,18 +37,18 @@ public class FollowCamera : MonoBehaviour
         playerMovement = gameObject.GetComponent<PlayerMovement>();
 
         target = targetTransform;
-        if (useCombatAngle)
-        {
-            // Find the target to use in combat
-            foreach (Transform transform in targetTransform)
-            {
-                if (transform.tag == "CameraCombatTarget")
-                {
-                    targetCombatTransform = transform;
-                    break;
-                }
-            }
-        }
+        //if (useCombatAngle)
+        //{
+        //    // Find the target to use in combat
+        //    foreach (Transform transform in targetTransform)
+        //    {
+        //        if (transform.tag == "CameraCombatTarget")
+        //        {
+        //            targetCombatTransform = transform;
+        //            break;
+        //        }
+        //    }
+        //}
     }
 
     void Start()
@@ -60,6 +60,12 @@ public class FollowCamera : MonoBehaviour
 
     void Update()
     {
+        // Switch to correct character (Anai or Mimbi)
+        if (target.root.tag != "Player")
+        {
+            GetCameraTarget(GameObject.FindGameObjectWithTag("Player"));
+        }
+
         if (lockedOn && !lockOnTarget.gameObject.activeInHierarchy)
         {
             LockOff();
@@ -133,6 +139,20 @@ public class FollowCamera : MonoBehaviour
     public void SetFreeRoam(bool enabled)
     {
         freeRoam = enabled;
+    }
+
+    private void GetCameraTarget(GameObject character)
+    {
+        // Find gameobject tagged as the camera look target (ONLY searches one hierarchy level deep)
+        foreach (Transform transform in character.transform)
+        {
+            if (transform.tag == "CameraTarget")
+            {
+                targetTransform = transform;
+                target = targetTransform;
+                break;
+            }
+        }
     }
 
     private void ManageLockOn()
