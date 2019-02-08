@@ -29,15 +29,8 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     {
         Stats = gameObject.GetComponent<CharacterStats>();
 
-        if (hasWeaponOut)
-        {
-            weapon.SetActive(true);
-        }
-        else
-        {
-            weapon.SetActive(false);
-        }
-        blockPlaceholder.SetActive(false);
+        weapon.SetActive(hasWeaponOut);
+        blockPlaceholder.SetActive(IsBlocking);
     }
 
     void Update()
@@ -123,14 +116,15 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         {
             if (!isAttacking)
             {
+                // attack
                 StartCoroutine(Swing());
             }
-            // attack
         }
     }
 
     private IEnumerator Swing()
     {
+        Debug.Log("atacl");
         isAttacking = true;
 
         yield return new WaitForSeconds(attackDelay);

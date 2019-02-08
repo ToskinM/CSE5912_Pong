@@ -13,6 +13,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     //public bool isBlocking;
     public bool isAttacking;
     [HideInInspector] public int attack;
+    [HideInInspector] public GameObject combatTarget;
 
     //public GameObject hitIndicator;
 
@@ -24,7 +25,6 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     private FieldOfView fieldOfView;
     private NPCAnimationController npcAnimationController;
-    private GameObject combatTarget;
 
     void Start()
     {
