@@ -8,11 +8,13 @@ public class PickupArea : MonoBehaviour
     public GameObject Player;
     private CharacterStats playerStat;
     private InventoryManager inventoryManager;
+    private PlayerInventory playerInventory;
 
     void Start()
     {
         inventoryManager = FindObjectOfType<InventoryManager>();
         playerStat = Player.GetComponent<CharacterStats>();
+        playerInventory = Player.GetComponent<PlayerInventory>();
     }
 
    
@@ -25,6 +27,10 @@ public class PickupArea : MonoBehaviour
             Debug.Log(other.gameObject.tag + " is collected, " + health + " were add to anai");
             Destroy(other.gameObject);
             playerStat.AddHealth(health);
+            if (other.gameObject.tag == "MoonFlower")
+                playerInventory.AddMoonFlower(other.gameObject);
+            if (other.gameObject.tag == "WolfApple")
+                playerInventory.AddWolfApple(other.gameObject);
         }
     }
     //void RaycastCollision()
