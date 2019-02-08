@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     //follow variables
     private NavMeshAgent agent;
+    private BoxCollider boxCollider;
     const float bufferRadius = 5f;
     const float tooCloseRadius = 4f;
     public GameObject otherCharacter;
@@ -41,14 +42,17 @@ public class PlayerMovement : MonoBehaviour
         runSpeed = 7f;
         pickupArea.SetActive(false);
         agent = GetComponent<NavMeshAgent>();
+        boxCollider = GetComponent<BoxCollider>();
         if (this.gameObject.name == "Anai")
         {
             playing = true;
+            boxCollider.enabled = true;
             agent.enabled = false;
             this.camera = GameObject.Find("Main Camera");
         }
         else
         {
+            boxCollider.enabled = false;
             this.camera = null;
             agent.enabled = true;
             playing = false;
@@ -229,6 +233,7 @@ public class PlayerMovement : MonoBehaviour
             if (playing)
             {
                 camera = GameObject.Find("Main Camera");
+                boxCollider.enabled = true;
                 agent.enabled = false;
 
             }
@@ -236,6 +241,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 agent.enabled = true;
                 running = false;
+                boxCollider.enabled = false;
                 jumping = false;
 
             }
@@ -253,13 +259,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Follow()
     {
-        walking = true;
         float distFromPlayer = Vector3.Distance(otherCharacter.transform.position, transform.position);
         if (distFromPlayer < bufferRadius)
         {
             if (distFromPlayer < tooCloseRadius)
             {
                 agent.isStopped = true;
+                walking = false;
+
                 Vector3 targetDirection = transform.position - otherCharacter.transform.position;
                 transform.Translate(-targetDirection.normalized * 2 * Time.deltaTime);
 
@@ -267,13 +274,15 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 agent.isStopped = true;
+                walking = false;
+
             }
         }
         else
         {
             agent.isStopped = false;
+            walking = true;
             agent.SetDestination(otherCharacter.transform.position);
         }
-        walking = false;
     }
 }
