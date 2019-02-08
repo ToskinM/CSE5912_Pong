@@ -20,6 +20,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(gameObject);
+
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -29,6 +30,8 @@ public class AudioManager : MonoBehaviour
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
+
+        FindObjectOfType<AudioManager>().Play("background");
     }
     public void Play (string name)
     {
@@ -36,7 +39,10 @@ public class AudioManager : MonoBehaviour
         if (s != null)
         {
             s.source.Play();
+            Debug.Log("i am playing");
         }
+        else if (s.source = null)
+        { Debug.Log("why no audio source!?"); }
         else
         { Debug.Log("there is no music source"); }
     }

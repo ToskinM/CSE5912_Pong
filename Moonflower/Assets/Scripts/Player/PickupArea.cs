@@ -9,18 +9,29 @@ public class PickupArea : MonoBehaviour
     private CharacterStats playerStat;
     private InventoryManager inventoryManager;
     private PlayerInventory playerInventory;
+    private AudioManager audioManager;
 
     void Start()
     {
+        FindObjectOfType<AudioManager>().Play("background");
+        StartCoroutine(GetAudioManager());
         inventoryManager = FindObjectOfType<InventoryManager>();
         playerStat = Player.GetComponent<CharacterStats>();
         playerInventory = Player.GetComponent<PlayerInventory>();
     }
 
-   
+    private IEnumerator GetAudioManager()
+    {
+        while (audioManager == null)
+        {
+            audioManager = FindObjectOfType<AudioManager>();
+            yield return null;
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.gameObject.tag == "WolfApple" || other.gameObject.tag == "MoonFlower")
         {
             int health = inventoryManager.getHealth(other.gameObject.tag);
@@ -31,6 +42,7 @@ public class PickupArea : MonoBehaviour
                 playerInventory.AddMoonFlower(other.gameObject);
             if (other.gameObject.tag == "WolfApple")
                 playerInventory.AddWolfApple(other.gameObject);
+            audioManager.Play("pickup01");
         }
     }
     //void RaycastCollision()
