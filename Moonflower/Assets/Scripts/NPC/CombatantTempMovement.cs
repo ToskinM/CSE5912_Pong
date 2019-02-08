@@ -7,7 +7,6 @@ public class CombatantTempMovement : MonoBehaviour
 {
     public GameObject target;
     public float rotateSpeed = 15f;
-    public float moveSpeed = 5f;
 
     private Vector3 velocity = Vector3.zero;
     private NavMeshAgent agent;
@@ -39,8 +38,8 @@ public class CombatantTempMovement : MonoBehaviour
                 if (distFromPlayer < tooCloseRadius)
                 {
                     agent.isStopped = true;
-                    Vector3 targetDirection = transform.position - target.transform.position;
-                    transform.Translate(-targetDirection.normalized * agent.speed * 2 * Time.deltaTime);
+                    Vector3 targetDirection = target.transform.position - transform.position;
+                    transform.Translate(targetDirection.normalized * agent.speed * 20 * Time.deltaTime);
                 }
                 else
                 {

@@ -253,7 +253,10 @@ public class PlayerMovement : MonoBehaviour
         if (playing)
         {
             DecidePickable();
-            DetectKeyInput();
+            if (!camera.GetComponent<FollowCamera>().freeRoam && !camera.GetComponent<FollowCamera>().switching)
+            {
+                DetectKeyInput();
+            }
         }
         else
         {

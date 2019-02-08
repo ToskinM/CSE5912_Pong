@@ -25,9 +25,11 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     private FieldOfView fieldOfView;
     private NPCAnimationController npcAnimationController;
+    private NPCMovement npcMovement;
 
     void Start()
     {
+        //npcMovement = new NPCMovement(gameObject, GameObject.FindGameObjectWithTag("Player"), transform.position, 5, 10);
         Stats = gameObject.GetComponent<CharacterStats>();
         fieldOfView = GetComponent<FieldOfView>();
         npcAnimationController = GetComponent<NPCAnimationController>();
@@ -35,6 +37,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     void Update()
     {
+        //npcMovement.Update();
         timeSinceLastHurt += Time.deltaTime;
 
         // Ensure weapon state is correct based on aggro

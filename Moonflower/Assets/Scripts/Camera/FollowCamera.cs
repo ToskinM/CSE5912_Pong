@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
-    public Transform targetTransform;
+    public Transform initialTarget;
     [HideInInspector] public Transform lockOnTarget;
     public float followDistanceMultiplier = 1f;
     public float rotateSpeed = 5f;
-    public bool useCombatAngle;
     public GameObject lockonIndicator;
+    public Transform switchTransform;
     [HideInInspector] public bool freeRoam;
-    public bool frozen = false; 
+    public bool frozen = false;
+    public bool switching;
 
     private PlayerMovement playerMovement;
 
@@ -35,20 +36,7 @@ public class FollowCamera : MonoBehaviour
     {
         // Get player movement script
         playerMovement = gameObject.GetComponent<PlayerMovement>();
-
-        target = targetTransform;
-        //if (useCombatAngle)
-        //{
-        //    // Find the target to use in combat
-        //    foreach (Transform transform in targetTransform)
-        //    {
-        //        if (transform.tag == "CameraCombatTarget")
-        //        {
-        //            targetCombatTransform = transform;
-        //            break;
-        //        }
-        //    }
-        //}
+        target = initialTarget;
     }
 
     void Start()
@@ -63,10 +51,12 @@ public class FollowCamera : MonoBehaviour
         // Switch to correct character (Anai or Mimbi)
         if (target.root.tag != "Player")
         {
-            GetCameraTarget(GameObject.FindGameObjectWithTag("Player"));
+            SwitchTarget();
         }
 
-        if (lockedOn && !lockOnTarget.gameObject.activeInHierarchy)
+
+        // Lock off if lock on target is no longer active
+        if (lockOnTarget != null && lockedOn && !lockOnTarget.gameObject.activeInHierarchy)
         {
             LockOff();
         }
@@ -76,11 +66,11 @@ public class FollowCamera : MonoBehaviour
         {
             if (!Input.GetButtonDown("LockOn"))
             {
-            xRotation += Input.GetAxis("Mouse X") * rotateSpeed;
-            yRotation += -Input.GetAxis("Mouse Y") * rotateSpeed;
-            if (!freeRoam)
-                yRotation = Mathf.Clamp(yRotation, yRotationMin, yRotationMax);
-        }
+                xRotation += Input.GetAxis("Mouse X") * rotateSpeed;
+                yRotation += -Input.GetAxis("Mouse Y") * rotateSpeed;
+                if (!freeRoam)
+                    yRotation = Mathf.Clamp(yRotation, yRotationMin, yRotationMax);
+            }
         }
 
 
@@ -97,21 +87,21 @@ public class FollowCamera : MonoBehaviour
             UpdateFreeMovement();
             UpdateFreeRotation();
         }
-        else
+        else //if (!switching)
         {
             if (Input.GetButtonDown("LockOn") && !freeRoam)
             {
                 ManageLockOn();
             }
-            if (lockOnTarget == null)
+            if (lockOnTarget == null || switching)
             {
                 rotation = Quaternion.Euler(yRotation, xRotation, 0);
             }
-            else
+            else if (lockedOn && lockOnTarget != null)
             {
-                    Vector3 relative = lockOnTarget.transform.position - target.position;
-                    float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
-                    rotation = Quaternion.Euler(yRotation, angle, 0);
+                Vector3 relative = lockOnTarget.transform.position - target.position;
+                float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+                rotation = Quaternion.Euler(yRotation, angle, 0);
             }
 
             // Stay behind player, in range
@@ -141,18 +131,19 @@ public class FollowCamera : MonoBehaviour
         freeRoam = enabled;
     }
 
-    private void GetCameraTarget(GameObject character)
+    private Transform GetCameraTarget(GameObject character)
     {
         // Find gameobject tagged as the camera look target (ONLY searches one hierarchy level deep)
         foreach (Transform transform in character.transform)
         {
             if (transform.tag == "CameraTarget")
             {
-                targetTransform = transform;
-                target = targetTransform;
-                break;
+                return transform;
             }
         }
+
+        Debug.Log("Failed to get camera target.");
+        return null;
     }
 
     private void ManageLockOn()
@@ -168,7 +159,7 @@ public class FollowCamera : MonoBehaviour
         }
         else
         {
-            ResetCamera();
+            StartCoroutine(ResetCamera());
         }
     }
     private void LockOn(Transform targetToLockTo)
@@ -176,23 +167,21 @@ public class FollowCamera : MonoBehaviour
         // lock on to a target
         lockedOn = true;
 
-        if (useCombatAngle)
-            target = targetCombatTransform;
         lockOnTarget = targetToLockTo;
         ToggleLockonIndicator(true);
     }
     private void LockOff()
     {
         // unlock if locked on
+        if (lockedOn)
+        {
+            // Adjust xRotation to match where we're currently looking (so it doesn't snap back to the pre-lockOn direction)
+            xRotation = xRotation + (transform.eulerAngles.y - xRotation);
 
-        // Adjust xRotation to match where we're currently looking (so it doesn't snap back to the pre-lockOn direction)
-        xRotation = xRotation + (transform.eulerAngles.y - xRotation);
-
-        if (useCombatAngle)
-            target = targetTransform;
-        lockedOn = false;
-        lockOnTarget = null;
-        ToggleLockonIndicator(false);
+            lockedOn = false;
+            lockOnTarget = null;
+            ToggleLockonIndicator(false);
+        }
     }
     private IEnumerator ResetCamera()
     {
@@ -201,23 +190,53 @@ public class FollowCamera : MonoBehaviour
 
         float currentAngleY = transform.eulerAngles.y;
         float currentAngleX = transform.eulerAngles.x;
-        float targetAngleY = target.eulerAngles.y;
 
-        float x = xRotation;
-        float y = yRotation;
+        float startingXRotation = xRotation;
+        float startingYRotation = yRotation;
 
         // Smoothly reset the camera behind player
         float t = 0;
         while (t < 1)
         {
-            xRotation = Mathf.LerpAngle(xRotation, x + (targetAngleY - currentAngleY), t);
-            yRotation = Mathf.LerpAngle(yRotation, y + (15f - currentAngleX), t);
+            xRotation = Mathf.LerpAngle(xRotation, startingXRotation + (target.eulerAngles.y - currentAngleY), t);
+            yRotation = Mathf.LerpAngle(yRotation, startingYRotation + (15f - currentAngleX), t);
 
             t += Time.deltaTime * 5;
             yield return null;
         }
 
         lockedOn = false;
+    }
+
+    private void SwitchTarget()
+    {
+        LockOff();
+        StartCoroutine(MoveCameraToNewTarget(GetCameraTarget(GameObject.FindGameObjectWithTag("Player"))));
+    }
+    private IEnumerator MoveCameraToNewTarget(Transform newTarget)
+    {
+        // 
+        switching = true;
+        switchTransform.position = target.position;
+        target = switchTransform;
+
+        float currentAngleY = transform.eulerAngles.y;
+        float startingXRotation = xRotation;
+
+        // 
+        float t = 0;
+        while (t < 1)
+        {
+            //xRotation = Mathf.LerpAngle(xRotation, startingXRotation + (newTarget.eulerAngles.y - currentAngleY), t);
+            target.position = Vector3.Lerp(target.position, newTarget.position, t);
+
+            t += Time.deltaTime * 1;
+            yield return null;
+        }
+
+        target = newTarget;
+        switchTransform.position = transform.position;
+        switching = false;
     }
 
     private void ToggleLockonIndicator(bool enable)
@@ -240,6 +259,6 @@ public class FollowCamera : MonoBehaviour
 
     public void ToggleFreeze()
     {
-        frozen = !frozen; 
-}
+        frozen = !frozen;
+    }
 }

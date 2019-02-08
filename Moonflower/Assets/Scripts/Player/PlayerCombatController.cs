@@ -124,7 +124,6 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 
     private IEnumerator Swing()
     {
-        Debug.Log("atacl");
         isAttacking = true;
 
         yield return new WaitForSeconds(attackDelay);
