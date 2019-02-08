@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro; 
+using UnityEngine.AI;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,12 +12,22 @@ public class PlayerMovement : MonoBehaviour
     public float rotateSpeed = 20f;
     public float jumpTimer = 0;
     public bool playing;
-    public GameObject camera;
+    private GameObject camera;
     public bool jumping;
+    public bool isAnai;
     public bool walking;
     public bool running;
     public GameObject pickupArea;
     public Rigidbody body;
+
+
+
+    //follow variables
+    private NavMeshAgent agent;
+    const float bufferRadius = 5f;
+    const float tooCloseRadius = 4f;
+    public GameObject otherCharacter;
+    public float smoothTime = 2f;
 
     private Quaternion rotation = Quaternion.identity;
 
@@ -25,11 +36,23 @@ public class PlayerMovement : MonoBehaviour
     {
         Physics.gravity = Physics.gravity * 3;
         body = GetComponent<Rigidbody>();
-        playing = true;
         moveSpeed = 3f;
         walkSpeed = 3f;
         runSpeed = 7f;
         pickupArea.SetActive(false);
+        agent = GetComponent<NavMeshAgent>();
+        if (this.gameObject.name == "Anai")
+        {
+            playing = true;
+            agent.enabled = false;
+            this.camera = GameObject.Find("Main Camera");
+        }
+        else
+        {
+            this.camera = null;
+            agent.enabled = true;
+            playing = false;
+        }
     }
     void DetectKeyInput()
     {
@@ -72,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Mouse1))
                     {
                         body.velocity = Vector3.zero;
-                        body.AddRelativeForce(new Vector3(0f, 0f,Mathf.Sign(verticalInput) * 10f), ForceMode.VelocityChange);
+                        body.AddRelativeForce(new Vector3(0f, 0f, Mathf.Sign(verticalInput) * 10f), ForceMode.VelocityChange);
                         body.velocity = Vector3.zero;
                     }
                     Vector3 vertDirection = new Vector3(0, 0, Mathf.Sign(verticalInput));
@@ -99,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Mouse1))
                     {
                         body.velocity = Vector3.zero;
-                        body.AddRelativeForce(new Vector3(Mathf.Sign(horizontalInput) * 12f,0f,0f), ForceMode.VelocityChange);
+                        body.AddRelativeForce(new Vector3(Mathf.Sign(horizontalInput) * 12f, 0f, 0f), ForceMode.VelocityChange);
                         body.velocity = Vector3.zero;
                     }
                     Vector3 horiDirection = new Vector3(Mathf.Sign(horizontalInput), 0, 0);
@@ -149,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Mouse1))
                     {
                         body.velocity = Vector3.zero;
-                        body.AddRelativeForce(new Vector3(0f,0f,10f), ForceMode.VelocityChange);
+                        body.AddRelativeForce(new Vector3(0f, 0f, 10f), ForceMode.VelocityChange);
                         body.velocity = Vector3.zero;
                     }
 
@@ -169,7 +192,7 @@ public class PlayerMovement : MonoBehaviour
                     jumping = true;
                     walking = false;
                     running = false;
-                    body.AddForce(new Vector3(0f, 25,0f), ForceMode.Impulse);
+                    body.AddForce(new Vector3(0f, 25, 0f), ForceMode.Impulse);
                 }
                 else
                 {
@@ -201,11 +224,56 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         if (Input.GetButtonDown("Switch"))
-        { playing = !playing; }
+        {
+            playing = !playing;
+            if (playing)
+            {
+                camera = GameObject.Find("Main Camera");
+                agent.enabled = false;
+
+            }
+            else
+            {
+                agent.enabled = true;
+                running = false;
+                jumping = false;
+
+            }
+        }
         if (playing)
         {
             DecidePickable();
             DetectKeyInput();
         }
+        else
+        {
+            Follow();
+        }
+    }
+
+    void Follow()
+    {
+        walking = true;
+        float distFromPlayer = Vector3.Distance(otherCharacter.transform.position, transform.position);
+        if (distFromPlayer < bufferRadius)
+        {
+            if (distFromPlayer < tooCloseRadius)
+            {
+                agent.isStopped = true;
+                Vector3 targetDirection = transform.position - otherCharacter.transform.position;
+                transform.Translate(-targetDirection.normalized * 2 * Time.deltaTime);
+
+            }
+            else
+            {
+                agent.isStopped = true;
+            }
+        }
+        else
+        {
+            agent.isStopped = false;
+            agent.SetDestination(otherCharacter.transform.position);
+        }
+        walking = false;
     }
 }
