@@ -30,7 +30,7 @@ public class NPCMovement : MonoBehaviour, IMovement
     const float bufferDist = .2f; //max dist from destination point before going somewhere else
     int pauseCount = 0; //keeps track of how long NPC has been chilling at destination
     int lingerLength; //length of pause 
-    const int smallPause = 0, largePause = 4; //max and min pause lengths
+    const int smallPause = 1, largePause = 4; //max and min pause lengths
 
     float engagementRadius = 0f;
     float bufferRadius = 3f;
@@ -158,8 +158,9 @@ public class NPCMovement : MonoBehaviour, IMovement
             if (distFromPlayer < tooCloseRadius)
             {
                 Vector3 targetDirection = self.transform.position - player.transform.position;
-                self.transform.Translate(targetDirection.normalized * agent.speed * 2 * Time.deltaTime);
-
+                Vector3 newDest = self.transform.position + targetDirection.normalized * 10;
+                dest = getRandomDest(newDest, 1f);
+                GoHere(dest); 
             }
             else
             {
@@ -291,15 +292,33 @@ public class NPCMovement : MonoBehaviour, IMovement
     // always gets a reachable point on the navmesh
     private Vector3 getRandomDest()
     {
+        //float x, z;
+        //NavMeshHit hit;
+        //bool viablePosition = true, viablePath = true; 
+        //do
+        //{
+        //    x = wanderAreaOrigin.x + Random.Range(-wanderAreaRadius, wanderAreaRadius);
+        //    z = wanderAreaOrigin.z + Random.Range(-wanderAreaRadius, wanderAreaRadius);
+        //    viablePosition = NavMesh.SamplePosition(new Vector3(x, self.transform.position.y, z), out hit, 10.0f, NavMesh.AllAreas);
+        //    viablePath = agent.CalculatePath(hit.position, new NavMeshPath()); 
+        //} while (!viablePosition || !viablePath);
+
+        //return hit.position;
+        return getRandomDest(wanderAreaOrigin, wanderAreaRadius); 
+    }
+
+    // always gets a reachable point on the navmesh
+    private Vector3 getRandomDest(Vector3 origin, float radius)
+    {
         float x, z;
         NavMeshHit hit;
-        bool viablePosition = true, viablePath = true; 
+        bool viablePosition = true, viablePath = true;
         do
         {
-            x = wanderAreaOrigin.x + Random.Range(-wanderAreaRadius, wanderAreaRadius);
-            z = wanderAreaOrigin.z + Random.Range(-wanderAreaRadius, wanderAreaRadius);
+            x = origin.x + Random.Range(-radius, radius);
+            z = origin.z + Random.Range(-radius, radius);
             viablePosition = NavMesh.SamplePosition(new Vector3(x, self.transform.position.y, z), out hit, 10.0f, NavMesh.AllAreas);
-            viablePath = agent.CalculatePath(hit.position, new NavMeshPath()); 
+            viablePath = agent.CalculatePath(hit.position, new NavMeshPath());
         } while (!viablePosition || !viablePath);
 
         return hit.position;
