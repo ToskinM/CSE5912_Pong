@@ -6,12 +6,12 @@ public class PlayerInventory : MonoBehaviour
 {
     public List<GameObject> MoonFlowers = new List<GameObject>();
     public List<GameObject> WolfApples = new List<GameObject>();
-    private InventoryManager inventoryManager;
+    //private InventoryManager inventoryManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        inventoryManager = FindObjectOfType<InventoryManager>();
+        //inventoryManager = FindObjectOfType<InventoryManager>();
     }
 
     public void AddMoonFlower(GameObject i)
