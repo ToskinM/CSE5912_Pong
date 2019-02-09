@@ -17,6 +17,8 @@ public class AmaruController : MonoBehaviour
     NPCMovement npc;
     NavMeshAgent agent;
     AmaruDialogueTrigger talkTrig;
+    IPlayerController playerController; 
+    
 
     // Start is called before the first frame update
     void Start()
@@ -30,26 +32,35 @@ public class AmaruController : MonoBehaviour
         npc.SetEngagementDistances(engagementRadius, bufferDist, tooCloseRad);
 
         talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.AMARU_ICON);
+        playerController = Player.GetComponent<IPlayerController>(); 
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        talkTrig.Update();
-        npc.UpdateMovement(); 
+        if (playerController.Playing)
+        {
+            talkTrig.Update();
 
-        if(npc.Engaging && !talkTrig.Complete)
-        {
-            startEngagement(); 
-        }
-        else if(!npc.Wandering)
-        {
-            npc.ResumeWandering();
-            if (talkTrig.DialogueActive())
+            npc.UpdateMovement();
+
+            if (npc.Engaging && !talkTrig.Complete)
             {
-                talkTrig.EndDialogue();
+                startEngagement();
             }
+            else if (!npc.Wandering)
+            {
+                npc.ResumeWandering();
+                if (talkTrig.DialogueActive())
+                {
+                    talkTrig.EndDialogue();
+                }
+            }
+        }
+        else
+        {
+            npc.UpdateMovement();
         }
 
     }

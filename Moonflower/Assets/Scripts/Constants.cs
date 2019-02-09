@@ -22,7 +22,7 @@ public static class Constants
     public const string SAVE_CPU_SCORE = "CPUScore";
 
     //image names
-    const string folder = "Images/Icons/";
+    const string folder = "Icons/";
     public const string ANAI_ICON = folder + "Anai";
     public const string NAIA_ICON = folder + "Naia";
     public const string AMARU_ICON = folder + "Amaru";

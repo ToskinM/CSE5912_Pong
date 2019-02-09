@@ -6,32 +6,30 @@ using UnityEngine;
 public class Node
 {
     string prompt;
-    bool hasOptions;
     List<string> options;
-    List<Node> children;
+    Dictionary<string, Node> children;
+    string defaultString = "default"; 
 
     public Node()
     {
         prompt = "";
-        hasOptions = false;
         options = new List<string>();
-        children = new List<Node>();
+        children = new Dictionary<string, Node>();
     }
 
     public Node(string text)
     {
+        //Debug.Log("Create Node: " + text); 
         prompt = text;
-        hasOptions = false;
         options = new List<string>();
-        children = new List<Node>();
+        children = new Dictionary<string, Node>();
     }
 
     public Node(string text, List<string> optionNodes)
     {
         prompt = text;
-        hasOptions = true;
         options = optionNodes;
-        children = new List<Node>();
+        children = new Dictionary<string, Node>();
     }
 
     public string Prompt()
@@ -41,7 +39,7 @@ public class Node
 
     public bool HasOptions()
     {
-        return hasOptions;
+        return options.Count > 0;
     }
 
     //public int NumChildren()
@@ -56,21 +54,28 @@ public class Node
 
     public Node GetNext(string option)
     {
-        return children[options.IndexOf(option)];
+        if (children.ContainsKey(option))
+            return children[option];
+        else
+        {
+            Debug.Log("No node for: " + option); 
+            return null;
+        }
     }
     public Node GetNext()
     {
-        if (children.Count > 0)
-            return children[0];
+        if (children.ContainsKey(defaultString))
+            return children[defaultString];
         else
-            return null; 
+        {
+            Debug.Log("No default node for: " + prompt);
+            return null;
+        }
     }
 
     public void AddOption(string op)
     {
         options.Add(op);
-        if (!hasOptions)
-            hasOptions = true;
     }
 
     public void AddResponse(string op, string resp)
@@ -79,13 +84,13 @@ public class Node
             options.Add(op);
 
         Node n = new Node(resp);
-        children.Insert(options.IndexOf(op), n);
+        children.Add(op, n);
     }
 
     public void AddNext(string s)
     {
         Node n = new Node(s);
-        children.Add(n);
+        children.Add(defaultString, n);
     }
 }
 

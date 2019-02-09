@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI; 
 
-public class AnaiController : MonoBehaviour
+public class AnaiController : MonoBehaviour, IPlayerController
 {
     public bool Playing { get; set; }
     public GameObject Mimbi;
