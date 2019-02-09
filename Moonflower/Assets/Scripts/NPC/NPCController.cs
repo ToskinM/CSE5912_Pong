@@ -36,7 +36,7 @@ public class NPCController : MonoBehaviour
     void Update()
     {
         talkTrig.Update();
-        npc.Update(); 
+        npc.UpdateMovement(); 
 
         if(npc.Engaging && !talkTrig.Complete)
         {
