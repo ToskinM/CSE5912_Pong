@@ -32,7 +32,7 @@ public class FieldOfView : MonoBehaviour
             viewMeshFilter.mesh = viewMesh;
         }
 
-        StartCoroutine("FindTargetsWithDelay", .2f);
+        StartCoroutine("FindTargetsWithDelay", 0.3f);
     }
 
 

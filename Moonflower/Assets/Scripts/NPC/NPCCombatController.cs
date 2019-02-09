@@ -9,10 +9,9 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     public bool IsBlocking { get; private set; }
     public bool hasWeaponOut;
     public GameObject weapon;
-    public bool inCombat; // (aggrod)
-    public bool isHit;
-    //public bool isBlocking;
-    public bool isAttacking;
+    [HideInInspector] public bool inCombat; // (aggrod)
+    [HideInInspector] public bool isHit;
+    [HideInInspector] public bool isAttacking;
     [HideInInspector] public int attack;
     [HideInInspector] public GameObject combatTarget;
 
@@ -31,8 +30,10 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     void Start()
     {
         //npcMovement = new NPCMovement(gameObject, GameObject.FindGameObjectWithTag("Player"), transform.position, 5, 10);
-        if (weapon)
-            weapon.SetActive(hasWeaponOut);
+        if (!weapon)
+            weapon = null;
+
+        weapon?.SetActive(hasWeaponOut);
         Stats = gameObject.GetComponent<CharacterStats>();
         fieldOfView = GetComponent<FieldOfView>();
         npcAnimationController = GetComponent<NPCAnimationController>();
@@ -115,7 +116,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     {
         if (hasWeaponOut)
         {
-            weapon.SetActive(false);
+            weapon?.SetActive(false);
             hasWeaponOut = false;
         }
     }
@@ -123,7 +124,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     {
         if (!hasWeaponOut)
         {
-            weapon.SetActive(true);
+            weapon?.SetActive(true);
             hasWeaponOut = true;
         }
     }
@@ -147,7 +148,12 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     private void CheckAggression()
     {
-        Transform possibleTarget = fieldOfView.closestTarget;
+        if (combatTarget != null && combatTarget.tag != "Player")
+        {
+            DeAggro();
+        }
+
+        Transform possibleTarget = fieldOfView?.closestTarget;
         if (possibleTarget != null)
         {
             switch (aggression)
@@ -177,13 +183,22 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         {
             //if (combatTarget != aggroTarget)
             //{
-                if (!inCombat)
-                    inCombat = true;
+            if (!inCombat)
+                inCombat = true;
 
-                combatTarget = aggroTarget;
-                Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
+            combatTarget = aggroTarget;
+            Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
             //}
         }
+    }
+    private void DeAggro()
+    {
+        if (inCombat)
+            inCombat = false;
+
+        combatTarget = null;
+        Debug.Log(gameObject.name + " stopped combat");
+        Sheathe();
     }
 
     private void CheckDeath()

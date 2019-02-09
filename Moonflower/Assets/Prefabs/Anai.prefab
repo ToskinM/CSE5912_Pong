@@ -720,7 +720,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &638714439
 Transform:
   m_ObjectHideFlags: 0
@@ -2040,7 +2040,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769887628}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -65.8}
   m_LocalScale: {x: 2.4007452, y: 2.4007452, z: 2.4007452}
   m_Children:
@@ -2172,8 +2172,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.630583, y: 1.31001, z: 0.511697}
-  m_Center: {x: -0.007631694, y: 0.57551306, z: -0.030327462}
+  m_Size: {x: 0.47, y: 1, z: 0.35}
+  m_Center: {x: -0.007631694, y: 0.5, z: -0.030327462}
 --- !u!114 &1769887629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2220,7 +2220,6 @@ MonoBehaviour:
   walkSpeed: 0
   rotateSpeed: 7
   jumpTimer: 0
-  playing: 0
   isAnai: 0
   pickupArea: {fileID: 1269331565}
   body: {fileID: 0}
@@ -2670,11 +2669,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.37
       objectReference: {fileID: 0}
-    - target: {fileID: 4727384469266215699, guid: 3e191d953f9f69b468286e1cae6a7f57,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: source
@@ -2786,21 +2780,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.27000004
       objectReference: {fileID: 0}
-    - target: {fileID: 4727384469266215699, guid: 3e191d953f9f69b468286e1cae6a7f57,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
-        type: 3}
-      propertyPath: damage
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: source
       value: 
       objectReference: {fileID: 1769887628}
+    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: damage
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e191d953f9f69b468286e1cae6a7f57, type: 3}
 --- !u!1 &7298912430922748171 stripped

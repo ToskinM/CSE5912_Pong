@@ -13,7 +13,7 @@ public class CombatantTempMovement : MonoBehaviour
     private NPCCombatController npcCombatController;
     private Vector3 startPosition;
 
-    const float bufferRadius = 3f;
+    const float bufferRadius = 2.5f;
     const float tooCloseRadius = 2f;
     const float deaggroRadius = 10f;
 
