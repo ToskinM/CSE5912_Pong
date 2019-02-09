@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 
-public class NPCController : MonoBehaviour
+public class AmaruController : MonoBehaviour
 {
     public GameObject Player;
     public GameObject WalkArea;
     public GameObject DialoguePanel;
 
     const float engagementRadius = 15f;
-    //const float bufferRadius = 3f;
-    //const float tooCloseRadius = 2.5f; 
+    const float tooCloseRad = 4f;
+    const float bufferDist = 5f; 
     bool engaging = false;
     NPCMovement npc;
     NavMeshAgent agent;
@@ -27,6 +27,7 @@ public class NPCController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
 
         npc = new NPCMovement(gameObject, Player, walkOrigin, walkRad, engagementRadius);
+        npc.SetEngagementDistances(engagementRadius, bufferDist, tooCloseRad); 
 
         talkTrig = new AmaruDialogueTrigger(DialoguePanel);
     }

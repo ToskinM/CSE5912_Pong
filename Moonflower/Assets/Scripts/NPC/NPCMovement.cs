@@ -8,22 +8,30 @@ public class NPCMovement : MonoBehaviour, IMovement
     public Actions Action { get; set; }
     public bool Jumping { get; set; }
 
+
     public bool Wandering { get { return wandering; } } //currently wandering
     public bool CanWander { get { return canWander; } } //capable of wandering
     public bool CanEngage { get; set; } //capable of being talked to 
     public bool Engaging { get { return engaging; } } //currently being talked to 
     public bool AvoidsPlayer { get; set; } = false;
+    public bool FollowingPlayer { get; set; } = false; 
 
     GameObject player;
     GameObject self;
     bool canWander;
     bool wandering;
     bool engaging;
+    private bool stickingAround = false;
+    int stickAroundCount = 0;
+    int stickAroundMax = 10; 
 
     NavMeshAgent agent;
     Vector3 dest;
     Vector3 wanderAreaOrigin;
-    float wanderAreaRadius = 5f;
+    float wanderAreaRadius = 5f; //default
+    float followDist = 5; //default
+    float baseSpeed;
+    float summonDist = 0; 
 
     float avoidsPlayerRadius = 10f;
 
@@ -32,6 +40,7 @@ public class NPCMovement : MonoBehaviour, IMovement
     int lingerLength; //length of pause 
     const int smallPause = 1, largePause = 4; //max and min pause lengths
 
+    //default
     float engagementRadius = 0f;
     float bufferRadius = 3f;
     float tooCloseRadius = 2.5f;
@@ -39,9 +48,7 @@ public class NPCMovement : MonoBehaviour, IMovement
     //initialize so player CANNOT wander CANNOT engage
     public NPCMovement(GameObject selfOb, GameObject playerOb)
     {
-        player = playerOb;
-        self = selfOb;
-        agent = self.GetComponent<NavMeshAgent>();
+        commonSetup(selfOb, playerOb);
 
         canWander = false;
         wandering = false;
@@ -53,16 +60,12 @@ public class NPCMovement : MonoBehaviour, IMovement
         dest = new Vector3(0, 0, 0);
         wanderAreaOrigin = new Vector3(0, 0, 0);
 
-        lingerLength = getRandomPause();
     }
 
     //initialize so player CAN wander CANNOT engage
     public NPCMovement(GameObject selfOb, GameObject playerOb, Vector3 wanderOrigin, float wanderRadius)
     {
-        player = playerOb;
-        self = selfOb;
-        agent = self.GetComponent<NavMeshAgent>();
-
+        commonSetup(selfOb, playerOb);
         canWander = true;
         wandering = true;
 
@@ -73,18 +76,12 @@ public class NPCMovement : MonoBehaviour, IMovement
         wanderAreaRadius = wanderRadius;
         dest = getRandomDest();
         self.transform.position = dest;
-
-        lingerLength = getRandomPause();
-
     }
 
     //initialize so player CAN wander CAN engage
     public NPCMovement(GameObject selfOb, GameObject playerOb, Vector3 wanderOrigin, float wanderRadius, float maxEngagementDistance)
     {
-        player = playerOb;
-        self = selfOb;
-        agent = self.GetComponent<NavMeshAgent>();
-
+        commonSetup(selfOb, playerOb);
 
         canWander = true;
         wandering = true;
@@ -92,23 +89,20 @@ public class NPCMovement : MonoBehaviour, IMovement
         CanEngage = true;
         engaging = false;
 
+
         engagementRadius = maxEngagementDistance;
 
         wanderAreaOrigin = wanderOrigin;
         wanderAreaRadius = wanderRadius;
         dest = getRandomDest();
         self.transform.position = dest;
-
-        lingerLength = getRandomPause();
 
     }
 
     //initialize so player CANNOT wander CAN engage
     public NPCMovement(GameObject selfOb, GameObject playerOb, float maxEngagementDistance)
     {
-        player = playerOb;
-        self = selfOb;
-        agent = self.GetComponent<NavMeshAgent>();
+        commonSetup(selfOb, playerOb); 
 
         canWander = false;
         wandering = false;
@@ -116,11 +110,21 @@ public class NPCMovement : MonoBehaviour, IMovement
         CanEngage = true;
         engaging = false;
 
+
         engagementRadius = maxEngagementDistance;
 
         //default
         dest = new Vector3(0, 0, 0);
         wanderAreaOrigin = new Vector3(0, 0, 0);
+    }
+
+    //called by all constructors
+    private void commonSetup(GameObject selfOb, GameObject playerOb)
+    {
+        player = playerOb;
+        self = selfOb;
+        agent = self.GetComponent<NavMeshAgent>();
+        baseSpeed = agent.speed;
 
         lingerLength = getRandomPause();
     }
@@ -128,30 +132,49 @@ public class NPCMovement : MonoBehaviour, IMovement
 
     public void UpdateMovement()
     {
-        if (Wandering)
-        {
-            wander();
-        }
+        if (!agent.enabled)
+            agent.enabled = true;
 
-        if (CanEngage)
-        {
-            if (!Engaging)
+            if (Wandering)
             {
-                float distFromPlayer = Vector3.Distance(player.transform.position, self.transform.position);
-                SetEngaging(distFromPlayer <= engagementRadius);
+                wander();
             }
-            if (Engaging)
+
+            if (CanEngage)
             {
-                engage();
+                if (!Engaging)
+                {
+                    float distFromPlayer = Vector3.Distance(player.transform.position, self.transform.position);
+                    SetEngaging(distFromPlayer <= engagementRadius);
+                }
+                if (Engaging)
+                {
+                    engage();
+                }
+            }
+
+            if (FollowingPlayer || stickingAround)
+            {
+                follow();
+            }
+        
+        if(stickingAround)
+        {
+            stickAroundCount++;
+            if(stickAroundCount > stickAroundMax*60)
+            {
+                stickingAround = false;
+                stickAroundCount = 0;
+                ResumeWandering();
+                Debug.Log("wander!!"); 
             }
         }
-
 
     }
 
     private void engage()
     {
-        float distFromPlayer = Vector3.Distance(player.transform.position, self.transform.position);
+        float distFromPlayer = getXZDist(player.transform.position, self.transform.position);
         SetWandering(false);
         if (distFromPlayer < bufferRadius)
         {
@@ -160,33 +183,50 @@ public class NPCMovement : MonoBehaviour, IMovement
                 Vector3 targetDirection = self.transform.position - player.transform.position;
                 Vector3 newDest = self.transform.position + targetDirection.normalized * 10;
                 dest = getRandomDest(newDest, 1f);
-                GoHere(dest); 
+                GoHere(dest);
+                agent.speed *= 2;
             }
             else
             {
                 Chill();
             }
         }
-        else
+        else if (distFromPlayer < engagementRadius)
             GoHere(player.transform.position);
+        else
+            SetEngaging(false); 
+    }
 
-
+    private void follow()
+    {
+        float distFromPlayer = Vector3.Distance(player.transform.position, self.transform.position);
+        bool atDest = getXZDist(self.transform.position, dest) <= bufferDist;
+        if (distFromPlayer > followDist * 1.3)
+        {
+            agent.isStopped = false;
+            dest = getRandomDest(player.transform.position, followDist);
+            GoHere(dest);
+        }
+        else if (atDest || distFromPlayer > followDist)
+        {
+            Chill(); 
+        }
     }
 
     private void wander()
     {
-        //Debug.Log("I am wandering!");
         float destDistFromPlayer = Vector3.Distance(player.transform.position, dest);
         if (AvoidsPlayer && destDistFromPlayer < avoidsPlayerRadius)
         {
             agent.isStopped = false;
-            Action = Actions.Walking;
+            //Action = Actions.Walking;
             dest = getRandomDest();
         }
 
         bool atDest = getXZDist(self.transform.position, dest) <= bufferDist;
         if (atDest && !agent.isStopped)
         {
+            Chill(); 
             Action = Actions.Chilling;
             agent.isStopped = true;
         }
@@ -210,6 +250,22 @@ public class NPCMovement : MonoBehaviour, IMovement
         {
             GoHere(dest); 
         }
+    }
+
+    public void RunToPlayer()
+    {
+        Action = Actions.Running;
+        followDist = followDist/1.5f; 
+        dest = player.transform.position;
+        agent.speed = baseSpeed * 2;
+
+        stickingAround = true; 
+    }
+
+    public void SetFollowingDist(float followDistance)
+    {
+        FollowingPlayer = true;
+        followDist = followDistance;
     }
 
     public void SetWandering(bool isWandering)
@@ -265,12 +321,14 @@ public class NPCMovement : MonoBehaviour, IMovement
     {
         Action = Actions.Chilling;
         agent.isStopped = true;
+        agent.speed = baseSpeed; 
     }
 
     //send NPC to location
     public void GoHere(Vector3 loc)
     {
-        Action = Actions.Walking;
+        if (Action != Actions.Running)
+            Action = Actions.Walking;
         agent.isStopped = false;
         agent.SetDestination(loc);
     }
@@ -278,7 +336,7 @@ public class NPCMovement : MonoBehaviour, IMovement
     //make NPC start wandering again
     public void ResumeWandering()
     {
-        if (canWander)
+        if (CanWander)
         {
             SetWandering(true);
             dest = getRandomDest();
@@ -286,6 +344,7 @@ public class NPCMovement : MonoBehaviour, IMovement
 
             lingerLength = getRandomPause();
             pauseCount = 0;
+            agent.speed = baseSpeed; 
         }
     }
 

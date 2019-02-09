@@ -19,7 +19,7 @@ public class MimbiController : MonoBehaviour
     NPCMovement npcMove; 
     PlayerCombatController playCombat;
     NavMeshAgent agent;
-    //const float hanginRadius = 15f;
+    BoxCollider boxCollider; 
     const float bufferRadius = 5f;
     const float tooCloseRadius = 4f;
     float wanderRadius = 15f; 
@@ -35,7 +35,8 @@ public class MimbiController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         playMove = GetComponent<PlayerMovement>();
         playCombat = GetComponent<PlayerCombatController>();
-        playAnimate = GetComponent<PlayerAnimatorController>(); 
+        playAnimate = GetComponent<PlayerAnimatorController>();
+        boxCollider = GetComponent<BoxCollider>(); 
         npcMove = new NPCMovement(gameObject, Anai, Anai.transform.position, wanderRadius);
 
         playAnimate.movement = npcMove;
@@ -56,6 +57,7 @@ public class MimbiController : MonoBehaviour
                 //camera = Camera.main;
                 agent.enabled = false;
                 playAnimate.movement = playMove;
+                boxCollider.enabled = true; 
 
             }
             else
@@ -64,12 +66,12 @@ public class MimbiController : MonoBehaviour
                 agent.enabled = true;
                 //enable npc movement
                 playAnimate.movement = npcMove;
+                boxCollider.enabled = false; 
             }
         }
 
         if (Playing)
         {
-            Debug.Log("Mimbi is playing!"); 
             playMove.MovementUpdate();
         }
         else
@@ -80,6 +82,10 @@ public class MimbiController : MonoBehaviour
         }
     }
 
+    public void Summon()
+    {
+        npcMove.RunToPlayer();
+    }
 
 
 }

@@ -14,17 +14,13 @@ public class PlayerMovement : MonoBehaviour, IMovement
     public float walkSpeed;
     public float rotateSpeed = 20f;
     public float jumpTimer = 0;
-    [HideInInspector] public bool playing;
     public bool isAnai;
-    //[HideInInspector] public bool walking;
-    //[HideInInspector] public bool running;
     public GameObject pickupArea;
     public Rigidbody body;
 
     private Camera camera;
 
     //follow variables
-    private NavMeshAgent agent;
     private BoxCollider boxCollider;
     const float bufferRadius = 5f;
     const float tooCloseRadius = 4f;
@@ -42,27 +38,13 @@ public class PlayerMovement : MonoBehaviour, IMovement
         walkSpeed = 3f;
         runSpeed = 7f;
         pickupArea.SetActive(false);
-        agent = GetComponent<NavMeshAgent>();
-        boxCollider = GetComponent<BoxCollider>();
 
         Action = Actions.Chilling;
         Jumping = false; 
 
-        if (this.gameObject.name == "Anai")
-        {
-            playing = true;
-            boxCollider.enabled = true;
-            agent.enabled = false;
-            this.camera = Camera.main;
-        }
-        else
-        {
-            boxCollider.enabled = false;
-            this.camera = null;
-            agent.enabled = true;
-            playing = false;
-        }
+        this.camera = Camera.main;
     }
+
     void DetectKeyInput()
     {
         float verticalInput = Input.GetAxis("Vertical");
@@ -230,40 +212,11 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     public void MovementUpdate()
     {
-            DecidePickable();
-            if (!camera.GetComponent<FollowCamera>().freeRoam && !camera.GetComponent<FollowCamera>().switching)
-            {
-                DetectKeyInput();
-            }
+        DecidePickable();
+        if (!camera.GetComponent<FollowCamera>().freeRoam && !camera.GetComponent<FollowCamera>().switching)
+        {
+            DetectKeyInput();
+        }
         
-        }
-
-    void Follow()
-    {
-        float distFromPlayer = Vector3.Distance(otherCharacter.transform.position, transform.position);
-        if (distFromPlayer < bufferRadius)
-        {
-            Action = Actions.Chilling;
-            if (distFromPlayer < tooCloseRadius)
-            {
-                agent.isStopped = true;
-               
-
-                Vector3 targetDirection = transform.position - otherCharacter.transform.position;
-                transform.Translate(-targetDirection.normalized * 2 * Time.deltaTime);
-
-            }
-            else
-            {
-                agent.isStopped = true;
-
-            }
-        }
-        else
-        {
-            Action = Actions.Walking;
-            agent.isStopped = false;
-            agent.SetDestination(otherCharacter.transform.position);
-        }
     }
 }

@@ -13,19 +13,17 @@ public class AnaiController : MonoBehaviour
     public float smoothTime = 2f;
     public float rotateSpeed = 15f;
 
+    MimbiController mimbiController; 
 
     PlayerMovement playMove;
     NPCMovement npcMove; 
     PlayerAnimatorController playAnimate; 
     PlayerCombatController playCombat; 
     NavMeshAgent agent;
-    //const float hanginRadius = 15f;
+    BoxCollider boxCollider;
     const float bufferRadius = 5f;
-    const float tooCloseRadius = 4f;
-    //bool engaging = false;
-    //NPCMovement npc;
-    //NavMeshAgent agent;
-    float wanderRadius = 8f; 
+    const float tooCloseRadius = 2f;
+    float followDist = 8f; 
 
 
     // Start is called before the first frame update
@@ -34,12 +32,16 @@ public class AnaiController : MonoBehaviour
         Playing = true;
         moveSpeed = 5f;
 
-        Mimbi = GameObject.Find("Mimbi"); 
+        Mimbi = GameObject.Find("Mimbi");
         agent = GetComponent<NavMeshAgent>();
         playMove = GetComponent<PlayerMovement>();
         playCombat = GetComponent<PlayerCombatController>();
         playAnimate = GetComponent<PlayerAnimatorController>();
-        npcMove = new NPCMovement(gameObject, Mimbi, Mimbi.transform.position, wanderRadius);
+        boxCollider = GetComponent<BoxCollider>(); 
+        npcMove = new NPCMovement(gameObject, Mimbi);
+
+        npcMove.SetFollowingDist(followDist); 
+        npcMove.SetAvoidsPlayerRadius(tooCloseRadius);
 
         playAnimate.movement = playMove; 
     }
@@ -57,6 +59,7 @@ public class AnaiController : MonoBehaviour
                 //camera = Camera.main;
                 agent.enabled = false;
                 playAnimate.movement = playMove;
+                boxCollider.enabled = true; 
 
             }
             else
@@ -64,18 +67,24 @@ public class AnaiController : MonoBehaviour
                 playCombat.enabled = false;
                 tag = "Companion";
                 agent.enabled = true;
-                //enable npc movement
                 playAnimate.movement = npcMove;
+                boxCollider.enabled = false; 
             }
         }
 
-        if(Playing)
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            Mimbi.GetComponent<MimbiController>().Summon(); 
+        }
+
+        if (Playing)
             playMove.MovementUpdate(); 
         else
         {
-            npcMove.SetWanderArea(Mimbi.transform.position, wanderRadius);
             npcMove.UpdateMovement();
         }
 
     }
+
+    
 }
