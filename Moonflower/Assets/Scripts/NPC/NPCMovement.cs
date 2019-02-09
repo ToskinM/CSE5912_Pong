@@ -8,30 +8,31 @@ public class NPCMovement : MonoBehaviour, IMovement
     public Actions Action { get; set; }
     public bool Jumping { get; set; }
 
-
     public bool Wandering { get { return wandering; } } //currently wandering
     public bool CanWander { get { return canWander; } } //capable of wandering
     public bool CanEngage { get; set; } //capable of being talked to 
     public bool Engaging { get { return engaging; } } //currently being talked to 
+    public bool Attacking { get { return attacking; } set { attacking = value; } } //currently persuing a combat target 
     public bool AvoidsPlayer { get; set; } = false;
-    public bool FollowingPlayer { get; set; } = false; 
+    public bool FollowingPlayer { get; set; } = false;
 
-    GameObject player;
+    public GameObject player;
     GameObject self;
     bool canWander;
     bool wandering;
     bool engaging;
+    bool attacking;
     private bool stickingAround = false;
     int stickAroundCount = 0;
-    int stickAroundMax = 10; 
+    int stickAroundMax = 10;
 
     NavMeshAgent agent;
-    Vector3 dest;
+    Vector3 destination;
     Vector3 wanderAreaOrigin;
     float wanderAreaRadius = 5f; //default
     float followDist = 5; //default
     float baseSpeed;
-    float summonDist = 0; 
+    float summonDist = 0;
 
     float avoidsPlayerRadius = 10f;
 
@@ -57,7 +58,7 @@ public class NPCMovement : MonoBehaviour, IMovement
         engaging = false;
 
         //default
-        dest = new Vector3(0, 0, 0);
+        destination = new Vector3(0, 0, 0);
         wanderAreaOrigin = new Vector3(0, 0, 0);
 
     }
@@ -74,8 +75,8 @@ public class NPCMovement : MonoBehaviour, IMovement
 
         wanderAreaOrigin = wanderOrigin;
         wanderAreaRadius = wanderRadius;
-        dest = getRandomDest();
-        self.transform.position = dest;
+        destination = getRandomDest();
+        self.transform.position = destination;
     }
 
     //initialize so player CAN wander CAN engage
@@ -94,15 +95,15 @@ public class NPCMovement : MonoBehaviour, IMovement
 
         wanderAreaOrigin = wanderOrigin;
         wanderAreaRadius = wanderRadius;
-        dest = getRandomDest();
-        self.transform.position = dest;
+        destination = getRandomDest();
+        self.transform.position = destination;
 
     }
 
     //initialize so player CANNOT wander CAN engage
     public NPCMovement(GameObject selfOb, GameObject playerOb, float maxEngagementDistance)
     {
-        commonSetup(selfOb, playerOb); 
+        commonSetup(selfOb, playerOb);
 
         canWander = false;
         wandering = false;
@@ -114,7 +115,7 @@ public class NPCMovement : MonoBehaviour, IMovement
         engagementRadius = maxEngagementDistance;
 
         //default
-        dest = new Vector3(0, 0, 0);
+        destination = new Vector3(0, 0, 0);
         wanderAreaOrigin = new Vector3(0, 0, 0);
     }
 
@@ -135,9 +136,15 @@ public class NPCMovement : MonoBehaviour, IMovement
         if (!agent.enabled)
             agent.enabled = true;
 
+        if (attacking)
+        {
+            Attack();
+        }
+        else
+        {
             if (Wandering)
             {
-                wander();
+                Wander();
             }
 
             if (CanEngage)
@@ -149,30 +156,30 @@ public class NPCMovement : MonoBehaviour, IMovement
                 }
                 if (Engaging)
                 {
-                    engage();
+                    Engage();
                 }
             }
 
             if (FollowingPlayer || stickingAround)
             {
-                follow();
+                Follow();
             }
-        
-        if(stickingAround)
-        {
-            stickAroundCount++;
-            if(stickAroundCount > stickAroundMax*60)
+
+            if (stickingAround)
             {
-                stickingAround = false;
-                stickAroundCount = 0;
-                ResumeWandering();
-                Debug.Log("wander!!"); 
+                stickAroundCount++;
+                if (stickAroundCount > stickAroundMax * 60)
+                {
+                    stickingAround = false;
+                    stickAroundCount = 0;
+                    ResumeWandering();
+                    Debug.Log("wander!!");
+                }
             }
         }
-
     }
 
-    private void engage()
+    private void Engage()
     {
         float distFromPlayer = getXZDist(player.transform.position, self.transform.position);
         SetWandering(false);
@@ -182,8 +189,8 @@ public class NPCMovement : MonoBehaviour, IMovement
             {
                 Vector3 targetDirection = self.transform.position - player.transform.position;
                 Vector3 newDest = self.transform.position + targetDirection.normalized * 10;
-                dest = getRandomDest(newDest, 1f);
-                GoHere(dest);
+                destination = getRandomDest(newDest, 1f);
+                GoHere(destination);
                 agent.speed *= 2;
             }
             else
@@ -194,39 +201,65 @@ public class NPCMovement : MonoBehaviour, IMovement
         else if (distFromPlayer < engagementRadius)
             GoHere(player.transform.position);
         else
-            SetEngaging(false); 
+            SetEngaging(false);
     }
 
-    private void follow()
+    private void Follow()
     {
         float distFromPlayer = Vector3.Distance(player.transform.position, self.transform.position);
-        bool atDest = getXZDist(self.transform.position, dest) <= bufferDist;
+        bool atDest = getXZDist(self.transform.position, destination) <= bufferDist;
         if (distFromPlayer > followDist * 1.3)
         {
             agent.isStopped = false;
-            dest = getRandomDest(player.transform.position, followDist);
-            GoHere(dest);
+            destination = getRandomDest(player.transform.position, followDist);
+            GoHere(destination);
         }
         else if (atDest || distFromPlayer > followDist)
         {
-            Chill(); 
+            Chill();
         }
     }
 
-    private void wander()
+    private void Attack()
     {
-        float destDistFromPlayer = Vector3.Distance(player.transform.position, dest);
+        float distFromPlayer = getXZDist(player.transform.position, self.transform.position);
+        SetWandering(false);
+
+        // If we're within buffer radius
+        if (distFromPlayer < bufferRadius)
+        {
+            if (distFromPlayer < tooCloseRadius)
+            {
+                // Move back a bit
+                Vector3 targetDirection = self.transform.position - player.transform.position;
+                Vector3 newDest = self.transform.position + targetDirection.normalized * 10;
+                destination = getRandomDest(newDest, 1f);
+                GoHere(destination);
+                agent.speed *= 2;
+            }
+            else
+            {
+                Chill();
+            }
+        }
+        else
+            GoHere(player.transform.position); // pursue combat target
+    }
+
+    private void Wander()
+    {
+        float destDistFromPlayer = Vector3.Distance(player.transform.position, destination);
         if (AvoidsPlayer && destDistFromPlayer < avoidsPlayerRadius)
         {
             agent.isStopped = false;
             //Action = Actions.Walking;
-            dest = getRandomDest();
+            destination = getRandomDest();
         }
 
-        bool atDest = getXZDist(self.transform.position, dest) <= bufferDist;
+        bool atDest = getXZDist(self.transform.position, destination) <= bufferDist;
         if (atDest && !agent.isStopped)
         {
-            Chill(); 
+            Chill();
             Action = Actions.Chilling;
             agent.isStopped = true;
         }
@@ -234,8 +267,8 @@ public class NPCMovement : MonoBehaviour, IMovement
         {
             if (pauseCount == lingerLength)
             {
-                dest = getRandomDest();
-                GoHere(dest);
+                destination = getRandomDest();
+                GoHere(destination);
 
                 lingerLength = getRandomPause();
                 pauseCount = 0;
@@ -248,18 +281,18 @@ public class NPCMovement : MonoBehaviour, IMovement
         }
         else
         {
-            GoHere(dest); 
+            GoHere(destination);
         }
     }
 
     public void RunToPlayer()
     {
         Action = Actions.Running;
-        followDist = followDist/1.5f; 
-        dest = player.transform.position;
+        followDist = followDist / 1.5f;
+        destination = player.transform.position;
         agent.speed = baseSpeed * 2;
 
-        stickingAround = true; 
+        stickingAround = true;
     }
 
     public void SetFollowingDist(float followDistance)
@@ -293,10 +326,10 @@ public class NPCMovement : MonoBehaviour, IMovement
 
     public void StayClose(Vector3 loc)
     {
-        if(getXZDist(dest,loc) > wanderAreaRadius)
+        if (getXZDist(destination, loc) > wanderAreaRadius)
         {
             wanderAreaOrigin = loc;
-            dest = getRandomDest(); 
+            destination = getRandomDest();
         }
     }
 
@@ -321,7 +354,7 @@ public class NPCMovement : MonoBehaviour, IMovement
     {
         Action = Actions.Chilling;
         agent.isStopped = true;
-        agent.speed = baseSpeed; 
+        agent.speed = baseSpeed;
     }
 
     //send NPC to location
@@ -339,26 +372,26 @@ public class NPCMovement : MonoBehaviour, IMovement
         if (CanWander)
         {
             SetWandering(true);
-            dest = getRandomDest();
-            GoHere(dest); 
+            destination = getRandomDest();
+            GoHere(destination);
 
             lingerLength = getRandomPause();
             pauseCount = 0;
-            agent.speed = baseSpeed; 
+            agent.speed = baseSpeed;
         }
     }
 
     // always gets a reachable point on the navmesh
     private Vector3 getRandomDest()
     {
-        return getRandomDest(wanderAreaOrigin, wanderAreaRadius); 
+        return getRandomDest(wanderAreaOrigin, wanderAreaRadius);
     }
 
     // always gets a reachable point on the navmesh around origin 
     private Vector3 getRandomDest(Vector3 origin, float radius)
     {
         int count = 0;
-        int bailCount = 20; 
+        int bailCount = 20;
 
         float x, z;
         NavMeshHit hit;
@@ -370,11 +403,11 @@ public class NPCMovement : MonoBehaviour, IMovement
             viablePosition = NavMesh.SamplePosition(new Vector3(x, self.transform.position.y, z), out hit, radius, NavMesh.AllAreas);
             viablePath = agent.CalculatePath(hit.position, new NavMeshPath());
 
-            if(AvoidsPlayer && viablePath)
+            if (AvoidsPlayer && viablePath)
             {
-                notTooClose = getXZDist(hit.position, player.transform.position) > avoidsPlayerRadius; 
+                notTooClose = getXZDist(hit.position, player.transform.position) > avoidsPlayerRadius;
             }
-            count++; 
+            count++;
 
         } while ((!viablePosition || !viablePath || !notTooClose) && count < bailCount);
 

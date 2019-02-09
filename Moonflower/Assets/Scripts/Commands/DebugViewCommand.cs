@@ -14,6 +14,6 @@ public class DebugViewCommand : ICommand
 
     public void Execute()
     {
-        //camera.cullingMask |= ~(1 << 13);
+        camera.cullingMask ^= 1 << LayerMask.NameToLayer("Debug");
     }
 }

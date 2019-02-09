@@ -13,7 +13,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     [HideInInspector] public bool isHit;
     [HideInInspector] public bool isAttacking;
     [HideInInspector] public int attack;
-    [HideInInspector] public GameObject combatTarget;
+    [HideInInspector] public GameObject combatTarget = null;
 
     //public GameObject hitIndicator;
 
@@ -21,7 +21,9 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     private float timeSinceLastHurt;
     private float hurtDelay = 0.5f;
-    private float attackDistance = 2.6f;
+    private float deaggroTime = 3;
+    private Coroutine deaggroCoroutine = null;
+    public float attackDistance = 2.6f;
 
     private FieldOfView fieldOfView;
     private NPCAnimationController npcAnimationController;
@@ -148,32 +150,42 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     private void CheckAggression()
     {
+        // Deaggo from companion if character switches characters
         if (combatTarget != null && combatTarget.tag != "Player")
         {
             DeAggro();
         }
 
+        if (inCombat)
+        {
+            // Deaggro if we cant find target in time
+            if (fieldOfView.IsInFieldOfView(combatTarget.transform))
+            {
+                if (deaggroCoroutine != null)
+                {
+                    StopCoroutine(deaggroCoroutine);
+                    deaggroCoroutine = null;
+                }
+               
+            }
+            else if(deaggroCoroutine == null)
+                deaggroCoroutine = StartCoroutine(WaitForDeaggro());
+        }
+
+        // Search for a target OR closer target
         Transform possibleTarget = fieldOfView?.closestTarget;
         if (possibleTarget != null)
         {
-            switch (aggression)
+            if (aggression == Aggression.Aggressive)
             {
-                case (Aggression.Aggressive):
-                    {
-                        if (possibleTarget.tag == "Player" && combatTarget != possibleTarget)
-                        {
-                            Aggro(possibleTarget.gameObject, false);
-                        }
-                        break;
-                    }
-                case (Aggression.Frenzied):
-                    {
-                        Aggro(possibleTarget.gameObject, false);
-                        break;
-                    }
-
-                default:
-                    break;
+                if (possibleTarget.tag == "Player" && combatTarget != possibleTarget)
+                {
+                    Aggro(possibleTarget.gameObject, false);
+                }
+            }
+            else if (aggression == Aggression.Frenzied)
+            {
+                Aggro(possibleTarget.gameObject, false);
             }
         }
     }
@@ -199,6 +211,11 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         combatTarget = null;
         Debug.Log(gameObject.name + " stopped combat");
         Sheathe();
+    }
+    private IEnumerator WaitForDeaggro()
+    {
+        yield return new WaitForSeconds(deaggroTime);
+        DeAggro();
     }
 
     private void CheckDeath()

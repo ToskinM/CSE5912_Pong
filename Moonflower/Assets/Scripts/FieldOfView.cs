@@ -11,20 +11,25 @@ public class FieldOfView : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
+
     [HideInInspector] public List<Transform> visibleTargets = new List<Transform>();
     [HideInInspector] public Transform closestTarget = null;
     [HideInInspector] public Transform focusedTarget = null;
 
+    private Material emptyMaterial;
+    private Material foundMaterial;
     private float meshResolution = 1;
     private int edgeResolveIterations = 1;
     private float edgeDstThreshold = 1;
 
-    public bool drawViewMesh;
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
 
     void Start()
     {
+        foundMaterial = Resources.Load<Material>("Materials/TriggerRed");
+        emptyMaterial = Resources.Load<Material>("Materials/TriggerYellow");
+
         if (viewMeshFilter)
         {
             viewMesh = new Mesh();
@@ -44,6 +49,12 @@ public class FieldOfView : MonoBehaviour
             FindVisibleTargets();
             GetClosestTarget();
             GetFocusedTarget();
+
+            if (viewMeshFilter)
+                if (visibleTargets.Count > 0)
+                    viewMeshFilter.GetComponent<Renderer>().material = foundMaterial;
+                else
+                    viewMeshFilter.GetComponent<Renderer>().material = emptyMaterial;
         }
     }
 
@@ -111,6 +122,9 @@ public class FieldOfView : MonoBehaviour
 
     public bool IsInFieldOfView(Transform transform)
     {
+        if (transform == null)
+            return false;
+
         for (int i = 0; i < visibleTargets.Count; i++)
             if (visibleTargets[i] == transform)
                 return true;
@@ -130,15 +144,7 @@ public class FieldOfView : MonoBehaviour
     void LateUpdate()
     {
         if (viewMeshFilter)
-            if (drawViewMesh)
-            {
-                viewMeshFilter.gameObject.SetActive(true);
-                DrawFieldOfView();
-            }
-            else
-            {
-                viewMeshFilter.gameObject.SetActive(false);
-            }
+            DrawFieldOfView();
     }
 
     void DrawFieldOfView()
