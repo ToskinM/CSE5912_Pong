@@ -31,7 +31,8 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     void Start()
     {
         //npcMovement = new NPCMovement(gameObject, GameObject.FindGameObjectWithTag("Player"), transform.position, 5, 10);
-        weapon.SetActive(hasWeaponOut);
+        if (weapon)
+            weapon.SetActive(hasWeaponOut);
         Stats = gameObject.GetComponent<CharacterStats>();
         fieldOfView = GetComponent<FieldOfView>();
         npcAnimationController = GetComponent<NPCAnimationController>();
