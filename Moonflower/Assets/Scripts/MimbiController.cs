@@ -53,6 +53,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
             playCombat.enabled = Playing;
             if (Playing)
             {
+                gameObject.layer = 10;
                 tag = "Player";
                 //camera = Camera.main;
                 agent.enabled = false;
@@ -62,6 +63,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
             }
             else
             {
+                gameObject.layer = 0;
                 tag = "Companion";
                 agent.enabled = true;
                 //enable npc movement

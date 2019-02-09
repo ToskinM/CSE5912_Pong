@@ -58,6 +58,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
             if (Playing)
             {
                 playCombat.enabled = true;
+                gameObject.layer = 10;
                 tag = "Player";
                 //camera = Camera.main;
                 agent.enabled = false;
@@ -68,6 +69,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
             else
             {
                 playCombat.enabled = false;
+                gameObject.layer = 0;
                 tag = "Companion";
                 agent.enabled = true;
                 playAnimate.movement = npcMove;
