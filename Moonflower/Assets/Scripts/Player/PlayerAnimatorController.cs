@@ -14,8 +14,8 @@ public class PlayerAnimatorController : MonoBehaviour
 
     private Animator animator;
     private PlayerCombatController combatController;
-    private IMovement movement;
 
+    public IMovement movement { get; set; } 
     public GameObject[] attackHurtboxes;
 
     // Start is called before the first frame update

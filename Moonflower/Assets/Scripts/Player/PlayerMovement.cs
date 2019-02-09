@@ -228,43 +228,14 @@ public class PlayerMovement : MonoBehaviour, IMovement
         }
     }
 
-    void Update()
+    public void MovementUpdate()
     {
-        if (Input.GetButtonDown("Switch"))
+        DecidePickable();
+        if (!camera.GetComponent<FollowCamera>().freeRoam && !camera.GetComponent<FollowCamera>().switching)
         {
-            playing = !playing;
-            if (playing)
-            {
-                GetComponent<PlayerCombatController>().enabled = true;
-                tag = "Player";
-                camera = Camera.main;
-                //boxCollider.enabled = true;
-                agent.enabled = false;
-
-            }
-            else
-            {
-                GetComponent<PlayerCombatController>().enabled = false;
-                tag = "Companion";
-                agent.enabled = true;
-                Action = Actions.Chilling; 
-                //boxCollider.enabled = false;
-                Jumping = false; 
-
-            }
+            DetectKeyInput();
         }
-        if (playing)
-        {
-            DecidePickable();
-            if (!camera.GetComponent<FollowCamera>().freeRoam && !camera.GetComponent<FollowCamera>().switching)
-            {
-                DetectKeyInput();
-            }
-        }
-        else
-        {
-            Follow();
-        }
+        
     }
 
     void Follow()
