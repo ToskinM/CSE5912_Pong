@@ -292,36 +292,41 @@ public class NPCMovement : MonoBehaviour, IMovement
     // always gets a reachable point on the navmesh
     private Vector3 getRandomDest()
     {
-        //float x, z;
-        //NavMeshHit hit;
-        //bool viablePosition = true, viablePath = true; 
-        //do
-        //{
-        //    x = wanderAreaOrigin.x + Random.Range(-wanderAreaRadius, wanderAreaRadius);
-        //    z = wanderAreaOrigin.z + Random.Range(-wanderAreaRadius, wanderAreaRadius);
-        //    viablePosition = NavMesh.SamplePosition(new Vector3(x, self.transform.position.y, z), out hit, 10.0f, NavMesh.AllAreas);
-        //    viablePath = agent.CalculatePath(hit.position, new NavMeshPath()); 
-        //} while (!viablePosition || !viablePath);
-
-        //return hit.position;
         return getRandomDest(wanderAreaOrigin, wanderAreaRadius); 
     }
 
-    // always gets a reachable point on the navmesh
+    // always gets a reachable point on the navmesh around origin 
     private Vector3 getRandomDest(Vector3 origin, float radius)
     {
+        int count = 0;
+        int bailCount = 20; 
+
         float x, z;
         NavMeshHit hit;
-        bool viablePosition = true, viablePath = true;
+        bool viablePosition = true, viablePath = true, notTooClose = true;
         do
         {
             x = origin.x + Random.Range(-radius, radius);
             z = origin.z + Random.Range(-radius, radius);
-            viablePosition = NavMesh.SamplePosition(new Vector3(x, self.transform.position.y, z), out hit, 10.0f, NavMesh.AllAreas);
+            viablePosition = NavMesh.SamplePosition(new Vector3(x, self.transform.position.y, z), out hit, radius, NavMesh.AllAreas);
             viablePath = agent.CalculatePath(hit.position, new NavMeshPath());
-        } while (!viablePosition || !viablePath);
 
-        return hit.position;
+            if(AvoidsPlayer && viablePath)
+            {
+                notTooClose = getXZDist(hit.position, player.transform.position) > avoidsPlayerRadius; 
+            }
+            count++; 
+
+        } while ((!viablePosition || !viablePath || !notTooClose) && count < bailCount);
+
+        if (count == bailCount)
+        {
+            return new Vector3(x, 0, z);
+        }
+        else
+        {
+            return hit.position;
+        }
     }
 
     private int getRandomPause()

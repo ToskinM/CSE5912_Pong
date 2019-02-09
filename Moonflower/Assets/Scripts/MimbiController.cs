@@ -38,7 +38,9 @@ public class MimbiController : MonoBehaviour
         playAnimate = GetComponent<PlayerAnimatorController>(); 
         npcMove = new NPCMovement(gameObject, Anai, Anai.transform.position, wanderRadius);
 
-        playAnimate.movement = npcMove; 
+        playAnimate.movement = npcMove;
+
+        npcMove.SetAvoidsPlayerRadius(tooCloseRadius);  
     }
 
     // Update is called once per frame
