@@ -10,22 +10,28 @@ public class AmaruDialogueTrigger : MonoBehaviour
     bool complete = false;
 
     GameObject panel;
+    Image icon; 
     TextMeshProUGUI text;
     Button templateButton; 
     Queue<Button> buttons;
     bool active = false;
     Node dialogue;
     Node currNode;
-    ICommand freezeCommand; 
+    ICommand freezeCommand;
+    Sprite sprite;
+    string spriteFile; 
 
 
-    public AmaruDialogueTrigger(GameObject p)
+    public AmaruDialogueTrigger(GameObject p, string characterSprite)
     {
         panel = p; //GameObject.Find("Dialogue Panel");
-        text = panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        icon = panel.transform.GetChild(0).GetComponent<Image>(); 
+        text = panel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         buttons = new Queue<Button>();
-        templateButton = panel.transform.GetChild(1).GetComponent<Button>();
-        freezeCommand = new FreezeCameraCommand();  
+        templateButton = panel.transform.GetChild(2).GetComponent<Button>();
+        freezeCommand = new FreezeCameraCommand();
+        //sprite = characterSprite; 
+        spriteFile = characterSprite; 
 
         dialogue = new Node("Hello");
         string s = "Hi!";
@@ -81,6 +87,8 @@ public class AmaruDialogueTrigger : MonoBehaviour
     public void StartDialogue()
     {
         panel.SetActive(true);
+        icon.enabled = false; 
+        //icon.sprite = Resources.Load<Sprite>("Images/Icons/Amaru"); 
         active = true;
         freezeCommand.Execute(); 
     }
@@ -88,6 +96,7 @@ public class AmaruDialogueTrigger : MonoBehaviour
     public void EndDialogue()
     {
         panel.SetActive(false);
+        //icon.sprite = null; 
         buttons.Clear(); 
         active = false;
         freezeCommand.Execute();

@@ -20,4 +20,15 @@ public static class Constants
     public const string SAVE_CPU_POSITION = "CPUPosition";
     public const string SAVE_PLAYER_SCORE = "PlayerScore";
     public const string SAVE_CPU_SCORE = "CPUScore";
+
+    //image names
+    const string folder = "Images/Icons/";
+    public const string ANAI_ICON = folder + "Anai";
+    public const string NAIA_ICON = folder + "Naia";
+    public const string AMARU_ICON = folder + "Amaru";
+    public const string PINON_ICON = folder + "Pinon";
+    public const string SYPAVE_ICON = folder + "Sypave";
+    public const string TEGU_ICON = folder + "Tegu.PNG";
+    public const string KURUPI_ICON = folder + "Kurupi";
+    public const string MONAI_ICON = folder + "Monai"; 
 }

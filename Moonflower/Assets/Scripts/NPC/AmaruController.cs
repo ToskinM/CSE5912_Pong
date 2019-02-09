@@ -27,9 +27,9 @@ public class AmaruController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
 
         npc = new NPCMovement(gameObject, Player, walkOrigin, walkRad, engagementRadius);
-        npc.SetEngagementDistances(engagementRadius, bufferDist, tooCloseRad); 
+        npc.SetEngagementDistances(engagementRadius, bufferDist, tooCloseRad);
 
-        talkTrig = new AmaruDialogueTrigger(DialoguePanel);
+        talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.AMARU_ICON);
     }
 
 

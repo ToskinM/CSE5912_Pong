@@ -8,6 +8,8 @@ public class AnaiController : MonoBehaviour
     public bool Playing { get; set; }
     public GameObject Mimbi;
 
+    Sprite icon; 
+
     private float moveSpeed;
     private Vector3 velocity = Vector3.zero;
     public float smoothTime = 2f;
@@ -32,6 +34,7 @@ public class AnaiController : MonoBehaviour
         Playing = true;
         moveSpeed = 5f;
 
+        icon = new IconFactory().GetIcon(Constants.ANAI_ICON); 
         Mimbi = GameObject.Find("Mimbi");
         agent = GetComponent<NavMeshAgent>();
         playMove = GetComponent<PlayerMovement>();
