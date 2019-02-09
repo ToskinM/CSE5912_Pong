@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NPCMovement : MonoBehaviour
+public class NPCMovement : MonoBehaviour, IMovement
 {
+    public Actions Action { get; set; }
+    public bool Jumping { get; set; }
 
     public bool Wandering { get { return wandering; } } //currently wandering
     public bool CanWander { get { return canWander; } } //capable of wandering

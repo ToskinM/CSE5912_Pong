@@ -14,7 +14,7 @@ public class PlayerAnimatorController : MonoBehaviour
 
     private Animator animator;
     private PlayerCombatController combatController;
-    private PlayerMovement movement;
+    private IMovement movement;
 
     public GameObject[] attackHurtboxes;
 
@@ -48,31 +48,9 @@ public class PlayerAnimatorController : MonoBehaviour
             animator.SetBool(key_isAttack02, false);
         }
 
-        if (movement.walking)
-        {
-            animator.SetBool(key_isWalk, true);
-        }
-        else
-        {
-            animator.SetBool(key_isWalk, false);
-        }
-        if (movement.running)
-        {
-            print("SETRUN");
-            animator.SetBool(key_isRun, true);
-        }
-        else
-        {
-            animator.SetBool(key_isRun, false);
-        }
-        if (movement.jumping)
-        {
-            animator.SetBool(key_isJump, true);
-        }
-        else
-        {
-            animator.SetBool(key_isJump, false);
-        }
+        animator.SetBool(key_isWalk, movement.Action == Actions.Walking);
+        animator.SetBool(key_isRun, movement.Action == Actions.Running);
+        animator.SetBool(key_isJump, movement.Jumping);
     }
 
     public void EnableHurtbox(int index)

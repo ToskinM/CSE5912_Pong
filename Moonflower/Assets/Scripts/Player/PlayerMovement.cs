@@ -4,18 +4,20 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IMovement
 {
+    public Actions Action { get; set; }
+    public bool Jumping { get; set; }
+
     private float moveSpeed;
     public float runSpeed;
     public float walkSpeed;
     public float rotateSpeed = 20f;
     public float jumpTimer = 0;
     [HideInInspector] public bool playing;
-    [HideInInspector] public bool jumping;
     public bool isAnai;
-    [HideInInspector] public bool walking;
-    [HideInInspector] public bool running;
+    //[HideInInspector] public bool walking;
+    //[HideInInspector] public bool running;
     public GameObject pickupArea;
     public Rigidbody body;
 
@@ -43,6 +45,9 @@ public class PlayerMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         boxCollider = GetComponent<BoxCollider>();
 
+        Action = Actions.Chilling;
+        Jumping = false; 
+
         if (this.gameObject.name == "Anai")
         {
             playing = true;
@@ -68,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
         if (!camera.GetComponent<FollowCamera>().freeRoam)
         {
             // If we're LOCKED ON
-            if (camera.GetComponent<FollowCamera>().lockOnTarget != null && !running)
+            if (camera.GetComponent<FollowCamera>().lockOnTarget != null && Action != Actions.Running)
             {
                 // look at lock on target
                 Vector3 relative = camera.GetComponent<FollowCamera>().lockOnTarget.transform.position - transform.position;
@@ -82,16 +87,14 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (Input.GetKeyDown(KeyCode.LeftShift))
                     {
-                        running = true;
-                        walking = false;
+                        Action = Actions.Running;
                         moveSpeed = runSpeed;
                     }
                     else
                     {
-                        if (!running || Input.GetKeyUp(KeyCode.LeftShift))
+                        if (Action != Actions.Running || Input.GetKeyUp(KeyCode.LeftShift))
                         {
-                            walking = true;
-                            running = false;
+                            Action = Actions.Walking; 
                             moveSpeed = walkSpeed;
                         }
 
@@ -109,16 +112,14 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (Input.GetKeyDown(KeyCode.LeftShift))
                     {
-                        running = true;
-                        walking = false;
+                        Action = Actions.Running; 
                         moveSpeed = runSpeed;
                     }
                     else
                     {
-                        if (!running || Input.GetKeyUp(KeyCode.LeftShift))
+                        if (Action != Actions.Running || Input.GetKeyUp(KeyCode.LeftShift))
                         {
-                            walking = true;
-                            running = false;
+                            Action = Actions.Walking; 
                             moveSpeed = walkSpeed;
                         }
 
@@ -134,41 +135,39 @@ public class PlayerMovement : MonoBehaviour
                 }
                 if (Input.GetKeyDown(KeyCode.Space) && jumpTimer == 0)
                 {
-                    jumping = true;
-                    walking = false;
-                    running = false;
+                    Jumping = true;
                     body.AddForce(new Vector3(0f, 5f, 0f), ForceMode.Impulse);
                     jumpTimer = 40;
                 }
                 else
                 {
-                    jumping = false;
+                    Jumping = false; 
                 }
                 if (Mathf.Approximately(horizontalInput + verticalInput, 0f))
                 {
-                    walking = false;
-                    running = false;
+                    Action = Actions.Chilling; 
                 }
             }
             // If we're NOT locked on  OR we're Locked on + sprinting (also when the camera is resetting behind the player)
             else
             {
-                if (verticalInput != 0f || horizontalInput != 0f)
+               if (verticalInput != 0f || horizontalInput != 0f)
                 {
+
                     //Quaternion rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
                     //transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
                     if (Input.GetKeyDown(KeyCode.LeftShift))
                     {
-                        running = true;
-                        walking = false;
+                        Action = Actions.Running; 
+                         
                         moveSpeed = runSpeed;
                     }
                     else
                     {
-                        if (!running || Input.GetKeyUp(KeyCode.LeftShift))
+                        if (Action != Actions.Running || Input.GetKeyUp(KeyCode.LeftShift))
                         {
-                            walking = true;
-                            running = false;
+                            Action = Actions.Walking; 
+
                             moveSpeed = walkSpeed;
                         }
 
@@ -188,23 +187,25 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else
                 {
-                    running = false;
-                    walking = false;
+                    Action = Actions.Chilling; 
+
                 }
                 if (Input.GetKeyDown(KeyCode.Space) && body.velocity.y == 0)
                 {
-                    jumping = true;
-                    walking = false;
-                    running = false;
+                    //Action = Actions.Chilling;
+                    Jumping = true; 
+
                     body.AddForce(new Vector3(0f, 25, 0f), ForceMode.Impulse);
+                  
                 }
                 else
                 {
-                    jumping = false;
+                    Jumping = false;
+                   
                 }
 
                 // Only rotate with camera while we have movement input
-                if (walking || running)
+                if (Action != Actions.Chilling)
                     transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
 
                 // Move foreward in the direction of input
@@ -213,6 +214,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
+
     public void DecidePickable()
     {
         if (Input.GetButton("Pickup"))
@@ -244,9 +247,9 @@ public class PlayerMovement : MonoBehaviour
                 GetComponent<PlayerCombatController>().enabled = false;
                 tag = "Companion";
                 agent.enabled = true;
-                running = false;
+                Action = Actions.Chilling; 
                 //boxCollider.enabled = false;
-                jumping = false;
+                Jumping = false; 
 
             }
         }
@@ -269,10 +272,11 @@ public class PlayerMovement : MonoBehaviour
         float distFromPlayer = Vector3.Distance(otherCharacter.transform.position, transform.position);
         if (distFromPlayer < bufferRadius)
         {
+            Action = Actions.Chilling;
             if (distFromPlayer < tooCloseRadius)
             {
                 agent.isStopped = true;
-                walking = false;
+               
 
                 Vector3 targetDirection = transform.position - otherCharacter.transform.position;
                 transform.Translate(-targetDirection.normalized * 2 * Time.deltaTime);
@@ -281,14 +285,13 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 agent.isStopped = true;
-                walking = false;
 
             }
         }
         else
         {
+            Action = Actions.Walking;
             agent.isStopped = false;
-            walking = true;
             agent.SetDestination(otherCharacter.transform.position);
         }
     }
