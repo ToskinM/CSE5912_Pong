@@ -8,6 +8,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     public bool IsBlocking { get; private set; }
     public bool hasWeaponOut;
+    public GameObject weapon;
     public bool inCombat; // (aggrod)
     public bool isHit;
     //public bool isBlocking;
@@ -30,6 +31,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     void Start()
     {
         //npcMovement = new NPCMovement(gameObject, GameObject.FindGameObjectWithTag("Player"), transform.position, 5, 10);
+        weapon.SetActive(hasWeaponOut);
         Stats = gameObject.GetComponent<CharacterStats>();
         fieldOfView = GetComponent<FieldOfView>();
         npcAnimationController = GetComponent<NPCAnimationController>();
@@ -112,6 +114,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     {
         if (hasWeaponOut)
         {
+            weapon.SetActive(false);
             hasWeaponOut = false;
         }
     }
@@ -119,6 +122,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     {
         if (!hasWeaponOut)
         {
+            weapon.SetActive(true);
             hasWeaponOut = true;
         }
     }
@@ -149,7 +153,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
             {
                 case (Aggression.Aggressive):
                     {
-                        if (possibleTarget.tag == "Player")
+                        if (possibleTarget.tag == "Player" && combatTarget != possibleTarget)
                         {
                             Aggro(possibleTarget.gameObject, false);
                         }
@@ -165,21 +169,19 @@ public class NPCCombatController : MonoBehaviour, ICombatant
                     break;
             }
         }
-
-
     }
     private void Aggro(GameObject aggroTarget, bool forceAggression)
     {
         if (aggression > Aggression.Passive || forceAggression)
         {
-            if (combatTarget != aggroTarget)
-            {
+            //if (combatTarget != aggroTarget)
+            //{
                 if (!inCombat)
                     inCombat = true;
 
                 combatTarget = aggroTarget;
                 Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
-            }
+            //}
         }
     }
 

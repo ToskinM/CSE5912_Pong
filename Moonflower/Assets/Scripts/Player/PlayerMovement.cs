@@ -51,13 +51,13 @@ public class PlayerMovement : MonoBehaviour, IMovement
         if (this.gameObject.name == "Anai")
         {
             playing = true;
-            //boxCollider.enabled = true;
+            boxCollider.enabled = true;
             agent.enabled = false;
             this.camera = Camera.main;
         }
         else
         {
-            //boxCollider.enabled = false;
+            boxCollider.enabled = false;
             this.camera = null;
             agent.enabled = true;
             playing = false;
@@ -236,19 +236,21 @@ public class PlayerMovement : MonoBehaviour, IMovement
             if (playing)
             {
                 GetComponent<PlayerCombatController>().enabled = true;
+                gameObject.layer = 10;
                 tag = "Player";
                 camera = Camera.main;
-                //boxCollider.enabled = true;
+                boxCollider.enabled = true;
                 agent.enabled = false;
 
             }
             else
             {
                 GetComponent<PlayerCombatController>().enabled = false;
+                gameObject.layer = 0;
                 tag = "Companion";
                 agent.enabled = true;
-                Action = Actions.Chilling; 
-                //boxCollider.enabled = false;
+                Action = Actions.Chilling;
+                boxCollider.enabled = false;
                 Jumping = false; 
 
             }

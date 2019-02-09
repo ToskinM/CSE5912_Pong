@@ -13,6 +13,7 @@ public class FollowCamera : MonoBehaviour
     [HideInInspector] public bool freeRoam;
     public bool frozen = false;
     public bool switching;
+    public float switchTime = 0.3f;
 
     private PlayerMovement playerMovement;
 
@@ -48,35 +49,40 @@ public class FollowCamera : MonoBehaviour
 
     void Update()
     {
-        // Switch to correct character (Anai or Mimbi)
-        if (target.root.tag != "Player")
+        if (!switching)
         {
-            SwitchTarget();
-        }
-
-
-        // Lock off if lock on target is no longer active
-        if (lockOnTarget != null && lockedOn && !lockOnTarget.gameObject.activeInHierarchy)
-        {
-            LockOff();
-        }
-
-        // Rotation adjustment
-        if (!frozen)
-        {
-            if (!Input.GetButtonDown("LockOn"))
+            // Switch to correct character (Anai or Mimbi)
+            if (target.root.tag != "Player")
             {
-                xRotation += Input.GetAxis("Mouse X") * rotateSpeed;
-                yRotation += -Input.GetAxis("Mouse Y") * rotateSpeed;
-                if (!freeRoam)
-                    yRotation = Mathf.Clamp(yRotation, yRotationMin, yRotationMax);
+                SwitchTarget();
             }
+
+
+            // Lock off if lock on target is no longer active
+            if (lockOnTarget != null && lockedOn && !lockOnTarget.gameObject.activeInHierarchy)
+            {
+                LockOff();
+            }
+
+            // Rotation adjustment
+            if (!frozen)
+            {
+                if (!Input.GetButtonDown("LockOn") && !switching)
+                {
+                    xRotation += Input.GetAxis("Mouse X") * rotateSpeed;
+                    yRotation += -Input.GetAxis("Mouse Y") * rotateSpeed;
+                    if (!freeRoam)
+                        yRotation = Mathf.Clamp(yRotation, yRotationMin, yRotationMax);
+                    else
+                        yRotation = Mathf.Clamp(yRotation, -90f, 90f);
+                }
+            }
+
+
+            // Follow distance adjustment
+            followDistanceMultiplier += -Input.GetAxis("Mouse ScrollWheel");
+            followDistanceMultiplier = Mathf.Clamp(followDistanceMultiplier, followDistanceMin, followDistanceMax);
         }
-
-
-        // Follow distance adjustment
-        followDistanceMultiplier += -Input.GetAxis("Mouse ScrollWheel");
-        followDistanceMultiplier = Mathf.Clamp(followDistanceMultiplier, followDistanceMin, followDistanceMax);
     }
 
     void LateUpdate()
@@ -87,9 +93,9 @@ public class FollowCamera : MonoBehaviour
             UpdateFreeMovement();
             UpdateFreeRotation();
         }
-        else //if (!switching)
+        else
         {
-            if (Input.GetButtonDown("LockOn") && !freeRoam)
+            if (!switching && Input.GetButtonDown("LockOn") && !freeRoam)
             {
                 ManageLockOn();
             }
@@ -97,7 +103,7 @@ public class FollowCamera : MonoBehaviour
             {
                 rotation = Quaternion.Euler(yRotation, xRotation, 0);
             }
-            else if (lockedOn && lockOnTarget != null)
+            else if (!switching && lockedOn && lockOnTarget != null)
             {
                 Vector3 relative = lockOnTarget.transform.position - target.position;
                 float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
@@ -196,7 +202,7 @@ public class FollowCamera : MonoBehaviour
 
         // Smoothly reset the camera behind player
         float t = 0;
-        while (t < 1)
+        while (t < switchTime)
         {
             xRotation = Mathf.LerpAngle(xRotation, startingXRotation + (target.eulerAngles.y - currentAngleY), t);
             yRotation = Mathf.LerpAngle(yRotation, startingYRotation + (15f - currentAngleX), t);
@@ -215,20 +221,20 @@ public class FollowCamera : MonoBehaviour
     }
     private IEnumerator MoveCameraToNewTarget(Transform newTarget)
     {
-        // 
         switching = true;
         switchTransform.position = target.position;
+        Vector3 startingPosition = target.position;
         target = switchTransform;
 
         float currentAngleY = transform.eulerAngles.y;
         float startingXRotation = xRotation;
 
-        // 
+        // Interpolate target position and xRotation to new target
         float t = 0;
-        while (t < 1)
+        while (t < switchTime)
         {
-            //xRotation = Mathf.LerpAngle(xRotation, startingXRotation + (newTarget.eulerAngles.y - currentAngleY), t);
-            target.position = Vector3.Lerp(target.position, newTarget.position, t);
+            xRotation = Mathf.LerpAngle(startingXRotation, startingXRotation + (newTarget.eulerAngles.y - currentAngleY), t / switchTime);
+            switchTransform.position = Vector3.Lerp(startingPosition, newTarget.position, t / switchTime);
 
             t += Time.deltaTime * 1;
             yield return null;
