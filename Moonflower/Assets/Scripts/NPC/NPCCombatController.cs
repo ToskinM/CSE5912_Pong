@@ -9,7 +9,6 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     public bool IsBlocking { get; private set; }
     public bool hasWeaponOut;
     public GameObject weapon;
-    public GameObject explosionObject;
     [HideInInspector] public bool inCombat; // (aggrod)
     [HideInInspector] public bool isHit;
     [HideInInspector] public bool isAttacking;
@@ -32,7 +31,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     private void Awake()
     {
-        explosionObject.GetComponent<ParticleSystem>().Stop();
+
     }
 
     void Start()
@@ -235,7 +234,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     {
         Debug.Log(gameObject.name + " has died");
 
-        ParticleSystem explosion = explosionObject.GetComponent<ParticleSystem>();
-        explosion.Play();
+        ObjectPoolController.current.CheckoutTemporary(transform, 1f);
+        Destroy(gameObject);
     }
 }

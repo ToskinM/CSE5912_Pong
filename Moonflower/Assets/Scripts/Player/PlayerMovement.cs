@@ -46,6 +46,12 @@ public class PlayerMovement : MonoBehaviour, IMovement
         this.camera = Camera.main;
     }
 
+    private void Update()
+    {
+        // Damping
+        body.velocity *= 0.98f;
+    }
+
     void DetectKeyInput()
     {
         float verticalInput = Input.GetAxis("Vertical");

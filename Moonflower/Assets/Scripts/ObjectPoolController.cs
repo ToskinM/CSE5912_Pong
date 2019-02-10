@@ -8,7 +8,7 @@ public class ObjectPoolController : MonoBehaviour
     public GameObject prefabToPool;
     public int poolCapacity;
 
-    List<GameObject> pooledObjects;
+    public List<GameObject> pooledObjects;
 
     void Awake()
     {
@@ -53,7 +53,7 @@ public class ObjectPoolController : MonoBehaviour
 
     /// <summary>Returns an object from the pool and matches its transfrom to the desired one.
     /// </summary>
-    public GameObject GetAndPlacePooledObject(Transform transform)
+    public GameObject Checkout(Transform transform)
     {
         // Grab an object from the pool
         GameObject objectFromPool = GetPooledObject();
@@ -72,7 +72,7 @@ public class ObjectPoolController : MonoBehaviour
 
     /// <summary>Returns an object from the pool and matches only its position to the desired one.
     /// </summary>
-    public GameObject GetAndPlacePooledObject(Vector3 position)
+    public GameObject Checkout(Vector3 position)
     {
         // Grab an object from the pool
         GameObject objectFromPool = GetPooledObject();
@@ -86,5 +86,53 @@ public class ObjectPoolController : MonoBehaviour
         objectFromPool.SetActive(true);
 
         return objectFromPool;
+    }
+
+    /// <summary>Returns an object from the pool and matches only its position to the desired one, returning it to the pool after the delay.
+    /// </summary>
+    public GameObject CheckoutTemporary(Vector3 position, float delay)
+    {
+        // Grab an object from the pool
+        GameObject objectFromPool = GetPooledObject();
+
+        // Return null if we can get an object
+        if (objectFromPool == null)
+            return null;
+
+        // Set the objects position to match the desired position, and set it active
+        objectFromPool.transform.position = position;
+        objectFromPool.SetActive(true);
+
+        StartCoroutine(ReturnAfterDelay(objectFromPool, delay));
+
+        return objectFromPool;
+    }
+    /// <summary>Returns an object from the pool and matches its transfrom to the desired one, returning it to the pool after the delay.
+    /// </summary>
+    public GameObject CheckoutTemporary(Transform transform, float delay)
+    {
+        // Grab an object from the pool
+        GameObject objectFromPool = GetPooledObject();
+
+        // Return null if we can get an object
+        if (objectFromPool == null)
+            return null;
+
+        // Set the objects transfrom to match the desired transform, and set it active
+        objectFromPool.transform.position = transform.position;
+        objectFromPool.transform.rotation = transform.rotation;
+        objectFromPool.SetActive(true);
+
+        StartCoroutine(ReturnAfterDelay(objectFromPool, delay));
+
+        return objectFromPool;
+    }
+
+    private IEnumerator ReturnAfterDelay(GameObject obj, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (obj.activeInHierarchy)
+            obj.SetActive(false);
     }
 }
