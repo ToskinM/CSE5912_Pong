@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
 {
     public Actions Action { get; set; }
     public bool Jumping { get; set; }
-
+    public TerrainCollider terrain;
     private float moveSpeed;
     public float runSpeed;
     public float walkSpeed;
@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     public bool isAnai;
     public GameObject pickupArea;
     public Rigidbody body;
-
+    private bool onGround = true;
     private Camera camera;
 
     //follow variables
@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     // Start is called before the first frame update
     void Start()
     {
+        terrain = GameObject.Find("Terrain").GetComponent<TerrainCollider>();
         Physics.gravity = Physics.gravity * 3;
         body = GetComponent<Rigidbody>();
         moveSpeed = 3f;
@@ -121,13 +122,13 @@ public class PlayerMovement : MonoBehaviour, IMovement
                     Vector3 horiDirection = new Vector3(Mathf.Sign(horizontalInput), 0, 0);
                     transform.Translate(horiDirection * Time.deltaTime * moveSpeed);
                 }
-                if (Input.GetKeyDown(KeyCode.Space) && jumpTimer == 0)
+                if (Input.GetKeyDown(KeyCode.Space) && onGround)
                 {
                     Jumping = true;
                     body.AddForce(new Vector3(0f, 5f, 0f), ForceMode.Impulse);
                     jumpTimer = 40;
                 }
-                else
+                else if (onGround)
                 {
                     Jumping = false; 
                 }
@@ -178,15 +179,15 @@ public class PlayerMovement : MonoBehaviour, IMovement
                     Action = Actions.Chilling; 
 
                 }
-                if (Input.GetKeyDown(KeyCode.Space) && body.velocity.y == 0)
+                if (Input.GetKeyDown(KeyCode.Space) && onGround)
                 {
                     //Action = Actions.Chilling;
-                    Jumping = true; 
-
+                    Jumping = true;
+                    onGround = false;
                     body.AddForce(new Vector3(0f, 25, 0f), ForceMode.Impulse);
                   
                 }
-                else
+                else if (onGround)
                 {
                     Jumping = false;
                    
@@ -215,7 +216,13 @@ public class PlayerMovement : MonoBehaviour, IMovement
             pickupArea.SetActive(false);
         }
     }
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.Equals(terrain))
+        {
+            onGround = true;
+        }
+    }
     public void MovementUpdate()
     {
         DecidePickable();
