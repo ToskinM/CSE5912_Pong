@@ -35,7 +35,6 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 
     void Update()
     {
-        Debug.Log(GetComponent<Rigidbody>().velocity);
         timeSinceLastHurt += Time.deltaTime;
 
         // Detect attack input (on button down)
