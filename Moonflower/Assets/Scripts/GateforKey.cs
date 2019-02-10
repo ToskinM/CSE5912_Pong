@@ -5,13 +5,15 @@ using UnityEngine;
 public class GateforKey : MonoBehaviour
 {
     private bool opened = false;
-    public GameObject target;
-    private int openTime = 0;
+    private float openTime = 0;
+    private Vector3 targetUpPos;
+    private Vector3 originalPos;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        targetUpPos = transform.position + new Vector3(0, 4, 0);
+        originalPos = transform.position;
     }
 
     // Update is called once per frame
@@ -19,11 +21,23 @@ public class GateforKey : MonoBehaviour
     {
         if(openTime != 0)
         {
-            openTime--;
-            if(openTime == 0)
+            openTime-= Time.deltaTime;
+            print(openTime);
+            if(openTime <= 0)
             {
+                openTime = 0;
                 TimedClose();
+                
             }
+        }
+        if (opened)
+        {
+            transform.position = Vector3.Lerp(transform.position, targetUpPos, Time.deltaTime * 2);
+        }
+        if (!opened)
+        {
+            
+            transform.position = Vector3.Lerp(transform.position, originalPos, Time.deltaTime * 2);
         }
     }
 
@@ -31,25 +45,23 @@ public class GateforKey : MonoBehaviour
     {
         if (!opened)
         {
-            transform.position += new Vector3(0, 4, 0);
             opened = true;
         }
     }
 
 
-    public void TimedOpenUp(int time)
+    public void TimedOpenUp(float time)
     {
-        openTime = time;
         if(!opened)
         {
-            transform.position += new Vector3(0, 4, 0);
+            openTime = time;
             opened = true;
         }
     }
 
     public void TimedClose()
     {
-        transform.position += new Vector3(0, -4, 0);
+        print(originalPos);
         opened = false;
     }
 }
