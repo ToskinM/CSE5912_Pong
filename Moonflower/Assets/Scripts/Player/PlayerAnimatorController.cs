@@ -11,7 +11,6 @@ public class PlayerAnimatorController : MonoBehaviour
     private const string key_isJump = "IsJump";
     private const string key_isDamage = "IsDamage";
     private const string key_isDead = "IsDead";
-
     private Animator animator;
     private PlayerCombatController combatController;
 
@@ -19,7 +18,8 @@ public class PlayerAnimatorController : MonoBehaviour
     public GameObject[] attackHurtboxes;
     public GameObject walkParticles;
     public GameObject runParticles;
-
+    public GameObject standingParticles;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -51,11 +51,17 @@ public class PlayerAnimatorController : MonoBehaviour
         }
 
         animator.SetBool(key_isWalk, movement.Action == Actions.Walking);
-        walkParticles.SetActive(movement.Action == Actions.Walking);
-        runParticles.SetActive(movement.Action == Actions.Running);
         animator.SetBool(key_isRun, movement.Action == Actions.Running);
         animator.SetBool(key_isJump, movement.Jumping);
+
+        if (walkParticles || runParticles || standingParticles)
+        {
+            standingParticles.SetActive(!(movement.Action == Actions.Running || movement.Action == Actions.Walking));
+            walkParticles.SetActive(movement.Action == Actions.Walking);
+            runParticles.SetActive(movement.Action == Actions.Running);
+        }
     }
+
 
     public void EnableHurtbox(int index)
     {
