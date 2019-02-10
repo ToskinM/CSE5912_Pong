@@ -17,6 +17,8 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public IMovement movement { get; set; } 
     public GameObject[] attackHurtboxes;
+    public GameObject walkParticles;
+    public GameObject runParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +51,8 @@ public class PlayerAnimatorController : MonoBehaviour
         }
 
         animator.SetBool(key_isWalk, movement.Action == Actions.Walking);
+        walkParticles.SetActive(movement.Action == Actions.Walking);
+        runParticles.SetActive(movement.Action == Actions.Running);
         animator.SetBool(key_isRun, movement.Action == Actions.Running);
         animator.SetBool(key_isJump, movement.Jumping);
     }
