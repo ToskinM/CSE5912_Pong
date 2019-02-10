@@ -116,7 +116,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
                     if (Input.GetKeyDown(KeyCode.Mouse1))
                     {
                         body.velocity = Vector3.zero;
-                        body.AddRelativeForce(new Vector3(Mathf.Sign(horizontalInput) * 12f, 0f, 0f), ForceMode.VelocityChange);
+                        body.AddRelativeForce(new Vector3(Mathf.Sign(horizontalInput) * 30f, 0f, 0f), ForceMode.VelocityChange);
                         body.velocity = Vector3.zero;
                     }
                     Vector3 horiDirection = new Vector3(Mathf.Sign(horizontalInput), 0, 0);
@@ -125,7 +125,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
                 if (Input.GetKeyDown(KeyCode.Space) && onGround)
                 {
                     Jumping = true;
-                    body.AddForce(new Vector3(0f, 5f, 0f), ForceMode.Impulse);
+                    body.AddForce(new Vector3(0f, 25f, 0f), ForceMode.Impulse);
                     jumpTimer = 40;
                 }
                 else if (onGround)
@@ -164,7 +164,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
                     if (Input.GetKeyDown(KeyCode.Mouse1))
                     {
                         body.velocity = Vector3.zero;
-                        body.AddRelativeForce(new Vector3(0f, 0f, 10f), ForceMode.VelocityChange);
+                        body.AddRelativeForce(new Vector3(0f, 0f, 30f), ForceMode.VelocityChange);
                         body.velocity = Vector3.zero;
                     }
 

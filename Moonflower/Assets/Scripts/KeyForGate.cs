@@ -5,8 +5,9 @@ using UnityEngine;
 public class KeyForGate : MonoBehaviour
 {
     public GameObject target;
-    public GateforKey gate;
-    public int time = 0;
+    private GateforKey gate;
+    public float time = 0;
+    public GameObject player;
     
     // Start is called before the first frame update
     void Start()
@@ -22,7 +23,7 @@ public class KeyForGate : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.Equals(GameObject.Find("Anai").GetComponent<BoxCollider>()) || other.Equals(GameObject.Find("Mimbi").GetComponent<BoxCollider>()))
+        if (other.Equals(player.GetComponent<BoxCollider>()) || player == null)
         {
             if (time != 0)
             {
