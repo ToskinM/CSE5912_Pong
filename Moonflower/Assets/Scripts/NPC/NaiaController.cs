@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 
-public class LesserNPCController : MonoBehaviour
+public class NaiaController : MonoBehaviour
 {
     public GameObject Player;
     public GameObject WalkArea;
