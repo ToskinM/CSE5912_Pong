@@ -5,6 +5,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 {
     public enum Aggression { Passive, Unaggressive, Aggressive, Frenzied };
     public Aggression aggression;
+    public bool Active { get; set; } = true; 
 
     public bool IsBlocking { get; private set; }
     public bool hasWeaponOut;
@@ -49,61 +50,67 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     void Update()
     {
-        //npcMovement.Update();
-        timeSinceLastHurt += Time.deltaTime;
-
-        // Ensure weapon state is correct based on aggro
-        if (inCombat && !hasWeaponOut)
-            SetWeaponSheathed(false);
-        else if (!inCombat && hasWeaponOut)
-            SetWeaponSheathed(true);
-
-        CheckAggression();
-
-        if (attack > 0)
-            isAttacking = true;
-        else
-            isAttacking = false;
-
-        // If we're in combat..
-        if (inCombat)
+        if (Active)
         {
-            ManageCombat();
+            //npcMovement.Update();
+            timeSinceLastHurt += Time.deltaTime;
+
+            // Ensure weapon state is correct based on aggro
+            if (inCombat && !hasWeaponOut)
+                SetWeaponSheathed(false);
+            else if (!inCombat && hasWeaponOut)
+                SetWeaponSheathed(true);
+
+            CheckAggression();
+
+            if (attack > 0)
+                isAttacking = true;
+            else
+                isAttacking = false;
+
+            // If we're in combat..
+            if (inCombat)
+            {
+                ManageCombat();
+            }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Get Tag
-        string tag = other.tag;
-
-        // Handle Hurtboxes
-        if (tag == "PlayerHurtbox")
+        if (Active)
         {
-            Aggro(other.gameObject.transform.root.gameObject, false);
+            // Get Tag
+            string tag = other.tag;
 
-            if (timeSinceLastHurt > hurtDelay)
+            // Handle Hurtboxes
+            if (tag == "PlayerHurtbox")
             {
-                // Get hurtbox information
-                HurtboxController hurtboxController = other.gameObject.GetComponent<HurtboxController>();
-                GameObject source = hurtboxController.source;
-                int damage = hurtboxController.damage;
+                Aggro(other.gameObject.transform.root.gameObject, false);
 
-                if (IsBlocking)
+                if (timeSinceLastHurt > hurtDelay)
                 {
-                    Debug.Log(gameObject.name + ": \"Hah, blocked ya.\"");
-                }
-                else
-                {
-                    npcAnimationController.SetHit(1);
+                    // Get hurtbox information
+                    HurtboxController hurtboxController = other.gameObject.GetComponent<HurtboxController>();
+                    GameObject source = hurtboxController.source;
+                    int damage = hurtboxController.damage;
 
-                    Stats.TakeDamage(damage, source.name);
-                    CheckDeath();
+                    if (IsBlocking)
+                    {
+                        Debug.Log(gameObject.name + ": \"Hah, blocked ya.\"");
+                    }
+                    else
+                    {
+                        npcAnimationController.SetHit(1);
+
+                        Stats.TakeDamage(damage, source.name);
+                        CheckDeath();
+                    }
                 }
             }
-        }
 
-        timeSinceLastHurt = 0f;
+            timeSinceLastHurt = 0f;
+        }
     }
 
     private IEnumerator Respawn()

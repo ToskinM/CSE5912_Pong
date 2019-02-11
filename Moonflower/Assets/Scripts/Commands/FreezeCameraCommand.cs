@@ -23,7 +23,7 @@ public class FreezeCameraCommand : ICommand
         {
             //SceneManager.LoadScene(Constants.SCENE_PAUSEMENU, LoadSceneMode.Additive);
             gameStateController.FreezeCamera();
-            //SceneManager.SetActiveScene(SceneManager.GetSceneByName(Constants.SCENE_PAUSEMENU));
+            //SceneManager.SetActiveScene(SceneManager.GetSceneByName(Constants.SCENE_PAUSEMENU)); 
         }
     }
 }

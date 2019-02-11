@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI; 
 using TMPro;
 
 public class NaiaController : MonoBehaviour
@@ -20,7 +21,12 @@ public class NaiaController : MonoBehaviour
     private NavMeshAgent agent;
     private AmaruDialogueTrigger talkTrig;
     private IPlayerController playerController;
+    private EngagementOptionsController engageController; 
 
+    private enum NaiaEngageType { talk, fight, chill }
+    private NaiaEngageType currState = NaiaEngageType.chill;
+    private bool engageMenuAllowed = true;
+    private bool engageMenuWanted = true; 
 
     void Start()
     {
@@ -33,55 +39,116 @@ public class NaiaController : MonoBehaviour
         movement = new NPCMovement(gameObject, Player, walkOrigin, 1);
         movement.SetEngagementDistances(5, combatController.attackDistance, 1);
 
-        //talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.AMARU_ICON);
+        //talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.NAIA_ICON);
         playerController = Player.GetComponent<IPlayerController>();
+
+        engageController = EngageOptPanel.GetComponent<EngagementOptionsController>();
+
     }
 
 
     void Update()
     {
-        if (talkTrig != null)
+        float playerDist = getXZDist(transform.position, Player.transform.position);
+        if ( engageMenuAllowed && playerDist < engagementRadius)
         {
+
+            if(Input.GetKeyDown(KeyCode.Return))
+            {
+                engageMenuWanted = !engageMenuWanted; 
+            }
+            if (engageMenuWanted)
+            {
+                ShowEngagementPanel();
+            }
+            else
+            {
+                NoEngagePanel(); 
+            }
+
+
+        }
+        else
+        {
+            NoEngagePanel(); 
+        }
+
+        if (currState == NaiaEngageType.chill)
+        {
+            engageMenuAllowed = true; 
+            combatController.Active = true;
+        }
+        else if(currState == NaiaEngageType.fight)
+        {
+            Debug.Log("I am in a combat"); 
+            engageMenuAllowed = false; 
+            if (combatController.inCombat)
+            {
+                movement.player = combatController.combatTarget;
+            }
+        }
+        else if(currState == NaiaEngageType.talk && talkTrig != null)
+        {
+            engageMenuAllowed = false;
+            combatController.Active = false;
             if (playerController.Playing)
             {
-                talkTrig.Update();
 
-                if (movement.Engaging && !talkTrig.Complete)
+                if (!talkTrig.Complete)
                 {
-                    StartEngagement();
+                    talkTrig.Update();
                 }
-                else if (!movement.Wandering)
+                else
                 {
                     movement.ResumeWandering();
                     if (talkTrig.DialogueActive())
                     {
                         talkTrig.EndDialogue();
+                        currState = NaiaEngageType.chill;
+                        engageMenuAllowed = false; 
                     }
                 }
             }
         }
-        else
+
+        movement.Attacking = combatController.inCombat; 
+        if(combatController.Active && combatController.inCombat)
         {
-            if (combatController.inCombat)
-            {
-                movement.player = combatController.combatTarget;
-                movement.Attacking = true;
-            }
-            else
-            {
-                movement.Attacking = false;
-            }
+            currState = NaiaEngageType.fight; 
         }
 
         movement.UpdateMovement();
     }
 
-    private void StartEngagement()
+
+    private float getXZDist(Vector3 a, Vector3 b)
     {
-        engaging = true;
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.z - b.z);
+
+    }
+
+    private void ShowEngagementPanel()
+    {
+        engageController.EnablePanel(Constants.NAIA_ICON); 
+        Button talk = engageController.GetButton(EngagementOptionsController.EngageType.talk);
+        talk.onClick.AddListener(startTalking);
+    }
+
+    private void NoEngagePanel()
+    {
+        engageController.DisablePanel(); 
+    }
+
+    private void startTalking()
+    {
+        NoEngagePanel(); 
+        engageMenuAllowed = false; 
+        currState = NaiaEngageType.talk;
+        combatController.Active = false; 
 
         if (talkTrig != null)
             if (!talkTrig.DialogueActive())
                 talkTrig.StartDialogue();
+
     }
 }
