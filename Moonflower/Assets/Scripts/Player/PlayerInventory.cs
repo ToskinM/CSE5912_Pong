@@ -4,31 +4,27 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public List<GameObject> MoonFlowers = new List<GameObject>();
-    public List<GameObject> WolfApples = new List<GameObject>();
-    //private InventoryManager inventoryManager;
+    public List<GameObject> InventoryObjs = new List<GameObject>();
 
-    // Start is called before the first frame update
     void Start()
     {
-        //inventoryManager = FindObjectOfType<InventoryManager>();
     }
 
-    public void AddMoonFlower(GameObject i)
+    public void AddObj(GameObject obj)
     {
-        MoonFlowers.Add(i);
+        InventoryObjs.Add(obj);
     }
-    public void AddWolfApple(GameObject i)
+    public int getObjNumber(string obj)
     {
-        WolfApples.Add(i);
-    }
-    public int GetNoMoonFlower()
-    {
-        return MoonFlowers.Count;
-    }
-    public int GetNoWolfApple()
-    {
-        return WolfApples.Count;
+        int count = 0;
+        foreach (GameObject inventoryObj in InventoryObjs)
+        {
+            if (inventoryObj.GetComponent<InventoryStat>().Name == obj)
+            {
+                count++;
+            }
+        }
+        return count;
     }
     // Update is called once per frame
     void Update()

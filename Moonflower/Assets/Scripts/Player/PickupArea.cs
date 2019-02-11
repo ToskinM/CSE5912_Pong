@@ -47,16 +47,16 @@ public class PickupArea : MonoBehaviour
             if (obj.GetComponent<InventoryStat>().AnaiObject)
             {
                 textUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Anai");
-                playerInventory.AddMoonFlower(obj.gameObject);
                 playerStat.AddHealth(health);
             }
             else if (obj.GetComponent<InventoryStat>().MimbiObject)
             {
                 textUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
-                playerInventory.AddWolfApple(obj.gameObject);
             }
+            //Add to inventory
+            playerInventory.AddObj(obj.gameObject);
             //Destroy Gameobject after collect
-            Destroy(obj.gameObject);
+            obj.gameObject.SetActive(false);
             //Play Pickup audio clip
             audioManager.Play("pickup01");
         }
