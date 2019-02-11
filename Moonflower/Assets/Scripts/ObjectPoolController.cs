@@ -9,6 +9,8 @@ public class ObjectPoolController : MonoBehaviour
 
     public Dictionary<string, ObjectPool> pools;
 
+    private const int CAPACITY_DEFAULT = 3;
+
     void Awake()
     {
         current = this;
@@ -24,12 +26,6 @@ public class ObjectPoolController : MonoBehaviour
         poolCount = pools.Count;
     }
 
-    void CreateNewPool(ObjectPool pool)
-    {
-        pool = new ObjectPool(gameObject, 1);
-        pools.Add(gameObject.name, pool);
-    }
-
     /// <summary>
     /// </summary>
     public GameObject Checkout(GameObject gameObject, Transform transform)
@@ -41,7 +37,7 @@ public class ObjectPoolController : MonoBehaviour
         }
         else
         {
-            pool = new ObjectPool(gameObject, 1);
+            pool = new ObjectPool(gameObject, CAPACITY_DEFAULT);
             pools.Add(gameObject.name, pool);
 
             return pool.Checkout(transform);
@@ -59,13 +55,15 @@ public class ObjectPoolController : MonoBehaviour
         }
         else
         {
-            pool = new ObjectPool(gameObject, 1);
+            pool = new ObjectPool(gameObject, CAPACITY_DEFAULT);
             pools.Add(gameObject.name, pool);
 
             request = pool.CheckoutTemporary(transform, delay);
         }
 
-        StartCoroutine(ReturnAfterDelay(request, delay));
+        //request.transform.parent = transform;
+        if (request != null)
+            StartCoroutine(ReturnAfterDelay(request, delay));
 
         return request;
     }

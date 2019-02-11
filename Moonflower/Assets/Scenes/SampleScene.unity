@@ -14591,11 +14591,12 @@ MonoBehaviour:
   lockonIndicator: {fileID: 869417972}
   switchTransform: {fileID: 1984263295}
   freeRoam: 0
-  switching: 0
   switchTime: 0.3
-  camMask:
+  switching: 0
+  accountForCollision: 1
+  collisionLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
 --- !u!114 &534669910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14616,7 +14617,6 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 2048
-  count: 0
   visibleTargets: []
   closestTarget: {fileID: 0}
   focusedTarget: {fileID: 0}
@@ -53977,7 +53977,7 @@ PrefabInstance:
     - target: {fileID: 6900419879104588744, guid: fd6b0007ad8be3e44beaec6d8354edf2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.95
+      value: -5.187
       objectReference: {fileID: 0}
     - target: {fileID: 6900419879104588744, guid: fd6b0007ad8be3e44beaec6d8354edf2,
         type: 3}
@@ -53987,7 +53987,7 @@ PrefabInstance:
     - target: {fileID: 6900419879104588744, guid: fd6b0007ad8be3e44beaec6d8354edf2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -107.56
+      value: -107.02
       objectReference: {fileID: 0}
     - target: {fileID: 6900419879104588744, guid: fd6b0007ad8be3e44beaec6d8354edf2,
         type: 3}

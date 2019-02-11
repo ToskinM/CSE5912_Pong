@@ -12,9 +12,10 @@ public class FollowCamera : MonoBehaviour
     public Transform switchTransform;
     [HideInInspector] public bool freeRoam;
     public bool Frozen { get; set; } = false;
-    public bool switching;
     public float switchTime = 0.3f;
-    public LayerMask camMask;
+    [HideInInspector] public bool switching;
+    public bool accountForCollision = true;
+    public LayerMask collisionLayers;
 
     private PlayerMovement playerMovement;
 
@@ -110,27 +111,26 @@ public class FollowCamera : MonoBehaviour
                 rotation = Quaternion.Euler(yRotation, angle, 0);
             }
 
-            Vector3 pos = target.position - (rotation * offset * followDistanceMultiplier);
-            //declare a new raycast hit.
-            RaycastHit wallHit = new RaycastHit();
-            //linecast from your player (targetFollow) to your cameras mask (camMask) to find collisions.
-            if (Physics.Linecast(target.transform.position, pos, out wallHit, camMask))
-            {
-                //the x and z coordinates are pushed away from the wall by hit.normal.
-                //the y coordinate stays the same.
-                Debug.Log(wallHit.transform.gameObject.name);
-                pos = new Vector3(wallHit.point.x + wallHit.normal.x * 0.2f, pos.y, wallHit.point.z + wallHit.normal.z * 0.2f);
-            }
-            else
-            {
-                Debug.Log("nothing");
-            }
+            // Find new camera position, Staying behind player, in range
+            Vector3 newPosition = target.position - (rotation * offset * followDistanceMultiplier);
 
-            // Stay behind player, in range
-            transform.position = pos;
-            //transform.position = target.position - (rotation * offset * followDistanceMultiplier);
+            if (accountForCollision)
+            {
+                // Account for collision with objects in camMask
+                RaycastHit wallHit = new RaycastHit();
+                //linecast from your player (targetFollow) to your cameras mask (camMask) to find collisions.
+                if (Physics.Linecast(target.transform.position, newPosition, out wallHit, collisionLayers))
+                {
+                    //the x and z coordinates are pushed away from the wall by hit.normal.
+                    //the y coordinate stays the same.
+                    newPosition = new Vector3(wallHit.point.x + wallHit.normal.x * 0.2f, newPosition.y, wallHit.point.z + wallHit.normal.z * 0.2f);
+                }
+            }
+            
+            // update position
+            transform.position = newPosition;
 
-            // Look at the targer
+            // Look at the target
             transform.LookAt(target);
         }
     }

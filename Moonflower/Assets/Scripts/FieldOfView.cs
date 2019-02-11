@@ -10,8 +10,6 @@ public class FieldOfView : MonoBehaviour
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
-    public int count;
-
 
     [HideInInspector] public List<Transform> visibleTargets = new List<Transform>();
     [HideInInspector] public Transform closestTarget = null;
@@ -56,8 +54,6 @@ public class FieldOfView : MonoBehaviour
                     viewMeshFilter.GetComponent<Renderer>().material = foundMaterial;
                 else
                     viewMeshFilter.GetComponent<Renderer>().material = emptyMaterial;
-
-            count = visibleTargets.Count;
         }
     }
 
