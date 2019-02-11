@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     void Start()
     {
         terrain = GameObject.Find("Terrain").GetComponent<TerrainCollider>();
-        Physics.gravity = Physics.gravity * 3;
+        Physics.gravity = new Vector3(0, -88.3f, 0);
         body = GetComponent<Rigidbody>();
         moveSpeed = 3f;
         walkSpeed = 3f;
