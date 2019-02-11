@@ -8,8 +8,8 @@ using TMPro;
 public class NaiaController : MonoBehaviour
 {
     public GameObject Player;
+    public GameObject WalkArea;
     public GameObject DialoguePanel;
-    public GameObject EngageOptPanel; 
 
     public float engagementRadius = 15f;
     public float tooCloseRad = 4f;
@@ -35,6 +35,7 @@ public class NaiaController : MonoBehaviour
         combatController = GetComponent<NPCCombatController>();
 
         // Setup Movement
+        float walkRad = WalkArea.GetComponent<Renderer>().bounds.size.x;
         Vector3 walkOrigin = transform.position;
         movement = new NPCMovement(gameObject, Player, walkOrigin, 1);
         movement.SetEngagementDistances(5, combatController.attackDistance, 1);

@@ -10,7 +10,6 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     public bool IsBlocking { get; private set; }
     public bool hasWeaponOut;
     public GameObject weapon;
-    public GameObject deathEffect;
     [HideInInspector] public bool inCombat; // (aggrod)
     [HideInInspector] public bool isHit;
     [HideInInspector] public bool isAttacking;
@@ -242,7 +241,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     {
         Debug.Log(gameObject.name + " has died");
 
-        ObjectPoolController.current.CheckoutTemporary(deathEffect, transform, 1);
-        gameObject.SetActive(false);
+        ObjectPoolController.current.CheckoutTemporary(transform, 1f);
+        Destroy(gameObject);
     }
 }

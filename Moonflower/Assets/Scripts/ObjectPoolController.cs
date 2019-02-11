@@ -5,9 +5,10 @@ using UnityEngine;
 public class ObjectPoolController : MonoBehaviour
 {
     public static ObjectPoolController current;
-    public int poolCount;
+    public GameObject prefabToPool;
+    public int poolCapacity;
 
-    public Dictionary<string, ObjectPool> pools;
+    public List<GameObject> pooledObjects;
 
     void Awake()
     {
@@ -16,58 +17,115 @@ public class ObjectPoolController : MonoBehaviour
 
     void Start()
     {
-        pools = new Dictionary<string, ObjectPool>();
+        if (poolCapacity < 1)
+        {
+            Debug.Log("<color=red> Object Pool " + gameObject.name + " is set to zero capacity.</color>");
+            return;
+        }
+
+        if (prefabToPool == null)
+        {
+            Debug.Log("<color=red> Object Pool " + gameObject.name + " has no prefab to set.</color>");
+            return;
+        }
+
+        // Create Pool
+        pooledObjects = new List<GameObject>();
+        for (int i = 0; i < poolCapacity; i++)
+        {
+            GameObject objectToAdd = Instantiate(prefabToPool);
+            objectToAdd.SetActive(false);
+            pooledObjects.Add(objectToAdd);
+        }
     }
 
-    void Update()
-    {
-        poolCount = pools.Count;
-    }
-
-    void CreateNewPool(ObjectPool pool)
-    {
-        pool = new ObjectPool(gameObject, 1);
-        pools.Add(gameObject.name, pool);
-    }
-
-    /// <summary>
+    /// <summary>Gets and returns an object from the pool if one is available. (without setting it active or setting its transfrom)
     /// </summary>
-    public GameObject Checkout(GameObject gameObject, Transform transform)
+    public GameObject GetPooledObject()
     {
-        ObjectPool pool = null;
-        if (pools.ContainsKey(gameObject.name) && pools.TryGetValue(gameObject.name, out pool))
-        {
-            return pool.Checkout(transform);
-        }
-        else
-        {
-            pool = new ObjectPool(gameObject, 1);
-            pools.Add(gameObject.name, pool);
+        // Get and return the first available obect in the pool
+        for (int i = 0; i < pooledObjects.Count; i++)
+            if (!pooledObjects[i].activeInHierarchy)
+                return pooledObjects[i];
 
-            return pool.Checkout(transform);
-        }
+        return null;
     }
-    /// <summary>
+
+    /// <summary>Returns an object from the pool and matches its transfrom to the desired one.
     /// </summary>
-    public GameObject CheckoutTemporary(GameObject gameObject, Transform transform, float delay)
+    public GameObject Checkout(Transform transform)
     {
-        GameObject request = null;
-        ObjectPool pool = null;
-        if (pools.ContainsKey(gameObject.name) && pools.TryGetValue(gameObject.name, out pool))
-        {
-            request = pool.Checkout(transform);
-        }
-        else
-        {
-            pool = new ObjectPool(gameObject, 1);
-            pools.Add(gameObject.name, pool);
+        // Grab an object from the pool
+        GameObject objectFromPool = GetPooledObject();
 
-            request = pool.CheckoutTemporary(transform, delay);
-        }
+        // Return null if we can get an object
+        if (objectFromPool == null)
+            return null;
 
-        StartCoroutine(ReturnAfterDelay(request, delay));
+        // Set the objects transfrom to match the desired transform, and set it active
+        objectFromPool.transform.position = transform.position;
+        objectFromPool.transform.rotation = transform.rotation;
+        objectFromPool.SetActive(true);
 
-        return request;
+        return objectFromPool;
+    }
+
+    /// <summary>Returns an object from the pool and matches only its position to the desired one.
+    /// </summary>
+    public GameObject Checkout(Vector3 position)
+    {
+        // Grab an object from the pool
+        GameObject objectFromPool = GetPooledObject();
+
+        // Return null if we can get an object
+        if (objectFromPool == null)
+            return null;
+
+        // Set the objects position to match the desired position, and set it active
+        objectFromPool.transform.position = position;
+        objectFromPool.SetActive(true);
+
+        return objectFromPool;
+    }
+
+    /// <summary>Returns an object from the pool and matches only its position to the desired one, returning it to the pool after the delay.
+    /// </summary>
+    public GameObject CheckoutTemporary(Vector3 position, float delay)
+    {
+        // Grab an object from the pool
+        GameObject objectFromPool = GetPooledObject();
+
+        // Return null if we can get an object
+        if (objectFromPool == null)
+            return null;
+
+        // Set the objects position to match the desired position, and set it active
+        objectFromPool.transform.position = position;
+        objectFromPool.SetActive(true);
+
+        StartCoroutine(ReturnAfterDelay(objectFromPool, delay));
+
+        return objectFromPool;
+    }
+    /// <summary>Returns an object from the pool and matches its transfrom to the desired one, returning it to the pool after the delay.
+    /// </summary>
+    public GameObject CheckoutTemporary(Transform transform, float delay)
+    {
+        // Grab an object from the pool
+        GameObject objectFromPool = GetPooledObject();
+
+        // Return null if we can get an object
+        if (objectFromPool == null)
+            return null;
+
+        // Set the objects transfrom to match the desired transform, and set it active
+        objectFromPool.transform.position = transform.position;
+        objectFromPool.transform.rotation = transform.rotation;
+        objectFromPool.SetActive(true);
+
+        StartCoroutine(ReturnAfterDelay(objectFromPool, delay));
+
+        return objectFromPool;
     }
 
     private IEnumerator ReturnAfterDelay(GameObject obj, float delay)
