@@ -14,6 +14,7 @@ public class FollowCamera : MonoBehaviour
     public bool Frozen { get; set; } = false;
     public bool switching;
     public float switchTime = 0.3f;
+    public LayerMask camMask;
 
     private PlayerMovement playerMovement;
 
@@ -29,7 +30,7 @@ public class FollowCamera : MonoBehaviour
 
     private readonly float freeRoamMoveSpeed = 0.4f;
     private readonly float yRotationMax = 60f;
-    private readonly float yRotationMin = -10f;
+    private readonly float yRotationMin = -30;
     private readonly float followDistanceMax = 3f;
     private readonly float followDistanceMin = 0.5f;
 
@@ -109,8 +110,25 @@ public class FollowCamera : MonoBehaviour
                 rotation = Quaternion.Euler(yRotation, angle, 0);
             }
 
+            Vector3 pos = target.position - (rotation * offset * followDistanceMultiplier);
+            //declare a new raycast hit.
+            RaycastHit wallHit = new RaycastHit();
+            //linecast from your player (targetFollow) to your cameras mask (camMask) to find collisions.
+            if (Physics.Linecast(target.transform.position, pos, out wallHit, camMask))
+            {
+                //the x and z coordinates are pushed away from the wall by hit.normal.
+                //the y coordinate stays the same.
+                Debug.Log(wallHit.transform.gameObject.name);
+                pos = new Vector3(wallHit.point.x + wallHit.normal.x * 0.2f, pos.y, wallHit.point.z + wallHit.normal.z * 0.2f);
+            }
+            else
+            {
+                Debug.Log("nothing");
+            }
+
             // Stay behind player, in range
-            transform.position = target.position - (rotation * offset * followDistanceMultiplier);
+            transform.position = pos;
+            //transform.position = target.position - (rotation * offset * followDistanceMultiplier);
 
             // Look at the targer
             transform.LookAt(target);
