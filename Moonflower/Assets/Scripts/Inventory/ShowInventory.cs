@@ -16,7 +16,7 @@ public class ShowInventory : MonoBehaviour
 
     public void textUpdate()
     {
-        string displayText = "No of Moonflower: " + playerInventory.GetNoMoonFlower() +"\n No of WolfApple" + playerInventory.GetNoWolfApple(); 
+        string displayText = "No of Moonflower: " + playerInventory.GetNoMoonFlower() +"\nNo of WolfApple: " + playerInventory.GetNoWolfApple(); 
         inventoryText.SetText(displayText);
     }
 
@@ -29,7 +29,7 @@ public class ShowInventory : MonoBehaviour
         }
         else if (Input.GetKeyUp(KeyCode.I))
             inventoryText.gameObject.SetActive(false);
-        inventoryText.gameObject.transform.position = Camera.main.WorldToScreenPoint(new Vector3(player.transform.position.x, player.transform.position.y+3, player.transform.position.z));
+        //inventoryText.gameObject.transform.position = Camera.main.WorldToScreenPoint(new Vector3(player.transform.position.x, player.transform.position.y+3, player.transform.position.z));
         textUpdate();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PickupArea : MonoBehaviour
@@ -13,6 +14,7 @@ public class PickupArea : MonoBehaviour
 
     private List<GameObject> currentCollisions = new List<GameObject>();
     private GameObject[] allCollidable;
+    public TextMeshProUGUI inventoryAdd;
     void Start()
     {
         FindObjectOfType<AudioManager>().Play("background");
@@ -35,6 +37,8 @@ public class PickupArea : MonoBehaviour
     {
         if (other.gameObject.tag == "Collectable")
         {
+            inventoryAdd.gameObject.SetActive(true);
+            Invoke("DelayMethod", 2f);
             //Get closest items
             GameObject obj = FindClosest();
             //Get items's health
@@ -42,13 +46,13 @@ public class PickupArea : MonoBehaviour
 
             if (obj.GetComponent<InventoryStat>().AnaiObject)
             {
-                Debug.Log(obj.tag + " is collected, " + health + " were add to anai");
+                textUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Anai");
                 playerInventory.AddMoonFlower(obj.gameObject);
                 playerStat.AddHealth(health);
             }
             else if (obj.GetComponent<InventoryStat>().MimbiObject)
             {
-                Debug.Log(obj.tag + " is collected, " + health + " were add to mimmbi");
+                textUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
                 playerInventory.AddWolfApple(obj.gameObject);
             }
             //Destroy Gameobject after collect
@@ -58,7 +62,15 @@ public class PickupArea : MonoBehaviour
         }
 
     }
-
+ 
+    public void textUpdate(string s)
+    {
+        inventoryAdd.SetText(s);
+    }
+    void DelayMethod()
+    {
+        inventoryAdd.gameObject.SetActive(false);
+    }
     private GameObject FindClosest()
     {
         allCollidable = GameObject.FindGameObjectsWithTag("Collectable");
@@ -77,7 +89,9 @@ public class PickupArea : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
     }
+
 }
 
 

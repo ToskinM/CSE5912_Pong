@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InventoryStat : MonoBehaviour
 {
+    public string Name;
     public int Strength;
     public int Attack;
     public int Defense;
