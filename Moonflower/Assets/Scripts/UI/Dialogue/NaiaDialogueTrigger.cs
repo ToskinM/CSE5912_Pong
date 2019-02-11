@@ -15,6 +15,7 @@ public class NaiaDialogueTrigger : MonoBehaviour
     Button templateButton; 
     Queue<Button> buttons;
     bool active = false;
+    public bool engaged = false; 
     Node dialogue;
     Node currNode;
     ICommand freezeCommand;
@@ -72,19 +73,22 @@ public class NaiaDialogueTrigger : MonoBehaviour
         if (active)
         {
             text.text = currNode.Prompt();
-            if(Input.GetKeyDown(KeyCode.Return) || text.text.Equals(""))
+            if(Input.GetKeyDown(KeyCode.Return) || currNode.Prompt().Equals(""))
             {
                 if (!optionsDisplayed)
                 {
                     displayOptions();
                     optionsDisplayed = true;
                 }
-                else
+                else if( !currNode.Prompt().Equals(""))
                 {
                     continueToNextNode();
                     optionsDisplayed = false;
                 }
             }
+
+            if (currNode != null && !currNode.Prompt().Equals(""))
+                engaged = true; 
         }
     }
 
@@ -102,6 +106,7 @@ public class NaiaDialogueTrigger : MonoBehaviour
         icon.sprite = null; 
         buttons.Clear(); 
         active = false;
+        engaged = false; 
         freezeCommand.Unexecute();
     }
 

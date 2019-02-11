@@ -141,7 +141,7 @@ public class AmaruDialogueTrigger : MonoBehaviour
 
                     {
                         o = "I'll go find her.";
-                        r = "Aweseom! See you around!";
+                        r = "Awesome! See you around!";
                         next2.AddResponse(o, r);
                     }
 

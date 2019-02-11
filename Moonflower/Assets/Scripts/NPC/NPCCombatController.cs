@@ -51,6 +51,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     {
         if (Active)
         {
+            Debug.Log("We ready? "); 
             //npcMovement.Update();
             timeSinceLastHurt += Time.deltaTime;
 
@@ -110,6 +111,16 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
             timeSinceLastHurt = 0f;
         }
+    }
+
+    public void StartFight(GameObject player)
+    {
+        Active = true;
+        SetWeaponSheathed(false);
+        inCombat = true; 
+        isAttacking = true;
+        combatTarget = player; 
+
     }
 
     private IEnumerator Respawn()

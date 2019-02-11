@@ -82,7 +82,9 @@ public class NaiaController : MonoBehaviour
         }
         else if(currState == NaiaEngageType.fight)
         {
-            engageMenuAllowed = false; 
+            engageMenuAllowed = false;
+            combatController.Active = true; 
+
             if (combatController.inCombat)
             {
                 movement.player = combatController.combatTarget;
@@ -92,19 +94,25 @@ public class NaiaController : MonoBehaviour
         {
             engageMenuAllowed = false;
             combatController.Active = false;
+
+
             if (playerController.Playing)
             {
+                if(talkTrig.engaged && !movement.FollowingPlayer)
+                    movement.SetFollowingDist(3.5f);
+
                 if (!talkTrig.Complete)
                 {
                     talkTrig.Update();
                 }
                 else
                 {
-                    movement.ResumeWandering();
-                    if (talkTrig.DialogueActive())
                     {
                         talkTrig.EndDialogue();
+                        movement.FollowingPlayer = false;
+                        movement.Attacking = true; 
                         currState = NaiaEngageType.fight;
+                        combatController.StartFight(Player); 
                         engageMenuAllowed = false; 
                     }
                 }
@@ -145,9 +153,13 @@ public class NaiaController : MonoBehaviour
         NoEngagePanel(); 
         engageMenuAllowed = false; 
         currState = NaiaEngageType.talk;
-        combatController.Active = false; 
-        
-        talkTrig.StartDialogue();
+        combatController.Active = false;
+
+        if (!talkTrig.DialogueActive())
+        {
+            talkTrig.StartDialogue();
+
+        }
 
     }
 }
