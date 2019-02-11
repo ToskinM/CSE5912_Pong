@@ -51,7 +51,6 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     {
         if (Active)
         {
-            Debug.Log("We ready? "); 
             //npcMovement.Update();
             timeSinceLastHurt += Time.deltaTime;
 
