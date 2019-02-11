@@ -10,6 +10,7 @@ public class FieldOfView : MonoBehaviour
 
     public LayerMask targetMask;
     public LayerMask obstacleMask;
+    public int count;
 
 
     [HideInInspector] public List<Transform> visibleTargets = new List<Transform>();
@@ -37,7 +38,7 @@ public class FieldOfView : MonoBehaviour
             viewMeshFilter.mesh = viewMesh;
         }
 
-        StartCoroutine("FindTargetsWithDelay", 0.3f);
+        StartCoroutine("FindTargetsWithDelay", 0.2f);
     }
 
 
@@ -55,6 +56,8 @@ public class FieldOfView : MonoBehaviour
                     viewMeshFilter.GetComponent<Renderer>().material = foundMaterial;
                 else
                     viewMeshFilter.GetComponent<Renderer>().material = emptyMaterial;
+
+            count = visibleTargets.Count;
         }
     }
 

@@ -313,9 +313,9 @@ GameObject:
   - component: {fileID: 6900419879104588747}
   - component: {fileID: 6900419879104588741}
   - component: {fileID: 6900419879104588743}
-  - component: {fileID: 6900419879104588742}
+  - component: {fileID: 995623718}
   m_Layer: 9
-  m_Name: Combatant
+  m_Name: Naia
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -409,7 +409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68655665de1db9b41ad317b508226a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 18
+  viewRadius: 10
   viewAngle: 90
   targetMask:
     serializedVersion: 2
@@ -420,7 +420,6 @@ MonoBehaviour:
   visibleTargets: []
   closestTarget: {fileID: 0}
   focusedTarget: {fileID: 0}
-  drawViewMesh: 0
   viewMeshFilter: {fileID: 6900419877537717530}
 --- !u!114 &6900419879104588745
 MonoBehaviour:
@@ -437,11 +436,13 @@ MonoBehaviour:
   aggression: 2
   hasWeaponOut: 0
   weapon: {fileID: 6900419877611807000}
+  deathEffect: {fileID: 0}
   inCombat: 0
   isHit: 0
   isAttacking: 0
   attack: 0
   combatTarget: {fileID: 0}
+  attackDistance: 2.6
 --- !u!114 &6900419879104588740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -517,7 +518,7 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6900419879104588742
+--- !u!114 &995623718
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -526,11 +527,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6900419879104588748}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86db98f25dd8fef49bc6ecdad36183a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 40a4dff09a86a4106a2c3e43ba631477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  rotateSpeed: 15
+  Player: {fileID: 0}
+  DialoguePanel: {fileID: 0}
+  EngageOptPanel: {fileID: 0}
+  engagementRadius: 15
+  tooCloseRad: 2
+  bufferDist: 2.5
 --- !u!1 &6900419879186786868
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,6 +707,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hurtbox
       objectReference: {fileID: 0}
+    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -764,18 +774,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
-        type: 3}
       propertyPath: m_LocalScale.z
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
-        type: 3}
-      propertyPath: damage
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e191d953f9f69b468286e1cae6a7f57, type: 3}
