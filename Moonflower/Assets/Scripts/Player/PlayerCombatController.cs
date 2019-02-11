@@ -25,12 +25,25 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     private const string BLOCK_AXIS = "Block";
     private const string SHEATHE_AXIS = "Sheathe/Unsheathe";
 
+    private AudioManager audioManager;
+
     void Start()
     {
         Stats = gameObject.GetComponent<CharacterStats>();
 
         weapon.SetActive(hasWeaponOut);
         blockPlaceholder.SetActive(IsBlocking);
+
+        StartCoroutine(GetAudioManager());
+    }
+
+    private IEnumerator GetAudioManager()
+    {
+        while (audioManager == null)
+        {
+            audioManager = FindObjectOfType<AudioManager>();
+            yield return null;
+        }
     }
 
     void Update()
@@ -108,6 +121,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     private void Attack()
     {
         Debug.Log("Attacking");
+        audioManager.Play("AttackSwing");
         if (!hasWeaponOut)   // take out weapon if its not already out
         {
             SetWeaponSheathed(false);
