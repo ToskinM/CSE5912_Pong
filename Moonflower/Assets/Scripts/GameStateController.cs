@@ -10,17 +10,20 @@ public class GameStateController : MonoBehaviour
     public bool Paused;
     public bool DebugModeOn;
 
+    private FollowCamera camControl; 
+
     // Start is called before the first frame update
     void Start()
     {
         Paused = false;
         DebugModeOn = false;
+        camControl = MainCamera.GetComponent<FollowCamera>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        camControl = MainCamera.GetComponent<FollowCamera>();
     }
 
     public void ToggleDebugMode()
@@ -28,7 +31,7 @@ public class GameStateController : MonoBehaviour
         DebugModeOn = !DebugModeOn;
 
         //CameraController camControl = MainCamera.GetComponent<CameraController>();
-        FollowCamera camControl = MainCamera.GetComponent<FollowCamera>();
+        camControl = MainCamera.GetComponent<FollowCamera>();
 
         camControl.SetFreeRoam(DebugModeOn);
         EnablePlayerMovement(!DebugModeOn);
@@ -40,13 +43,24 @@ public class GameStateController : MonoBehaviour
         Paused = !Paused;
 
         EnablePlayerMovement(!Paused);
-        FreezeCamera(); 
+
+        if (camControl.Frozen)
+            UnfreezeCamera();
+        else
+            FreezeCamera(); 
 
     }
 
     public void FreezeCamera()
     {
-        MainCamera.GetComponent<FollowCamera>().ToggleFreeze(); 
+        Debug.Log("Freeze!!!"); 
+       camControl.Frozen = true; 
+    }
+
+    public void UnfreezeCamera()
+    {
+        Debug.Log("Unfreeze"); 
+        camControl.Frozen = false;
     }
 
     private void EnablePlayerMovement(bool enabled)

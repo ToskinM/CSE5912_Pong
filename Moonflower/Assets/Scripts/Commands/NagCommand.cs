@@ -15,4 +15,9 @@ public class NagCommand : ICommand
         SceneManager.LoadScene("Quit Nag Popup",LoadSceneMode.Additive);
         
     }
+
+    public void Unexecute()
+    {
+        SceneManager.UnloadSceneAsync(Constants.SCENE_QUITPOPUP);
+    }
 }

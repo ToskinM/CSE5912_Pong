@@ -321,7 +321,7 @@ public class AmaruDialogueTrigger : MonoBehaviour
         icon.sprite = null; 
         buttons.Clear(); 
         active = false;
-        freezeCommand.Execute();
+        freezeCommand.Unexecute();
     }
 
     public bool DialogueActive()
@@ -362,7 +362,7 @@ public class AmaruDialogueTrigger : MonoBehaviour
         if (currNode.HasOptions())
         {
             int currOffset = 0;
-            int offset = Screen.height / 19;
+            int offset = Screen.height / 17;
             for (int i = 0; i < currNode.Options().Count; i++)
             {
                 Button b = Instantiate(templateButton, templateButton.transform.position, templateButton.transform.rotation);

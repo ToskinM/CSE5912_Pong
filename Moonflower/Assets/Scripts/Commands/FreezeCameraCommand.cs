@@ -26,4 +26,9 @@ public class FreezeCameraCommand : ICommand
             //SceneManager.SetActiveScene(SceneManager.GetSceneByName(Constants.SCENE_PAUSEMENU)); 
         }
     }
+
+    public void Unexecute()
+    {
+        gameStateController.UnfreezeCamera();
+    }
 }

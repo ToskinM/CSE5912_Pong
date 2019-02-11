@@ -29,4 +29,8 @@ public class VideoCaptureCommand : ICommand
             Debug.Log("Stopped video capture.");
         }
     }
+    public void Unexecute()
+    {
+        //not a thing
+    }
 }

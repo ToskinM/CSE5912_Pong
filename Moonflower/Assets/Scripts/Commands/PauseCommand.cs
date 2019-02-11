@@ -26,4 +26,10 @@ public class PauseCommand : ICommand
             //SceneManager.SetActiveScene(SceneManager.GetSceneByName(Constants.SCENE_PAUSEMENU));
         }
     }
+
+    public void Unexecute()
+    {
+        SceneManager.LoadScene(Constants.SCENE_PAUSEMENU, LoadSceneMode.Additive);
+        gameStateController.TogglePause();
+    }
 }

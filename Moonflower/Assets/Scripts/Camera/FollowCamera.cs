@@ -11,7 +11,7 @@ public class FollowCamera : MonoBehaviour
     public GameObject lockonIndicator;
     public Transform switchTransform;
     [HideInInspector] public bool freeRoam;
-    public bool frozen = false;
+    public bool Frozen { get; set; } = false;
     public bool switching;
     public float switchTime = 0.3f;
 
@@ -63,9 +63,8 @@ public class FollowCamera : MonoBehaviour
             {
                 LockOff();
             }
-
             // Rotation adjustment
-            if (!frozen)
+            if (!Frozen)
             {
                 if (!Input.GetButtonDown("LockOn") && !switching)
                 {
@@ -261,10 +260,5 @@ public class FollowCamera : MonoBehaviour
             lockonIndicator.SetActive(false);
         }
 
-    }
-
-    public void ToggleFreeze()
-    {
-        frozen = !frozen;
     }
 }

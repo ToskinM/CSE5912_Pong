@@ -14,4 +14,8 @@ public class KillNagCommand : ICommand
 
         SceneManager.UnloadSceneAsync(Constants.SCENE_QUITPOPUP);
     }
+    public void Unexecute()
+    {
+
+    }
 }

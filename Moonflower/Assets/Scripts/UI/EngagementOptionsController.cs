@@ -16,7 +16,7 @@ public class EngagementOptionsController : MonoBehaviour
     public Image icon;
 
     private ICommand freezeCommand;
-    private bool showing = false;
+    public bool Showing = false;
     private bool cameraFrozen = false; 
 
     // Start is called before the first frame update
@@ -29,13 +29,6 @@ public class EngagementOptionsController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (showing)
-        //{
-        //    if (Input.GetKeyDown(KeyCode.Return))
-        //    {
-        //        DisablePanel();
-        //    }
-        //}
     }
 
     private void updateDisplay()
@@ -87,29 +80,21 @@ public class EngagementOptionsController : MonoBehaviour
 
     public void EnablePanel(string characterSprite)
     {
-        //showing = true;
+        Showing = true;
         panel.SetActive(true);
         icon.sprite = new IconFactory().GetIcon(characterSprite);
 
-        if (!cameraFrozen)
-        {
-            freezeCommand.Execute();
-            cameraFrozen = true; 
-        }
+        freezeCommand.Execute(); 
     }
 
     public void DisablePanel()
     {
-        showing = false; 
+        Showing = false; 
         panel.SetActive(false);
         TalkButton.SetActive(false);
         DistractButton.SetActive(false);
         GiveButton.SetActive(false);
-        if (cameraFrozen)
-        {
-            freezeCommand.Execute();
-            cameraFrozen = false;
-        }
+        freezeCommand.Unexecute(); 
     }
 
     private void twoButtons(GameObject a, GameObject b)

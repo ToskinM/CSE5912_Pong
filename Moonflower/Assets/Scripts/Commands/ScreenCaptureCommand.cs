@@ -22,4 +22,8 @@ public class ScreenCaptureCommand : ICommand
 
         Debug.Log("Screen capture saved.");
     }
+    public void Unexecute()
+    {
+        //not a thing
+    }
 }

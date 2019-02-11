@@ -9,4 +9,8 @@ public class ReturnMenuCommand : ICommand
     {
         SceneManager.LoadScene(Constants.SCENE_MAINMENU);
     }
+    public void Unexecute()
+    {
+        //not a thing
+    }
 }

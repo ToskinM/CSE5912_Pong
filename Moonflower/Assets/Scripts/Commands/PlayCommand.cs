@@ -9,4 +9,9 @@ public class PlayCommand : ICommand
     {
         SceneManager.LoadScene(Constants.SCENE_GAME);
     }
+
+    public void Unexecute()
+    {
+        //not a thing
+    }
 }

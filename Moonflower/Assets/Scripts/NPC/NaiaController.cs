@@ -19,7 +19,7 @@ public class NaiaController : MonoBehaviour
     private NPCMovement movement;
     private NPCCombatController combatController;
     private NavMeshAgent agent;
-    private AmaruDialogueTrigger talkTrig;
+    private NaiaDialogueTrigger talkTrig;
     private IPlayerController playerController;
     private EngagementOptionsController engageController; 
 
@@ -39,7 +39,7 @@ public class NaiaController : MonoBehaviour
         movement = new NPCMovement(gameObject, Player, walkOrigin, 1);
         movement.SetEngagementDistances(5, combatController.attackDistance, 1);
 
-        //talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.NAIA_ICON);
+        talkTrig = new NaiaDialogueTrigger(DialoguePanel, Constants.NAIA_ICON);
         playerController = Player.GetComponent<IPlayerController>();
 
         engageController = EngageOptPanel.GetComponent<EngagementOptionsController>();
@@ -75,19 +75,19 @@ public class NaiaController : MonoBehaviour
 
         if (currState == NaiaEngageType.chill)
         {
-            engageMenuAllowed = true; 
+            if(!talkTrig.Complete)
+                engageMenuAllowed = true; 
             combatController.Active = true;
         }
         else if(currState == NaiaEngageType.fight)
         {
-            Debug.Log("I am in a combat"); 
             engageMenuAllowed = false; 
             if (combatController.inCombat)
             {
                 movement.player = combatController.combatTarget;
             }
         }
-        else if(currState == NaiaEngageType.talk && talkTrig != null)
+        else if(currState == NaiaEngageType.talk)
         {
             engageMenuAllowed = false;
             combatController.Active = false;
@@ -104,7 +104,7 @@ public class NaiaController : MonoBehaviour
                     if (talkTrig.DialogueActive())
                     {
                         talkTrig.EndDialogue();
-                        currState = NaiaEngageType.chill;
+                        currState = NaiaEngageType.fight;
                         engageMenuAllowed = false; 
                     }
                 }
@@ -136,7 +136,8 @@ public class NaiaController : MonoBehaviour
 
     private void NoEngagePanel()
     {
-        engageController.DisablePanel(); 
+        if(engageController.Showing)
+            engageController.DisablePanel(); 
     }
 
     private void startTalking()
@@ -145,10 +146,8 @@ public class NaiaController : MonoBehaviour
         engageMenuAllowed = false; 
         currState = NaiaEngageType.talk;
         combatController.Active = false; 
-
-        if (talkTrig != null)
-            if (!talkTrig.DialogueActive())
-                talkTrig.StartDialogue();
+        
+        talkTrig.StartDialogue();
 
     }
 }

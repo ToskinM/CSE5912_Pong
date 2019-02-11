@@ -14,16 +14,10 @@ public class AddCharisma : ICommand
 
     public void Execute()
     {
-        //if (gameStateController.Paused)
-        //{
-        //    SceneManager.UnloadSceneAsync(Constants.SCENE_PAUSEMENU);
-        //    gameStateController.TogglePause();
-        //}
-        //if (SceneManager.GetActiveScene().name == Constants.SCENE_GAME)
-        {
-            //SceneManager.LoadScene(Constants.SCENE_PAUSEMENU, LoadSceneMode.Additive);
-            gameStateController.FreezeCamera();
-            //SceneManager.SetActiveScene(SceneManager.GetSceneByName(Constants.SCENE_PAUSEMENU));
-        }
+    }
+
+    public void Unexecute()
+    {
+        //not a thing
     }
 }
