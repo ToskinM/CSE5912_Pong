@@ -36,7 +36,8 @@ public class NaiaController : MonoBehaviour
 
         // Setup Movement
         Vector3 walkOrigin = transform.position;
-        movement = new NPCMovement(gameObject, Player, walkOrigin, 1);
+        //movement = new NPCMovement(gameObject, Player, walkOrigin, 1);
+        movement = new NPCMovement(gameObject, Player);
         movement.SetEngagementDistances(5, combatController.attackDistance, 1);
 
         talkTrig = new NaiaDialogueTrigger(DialoguePanel, Constants.NAIA_ICON);
@@ -93,7 +94,6 @@ public class NaiaController : MonoBehaviour
             combatController.Active = false;
             if (playerController.Playing)
             {
-
                 if (!talkTrig.Complete)
                 {
                     talkTrig.Update();

@@ -53,13 +53,11 @@ public class GameStateController : MonoBehaviour
 
     public void FreezeCamera()
     {
-        Debug.Log("Freeze!!!"); 
        camControl.Frozen = true; 
     }
 
     public void UnfreezeCamera()
     {
-        Debug.Log("Unfreeze"); 
         camControl.Frozen = false;
     }
 
