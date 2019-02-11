@@ -24,7 +24,7 @@ public class LightColor : MonoBehaviour
         light = GetComponent<Light>();
 
         //orange - sunrise (5-6am)
-        colors[0] = new Color(1, .5f, 0);
+        colors[0] = new Color(1, .2f, 0);
         positions[0] = new Vector3(-24, 24, 104);
         rotations[0] = new Vector3(8, 188, 352);
         intensities[0] = 1f;
@@ -63,14 +63,14 @@ public class LightColor : MonoBehaviour
         colors[5] = new Color(.3f, .15f, .5f);
         positions[5] = new Vector3(-30, 134, -3);
         rotations[5] = new Vector3(74, 188, 4);
-        intensities[5] = .6f;
+        intensities[5] = .4f;
         times[5] = 3; //spend 3 hours on early night
 
         //Dark blue - late night (11pm-5am)
         colors[6] = new Color(.3f, .3f, .5f);
         positions[6] = new Vector3(-30, 49, 104);
         rotations[6] = new Vector3(31, 183, 359);
-        intensities[6] = 1f;
+        intensities[6] = .2f;
         times[6] = 6; //spend 6 hours on night;
 
 

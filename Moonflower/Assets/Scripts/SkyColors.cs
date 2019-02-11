@@ -29,7 +29,7 @@ public class SkyColors : MonoBehaviour
         times[0] = 1; //spend 1 hour on sunrise
 
         //light purple - morning
-        colors[1] = new Color(.9f, .6f, 1);
+        colors[1] = new Color(.9f, .85f, 1);
         fogHeights[1] = .7f;
         times[1] = 4; //spend 4 hours on morning
 
