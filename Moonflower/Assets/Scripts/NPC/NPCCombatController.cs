@@ -5,7 +5,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 {
     public enum Aggression { Passive, Unaggressive, Aggressive, Frenzied };
     public Aggression aggression;
-    public bool Active { get; set; } = true; 
+    public bool Active { get; set; } = true;
 
     public bool IsBlocking { get; private set; }
     public bool hasWeaponOut;
@@ -46,6 +46,9 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         Stats = gameObject.GetComponent<CharacterStats>();
         fieldOfView = GetComponent<FieldOfView>();
         npcAnimationController = GetComponent<NPCAnimationController>();
+
+        if (aggression == Aggression.Frenzied)
+            Frenzy();
     }
 
     void Update()
@@ -78,13 +81,14 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.name);
         if (Active)
         {
             // Get Tag
             string tag = other.tag;
 
             // Handle Hurtboxes
-            if (tag == "PlayerHurtbox")
+            if (tag == "PlayerHurtbox" || tag == "Hurtbox")
             {
                 Aggro(other.gameObject.transform.root.gameObject, false);
 
@@ -117,9 +121,9 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     {
         Active = true;
         SetWeaponSheathed(false);
-        inCombat = true; 
+        inCombat = true;
         isAttacking = true;
-        combatTarget = player; 
+        combatTarget = player;
     }
 
     private IEnumerator Respawn()
@@ -172,12 +176,6 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     private void CheckAggression()
     {
-        // Deaggo from companion if character switches characters
-        if (combatTarget != null && combatTarget.tag != "Player")
-        {
-            DeAggro();
-        }
-
         if (inCombat)
         {
             // Deaggro if we cant find target in time
@@ -188,15 +186,15 @@ public class NPCCombatController : MonoBehaviour, ICombatant
                     StopCoroutine(deaggroCoroutine);
                     deaggroCoroutine = null;
                 }
-               
+
             }
-            else if(deaggroCoroutine == null)
+            else if (deaggroCoroutine == null)
                 deaggroCoroutine = StartCoroutine(WaitForDeaggro());
         }
 
         // Search for a target OR closer target
         Transform possibleTarget = fieldOfView?.closestTarget;
-        if (possibleTarget != null)
+        if (possibleTarget != null )
         {
             if (aggression == Aggression.Aggressive)
             {
@@ -234,6 +232,12 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         Debug.Log(gameObject.name + " stopped combat");
         Sheathe();
     }
+
+    private void Frenzy()
+    {
+        aggression = Aggression.Frenzied;
+        fieldOfView.targetMask |= 1 << LayerMask.NameToLayer("NPC");
+    }
     private IEnumerator WaitForDeaggro()
     {
         yield return new WaitForSeconds(deaggroTime);
@@ -243,9 +247,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     private void CheckDeath()
     {
         if (Stats.CurrentHealth <= 0)
-        {
             Die();
-        }
     }
     private void Die()
     {
