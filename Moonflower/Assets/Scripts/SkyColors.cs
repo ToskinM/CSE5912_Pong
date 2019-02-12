@@ -92,7 +92,7 @@ public class SkyColors : MonoBehaviour
                 transitionRate += Time.deltaTime / (transitionTime * times[counter]);
                 yield return null;
             }
-            if (counter + 1 > colors.Length)
+            if (counter + 1 == colors.Length)
             {
                 counter = 0;
             }
