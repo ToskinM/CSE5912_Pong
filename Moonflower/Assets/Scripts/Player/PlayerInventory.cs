@@ -6,14 +6,23 @@ public class PlayerInventory : MonoBehaviour
 {
     public List<GameObject> InventoryObjs = new List<GameObject>();
 
+    private PlayerHealthDisplay display; 
+
     void Start()
     {
+        display = GameObject.Find("HUD").GetComponent<PlayerHealthDisplay>(); 
     }
 
     public void AddObj(GameObject obj)
     {
         InventoryObjs.Add(obj);
+
+        if(obj.GetComponent<InventoryStat>().Name.Equals(Constants.MOONFLOWER_PICKUP))
+        {
+            display.HealPetal();
+        }
     }
+
     public int getObjNumber(string obj)
     {
         int count = 0;

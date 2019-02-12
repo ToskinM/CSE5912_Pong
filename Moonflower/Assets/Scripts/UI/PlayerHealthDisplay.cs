@@ -140,4 +140,19 @@ public class PlayerHealthDisplay : MonoBehaviour
         }
     }
 
+    public void HealPetal()
+    {
+        if(stateOfPetal[currPetal] == petalState.full)
+        {
+            int newIndex = petals.IndexOf(currPetal) - 1;
+            if (newIndex >= 0)
+            {
+                currPetal = petals[newIndex];
+                currPetal.gameObject.SetActive(true); 
+            }
+        }
+        currPetal.sprite = factory.GetHealthyPetal();
+        updatePetalState(currPetal, petalState.full); 
+    }
+
 }
