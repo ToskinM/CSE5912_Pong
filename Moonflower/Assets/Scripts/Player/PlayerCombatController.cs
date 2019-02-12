@@ -119,10 +119,14 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         }
     }
 
+    public void PlayAttackSFX()
+    {
+        audioManager.Play("AttackSwing");
+    }
+
     private void Attack()
     {
         Debug.Log("Attacking");
-        audioManager.Play("AttackSwing");
         if (!hasWeaponOut)   // take out weapon if its not already out
         {
             SetWeaponSheathed(false);
