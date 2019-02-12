@@ -21,14 +21,21 @@ public static class Constants
     public const string SAVE_PLAYER_SCORE = "PlayerScore";
     public const string SAVE_CPU_SCORE = "CPUScore";
 
-    //image names
-    const string folder = "Icons/";
-    public const string ANAI_ICON = folder + "Anai";
-    public const string NAIA_ICON = folder + "Naia";
-    public const string AMARU_ICON = folder + "Amaru";
-    public const string PINON_ICON = folder + "Pinon";
-    public const string SYPAVE_ICON = folder + "Sypave";
-    public const string TEGU_ICON = folder + "Tegu.PNG";
-    public const string KURUPI_ICON = folder + "Kurupi";
-    public const string MONAI_ICON = folder + "Monai"; 
+    //icon names
+    const string iconFolder = "Icons/";
+    public const string ANAI_ICON = iconFolder + "Anai";
+    public const string NAIA_ICON = iconFolder + "Naia";
+    public const string AMARU_ICON = iconFolder + "Amaru";
+    public const string PINON_ICON = iconFolder + "Pinon";
+    public const string SYPAVE_ICON = iconFolder + "Sypave";
+    public const string TEGU_ICON = iconFolder + "Tegu.PNG";
+    public const string KURUPI_ICON = iconFolder + "Kurupi";
+    public const string MONAI_ICON = iconFolder + "Monai";
+
+    //life petal names
+    const string flowerFolder = "Life Petals/";
+    public const string HEALTHY_PETAL = flowerFolder + "Full";
+    public const string DECAY_PETAL1 = flowerFolder + "Decay1";
+    public const string DECAY_PETAL2 = flowerFolder + "Decay2";
+    public const string DECAY_PETAL3 = flowerFolder + "Decay3"; 
 }

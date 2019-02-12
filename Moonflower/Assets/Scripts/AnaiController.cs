@@ -7,6 +7,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
 {
     public bool Playing { get; set; }
     public GameObject Mimbi;
+    public GameObject HUD;
 
     Sprite icon; 
 
@@ -15,12 +16,13 @@ public class AnaiController : MonoBehaviour, IPlayerController
     public float smoothTime = 2f;
     public float rotateSpeed = 15f;
 
-    MimbiController mimbiController; 
+    MimbiController mimbiController;
+    PlayerCombatController playCombat;
 
     PlayerMovement playMove;
     NPCMovement npcMove; 
     PlayerAnimatorController playAnimate; 
-    PlayerCombatController playCombat; 
+    CharacterStats stats; 
     NavMeshAgent agent;
     BoxCollider boxCollider;
     const float bufferRadius = 5f;
@@ -40,13 +42,14 @@ public class AnaiController : MonoBehaviour, IPlayerController
         playMove = GetComponent<PlayerMovement>();
         playCombat = GetComponent<PlayerCombatController>();
         playAnimate = GetComponent<PlayerAnimatorController>();
-        boxCollider = GetComponent<BoxCollider>(); 
+        boxCollider = GetComponent<BoxCollider>();
+        stats = GetComponent<CharacterStats>(); 
         npcMove = new NPCMovement(gameObject, Mimbi);
 
         npcMove.SetFollowingDist(followDist); 
         npcMove.SetAvoidsPlayerRadius(tooCloseRadius);
 
-        playAnimate.movement = playMove; 
+        playAnimate.movement = playMove;
     }
 
     // Update is called once per frame
@@ -91,5 +94,4 @@ public class AnaiController : MonoBehaviour, IPlayerController
 
     }
 
-    
 }
