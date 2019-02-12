@@ -31,7 +31,7 @@ public class LesserNPCController : MonoBehaviour
         // Setup Movement
         //float walkRad = WalkArea.GetComponent<Renderer>().bounds.size.x;
         Vector3 walkOrigin = transform.position;
-        movement = new NPCMovement(gameObject, Player, walkOrigin, 1);
+        movement = new NPCMovement(gameObject, Player, 1);
         movement.SetEngagementDistances(5, combatController.attackDistance, 1);
 
         //talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.AMARU_ICON);
