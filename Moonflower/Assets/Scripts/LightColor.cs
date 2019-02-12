@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LightColor : MonoBehaviour
 {
+    public int dayCycleSeconds = 120;
     int[] times;
     Color[] colors;
     Vector3[] positions;
@@ -11,11 +12,12 @@ public class LightColor : MonoBehaviour
     float[] intensities;
     Light light;
     int counter = 0;
-    float transitionTime = 5f; // Amount of time it takes to fade between colors
+    float transitionTime; // Amount of time it takes to fade between colors
 
     void Start()
 
     {
+        transitionTime = dayCycleSeconds / 24f;
         colors = new Color[7];
         positions = new Vector3[7];
         rotations = new Vector3[7];

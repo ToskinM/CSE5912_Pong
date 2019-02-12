@@ -8,9 +8,10 @@ public class SkyColors : MonoBehaviour
     Color[] colors;
     float[] fogHeights;
     int[] times;
+    public int dayCycleSeconds=120;
     MeshRenderer thisRend;
     int counter = 0;
-    float transitionTime = 5f; // Amount of time it takes to fade between colors
+    float transitionTime; // Amount of time it takes to fade between colors
 
 
     void Start()
@@ -18,7 +19,7 @@ public class SkyColors : MonoBehaviour
     {
         times = new int[7]; //how many updates to spend on each color
         thisRend = GetComponent<MeshRenderer>();
-
+        transitionTime = dayCycleSeconds/24f;
         colors = new Color[7];
         fogHeights = new float[7];
 
