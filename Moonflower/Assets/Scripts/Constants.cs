@@ -37,5 +37,8 @@ public static class Constants
     public const string HEALTHY_PETAL = flowerFolder + "Full";
     public const string DECAY_PETAL1 = flowerFolder + "Decay1";
     public const string DECAY_PETAL2 = flowerFolder + "Decay2";
-    public const string DECAY_PETAL3 = flowerFolder + "Decay3"; 
+    public const string DECAY_PETAL3 = flowerFolder + "Decay3";
+
+    //inventory names
+    public const string MOONFLOWER_PICKUP = "Moon Flower"; 
 }
