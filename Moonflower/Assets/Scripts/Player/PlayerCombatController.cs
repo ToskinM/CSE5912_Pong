@@ -31,6 +31,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     {
         Stats = gameObject.GetComponent<CharacterStats>();
 
+
         weapon.SetActive(hasWeaponOut);
         blockPlaceholder.SetActive(IsBlocking);
 

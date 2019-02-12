@@ -19,10 +19,17 @@ public class CharacterStats : MonoBehaviour
     public int Charisma;
     public int Stealth;
 
+    public GameObject HUD;
+    private PlayerHealthDisplay display; 
+
+
     // Start is called before the first frame update
     void Start()
     {
         // Data drive specific values for each separate entity
+        //if (HUD.GetComponent<PlayerHealthDisplay>())
+            display = HUD.GetComponent<PlayerHealthDisplay>(); 
+
     }
 
     // Not sure how combat/interactions are going to be implemented beforehand (script-wise) so just leaving general methods for now
@@ -35,6 +42,8 @@ public class CharacterStats : MonoBehaviour
     public void TakeDamage(int damage, string sourceName)
     {
         CurrentHealth -= damage;
+        if (display != null)
+            display.HitHealth(); 
         Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
     }
 
