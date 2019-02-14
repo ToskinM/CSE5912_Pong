@@ -52,8 +52,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
         playAnimate.movement = playMove;
     }
 
-    // Update is called once per frame
-    void Update()
+    void DetectCharacterSwitchInput()
     {
         if (Input.GetButtonDown("Switch"))
         {
@@ -66,7 +65,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
                 //camera = Camera.main;
                 agent.enabled = false;
                 playAnimate.movement = playMove;
-                boxCollider.enabled = true; 
+                boxCollider.enabled = true;
 
             }
             else
@@ -76,17 +75,29 @@ public class AnaiController : MonoBehaviour, IPlayerController
                 tag = "Companion";
                 agent.enabled = true;
                 playAnimate.movement = npcMove;
-                boxCollider.enabled = false; 
+                boxCollider.enabled = false;
             }
         }
+    }
 
-        if(Input.GetKeyDown(KeyCode.V))
+    void DetectSummonCompanionInput()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
         {
-            Mimbi.GetComponent<MimbiController>().Summon(); 
+            Mimbi.GetComponent<MimbiController>().Summon();
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        DetectCharacterSwitchInput();
+        DetectSummonCompanionInput();
 
         if (Playing)
+        {
             playMove.MovementUpdate(); 
+        }
         else
         {
             npcMove.UpdateMovement();
