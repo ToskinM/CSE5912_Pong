@@ -15,7 +15,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
     public float rotateSpeed = 20f;
     public float jumpTimer = 0;
     public bool isAnai;
-    public GameObject pickupArea;
     public Rigidbody body;
     private bool onGround = true;
     private FollowCamera cameraScript;
@@ -42,7 +41,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
         walkSpeed = 3f;
         runSpeed = 7f;
         moveSpeed = walkSpeed;
-        pickupArea.SetActive(false);
 
         Action = Actions.Chilling;
         Jumping = false; 
@@ -198,18 +196,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
         MovePlayer(horizontalInput, verticalInput);
     }
 
-
-    public void DecidePickable()
-    {
-        if (Input.GetButton("Pickup"))
-        {
-            pickupArea.SetActive(true);
-        }
-        if (Input.GetButtonUp("Pickup"))
-        {
-            pickupArea.SetActive(false);
-        }
-    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.Equals(terrain))
@@ -219,11 +205,9 @@ public class PlayerMovement : MonoBehaviour, IMovement
     }
     public void MovementUpdate()
     {
-        DecidePickable();
         if (!cameraScript.freeRoam && !cameraScript.switching)
         {
             DetectKeyInput();
         }
-        
     }
 }
