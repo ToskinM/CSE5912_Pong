@@ -29,11 +29,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     private Quaternion rotation = Quaternion.identity;
 
-    // Variables to allow GetAxis to behave like GetKeyDown
-    private bool jumpAxisInUse;
-    private bool runAxisInUse;
-    private bool dashAxisInUse;
-
     void Awake()
     {
         terrain = GameObject.Find("Terrain").GetComponent<TerrainCollider>();
@@ -51,10 +46,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
         Action = Actions.Chilling;
         Jumping = false; 
-
-        jumpAxisInUse = false;
-        runAxisInUse = false;
-        dashAxisInUse = false;
     }
 
     private void Update()
@@ -65,26 +56,24 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     void SetWalkOrRun()
     {
-        if (Input.GetAxisRaw("Run") != 0f && !runAxisInUse)
+        if (Input.GetButtonDown("Run"))
         {
             Action = Actions.Running;
             moveSpeed = runSpeed;
-            runAxisInUse = true;
         }
         else
         {
-            if (Action != Actions.Running || (Input.GetAxisRaw("Run") == 0f && runAxisInUse))
+            if (Action != Actions.Running || Input.GetButtonUp("Run"))
             {
                 Action = Actions.Walking;
                 moveSpeed = walkSpeed;
-                runAxisInUse = false;
             }
         }
     }
 
     void SetJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && onGround)
+        if (Input.GetButtonDown("Jump") && onGround)
         {
             //Action = Actions.Chilling;
             Jumping = true;
@@ -100,19 +89,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     void DetectDodgeInput(Vector3 direction)
     {
-        //if (Input.GetAxisRaw("Dodge") != 0f && !dashAxisInUse)
-        //{
-        //    body.velocity = Vector3.zero;
-        //    body.AddRelativeForce(direction, ForceMode.VelocityChange);
-        //    body.velocity = Vector3.zero;
-
-        //    dashAxisInUse = true;
-        //}
-        //else if (Input.GetAxisRaw("Dodge") == 0f && dashAxisInUse)
-        //{
-        //    dashAxisInUse = false;
-        //}
-
         if (Input.GetButtonDown("Block"))
         {
             body.velocity = Vector3.zero;
@@ -150,7 +126,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
     {
         float verticalInput = Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
-        //float jumpInput = Input.GetAxis("Jump");
 
         // If we're LOCKED ON
         if (cameraScript.lockOnTarget != null && Action != Actions.Running)
