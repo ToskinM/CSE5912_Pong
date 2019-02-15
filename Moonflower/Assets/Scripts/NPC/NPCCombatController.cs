@@ -31,9 +31,14 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     private NPCAnimationController npcAnimationController;
     private NPCMovement npcMovement;
 
+    public delegate void AggroUpdate(bool aggroed);
+    public event AggroUpdate OnAggroUpdated;
+
     private void Awake()
     {
-
+        Stats = gameObject.GetComponent<CharacterStats>();
+        fieldOfView = GetComponent<FieldOfView>();
+        npcAnimationController = GetComponent<NPCAnimationController>();
     }
 
     void Start()
@@ -43,9 +48,6 @@ public class NPCCombatController : MonoBehaviour, ICombatant
             weapon = null;
 
         weapon?.SetActive(hasWeaponOut);
-        Stats = gameObject.GetComponent<CharacterStats>();
-        fieldOfView = GetComponent<FieldOfView>();
-        npcAnimationController = GetComponent<NPCAnimationController>();
 
         if (aggression == Aggression.Frenzied)
             Frenzy();
@@ -221,6 +223,9 @@ public class NPCCombatController : MonoBehaviour, ICombatant
             combatTarget = aggroTarget;
             Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
             //}
+
+            // Broadcast that we've aggroed
+            OnAggroUpdated?.Invoke(true);
         }
     }
     private void DeAggro()
@@ -231,6 +236,9 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         combatTarget = null;
         Debug.Log(gameObject.name + " stopped combat");
         Sheathe();
+
+        // Broadcast that we've lost aggro
+        OnAggroUpdated?.Invoke(false);
     }
 
     private void Frenzy()

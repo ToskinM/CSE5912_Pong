@@ -21,13 +21,16 @@ public class LesserNPCController : MonoBehaviour
     private AmaruDialogueTrigger talkTrig;
     private IPlayerController playerController;
 
-
-    void Start()
+    private void Awake()
     {
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
         combatController = GetComponent<NPCCombatController>();
+        playerController = Player.GetComponent<IPlayerController>();
+    }
 
+    void Start()
+    {
         // Setup Movement
         //float walkRad = WalkArea.GetComponent<Renderer>().bounds.size.x;
         Vector3 walkOrigin = transform.position;
@@ -35,7 +38,7 @@ public class LesserNPCController : MonoBehaviour
         movement.SetEngagementDistances(5, combatController.attackDistance, 1);
 
         //talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.AMARU_ICON);
-        playerController = Player.GetComponent<IPlayerController>();
+        
     }
 
     void Update()
@@ -62,15 +65,15 @@ public class LesserNPCController : MonoBehaviour
         }
         else
         {
-            if (combatController.inCombat)
-            {
-                movement.player = combatController.combatTarget;
-                movement.Attacking = true;
-            }
-            else
-            {
-                movement.Attacking = false;
-            }
+            //if (combatController.inCombat)
+            //{
+            //    movement.player = combatController.combatTarget;
+            //    movement.Attacking = true;
+            //}
+            //else
+            //{
+            //    movement.Attacking = false;
+            //}
         }
 
         movement.UpdateMovement();
@@ -83,5 +86,29 @@ public class LesserNPCController : MonoBehaviour
         if (talkTrig != null)
             if (!talkTrig.DialogueActive())
                 talkTrig.StartDialogue();
+    }
+
+    private void HandleOnAggroUpdated(bool aggroed)
+    {
+        if (aggroed)
+        {
+            movement.player = combatController.combatTarget;
+            movement.Attacking = true;
+        }
+        else
+        {
+            movement.Attacking = false;
+        }
+    }
+
+    private void OnEnable()
+    {
+        // Subscribe to recieve OnAggroUpdated event
+        combatController.OnAggroUpdated += HandleOnAggroUpdated;
+    }
+    private void OnDisable()
+    {
+        // Unsubscribe from recieving OnAggroUpdated event
+        combatController.OnAggroUpdated -= HandleOnAggroUpdated;
     }
 }

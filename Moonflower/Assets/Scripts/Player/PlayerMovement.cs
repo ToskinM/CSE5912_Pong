@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     public GameObject pickupArea;
     public Rigidbody body;
     private bool onGround = true;
-    private Camera camera;
+    private FollowCamera cameraScript;
 
     //follow variables
     private BoxCollider boxCollider;
@@ -34,12 +34,16 @@ public class PlayerMovement : MonoBehaviour, IMovement
     private bool runAxisInUse;
     private bool dashAxisInUse;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         terrain = GameObject.Find("Terrain").GetComponent<TerrainCollider>();
-        Physics.gravity = new Vector3(0, -88.3f, 0);
         body = GetComponent<Rigidbody>();
+        cameraScript = Camera.main.GetComponent<FollowCamera>();
+    }
+
+    void Start()
+    {
+        Physics.gravity = new Vector3(0, -88.3f, 0);
         walkSpeed = 3f;
         runSpeed = 7f;
         moveSpeed = walkSpeed;
@@ -47,8 +51,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
         Action = Actions.Chilling;
         Jumping = false; 
-
-        this.camera = Camera.main;
 
         jumpAxisInUse = false;
         runAxisInUse = false;
@@ -98,17 +100,24 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     void DetectDodgeInput(Vector3 direction)
     {
-        if (Input.GetAxisRaw("Dodge") != 0f && !dashAxisInUse)
+        //if (Input.GetAxisRaw("Dodge") != 0f && !dashAxisInUse)
+        //{
+        //    body.velocity = Vector3.zero;
+        //    body.AddRelativeForce(direction, ForceMode.VelocityChange);
+        //    body.velocity = Vector3.zero;
+
+        //    dashAxisInUse = true;
+        //}
+        //else if (Input.GetAxisRaw("Dodge") == 0f && dashAxisInUse)
+        //{
+        //    dashAxisInUse = false;
+        //}
+
+        if (Input.GetButtonDown("Block"))
         {
             body.velocity = Vector3.zero;
             body.AddRelativeForce(direction, ForceMode.VelocityChange);
             body.velocity = Vector3.zero;
-
-            dashAxisInUse = true;
-        }
-        else if (Input.GetAxisRaw("Dodge") == 0f && dashAxisInUse)
-        {
-            dashAxisInUse = false;
         }
     }
 
@@ -122,7 +131,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     void RotateCameraLocked()
     {
         // look at lock on target
-        Vector3 relative = camera.GetComponent<FollowCamera>().lockOnTarget.transform.position - transform.position;
+        Vector3 relative = cameraScript.lockOnTarget.transform.position - transform.position;
         float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
         rotation = Quaternion.Euler(0, angle, 0);
 
@@ -144,7 +153,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
         //float jumpInput = Input.GetAxis("Jump");
 
         // If we're LOCKED ON
-        if (camera.GetComponent<FollowCamera>().lockOnTarget != null && Action != Actions.Running)
+        if (cameraScript.lockOnTarget != null && Action != Actions.Running)
         {
             HandleLockonMovement(verticalInput, horizontalInput);
         }
@@ -200,7 +209,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
         
             // Dertermine angle we should face from input angle
             float angle = Mathf.Atan2(horizontalInput, verticalInput) * (180 / Mathf.PI);
-            angle += camera.transform.rotation.eulerAngles.y;
+            angle += cameraScript.transform.rotation.eulerAngles.y;
             //Debug.Log(angle);
             rotation = Quaternion.AngleAxis(angle, Vector3.up);
         }
@@ -236,7 +245,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     public void MovementUpdate()
     {
         DecidePickable();
-        if (!camera.GetComponent<FollowCamera>().freeRoam && !camera.GetComponent<FollowCamera>().switching)
+        if (!cameraScript.freeRoam && !cameraScript.switching)
         {
             DetectKeyInput();
         }
