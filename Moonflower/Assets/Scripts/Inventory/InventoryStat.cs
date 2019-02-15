@@ -11,6 +11,7 @@ public class InventoryStat : MonoBehaviour
     public int Health;
     public bool AnaiObject;
     public bool MimbiObject;
+    public bool DayObject;
 
 
 
