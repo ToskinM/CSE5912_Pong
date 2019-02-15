@@ -29,6 +29,11 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     private Quaternion rotation = Quaternion.identity;
 
+    // Variables to allow GetAxis to behave like GetKeyDown
+    private bool jumpAxisInUse;
+    private bool runAxisInUse;
+    private bool dashAxisInUse;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +49,10 @@ public class PlayerMovement : MonoBehaviour, IMovement
         Jumping = false; 
 
         this.camera = Camera.main;
+
+        jumpAxisInUse = false;
+        runAxisInUse = false;
+        dashAxisInUse = false;
     }
 
     private void Update()
@@ -54,17 +63,19 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     void SetWalkOrRun()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetAxisRaw("Run") != 0f && !runAxisInUse)
         {
             Action = Actions.Running;
             moveSpeed = runSpeed;
+            runAxisInUse = true;
         }
         else
         {
-            if (Action != Actions.Running || Input.GetKeyUp(KeyCode.LeftShift))
+            if (Action != Actions.Running || (Input.GetAxisRaw("Run") == 0f && runAxisInUse))
             {
                 Action = Actions.Walking;
                 moveSpeed = walkSpeed;
+                runAxisInUse = false;
             }
         }
     }
@@ -85,11 +96,20 @@ public class PlayerMovement : MonoBehaviour, IMovement
         }
     }
 
-    void Dash(Vector3 direction)
+    void DetectDodgeInput(Vector3 direction)
     {
-        body.velocity = Vector3.zero;
-        body.AddRelativeForce(direction, ForceMode.VelocityChange);
-        body.velocity = Vector3.zero;
+        if (Input.GetAxisRaw("Dodge") != 0f && !dashAxisInUse)
+        {
+            body.velocity = Vector3.zero;
+            body.AddRelativeForce(direction, ForceMode.VelocityChange);
+            body.velocity = Vector3.zero;
+
+            dashAxisInUse = true;
+        }
+        else if (Input.GetAxisRaw("Dodge") == 0f && dashAxisInUse)
+        {
+            dashAxisInUse = false;
+        }
     }
 
     void RotateCameraFree()
@@ -123,19 +143,15 @@ public class PlayerMovement : MonoBehaviour, IMovement
         float horizontalInput = Input.GetAxis("Horizontal");
         //float jumpInput = Input.GetAxis("Jump");
 
-        // Don't move in camera free roam
-        if (!camera.GetComponent<FollowCamera>().freeRoam)
+        // If we're LOCKED ON
+        if (camera.GetComponent<FollowCamera>().lockOnTarget != null && Action != Actions.Running)
         {
-            // If we're LOCKED ON
-            if (camera.GetComponent<FollowCamera>().lockOnTarget != null && Action != Actions.Running)
-            {
-                HandleLockonMovement(verticalInput, horizontalInput);
-            }
-            // If we're NOT locked on  OR we're Locked on + sprinting (also when the camera is resetting behind the player)
-            else
-            {
-                HandleFreeMovement(verticalInput, horizontalInput);
-            }
+            HandleLockonMovement(verticalInput, horizontalInput);
+        }
+        // If we're NOT locked on  OR we're Locked on + sprinting (also when the camera is resetting behind the player)
+        else
+        {
+            HandleFreeMovement(verticalInput, horizontalInput);
         }
     }
 
@@ -147,10 +163,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
         {
             SetWalkOrRun();
 
-            if (Input.GetKeyDown(KeyCode.Mouse1))
-            {
-                Dash(new Vector3(0f, 0f, Mathf.Sign(verticalInput) * 10f));
-            }
+            DetectDodgeInput(new Vector3(0f, 0f, Mathf.Sign(verticalInput) * 10f));
+
             Vector3 vertDirection = new Vector3(0, 0, Mathf.Sign(verticalInput));
             transform.Translate(vertDirection * Time.deltaTime * moveSpeed);
         }
@@ -159,24 +173,13 @@ public class PlayerMovement : MonoBehaviour, IMovement
         {
             SetWalkOrRun();
 
-            if (Input.GetKeyDown(KeyCode.Mouse1))
-            {
-                Dash(new Vector3(Mathf.Sign(horizontalInput) * 30f, 0f, 0f));
-            }
+            DetectDodgeInput(new Vector3(Mathf.Sign(horizontalInput) * 30f, 0f, 0f));
+
             Vector3 horiDirection = new Vector3(Mathf.Sign(horizontalInput), 0, 0);
             transform.Translate(horiDirection * Time.deltaTime * moveSpeed);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && onGround)
-        {
-            Jumping = true;
-            body.AddForce(new Vector3(0f, 25f, 0f), ForceMode.Impulse);
-            jumpTimer = 40;
-        }
-        else if (onGround)
-        {
-            Jumping = false;
-        }
+        SetJump();
 
         if (Mathf.Approximately(horizontalInput + verticalInput, 0f))
         {
@@ -193,11 +196,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
             SetWalkOrRun();
 
-            if (Input.GetKeyDown(KeyCode.Mouse1))
-            {
-                Dash(new Vector3(0f, 0f, 30f));
-            }
-
+            DetectDodgeInput(new Vector3(0f, 0f, 30f));
+        
             // Dertermine angle we should face from input angle
             float angle = Mathf.Atan2(horizontalInput, verticalInput) * (180 / Mathf.PI);
             angle += camera.transform.rotation.eulerAngles.y;
