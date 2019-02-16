@@ -11,10 +11,12 @@ public class MainMenuBehavior : MonoBehaviour
     //public AudioClip MusicClip;
     //public AudioSource MusicSource;
     public ICommand play, nag;
-    public Slider slider;
+    public Slider musicSlider;
+    public Slider audioSlider;
 
     //private AudioManager audioManager;
-    private float originalVolume;
+    private float originalMusicVol;
+    private float originalAudioVol;
     private SceneController sceneController;    // Reference to the SceneController to actually do the loading and unloading of scenes.
 
     void Awake()
@@ -28,8 +30,10 @@ public class MainMenuBehavior : MonoBehaviour
         options.onClick.AddListener(Options);
         quit.onClick.AddListener(QuitGame);
         back.onClick.AddListener(GoBack);
-        //slider.value = FindObjectOfType<AudioManager>().GetVolume("Backgroud");
-        originalVolume = slider.value;
+        musicSlider.value = FindObjectOfType<AudioManager>().GetBackgroundVolume();
+        audioSlider.value = FindObjectOfType<AudioManager>().GetSoundVolume();
+        originalMusicVol = musicSlider.value;
+        originalAudioVol = audioSlider.value;
         play = new PlayCommand();
         nag = new NagCommand();
 
@@ -87,11 +91,12 @@ public class MainMenuBehavior : MonoBehaviour
     }
     public void Slider()
     {
-        //FindObjectOfType<AudioManager>().ChangeVolume("Background", slider.value);
-        //if (Mathf.Abs(slider.value-originalVolume)>=0.01)
-        //{
-        //    FindObjectOfType<AudioManager>().PlayTest("Background");
-        //}
+
+        if (Mathf.Abs(musicSlider.value-originalMusicVol)>=0.01)
+        {
+            FindObjectOfType<AudioManager>().ChangeBackgroundVol(musicSlider.value);
+            //FindObjectOfType<AudioManager>().PlayTest("Background");
+        }
     }
 
     //private IEnumerator GetAudioManager()
