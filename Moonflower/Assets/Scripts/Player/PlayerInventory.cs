@@ -40,18 +40,18 @@ public class PlayerInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DetectPickup();
+        //DetectPickup();
     }
 
-    public void DetectPickup()
-    {
-        if (Input.GetButtonDown("Pickup"))
-        {
-            pickupArea.SetActive(true);
-        }
-        else if (Input.GetButtonUp("Pickup"))
-        {
-            pickupArea.SetActive(false);
-        }
-    }
+    //public void DetectPickup()
+    //{
+    //    if (Input.GetButtonDown("Pickup"))
+    //    {
+    //        pickupArea.SetActive(true);
+    //    }
+    //    else if (Input.GetButtonUp("Pickup"))
+    //    {
+    //        pickupArea.SetActive(false);
+    //    }
+    //}
 }

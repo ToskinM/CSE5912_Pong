@@ -13,13 +13,18 @@ public class InventoryStat : MonoBehaviour
     public bool MimbiObject;
     public bool DayObject;
 
-
+    public Behaviour halo;
 
     // Start is called before the first frame update
     void Start()
     {
 
     }
+    public void SetHalo(bool decide)
+    {
+        halo.enabled = decide;
+    }
+
     public int GetHealth ()
     {
         return Health;

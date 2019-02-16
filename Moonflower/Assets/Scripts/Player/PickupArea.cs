@@ -17,11 +17,11 @@ public class PickupArea : MonoBehaviour
     public TextMeshProUGUI inventoryAdd;
     void Start()
     {
-        FindObjectOfType<AudioManager>().Play("background");
         StartCoroutine(GetAudioManager());
         //inventoryManager = FindObjectOfType<InventoryManager>();
         playerStat = Player.GetComponent<CharacterStats>();
         playerInventory = Player.GetComponent<PlayerInventory>();
+
     }
 
     private IEnumerator GetAudioManager()
@@ -58,11 +58,16 @@ public class PickupArea : MonoBehaviour
             //Destroy Gameobject after collect
             obj.gameObject.SetActive(false);
             //Play Pickup audio clip
-            audioManager.Play("pickup01");
+            PlayPickup();
         }
 
     }
  
+    private void PlayPickup()
+    {
+        audioManager.Play("pickup01");
+    }
+
     public void textUpdate(string s)
     {
         inventoryAdd.SetText(s);
