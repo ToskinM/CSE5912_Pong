@@ -16,8 +16,8 @@ public class NaiaDialogueTrigger : MonoBehaviour
     Queue<Button> buttons;
     bool active = false;
     public bool engaged = false; 
-    Node dialogue;
-    Node currNode;
+    DialogueTreeNode dialogue;
+    DialogueTreeNode currNode;
     ICommand freezeCommand;
     string spriteFile;
     bool optionsDisplayed = false; 
@@ -33,7 +33,7 @@ public class NaiaDialogueTrigger : MonoBehaviour
         freezeCommand = new FreezeCameraCommand();
         spriteFile = characterSprite; 
 
-        dialogue = new Node("");
+        dialogue = new DialogueTreeNode("");
         {
             string o, r; 
 
@@ -41,7 +41,7 @@ public class NaiaDialogueTrigger : MonoBehaviour
                 o = "Hi, Naia.";
                 r = "You're looking off your guard.";
                 dialogue.AddResponse(o, r);
-                Node next1 = dialogue.GetNext(o); // gets node for r
+                DialogueTreeNode next1 = dialogue.GetNext(o); // gets node for r
                 {
                     o = "Why would I be on my guard?";
                     r = "Around me? *grin* There's always reason to be cautious";
@@ -52,7 +52,7 @@ public class NaiaDialogueTrigger : MonoBehaviour
                     o = "Thank you?";
                     r = "That wasn't a compliment.";
                     next1.AddResponse(o, r);
-                    Node next2 = next1.GetNext(o);
+                    DialogueTreeNode next2 = next1.GetNext(o);
                     next2.AddNext("Heads up!");
                 }
 

@@ -3,33 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Node
+public class DialogueTreeNode
 {
     string prompt;
     List<string> options;
-    Dictionary<string, Node> children;
+    Dictionary<string, DialogueTreeNode> children;
     string defaultString = "default"; 
 
-    public Node()
+    public DialogueTreeNode()
     {
         prompt = "";
         options = new List<string>();
-        children = new Dictionary<string, Node>();
+        children = new Dictionary<string, DialogueTreeNode>();
     }
 
-    public Node(string text)
+    public DialogueTreeNode(string text)
     {
         //Debug.Log("Create Node: " + text); 
         prompt = text;
         options = new List<string>();
-        children = new Dictionary<string, Node>();
+        children = new Dictionary<string, DialogueTreeNode>();
     }
 
-    public Node(string text, List<string> optionNodes)
+    public DialogueTreeNode(string text, List<string> optionNodes)
     {
         prompt = text;
         options = optionNodes;
-        children = new Dictionary<string, Node>();
+        children = new Dictionary<string, DialogueTreeNode>();
     }
 
     public string Prompt()
@@ -52,7 +52,7 @@ public class Node
         return options;
     }
 
-    public Node GetNext(string option)
+    public DialogueTreeNode GetNext(string option)
     {
         if (children.ContainsKey(option))
             return children[option];
@@ -62,7 +62,7 @@ public class Node
             return null;
         }
     }
-    public Node GetNext()
+    public DialogueTreeNode GetNext()
     {
         if (children.ContainsKey(defaultString))
             return children[defaultString];
@@ -83,13 +83,13 @@ public class Node
         if (!options.Contains(op))
             options.Add(op);
 
-        Node n = new Node(resp);
+        DialogueTreeNode n = new DialogueTreeNode(resp);
         children.Add(op, n);
     }
 
     public void AddNext(string s)
     {
-        Node n = new Node(s);
+        DialogueTreeNode n = new DialogueTreeNode(s);
         children.Add(defaultString, n);
     }
 }
