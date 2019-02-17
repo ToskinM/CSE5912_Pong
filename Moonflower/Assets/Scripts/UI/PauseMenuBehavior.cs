@@ -8,10 +8,14 @@ public class PauseMenuBehavior : MonoBehaviour
     public GameObject Menu, OptionsMenu;
     public Button main, options, quit, back;
     public ICommand returnMain, nag;
-    public Slider slider;
+    public Slider musicSlider;
+    public Slider audioSlider;
 
-    private float originalVolume;
+    private float originalMusicVol;
+    private float originalAudioVol;
     private SceneController sceneController;    // Reference to the SceneController to actually do the loading and unloading of scenes.
+
+    private AudioManager audioManager;
 
     void Start()
     {
@@ -22,8 +26,20 @@ public class PauseMenuBehavior : MonoBehaviour
 
         returnMain = new ReturnMenuCommand();
         nag = new NagCommand();
-        //slider.value = FindObjectOfType<AudioManager>().GetVolume("Backgroud");
-        originalVolume = slider.value;
+        //Music 
+        StartCoroutine(GetAudioManager());
+        musicSlider.value = GetBackgroundVolume();
+        audioSlider.value = GetSoundVolume();
+
+    }
+
+    private IEnumerator GetAudioManager()
+    {
+        while (audioManager == null)
+        {
+            audioManager = FindObjectOfType<AudioManager>();
+            yield return null;
+        }
     }
 
     public void MainMenu()
@@ -53,7 +69,8 @@ public class PauseMenuBehavior : MonoBehaviour
         OptionsMenu.SetActive(true);
         //FindObjectOfType<AudioManager>().Play("Menu");
         //slider.value = FindObjectOfType<AudioManager>().GetVolume("Backgroud");
-        originalVolume = slider.value;
+        originalMusicVol = musicSlider.value;
+        originalAudioVol = audioSlider.value;
     }
 
     public void Win()
@@ -68,12 +85,33 @@ public class PauseMenuBehavior : MonoBehaviour
 
     public void Slider()
     {
-        //FindObjectOfType<AudioManager>().ChangeVolume("Background", slider.value);
-        //if (Mathf.Abs(slider.value-originalVolume)>=0.01)
-        //{
-        //    FindObjectOfType<AudioManager>().PlayTest("Background");
-        //}
+        if (Mathf.Abs(musicSlider.value - originalMusicVol) >= 0.01)
+        {
+            ChangeBackgroundVol(musicSlider.value);
+        }
+        if (Mathf.Abs(audioSlider.value - originalMusicVol) >= 0.01)
+        {
+            ChangeAudioVol(audioSlider.value);
+        }
+
     }
+    public float GetBackgroundVolume()
+    {
+        return audioManager.GetBackgroundVolume();
+    }
+    public float GetSoundVolume()
+    {
+        return audioManager.GetSoundVolume();
+    }
+    public void ChangeBackgroundVol(float vol)
+    {
+        audioManager.ChangeBackgroundVol(vol);
+    }
+    public void ChangeAudioVol(float vol)
+    {
+        audioManager.ChangeSoundVol(vol);
+    }
+
     void Update()
     {
         if (OptionsMenu.activeInHierarchy == true)

@@ -9,11 +9,14 @@ public class AudioManager : MonoBehaviour
     //private AudioList AllSound ;
     public Sound[] sounds;
     public Sound[] backgrounds;
+    public float soundVol;
+    public float backgroundVol;
     public static AudioManager instance;
 
     // Start is called before the first frame update
     void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         if (instance == null)
             instance = this;
         else
@@ -21,16 +24,17 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-        AssignToAudioSource(sounds);
-        AssignToAudioSource(backgrounds);
-
-        //AllSound[0] = backgrounds;
-        //AllSound[1] = sounds;
+        //Assign vol
+        soundVol = 1;
+        backgroundVol = 1;
+        //Assign music clip to audio source
+        AssignToAudioSource(sounds, soundVol);
+        AssignToAudioSource(backgrounds,backgroundVol);
+        //Play Background wind Sound
         FindObjectOfType<AudioManager>().PlayBackground("background");
     }
 
-    private void AssignToAudioSource(Sound[] category)
+    private void AssignToAudioSource(Sound[] category, float vol)
     {
         foreach (Sound s in category)
         {
@@ -38,7 +42,7 @@ public class AudioManager : MonoBehaviour
                 s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
 
-            s.source.volume = s.volume;
+            s.source.volume = vol;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
@@ -91,13 +95,34 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.volume = vol;
     }
-    public float GetVolume(string name)
+
+    public void ChangeSoundVol(float vol)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
+        soundVol = vol;
+    }
+    public void ChangeBackgroundVol(float vol)
+    {
+        backgroundVol = vol;
+    }
+    public void UpdateVol(Sound[] category, float vol)
+    {
+        foreach (Sound s in category)
         {
-            Debug.Log("there is nth");
+            s.source.volume = vol;
         }
-        return s.source.volume;
+    }
+
+    public float GetBackgroundVolume()
+    {
+        return backgroundVol;
+    }
+    public float GetSoundVolume()
+    {
+        return soundVol;
+    }
+    void Update()
+    {
+        UpdateVol(backgrounds,backgroundVol);
+        UpdateVol(sounds, soundVol);
     }
 }
