@@ -104,11 +104,13 @@ public class LesserNPCController : MonoBehaviour
     private void OnEnable()
     {
         // Subscribe to recieve OnAggroUpdated event
-        combatController.OnAggroUpdated += HandleOnAggroUpdated;
+        if (combatController)
+            combatController.OnAggroUpdated += HandleOnAggroUpdated;
     }
     private void OnDisable()
     {
         // Unsubscribe from recieving OnAggroUpdated event
-        combatController.OnAggroUpdated -= HandleOnAggroUpdated;
+        if (combatController)
+            combatController.OnAggroUpdated -= HandleOnAggroUpdated;
     }
 }
