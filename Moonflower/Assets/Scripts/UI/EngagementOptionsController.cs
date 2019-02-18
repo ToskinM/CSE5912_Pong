@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
+using Dialogue; 
 
 public class EngagementOptionsController : MonoBehaviour
 {
@@ -17,13 +18,12 @@ public class EngagementOptionsController : MonoBehaviour
 
     private ICommand freezeCommand;
     public bool Showing = false;
-    private bool cameraFrozen = false; 
+    private bool cameraFrozen = false;
 
     // Start is called before the first frame update
     void Start()
     {
         freezeCommand = new FreezeCameraCommand();
-
     }
 
     // Update is called once per frame

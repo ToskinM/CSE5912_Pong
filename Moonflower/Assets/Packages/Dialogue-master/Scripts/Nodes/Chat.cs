@@ -18,18 +18,18 @@ namespace Dialogue {
 
         public void AnswerQuestion(int index) {
             NodePort port = null;
-            if (answers.Count == 0) {
+            if (answers.Count == 0) { //if no answer options, just go to next default node
                 port = GetOutputPort("output");
-            } else {
+            } else { //otherwise, get output port for answer
                 if (answers.Count <= index) return;
                 port = GetOutputPort("answers " + index);
             }
 
-            if (port == null) return;
+            if (port == null) return; 
             for (int i = 0; i < port.ConnectionCount; i++) {
                 NodePort connection = port.GetConnection(i);
                 (connection.node as DialogueBaseNode).Trigger();
-            }
+            } 
         }
 
         public override void Trigger() {
