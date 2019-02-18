@@ -21,7 +21,16 @@ public class DialogueTrigger : MonoBehaviour
 
     bool active = false;
     public bool engaged = false; 
-    bool optionsDisplayed = false;
+
+    enum TextState { typing, paused, options, done}
+    TextState state = TextState.done; 
+    bool typing = false;
+    int typeIndex = 0;
+
+    int slowDownFrac = 2;
+    int pauseCount = 0;
+    int pauseMax = 10;
+    string punctuation = ".!?"; 
 
     DialogueGraph graph;
     DialogueFactory factory; 
@@ -45,24 +54,41 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (active)
         {
-            text.text = graph.current.text;
-            if (Input.GetKeyDown(KeyCode.Return) || text.text.Equals(""))
+            switch(state)
             {
-                if (!optionsDisplayed)
-                {
+                case TextState.typing:
+                case TextState.paused:
+                    typeText();
+                    break;
+                case TextState.options:
                     displayOptions();
-                    optionsDisplayed = true;
-                }
-                else if( !text.text.Equals(""))
+                    break; 
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                Debug.Log("what state? " + state); 
+                switch(state)
                 {
-                    gotoNext(-1);
-                    optionsDisplayed = false;
+                    case TextState.typing:
+                    case TextState.paused:
+                        text.text = graph.current.text;
+                        typeIndex = 0; 
+                        state = TextState.options; 
+                        break;
+                    case TextState.options:
+                        displayOptions();
+                        state = TextState.done; 
+                        break;
+                    case TextState.done:
+                        if (!hasOptions())
+                        {
+                            gotoNext(-1);
+                        }
+                        break;
                 }
                 engaged = true; 
             }
-
-            //if (currNode != null && !currNode.Prompt().Equals(""))
-                //engaged = true; 
         }
     }
 
@@ -71,6 +97,7 @@ public class DialogueTrigger : MonoBehaviour
         panel.SetActive(true); 
         icon.sprite = new IconFactory().GetIcon(spriteFile); 
         active = true;
+        state = TextState.typing; 
         freezeCommand.Execute(); 
     }
 
@@ -89,6 +116,57 @@ public class DialogueTrigger : MonoBehaviour
         return active;
     }
 
+    private void typeText()
+    {
+        string dialogue = graph.current.text; 
+        switch(state)
+        {
+            case TextState.typing:
+                if (typeIndex%slowDownFrac == 0)
+                    text.text = dialogue.Substring(0, typeIndex/slowDownFrac);
+
+                typeIndex++;
+                int currDiaIndex = typeIndex / slowDownFrac;
+                //if (currDiaIndex == dialogue.Length)
+                //{
+                //    typeIndex = 0;
+                //    typing = false;
+                //    state = TextState.options;  
+                //}
+                if(currDiaIndex > 1 && punctuation.IndexOf(dialogue[currDiaIndex-2]) != -1)
+                    state = TextState.paused;
+                break;
+
+            case TextState.paused:
+                pauseCount++; 
+                if(pauseCount == pauseMax)
+                {
+                    pauseCount = 0;
+                    if (typeIndex / slowDownFrac == dialogue.Length)
+                    {
+                        typeIndex = 0;
+                        typing = false;
+                        if (hasOptions())
+                            state = TextState.options;
+                        else
+                            state = TextState.done; 
+                    }
+                    else
+                    {
+                        state = TextState.typing;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private bool hasOptions()
+    {
+        return graph.current.answers.Count > 0;
+    }
+
     private void destroyButtons()
     {
         while(buttons.Count > 0)
@@ -100,6 +178,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void gotoNext(int i)
     {
+        state = TextState.typing; 
         string prev = graph.current.text; 
         graph.GetNext(i);
         string next = graph.current.text;
@@ -117,7 +196,7 @@ public class DialogueTrigger : MonoBehaviour
         if (numOptions > 0)
         {
             int currOffset = 0;
-            int offset = Screen.height / 19;
+            int offset = Screen.height / 21;
             for (int i = 0; i < numOptions; i++)
             {
                 Button b = Instantiate(templateButton, templateButton.transform.position, templateButton.transform.rotation);
@@ -136,6 +215,7 @@ public class DialogueTrigger : MonoBehaviour
                 buttons.Enqueue(currButton);
             }
         }
+        state = TextState.done; 
     }
 
 }
