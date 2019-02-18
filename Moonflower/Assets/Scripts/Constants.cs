@@ -40,5 +40,19 @@ public static class Constants
     public const string DECAY_PETAL3 = flowerFolder + "Decay3";
 
     //inventory names
-    public const string MOONFLOWER_PICKUP = "Moon Flower"; 
+    public const string MOONFLOWER_PICKUP = "Moon Flower";
+
+    /*
+     * Dialogue Names
+     */
+    const string dialogueFolder = "Dialogues/";
+
+    //Amaru
+    public const string TEST_DIALOGUE = dialogueFolder + "New Dialogue Graph";
+    public const string AMARU_INTRO_DIALOGUE = dialogueFolder + "Amaru Intro Dialogue"; 
+    //Naia
+    //Sypave
+    //Jeruti
+    //Pinon
+    //Ysapy
 }

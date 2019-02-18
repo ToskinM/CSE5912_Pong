@@ -83,7 +83,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
+//        Debug.Log(other.gameObject.name);
         if (Active)
         {
             // Get Tag
@@ -221,7 +221,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
                 inCombat = true;
 
             combatTarget = aggroTarget;
-            Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
+            //Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
             //}
 
             // Broadcast that we've aggroed
@@ -234,7 +234,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
             inCombat = false;
 
         combatTarget = null;
-        Debug.Log(gameObject.name + " stopped combat");
+        //Debug.Log(gameObject.name + " stopped combat");
         Sheathe();
 
         // Broadcast that we've lost aggro

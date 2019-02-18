@@ -16,7 +16,7 @@ public class AmaruController : MonoBehaviour
     bool engaging = false;
     NPCMovement npc;
     NavMeshAgent agent;
-    AmaruDialogueTrigger talkTrig;
+    DialogueTrigger talkTrig;
     IPlayerController playerController; 
     
 
@@ -31,7 +31,7 @@ public class AmaruController : MonoBehaviour
         npc = new NPCMovement(gameObject, Player, walkOrigin, walkRad, engagementRadius);
         npc.SetEngagementDistances(engagementRadius, bufferDist, tooCloseRad);
 
-        talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.AMARU_ICON);
+        talkTrig = new DialogueTrigger(DialoguePanel, Constants.AMARU_ICON, Constants.AMARU_INTRO_DIALOGUE);
         playerController = Player.GetComponent<IPlayerController>(); 
     }
 
