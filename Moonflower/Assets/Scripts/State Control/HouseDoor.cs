@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class HouseDoor : MonoBehaviour
 {
+    public string targetScene;
     private SceneController sceneController;
     // Start is called before the first frame update
     void Start()
     {
-        sceneController = FindObjectOfType<SceneController>();
     }
 
     // Update is called once per frame
@@ -20,9 +20,9 @@ public class HouseDoor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.Equals(GameObject.Find("Anai").GetComponent<Collider>()) || other.Equals(GameObject.Find("Mimbi").GetComponent<Collider>()))
+        if (other.Equals(GameObject.Find("Anai").GetComponent<Collider>()) && (GameObject.Find("Anai").GetComponent<UnityEngine.AI.NavMeshAgent>().enabled == false) || other.Equals(GameObject.Find("Mimbi").GetComponent<Collider>()) && (GameObject.Find("Mimbi").GetComponent<UnityEngine.AI.NavMeshAgent>().enabled == false))
         {
-                SceneManager.LoadScene("Anai House");
+                SceneManager.LoadScene(targetScene);
         }
     }
 }
