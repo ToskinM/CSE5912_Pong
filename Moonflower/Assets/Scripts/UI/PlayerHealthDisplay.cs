@@ -9,8 +9,10 @@ public class PlayerHealthDisplay : MonoBehaviour
     public GameObject Flower;
     public GameObject Player;
 
-    public bool Dead = false; 
+    public bool Dead = false;
 
+    private bool healing = false;
+    private bool falling = false; 
     private enum petalState { full, down1, down2, down3, gone}
 
     private CharacterStats playerStat;
@@ -18,12 +20,15 @@ public class PlayerHealthDisplay : MonoBehaviour
     private List<Image> petals;
     private Dictionary<Image, petalState> stateOfPetal; 
     private Image currPetal;
+    private Image fallingPetal;
+    private bool fallLeft = true;  
     private PetalFactory factory; 
 
 
     private bool damageDelt = false;
     private int shakeCount = 0;
     private int maxShake = 20;
+    private int healCount = 0; 
     private Vector3 initPosition; 
 
 
@@ -33,8 +38,6 @@ public class PlayerHealthDisplay : MonoBehaviour
         playerStat = Player.GetComponent<CharacterStats>();
         healthText = gameObject.GetComponent<TextMeshProUGUI>();
         factory = new PetalFactory(); 
-
-        //RefreshHealthDisplay();
 
         petals = new List<Image>();
         stateOfPetal = new Dictionary<Image, petalState>();
@@ -51,11 +54,8 @@ public class PlayerHealthDisplay : MonoBehaviour
 
     }
 
-    // TODO: Remove after combat features are implemented, call RefreshHealthDisplay() instead to reduce number of Update() calls
     private void Update()
     {
-        //RefreshHealthDisplay();
-
         if(damageDelt)
         {
             if (shakeCount < maxShake)
@@ -78,23 +78,67 @@ public class PlayerHealthDisplay : MonoBehaviour
                 Flower.transform.position = initPosition; 
             }
         }
-    }
+        if(healing)
+        {
+            petalState currState = stateOfPetal[currPetal];
+            if (currState != petalState.full)
+            {
+                if (healCount % 10 == 0)
+                {
+                    petalState newState = currState-1;
+                    currPetal.sprite = getPetal(newState); 
+                    updatePetalState(currPetal, newState);
+                }
+                healCount++; 
+            }
+            else
+            {
+                healing = false;
+                healCount = 0; 
+            }
+        }
+        if(falling)
+        {
+            fallingPetal.transform.position -= new Vector3(0, 1);
+            fallingPetal.color -= new Color(0, 0, 0, 0.02f);
+            if(fallLeft)
+                fallingPetal.transform.RotateAround(fallingPetal.transform.position, Vector3.forward, 80*Time.deltaTime);
+            else
+                fallingPetal.transform.RotateAround(fallingPetal.transform.position,-Vector3.forward, 80 * Time.deltaTime);
 
-    public void RefreshHealthDisplay()
-    {
-        //string displayText = "Health: " + playerStat.CurrentHealth.ToString();
-        //healthText.SetText(displayText);
+            if (fallingPetal.color.a <= 0)
+            {
+                Destroy(fallingPetal.gameObject);
+                falling = false; 
+            }
+        }
     }
 
     public void HitHealth()
     {
-
         if (!Dead)
         {
             damageDelt = true;
             damagePetal();
         }
 
+    }
+
+    private Sprite getPetal(petalState p)
+    {
+        switch(p)
+        {
+            case petalState.full:
+                return factory.GetHealthyPetal();
+            case petalState.down1:
+                return factory.GetDecayPetal1();
+            case petalState.down2:
+                return factory.GetDecayPetal2();
+            case petalState.down3:
+                return factory.GetDecayPetal3();
+            default:
+                return null; 
+        }
     }
 
     private void damagePetal()
@@ -115,6 +159,8 @@ public class PlayerHealthDisplay : MonoBehaviour
                 updatePetalState(petal, petalState.down3);
                 break;
             case petalState.down3:
+                cloneDeadPetal(petal); 
+                falling = true; 
                 petal.gameObject.SetActive(false); 
                 updatePetalState(petal, petalState.gone);
                 int newIndex = petals.IndexOf(petal) + 1;
@@ -124,6 +170,15 @@ public class PlayerHealthDisplay : MonoBehaviour
                     Dead = true; 
                 break;
         }
+    }
+
+    private void cloneDeadPetal(Image petal)
+    {
+        GameObject petalOb = Instantiate(petal.gameObject, Flower.transform);
+        petalOb.transform.position = petal.transform.position;
+        petalOb.transform.rotation = petal.transform.rotation;
+        fallingPetal = petalOb.GetComponent<Image>();
+        fallLeft = petals.IndexOf(petal) <= 1; 
     }
 
 
@@ -151,8 +206,7 @@ public class PlayerHealthDisplay : MonoBehaviour
                 currPetal.gameObject.SetActive(true); 
             }
         }
-        currPetal.sprite = factory.GetHealthyPetal();
-        updatePetalState(currPetal, petalState.full); 
+        healing = true; 
     }
 
 }

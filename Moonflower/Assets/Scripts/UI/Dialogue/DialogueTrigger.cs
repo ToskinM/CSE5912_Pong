@@ -19,7 +19,6 @@ public class DialogueTrigger : MonoBehaviour
     List<Button> buttons;
     string spriteFile;
 
-    bool active = false;
     public bool engaged = false; 
 
     enum PanelState { down, rising, up, falling}
@@ -60,7 +59,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void Update()
     {
-        if (active)
+        if (pState != PanelState.down)
         {
             switch (pState)
             {
@@ -79,7 +78,6 @@ public class DialogueTrigger : MonoBehaviour
                     {
                         pState = PanelState.down;
                         panel.SetActive(false);
-                        active = false; 
                     }
                     break;
 
@@ -129,7 +127,6 @@ public class DialogueTrigger : MonoBehaviour
         pState = PanelState.rising; 
         panel.SetActive(true); 
         icon.sprite = new IconFactory().GetIcon(spriteFile); 
-        active = true;
         tState = TextState.typing; 
         freezeCommand.Execute();
     }
@@ -146,7 +143,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public bool DialogueActive()
     {
-        return active;
+        return pState != PanelState.down;
     }
 
     private void typeText()
