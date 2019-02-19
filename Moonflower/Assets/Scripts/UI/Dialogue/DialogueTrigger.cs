@@ -16,16 +16,21 @@ public class DialogueTrigger : MonoBehaviour
     Button templateButton;
     ICommand freezeCommand;
 
-    Queue<Button> buttons;
+    List<Button> buttons;
     string spriteFile;
 
     bool active = false;
     public bool engaged = false; 
 
+    enum PanelState { down, rising, up, falling}
+    PanelState pState = PanelState.down;
     enum TextState { typing, paused, options, done}
-    TextState state = TextState.done; 
-    bool typing = false;
+    TextState tState = TextState.done; 
     int typeIndex = 0;
+    const int fadeMax = 30;
+    Button currB;
+    Vector3 upPos;
+    Vector3 downPos;  
 
     int slowDownFrac = 2;
     int pauseCount = 0;
@@ -43,10 +48,13 @@ public class DialogueTrigger : MonoBehaviour
         panel = p;
         icon = panel.transform.GetChild(0).GetComponent<Image>(); 
         text = panel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        buttons = new Queue<Button>();
+        buttons = new List<Button>(); 
         templateButton = panel.transform.GetChild(2).GetComponent<Button>();
         freezeCommand = new FreezeCameraCommand();
-        spriteFile = characterSprite; 
+        spriteFile = characterSprite;
+        upPos = panel.transform.position;
+        downPos = new Vector3(upPos.x, upPos.y - icon.rectTransform.rect.height);
+        panel.transform.position = downPos; 
     }
 
 
@@ -54,59 +62,84 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (active)
         {
-            switch(state)
+            switch (pState)
             {
-                case TextState.typing:
-                case TextState.paused:
-                    typeText();
+                case PanelState.rising:
+                    panel.transform.position += new Vector3(0, 4); 
+                    if(panel.transform.position.y >= upPos.y)
+                    {
+                        panel.transform.position = upPos; 
+                        pState = PanelState.up; 
+                    }
                     break;
-                case TextState.options:
-                    displayOptions();
-                    break; 
-            }
 
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                Debug.Log("what state? " + state); 
-                switch(state)
-                {
-                    case TextState.typing:
-                    case TextState.paused:
-                        text.text = graph.current.text;
-                        typeIndex = 0; 
-                        state = TextState.options; 
-                        break;
-                    case TextState.options:
-                        displayOptions();
-                        state = TextState.done; 
-                        break;
-                    case TextState.done:
-                        if (!hasOptions())
+                case PanelState.falling:
+                    panel.transform.position -= new Vector3(0, 4);
+                    if (panel.transform.position.y <= downPos.y)
+                    {
+                        pState = PanelState.down;
+                        panel.SetActive(false);
+                        active = false; 
+                    }
+                    break;
+
+                case PanelState.up:
+                    switch (tState)
+                    {
+                        case TextState.typing:
+                        case TextState.paused:
+                            typeText();
+                            break;
+                        case TextState.options:
+                            displayOptions();
+                            break;
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.Return))
+                    {
+                        switch (tState)
                         {
-                            gotoNext(-1);
+                            case TextState.typing:
+                            case TextState.paused:
+                                text.text = graph.current.text;
+                                typeIndex = 0;
+                                tState = TextState.options;
+                                break;
+                            case TextState.options:
+                                forceOptions();
+                                tState = TextState.done;
+                                break;
+                            case TextState.done:
+                                if (!hasOptions())
+                                {
+                                    gotoNext(-1);
+                                }
+                                break;
                         }
-                        break;
-                }
-                engaged = true; 
+                        engaged = true;
+                    }
+                    break; 
+
             }
         }
     }
 
     public void StartDialogue()
     {
+        pState = PanelState.rising; 
         panel.SetActive(true); 
         icon.sprite = new IconFactory().GetIcon(spriteFile); 
         active = true;
-        state = TextState.typing; 
-        freezeCommand.Execute(); 
+        tState = TextState.typing; 
+        freezeCommand.Execute();
     }
 
     public void EndDialogue()
     {
-        panel.SetActive(false);
-        icon.sprite = null; 
-        buttons.Clear(); 
-        active = false;
+        //panel.SetActive(false);
+        destroyButtons(); 
+        //active = false;
+        pState = PanelState.falling; 
         engaged = false;
         freezeCommand.Unexecute();
     }
@@ -119,7 +152,7 @@ public class DialogueTrigger : MonoBehaviour
     private void typeText()
     {
         string dialogue = graph.current.text; 
-        switch(state)
+        switch(tState)
         {
             case TextState.typing:
                 if (typeIndex%slowDownFrac == 0)
@@ -134,7 +167,7 @@ public class DialogueTrigger : MonoBehaviour
                 //    state = TextState.options;  
                 //}
                 if(currDiaIndex > 1 && punctuation.IndexOf(dialogue[currDiaIndex-2]) != -1)
-                    state = TextState.paused;
+                    tState = TextState.paused;
                 break;
 
             case TextState.paused:
@@ -144,16 +177,15 @@ public class DialogueTrigger : MonoBehaviour
                     pauseCount = 0;
                     if (typeIndex / slowDownFrac == dialogue.Length)
                     {
-                        typeIndex = 0;
-                        typing = false;
+                        resetCounts(); 
                         if (hasOptions())
-                            state = TextState.options;
+                            tState = TextState.options;
                         else
-                            state = TextState.done; 
+                            tState = TextState.done; 
                     }
                     else
                     {
-                        state = TextState.typing;
+                        tState = TextState.typing;
                     }
                 }
                 break;
@@ -171,14 +203,22 @@ public class DialogueTrigger : MonoBehaviour
     {
         while(buttons.Count > 0)
         {
-            Button b = buttons.Dequeue(); 
+            Button b = buttons[0];
+            buttons.RemoveAt(0); 
             Destroy(b.gameObject); 
         }
+        buttons.Clear(); 
+    }
+
+    private void resetCounts()
+    {
+        typeIndex = 0;
+        pauseCount = 0;
     }
 
     private void gotoNext(int i)
     {
-        state = TextState.typing; 
+        tState = TextState.typing; 
         string prev = graph.current.text; 
         graph.GetNext(i);
         string next = graph.current.text;
@@ -195,6 +235,61 @@ public class DialogueTrigger : MonoBehaviour
         int numOptions = graph.current.answers.Count;
         if (numOptions > 0)
         {
+            if (buttons.Count != numOptions)
+            {
+                int currOffset = 0;
+                int offset = Screen.height / 21;
+                for (int i = 0; i < numOptions; i++)
+                {
+                    Button b = Instantiate(templateButton, templateButton.transform.position, templateButton.transform.rotation);
+                    b.transform.SetParent(panel.transform, false);
+                    b.transform.position = new Vector3(templateButton.transform.position.x, templateButton.transform.position.y - currOffset);
+                    currOffset += offset;
+
+                    buttons.Add(b); 
+                }
+                for (int i = 0; i < numOptions; i++)
+                {
+                    Chat.Answer answer = graph.current.answers[i];
+                    Button currButton = buttons[i];//.Dequeue();
+                    currButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = answer.text; //op;
+                    currButton.onClick.AddListener(delegate { gotoNext(graph.current.answers.IndexOf(answer)); });
+                    Color c = currButton.targetGraphic.color; 
+                    currButton.targetGraphic.color = new Color(c.r, c.g, c.b, 0);
+                }
+            }
+            else
+            {
+                if (currB == null)
+                    currB = buttons[0];
+
+                Graphic img = currB.targetGraphic;
+                img.color = new Color(img.color.r, img.color.g, img.color.b, 1.0f*pauseCount/pauseMax);
+                pauseCount++;
+                if (pauseCount == fadeMax)
+                {
+                    resetCounts(); 
+                    img.color = new Color(img.color.r, img.color.g, img.color.b, 1);
+                    int index = buttons.IndexOf(currB); 
+                    if (index == buttons.Count - 1)
+                    {
+                        tState = TextState.done;
+                    }
+                    else
+                    {
+                        currB = buttons[index + 1];
+                    }
+                }
+            }
+        }
+    }
+
+    private void forceOptions()
+    {
+        destroyButtons(); 
+        int numOptions = graph.current.answers.Count;
+        if (numOptions > 0)
+        {
             int currOffset = 0;
             int offset = Screen.height / 21;
             for (int i = 0; i < numOptions; i++)
@@ -204,18 +299,16 @@ public class DialogueTrigger : MonoBehaviour
                 b.transform.position = new Vector3(templateButton.transform.position.x, templateButton.transform.position.y - currOffset);
                 currOffset += offset;
 
-                buttons.Enqueue(b);
+                buttons.Add(b);
             }
             for (int i = 0; i < numOptions; i++)
             {
                 Chat.Answer answer = graph.current.answers[i];
-                Button currButton = buttons.Dequeue();
+                Button currButton = buttons[i];//.Dequeue();
                 currButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = answer.text; //op;
                 currButton.onClick.AddListener(delegate { gotoNext(graph.current.answers.IndexOf(answer)); });
-                buttons.Enqueue(currButton);
             }
         }
-        state = TextState.done; 
     }
 
 }

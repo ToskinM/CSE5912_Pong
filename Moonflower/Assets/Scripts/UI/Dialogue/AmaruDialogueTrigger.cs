@@ -356,9 +356,6 @@ public class AmaruDialogueTrigger : MonoBehaviour
     private void gotoNext(int i)
     {
         graph.current = graph.GetNext(i);
-        Debug.Log("did we get next?");
-        Debug.Log("Next should be: " + graph.current.text); 
-        //currNode = currNode.GetNext(s);
         destroyButtons();
     }
 
@@ -377,13 +374,11 @@ public class AmaruDialogueTrigger : MonoBehaviour
 
     private void displayOptions()
     {
-        //if (currNode.HasOptions())
         int numOptions = graph.current.answers.Count; 
         if(numOptions > 0)
         {
             int currOffset = 0;
             int offset = Screen.height / 17;
-            //for (int i = 0; i < currNode.Options().Count; i++)
             for (int i = 0; i < numOptions; i++)
             {
                 Button b = Instantiate(templateButton, templateButton.transform.position, templateButton.transform.rotation);
@@ -393,14 +388,11 @@ public class AmaruDialogueTrigger : MonoBehaviour
 
                 buttons.Enqueue(b);
             }
-            //foreach (string op in currNode.Options())
             for(int i  = 0;  i < numOptions;  i++)
             {
                 Chat.Answer answer = graph.current.answers[i];
-                Debug.Log("so " + i + " is " + answer.text);
                 Button currButton = buttons.Dequeue();
                 currButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = answer.text; //op;
-                //currButton.onClick.AddListener(delegate { changeCurrNode(op); });
                 currButton.onClick.AddListener(delegate { gotoNext(graph.current.answers.IndexOf(answer)); });
                 buttons.Enqueue(currButton);
             }
