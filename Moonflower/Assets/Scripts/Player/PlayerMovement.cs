@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     private float moveSpeed;
     public float runSpeed;
     public float walkSpeed;
+    public float sneakSpeed;
     public float rotateSpeed = 20f;
     public float jumpTimer = 0;
     public bool isAnai;
@@ -40,6 +41,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
         Physics.gravity = new Vector3(0, -88.3f, 0);
         walkSpeed = 3f;
         runSpeed = 7f;
+        sneakSpeed = 1.5f;
         moveSpeed = walkSpeed;
 
         Action = Actions.Chilling;
@@ -52,21 +54,35 @@ public class PlayerMovement : MonoBehaviour, IMovement
         body.velocity *= 0.98f;
     }
 
-    void SetWalkOrRun()
+    void SetMovementState()
     {
-        if (Input.GetButtonDown("Run"))
+        if (Input.GetButtonDown("Run") && Action != Actions.Sneaking)
         {
             Action = Actions.Running;
             moveSpeed = runSpeed;
         }
+        else if (Input.GetButtonDown("Crouch") && Action != Actions.Running)
+        {
+            Action = Actions.Sneaking;
+            moveSpeed = sneakSpeed;
+        }
         else
         {
-            if (Action != Actions.Running || Input.GetButtonUp("Run"))
+            if (WalkConditionCheck())
             {
                 Action = Actions.Walking;
                 moveSpeed = walkSpeed;
             }
         }
+    }
+
+    bool WalkConditionCheck()
+    {
+        bool releaseRun = Action == Actions.Running && Input.GetButtonUp("Run");
+        bool releaseSneak = Action == Actions.Sneaking && Input.GetButtonUp("Crouch");
+        bool neutralState = Action != Actions.Running && Action != Actions.Sneaking;
+
+        return releaseRun || releaseSneak || neutralState;
     }
 
     void SetJump()
@@ -143,7 +159,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
         if (verticalInput != 0f)
         {
-            SetWalkOrRun();
+            SetMovementState();
 
             DetectDodgeInput(new Vector3(0f, 0f, Mathf.Sign(verticalInput) * 10f));
 
@@ -153,7 +169,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
         if (horizontalInput != 0f)
         {
-            SetWalkOrRun();
+            SetMovementState();
 
             DetectDodgeInput(new Vector3(Mathf.Sign(horizontalInput) * 30f, 0f, 0f));
 
@@ -176,7 +192,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
             //Quaternion rotation = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up);
             //transform.rotation = Quaternion.Lerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
 
-            SetWalkOrRun();
+            SetMovementState();
 
             DetectDodgeInput(new Vector3(0f, 0f, 30f));
         
