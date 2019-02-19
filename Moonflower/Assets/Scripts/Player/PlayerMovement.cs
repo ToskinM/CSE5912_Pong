@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour, IMovement
     public float jumpTimer = 0;
     public bool isAnai;
     public Rigidbody body;
+    private float blockCooldownTime = 0.5f;
+    private float blockCooldown;
+    private bool blockOffCooldown;
     private bool onGround = true;
     private FollowCamera cameraScript;
 
@@ -43,6 +46,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
         runSpeed = 7f;
         sneakSpeed = 1.5f;
         moveSpeed = walkSpeed;
+        blockCooldown = blockCooldownTime;
+        blockOffCooldown = true;
 
         Action = Actions.Chilling;
         Jumping = false; 
@@ -103,11 +108,14 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     void DetectDodgeInput(Vector3 direction)
     {
-        if (Input.GetButtonDown("Block"))
+        if (Input.GetButtonDown("Block") && blockOffCooldown)
         {
             body.velocity = Vector3.zero;
             body.AddRelativeForce(direction, ForceMode.VelocityChange);
             body.velocity = Vector3.zero;
+
+            blockCooldown = blockCooldownTime;
+            blockOffCooldown = false;
         }
     }
 
@@ -212,6 +220,21 @@ public class PlayerMovement : MonoBehaviour, IMovement
         MovePlayer(horizontalInput, verticalInput);
     }
 
+    void UpdateCooldowns()
+    {
+        UpdateBlockCooldown();
+    }
+
+    void UpdateBlockCooldown()
+    {
+        if (!blockOffCooldown)
+        {
+            blockCooldown -= Time.deltaTime;
+
+            if (blockCooldown <= 0f) blockOffCooldown = true;
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.Equals(terrain))
@@ -219,11 +242,13 @@ public class PlayerMovement : MonoBehaviour, IMovement
             onGround = true;
         }
     }
+
     public void MovementUpdate()
     {
         if (!cameraScript.freeRoam && !cameraScript.switching)
         {
             DetectKeyInput();
+            UpdateCooldowns();
         }
     }
 }
