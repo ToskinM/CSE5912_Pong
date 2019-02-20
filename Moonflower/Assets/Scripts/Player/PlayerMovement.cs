@@ -32,6 +32,9 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     private Quaternion rotation = Quaternion.identity;
 
+    public delegate void MakeNoise();
+    public static event MakeNoise NoiseRaised;
+
     void Awake()
     {
         terrain = GameObject.Find("Terrain").GetComponent<TerrainCollider>();
@@ -39,12 +42,13 @@ public class PlayerMovement : MonoBehaviour, IMovement
         cameraScript = Camera.main.GetComponent<FollowCamera>();
     }
 
+
     void Start()
     {
         Physics.gravity = new Vector3(0, -88.3f, 0);
-        walkSpeed = 3f;
-        runSpeed = 7f;
-        sneakSpeed = 1.5f;
+        walkSpeed = 7f;
+        runSpeed = 15f;
+        sneakSpeed = 4f;
         moveSpeed = walkSpeed;
         blockCooldown = blockCooldownTime;
         blockOffCooldown = true;
@@ -239,7 +243,11 @@ public class PlayerMovement : MonoBehaviour, IMovement
     {
         if (collision.collider.Equals(terrain))
         {
-            onGround = true;
+            if (!onGround)
+            {
+                onGround = true;
+                MakeNoiseUponLanding();
+            }
         }
     }
 
@@ -250,5 +258,11 @@ public class PlayerMovement : MonoBehaviour, IMovement
             DetectKeyInput();
             UpdateCooldowns();
         }
+    }
+
+    void MakeNoiseUponLanding()
+    {
+        if (NoiseRaised != null)
+            NoiseRaised();
     }
 }

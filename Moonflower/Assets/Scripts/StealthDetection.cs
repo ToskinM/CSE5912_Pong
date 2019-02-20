@@ -7,12 +7,14 @@ public class StealthDetection : MonoBehaviour
 {
     private NavMeshAgent nav;
     private SphereCollider col;
+    private bool heardJump;
 
     // Start is called before the first frame update
     void Start()
     {
         col = GetComponent<SphereCollider>();
         nav = GetComponent<NavMeshAgent>();
+        heardJump = false;
     }
 
     // Update is called once per frame
@@ -26,6 +28,7 @@ public class StealthDetection : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             GameObject player = other.gameObject;
+            PlayerMovement.NoiseRaised += HandleNoiseRaised;
 
             if (player.GetComponent<PlayerMovement>().Action == Actions.Walking)
             {
@@ -34,7 +37,7 @@ public class StealthDetection : MonoBehaviour
                     gameObject.GetComponent<Renderer>().material.color = Color.yellow;
                 }
             }
-            else if (player.GetComponent<PlayerMovement>().Action == Actions.Running)
+            else if (player.GetComponent<PlayerMovement>().Action == Actions.Running || heardJump)
             {
                 if (CalculatePathLength(player.transform.position) <= col.radius)
                 {
@@ -43,14 +46,18 @@ public class StealthDetection : MonoBehaviour
             }
             else
             {
-                gameObject.GetComponent<Renderer>().material.color = Color.cyan;
+                gameObject.GetComponent<Renderer>().material.color = Color.green;
             }
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player")) gameObject.GetComponent<Renderer>().material.color = Color.white;
+        if (other.gameObject.CompareTag("Player"))
+        {
+            gameObject.GetComponent<Renderer>().material.color = Color.white;
+            PlayerMovement.NoiseRaised -= HandleNoiseRaised;
+        }
     }
 
     float CalculatePathLength(Vector3 targetPosiion)
@@ -79,5 +86,10 @@ public class StealthDetection : MonoBehaviour
         }
 
         return pathLength;
+    }
+
+    void HandleNoiseRaised()
+    {
+        // Cause enemy to hear with greater threshold
     }
 }
