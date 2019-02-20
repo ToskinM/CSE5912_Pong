@@ -81,6 +81,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
             {
                 Action = Actions.Walking;
                 moveSpeed = walkSpeed;
+                //GetComponent<PlayerSoundEffect>().PlayWalkingSFX();
             }
         }
     }
@@ -145,6 +146,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
         // Move foreward in the direction of input
         Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput);
         transform.Translate(new Vector3(0f, 0f, Vector3.Magnitude(direction)) * Time.deltaTime * moveSpeed);
+
     }
 
 
