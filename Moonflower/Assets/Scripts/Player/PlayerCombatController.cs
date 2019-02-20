@@ -6,19 +6,21 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 {
     public CharacterStats Stats { get; private set; }
 
-    public bool IsBlocking { get; private set; }
-    [HideInInspector] public bool hasWeaponOut;
+    [HideInInspector] public bool IsBlocking { get; private set; } = false;
+     public bool hasWeaponOut;
     [HideInInspector] public bool inCombat;
     [HideInInspector] public bool isAttacking;
     [HideInInspector] public int attack = 0;
 
     //public bool isBlocking;
 
-    public GameObject weapon;
+    public Weapon weapon;
+    private int damage;
     public GameObject blockPlaceholder;
 
     private float timeSinceLastHurt;
-    private float hurtDelay = 0.5f;
+    private readonly float hurtDelay = 0.5f;
+    private readonly float[] attackMultipliers = new float[] { 1, 1.5f };
 
     private const float attackDelay = 0.35f;
     private const string ATTACK_AXIS = "Attack";
@@ -27,12 +29,16 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 
     private AudioManager audioManager;
 
-    void Start()
+    void Awake()
     {
         Stats = gameObject.GetComponent<CharacterStats>();
 
+    }
 
-        weapon.SetActive(hasWeaponOut);
+    void Start()
+    {
+        damage = weapon.baseDamage;
+        weapon.gameObject.SetActive(hasWeaponOut);
         blockPlaceholder.SetActive(IsBlocking);
 
         StartCoroutine(GetAudioManager());
@@ -75,7 +81,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     }
 
     // Sheathe/Unsheathe weapon
-    private void SetWeaponSheathed(bool sheathed)
+    public void SetWeaponSheathed(bool sheathed)
     {
         if (sheathed)
             Sheathe();
@@ -100,20 +106,20 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 
     private void Sheathe()
     {
-        Debug.Log("Sheathing");
+        //Debug.Log("Sheathing");
         if (hasWeaponOut)
         {
-            weapon.SetActive(false);
+            weapon.gameObject.SetActive(false);
 
             hasWeaponOut = false;
         }
     }
     private void Unsheathe()
     {
-        Debug.Log("Unsheathing");
+        //Debug.Log("Unsheathing");
         if (!hasWeaponOut)
         {
-            weapon.SetActive(true);
+            weapon.gameObject.SetActive(true);
 
             hasWeaponOut = true;
         }
@@ -126,7 +132,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 
     private void Attack()
     {
-        Debug.Log("Attacking");
+        //Debug.Log("Attacking");
         if (!hasWeaponOut)   // take out weapon if its not already out
         {
             SetWeaponSheathed(false);
@@ -179,5 +185,21 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         }
 
         timeSinceLastHurt = 0f;
+    }
+
+    public int GetAttackDamage()
+    {
+        return (int)( (weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[attack] );
+    }
+
+    public void Load()
+    {
+        if (hasWeaponOut)
+        {
+
+        }
+        blockPlaceholder.SetActive(IsBlocking);
+
+        damage = weapon.baseDamage;
     }
 }

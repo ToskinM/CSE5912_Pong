@@ -17,7 +17,7 @@ public class NPCAnimationController : MonoBehaviour
     private NPCCombatController combatController;
     private NPCMovement movement;
 
-    public GameObject[] attackHurtboxes;
+    public HurtboxController[] attackHurtboxes;
 
     void Awake()
     {
@@ -69,11 +69,11 @@ public class NPCAnimationController : MonoBehaviour
 
     public void EnableHurtbox(int index)
     {
-        attackHurtboxes[index].SetActive(true);
+        attackHurtboxes[index].Enable(combatController.GetAttackDamage());
     }
     public void DisableHurtbox(int index)
     {
-        attackHurtboxes[index].SetActive(false);
+        attackHurtboxes[index].Disable();
     }
 
     private void CleanHurtboxes()

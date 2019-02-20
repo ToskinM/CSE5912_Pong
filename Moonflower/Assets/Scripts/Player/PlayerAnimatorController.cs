@@ -15,7 +15,7 @@ public class PlayerAnimatorController : MonoBehaviour
     private PlayerCombatController combatController;
 
     public IMovement movement { get; set; } 
-    public GameObject[] attackHurtboxes;
+    public HurtboxController[] attackHurtboxes;
     public GameObject walkParticles;
     public GameObject runParticles;
     public GameObject standingParticles;
@@ -65,10 +65,10 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void EnableHurtbox(int index)
     {
-        attackHurtboxes[index].SetActive(true);
+        attackHurtboxes[index].Enable(combatController.GetAttackDamage());
     }
     public void DisableHurtbox(int index)
     {
-        attackHurtboxes[index].SetActive(false);
+        attackHurtboxes[index].Disable();
     }
 }

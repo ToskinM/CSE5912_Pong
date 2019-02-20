@@ -7,10 +7,15 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     public Aggression aggression;
     public bool Active { get; set; } = true;
 
-    public bool IsBlocking { get; private set; }
-    public bool hasWeaponOut;
-    public GameObject weapon;
+
+
+    public Weapon weapon;
+    private readonly float[] attackMultipliers = new float[] { 0f, 1f };
+
     public GameObject deathEffect;
+
+    [HideInInspector] public bool IsBlocking { get; private set; }
+    private bool hasWeaponOut;
     [HideInInspector] public bool inCombat; // (aggrod)
     [HideInInspector] public bool isHit;
     [HideInInspector] public bool isAttacking;
@@ -47,7 +52,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         if (!weapon)
             weapon = null;
 
-        weapon?.SetActive(hasWeaponOut);
+        weapon?.gameObject.SetActive(hasWeaponOut);
 
         if (aggression == Aggression.Frenzied)
             Frenzy();
@@ -83,7 +88,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     private void OnTriggerEnter(Collider other)
     {
-//        Debug.Log(other.gameObject.name);
+        //Debug.Log(other.gameObject.name);
         if (Active)
         {
             // Get Tag
@@ -146,7 +151,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     {
         if (hasWeaponOut)
         {
-            weapon?.SetActive(false);
+            weapon?.gameObject.SetActive(false);
             hasWeaponOut = false;
         }
     }
@@ -154,7 +159,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     {
         if (!hasWeaponOut)
         {
-            weapon?.SetActive(true);
+            weapon?.gameObject.SetActive(true);
             hasWeaponOut = true;
         }
     }
@@ -263,5 +268,10 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
         ObjectPoolController.current.CheckoutTemporary(deathEffect, transform, 1);
         gameObject.SetActive(false);
+    }
+
+    public int GetAttackDamage()
+    {
+        return (int)((weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[attack]);
     }
 }

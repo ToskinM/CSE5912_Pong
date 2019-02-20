@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
-    public Transform initialTarget;
     [HideInInspector] public Transform lockOnTarget;
     public float followDistanceMultiplier = 1f;
     public float rotateSpeed = 5f;
@@ -39,7 +38,9 @@ public class FollowCamera : MonoBehaviour
     {
         // Get player movement script
         playerMovement = gameObject.GetComponent<PlayerMovement>();
-        target = initialTarget;
+
+        // Get player target
+        target = GetCameraTarget(GameObject.FindGameObjectWithTag("Player"));
     }
 
     void Start()

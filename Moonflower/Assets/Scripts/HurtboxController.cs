@@ -15,12 +15,14 @@ public class HurtboxController : MonoBehaviour
         Disable();
     }
 
-    public void Enable()
+    public void Enable(int damage)
     {
         gameObject.SetActive(true);
+        this.damage = damage;
     }
     public void Disable()
     {
         gameObject.SetActive(false);
+        this.damage = 0;
     }
 }

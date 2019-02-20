@@ -51,7 +51,7 @@ LightmapSettings:
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
     m_EnvironmentLightingMode: 0
-    m_EnableBakedLightmaps: 1
+    m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
     serializedVersion: 10
@@ -2650,12 +2650,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1448820976}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1448820978 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 486067122, guid: 71ea9cd348b57ee4b91d4ecea6aa60e6,
-    type: 3}
-  m_PrefabInstance: {fileID: 1448820976}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1488004613
 GameObject:
   m_ObjectHideFlags: 0
@@ -3848,22 +3842,22 @@ MonoBehaviour:
   sounds:
   - name: pickup01
     clip: {fileID: 8300000, guid: 1d52674fca61c4df092a5301765fd976, type: 3}
-    volume: 0.5
     pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: background
     clip: {fileID: 8300000, guid: ecfa5fc3c162c422f94a5e9d057f301a, type: 3}
-    volume: 1
     pitch: 1
     loop: 1
     source: {fileID: 0}
   - name: AttackSwing
     clip: {fileID: 8300000, guid: 2df32346d10514728a933156df1619ea, type: 3}
-    volume: 0.306
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  backgrounds: []
+  soundVol: 0
+  backgroundVol: 0
 --- !u!4 &1829859988
 Transform:
   m_ObjectHideFlags: 0
@@ -4185,7 +4179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52c121f99fa15fa40a8ba63ccb961636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialTarget: {fileID: 1448820978}
   lockOnTarget: {fileID: 0}
   followDistanceMultiplier: 1
   rotateSpeed: 5

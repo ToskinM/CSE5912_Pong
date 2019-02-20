@@ -465,8 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aggression: 2
-  hasWeaponOut: 0
-  weapon: {fileID: 6900419877611807000}
+  weapon: {fileID: 8717063139423998283}
   deathEffect: {fileID: 1270126634788680, guid: 54bd8c7da32a6874bbc9f5487750acaf,
     type: 3}
   inCombat: 0
@@ -488,7 +487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackHurtboxes:
-  - {fileID: 4218119674716689794}
+  - {fileID: 9055083406016766410}
 --- !u!95 &6900419879104588747
 Animator:
   serializedVersion: 3
@@ -520,14 +519,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1650f9b37ca4d54284136ed5cc15f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Strength: 0
+  Strength: 10
   Attack: 0
-  Defense: 0
+  Defense: 1
   MaxHealth: 10
-  CurrentHealth: 3
+  CurrentHealth: 10
   Cunning: 0
   Charisma: 0
   Stealth: 0
+  HUD: {fileID: 0}
 --- !u!195 &6900419879104588743
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -578,6 +578,7 @@ GameObject:
   - component: {fileID: 6900419879186786869}
   - component: {fileID: 6900419879186786864}
   - component: {fileID: 6900419879186786871}
+  - component: {fileID: 8717063139423998283}
   m_Layer: 10
   m_Name: NPCStick
   m_TagString: Untagged
@@ -645,6 +646,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &8717063139423998283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6900419879186786868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40dc719ddb0f7048bb2a9ebb520c332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseDamage: 1
 --- !u!1001 &5455998018822079106
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -738,11 +752,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hurtbox
       objectReference: {fileID: 0}
-    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
-        type: 3}
-      propertyPath: damage
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -808,17 +817,28 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e191d953f9f69b468286e1cae6a7f57, type: 3}
---- !u!1 &4218119674716689794 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7298912431453931981, guid: 3e191d953f9f69b468286e1cae6a7f57,
-    type: 3}
-  m_PrefabInstance: {fileID: 6900419878263299151}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2764681446511011961 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
     type: 3}
   m_PrefabInstance: {fileID: 6900419878263299151}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9055083406016766410 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
+    type: 3}
+  m_PrefabInstance: {fileID: 6900419878263299151}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7816da57fe59251489a2c43e5a3e7048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
