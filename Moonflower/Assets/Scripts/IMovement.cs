@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum Actions
 {
-    Walking, Running, Chilling
+    Walking, Running, Chilling, Sneaking
 }
 
 public interface IMovement
