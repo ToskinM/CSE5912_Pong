@@ -42,7 +42,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
         cameraScript = Camera.main.GetComponent<FollowCamera>();
     }
 
-
     void Start()
     {
         Physics.gravity = new Vector3(0, -88.3f, 0);
@@ -65,19 +64,25 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     void SetMovementState()
     {
-        if (Input.GetButtonDown("Run") && Action != Actions.Sneaking)
+        if (Input.GetButton("Run") && Action != Actions.Sneaking)
         {
-            Action = Actions.Running;
-            moveSpeed = runSpeed;
+            if (Action != Actions.Running)
+            {
+                Action = Actions.Running;
+                moveSpeed = runSpeed;
+            }
         }
-        else if (Input.GetButtonDown("Crouch") && Action != Actions.Running)
+        else if (Input.GetButton("Crouch") && Action != Actions.Running)
         {
-            Action = Actions.Sneaking;
-            moveSpeed = sneakSpeed;
+            if (Action != Actions.Sneaking)
+            {
+                Action = Actions.Sneaking;
+                moveSpeed = sneakSpeed;
+            }
         }
         else
         {
-            if (WalkConditionCheck())
+            //if (WalkConditionCheck())
             {
                 Action = Actions.Walking;
                 moveSpeed = walkSpeed;
