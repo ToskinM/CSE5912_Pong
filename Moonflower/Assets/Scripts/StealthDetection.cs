@@ -164,9 +164,9 @@ public class StealthDetection : MonoBehaviour
     IEnumerator BecomeAlertedAfterDelay(float time, GameObject player)
     {
         gameObject.GetComponent<Renderer>().material.color = Color.red;
+        Vector3 detectedPosition = player.transform.position;
         yield return new WaitForSeconds(time);
         Awareness = AwarenessLevel.Alerted;
-        Vector3 detectedPosition = player.transform.position;
         nav.destination = detectedPosition;
     }
 
