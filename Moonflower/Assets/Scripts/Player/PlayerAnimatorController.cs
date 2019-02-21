@@ -8,6 +8,7 @@ public class PlayerAnimatorController : MonoBehaviour
     private const string key_isWalk = "IsWalk";
     private const string key_isAttack01 = "IsAttack01";
     private const string key_isAttack02 = "IsAttack02";
+    private const string key_AttackTrigger = "Attack";
     private const string key_Attack = "Attack";
     private const string key_isJump = "IsJump";
     private const string key_isDamage = "IsDamage";
@@ -63,17 +64,9 @@ public class PlayerAnimatorController : MonoBehaviour
         }
     }
 
-    public void SetAttack(int attack)
+    public void TriggerAttack()
     {
-        animator.SetInteger(key_Attack, attack);
-        combatController.attack = attack;
-    }
-    public void TriggerAttack(int attack)
-    {
-        if (attack == 1)
-            animator.SetTrigger("Attack01Trigger");
-        else if (attack == 2)
-            animator.SetTrigger("Attack02Trigger");
+        animator.SetTrigger(key_AttackTrigger);
     }
 
     public void EnableHurtbox(int index)

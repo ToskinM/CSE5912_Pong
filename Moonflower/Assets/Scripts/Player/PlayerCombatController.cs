@@ -61,11 +61,11 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         timeSinceLastHurt += Time.deltaTime;
         timeSinceLastAttack += Time.deltaTime;
         // reset attack sequence if we stopped attacking
-        if (timeSinceLastAttack > attackComboTimeout)
-        {
-            animator.SetAttack(0);
-            isAttacking = false;
-        }
+        //if (timeSinceLastAttack > attackComboTimeout)
+        //{
+        //    animator.SetAttack(0);
+        //    isAttacking = false;
+        //}
 
         // Detect attack input (on button down)
         if (Input.GetButtonDown(ATTACK_AXIS))
@@ -142,8 +142,8 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         timeSinceLastAttack = 0f;
 
         //if (attack < 2)
-            animator.SetAttack(1);
-            animator.TriggerAttack(1);
+            //animator.SetAttack(1);
+            animator.TriggerAttack();
         
         //yield return new WaitForSeconds(attackDelay);
 
