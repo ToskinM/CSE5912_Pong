@@ -8,7 +8,8 @@ public class DataSavingManager : MonoBehaviour
 {
     public static DataSavingManager current;
 
-    AnaiData playerData;
+    AnaiData playerData = null;
+    CameraData cameraData = null;
 
     private GameObject anai;
     private GameObject mimbi;
@@ -34,7 +35,6 @@ public class DataSavingManager : MonoBehaviour
         anaiDataFilePath = Application.persistentDataPath + "/AnaiInfo.dat";
         anai = GameObject.Find("Anai");
         mimbi = GameObject.Find("Mimbi");
-        playerData = null;
     }
 
     public void SaveGame()
@@ -61,6 +61,7 @@ public class DataSavingManager : MonoBehaviour
         //    file.Close();
 
         playerData = new AnaiData(anai);
+        cameraData = new CameraData(Camera.main);
     }
 
     private void LoadPlayerInfo(BinaryFormatter binaryFormatter)
@@ -74,11 +75,8 @@ public class DataSavingManager : MonoBehaviour
         //    anai.transform.SetPositionAndRotation(anaiData.transform.position, anaiData.transform.rotation);
         //}
 
-        if (playerData != null)
-        {
-            playerData.Load(anai);
-
-        }
+        playerData?.Load(anai);
+        cameraData?.Load();
 
     }
 

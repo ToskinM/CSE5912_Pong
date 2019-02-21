@@ -16,16 +16,14 @@ public class FollowCamera : MonoBehaviour
     public bool accountForCollision = true;
     public LayerMask collisionLayers;
 
-    private PlayerMovement playerMovement;
-
     private Transform target;
     private Transform targetCombatTransform;
 
     private bool lockedOn;
 
     private Quaternion rotation = Quaternion.identity;
-    private float xRotation;
-    private float yRotation;
+    public float xRotation;
+    public float yRotation;
     private Vector3 offset;
 
     private readonly float freeRoamMoveSpeed = 0.4f;
@@ -36,9 +34,6 @@ public class FollowCamera : MonoBehaviour
 
     private void Awake()
     {
-        // Get player movement script
-        playerMovement = gameObject.GetComponent<PlayerMovement>();
-
         // Get player target
         target = GetCameraTarget(GameObject.FindGameObjectWithTag("Player"));
     }

@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerCombatController : MonoBehaviour, ICombatant
 {
     public CharacterStats Stats { get; private set; }
+    public PlayerAnimatorController animator { get; private set; }
 
     [HideInInspector] public bool IsBlocking { get; private set; } = false;
      public bool hasWeaponOut;
     [HideInInspector] public bool inCombat;
     [HideInInspector] public bool isAttacking;
     [HideInInspector] public int attack = 0;
+    [HideInInspector] public float attackComboTimeout = 50f;
 
     //public bool isBlocking;
 
@@ -19,6 +21,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     public GameObject blockPlaceholder;
 
     private float timeSinceLastHurt;
+    private float timeSinceLastAttack;
     private readonly float hurtDelay = 0.5f;
     private readonly float[] attackMultipliers = new float[] { 1, 1.5f };
 
@@ -32,7 +35,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     void Awake()
     {
         Stats = gameObject.GetComponent<CharacterStats>();
-
+        animator = gameObject.GetComponent<PlayerAnimatorController>();
     }
 
     void Start()
@@ -56,6 +59,13 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     void Update()
     {
         timeSinceLastHurt += Time.deltaTime;
+        timeSinceLastAttack += Time.deltaTime;
+        // reset attack sequence if we stopped attacking
+        if (timeSinceLastAttack > attackComboTimeout)
+        {
+            animator.SetAttack(0);
+            isAttacking = false;
+        }
 
         // Detect attack input (on button down)
         if (Input.GetButtonDown(ATTACK_AXIS))
@@ -81,12 +91,11 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     }
 
     // Sheathe/Unsheathe weapon
-    public void SetWeaponSheathed(bool sheathed)
+    public void SetWeaponSheathed(bool sheathe)
     {
-        if (sheathed)
-            Sheathe();
-        else
-            Unsheathe();
+        weapon.gameObject.SetActive(!sheathe);
+
+        hasWeaponOut = !sheathe;
     }
 
     // Block
@@ -104,27 +113,6 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         }
     }
 
-    private void Sheathe()
-    {
-        //Debug.Log("Sheathing");
-        if (hasWeaponOut)
-        {
-            weapon.gameObject.SetActive(false);
-
-            hasWeaponOut = false;
-        }
-    }
-    private void Unsheathe()
-    {
-        //Debug.Log("Unsheathing");
-        if (!hasWeaponOut)
-        {
-            weapon.gameObject.SetActive(true);
-
-            hasWeaponOut = true;
-        }
-    }
-
     public void PlayAttackSFX()
     {
         audioManager.Play("AttackSwing");
@@ -139,22 +127,28 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         }
         else
         {
-            if (!isAttacking)
-            {
+            //if (!isAttacking)
+            //{
                 // attack
-                StartCoroutine(Swing());
-            }
+                //StartCoroutine(Swing());
+                Swing();
+            //}
         }
     }
 
-    private IEnumerator Swing()
+    private void Swing()
     {
         isAttacking = true;
+        timeSinceLastAttack = 0f;
 
-        yield return new WaitForSeconds(attackDelay);
+        //if (attack < 2)
+            animator.SetAttack(1);
+            animator.TriggerAttack(1);
+        
+        //yield return new WaitForSeconds(attackDelay);
 
-        isAttacking = false;
-        attack = (attack + 1) % 2;
+        //isAttacking = false;
+        //attack = (attack + 1) % 2;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -192,12 +186,9 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         return (int)( (weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[attack] );
     }
 
-    public void Load()
+    public void ApplyLoad()
     {
-        if (hasWeaponOut)
-        {
-
-        }
+        SetWeaponSheathed(!hasWeaponOut);
         blockPlaceholder.SetActive(IsBlocking);
 
         damage = weapon.baseDamage;

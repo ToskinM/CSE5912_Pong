@@ -52,6 +52,6 @@ public class AnaiData
         anaiMovement.Action = action;
 
         anaiCombat.SetWeaponSheathed(!hasWeaponOut);
-        anaiCombat.Load();
+        anaiCombat.ApplyLoad();
     }
 }
