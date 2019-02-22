@@ -38,7 +38,7 @@ public class LesserNPCController : MonoBehaviour
         movement.SetEngagementDistances(5, combatController.attackDistance, 1);
 
         //talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.AMARU_ICON);
-        
+
     }
 
     void Update()

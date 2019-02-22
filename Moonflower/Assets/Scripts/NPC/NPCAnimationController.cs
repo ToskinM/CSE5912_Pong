@@ -23,7 +23,6 @@ public class NPCAnimationController : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        movement = GetComponent<NPCMovement>();
         combatController = GetComponent<NPCCombatController>();
     }
 
