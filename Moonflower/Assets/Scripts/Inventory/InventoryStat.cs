@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryStat : MonoBehaviour
 {
@@ -11,7 +12,13 @@ public class InventoryStat : MonoBehaviour
     public int Health;
     public bool AnaiObject;
     public bool MimbiObject;
-    public bool DayObject;
+    public Sprite objectImage;
+
+    public enum DayNightCateogry{Day, Night}
+    public DayNightCateogry DayNight;
+
+    public enum InventoryCategory { consumable, key, material }
+    public InventoryCategory inventoryCat;
 
     public Behaviour halo;
 
