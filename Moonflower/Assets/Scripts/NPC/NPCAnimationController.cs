@@ -54,17 +54,9 @@ public class NPCAnimationController : MonoBehaviour
     {
         return animator.GetInteger(key_Attack);
     }
-    public void SetHit(int hit)
+    public void TriggerHit()
     {
-        if (hit == 1)
-        {
-            animator.SetBool(key_IsHit, true);
-
-        }
-        else
-        {
-            animator.SetBool(key_IsHit, false);
-        }
+        animator.SetTrigger(key_IsHit);
     }
 
     public void EnableHurtbox(int index)

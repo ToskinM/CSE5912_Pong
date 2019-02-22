@@ -8,11 +8,11 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     public PlayerAnimatorController animator { get; private set; }
 
     [HideInInspector] public bool IsBlocking { get; private set; } = false;
-     public bool hasWeaponOut;
+    public bool hasWeaponOut;
     [HideInInspector] public bool inCombat;
     [HideInInspector] public bool isAttacking;
     [HideInInspector] public int attack = 0;
-    [HideInInspector] public float attackComboTimeout = 50f;
+    [HideInInspector] public float attackTimeout = 0.5f;
 
     //public bool isBlocking;
 
@@ -60,12 +60,10 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     {
         timeSinceLastHurt += Time.deltaTime;
         timeSinceLastAttack += Time.deltaTime;
-        // reset attack sequence if we stopped attacking
-        //if (timeSinceLastAttack > attackComboTimeout)
-        //{
-        //    animator.SetAttack(0);
-        //    isAttacking = false;
-        //}
+        if (timeSinceLastAttack > attackTimeout)
+        {
+
+        }
 
         // Detect attack input (on button down)
         if (Input.GetButtonDown(ATTACK_AXIS))
@@ -120,35 +118,17 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 
     private void Attack()
     {
-        //Debug.Log("Attacking");
-        if (!hasWeaponOut)   // take out weapon if its not already out
-        {
-            SetWeaponSheathed(false);
-        }
+        if (!hasWeaponOut)   
+            SetWeaponSheathed(false); // take out weapon if its not already out
         else
-        {
-            //if (!isAttacking)
-            //{
-                // attack
-                //StartCoroutine(Swing());
-                Swing();
-            //}
-        }
+            Swing();
     }
-
     private void Swing()
     {
         isAttacking = true;
         timeSinceLastAttack = 0f;
 
-        //if (attack < 2)
-            //animator.SetAttack(1);
-            animator.TriggerAttack();
-        
-        //yield return new WaitForSeconds(attackDelay);
-
-        //isAttacking = false;
-        //attack = (attack + 1) % 2;
+        animator.TriggerAttack();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -173,6 +153,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
                 else
                 {
                     Stats.TakeDamage(damage, source.name);
+                    Stagger();
                     //CheckDeath();
                 }
             }
@@ -181,9 +162,14 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         timeSinceLastHurt = 0f;
     }
 
+    private void Stagger()
+    {
+        animator.TriggerHit();
+    }
+
     public int GetAttackDamage()
     {
-        return (int)( (weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[attack] );
+        return (int)((weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[attack]);
     }
 
     public void ApplyLoad()

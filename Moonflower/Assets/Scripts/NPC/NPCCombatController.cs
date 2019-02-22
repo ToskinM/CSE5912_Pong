@@ -27,7 +27,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     public CharacterStats Stats { get; private set; }
 
     private float timeSinceLastHurt;
-    private float hurtDelay = 0.5f;
+    private float hurtDelay = 0.1f;
     private float deaggroTime = 3;
     private Coroutine deaggroCoroutine = null;
     public float attackDistance = 2.6f;
@@ -112,7 +112,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
                     }
                     else
                     {
-                        npcAnimationController.SetHit(1);
+                        npcAnimationController.TriggerHit();
 
                         Stats.TakeDamage(damage, source.name);
                         CheckDeath();
