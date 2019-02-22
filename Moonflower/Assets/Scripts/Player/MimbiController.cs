@@ -43,7 +43,9 @@ public class MimbiController : MonoBehaviour, IPlayerController
 
         playAnimate.movement = npcMove;
 
-        npcMove.SetAvoidsPlayerRadius(tooCloseRadius);  
+        npcMove.SetAvoidsPlayerRadius(tooCloseRadius);
+
+        GameStateController.OnPaused += HandlePauseEvent;
     }
 
     // Update is called once per frame
@@ -91,5 +93,9 @@ public class MimbiController : MonoBehaviour, IPlayerController
         npcMove.RunToPlayer();
     }
 
-
+    // Disable updates when gaame is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        enabled = !isPaused;
+    }
 }

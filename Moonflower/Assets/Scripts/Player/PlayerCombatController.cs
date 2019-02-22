@@ -30,6 +30,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     private const string SHEATHE_AXIS = "Sheathe/Unsheathe";
 
     private AudioManager audioManager;
+    
 
     void Awake()
     {
@@ -44,6 +45,8 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         blockPlaceholder.SetActive(IsBlocking);
 
         StartCoroutine(GetAudioManager());
+
+        GameStateController.OnPaused += HandlePauseEvent;
     }
 
     private IEnumerator GetAudioManager()
@@ -110,11 +113,6 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         }
     }
 
-    public void PlayAttackSFX()
-    {
-        audioManager.Play("AttackSwing");
-    }
-
     private void Attack()
     {
         if (!hasWeaponOut)   
@@ -177,5 +175,11 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         blockPlaceholder.SetActive(IsBlocking);
 
         damage = weapon.baseDamage;
+    }
+
+    // Disable player combat controls when game is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        enabled = !isPaused;
     }
 }

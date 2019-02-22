@@ -26,6 +26,11 @@ public class NPCAnimationController : MonoBehaviour
         combatController = GetComponent<NPCCombatController>();
     }
 
+    void Start()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+    }
+
     void Update()
     {
         if (animator && movement)
@@ -81,5 +86,11 @@ public class NPCAnimationController : MonoBehaviour
         for (int i = 0; i < attackHurtboxes.Length; i++)
         {
         }
+    }
+
+    // Disable updates when gaame is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        enabled = !isPaused;
     }
 }

@@ -12,7 +12,7 @@ public class StealthDetection : MonoBehaviour
     private SphereCollider col;
     public float suspicionMeter;
     private float timeToClearSuspicion = 3f;
-    private float timeSinceLastMovement;
+    private float timeSinceLastAction;
 
     // Start is called before the first frame update
     void Start()
@@ -20,21 +20,23 @@ public class StealthDetection : MonoBehaviour
         col = GetComponent<SphereCollider>();
         nav = GetComponent<NavMeshAgent>();
 
-        timeSinceLastMovement = 0f;
+        timeSinceLastAction = 0f;
         Awareness = AwarenessLevel.Neutral;
+
+        GameStateController.OnPaused += HandlePauseEvent;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timeSinceLastMovement >= timeToClearSuspicion)
+        // If some time has passed since last player movement, reduce suspicion levels
+        if (timeSinceLastAction >= timeToClearSuspicion)
         {
-            if (suspicionMeter > 0f) SuspicionDecay(timeSinceLastMovement);
-            //Awareness = AwarenessLevel.Neutral;
+            if (suspicionMeter > 0f) SuspicionDecay();
         }
         else
         {
-            timeSinceLastMovement += Time.deltaTime;
+            timeSinceLastAction += Time.deltaTime;  // Wait some time before the decay starts
         }
     }
 
@@ -47,30 +49,30 @@ public class StealthDetection : MonoBehaviour
             if (player.GetComponent<PlayerMovement>().Action == Actions.Walking)
             {
                 suspicionMeter += 2.5f;
-                timeSinceLastMovement = 0f;
+                timeSinceLastAction = 0f;
             }
             // Add bigger amounts of suspicion if player is running
             else if (player.GetComponent<PlayerMovement>().Action == Actions.Running)
             {
                 suspicionMeter += 5f;
-                timeSinceLastMovement = 0f;
+                timeSinceLastAction = 0f;
             }
         }
         // If player is within the detection range but is further than half its radius
         else if (distance <= col.radius && player.GetComponent<PlayerMovement>().Action == Actions.Running)
         {
             suspicionMeter += 3f;
-            timeSinceLastMovement = 0f;
-        }
-        else
-        {
-            StartCoroutine(BecomeNeutralAfterDelay(5f));
+            timeSinceLastAction = 0f;
         }
 
         // Once suspicion meter is past its threshold, turn into suspicious state
         if (suspicionMeter >= 100f)
         {
             StartCoroutine(BecomeSuspiciousAfterDelay(3f));
+        }
+        else if (suspicionMeter <= 0f)
+        {
+            StartCoroutine(BecomeNeutralAfterDelay(3f));
         }
     }
 
@@ -79,23 +81,28 @@ public class StealthDetection : MonoBehaviour
         if (player.GetComponent<PlayerMovement>().Action == Actions.Walking)
         {
             suspicionMeter += 5f;
-            timeSinceLastMovement = 0f;
+            timeSinceLastAction = 0f;
         }
         // Add bigger amounts of suspicion if player is running
         else if (player.GetComponent<PlayerMovement>().Action == Actions.Running)
         {
             suspicionMeter += 10f;
-            timeSinceLastMovement = 0f;
+            timeSinceLastAction = 0f;
         }
+        // Add smaller amounts of suspicion if player is sneaking
         else if (player.GetComponent<PlayerMovement>().Action == Actions.Sneaking)
         {
             suspicionMeter += 1f;
-            timeSinceLastMovement = 0f;
+            timeSinceLastAction = 0f;
         }
 
         if (suspicionMeter >= 200f)
         {
             StartCoroutine(BecomeAlertedAfterDelay(3f, player));
+        }
+        else if (suspicionMeter <= 100f)
+        {
+            StartCoroutine(BecomeSuspiciousAfterDelay(3f));
         }
     }
 
@@ -112,6 +119,8 @@ public class StealthDetection : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
+        if (!enabled) return;
+
         if (other.gameObject.CompareTag("Player"))
         {
             GameObject player = other.gameObject;
@@ -172,10 +181,18 @@ public class StealthDetection : MonoBehaviour
 
     void HandleNoiseRaised()
     {
-        suspicionMeter += 5f;
+        if (Awareness == AwarenessLevel.Neutral)
+        {
+            suspicionMeter += 25f;
+        }
+        if (Awareness == AwarenessLevel.Suspicious)
+        {
+            suspicionMeter += 50f;
+        }
+        timeSinceLastAction = 0f;
     }
 
-    void SuspicionDecay(float time)
+    void SuspicionDecay()
     {
         suspicionMeter -= 1f;
     }
@@ -200,12 +217,17 @@ public class StealthDetection : MonoBehaviour
     {
         gameObject.GetComponent<Renderer>().material.color = Color.green;
         yield return new WaitForSeconds(time);
-        //suspicionMeter = 0f;
         Awareness = AwarenessLevel.Neutral;
     }
 
     IEnumerator BecomeDistracted(float time)
     {
         yield return new WaitForSeconds(time);
+    }
+
+    // Disable updates when gaame is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        enabled = !isPaused;
     }
 }

@@ -51,6 +51,8 @@ public class AnaiController : MonoBehaviour, IPlayerController
         npcMove.SetAvoidsPlayerRadius(tooCloseRadius);
 
         playAnimate.movement = playMove;
+
+        GameStateController.OnPaused += HandlePauseEvent;
     }
 
     void DetectCharacterSwitchInput()
@@ -104,6 +106,12 @@ public class AnaiController : MonoBehaviour, IPlayerController
             npcMove.UpdateMovement();
         }
 
+    }
+
+    // Disable updates when gaame is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        enabled = !isPaused;
     }
 
 }
