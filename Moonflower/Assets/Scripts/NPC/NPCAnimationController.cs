@@ -8,6 +8,7 @@ public class NPCAnimationController : MonoBehaviour
     private const string key_IsRun = "IsRun";
     private const string key_IsJump = "IsJump";
     private const string key_Attack = "Attack";
+    private const string key_AttackTrigger = "Attack";
     private const string key_IsBlocking = "IsBlocking";
     private const string key_IsHit = "IsHit";
     private const string key_IsStunned = "IsStunned";
@@ -45,10 +46,14 @@ public class NPCAnimationController : MonoBehaviour
         animator.SetBool(key_IsRun, running);
     }
 
-    public void SetAttack(int attack)
+    //public void SetAttack(int attack)
+    //{
+    //    animator.SetInteger(key_Attack, attack);
+    //    combatController.attack = attack;
+    //}
+    public void TriggerAttack()
     {
-        animator.SetInteger(key_Attack, attack);
-        combatController.attack = attack;
+        animator.SetTrigger(key_AttackTrigger);
     }
     public int GetAttack()
     {
@@ -57,6 +62,10 @@ public class NPCAnimationController : MonoBehaviour
     public void TriggerHit()
     {
         animator.SetTrigger(key_IsHit);
+    }
+    public void SetIsDead(bool isDead)
+    {
+        animator.SetBool(key_IsDead, isDead);
     }
 
     public void EnableHurtbox(int index)

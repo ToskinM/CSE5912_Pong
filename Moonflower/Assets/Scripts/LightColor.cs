@@ -127,7 +127,7 @@ public class LightColor : MonoBehaviour
             else
             {
                 counter++;
-                print(counter);
+                //print(counter);
             }
             yield return null;
         }

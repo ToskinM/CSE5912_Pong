@@ -100,7 +100,7 @@ public class SkyColors : MonoBehaviour
             else
             {
                 counter++;
-                print(counter);
+                //print(counter);
             }
             yield return null;
         }

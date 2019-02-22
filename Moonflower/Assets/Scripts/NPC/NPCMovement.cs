@@ -151,12 +151,16 @@ public class NPCMovement : MonoBehaviour, IMovement
             {
                 if (!Engaging)
                 {
-                    float distFromPlayer = Vector3.Distance(player.transform.position, self.transform.position);
-                    SetEngaging(distFromPlayer <= engagementRadius);
+                    if (player)
+                    {
+                        float distFromPlayer = Vector3.Distance(player.transform.position, self.transform.position);
+                        SetEngaging(distFromPlayer <= engagementRadius);
+                    }
                 }
                 if (Engaging)
                 {
-                    Engage();
+                    if (player)
+                        Engage();
                 }
             }
 

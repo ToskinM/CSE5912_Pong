@@ -11,7 +11,6 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     public bool hasWeaponOut;
     [HideInInspector] public bool inCombat;
     [HideInInspector] public bool isAttacking;
-    [HideInInspector] public int attack = 0;
     [HideInInspector] public float attackTimeout = 0.5f;
 
     //public bool isBlocking;
@@ -62,7 +61,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         timeSinceLastAttack += Time.deltaTime;
         if (timeSinceLastAttack > attackTimeout)
         {
-
+            isAttacking = false;
         }
 
         // Detect attack input (on button down)
@@ -167,9 +166,9 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
         animator.TriggerHit();
     }
 
-    public int GetAttackDamage()
+    public int GetAttackDamage(int attackHurtbox)
     {
-        return (int)((weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[attack]);
+        return (int)((weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[attackHurtbox]);
     }
 
     public void ApplyLoad()

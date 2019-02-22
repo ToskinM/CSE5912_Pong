@@ -7,8 +7,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     public Aggression aggression;
     public bool Active { get; set; } = true;
 
-
-
+    public GameObject ragdollPrefab;
     public Weapon weapon;
     private readonly float[] attackMultipliers = new float[] { 0f, 1f };
 
@@ -31,6 +30,8 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     private float deaggroTime = 3;
     private Coroutine deaggroCoroutine = null;
     public float attackDistance = 2.6f;
+    [HideInInspector] public float attackTimeout = 0.5f;
+    private float timeSinceLastAttack;
 
     private FieldOfView fieldOfView;
     private NPCAnimationController npcAnimationController;
@@ -60,10 +61,17 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     void Update()
     {
+        timeSinceLastHurt += Time.deltaTime;
+
+        timeSinceLastAttack += Time.deltaTime;
+        if (timeSinceLastAttack > attackTimeout)
+        {
+            isAttacking = false;
+        }
+
         if (Active)
         {
             //npcMovement.Update();
-            timeSinceLastHurt += Time.deltaTime;
 
             // Ensure weapon state is correct based on aggro
             if (inCombat && !hasWeaponOut)
@@ -73,17 +81,14 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
             CheckAggression();
 
-            if (attack > 0)
-                isAttacking = true;
-            else
-                isAttacking = false;
-
             // If we're in combat..
             if (inCombat)
             {
                 ManageCombat();
             }
         }
+
+        CheckDeath();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -115,7 +120,6 @@ public class NPCCombatController : MonoBehaviour, ICombatant
                         npcAnimationController.TriggerHit();
 
                         Stats.TakeDamage(damage, source.name);
-                        CheckDeath();
                     }
                 }
             }
@@ -175,16 +179,28 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     }
     private void Attack()
     {
-        if (attack <= 0)
-        {
-            npcAnimationController.SetAttack(1);
-        }
+        isAttacking = true;
+        timeSinceLastAttack = 0f;
+
+        npcAnimationController.TriggerAttack();
     }
 
     private void CheckAggression()
     {
         if (inCombat)
         {
+            // Deaggro if we cant find target in time
+            if (combatTarget == null)
+            {
+                DeAggro();
+                if (deaggroCoroutine != null)
+                {
+                    StopCoroutine(deaggroCoroutine);
+                    deaggroCoroutine = null;
+                }
+                return;
+            }
+
             // Deaggro if we cant find target in time
             if (fieldOfView.IsInFieldOfView(combatTarget.transform))
             {
@@ -233,6 +249,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
             OnAggroUpdated?.Invoke(true);
         }
     }
+
     private void DeAggro()
     {
         if (inCombat)
@@ -246,32 +263,63 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         OnAggroUpdated?.Invoke(false);
     }
 
+    // Set aggression to Frenzied
     private void Frenzy()
     {
         aggression = Aggression.Frenzied;
         fieldOfView.targetMask |= 1 << LayerMask.NameToLayer("NPC");
     }
+
+    // Start deaggro timer
     private IEnumerator WaitForDeaggro()
     {
         yield return new WaitForSeconds(deaggroTime);
         DeAggro();
     }
 
+    // Check if we should be dead
     private void CheckDeath()
     {
         if (Stats.CurrentHealth <= 0)
-            Die();
+            StartCoroutine(Die());
     }
-    private void Die()
+
+    // Kills this NPC
+    public void Kill()
+    {
+        Stats.TakeDamage(Stats.CurrentHealth, "Kill Command");
+    }
+
+    // Death cleanup and Sequence
+    private IEnumerator Die()
     {
         Debug.Log(gameObject.name + " has died");
 
-        ObjectPoolController.current.CheckoutTemporary(deathEffect, transform, 1);
+        // Stop combat
+        DeAggro();
+
+        // Play and wait for death animation to finish
+        npcAnimationController.SetIsDead(true);
+        yield return new WaitForSeconds(1f);
+
+        if (ragdollPrefab != null)
+        {
+            // Spawn ragdoll and have it match our pose
+            GameObject ragdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
+            ragdoll.GetComponent<Ragdoll>().MatchPose(gameObject.GetComponentsInChildren<Transform>());
+        }
+        else
+        {
+            // Poof us away
+            ObjectPoolController.current.CheckoutTemporary(deathEffect, transform, 1);
+        }
+
         gameObject.SetActive(false);
+        Destroy(gameObject, 0.5f);
     }
 
     public int GetAttackDamage()
     {
-        return (int)((weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[attack]);
+        return (int)((weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[1]);
     }
 }
