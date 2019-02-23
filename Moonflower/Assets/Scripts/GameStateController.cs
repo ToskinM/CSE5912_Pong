@@ -10,7 +10,10 @@ public class GameStateController : MonoBehaviour
     public bool Paused;
     public bool DebugModeOn;
 
-    private FollowCamera camControl; 
+    private FollowCamera camControl;
+
+    public delegate void Pause(bool isPaused);
+    public static event Pause OnPaused;
 
     // Start is called before the first frame update
     void Start()
@@ -41,8 +44,7 @@ public class GameStateController : MonoBehaviour
     public void TogglePause()
     {
         Paused = !Paused;
-
-        EnablePlayerMovement(!Paused);
+        OnPaused?.Invoke(Paused);
 
         if (camControl.Frozen)
             UnfreezeCamera();
@@ -64,6 +66,6 @@ public class GameStateController : MonoBehaviour
     private void EnablePlayerMovement(bool enabled)
     {
         PlayerMovement playerMovement = Player.GetComponent<PlayerMovement>();
-        playerMovement.enabled = enabled;
+        playerMovement.enabled = true;
     }
 }

@@ -50,6 +50,9 @@ public class AnaiController : MonoBehaviour, IPlayerController
         npcMove.SetFollowingDist(followDist); 
         npcMove.SetAvoidsPlayerRadius(tooCloseRadius);
 
+        playAnimate.movement = playMove;
+
+        GameStateController.OnPaused += HandlePauseEvent;
         playerAnimate.movement = playMove;
 
         SceneTracker.current.anai = gameObject;
@@ -64,26 +67,26 @@ public class AnaiController : MonoBehaviour, IPlayerController
         }
     }
     public void Switch(bool switchToThis)
-    {
+            {
         if (switchToThis)
         {
-            playCombat.enabled = true;
-            gameObject.layer = 10;
-            tag = "Player";
-            agent.enabled = false;
+                playCombat.enabled = true;
+                gameObject.layer = 10;
+                tag = "Player";
+                agent.enabled = false;
             playerAnimate.movement = playMove;
-            boxCollider.enabled = true;
-        }
-        else
-        {
-            playCombat.enabled = false;
-            gameObject.layer = 0;
-            tag = "Companion";
-            agent.enabled = true;
+                boxCollider.enabled = true;
+            }
+            else
+            {
+                playCombat.enabled = false;
+                gameObject.layer = 0;
+                tag = "Companion";
+                agent.enabled = true;
             playerAnimate.movement = npcMove;
-            boxCollider.enabled = false;
+                boxCollider.enabled = false;
+            }
         }
-    }
 
     void DetectSummonCompanionInput()
     {
@@ -109,5 +112,11 @@ public class AnaiController : MonoBehaviour, IPlayerController
         }
 
     }
+
+    // Disable updates when gaame is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        enabled = !isPaused;
+}
 
 }

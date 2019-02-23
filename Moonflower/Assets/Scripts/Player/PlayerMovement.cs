@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     private bool blockOffCooldown;
     private bool onGround = true;
     private FollowCamera cameraScript;
+    private AudioManager audioManager;
 
     //follow variables
     private BoxCollider boxCollider;
@@ -53,7 +54,9 @@ public class PlayerMovement : MonoBehaviour, IMovement
         blockOffCooldown = true;
 
         Action = Actions.Chilling;
-        Jumping = false; 
+        Jumping = false;
+
+        GameStateController.OnPaused += HandlePauseEvent;
     }
 
     private void Update()
@@ -271,5 +274,11 @@ public class PlayerMovement : MonoBehaviour, IMovement
     {
         if (NoiseRaised != null)
             NoiseRaised();
+    }
+
+    // Disable player movement controls when game is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        enabled = !isPaused;
     }
 }

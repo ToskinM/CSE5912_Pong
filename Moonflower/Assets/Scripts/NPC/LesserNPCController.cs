@@ -39,6 +39,7 @@ public class LesserNPCController : MonoBehaviour
 
 
         //talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.AMARU_ICON);
+        GameStateController.OnPaused += HandlePauseEvent;
 
         SceneTracker.current.RegisterNPC(gameObject);
     }
@@ -115,4 +116,10 @@ public class LesserNPCController : MonoBehaviour
         if (combatController)
             combatController.OnAggroUpdated -= HandleOnAggroUpdated;
     }
+
+    // Disable player combat controls when game is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        enabled = !isPaused;
+}
 }

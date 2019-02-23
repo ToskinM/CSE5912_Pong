@@ -46,6 +46,11 @@ public class NPCMovement : MonoBehaviour, IMovement
     float bufferRadius = 3f;
     float tooCloseRadius = 2.5f;
 
+    void Start()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+    }
+
     //initialize so player CANNOT wander CANNOT engage
     public NPCMovement(GameObject selfOb, GameObject playerOb)
     {
@@ -436,6 +441,10 @@ public class NPCMovement : MonoBehaviour, IMovement
 
     }
 
-
+    // Disable player combat controls when game is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        enabled = !isPaused;
+    }
 
 }

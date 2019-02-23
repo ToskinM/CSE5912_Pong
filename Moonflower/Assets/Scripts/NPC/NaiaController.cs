@@ -45,6 +45,7 @@ public class NaiaController : MonoBehaviour
 
         engageController = EngageOptPanel.GetComponent<EngagementOptionsController>();
 
+        GameStateController.OnPaused += HandlePauseEvent;
     }
 
 
@@ -161,5 +162,11 @@ public class NaiaController : MonoBehaviour
 
         }
 
+    }
+
+    // Disable player combat controls when game is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        enabled = !isPaused;
     }
 }

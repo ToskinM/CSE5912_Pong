@@ -43,7 +43,9 @@ public class MimbiController : MonoBehaviour, IPlayerController
 
         playerAnimate.movement = npcMove;
 
-        npcMove.SetAvoidsPlayerRadius(tooCloseRadius);
+        npcMove.SetAvoidsPlayerRadius(tooCloseRadius);  
+
+        GameStateController.OnPaused += HandlePauseEvent;
 
         SceneTracker.current.mimbi = gameObject;
     }
@@ -74,31 +76,35 @@ public class MimbiController : MonoBehaviour, IPlayerController
         }
     }
     public void Switch(bool switchToThis)
-    {
+            {
         if (switchToThis)
         {
             playCombat.enabled = true;
-            gameObject.layer = 10;
-            tag = "Player";
-            agent.enabled = false;
+                gameObject.layer = 10;
+                tag = "Player";
+                agent.enabled = false;
             playerAnimate.movement = playMove;
-            boxCollider.enabled = true;
-        }
-        else
-        {
+                boxCollider.enabled = true; 
+            }
+            else
+            {
             playCombat.enabled = false;
-            gameObject.layer = 0;
-            tag = "Companion";
-            agent.enabled = true;
+                gameObject.layer = 0;
+                tag = "Companion";
+                agent.enabled = true;
             playerAnimate.movement = npcMove;
-            boxCollider.enabled = false;
+                boxCollider.enabled = false; 
+            }
         }
-    }
 
     public void Summon()
     {
         npcMove.RunToPlayer();
     }
 
-
+    // Disable updates when gaame is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        enabled = !isPaused;
+}
 }

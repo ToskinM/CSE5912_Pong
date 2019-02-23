@@ -32,7 +32,9 @@ public class AmaruController : MonoBehaviour
         npc.SetEngagementDistances(engagementRadius, bufferDist, tooCloseRad);
 
         talkTrig = new DialogueTrigger(DialoguePanel, Constants.AMARU_ICON, Constants.AMARU_INTRO_DIALOGUE);
-        playerController = Player.GetComponent<IPlayerController>(); 
+        playerController = Player.GetComponent<IPlayerController>();
+
+        GameStateController.OnPaused += HandlePauseEvent;
     }
 
 
@@ -73,5 +75,11 @@ public class AmaruController : MonoBehaviour
         {
             talkTrig.StartDialogue();
         }
+    }
+
+    // Disable updates when gaame is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        enabled = !isPaused;
     }
 }

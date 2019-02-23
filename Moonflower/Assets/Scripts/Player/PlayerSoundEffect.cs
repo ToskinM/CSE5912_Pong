@@ -29,6 +29,16 @@ public class PlayerSoundEffect : MonoBehaviour
         audioManager.Play("AnaiWalking");
     }
 
+    public void PlayPunchSound01()
+    {
+        audioManager.Play("AnaiPunch");
+    }
+
+    public void PlayKickSound01()
+    {
+        audioManager.Play("AnaiKick");
+    }
+
     // Update is called once per frame
     void Update()
     {

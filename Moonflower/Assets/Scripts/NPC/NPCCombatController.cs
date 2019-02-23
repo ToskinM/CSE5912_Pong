@@ -40,6 +40,8 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     public delegate void AggroUpdate(bool aggroed);
     public event AggroUpdate OnAggroUpdated;
 
+    private AudioManager audioManager;
+
     private void Awake()
     {
         Stats = gameObject.GetComponent<CharacterStats>();
@@ -57,6 +59,18 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
         if (aggression == Aggression.Frenzied)
             Frenzy();
+
+        StartCoroutine(GetAudioManager());
+        GameStateController.OnPaused += HandlePauseEvent;
+    }
+
+    private IEnumerator GetAudioManager()
+    {
+        while (audioManager == null)
+        {
+            audioManager = FindObjectOfType<AudioManager>();
+            yield return null;
+        }
     }
 
     void Update()
@@ -325,5 +339,11 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     public int GetAttackDamage()
     {
         return (int)((weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[1]);
+    }
+
+    // Disable player combat controls when game is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        enabled = !isPaused;
     }
 }

@@ -26,6 +26,8 @@ public class PlayerAnimatorController : MonoBehaviour
         animator = GetComponent<Animator>();
         movement = GetComponent<PlayerMovement>();
         combatController = GetComponent<PlayerCombatController>();
+
+        GameStateController.OnPaused += HandlePauseEvent;
     }
 
     // Update is called once per frame
@@ -56,8 +58,15 @@ public class PlayerAnimatorController : MonoBehaviour
     {
         attackHurtboxes[index].Enable(combatController.GetAttackDamage(index));
     }
+
     public void DisableHurtbox(int index)
     {
         attackHurtboxes[index].Disable();
+    }
+
+    // Disable player animation when game is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        animator.enabled = !isPaused;
     }
 }
