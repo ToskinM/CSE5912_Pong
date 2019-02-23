@@ -74,10 +74,15 @@ public class Pickup : MonoBehaviour
             {
                 textUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
             }
+            else
+            {
+                textUpdate(obj.GetComponent<InventoryStat>().Name + " is collected. ");
+            }
             //Add to inventory
             playerInventory.AddObj(obj.gameObject);
             //Destroy Gameobject after collect
-            obj.gameObject.SetActive(false);
+            //obj.gameObject.SetActive(false);
+            Destroy(obj.gameObject);
             //Play Pickup audio clip
             PlayPickup();
         }

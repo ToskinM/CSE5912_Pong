@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.48066366, g: 0.9257534, b: 1.4880309, a: 1}
+  m_IndirectSpecularColor: {r: 0.4852417, g: 0.9310331, b: 1.487578, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15707,6 +15707,8 @@ MonoBehaviour:
   InventoryPanel: {fileID: 1262600174}
   InvContentPanel: {fileID: 1012454834}
   Player: {fileID: 1769887628}
+  InventoryText: {fileID: 0}
+  gameController: {fileID: 0}
 --- !u!1001 &512604104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39259,7 +39261,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: New Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 65841ae60cf6d42ef9a9d46a2c8061c9, type: 2}
   m_sharedMaterial: {fileID: 21098025989705572, guid: 65841ae60cf6d42ef9a9d46a2c8061c9,
@@ -39337,11 +39339,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -47702,6 +47704,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2747497170271713436, guid: c54a3408b5ffd2f46a0f3a566688594d,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 582f14a20ccdab84da619546e247a431, type: 3}
     - target: {fileID: 771196952918974433, guid: c54a3408b5ffd2f46a0f3a566688594d,
         type: 3}
       propertyPath: m_Size
@@ -47712,11 +47719,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2747497170271713436, guid: c54a3408b5ffd2f46a0f3a566688594d,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 4300000, guid: 582f14a20ccdab84da619546e247a431, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c54a3408b5ffd2f46a0f3a566688594d, type: 3}
 --- !u!1001 &1531896404
@@ -54384,6 +54386,26 @@ PrefabInstance:
       propertyPath: inventoryText
       value: 
       objectReference: {fileID: 1252117046}
+    - target: {fileID: 1769887640, guid: 71ea9cd348b57ee4b91d4ecea6aa60e6, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1769887628}
+    - target: {fileID: 1769887640, guid: 71ea9cd348b57ee4b91d4ecea6aa60e6, type: 3}
+      propertyPath: InventoryPanel
+      value: 
+      objectReference: {fileID: 1252117045}
+    - target: {fileID: 1769887640, guid: 71ea9cd348b57ee4b91d4ecea6aa60e6, type: 3}
+      propertyPath: InventoryText
+      value: 
+      objectReference: {fileID: 1252117046}
+    - target: {fileID: 1769887640, guid: 71ea9cd348b57ee4b91d4ecea6aa60e6, type: 3}
+      propertyPath: gameController
+      value: 
+      objectReference: {fileID: 710919853}
+    - target: {fileID: 1769887640, guid: 71ea9cd348b57ee4b91d4ecea6aa60e6, type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 1769887632}
     - target: {fileID: 1769887630, guid: 71ea9cd348b57ee4b91d4ecea6aa60e6, type: 3}
       propertyPath: Mimbi
       value: 
@@ -54758,6 +54780,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0592b69fb9fb84e938da77f0a8252cb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1769887632 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1769887639, guid: 71ea9cd348b57ee4b91d4ecea6aa60e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1769887627}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769887628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8dfeb2dc6684ec0acd28b2f9028f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1769887642
@@ -61199,6 +61233,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2747497170271713436, guid: c54a3408b5ffd2f46a0f3a566688594d,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 582f14a20ccdab84da619546e247a431, type: 3}
     - target: {fileID: 771196952918974433, guid: c54a3408b5ffd2f46a0f3a566688594d,
         type: 3}
       propertyPath: m_Size
@@ -61209,11 +61248,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2747497170271713436, guid: c54a3408b5ffd2f46a0f3a566688594d,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 4300000, guid: 582f14a20ccdab84da619546e247a431, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c54a3408b5ffd2f46a0f3a566688594d, type: 3}
 --- !u!1001 &1999237905
@@ -61766,6 +61800,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2747497170271713436, guid: c54a3408b5ffd2f46a0f3a566688594d,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 582f14a20ccdab84da619546e247a431, type: 3}
     - target: {fileID: 771196952918974433, guid: c54a3408b5ffd2f46a0f3a566688594d,
         type: 3}
       propertyPath: m_Size
@@ -61776,11 +61815,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2747497170271713436, guid: c54a3408b5ffd2f46a0f3a566688594d,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 4300000, guid: 582f14a20ccdab84da619546e247a431, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c54a3408b5ffd2f46a0f3a566688594d, type: 3}
 --- !u!1001 &2009837436
