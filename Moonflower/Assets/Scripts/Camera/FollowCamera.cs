@@ -43,6 +43,8 @@ public class FollowCamera : MonoBehaviour
         // Get a base distance from player from starting positions
         transform.position = target.position + new Vector3(0, 1, -5);
         offset = target.position - transform.position;
+
+        SceneTracker.current.camera = this;
     }
 
     void Update()
@@ -150,7 +152,7 @@ public class FollowCamera : MonoBehaviour
         freeRoam = enabled;
     }
 
-    private Transform GetCameraTarget(GameObject character)
+    public Transform GetCameraTarget(GameObject character)
     {
         // Find gameobject tagged as the camera look target (ONLY searches one hierarchy level deep)
         foreach (Transform transform in character.transform)

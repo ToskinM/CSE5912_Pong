@@ -12,7 +12,7 @@ public class AnaiData
     public NPCMovement movement;
 
     // Movement
-    public PlayerMovement anaiMovement;
+    public PlayerMovement playerMovement;
     public Vector3 position;
     public Quaternion rotation;
     public Actions action;
@@ -20,7 +20,7 @@ public class AnaiData
     public float jumpTimer;
 
     // Combat
-    public PlayerCombatController anaiCombat;
+    public PlayerCombatController combatController;
     public bool isBlocking;
     public bool hasWeaponOut;
     public bool inCombat;
@@ -29,29 +29,32 @@ public class AnaiData
     public AnaiData(GameObject anai)
     {
         anaiController = anai.GetComponent<AnaiController>();
-        anaiMovement = anai.GetComponent<PlayerMovement>();
-        anaiCombat = anai.GetComponent<PlayerCombatController>();
+        playerMovement = anai.GetComponent<PlayerMovement>();
+        combatController = anai.GetComponent<PlayerCombatController>();
 
         // Controller
-        //playing = anaiController.Playing;
+        playing = anaiController.Playing;
 
         // Movement
         position = anai.transform.position;
         rotation = anai.transform.rotation;
-        action = anaiMovement.Action;
+        action = playerMovement.Action;
         //jumping = anaiMovement.Jumping;
         //jumpTimer = anaiMovement.jumpTimer;
 
-        hasWeaponOut = anaiCombat.hasWeaponOut;
+        hasWeaponOut = combatController.hasWeaponOut;
     }
 
     public void Load(GameObject anai)
     {
+        anaiController.Playing = playing;
+        anaiController.Switch(playing);
+
         anai.transform.position = position;
         anai.transform.rotation = rotation;
-        anaiMovement.Action = action;
+        playerMovement.Action = action;
 
-        anaiCombat.SetWeaponSheathed(!hasWeaponOut);
-        anaiCombat.ApplyLoad();
+        combatController.SetWeaponSheathed(!hasWeaponOut);
+        combatController.ApplyLoad();
     }
 }

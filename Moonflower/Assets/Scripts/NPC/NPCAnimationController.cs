@@ -16,6 +16,7 @@ public class NPCAnimationController : MonoBehaviour
 
     private Animator animator;
     private NPCCombatController combatController;
+    private LesserNPCController controller;
     private NPCMovement movement;
 
     public HurtboxController[] attackHurtboxes;
@@ -24,6 +25,7 @@ public class NPCAnimationController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         combatController = GetComponent<NPCCombatController>();
+        controller = GetComponent<LesserNPCController>();
     }
 
     void Update()
@@ -45,11 +47,6 @@ public class NPCAnimationController : MonoBehaviour
         animator.SetBool(key_IsRun, running);
     }
 
-    //public void SetAttack(int attack)
-    //{
-    //    animator.SetInteger(key_Attack, attack);
-    //    combatController.attack = attack;
-    //}
     public void TriggerAttack()
     {
         animator.SetTrigger(key_AttackTrigger);

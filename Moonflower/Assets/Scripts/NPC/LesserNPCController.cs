@@ -27,6 +27,8 @@ public class LesserNPCController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         combatController = GetComponent<NPCCombatController>();
         playerController = Player.GetComponent<IPlayerController>();
+        movement = new NPCMovement(gameObject, Player, 1);
+        movement.SetEngagementDistances(5, combatController.attackDistance, 1);
     }
 
     void Start()
@@ -34,11 +36,11 @@ public class LesserNPCController : MonoBehaviour
         // Setup Movement
         //float walkRad = WalkArea.GetComponent<Renderer>().bounds.size.x;
         Vector3 walkOrigin = transform.position;
-        movement = new NPCMovement(gameObject, Player, 1);
-        movement.SetEngagementDistances(5, combatController.attackDistance, 1);
+
 
         //talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.AMARU_ICON);
 
+        SceneTracker.current.RegisterNPC(gameObject);
     }
 
     void Update()

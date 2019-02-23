@@ -295,6 +295,9 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     {
         Debug.Log(gameObject.name + " has died");
 
+        // Tell the tracker we have died
+        SceneTracker.current.RegisterNPCDeath(gameObject);
+
         // Stop combat
         DeAggro();
 
@@ -315,6 +318,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         }
 
         gameObject.SetActive(false);
+
         Destroy(gameObject, 0.5f);
     }
 

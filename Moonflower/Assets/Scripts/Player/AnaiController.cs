@@ -23,7 +23,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
 
     public PlayerMovement playMove;
     public NPCMovement npcMove; 
-    PlayerAnimatorController playAnimate; 
+    PlayerAnimatorController playerAnimate; 
     CharacterStats stats; 
     NavMeshAgent agent;
     BoxCollider boxCollider;
@@ -42,7 +42,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
         agent = GetComponent<NavMeshAgent>();
         playMove = GetComponent<PlayerMovement>();
         playCombat = GetComponent<PlayerCombatController>();
-        playAnimate = GetComponent<PlayerAnimatorController>();
+        playerAnimate = GetComponent<PlayerAnimatorController>();
         boxCollider = GetComponent<BoxCollider>();
         stats = GetComponent<CharacterStats>(); 
         npcMove = new NPCMovement(gameObject, Mimbi);
@@ -50,7 +50,9 @@ public class AnaiController : MonoBehaviour, IPlayerController
         npcMove.SetFollowingDist(followDist); 
         npcMove.SetAvoidsPlayerRadius(tooCloseRadius);
 
-        playAnimate.movement = playMove;
+        playerAnimate.movement = playMove;
+
+        SceneTracker.current.anai = gameObject;
     }
 
     void DetectCharacterSwitchInput()
@@ -58,26 +60,28 @@ public class AnaiController : MonoBehaviour, IPlayerController
         if (Input.GetButtonDown("Switch"))
         {
             Playing = !Playing;
-            if (Playing)
-            {
-                playCombat.enabled = true;
-                gameObject.layer = 10;
-                tag = "Player";
-                //camera = Camera.main;
-                agent.enabled = false;
-                playAnimate.movement = playMove;
-                boxCollider.enabled = true;
-
-            }
-            else
-            {
-                playCombat.enabled = false;
-                gameObject.layer = 0;
-                tag = "Companion";
-                agent.enabled = true;
-                playAnimate.movement = npcMove;
-                boxCollider.enabled = false;
-            }
+            Switch(Playing);
+        }
+    }
+    public void Switch(bool switchToThis)
+    {
+        if (switchToThis)
+        {
+            playCombat.enabled = true;
+            gameObject.layer = 10;
+            tag = "Player";
+            agent.enabled = false;
+            playerAnimate.movement = playMove;
+            boxCollider.enabled = true;
+        }
+        else
+        {
+            playCombat.enabled = false;
+            gameObject.layer = 0;
+            tag = "Companion";
+            agent.enabled = true;
+            playerAnimate.movement = npcMove;
+            boxCollider.enabled = false;
         }
     }
 

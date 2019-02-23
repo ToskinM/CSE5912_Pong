@@ -10,9 +10,9 @@ public class CameraData
     public float xRotation;
     public float yRotation;
 
-    public CameraData(Camera mainCamera)
+    public CameraData(FollowCamera camera)
     {
-        cameraController = mainCamera.GetComponent<FollowCamera>();
+        cameraController = camera;
         xRotation = cameraController.xRotation;
         yRotation = cameraController.yRotation;
     }

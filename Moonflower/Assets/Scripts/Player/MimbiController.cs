@@ -17,7 +17,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
 
 
     PlayerMovement playMove;
-    PlayerAnimatorController playAnimate; 
+    PlayerAnimatorController playerAnimate; 
     public NPCMovement npcMove; 
     PlayerCombatController playCombat;
     NavMeshAgent agent;
@@ -37,42 +37,21 @@ public class MimbiController : MonoBehaviour, IPlayerController
         agent = GetComponent<NavMeshAgent>();
         playMove = GetComponent<PlayerMovement>();
         playCombat = GetComponent<PlayerCombatController>();
-        playAnimate = GetComponent<PlayerAnimatorController>();
+        playerAnimate = GetComponent<PlayerAnimatorController>();
         boxCollider = GetComponent<BoxCollider>(); 
         npcMove = new NPCMovement(gameObject, Anai, Anai.transform.position, wanderRadius);
 
-        playAnimate.movement = npcMove;
+        playerAnimate.movement = npcMove;
 
-        npcMove.SetAvoidsPlayerRadius(tooCloseRadius);  
+        npcMove.SetAvoidsPlayerRadius(tooCloseRadius);
+
+        SceneTracker.current.mimbi = gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Switch"))
-        {
-            Playing = !Playing;
-            playCombat.enabled = Playing;
-            if (Playing)
-            {
-                gameObject.layer = 10;
-                tag = "Player";
-                //camera = Camera.main;
-                agent.enabled = false;
-                playAnimate.movement = playMove;
-                boxCollider.enabled = true; 
-
-            }
-            else
-            {
-                gameObject.layer = 0;
-                tag = "Companion";
-                agent.enabled = true;
-                //enable npc movement
-                playAnimate.movement = npcMove;
-                boxCollider.enabled = false; 
-            }
-        }
+        DetectCharacterSwitchInput();
 
         if (Playing)
         {
@@ -83,6 +62,36 @@ public class MimbiController : MonoBehaviour, IPlayerController
             //Debug.Log("Mimbi is a free agent");
             npcMove.StayClose(Anai.transform.position); 
             npcMove.UpdateMovement();
+        }
+    }
+
+    void DetectCharacterSwitchInput()
+    {
+        if (Input.GetButtonDown("Switch"))
+        {
+            Playing = !Playing;
+            Switch(Playing);
+        }
+    }
+    public void Switch(bool switchToThis)
+    {
+        if (switchToThis)
+        {
+            playCombat.enabled = true;
+            gameObject.layer = 10;
+            tag = "Player";
+            agent.enabled = false;
+            playerAnimate.movement = playMove;
+            boxCollider.enabled = true;
+        }
+        else
+        {
+            playCombat.enabled = false;
+            gameObject.layer = 0;
+            tag = "Companion";
+            agent.enabled = true;
+            playerAnimate.movement = npcMove;
+            boxCollider.enabled = false;
         }
     }
 
