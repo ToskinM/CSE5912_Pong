@@ -22,15 +22,24 @@ public static class Constants
     public const string SAVE_CPU_SCORE = "CPUScore";
 
     //icon names
-    const string iconFolder = "Icons/";
-    public const string ANAI_ICON = iconFolder + "Anai";
-    public const string NAIA_ICON = iconFolder + "Naia";
-    public const string AMARU_ICON = iconFolder + "Amaru";
-    public const string PINON_ICON = iconFolder + "Pinon";
-    public const string SYPAVE_ICON = iconFolder + "Sypave";
-    public const string TEGU_ICON = iconFolder + "Tegu.PNG";
-    public const string KURUPI_ICON = iconFolder + "Kurupi";
-    public const string MONAI_ICON = iconFolder + "Monai";
+    const string characterFolder = "Icons/Characters/";
+    public const string ANAI_ICON = characterFolder + "Anai";
+    public const string NAIA_ICON = characterFolder + "Naia";
+    public const string AMARU_ICON = characterFolder + "Amaru";
+    public const string PINON_ICON = characterFolder + "Pinon";
+    public const string SYPAVE_ICON = characterFolder + "Sypave";
+    public const string TEGU_ICON = characterFolder + "Tegu.PNG";
+    public const string KURUPI_ICON = characterFolder + "Kurupi";
+    public const string MONAI_ICON = characterFolder + "Monai";
+    const string itemFolder = "Icons/Items/";
+    public const string MOONFLOWER_ICON = itemFolder + "Moonflower";
+    public const string WOLFAPPLE_ICON = itemFolder + "Wolf Apple";
+    public const string HONEY_ICON = itemFolder + "Honey";
+    public const string ROPE_ICON = itemFolder + "Rope";
+    public const string CHIPA_ICON = itemFolder + "Chipa";
+    public const string PUMPKIN_ICON = itemFolder + "Pumpkin";
+    public const string FLUTE_ICON = itemFolder + "Flute";
+    public const string JAR_ICON = itemFolder + "Jar";
 
     //life petal names
     const string flowerFolder = "Life Petals/";
