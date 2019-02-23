@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 public class ItemLookup : MonoBehaviour
 {
@@ -12,7 +12,7 @@ public class ItemLookup : MonoBehaviour
     public const string JAR_NAME = "Jar";
     public const string PUMPKIN_NAME = "Pumpkin";
     public const string CHIPA_NAME = "Chipa";
-    public const string FLUTE_NAME = "Flute"; 
+    public const string FLUTE_NAME = "Flute";
 
     public GameObject GetObject(string name)
     {
@@ -75,4 +75,3 @@ public class ItemLookup : MonoBehaviour
         }
     }
 }
-
