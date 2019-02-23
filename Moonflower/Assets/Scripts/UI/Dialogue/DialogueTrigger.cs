@@ -52,7 +52,10 @@ public class DialogueTrigger : MonoBehaviour
         buttons = new List<Button>(); 
         templateButton = panel.transform.GetChild(2).GetComponent<Button>();
         exitButton = panel.transform.GetChild(3).GetComponent<Button>();
-        exitButton.onClick.AddListener(endConvo);
+        Debug.Log("This is happening, right?"); 
+        exitButton.onClick.AddListener(() => ButtonClicked(42));
+        Debug.Log("Like what the hell"); 
+
         freezeCommand = new FreezeCameraCommand();
         spriteFile = characterSprite;
         upPos = panel.transform.position;
@@ -60,6 +63,10 @@ public class DialogueTrigger : MonoBehaviour
         panel.transform.position = downPos; 
     }
 
+    private void ButtonClicked(int n)
+    {
+        Debug.Log("Button clicked = " + n);
+    }
 
     public void Update()
     {
