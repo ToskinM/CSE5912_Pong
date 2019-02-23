@@ -15,7 +15,7 @@ public class SceneTracker : MonoBehaviour
 
     //public List<GameObject> deadNPCs = new List<GameObject>(); 
 
-    void Start()
+    void Awake()
     {
         if (current == null)
         {

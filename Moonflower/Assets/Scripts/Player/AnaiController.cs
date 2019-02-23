@@ -11,7 +11,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
     public GameObject Mimbi;
     public GameObject HUD;
 
-    Sprite icon; 
+    Sprite icon;
 
     private float moveSpeed;
     private Vector3 velocity = Vector3.zero;
@@ -22,14 +22,14 @@ public class AnaiController : MonoBehaviour, IPlayerController
     PlayerCombatController playCombat;
 
     public PlayerMovement playMove;
-    public NPCMovement npcMove; 
-    PlayerAnimatorController playerAnimate; 
-    CharacterStats stats; 
+    public NPCMovement npcMove;
+    PlayerAnimatorController playerAnimate;
+    CharacterStats stats;
     NavMeshAgent agent;
     BoxCollider boxCollider;
     const float bufferRadius = 5f;
     const float tooCloseRadius = 2f;
-    float followDist = 8f; 
+    float followDist = 8f;
 
 
     void Start()
@@ -37,20 +37,18 @@ public class AnaiController : MonoBehaviour, IPlayerController
         Playing = true;
         moveSpeed = 5f;
 
-        icon = new IconFactory().GetIcon(Constants.ANAI_ICON); 
+        icon = new IconFactory().GetIcon(Constants.ANAI_ICON);
         Mimbi = GameObject.Find("Mimbi");
         agent = GetComponent<NavMeshAgent>();
         playMove = GetComponent<PlayerMovement>();
         playCombat = GetComponent<PlayerCombatController>();
         playerAnimate = GetComponent<PlayerAnimatorController>();
         boxCollider = GetComponent<BoxCollider>();
-        stats = GetComponent<CharacterStats>(); 
+        stats = GetComponent<CharacterStats>();
         npcMove = new NPCMovement(gameObject, Mimbi);
 
-        npcMove.SetFollowingDist(followDist); 
+        npcMove.SetFollowingDist(followDist);
         npcMove.SetAvoidsPlayerRadius(tooCloseRadius);
-
-        playAnimate.movement = playMove;
 
         GameStateController.OnPaused += HandlePauseEvent;
         playerAnimate.movement = playMove;
@@ -67,26 +65,26 @@ public class AnaiController : MonoBehaviour, IPlayerController
         }
     }
     public void Switch(bool switchToThis)
-            {
+    {
         if (switchToThis)
         {
-                playCombat.enabled = true;
-                gameObject.layer = 10;
-                tag = "Player";
-                agent.enabled = false;
+            playCombat.enabled = true;
+            gameObject.layer = 10;
+            tag = "Player";
+            agent.enabled = false;
             playerAnimate.movement = playMove;
-                boxCollider.enabled = true;
-            }
-            else
-            {
-                playCombat.enabled = false;
-                gameObject.layer = 0;
-                tag = "Companion";
-                agent.enabled = true;
-            playerAnimate.movement = npcMove;
-                boxCollider.enabled = false;
-            }
+            boxCollider.enabled = true;
         }
+        else
+        {
+            playCombat.enabled = false;
+            gameObject.layer = 0;
+            tag = "Companion";
+            agent.enabled = true;
+            playerAnimate.movement = npcMove;
+            boxCollider.enabled = false;
+        }
+    }
 
     void DetectSummonCompanionInput()
     {
@@ -104,7 +102,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
 
         if (Playing)
         {
-            playMove.MovementUpdate(); 
+            playMove.MovementUpdate();
         }
         else
         {
@@ -117,6 +115,5 @@ public class AnaiController : MonoBehaviour, IPlayerController
     void HandlePauseEvent(bool isPaused)
     {
         enabled = !isPaused;
-}
-
+    }
 }
