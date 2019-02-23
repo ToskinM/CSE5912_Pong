@@ -101,14 +101,18 @@ public class Pickup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject closest = FindClosest(); 
+        GameObject closest = FindClosest();
+        GameObject temp;
+
         if (Vector3.Distance(FindClosest().transform.position, transform.position) <= distanceToPickup)
         {
-            if(closest != null)
+            if (closest != null)
+            {
                 closest.GetComponent<InventoryStat>().SetHalo(true);
+                temp = FindClosest();
+            }
             if (Input.GetButtonDown("Pickup"))
             {
-                Debug.Log("I need to pickup");
                 DoPickup(FindClosest());
             }
 

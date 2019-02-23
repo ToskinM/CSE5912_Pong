@@ -12,7 +12,10 @@ public class SkyColors : MonoBehaviour
     MeshRenderer thisRend;
     int counter = 0;
     float transitionTime; // Amount of time it takes to fade between colors
+    public float transitionRate = 0;
 
+    public enum SkyCategory { Day, Sunset ,Night }
+    public SkyCategory dayNight;
 
     void Start()
 
@@ -66,7 +69,7 @@ public class SkyColors : MonoBehaviour
     void Update()
 
     {
-
+        //Debug.Log(GetDayorNight());
     }
 
     IEnumerator ColorChange()
@@ -82,7 +85,7 @@ public class SkyColors : MonoBehaviour
             Color newColor = colors[counter];
             float newFog = fogHeights[counter];
 
-            float transitionRate = 0; 
+             transitionRate = 0; 
             
 
             while (transitionRate < 1)
@@ -102,7 +105,25 @@ public class SkyColors : MonoBehaviour
                 counter++;
                 //print(counter);
             }
+
+            setDayorNight();
+
+
             yield return null;
         }
+    }
+    public void setDayorNight()
+    {
+        if (counter < 3)
+            dayNight = SkyCategory.Day;
+        else if (counter == 3)
+            dayNight = SkyCategory.Sunset;
+        else
+            dayNight = SkyCategory.Night;
+    }
+
+    public SkyCategory GetDayNight()
+    {
+        return dayNight;
     }
 }
