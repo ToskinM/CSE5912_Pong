@@ -14,16 +14,18 @@ public class DialogueTrigger : MonoBehaviour
     Image icon; 
     TextMeshProUGUI text;
     Button templateButton;
+    Button exitButton; 
     ICommand freezeCommand;
 
     List<Button> buttons;
     string spriteFile;
+    string exitText = "Okay. See you around!"; 
 
     public bool engaged = false; 
 
     enum PanelState { down, rising, up, falling}
     PanelState pState = PanelState.down;
-    enum TextState { typing, paused, options, done}
+    enum TextState { typing, paused, options, done, ending}
     TextState tState = TextState.done; 
     int typeIndex = 0;
     const int fadeMax = 30;
@@ -49,6 +51,8 @@ public class DialogueTrigger : MonoBehaviour
         text = panel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         buttons = new List<Button>(); 
         templateButton = panel.transform.GetChild(2).GetComponent<Button>();
+        exitButton = panel.transform.GetChild(3).GetComponent<Button>();
+        exitButton.onClick.AddListener(endConvo);
         freezeCommand = new FreezeCameraCommand();
         spriteFile = characterSprite;
         upPos = panel.transform.position;
@@ -84,6 +88,9 @@ public class DialogueTrigger : MonoBehaviour
                 case PanelState.up:
                     switch (tState)
                     {
+                        case TextState.ending:
+                            typeEnding(); 
+                            break;
                         case TextState.typing:
                         case TextState.paused:
                             typeText();
@@ -97,6 +104,16 @@ public class DialogueTrigger : MonoBehaviour
                     {
                         switch (tState)
                         {
+                            case TextState.ending:
+                                if(!text.text.Equals(exitText))
+                                {
+                                    text.text = graph.current.text;
+                                }
+                                else
+                                {
+                                    pState = PanelState.down;
+                                }
+                                break; 
                             case TextState.typing:
                             case TextState.paused:
                                 text.text = graph.current.text;
@@ -144,6 +161,35 @@ public class DialogueTrigger : MonoBehaviour
     public bool DialogueActive()
     {
         return pState != PanelState.down;
+    }
+
+    public void SetExitText(string s)
+    {
+        exitText = s;
+    }
+
+    private void endConvo()
+    {
+        Debug.Log("I got clicked!"); 
+        tState = TextState.ending;
+        typeIndex = 0; 
+    }
+
+    private void typeEnding()
+    {
+        if (typeIndex % slowDownFrac == 0)
+            text.text = exitText.Substring(0, typeIndex / slowDownFrac);
+
+        typeIndex++;
+        int currDiaIndex = typeIndex / slowDownFrac;
+        //if (currDiaIndex == dialogue.Length)
+        //{
+        //    typeIndex = 0;
+        //    typing = false;
+        //    state = TextState.options;  
+        //}
+        if (currDiaIndex > 1 && punctuation.IndexOf(exitText[currDiaIndex - 2]) != -1)
+            tState = TextState.paused;
     }
 
     private void typeText()
