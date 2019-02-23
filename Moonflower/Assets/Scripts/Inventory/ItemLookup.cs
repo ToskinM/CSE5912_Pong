@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemLookup : MonoBehaviour
+public class ItemLookup
 {
-    public const string MOONFLOWER_NAME = "Moonflower";
+    public const string MOONFLOWER_NAME = "Moon Flower";
     public const string WOLFAPPLE_NAME = "Wolf Apple";
     public const string HONEY_NAME = "Honey";
     public const string ROPE_NAME = "Rope";

@@ -2,27 +2,106 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShowInventory : MonoBehaviour
 {
     //public TextMeshProUGUI inventoryText;
-    public GameObject inventoryPanel;
-    public GameObject player;
+    public GameObject InventoryPanel;
+    public GameObject InvContentPanel; 
+    public GameObject Player;
+
+    List<GameObject> items = new List<GameObject>();
+    GameStateController gameController;
+    GameObject InvItemTemplate;
+    ItemLookup lookup = new ItemLookup(); 
     private PlayerInventory playerInventory;
     private string MoonFlower = "Moon Flower";
     private string WolfApple = "Wolf Apple";
     private bool show;
+    private int xOffset = 150;
+    private int yOffset = 155;
+    private int numCols = 4; 
+
     // Start is called before the first frame update
     void Start()
     {
+        InvItemTemplate = InvContentPanel.transform.GetChild(0).gameObject; 
         show = false;
-        playerInventory = player.GetComponent<PlayerInventory>();
+        playerInventory = Player.GetComponent<PlayerInventory>();
+        gameController = GameObject.Find("Game State Manager").GetComponent<GameStateController>(); 
     }
 
     public void textUpdate()
     {
         string displayText = "No of Moonflower: " + playerInventory.getObjNumber(MoonFlower) + "\nNo of WolfApple: " + playerInventory.getObjNumber(WolfApple); 
         //inventoryText.SetText(displayText);
+    }
+
+    public void itemUpdate()
+    {
+        DestroyItemIcons(); 
+        if (playerInventory.ItemNames.Count > 0)
+        {
+            bool first = true;
+            int currCol = 0;
+            int currRow = 0; 
+            foreach (string item in playerInventory.ItemNames)
+            {
+                GameObject newItem; 
+                if(first)
+                {
+                    newItem = InvItemTemplate;
+                    currCol = 1; 
+                }
+                else
+                {
+                    newItem = Instantiate(InvItemTemplate, InvContentPanel.transform);
+                    newItem.transform.position = InvItemTemplate.transform.position + new Vector3(xOffset * currCol, yOffset * currRow, 0);
+                    items.Add(newItem); 
+                    currCol++; 
+                    if(currCol > numCols)
+                    {
+                        currRow++;
+                        currCol = 0; 
+                    }
+
+                }
+
+                Image icon = newItem.transform.GetChild(0).GetComponent<Image>();
+                TextMeshProUGUI name = newItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+                icon.sprite = lookup.GetSprite(item);
+                name.text = item; 
+            }
+        }
+        else
+        {
+            InvItemTemplate.SetActive(false); 
+        }
+    }
+
+    public void DestroyItemIcons()
+    {
+        foreach(GameObject item in items)
+        {
+            Destroy(item); 
+        }
+
+        items.Clear(); 
+    }
+
+    public void ShowInvList()
+    {
+        itemUpdate();
+        InventoryPanel.SetActive(true);
+        gameController.PauseGame();
+    }
+
+    public void HideInvList()
+    {
+        DestroyItemIcons();
+        InventoryPanel.SetActive(false);
+        gameController.unPauseGame(); 
     }
 
     // Update is called once per frame
@@ -37,10 +116,15 @@ public class ShowInventory : MonoBehaviour
         if (show)
         {
             //inventoryText.gameObject.SetActive(false);
-            inventoryPanel.SetActive(true);
+            InventoryPanel.SetActive(true);
+            ShowInvList();
+
         }
         else
-            inventoryPanel.SetActive(false);
+        {
+            InventoryPanel.SetActive(false);
+            HideInvList(); 
+        }
         textUpdate();
     }
 }
