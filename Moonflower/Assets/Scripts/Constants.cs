@@ -48,6 +48,30 @@ public static class Constants
     public const string DECAY_PETAL2 = flowerFolder + "Decay2";
     public const string DECAY_PETAL3 = flowerFolder + "Decay3";
 
+    //life apple names
+    const string appleFolder = "Life Apple/";
+    public const string HEALTHY_APPLE = appleFolder + "Healthy Apple";
+    public const string APPLE_ROT_1 = appleFolder + "Apple Rot 1";
+    public const string APPLE_ROT_2 = appleFolder + "Apple Rot 2";
+    public const string APPLE_ROT_3 = appleFolder + "Apple Rot 3";
+    public const string APPLE_ROT_4 = appleFolder + "Apple Rot 4";
+    public const string APPLE_ROT_5 = appleFolder + "Apple Rot 5";
+    public const string APPLE_ROT_6 = appleFolder + "Apple Rot 6";
+    public const string APPLE_ROT_7 = appleFolder + "Apple Rot 7";
+    public const string APPLE_ROT_8 = appleFolder + "Apple Rot 8";
+    public const string APPLE_ROT_9 = appleFolder + "Apple Rot 9";
+    public const string APPLE_ROT_10 = appleFolder + "Apple Rot 10";
+    public const string APPLE_ROT_11 = appleFolder + "Apple Rot 11";
+    public const string APPLE_ROT_12 = appleFolder + "Apple Rot 12";
+    public const string APPLE_ROT_13 = appleFolder + "Apple Rot 13";
+    public const string APPLE_ROT_14 = appleFolder + "Apple Rot 14";
+    public const string APPLE_ROT_15 = appleFolder + "Apple Rot 15";
+    public const string APPLE_ROT_16 = appleFolder + "Apple Rot 16";
+    public const string APPLE_ROT_17 = appleFolder + "Apple Rot 17";
+    public const string APPLE_ROT_18 = appleFolder + "Apple Rot 18";
+    public const string DEAD_APPLE = appleFolder + "Dead Apple";
+
+
     //inventory names
     public const string MOONFLOWER_PICKUP = "Moon Flower";
 

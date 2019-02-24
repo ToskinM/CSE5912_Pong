@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PlayerHealthDisplay : MonoBehaviour
 {
     public GameObject Flower;
+    public GameObject Apple; 
     public GameObject Player;
 
     public bool Dead = false;
@@ -14,15 +15,18 @@ public class PlayerHealthDisplay : MonoBehaviour
     private bool healing = false;
     private bool falling = false; 
     private enum petalState { full, down1, down2, down3, gone}
+    private enum appleState { full, rot, dead}
 
     private CharacterStats playerStat;
     private TextMeshProUGUI healthText;
+    private List<Sprite> apples; 
     private List<Image> petals;
     private Dictionary<Image, petalState> stateOfPetal; 
     private Image currPetal;
     private Image fallingPetal;
     private bool fallLeft = true;  
-    private PetalFactory factory; 
+    private PetalFactory petalFactory;
+    private AppleFactory appleFactory;
 
 
     private bool damageDelt = false;
@@ -37,7 +41,8 @@ public class PlayerHealthDisplay : MonoBehaviour
     {
         playerStat = Player.GetComponent<CharacterStats>();
         healthText = gameObject.GetComponent<TextMeshProUGUI>();
-        factory = new PetalFactory(); 
+        petalFactory = new PetalFactory();
+        appleFactory = new AppleFactory(); 
 
         petals = new List<Image>();
         stateOfPetal = new Dictionary<Image, petalState>();
@@ -51,6 +56,25 @@ public class PlayerHealthDisplay : MonoBehaviour
         currPetal = petals[0];
 
         initPosition = Flower.transform.position;
+
+        apples.Add(appleFactory.GetRot1());
+        apples.Add(appleFactory.GetRot2());
+        apples.Add(appleFactory.GetRot3());
+        apples.Add(appleFactory.GetRot4());
+        apples.Add(appleFactory.GetRot5());
+        apples.Add(appleFactory.GetRot6());
+        apples.Add(appleFactory.GetRot7()); 
+        apples.Add(appleFactory.GetRot8());
+        apples.Add(appleFactory.GetRot9());
+        apples.Add(appleFactory.GetRot10());
+        apples.Add(appleFactory.GetRot11());
+        apples.Add(appleFactory.GetRot12());
+        apples.Add(appleFactory.GetRot13());
+        apples.Add(appleFactory.GetRot14());
+        apples.Add(appleFactory.GetRot15());
+        apples.Add(appleFactory.GetRot16());
+        apples.Add(appleFactory.GetRot17());
+        apples.Add(appleFactory.GetRot18());
 
     }
 
@@ -129,13 +153,13 @@ public class PlayerHealthDisplay : MonoBehaviour
         switch(p)
         {
             case petalState.full:
-                return factory.GetHealthyPetal();
+                return petalFactory.GetHealthyPetal();
             case petalState.down1:
-                return factory.GetDecayPetal1();
+                return petalFactory.GetDecayPetal1();
             case petalState.down2:
-                return factory.GetDecayPetal2();
+                return petalFactory.GetDecayPetal2();
             case petalState.down3:
-                return factory.GetDecayPetal3();
+                return petalFactory.GetDecayPetal3();
             default:
                 return null; 
         }
@@ -147,15 +171,15 @@ public class PlayerHealthDisplay : MonoBehaviour
         switch (stateOfPetal[petal])
         {
             case petalState.full:
-                petal.sprite = factory.GetDecayPetal1();
+                petal.sprite = petalFactory.GetDecayPetal1();
                 updatePetalState(petal, petalState.down1); 
                 break;
             case petalState.down1:
-                petal.sprite = factory.GetDecayPetal2();
+                petal.sprite = petalFactory.GetDecayPetal2();
                 updatePetalState(petal, petalState.down2);
                 break;
             case petalState.down2:
-                petal.sprite = factory.GetDecayPetal3();
+                petal.sprite = petalFactory.GetDecayPetal3();
                 updatePetalState(petal, petalState.down3);
                 break;
             case petalState.down3:
