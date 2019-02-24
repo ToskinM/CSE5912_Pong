@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
+using System; 
+
 
 public class LifeAppleController : MonoBehaviour
 {
@@ -113,25 +115,36 @@ public class LifeAppleController : MonoBehaviour
         }
     }
 
-    public void HitHealth()
+    public void HitHealth(int curr, int max)
     {
         if (!Dead)
         {
-            if(currState == appleState.full)
+            float healthFrac = 1.0f * curr / max; 
+            if (healthFrac > 19f / 20f)
             {
-                appleImage.sprite = apples[currRotIndex];
+                appleImage.sprite = factory.GetHealthyApple();
+                currState = appleState.full;
+            }
+            else if(healthFrac > 1f/20f)
+            {
+                float newFrac = (healthFrac - 1f / 20f) * (20f / 18f); 
+                int index = (int)Math.Round(newFrac*apples.Count);
+                index = 18 - index;  
+                if(index < apples.Count)
+                    appleImage.sprite = apples[index];
                 currState = appleState.rotting; 
             }
-            else if(currRotIndex == apples.Count - 1)
+            else 
             {
                 appleImage.sprite = factory.GetDeadApple();
                 Dead = true;
+                currState = appleState.dead;
             }
-            else
-            {
-                currRotIndex++;
-                appleImage.sprite = apples[currRotIndex];
-            }
+            //else
+            //{
+            //    currRotIndex++;
+            //    appleImage.sprite = apples[currRotIndex];
+            //}
             damageDelt = true;
         }
 

@@ -16,6 +16,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     [HideInInspector] public bool isAttacking;
     [HideInInspector] public float attackTimeout = 0.5f;
 
+    public bool canAttack = true; 
     //public bool isBlocking;
 
     public GameObject ragdollPrefab;
@@ -67,6 +68,8 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     void Update()
     {
+        if (canAttack)
+        {
         timeSinceLastHurt += Time.deltaTime;
         timeSinceLastAttack += Time.deltaTime;
         if (timeSinceLastAttack > attackTimeout)
@@ -97,6 +100,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         }
 
         CheckDeath();
+    }
     }
 
     // Sheathe/Unsheathe weapon
@@ -176,25 +180,25 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     }
 
     public void Stagger()
-    {
+                {
         animator.TriggerHit();
-    }
+                }
 
     // Check if we should be dead
     private void CheckDeath()
-    {
+                {
         if (!IsDead && Stats.CurrentHealth <= 0)
         {
             IsDead = true;
             Die();
             //StartCoroutine(Die());
-        }
-    }
+                }
+            }
     // Kills this Character
     public void Kill()
     {
         Stats.TakeDamage(Stats.CurrentHealth, "Kill Command");
-    }
+        }
 
     // Death cleanup and Sequence
     private void Die()
@@ -204,11 +208,11 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         InCombat = false;
 
         if (ragdollPrefab != null)
-        {
+    {
             // Spawn ragdoll and have it match our pose
             GameObject ragdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
             ragdoll.GetComponent<Ragdoll>().MatchPose(gameObject.GetComponentsInChildren<Transform>());
-        }
+    }
 
         //gameObject.SetActive(false);
 

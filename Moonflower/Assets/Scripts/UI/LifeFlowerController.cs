@@ -116,12 +116,41 @@ public class LifeFlowerController : MonoBehaviour
         }
     }
 
-    public void HitHealth()
+    public void HitHealth(int current, int max)
     {
         if (!Dead)
         {
             damageDelt = true;
-            damagePetal();
+            float fracHealth = 1.0f * current / max;
+            float newFrac;
+            if(fracHealth > 4f/5f)
+            {
+                currPetal = petals[0];
+                newFrac = fracHealth - 4f/5f;
+            }
+            else if (fracHealth > 3f/5f)
+            {
+                currPetal = petals[1];
+                newFrac = fracHealth - 3f / 5f;
+            }
+            else if(fracHealth > 2f/5f)
+            {
+                currPetal = petals[2];
+                newFrac = fracHealth - 2f / 5f;
+            }
+            else if (fracHealth > 1f/5f)
+            {
+                currPetal = petals[3];
+                newFrac = fracHealth - 1f / 5f;
+            }
+            else
+            {
+                currPetal = petals[4];
+                newFrac = fracHealth; 
+            }
+
+            newFrac *= 5; 
+            damagePetal(newFrac);
         }
 
     }
@@ -157,35 +186,77 @@ public class LifeFlowerController : MonoBehaviour
         }
     }
 
-    private void damagePetal()
+    private void damagePetal(float frac)
     {
-        Image petal = currPetal; 
-        switch (stateOfPetal[petal])
+        for(int i = 0; i < petals.IndexOf(currPetal); i++)
         {
-            case petalState.full:
-                petal.sprite = petalFactory.GetDecayPetal1();
-                updatePetalState(petal, petalState.down1); 
-                break;
-            case petalState.down1:
-                petal.sprite = petalFactory.GetDecayPetal2();
-                updatePetalState(petal, petalState.down2);
-                break;
-            case petalState.down2:
-                petal.sprite = petalFactory.GetDecayPetal3();
-                updatePetalState(petal, petalState.down3);
-                break;
-            case petalState.down3:
-                cloneFallingPetal(petal); 
-                falling = true; 
-                petal.gameObject.SetActive(false); 
-                updatePetalState(petal, petalState.gone);
-                int newIndex = petals.IndexOf(petal) + 1;
-                if (newIndex < petals.Count)
-                    currPetal = petals[newIndex];
-                else
-                    Dead = true; 
-                break;
+            if(petals[i].gameObject.active)
+            {
+                petals[i].gameObject.SetActive(false); 
+            }
         }
+
+        Image petal = currPetal; 
+        if(frac < 1f/5f)
+        {
+            petal.sprite = petalFactory.GetDecayPetal3(); 
+            cloneFallingPetal(petal);
+            falling = true; 
+            petal.gameObject.SetActive(false); 
+            updatePetalState(petal, petalState.gone);
+            int newIndex = petals.IndexOf(petal) + 1;
+            if (newIndex < petals.Count)
+                currPetal = petals[newIndex];
+            else
+                Dead = true; 
+        }
+        else if(frac < 2f/5f)
+        {
+            petal.sprite = petalFactory.GetDecayPetal3();
+            updatePetalState(petal, petalState.down3);
+        }
+        else if(frac < 3f/5f)
+        {
+            petal.sprite = petalFactory.GetDecayPetal2();
+            updatePetalState(petal, petalState.down2);
+        }
+        else if(frac < 4f/5f)
+        {
+            petal.sprite = petalFactory.GetDecayPetal1();
+            updatePetalState(petal, petalState.down1); 
+        }
+        else 
+        {
+            petal.sprite = petalFactory.GetHealthyPetal();
+            updatePetalState(petal, petalState.full);
+        }
+
+        //switch (stateOfPetal[petal])
+        //{
+        //    case petalState.full:
+        //        petal.sprite = petalFactory.GetDecayPetal1();
+        //        updatePetalState(petal, petalState.down1); 
+        //        break;
+        //    case petalState.down1:
+        //        petal.sprite = petalFactory.GetDecayPetal2();
+        //        updatePetalState(petal, petalState.down2);
+        //        break;
+        //    case petalState.down2:
+        //        petal.sprite = petalFactory.GetDecayPetal3();
+        //        updatePetalState(petal, petalState.down3);
+        //        break;
+        //    case petalState.down3:
+        //        cloneFallingPetal(petal); 
+        //        falling = true; 
+        //        petal.gameObject.SetActive(false); 
+        //        updatePetalState(petal, petalState.gone);
+        //        int newIndex = petals.IndexOf(petal) + 1;
+        //        if (newIndex < petals.Count)
+        //            currPetal = petals[newIndex];
+        //        else
+        //            Dead = true; 
+        //        break;
+        //}
     }
 
     private void cloneFallingPetal(Image petal)

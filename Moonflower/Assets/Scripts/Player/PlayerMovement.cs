@@ -89,7 +89,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
             {
                 Action = Actions.Walking;
                 moveSpeed = walkSpeed;
-                //GetComponent<PlayerSoundEffect>().PlayWalkingSFX();
+                //GetComponent<PlayerSoundEffect>().AnaiWalkingSFX();
             }
         }
     }

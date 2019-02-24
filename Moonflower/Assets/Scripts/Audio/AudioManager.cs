@@ -9,10 +9,13 @@ public class AudioManager : MonoBehaviour
     //private AudioList AllSound ;
     public Sound[] sounds;
     public Sound[] backgrounds;
+
     public float soundVol;
     public float backgroundVol;
+
     public static AudioManager instance;
     private AudioAvalibleArea avalibleArea;
+    private AudioSourceManager audioSources;
 
     // Start is called before the first frame update
     void Awake()
@@ -28,13 +31,17 @@ public class AudioManager : MonoBehaviour
         //Assign vol
         soundVol = 1;
         backgroundVol = 1;
+        //Get AudioSource
+        audioSources = GetComponent<AudioSourceManager>();
         //Assign music clip to audio source
         AssignToAudioSource(sounds, soundVol);
         AssignToAudioSource(backgrounds,backgroundVol);
         //Play Background wind Sound
-        FindObjectOfType<AudioManager>().PlayBackground("background");
+        PlayBackground("background");
         //Set hearable area
         avalibleArea = GetComponent<AudioAvalibleArea>();
+
+
     }
 
     private void AssignToAudioSource(Sound[] category, float vol)
@@ -42,14 +49,24 @@ public class AudioManager : MonoBehaviour
         foreach (Sound s in category)
         {
             if (s.source == null)
-                s.source = gameObject.AddComponent<AudioSource>();
+            {
+                if (s.name.Contains("Anai"))
+                    s.source = audioSources.GetAnaiAudioSource();
+                else if (s.name.Contains("Mimbi"))
+                    s.source = audioSources.GetMimbiAudioSource();
+                //else if (s.name.Contains("Player"))
+                    //s.source = audioSources.GetCurrentPlayerAudioSource();
+                else
+                    s.source = gameObject.AddComponent<AudioSource>();
+            }
+                
             s.source.clip = s.clip;
-
             s.source.volume = vol;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
     }
+
 
 
     public void Play (string name)
@@ -71,7 +88,6 @@ public class AudioManager : MonoBehaviour
         if (s != null)
         {
             s.source.Play();
-            //Debug.Log("i am playing");
         }
         else if (s.source = null)
         { Debug.Log("why no audio source!?"); }
@@ -99,6 +115,7 @@ public class AudioManager : MonoBehaviour
         s.source.volume = vol;
     }
 
+    //Change Volume
     public void ChangeSoundVol(float vol)
     {
         soundVol = vol;
@@ -115,7 +132,7 @@ public class AudioManager : MonoBehaviour
             avalibleArea.HearableArea(s.source, vol);
         }
     }
-
+    //Get Volume
     public float GetBackgroundVolume()
     {
         return backgroundVol;
@@ -124,9 +141,12 @@ public class AudioManager : MonoBehaviour
     {
         return soundVol;
     }
+
     void Update()
     {
         UpdateVol(backgrounds,backgroundVol);
         UpdateVol(sounds, soundVol);
     }
+
+
 }

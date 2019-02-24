@@ -39,7 +39,9 @@ public class DialogueTrigger : MonoBehaviour
     string punctuation = ".!?"; 
 
     DialogueGraph graph;
-    DialogueFactory factory; 
+    DialogueFactory factory;
+    bool noExit = true; 
+
 
     public DialogueTrigger(GameObject p, string characterSprite, string graphName)
     {
@@ -58,12 +60,7 @@ public class DialogueTrigger : MonoBehaviour
         spriteFile = characterSprite;
         upPos = panel.transform.position;
         downPos = new Vector3(upPos.x, upPos.y - icon.rectTransform.rect.height);
-        panel.transform.position = downPos; 
-    }
-
-    private void ButtonClicked(int n)
-    {
-        Debug.Log("Button clicked = " + n);
+        panel.transform.position = downPos;
     }
 
     public void Update()
@@ -109,16 +106,16 @@ public class DialogueTrigger : MonoBehaviour
                     {
                         switch (tState)
                         {
-                            case TextState.ending:
-                                if(!text.text.Equals(exitText))
-                                {
-                                    text.text = graph.current.text;
-                                }
-                                else
-                                {
-                                    pState = PanelState.down;
-                                }
-                                break; 
+                            //case TextState.ending:
+                                //if(!text.text.Equals(exitText))
+                                //{
+                                //    text.text = graph.current.text;
+                                //}
+                                //else
+                                //{
+                                //    pState = PanelState.down;
+                                //}
+                                //break; 
                             case TextState.typing:
                             case TextState.paused:
                                 text.text = graph.current.text;
@@ -176,7 +173,7 @@ public class DialogueTrigger : MonoBehaviour
     private void endConvo()
     {
         Debug.Log("I got clicked!"); 
-        tState = TextState.ending;
+        //tState = TextState.ending;
         typeIndex = 0; 
     }
 
@@ -276,6 +273,7 @@ public class DialogueTrigger : MonoBehaviour
             complete = true; 
         }
         destroyButtons();
+        resetCounts(); 
     }
 
     private void displayOptions()
@@ -334,6 +332,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void forceOptions()
     {
+        resetCounts(); 
         destroyButtons(); 
         int numOptions = graph.current.answers.Count;
         if (numOptions > 0)

@@ -10,7 +10,7 @@ public class PlayerHealthDisplay : MonoBehaviour
     public GameObject Apple; 
     public GameObject Anai; 
 
-    public bool Dead = false;
+    public bool Dead { get { return appleControl.Dead || flowerControl.Dead; } }
 
     private bool playerIsAnai = true; 
 
@@ -41,12 +41,12 @@ public class PlayerHealthDisplay : MonoBehaviour
             appleControl.UpdateApple(); 
     }
 
-    public void HitHealth()
+    public void HitHealth(int current, int max)
     {
         if (playerIsAnai)
-            flowerControl.HitHealth();
+            flowerControl.HitHealth(current,max);
         else
-            appleControl.HitHealth(); 
+            appleControl.HitHealth(current,max); 
 
     }
 
