@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class ShowInventory : MonoBehaviour
 {
-    //public TextMeshProUGUI inventoryText;
+    public TextMeshProUGUI inventoryText;
     public GameObject InventoryPanel;
     public GameObject InvContentPanel; 
     public GameObject Player;
 
     List<GameObject> items = new List<GameObject>();
-    GameStateController gameController;
+    public GameStateController gameController;
     GameObject InvItemTemplate;
     ItemLookup lookup = new ItemLookup(); 
     private PlayerInventory playerInventory;
@@ -24,7 +24,7 @@ public class ShowInventory : MonoBehaviour
     private int numCols = 4; 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         InvItemTemplate = InvContentPanel.transform.GetChild(0).gameObject; 
         show = false;
@@ -32,13 +32,13 @@ public class ShowInventory : MonoBehaviour
         gameController = GameObject.Find("Game State Manager").GetComponent<GameStateController>(); 
     }
 
-    public void textUpdate()
+    public void TextUpdate()
     {
         string displayText = "No of Moonflower: " + playerInventory.GetObjNumber(MoonFlower) + "\nNo of WolfApple: " + playerInventory.GetObjNumber(WolfApple); 
-        //inventoryText.SetText(displayText);
+        inventoryText.SetText(displayText);
     }
 
-    public void itemUpdate()
+    public void ItemUpdate()
     {
         DestroyItemIcons(); 
         if (playerInventory.ItemNames.Count > 0)
@@ -92,16 +92,18 @@ public class ShowInventory : MonoBehaviour
 
     public void ShowInvList()
     {
-        itemUpdate();
+        ItemUpdate();
         InventoryPanel.SetActive(true);
         gameController.PauseGame();
+        inventoryText.gameObject.SetActive(true);
     }
 
     public void HideInvList()
     {
         DestroyItemIcons();
         InventoryPanel.SetActive(false);
-        gameController.unPauseGame(); 
+        gameController.unPauseGame();
+        inventoryText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -115,16 +117,12 @@ public class ShowInventory : MonoBehaviour
         }
         if (show)
         {
-            //inventoryText.gameObject.SetActive(false);
-            InventoryPanel.SetActive(true);
             ShowInvList();
-
         }
         else
         {
-            InventoryPanel.SetActive(false);
             HideInvList(); 
         }
-        textUpdate();
+        TextUpdate();
     }
 }
