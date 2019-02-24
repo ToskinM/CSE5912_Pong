@@ -10,6 +10,7 @@ public class ShowInventory : MonoBehaviour
     public GameObject InventoryPanel;
     public GameObject InvContentPanel; 
     public GameObject Player;
+    public Button InvoButton; 
 
     List<GameObject> items = new List<GameObject>();
     public GameStateController gameController;
@@ -21,15 +22,52 @@ public class ShowInventory : MonoBehaviour
     private bool show;
     private int xOffset = 150;
     private int yOffset = 155;
-    private int numCols = 4; 
+    private int numCols = 4;
+
 
     // Start is called before the first frame update
     void Awake()
     {
+        InvoButton.GetComponent<Image>().sprite = Resources.Load<Sprite>(Constants.WOLFAPPLE_ICON);
         InvItemTemplate = InvContentPanel.transform.GetChild(0).gameObject; 
         show = false;
         playerInventory = Player.GetComponent<PlayerInventory>();
-        gameController = GameObject.Find("Game State Manager").GetComponent<GameStateController>(); 
+        gameController = GameObject.Find("Game State Manager").GetComponent<GameStateController>();
+        InvoButton.onClick.AddListener(showInv);
+   }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //if (Input.GetKeyDown(KeyCode.I))
+        //{
+        //    showInv();
+        //    //show = !show;
+        //    //inventoryText.gameObject.SetActive(true);
+
+        //}
+        ////if (show)
+        ////{
+        ////    ShowInvList();
+        ////}
+        ////else
+        ////{
+        ////    HideInvList();
+        ////}
+        ////TextUpdate();
+    }
+
+    private void showInv()
+    {
+        show = !show; 
+        if(show)
+        {
+            ShowInvList();
+        }
+        else
+        {
+            HideInvList(); 
+        }
     }
 
     public void TextUpdate()
@@ -69,9 +107,14 @@ public class ShowInventory : MonoBehaviour
                 }
 
                 Image icon = newItem.transform.GetChild(0).GetComponent<Image>();
-                TextMeshProUGUI name = newItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI itemName = newItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI itemNum = newItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+
                 icon.sprite = lookup.GetSprite(item);
-                name.text = item; 
+                itemName.text = item;
+                int numItem = playerInventory.ItemAmountMap[item];
+                if(numItem > 1)
+                    itemNum.text = "" + numItem; 
             }
         }
         else
@@ -106,23 +149,5 @@ public class ShowInventory : MonoBehaviour
         //inventoryText.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            show = !show;
-            //inventoryText.gameObject.SetActive(true);
 
-        }
-        if (show)
-        {
-            ShowInvList();
-        }
-        else
-        {
-            HideInvList(); 
-        }
-        TextUpdate();
-    }
 }

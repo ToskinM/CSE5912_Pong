@@ -27,6 +27,24 @@ public class ItemLookup
 
     public Sprite GetSprite(string name)
     {
+        //if (name.Equals(MOONFLOWER_NAME))
+        //    return Resources.Load<Sprite>(Constants.MOONFLOWER_ICON);
+        //else if (name.Equals(WOLFAPPLE_NAME))
+        //    return Resources.Load<Sprite>(Constants.WOLFAPPLE_ICON);
+        //else if (name.Equals(HONEY_NAME))
+        //    return Resources.Load<Sprite>(Constants.HONEY_ICON);
+        //else if (name.Equals(ROPE_NAME))
+        //    return Resources.Load<Sprite>(Constants.ROPE_ICON);
+        //else if (name.Equals(JAR_NAME))
+        //    return Resources.Load<Sprite>(Constants.JAR_ICON);
+        //else if (name.Equals(CHIPA_NAME))
+        //    return Resources.Load<Sprite>(Constants.CHIPA_ICON);
+        //else if (name.Equals(FLUTE_NAME))
+        //    return Resources.Load<Sprite>(Constants.FLUTE_ICON);
+        //else
+            //return null; 
+
+
         switch (name)
         {
             case MOONFLOWER_NAME:
