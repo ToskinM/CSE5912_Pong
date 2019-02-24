@@ -7,7 +7,7 @@ public class PlayerInventory : MonoBehaviour
     public List<GameObject> InventoryObjs = new List<GameObject>();
     public List<string> ItemNames = new List<string>();
     public Dictionary<string, GameObject> ItemObjMap = new Dictionary<string, GameObject>();
-    public Dictionary<string, int> ItemAmountMap = new Dictionary<string, int>(); 
+    public Dictionary<string, int> ItemAmountMap = new Dictionary<string, int>();
 
     //public GameObject pickupArea;
 

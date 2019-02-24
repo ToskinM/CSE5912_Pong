@@ -12,7 +12,6 @@ public class AudioAvalibleArea : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hearableRadius = 10;
     }
     private void CheckCurrentPlayer()
     {

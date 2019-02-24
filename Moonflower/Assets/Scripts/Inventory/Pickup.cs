@@ -17,7 +17,8 @@ public class Pickup : MonoBehaviour
     private CharacterStats playerStat;
     //private InventoryManager inventoryManager;
     private PlayerInventory playerInventory;
-    private AudioManager audioManager;
+    //private AudioManager audioManager;
+    private PlayerSoundEffect soundEffect;
 
     public TextMeshProUGUI inventoryAdd;
 
@@ -26,21 +27,22 @@ public class Pickup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(GetAudioManager());
+        //StartCoroutine(GetAudioManager());
         //inventoryManager = FindObjectOfType<InventoryManager>();
         playerStat = PlayerAnai.GetComponent<CharacterStats>();
         playerInventory = PlayerAnai.GetComponent<PlayerInventory>();
+        soundEffect = PlayerAnai.GetComponent<PlayerSoundEffect>();
         CurrentPlayer = PlayerAnai;
     }
 
-    private IEnumerator GetAudioManager()
-    {
-        while (audioManager == null)
-        {
-            audioManager = FindObjectOfType<AudioManager>();
-            yield return null;
-        }
-    }
+    //private IEnumerator GetAudioManager()
+    //{
+    //    while (audioManager == null)
+    //    {
+    //        audioManager = FindObjectOfType<AudioManager>();
+    //        yield return null;
+    //    }
+    //}
 
     private GameObject FindClosest()
     {
@@ -91,17 +93,18 @@ public class Pickup : MonoBehaviour
             //obj.gameObject.SetActive(false);
             Destroy(obj.gameObject);
             //Play Pickup audio clip
-            PlayPickup();
+            //PlayPickup();
+            soundEffect.PlayerPickupSFX();
         }
     }
     void DelayMethod()
     {
         inventoryAdd.gameObject.SetActive(false);
     }
-    private void PlayPickup()
-    {
-        audioManager.Play("pickup01");
-    }
+    //private void PlayPickup()
+    //{
+    //    audioManager.Play("pickup01");
+    //}
 
     public void TextUpdate(string s)
     {
