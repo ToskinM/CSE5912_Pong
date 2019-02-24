@@ -46,8 +46,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
     void Start()
     {
         Physics.gravity = new Vector3(0, -88.3f, 0);
-        walkSpeed = 4f;
-        runSpeed = 9f;
+        walkSpeed = 6f;
+        runSpeed = 11f;
         sneakSpeed = 4f;
         moveSpeed = walkSpeed;
         blockCooldown = blockCooldownTime;
