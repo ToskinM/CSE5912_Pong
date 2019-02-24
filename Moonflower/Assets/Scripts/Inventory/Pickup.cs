@@ -119,9 +119,10 @@ public class Pickup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckCurrentPlayer();
-        GameObject closest = FindClosest();
 
+        CheckCurrentPlayer();
+
+        GameObject closest = FindClosest();
         if (Vector3.Distance(FindClosest().transform.position, CurrentPlayer.transform.position) <= distanceToPickup)
         {
             if (closest != null)
