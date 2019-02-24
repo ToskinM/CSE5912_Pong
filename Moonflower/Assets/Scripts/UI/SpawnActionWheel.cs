@@ -31,6 +31,7 @@ public class SpawnActionWheel : MonoBehaviour
         else if (Input.GetButtonUp("Interact"))
         {
             Destroy(activeWheel);
+            gameStateController.unPauseGame();
         }
     }
 }
