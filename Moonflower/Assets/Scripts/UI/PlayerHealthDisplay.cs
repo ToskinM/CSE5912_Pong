@@ -50,7 +50,7 @@ public class PlayerHealthDisplay : MonoBehaviour
 
     }
 
-    public void HealPetal()
+    public void Heal()
     {
         if (playerIsAnai)
             flowerControl.HealPetal();

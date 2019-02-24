@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ShowInventory : MonoBehaviour
 {
-    public TextMeshProUGUI inventoryText;
+    //public TextMeshProUGUI inventoryText;
     public GameObject InventoryPanel;
     public GameObject InvContentPanel; 
     public GameObject Player;
@@ -35,7 +35,7 @@ public class ShowInventory : MonoBehaviour
     public void TextUpdate()
     {
         string displayText = "No of Moonflower: " + playerInventory.GetObjNumber(MoonFlower) + "\nNo of WolfApple: " + playerInventory.GetObjNumber(WolfApple); 
-        inventoryText.SetText(displayText);
+        //inventoryText.SetText(displayText);
     }
 
     public void ItemUpdate()
@@ -95,7 +95,7 @@ public class ShowInventory : MonoBehaviour
         ItemUpdate();
         InventoryPanel.SetActive(true);
         gameController.PauseGame();
-        inventoryText.gameObject.SetActive(true);
+        //inventoryText.gameObject.SetActive(true);
     }
 
     public void HideInvList()
@@ -103,7 +103,7 @@ public class ShowInventory : MonoBehaviour
         DestroyItemIcons();
         InventoryPanel.SetActive(false);
         gameController.unPauseGame();
-        inventoryText.gameObject.SetActive(false);
+        //inventoryText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

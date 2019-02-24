@@ -38,12 +38,12 @@ public class PlayerInventory : MonoBehaviour
 
         if(objName.Equals(ItemLookup.MOONFLOWER_NAME))
         {
-            display.HealPetal();
+            display.Heal();
         }
 
         if (objName.Equals(ItemLookup.WOLFAPPLE_NAME))
         {
-            display.HealPetal(); 
+            display.Heal(); 
         }
     }
 
