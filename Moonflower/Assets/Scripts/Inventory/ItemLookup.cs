@@ -13,6 +13,14 @@ public class ItemLookup
     public const string PUMPKIN_NAME = "Pumpkin";
     public const string CHIPA_NAME = "Chipa";
     public const string FLUTE_NAME = "Flute";
+    public const string PINEAPPLE_NAME = "Pineapple";
+    public const string SWEETPOTATO_NAME = "Sweet Potato";
+    public const string PEANUT_NAME = "Peanut";
+    public const string FISH_NAME = "Fish";
+    public const string PAINT_NAME = "Paint";
+    public const string STAFF_NAME = "Staff";
+    public const string CORN_NAME = "Corn";
+
 
     public GameObject GetObject(string name)
     {
@@ -70,6 +78,20 @@ public class ItemLookup
                 return "chipa";
             case FLUTE_NAME:
                 return "mimby puku";
+            case PINEAPPLE_NAME:
+                return "anana";
+            case SWEETPOTATO_NAME:
+                return "jety";
+            case PEANUT_NAME:
+                return "manduvi";
+            case FISH_NAME:
+                return "pira";
+            case PAINT_NAME:
+                return "mbosay";
+            case STAFF_NAME:
+                return "pokoka";
+            case CORN_NAME:
+                return "avati"; 
             default:
                 return "";
         }

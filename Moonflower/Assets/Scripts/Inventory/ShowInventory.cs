@@ -10,54 +10,111 @@ public class ShowInventory : MonoBehaviour
     public GameObject InventoryPanel;
     public GameObject InvContentPanel; 
     public GameObject Player;
+    public Button InvoButton; 
 
     List<GameObject> items = new List<GameObject>();
+    List<string> names = new List<string>(); 
     public GameStateController gameController;
     GameObject InvItemTemplate;
     ItemLookup lookup = new ItemLookup(); 
     private PlayerInventory playerInventory;
-    private string MoonFlower = "Moon Flower";
-    private string WolfApple = "Wolf Apple";
     private bool show;
-    private int xOffset = 150;
-    private int yOffset = 155;
-    private int numCols = 4; 
+    private float xOffset;
+    private float yOffset;
+    private int numCols = 4;
+    private bool inEnglish = false; 
+    private bool toggleEnabled = false;
+    private int toggleMax = 30;
+    private int toggleCount = 0; 
+
 
     // Start is called before the first frame update
     void Awake()
     {
+        xOffset = Screen.width / 5;
+        yOffset = Screen.height / 2.5f;
         InvItemTemplate = InvContentPanel.transform.GetChild(0).gameObject; 
         show = false;
         playerInventory = Player.GetComponent<PlayerInventory>();
-        gameController = GameObject.Find("Game State Manager").GetComponent<GameStateController>(); 
-    }
+        gameController = GameObject.Find("Game State Manager").GetComponent<GameStateController>();
+        InvoButton.onClick.AddListener(showInv);
+   }
 
-    public void TextUpdate()
+    // Update is called once per frame
+    void Update()
     {
-        string displayText = "No of Moonflower: " + playerInventory.GetObjNumber(MoonFlower) + "\nNo of WolfApple: " + playerInventory.GetObjNumber(WolfApple); 
-        //inventoryText.SetText(displayText);
-    }
-
-    public void ItemUpdate()
-    {
-        DestroyItemIcons(); 
-        if (playerInventory.ItemNames.Count > 0)
+        if(Input.GetMouseButton(0) && toggleEnabled)
         {
-            bool first = true;
-            int currCol = 0;
-            int currRow = 0; 
-            foreach (string item in playerInventory.ItemNames)
+            toggleEnabled = false; 
+            inEnglish = !inEnglish; 
+            foreach(GameObject item in items)
             {
-                GameObject newItem; 
-                if(first)
+                string itemName = names[items.IndexOf(item)];
+                if (inEnglish)
                 {
-                    newItem = InvItemTemplate;
-                    currCol = 1; 
+                    item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemName;
                 }
                 else
                 {
+                    item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = lookup.GetGuaraniName(itemName);
+                }
+
+            }
+        }
+        else
+        {
+            toggleCount++; 
+            if(toggleCount > toggleMax)
+            {
+                toggleCount = 0;
+                toggleEnabled = true; 
+            }
+        }
+    }
+
+    private void showInv()
+    {
+        show = !show; 
+        if(show)
+        {
+            ShowInvList();
+        }
+        else
+        {
+            HideInvList(); 
+        }
+    }
+
+    //public void TextUpdate()
+    //{
+    //    string displayText = "No of Moonflower: " + playerInventory.GetObjNumber(MoonFlower) + "\nNo of WolfApple: " + playerInventory.GetObjNumber(WolfApple); 
+    //    //inventoryText.SetText(displayText);
+    //}
+
+    public void ItemUpdate()
+    {
+        InvItemTemplate.SetActive(true);
+        DestroyItemIcons(); 
+
+        if (playerInventory.ItemNames.Count > 0)
+        {
+            //bool first = true;
+            int currCol = 0;
+            int currRow = 0;
+            float heightDim = 10; 
+            foreach (string item in playerInventory.ItemNames)
+            {
+                GameObject newItem;
+                //if(first)
+                //{
+                //    newItem = InvItemTemplate;
+                //    currCol = 1;
+                //    first = false; 
+                //}
+                //else
+                {
                     newItem = Instantiate(InvItemTemplate, InvContentPanel.transform);
-                    newItem.transform.position = InvItemTemplate.transform.position + new Vector3(xOffset * currCol, yOffset * currRow, 0);
+                    newItem.transform.position = InvItemTemplate.transform.position + new Vector3(xOffset * currCol, -yOffset * currRow, 0);
                     items.Add(newItem); 
                     currCol++; 
                     if(currCol > numCols)
@@ -67,27 +124,49 @@ public class ShowInventory : MonoBehaviour
                     }
 
                 }
+                names.Add(item);
 
                 Image icon = newItem.transform.GetChild(0).GetComponent<Image>();
-                TextMeshProUGUI name = newItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI itemName = newItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI itemNum = newItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+
+                heightDim = icon.gameObject.GetComponent<RectTransform>().rect.height * 2.3f;
+
                 icon.sprite = lookup.GetSprite(item);
-                name.text = item; 
+                if (inEnglish)
+                    itemName.text = item;
+                else
+                    itemName.text = lookup.GetGuaraniName(item); 
+
+                int numItem = playerInventory.ItemAmountMap[item];
+                if(numItem > 1)
+                    itemNum.text = "" + numItem; 
             }
+
+            RectTransform rect = InvContentPanel.GetComponent<RectTransform>();
+            rect.sizeDelta = new Vector2(rect.sizeDelta.x, currRow * heightDim); 
         }
         else
         {
-            InvItemTemplate.SetActive(false); 
+
+            //RectTransform rect = InvContentPanel.GetComponent<RectTransform>();
+            //rect.sizeDelta = new Vector2(rect.rect.width, yOffset);
+
         }
+        InvItemTemplate.SetActive(false);
+
     }
 
     public void DestroyItemIcons()
     {
-        foreach(GameObject item in items)
+        while(items.Count > 0)
         {
-            Destroy(item); 
+            Destroy(items[0]);
+            items.RemoveAt(0); 
         }
 
-        items.Clear(); 
+        items.Clear();
+        names.Clear();  
     }
 
     public void ShowInvList()
@@ -106,23 +185,5 @@ public class ShowInventory : MonoBehaviour
         //inventoryText.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            show = !show;
-            //inventoryText.gameObject.SetActive(true);
 
-        }
-        if (show)
-        {
-            ShowInvList();
-        }
-        else
-        {
-            HideInvList(); 
-        }
-        TextUpdate();
-    }
 }

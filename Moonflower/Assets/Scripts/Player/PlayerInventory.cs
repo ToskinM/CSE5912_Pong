@@ -22,14 +22,14 @@ public class PlayerInventory : MonoBehaviour
     public void AddObj(GameObject obj)
     {
         string objName = obj.GetComponent<InventoryStat>().Name;
-        if (ItemNames.Contains(name))
+        if (ItemNames.Contains(objName))
         {
             int num = ItemAmountMap[objName] + 1;
             ItemAmountMap.Remove(objName);
             ItemAmountMap.Add(objName, num);
         }
         else
-        {
+        { 
             InventoryObjs.Add(obj);
             ItemNames.Add(objName);
             ItemObjMap.Add(objName, obj);
