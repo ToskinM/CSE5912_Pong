@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     public float soundVol;
     public float backgroundVol;
     public static AudioManager instance;
+    private AudioAvalibleArea avalibleArea;
 
     // Start is called before the first frame update
     void Awake()
@@ -32,6 +33,8 @@ public class AudioManager : MonoBehaviour
         AssignToAudioSource(backgrounds,backgroundVol);
         //Play Background wind Sound
         FindObjectOfType<AudioManager>().PlayBackground("background");
+        //Set hearable area
+        avalibleArea = GetComponent<AudioAvalibleArea>();
     }
 
     private void AssignToAudioSource(Sound[] category, float vol)
@@ -109,6 +112,7 @@ public class AudioManager : MonoBehaviour
         foreach (Sound s in category)
         {
             s.source.volume = vol;
+            avalibleArea.HearableArea(s.source, vol);
         }
     }
 
