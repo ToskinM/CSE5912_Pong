@@ -27,7 +27,7 @@ public class LesserNPCController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         combatController = GetComponent<NPCCombatController>();
         playerController = Player.GetComponent<IPlayerController>();
-        movement = new NPCMovement(gameObject, Player, 1);
+        movement = new NPCMovement(gameObject, Player);
         movement.SetEngagementDistances(5, combatController.attackDistance, 1);
     }
 

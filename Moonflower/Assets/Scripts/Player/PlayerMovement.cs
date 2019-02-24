@@ -110,7 +110,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
             //Action = Actions.Chilling;
             Jumping = true;
             onGround = false;
-            body.AddForce(new Vector3(0f, 25, 0f), ForceMode.Impulse);
+            body.AddForce(new Vector3(0f, 125f, 0f), ForceMode.Impulse);
 
         }
         else if (onGround)

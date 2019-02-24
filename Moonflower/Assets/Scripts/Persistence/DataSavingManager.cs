@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DataSavingManager : MonoBehaviour
 {
     public static DataSavingManager current;
 
-    AnaiData anaiData = null;
-    MimbiData mimbiData = null;
-    CameraData cameraData = null;
-    NPCData npcData = null;
+    public AnaiData anaiData = null;
+    public MimbiData mimbiData = null;
+    public CameraData cameraData = null;
+    public NPCData npcData = null;
 
-    private GameObject anai;
-    private GameObject mimbi;
+    public GameObject anai;
+    public GameObject mimbi;
 
     private string anaiDataFilePath;
 
@@ -46,17 +47,16 @@ public class DataSavingManager : MonoBehaviour
         SavePlayerInfo(binaryFormatter);
         cameraData = new CameraData(SceneTracker.current.camera);
         npcData = new NPCData();
-
-
     }
     public void LoadGame()
     {
         BinaryFormatter binaryFormatter = new BinaryFormatter();
 
-        LoadPlayerInfo(binaryFormatter);
-        cameraData?.Load();
-        npcData?.Load();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
+        //LoadPlayerInfo();
+        //cameraData?.Load();
+        //npcData?.Load();
     }
 
     private void SavePlayerInfo(BinaryFormatter binaryFormatter)
@@ -73,7 +73,7 @@ public class DataSavingManager : MonoBehaviour
         mimbiData = new MimbiData(mimbi);
     }
 
-    private void LoadPlayerInfo(BinaryFormatter binaryFormatter)
+    public void LoadPlayerInfo()
     {
         //if (File.Exists(anaiDataFilePath))
         //{
@@ -84,8 +84,8 @@ public class DataSavingManager : MonoBehaviour
         //    anai.transform.SetPositionAndRotation(anaiData.transform.position, anaiData.transform.rotation);
         //}
 
-        anaiData?.Load(anai);
-        mimbiData?.Load(mimbi);
+        anaiData?.Load(SceneTracker.current.anai);
+        mimbiData?.Load(SceneTracker.current.mimbi);
 
     }
 

@@ -13013,18 +13013,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1468746725, guid: 0717d70c0de52434486d20a500d4f6c4, type: 3}
-      propertyPath: viewMeshFilter
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1468746726, guid: 0717d70c0de52434486d20a500d4f6c4, type: 3}
       propertyPath: Player
       value: 
       objectReference: {fileID: 1769887628}
-    - target: {fileID: 1468746728, guid: 0717d70c0de52434486d20a500d4f6c4, type: 3}
-      propertyPath: aggression
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 1468746733, guid: 0717d70c0de52434486d20a500d4f6c4, type: 3}
       propertyPath: HUD
       value: 
@@ -22199,6 +22191,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1be4eb81c6e17499b7ff3f442b0b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anaiData:
+    anaiController: {fileID: 0}
+    playing: 0
+    movement: {fileID: 0}
+    playerMovement: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    action: 0
+    jumping: 0
+    jumpTimer: 0
+    combatController: {fileID: 0}
+    isBlocking: 0
+    hasWeaponOut: 0
+    inCombat: 0
+  mimbiData:
+    mimbiController: {fileID: 0}
+    playing: 0
+    movement: {fileID: 0}
+    playerMovement: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    action: 0
+    jumping: 0
+    jumpTimer: 0
+    combatController: {fileID: 0}
+    isBlocking: 0
+    hasWeaponOut: 0
+    inCombat: 0
+  cameraData:
+    xRotation: 0
+    yRotation: 0
+  npcData: {fileID: 0}
+  anai: {fileID: 0}
+  mimbi: {fileID: 0}
 --- !u!4 &733420502
 Transform:
   m_ObjectHideFlags: 0
@@ -46923,10 +46949,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1468746725, guid: 0717d70c0de52434486d20a500d4f6c4, type: 3}
-      propertyPath: viewMeshFilter
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1468746726, guid: 0717d70c0de52434486d20a500d4f6c4, type: 3}
       propertyPath: Player
       value: 
@@ -50078,6 +50100,7 @@ MonoBehaviour:
   anai: {fileID: 0}
   mimbi: {fileID: 0}
   npcs: []
+  deadNPCs: 
 --- !u!4 &1630125740
 Transform:
   m_ObjectHideFlags: 0
@@ -53978,6 +54001,10 @@ PrefabInstance:
       propertyPath: weapon
       value: 
       objectReference: {fileID: 1875797704}
+    - target: {fileID: 1769887636, guid: 71ea9cd348b57ee4b91d4ecea6aa60e6, type: 3}
+      propertyPath: m_Mass
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71ea9cd348b57ee4b91d4ecea6aa60e6, type: 3}
 --- !u!1 &1769887628 stripped
