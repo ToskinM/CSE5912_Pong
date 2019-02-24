@@ -118,7 +118,8 @@ public class LifeAppleController : MonoBehaviour
         {
             if(currState == appleState.full)
             {
-                appleImage.sprite = apples[currRotIndex]; 
+                appleImage.sprite = apples[currRotIndex];
+                currState = appleState.rotting; 
             }
             else if(currRotIndex == apples.Count - 1)
             {
@@ -127,7 +128,7 @@ public class LifeAppleController : MonoBehaviour
             }
             else
             {
-                currRotIndex--;
+                currRotIndex++;
                 appleImage.sprite = apples[currRotIndex];
             }
             damageDelt = true;
