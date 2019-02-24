@@ -319,9 +319,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5727384482546202516}
+  - component: {fileID: 1118158987527131022}
+  - component: {fileID: 4507086210522838967}
   m_Layer: 0
   m_Name: corn
-  m_TagString: Untagged
+  m_TagString: Collectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -341,6 +343,41 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1118158987527131022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7384405221219703336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea97fbef6a01438fad60a6aa9eacb76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: 
+  Strength: 0
+  Attack: 0
+  Defense: 0
+  Health: 0
+  AnaiObject: 0
+  MimbiObject: 0
+  objectImage: {fileID: 0}
+  DayNight: 2
+  inventoryCat: 0
+  halo: {fileID: 4507086210522838967}
+--- !u!122 &4507086210522838967
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7384405221219703336}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 8355731
+  m_Size: 1
 --- !u!1 &9179926694734100170
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     public List<GameObject> InventoryObjs = new List<GameObject>();
+    public List<string> ItemNames = new List<string>();
+    public Dictionary<string, GameObject> ItemObjMap = new Dictionary<string, GameObject>();
+    public Dictionary<string, int> ItemAmountMap = new Dictionary<string, int>(); 
+
     public GameObject pickupArea;
 
     private PlayerHealthDisplay display; 
@@ -17,9 +21,22 @@ public class PlayerInventory : MonoBehaviour
 
     public void AddObj(GameObject obj)
     {
-        InventoryObjs.Add(obj);
+        string objName = obj.GetComponent<InventoryStat>().Name;
+        if (ItemNames.Contains(name))
+        {
+            int num = ItemAmountMap[objName] + 1;
+            ItemAmountMap.Remove(objName);
+            ItemAmountMap.Add(objName, num);
+        }
+        else
+        {
+            InventoryObjs.Add(obj);
+            ItemNames.Add(objName);
+            ItemObjMap.Add(objName, obj);
+            ItemAmountMap.Add(objName, 1);
+        }
 
-        if(obj.GetComponent<InventoryStat>().Name.Equals(Constants.MOONFLOWER_PICKUP))
+        if(objName.Equals(ItemLookup.MOONFLOWER_NAME))
         {
             display.HealPetal();
         }

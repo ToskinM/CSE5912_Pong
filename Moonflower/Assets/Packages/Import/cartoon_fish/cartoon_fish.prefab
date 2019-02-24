@@ -77,6 +77,49 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &1452155932732076884
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 245034101499983112}
+  - component: {fileID: 7877109776558596307}
+  m_Layer: 0
+  m_Name: Halo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &245034101499983112
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452155932732076884}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.17080003, z: -0.23458004}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_Children: []
+  m_Father: {fileID: 7113548558258886694}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!122 &7877109776558596307
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452155932732076884}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 8355731
+  m_Size: 1
 --- !u!1 &3418239594770466407
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,9 +515,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7113548558258886694}
+  - component: {fileID: 1280107909}
   m_Layer: 0
   m_Name: cartoon_fish
-  m_TagString: Untagged
+  m_TagString: Collectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -488,12 +532,36 @@ Transform:
   m_GameObject: {fileID: 7190393790189641836}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 6110898930150368996}
+  - {fileID: 245034101499983112}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1280107909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7190393790189641836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea97fbef6a01438fad60a6aa9eacb76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Pira
+  Strength: 0
+  Attack: 0
+  Defense: 0
+  Health: 0
+  AnaiObject: 0
+  MimbiObject: 0
+  objectImage: {fileID: 0}
+  DayNight: 2
+  inventoryCat: 0
+  halo: {fileID: 7877109776558596307}
 --- !u!1 &7919938289157705683
 GameObject:
   m_ObjectHideFlags: 0

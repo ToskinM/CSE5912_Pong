@@ -74,10 +74,15 @@ public class Pickup : MonoBehaviour
             {
                 textUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
             }
+            else
+            {
+                textUpdate(obj.GetComponent<InventoryStat>().Name + " is collected. ");
+            }
             //Add to inventory
             playerInventory.AddObj(obj.gameObject);
             //Destroy Gameobject after collect
-            obj.gameObject.SetActive(false);
+            //obj.gameObject.SetActive(false);
+            Destroy(obj.gameObject);
             //Play Pickup audio clip
             PlayPickup();
         }
@@ -101,14 +106,18 @@ public class Pickup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject closest = FindClosest(); 
+        GameObject closest = FindClosest();
+        GameObject temp;
+
         if (Vector3.Distance(FindClosest().transform.position, transform.position) <= distanceToPickup)
         {
-            if(closest != null)
+            if (closest != null)
+            {
                 closest.GetComponent<InventoryStat>().SetHalo(true);
+                temp = FindClosest();
+            }
             if (Input.GetButtonDown("Pickup"))
             {
-                Debug.Log("I need to pickup");
                 DoPickup(FindClosest());
             }
 
