@@ -13,6 +13,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     [HideInInspector] public bool isAttacking;
     [HideInInspector] public float attackTimeout = 0.5f;
 
+    public bool canAttack = true; 
     //public bool isBlocking;
 
     public Weapon weapon;
@@ -63,33 +64,36 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 
     void Update()
     {
-        timeSinceLastHurt += Time.deltaTime;
-        timeSinceLastAttack += Time.deltaTime;
-        if (timeSinceLastAttack > attackTimeout)
+        if (canAttack)
         {
-            isAttacking = false;
-        }
+            timeSinceLastHurt += Time.deltaTime;
+            timeSinceLastAttack += Time.deltaTime;
+            if (timeSinceLastAttack > attackTimeout)
+            {
+                isAttacking = false;
+            }
 
-        // Detect attack input (on button down)
-        if (Input.GetButtonDown(ATTACK_AXIS))
-        {
-            Attack();
-        }
+            // Detect attack input (on button down)
+            if (Input.GetButtonDown(ATTACK_AXIS))
+            {
+                Attack();
+            }
 
-        // Detect sheathing input (on button down)
-        if (Input.GetButtonDown(SHEATHE_AXIS))
-        {
-            SetWeaponSheathed(hasWeaponOut);
-        }
+            // Detect sheathing input (on button down)
+            if (Input.GetButtonDown(SHEATHE_AXIS))
+            {
+                SetWeaponSheathed(hasWeaponOut);
+            }
 
-        // Detect blocking input (on button down)
-        if (Input.GetButtonDown(BLOCK_AXIS))
-        {
-            SetBlock(true);
-        }
-        else if (Input.GetButtonUp(BLOCK_AXIS))
-        {
-            SetBlock(false);
+            // Detect blocking input (on button down)
+            if (Input.GetButtonDown(BLOCK_AXIS))
+            {
+                SetBlock(true);
+            }
+            else if (Input.GetButtonUp(BLOCK_AXIS))
+            {
+                SetBlock(false);
+            }
         }
     }
 

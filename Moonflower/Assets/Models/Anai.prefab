@@ -1610,6 +1610,7 @@ MonoBehaviour:
   rotateSpeed: 15
   playMove: {fileID: 0}
   npcMove: {fileID: 0}
+  CurrState: 0
 --- !u!114 &2691258741450554321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1648,7 +1649,7 @@ MonoBehaviour:
   Attack: 5
   Defense: 5
   MaxHealth: 100
-  CurrentHealth: 10
+  CurrentHealth: 100
   Cunning: 5
   Charisma: 5
   Stealth: 5
@@ -1669,6 +1670,7 @@ MonoBehaviour:
   inCombat: 0
   isAttacking: 0
   attackTimeout: 0.5
+  canAttack: 1
   weapon: {fileID: 0}
   blockPlaceholder: {fileID: 773100833350970549}
 --- !u!114 &8469618191332126146

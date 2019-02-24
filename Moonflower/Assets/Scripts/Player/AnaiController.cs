@@ -31,6 +31,10 @@ public class AnaiController : MonoBehaviour, IPlayerController
     const float tooCloseRadius = 2f;
     float followDist = 8f;
 
+    public enum PlayerStates { exploring, talking, fighting, distracting}
+    public PlayerStates CurrState = PlayerStates.exploring; 
+
+
     void Start()
     {
         Playing = true;
@@ -101,7 +105,12 @@ public class AnaiController : MonoBehaviour, IPlayerController
 
         if (Playing)
         {
+            if (CurrState == PlayerStates.talking)
+                playCombat.canAttack = false;
+            else if(!playCombat.canAttack)
+                playCombat.canAttack = true; 
             playMove.MovementUpdate();
+
         }
         else
         {

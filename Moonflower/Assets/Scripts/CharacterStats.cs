@@ -43,7 +43,7 @@ public class CharacterStats : MonoBehaviour
     {
         CurrentHealth -= damage;
         if (display != null)
-            display.HitHealth(); 
+            display.HitHealth(CurrentHealth, MaxHealth); 
         Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
     }
 
