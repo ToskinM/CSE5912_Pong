@@ -20,26 +20,31 @@ public class PlayerSoundEffect : MonoBehaviour
             yield return null;
         }
     }
-    public void PlayAttackSFX()
+    public void AnaiAttackSFX()
     {
-        audioManager.Play("AttackSwing");
+        audioManager.Play("AnaiAttackSwing");
     }
-    public void PlayWalkingSFX()
+    public void AnaiWalkingSFX()
     {
         audioManager.Play("AnaiWalking");
     }
 
-    public void PlayPunchSound01()
+    public void AnaiPunchSFX()
     {
         audioManager.Play("AnaiPunch");
     }
 
-    public void PlayKickSound01()
+    public void AnaiKickSFX()
     {
         audioManager.Play("AnaiKick");
     }
-
-    // Update is called once per frame
+    
+    public void PlayerPickupSFX()
+    {
+        audioManager.Play("PlayerPickup");
+    }
+    
+// Update is called once per frame
     void Update()
     {
 
