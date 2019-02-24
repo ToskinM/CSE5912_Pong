@@ -9,14 +9,14 @@ public class PlayerInventory : MonoBehaviour
     public Dictionary<string, GameObject> ItemObjMap = new Dictionary<string, GameObject>();
     public Dictionary<string, int> ItemAmountMap = new Dictionary<string, int>(); 
 
-    public GameObject pickupArea;
+    //public GameObject pickupArea;
 
     private PlayerHealthDisplay display; 
 
     void Start()
     {
         display = GameObject.Find("HUD").GetComponent<PlayerHealthDisplay>();
-        pickupArea.SetActive(false);
+        //pickupArea.SetActive(false);
     }
 
     public void AddObj(GameObject obj)
@@ -42,7 +42,7 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public int getObjNumber(string obj)
+    public int GetObjNumber(string obj)
     {
         int count = 0;
         foreach (GameObject inventoryObj in InventoryObjs)
