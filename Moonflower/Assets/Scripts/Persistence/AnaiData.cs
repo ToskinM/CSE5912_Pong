@@ -42,7 +42,7 @@ public class AnaiData
         //jumping = anaiMovement.Jumping;
         //jumpTimer = anaiMovement.jumpTimer;
 
-        hasWeaponOut = combatController.hasWeaponOut;
+        hasWeaponOut = combatController.HasWeaponOut;
     }
 
     public void Load(GameObject anai)

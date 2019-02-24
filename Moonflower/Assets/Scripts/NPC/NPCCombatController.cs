@@ -1,32 +1,32 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class NPCCombatController : MonoBehaviour, ICombatant
+public class NPCCombatController : MonoBehaviour, ICombatController
 {
-    public enum Aggression { Passive, Unaggressive, Aggressive, Frenzied };
-    public Aggression aggression;
+    // Interface Members
+    [HideInInspector] public CharacterStats Stats { get; private set; }
+    [HideInInspector] public bool IsBlocking { get; private set; } = false;
+    [HideInInspector] public bool InCombat { get; private set; } = false;
+    [HideInInspector] public bool IsDead { get; private set; } = false;
+    [HideInInspector] public bool HasWeaponOut { get; private set; } = false;
+
     public bool Active { get; set; } = true;
 
+    public enum Aggression { Passive, Unaggressive, Aggressive, Frenzied };
+    public Aggression aggression;
+
     public GameObject ragdollPrefab;
-    public Weapon weapon;
     private readonly float[] attackMultipliers = new float[] { 0f, 1f };
 
     public GameObject deathEffect;
 
-    [HideInInspector] public bool IsBlocking { get; private set; }
-    private bool hasWeaponOut;
-    [HideInInspector] public bool inCombat; // (aggrod)
-    [HideInInspector] public bool isHit;
     [HideInInspector] public bool isAttacking;
+    public Weapon weapon;
     [HideInInspector] public int attack;
     [HideInInspector] public GameObject combatTarget = null;
 
-    //public GameObject hitIndicator;
-
-    public CharacterStats Stats { get; private set; }
-
     private float timeSinceLastHurt;
-    private float hurtDelay = 0.1f;
+    private float hurtDelay = 0.2f;
     private float deaggroTime = 3;
     private Coroutine deaggroCoroutine = null;
     public float attackDistance = 2.6f;
@@ -55,7 +55,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         if (!weapon)
             weapon = null;
 
-        weapon?.gameObject.SetActive(hasWeaponOut);
+        weapon?.gameObject.SetActive(HasWeaponOut);
 
         if (aggression == Aggression.Frenzied)
             Frenzy();
@@ -88,15 +88,15 @@ public class NPCCombatController : MonoBehaviour, ICombatant
             //npcMovement.Update();
 
             // Ensure weapon state is correct based on aggro
-            if (inCombat && !hasWeaponOut)
+            if (InCombat && !HasWeaponOut)
                 SetWeaponSheathed(false);
-            else if (!inCombat && hasWeaponOut)
+            else if (!InCombat && HasWeaponOut)
                 SetWeaponSheathed(true);
 
             CheckAggression();
 
             // If we're in combat..
-            if (inCombat)
+            if (InCombat)
             {
                 ManageCombat();
             }
@@ -127,28 +127,38 @@ public class NPCCombatController : MonoBehaviour, ICombatant
                     GameObject source = hurtboxController.source;
                     int damage = hurtboxController.damage;
 
-                    if (IsBlocking)
-                    {
-                        Debug.Log(gameObject.name + ": \"Hah, blocked ya.\"");
-                    }
-                    else
-                    {
-                        npcAnimationController.TriggerHit();
-
-                        Stats.TakeDamage(damage, source.name);
-                    }
+                    if (!IsBlocking)
+                        Stagger();
+                    Stats.TakeDamage(damage, source.name, hurtboxController.sourceCharacterStats, GetContactPoint(other), IsBlocking);
                 }
             }
 
             timeSinceLastHurt = 0f;
         }
     }
+    private Vector3 GetContactPoint(Collider other)
+    {
+        Vector3 locPos = Vector3.zero;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, other.transform.position - transform.position, out hit, LayerMask.GetMask("Debug")))
+        {
+            //Debug.Log("Point of contact: " + hit.point);
+            locPos = hit.point;
+        }
+
+        return locPos;
+    }
+
+    public void Stagger()
+    {
+        npcAnimationController.TriggerHit();
+    }
 
     public void StartFight(GameObject player)
     {
         Active = true;
         SetWeaponSheathed(false);
-        inCombat = true;
+        InCombat = true;
         isAttacking = true;
         combatTarget = player;
     }
@@ -169,18 +179,18 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     }
     private void Sheathe()
     {
-        if (hasWeaponOut)
+        if (HasWeaponOut)
         {
             weapon?.gameObject.SetActive(false);
-            hasWeaponOut = false;
+            HasWeaponOut = false;
         }
     }
     private void Unsheathe()
     {
-        if (!hasWeaponOut)
+        if (!HasWeaponOut)
         {
             weapon?.gameObject.SetActive(true);
-            hasWeaponOut = true;
+            HasWeaponOut = true;
         }
     }
 
@@ -203,7 +213,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     private void CheckAggression()
     {
-        if (inCombat)
+        if (InCombat)
         {
             // Deaggro if we cant find target in time
             if (combatTarget == null)
@@ -254,8 +264,8 @@ public class NPCCombatController : MonoBehaviour, ICombatant
         {
             //if (combatTarget != aggroTarget)
             //{
-            if (!inCombat)
-                inCombat = true;
+            if (!InCombat)
+                InCombat = true;
 
             combatTarget = aggroTarget;
             //Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
@@ -268,8 +278,8 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
     private void DeAggro()
     {
-        if (inCombat)
-            inCombat = false;
+        if (InCombat)
+            InCombat = false;
 
         combatTarget = null;
         //Debug.Log(gameObject.name + " stopped combat");
@@ -296,11 +306,14 @@ public class NPCCombatController : MonoBehaviour, ICombatant
     // Check if we should be dead
     private void CheckDeath()
     {
-        if (Stats.CurrentHealth <= 0)
+        if (!IsDead && Stats.CurrentHealth <= 0)
+        {
+            IsDead = true;
             StartCoroutine(Die());
+        }
     }
 
-    // Kills this NPC
+    // Kills this Character
     public void Kill()
     {
         Stats.TakeDamage(Stats.CurrentHealth, "Kill Command");

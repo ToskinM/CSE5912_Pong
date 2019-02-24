@@ -63,6 +63,10 @@ public class PlayerAnimatorController : MonoBehaviour
     {
         attackHurtboxes[index].Disable();
     }
+    public void PlayAttackSFX()
+    {
+
+    }
 
     // Disable player animation when game is paused
     void HandlePauseEvent(bool isPaused)

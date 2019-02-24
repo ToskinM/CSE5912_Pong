@@ -2132,6 +2132,7 @@ MonoBehaviour:
   Cunning: 5
   Charisma: 5
   Stealth: 5
+  strengthExperience: 0
   HUD: {fileID: 0}
 --- !u!114 &1769887637
 MonoBehaviour:
@@ -2145,10 +2146,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09d74e2fa40e1054aaa80dedd3cb9eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasWeaponOut: 0
-  inCombat: 0
   isAttacking: 0
   attackTimeout: 0.5
+  ragdollPrefab: {fileID: 0}
   weapon: {fileID: 0}
   blockPlaceholder: {fileID: 638714438}
 --- !u!114 &1769887639
@@ -2180,6 +2180,8 @@ MonoBehaviour:
   InventoryPanel: {fileID: 0}
   InvContentPanel: {fileID: 0}
   Player: {fileID: 0}
+  InvoButton: {fileID: 0}
+  gameController: {fileID: 0}
 --- !u!195 &1769887641
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2568,6 +2570,11 @@ PrefabInstance:
       propertyPath: damage
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: sourceCharacterStats
+      value: 
+      objectReference: {fileID: 1769887633}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e191d953f9f69b468286e1cae6a7f57, type: 3}
 --- !u!4 &8763204915738705740 stripped
@@ -2673,6 +2680,11 @@ PrefabInstance:
       propertyPath: damage
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: sourceCharacterStats
+      value: 
+      objectReference: {fileID: 1769887633}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e191d953f9f69b468286e1cae6a7f57, type: 3}
 --- !u!4 &8763204916469607664 stripped

@@ -19,8 +19,13 @@ public class CharacterStats : MonoBehaviour
     public int Charisma;
     public int Stealth;
 
+    public float strengthExperience;
+
     public GameObject HUD;
-    private PlayerHealthDisplay display; 
+    private PlayerHealthDisplay display;
+
+    private const float STRENGTH_EXPERIENCE_HIT = 2.5f;
+    private const float STRENGTH_EXPERIENCE_KILL = 20f; // This will hopefully vary by character killed
 
 
     // Start is called before the first frame update
@@ -28,8 +33,7 @@ public class CharacterStats : MonoBehaviour
     {
         // Data drive specific values for each separate entity
         //if (HUD.GetComponent<PlayerHealthDisplay>())
-            display = HUD.GetComponent<PlayerHealthDisplay>(); 
-
+            display = HUD.GetComponent<PlayerHealthDisplay>();
     }
 
     // Not sure how combat/interactions are going to be implemented beforehand (script-wise) so just leaving general methods for now
@@ -45,6 +49,29 @@ public class CharacterStats : MonoBehaviour
         if (display != null)
             display.HitHealth(); 
         Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
+    }
+    public void TakeDamage(int damage, string sourceName, CharacterStats sourceCharacterStats, Vector3 hitPoint, bool blocked)
+    {
+        if (!blocked)
+        {
+            CurrentHealth -= damage;
+            if (display != null)
+                display.HitHealth();
+            Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
+
+            if (hitPoint != Vector3.zero)
+                ObjectPoolController.current.CheckoutTemporary((GameObject)Resources.Load("Effects/HitEffect_Damage"), hitPoint, 1);
+        }
+        else
+        {
+            if (hitPoint != Vector3.zero)
+                ObjectPoolController.current.CheckoutTemporary((GameObject)Resources.Load("Effects/HitEffect_Blocked"), hitPoint, 1);
+        }
+
+        if (CurrentHealth <= 0)
+            sourceCharacterStats.TrainStrengthKill();
+        else
+            sourceCharacterStats.TrainStrengthHit();
     }
 
     public bool CompareCunning(int otherCunning)
@@ -66,5 +93,24 @@ public class CharacterStats : MonoBehaviour
         CurrentHealth = CurrentHealth + amount;
         if (CurrentHealth >= MaxHealth)
             CurrentHealth = MaxHealth;
+    }
+
+    public void TrainStrengthHit()
+    {
+        strengthExperience += STRENGTH_EXPERIENCE_HIT;
+        StrengthLevelUpCheck();
+    }
+    public void TrainStrengthKill()
+    {
+        strengthExperience += STRENGTH_EXPERIENCE_KILL;
+        StrengthLevelUpCheck();
+    }
+    private void StrengthLevelUpCheck()
+    {
+        if (strengthExperience >= (Strength + 1) * 5)
+        {
+            strengthExperience = 0;
+            Strength++;
+        }
     }
 }

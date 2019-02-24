@@ -467,12 +467,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aggression: 2
   ragdollPrefab: {fileID: 0}
-  weapon: {fileID: 8717063139423998283}
   deathEffect: {fileID: 1270126634788680, guid: 54bd8c7da32a6874bbc9f5487750acaf,
     type: 3}
-  inCombat: 0
-  isHit: 0
   isAttacking: 0
+  weapon: {fileID: 8717063139423998283}
   attack: 0
   combatTarget: {fileID: 0}
   attackDistance: 2.6
@@ -530,6 +528,7 @@ MonoBehaviour:
   Cunning: 0
   Charisma: 0
   Stealth: 0
+  strengthExperience: 0
   HUD: {fileID: 0}
 --- !u!195 &6900419879104588743
 NavMeshAgent:
@@ -841,6 +840,11 @@ PrefabInstance:
       propertyPath: damage
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: sourceCharacterStats
+      value: 
+      objectReference: {fileID: 6900419879104588741}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e191d953f9f69b468286e1cae6a7f57, type: 3}
 --- !u!4 &2764681446511011961 stripped

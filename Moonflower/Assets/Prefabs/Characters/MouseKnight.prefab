@@ -858,12 +858,10 @@ MonoBehaviour:
   aggression: 1
   ragdollPrefab: {fileID: 1298671735298112, guid: 536fcf3c0e86ecb44b738d2721978483,
     type: 3}
-  weapon: {fileID: 934448058}
   deathEffect: {fileID: 1270126634788680, guid: 54bd8c7da32a6874bbc9f5487750acaf,
     type: 3}
-  inCombat: 0
-  isHit: 0
   isAttacking: 0
+  weapon: {fileID: 934448058}
   attack: 0
   combatTarget: {fileID: 0}
   attackDistance: 2.6
@@ -902,6 +900,7 @@ MonoBehaviour:
   Cunning: 0
   Charisma: 0
   Stealth: 0
+  strengthExperience: 0
   HUD: {fileID: 0}
 --- !u!54 &3116732539371463168
 Rigidbody:
@@ -1254,7 +1253,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 588cb1a3084bba747b81631d0c071523, type: 3}
 --- !u!1 &1413040377541786
@@ -1972,7 +1971,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 9ef625d01f79b4e4eb62fcdf032954ca, type: 3}
 --- !u!1 &1634694003857070
@@ -2900,6 +2899,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: -0.29
       objectReference: {fileID: 0}
+    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: sourceCharacterStats
+      value: 
+      objectReference: {fileID: 1468746733}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e191d953f9f69b468286e1cae6a7f57, type: 3}
 --- !u!4 &8763204916404977153 stripped

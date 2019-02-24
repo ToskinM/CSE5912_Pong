@@ -86,7 +86,7 @@ public class NaiaController : MonoBehaviour
             engageMenuAllowed = false;
             combatController.Active = true; 
 
-            if (combatController.inCombat)
+            if (combatController.InCombat)
             {
                 movement.player = combatController.combatTarget;
             }
@@ -120,8 +120,8 @@ public class NaiaController : MonoBehaviour
             }
         }
 
-        movement.Attacking = combatController.inCombat; 
-        if(combatController.Active && combatController.inCombat)
+        movement.Attacking = combatController.InCombat; 
+        if(combatController.Active && combatController.InCombat)
         {
             currState = NaiaEngageType.fight; 
         }
