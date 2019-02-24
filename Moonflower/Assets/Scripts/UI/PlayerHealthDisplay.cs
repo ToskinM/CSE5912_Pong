@@ -8,26 +8,33 @@ public class PlayerHealthDisplay : MonoBehaviour
 {
     public GameObject Flower;
     public GameObject Apple; 
-    public GameObject Player;
+    public GameObject Anai; 
 
     public bool Dead = false;
 
     private bool playerIsAnai = true; 
 
     private LifeAppleController appleControl;
-    private LifeFlowerController flowerControl; 
+    private LifeFlowerController flowerControl;
+    private AnaiController anaiController; 
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Is this not happening?"); 
         appleControl = new LifeAppleController(Apple);
         flowerControl = new LifeFlowerController(Flower);
+        anaiController = Anai.GetComponent<AnaiController>();
 
     }
 
-    public void Update()
+    void Update()
     {
+        if (playerIsAnai && !anaiController.Playing)
+            switchPlayer();
+
+        if (!playerIsAnai && anaiController.Playing)
+            switchPlayer(); 
+
         if (playerIsAnai)
             flowerControl.UpdateFlower();
         else
@@ -51,7 +58,7 @@ public class PlayerHealthDisplay : MonoBehaviour
             appleControl.HealApple(); 
     }
 
-    public void SwitchPlayer()
+    private void switchPlayer()
     {
         playerIsAnai = !playerIsAnai;
         if(playerIsAnai)

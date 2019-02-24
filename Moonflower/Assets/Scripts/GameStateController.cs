@@ -7,7 +7,6 @@ public class GameStateController : MonoBehaviour
     public GameObject Player;
     public GameObject MainCamera;
 
-    public bool CurrPlayerIsAnai = true; 
 
     public bool Paused;
     public bool DebugModeOn;
