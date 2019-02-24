@@ -34,7 +34,7 @@ public class ShowInventory : MonoBehaviour
 
     public void textUpdate()
     {
-        string displayText = "No of Moonflower: " + playerInventory.getObjNumber(MoonFlower) + "\nNo of WolfApple: " + playerInventory.getObjNumber(WolfApple); 
+        string displayText = "No of Moonflower: " + playerInventory.GetObjNumber(MoonFlower) + "\nNo of WolfApple: " + playerInventory.GetObjNumber(WolfApple); 
         //inventoryText.SetText(displayText);
     }
 

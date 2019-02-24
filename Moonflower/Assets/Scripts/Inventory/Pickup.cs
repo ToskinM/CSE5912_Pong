@@ -10,7 +10,10 @@ public class Pickup : MonoBehaviour
     public int distanceToPickup = 5;
 
     public CharacterStats Stats { get; private set; }
-    public GameObject Player;
+    public GameObject PlayerAnai;
+    public GameObject PlayerMimbi;
+    private GameObject CurrentPlayer;
+
     private CharacterStats playerStat;
     //private InventoryManager inventoryManager;
     private PlayerInventory playerInventory;
@@ -18,15 +21,16 @@ public class Pickup : MonoBehaviour
 
     public TextMeshProUGUI inventoryAdd;
 
-    //Behaviour halo = (Behaviour)gameObject.GetComponent("Halo");
+    public PlayerMovement playerMovement;
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(GetAudioManager());
         //inventoryManager = FindObjectOfType<InventoryManager>();
-        playerStat = Player.GetComponent<CharacterStats>();
-        playerInventory = Player.GetComponent<PlayerInventory>();
+        playerStat = PlayerAnai.GetComponent<CharacterStats>();
+        playerInventory = PlayerAnai.GetComponent<PlayerInventory>();
+        CurrentPlayer = PlayerAnai;
     }
 
     private IEnumerator GetAudioManager()
@@ -42,14 +46,17 @@ public class Pickup : MonoBehaviour
     {
         allCollidable = GameObject.FindGameObjectsWithTag("Collectable");
         GameObject nearestObj = allCollidable[0];
-        float nearest = Vector3.Distance(allCollidable[0].transform.position, transform.position);
+        float nearest = Vector3.Distance(allCollidable[0].transform.position, CurrentPlayer.transform.position);
         foreach (GameObject g in allCollidable)
         {
-            if (Vector3.Distance(g.transform.position, transform.position) < nearest)
+            if (Vector3.Distance(g.transform.position, CurrentPlayer.transform.position) < nearest)
             {
-                nearest = Vector3.Distance(g.transform.position, transform.position);
+                nearest = Vector3.Distance(g.transform.position, CurrentPlayer.transform.position);
                 nearestObj = g;
             }
+            //remove halo if not nearest anymore
+            if (g!=nearestObj)
+                g.GetComponent<InventoryStat>().SetHalo(false);
         }
         return nearestObj;
     }
@@ -67,16 +74,16 @@ public class Pickup : MonoBehaviour
 
             if (obj.GetComponent<InventoryStat>().AnaiObject)
             {
-                textUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Anai");
+                TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Anai");
                 playerStat.AddHealth(health);
             }
             else if (obj.GetComponent<InventoryStat>().MimbiObject)
             {
-                textUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
+                TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
             }
             else
             {
-                textUpdate(obj.GetComponent<InventoryStat>().Name + " is collected. ");
+                TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected. ");
             }
             //Add to inventory
             playerInventory.AddObj(obj.gameObject);
@@ -96,25 +103,30 @@ public class Pickup : MonoBehaviour
         audioManager.Play("pickup01");
     }
 
-    public void textUpdate(string s)
+    public void TextUpdate(string s)
     {
         inventoryAdd.SetText(s);
     }
 
-
+    private void CheckCurrentPlayer()
+    {
+        if (PlayerAnai.GetComponent<AnaiController>().Playing == true)
+            CurrentPlayer = PlayerAnai;
+        else
+            CurrentPlayer = PlayerMimbi;
+    }
 
     // Update is called once per frame
     void Update()
     {
+        CheckCurrentPlayer();
         GameObject closest = FindClosest();
-        GameObject temp;
 
-        if (Vector3.Distance(FindClosest().transform.position, transform.position) <= distanceToPickup)
+        if (Vector3.Distance(FindClosest().transform.position, CurrentPlayer.transform.position) <= distanceToPickup)
         {
             if (closest != null)
             {
                 closest.GetComponent<InventoryStat>().SetHalo(true);
-                temp = FindClosest();
             }
             if (Input.GetButtonDown("Pickup"))
             {
