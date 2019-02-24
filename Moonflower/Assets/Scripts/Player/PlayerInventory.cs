@@ -29,8 +29,7 @@ public class PlayerInventory : MonoBehaviour
             ItemAmountMap.Add(objName, num);
         }
         else
-        {
-            Debug.Log("We getting a " + objName); 
+        { 
             InventoryObjs.Add(obj);
             ItemNames.Add(objName);
             ItemObjMap.Add(objName, obj);
