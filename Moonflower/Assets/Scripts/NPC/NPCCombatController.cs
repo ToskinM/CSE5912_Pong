@@ -117,6 +117,8 @@ public class NPCCombatController : MonoBehaviour, ICombatant
             if (tag == "PlayerHurtbox" || tag == "Hurtbox")
             {
                 Aggro(other.gameObject.transform.root.gameObject, false);
+                if (aggression == Aggression.Unaggressive)
+                    aggression = Aggression.Aggressive;
 
                 if (timeSinceLastHurt > hurtDelay)
                 {
@@ -333,7 +335,7 @@ public class NPCCombatController : MonoBehaviour, ICombatant
 
         gameObject.SetActive(false);
 
-        Destroy(gameObject, 0.5f);
+        //Destroy(gameObject, 0.5f);
     }
 
     public int GetAttackDamage()

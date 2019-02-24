@@ -47,6 +47,10 @@ public class AnaiData
 
     public void Load(GameObject anai)
     {
+        anaiController = anai.GetComponent<AnaiController>();
+        playerMovement = anai.GetComponent<PlayerMovement>();
+        combatController = anai.GetComponent<PlayerCombatController>();
+
         anaiController.Playing = playing;
         anaiController.Switch(playing);
 

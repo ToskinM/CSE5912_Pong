@@ -31,7 +31,6 @@ public class AnaiController : MonoBehaviour, IPlayerController
     const float tooCloseRadius = 2f;
     float followDist = 8f;
 
-
     void Start()
     {
         Playing = true;

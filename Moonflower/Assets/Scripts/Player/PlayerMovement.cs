@@ -46,8 +46,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
     void Start()
     {
         Physics.gravity = new Vector3(0, -88.3f, 0);
-        walkSpeed = 7f;
-        runSpeed = 15f;
+        walkSpeed = 6f;
+        runSpeed = 11f;
         sneakSpeed = 4f;
         moveSpeed = walkSpeed;
         blockCooldown = blockCooldownTime;
@@ -110,7 +110,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
             //Action = Actions.Chilling;
             Jumping = true;
             onGround = false;
-            body.AddForce(new Vector3(0f, 25, 0f), ForceMode.Impulse);
+            body.AddForce(new Vector3(0f, 30f, 0f), ForceMode.Impulse);
 
         }
         else if (onGround)

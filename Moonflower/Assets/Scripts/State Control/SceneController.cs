@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class SceneController : MonoBehaviour
 {
+    public static SceneController current;
+
     public event Action BeforeSceneUnload;
     public event Action AfterSceneLoad;
     public CanvasGroup faderCanvasGroup;
@@ -22,7 +24,12 @@ public class SceneController : MonoBehaviour
     private void Start()
     {
         // Only allow one scene controller at a time
-        if (!isThePersistentController && FindObjectOfType<SceneController>() != null)
+        if (current == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            current = this;
+        }
+        else if (current != null)
         {
             Destroy(gameObject);
         }
