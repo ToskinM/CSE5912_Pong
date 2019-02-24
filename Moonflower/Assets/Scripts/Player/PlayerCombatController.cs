@@ -40,8 +40,11 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 
     void Start()
     {
-        damage = weapon.baseDamage;
-        weapon.gameObject.SetActive(hasWeaponOut);
+        if (weapon != null)
+        {
+            damage = weapon.baseDamage;
+            weapon.gameObject.SetActive(hasWeaponOut);
+        }
         blockPlaceholder.SetActive(IsBlocking);
 
         StartCoroutine(GetAudioManager());
@@ -93,7 +96,8 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
     // Sheathe/Unsheathe weapon
     public void SetWeaponSheathed(bool sheathe)
     {
-        weapon.gameObject.SetActive(!sheathe);
+        if(weapon != null)
+            weapon.gameObject.SetActive(!sheathe);
 
         hasWeaponOut = !sheathe;
     }
@@ -166,7 +170,10 @@ public class PlayerCombatController : MonoBehaviour, ICombatant
 
     public int GetAttackDamage(int attackHurtbox)
     {
-        return (int)((weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[attackHurtbox]);
+        if (weapon != null)
+            return (int)((weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[attackHurtbox]);
+        else
+            return 0; 
     }
 
     public void ApplyLoad()

@@ -89,6 +89,7 @@ public class LifeAppleController : MonoBehaviour
         }
         if(healing)
         {
+            Debug.Log("I am healing"); 
             if (healCount % 10 == 0)
             {
                 currRotIndex--;
@@ -107,6 +108,7 @@ public class LifeAppleController : MonoBehaviour
             healing = !(currState == appleState.full || currRotIndex == 3 || currRotIndex == 8 || currRotIndex == 13);
             if(!healing)
             {
+                Debug.Log("Healed!"); 
                 healCount = 0; 
             }
         }

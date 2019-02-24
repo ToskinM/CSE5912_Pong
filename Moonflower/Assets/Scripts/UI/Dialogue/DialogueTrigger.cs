@@ -52,7 +52,7 @@ public class DialogueTrigger : MonoBehaviour
         buttons = new List<Button>(); 
         templateButton = panel.transform.GetChild(2).GetComponent<Button>();
         exitButton = panel.transform.GetChild(3).GetComponent<Button>();
-        exitButton.onClick.AddListener(() => ButtonClicked(42));
+        exitButton.onClick.AddListener(endConvo);
 
         freezeCommand = new FreezeCameraCommand();
         spriteFile = characterSprite;

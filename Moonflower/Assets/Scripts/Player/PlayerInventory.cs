@@ -40,6 +40,11 @@ public class PlayerInventory : MonoBehaviour
         {
             display.HealPetal();
         }
+
+        if (objName.Equals(ItemLookup.WOLFAPPLE_NAME))
+        {
+            display.HealPetal(); 
+        }
     }
 
     public int GetObjNumber(string obj)
