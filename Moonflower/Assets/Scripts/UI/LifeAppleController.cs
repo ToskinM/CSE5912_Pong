@@ -127,12 +127,11 @@ public class LifeAppleController : MonoBehaviour
             }
             else if(healthFrac > 1f/20f)
             {
-                float newFrac = (healthFrac - 1f / 20f) * (20f / 18f);
-                Debug.Log("Fraction between 0 and 1: " + newFrac); 
+                float newFrac = (healthFrac - 1f / 20f) * (20f / 18f); 
                 int index = (int)Math.Round(newFrac*apples.Count);
-                index = 18 - index; 
-                Debug.Log("Index will be " + index + " out of " + apples.Count); 
-                appleImage.sprite = apples[index];
+                index = 18 - index;  
+                if(index < apples.Count)
+                    appleImage.sprite = apples[index];
                 currState = appleState.rotting; 
             }
             else 
