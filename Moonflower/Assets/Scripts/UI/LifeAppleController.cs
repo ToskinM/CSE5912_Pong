@@ -7,15 +7,15 @@ using UnityEngine.UI;
 public class LifeAppleController : MonoBehaviour
 {
     public GameObject Apple;
-    //public GameObject Player;
 
     public bool Dead = false;
 
     private Image appleImage; 
     private bool healing = false;
+    private int healIndex = 0; 
+    private int healIncrementNum = 4; 
     private enum appleState { full, rotting, dead}
 
-    //private CharacterStats playerStat;
     private List<Sprite> apples;
     private appleState currState = appleState.full;
     private int currRotIndex = 0;
@@ -34,8 +34,6 @@ public class LifeAppleController : MonoBehaviour
     {
         Apple = flowerOb;
         appleImage = Apple.GetComponent<Image>(); 
-        //Player = playerOb; 
-        //playerStat = Player.GetComponent<CharacterStats>();
         factory = new AppleFactory();
 
         apples = new List<Sprite>();
@@ -89,8 +87,7 @@ public class LifeAppleController : MonoBehaviour
         }
         if(healing)
         {
-            Debug.Log("I am healing"); 
-            if (healCount % 10 == 0)
+            if (healCount % 6 == 0)
             {
                 currRotIndex--;
                 if (currRotIndex < 0)
@@ -103,13 +100,15 @@ public class LifeAppleController : MonoBehaviour
                 {
                     appleImage.sprite = apples[currRotIndex];
                 }
+                healIndex++;
             }
             healCount++;
-            healing = !(currState == appleState.full || currRotIndex == 3 || currRotIndex == 8 || currRotIndex == 13);
-            if(!healing)
+            //healing = currState != appleState.full && currRotIndex != 3 && currRotIndex != 8 && currRotIndex != 13;
+            healing = currState != appleState.full && healIndex < healIncrementNum;
+            if (!healing)
             {
-                Debug.Log("Healed!"); 
-                healCount = 0; 
+                healCount = 0;
+                healIndex = 0; 
             }
         }
     }
@@ -140,8 +139,11 @@ public class LifeAppleController : MonoBehaviour
 
     public void HealApple()
     {
-        healing = true;
-        healCount = 0; 
+        if (currState != appleState.full)
+        {
+            healing = true;
+            healCount = 0;
+        }
 
     }
 
