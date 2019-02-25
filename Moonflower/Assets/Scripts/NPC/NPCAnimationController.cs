@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class NPCAnimationController : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class NPCAnimationController : MonoBehaviour
     private const string key_IsDead = "IsDead";
 
     private Animator animator;
+    private NavMeshAgent agent;
     private NPCCombatController combatController;
     private LesserNPCController controller;
     private NPCMovement movement;
@@ -26,6 +28,7 @@ public class NPCAnimationController : MonoBehaviour
         animator = GetComponent<Animator>();
         combatController = GetComponent<NPCCombatController>();
         controller = GetComponent<LesserNPCController>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     void Start()
@@ -35,11 +38,31 @@ public class NPCAnimationController : MonoBehaviour
 
     void Update()
     {
-        if (animator && movement)
+        // Not sure why this won't work
+        //if (animator && movement)
+        //{
+        //    animator.SetBool(key_IsWalk, movement.Action == Actions.Walking);
+        //    animator.SetBool(key_IsRun, movement.Action == Actions.Running);
+        //    animator.SetBool(key_IsJump, movement.Jumping);
+        //}
+
+        if (agent)
         {
-            animator.SetBool(key_IsWalk, movement.Action == Actions.Walking);
-            animator.SetBool(key_IsRun, movement.Action == Actions.Running);
-            animator.SetBool(key_IsJump, movement.Jumping);
+            if (agent.velocity.magnitude > agent.speed * (2f/3f)) // Run
+            {
+                animator.SetBool(key_IsRun, true);
+                animator.SetBool(key_IsWalk, false);
+            }
+            else if (agent.velocity.magnitude > 0)  // Walk
+            {
+                animator.SetBool(key_IsRun, false);
+                animator.SetBool(key_IsWalk, true);
+            }
+            else                                    // Idle
+            {
+                animator.SetBool(key_IsRun, false);
+                animator.SetBool(key_IsWalk, false);
+            }
         }
     }
 
