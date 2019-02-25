@@ -18,7 +18,7 @@ public class AudioManager : MonoBehaviour
     private AudioSourceManager audioSources;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         DontDestroyOnLoad(gameObject);
         if (instance == null)
@@ -75,7 +75,7 @@ public class AudioManager : MonoBehaviour
         if (s != null)
         {
             s.source.Play();
-            //Debug.Log("i am playing");
+            Debug.Log("i am playing" + s.name);
         }
         else if (s.source = null)
         { Debug.Log("why no audio source!?"); }
