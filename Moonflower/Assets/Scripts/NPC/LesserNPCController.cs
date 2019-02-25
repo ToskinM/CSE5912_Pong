@@ -29,6 +29,7 @@ public class LesserNPCController : MonoBehaviour
         playerController = Player.GetComponent<IPlayerController>();
         movement = new NPCMovement(gameObject, Player);
         movement.SetEngagementDistances(5, combatController.attackDistance + 0.5f, 1);
+        combatController.npcMovement = movement;
     }
 
     void Start()

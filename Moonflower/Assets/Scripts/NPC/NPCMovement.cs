@@ -16,6 +16,8 @@ public class NPCMovement : MonoBehaviour, IMovement
     public bool AvoidsPlayer { get; set; } = false;
     public bool FollowingPlayer { get; set; } = false;
 
+    public bool stunned;
+
     public GameObject player;
     GameObject self;
     bool canWander;
@@ -141,48 +143,56 @@ public class NPCMovement : MonoBehaviour, IMovement
         if (!agent.enabled)
             agent.enabled = true;
 
-        if (attacking)
+        // Stop moving if we're stunned
+        if (stunned)
         {
-            Attack();
+            Chill();
         }
         else
         {
-            if (Wandering)
+            if (attacking)
             {
-                Wander();
+                Attack();
             }
-
-            if (CanEngage)
+            else
             {
-                if (!Engaging)
+                if (Wandering)
                 {
-                    if (player)
+                    Wander();
+                }
+
+                if (CanEngage)
+                {
+                    if (!Engaging)
                     {
-                        float distFromPlayer = Vector3.Distance(player.transform.position, self.transform.position);
-                        SetEngaging(distFromPlayer <= engagementRadius);
+                        if (player)
+                        {
+                            float distFromPlayer = Vector3.Distance(player.transform.position, self.transform.position);
+                            SetEngaging(distFromPlayer <= engagementRadius);
+                        }
+                    }
+                    if (Engaging)
+                    {
+                        if (player)
+                            Engage();
                     }
                 }
-                if (Engaging)
+
+                if (FollowingPlayer || stickingAround)
                 {
-                    if (player)
-                        Engage();
+                    Follow();
                 }
-            }
 
-            if (FollowingPlayer || stickingAround)
-            {
-                Follow();
-            }
-
-            if (stickingAround)
-            {
-                stickAroundCount++;
-                if (stickAroundCount > stickAroundMax * 60)
+                if (stickingAround)
                 {
-                    stickingAround = false;
-                    stickAroundCount = 0;
-                    ResumeWandering();
-                    Debug.Log("wander!!");
+                    stickAroundCount++;
+                    if (stickAroundCount > stickAroundMax * 60)
+                    {
+                        stickingAround = false;
+                        stickAroundCount = 0;
+                        ResumeWandering();
+                        Debug.Log("wander!!");
+                    }
                 }
             }
         }

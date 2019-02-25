@@ -8,7 +8,9 @@ public class PlayerMovement : MonoBehaviour, IMovement
 {
     public Actions Action { get; set; }
     public bool Jumping { get; set; }
+    public bool stunned;
     public TerrainCollider terrain;
+
     private float moveSpeed;
     public float runSpeed;
     public float walkSpeed;
@@ -271,7 +273,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
     {
         if (!cameraScript.freeRoam && !cameraScript.switching)
         {
-            DetectKeyInput();
+            if (!stunned)
+                DetectKeyInput();
             UpdateCooldowns();
         }
     }

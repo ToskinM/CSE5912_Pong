@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.48066366, g: 0.9257534, b: 1.4880309, a: 1}
+  m_IndirectSpecularColor: {r: 0.4855957, g: 0.9311419, b: 1.4875678, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -18254,6 +18254,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1688219743958192488, guid: 38c95f92923cd4c739d34f91333f4760,
+        type: 3}
+      propertyPath: m_Name
+      value: broom.002
+      objectReference: {fileID: 0}
     - target: {fileID: 7330007973694977610, guid: 38c95f92923cd4c739d34f91333f4760,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -18323,11 +18328,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1688219743958192488, guid: 38c95f92923cd4c739d34f91333f4760,
-        type: 3}
-      propertyPath: m_Name
-      value: broom.002
       objectReference: {fileID: 0}
     - target: {fileID: 224549999352846708, guid: 38c95f92923cd4c739d34f91333f4760,
         type: 3}
@@ -45780,6 +45780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09d74e2fa40e1054aaa80dedd3cb9eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMovement: {fileID: 0}
   isAttacking: 0
   attackTimeout: 0.5
   canAttack: 1

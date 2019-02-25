@@ -35,7 +35,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
     private FieldOfView fieldOfView;
     private NPCAnimationController npcAnimationController;
-    private NPCMovement npcMovement;
+    public NPCMovement npcMovement;
 
     public delegate void AggroUpdate(bool aggroed);
     public event AggroUpdate OnAggroUpdated;
@@ -152,6 +152,14 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     public void Stagger()
     {
         npcAnimationController.TriggerHit();
+        SetStunned(1);
+    }
+    public void SetStunned(int stunned)
+    {
+        if (stunned == 1)
+            npcMovement.stunned = true;
+        else
+            npcMovement.stunned = false;
     }
 
     public void StartFight(GameObject player)

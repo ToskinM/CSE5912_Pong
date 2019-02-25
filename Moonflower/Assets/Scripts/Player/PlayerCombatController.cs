@@ -12,11 +12,13 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     [HideInInspector] public bool HasWeaponOut { get; private set; } = false;
 
     public PlayerAnimatorController animator { get; private set; }
+    public PlayerMovement playerMovement;
+
 
     [HideInInspector] public bool isAttacking;
     [HideInInspector] public float attackTimeout = 0.5f;
 
-    public bool canAttack = true; 
+    public bool canAttack = true;
     //public bool isBlocking;
 
     public GameObject ragdollPrefab;
@@ -35,12 +37,13 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     private const string SHEATHE_AXIS = "Sheathe/Unsheathe";
 
     private AudioManager audioManager;
-    
+
 
     void Awake()
     {
         Stats = gameObject.GetComponent<CharacterStats>();
         animator = gameObject.GetComponent<PlayerAnimatorController>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     void Start()
@@ -70,43 +73,43 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     {
         if (canAttack)
         {
-        timeSinceLastHurt += Time.deltaTime;
-        timeSinceLastAttack += Time.deltaTime;
-        if (timeSinceLastAttack > attackTimeout)
-        {
-            isAttacking = false;
-        }
+            timeSinceLastHurt += Time.deltaTime;
+            timeSinceLastAttack += Time.deltaTime;
+            if (timeSinceLastAttack > attackTimeout)
+            {
+                isAttacking = false;
+            }
 
-        // Detect attack input (on button down)
-        if (Input.GetButtonDown(ATTACK_AXIS))
-        {
-            Attack();
-        }
+            // Detect attack input (on button down)
+            if (Input.GetButtonDown(ATTACK_AXIS))
+            {
+                Attack();
+            }
 
-        // Detect sheathing input (on button down)
-        if (Input.GetButtonDown(SHEATHE_AXIS))
-        {
-            SetWeaponSheathed(HasWeaponOut);
-        }
+            // Detect sheathing input (on button down)
+            if (Input.GetButtonDown(SHEATHE_AXIS))
+            {
+                SetWeaponSheathed(HasWeaponOut);
+            }
 
-        // Detect blocking input (on button down)
-        if (Input.GetButtonDown(BLOCK_AXIS))
-        {
-            SetBlock(true);
-        }
-        else if (Input.GetButtonUp(BLOCK_AXIS))
-        {
-            SetBlock(false);
-        }
+            // Detect blocking input (on button down)
+            if (Input.GetButtonDown(BLOCK_AXIS))
+            {
+                SetBlock(true);
+            }
+            else if (Input.GetButtonUp(BLOCK_AXIS))
+            {
+                SetBlock(false);
+            }
 
-        CheckDeath();
-    }
+            CheckDeath();
+        }
     }
 
     // Sheathe/Unsheathe weapon
     public void SetWeaponSheathed(bool sheathe)
     {
-        if(weapon != null)
+        if (weapon != null)
             weapon.gameObject.SetActive(!sheathe);
 
         HasWeaponOut = !sheathe;
@@ -129,7 +132,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     private void Attack()
     {
-        if (!HasWeaponOut)   
+        if (!HasWeaponOut)
             SetWeaponSheathed(false); // take out weapon if its not already out
         else
             Swing();
@@ -180,25 +183,33 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     }
 
     public void Stagger()
-                {
+    {
         animator.TriggerHit();
-                }
+        SetStunned(1);
+    }
+    public void SetStunned(int stunned)
+    {
+        if (stunned == 1)
+            playerMovement.stunned = true;
+        else
+            playerMovement.stunned = false;
+    }
 
     // Check if we should be dead
     private void CheckDeath()
-                {
+    {
         if (!IsDead && Stats.CurrentHealth <= 0)
         {
             IsDead = true;
             Die();
             //StartCoroutine(Die());
-                }
-            }
+        }
+    }
     // Kills this Character
     public void Kill()
     {
         Stats.TakeDamage(Stats.CurrentHealth, "Kill Command");
-        }
+    }
 
     // Death cleanup and Sequence
     private void Die()
@@ -208,11 +219,11 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         InCombat = false;
 
         if (ragdollPrefab != null)
-    {
+        {
             // Spawn ragdoll and have it match our pose
             GameObject ragdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
             ragdoll.GetComponent<Ragdoll>().MatchPose(gameObject.GetComponentsInChildren<Transform>());
-    }
+        }
 
         //gameObject.SetActive(false);
 
@@ -224,7 +235,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         if (weapon != null)
             return (int)((weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[attackHurtbox]);
         else
-            return 0; 
+            return 0;
     }
 
     public void ApplyLoad()
