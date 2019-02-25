@@ -25,7 +25,8 @@ public class NPCAnimationController : MonoBehaviour
 
     void Awake()
     {
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         combatController = GetComponent<NPCCombatController>();
         controller = GetComponent<LesserNPCController>();
         agent = GetComponent<NavMeshAgent>();
