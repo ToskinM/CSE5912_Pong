@@ -51,7 +51,6 @@ public class PlayerSoundEffect : MonoBehaviour
 
     public void AnaiRunSFX()
     {
-        Debug.Log("hi");
         if (runStep == 0)
             audioManager.Play("AnaiRun");
         runStep++;

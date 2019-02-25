@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
         terrain = GameObject.Find("Terrain").GetComponent<TerrainCollider>();
         body = GetComponent<Rigidbody>();
         cameraScript = Camera.main.GetComponent<FollowCamera>();
-        playerSoundEffect = GetComponent<PlayerSoundEffect>();
+        playerSoundEffect = GameObject.Find("Anai").GetComponent<PlayerSoundEffect>();
     }
 
     void Start()
@@ -68,6 +68,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     {
         // Damping
         body.velocity *= 0.98f;
+        isAnai = GameObject.Find("Anai").GetComponent<AnaiController>().Playing;
     }
 
     void SetMovementState()
@@ -79,7 +80,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
                 Action = Actions.Running;
                 moveSpeed = runSpeed;
             }
-            playerSoundEffect.AnaiRunSFX();
+            if (isAnai)
+                playerSoundEffect.AnaiRunSFX();
         }
         else if (Input.GetButton("Crouch") && Action != Actions.Running)
         {
@@ -95,11 +97,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
             {
                 Action = Actions.Walking;
                 moveSpeed = walkSpeed;
-                //if (footstep == 0)
+                if (isAnai)
                     playerSoundEffect.AnaiWalkingSFX();
-                //footstep++;
-                //if (footstep == footstepTime)
-                    //footstep = 0;
             }
         }
     }
