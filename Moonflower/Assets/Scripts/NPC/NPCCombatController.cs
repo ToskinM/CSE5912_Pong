@@ -20,7 +20,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
     public GameObject deathEffect;
 
-    [HideInInspector] public bool isAttacking;
+    public bool isAttacking;
     public Weapon weapon;
     [HideInInspector] public int attack;
     [HideInInspector] public GameObject combatTarget = null;
@@ -30,7 +30,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     private float deaggroTime = 3;
     private Coroutine deaggroCoroutine = null;
     public float attackDistance = 2.6f;
-    [HideInInspector] public float attackTimeout = 0.5f;
+    [HideInInspector] public float attackTimeout = 20f;
     private float timeSinceLastAttack;
 
     private FieldOfView fieldOfView;
@@ -76,11 +76,15 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     void Update()
     {
         timeSinceLastHurt += Time.deltaTime;
-
         timeSinceLastAttack += Time.deltaTime;
         if (timeSinceLastAttack > attackTimeout)
         {
             isAttacking = false;
+        }
+
+        if (npcMovement)
+        {
+            npcMovement.swinging = isAttacking;
         }
 
         if (Active)
@@ -167,7 +171,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         Active = true;
         SetWeaponSheathed(false);
         InCombat = true;
-        isAttacking = true;
+        //isAttacking = true;
         combatTarget = player;
     }
 
@@ -331,7 +335,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     // Death cleanup and Sequence
     private IEnumerator Die()
     {
-        Debug.Log(gameObject.name + " has died");
+        //Debug.Log(gameObject.name + " has died");
 
         // Tell the tracker we have died
         SceneTracker.current.RegisterNPCDeath(gameObject);

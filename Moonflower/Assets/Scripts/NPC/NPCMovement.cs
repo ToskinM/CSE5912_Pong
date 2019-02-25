@@ -17,6 +17,7 @@ public class NPCMovement : MonoBehaviour, IMovement
     public bool FollowingPlayer { get; set; } = false;
 
     public bool stunned;
+    public bool swinging;
 
     public GameObject player;
     GameObject self;
@@ -143,8 +144,8 @@ public class NPCMovement : MonoBehaviour, IMovement
         if (!agent.enabled)
             agent.enabled = true;
 
-        // Stop moving if we're stunned
-        if (stunned)
+        // Dont move if we're stunned or swinging our weapon
+        if (stunned || swinging)
         {
             Chill();
         }

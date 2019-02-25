@@ -101,13 +101,6 @@ public class NPCAnimationController : MonoBehaviour
         attackHurtboxes[index].Disable();
     }
 
-    private void CleanHurtboxes()
-    {
-        for (int i = 0; i < attackHurtboxes.Length; i++)
-        {
-        }
-    }
-
     // Disable updates when gaame is paused
     void HandlePauseEvent(bool isPaused)
     {
