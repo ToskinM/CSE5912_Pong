@@ -18,10 +18,11 @@ public class AmaruAnimatorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (agent.velocity.magnitude > 0.1)
+        if (agent.velocity.magnitude > 0)
         {
             animator.SetBool("Walking", true);
             animator.SetBool("Waiting", false);
+            animator.SetBool("Talking", false);
         }
         else
         {
