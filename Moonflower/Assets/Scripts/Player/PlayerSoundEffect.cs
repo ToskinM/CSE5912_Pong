@@ -6,9 +6,15 @@ public class PlayerSoundEffect : MonoBehaviour
 {
     private AudioManager audioManager;
     private bool walk;
+    private int footstep;
+    private int runStep;
+    public int footstepTime = 8;
+    public int runStepTime = 5;
+
     // Start is called before the first frame update
     void Start()
     {
+        footstep = 0;
         walk = false;
         StartCoroutine(GetAudioManager());
     }
@@ -17,8 +23,7 @@ public class PlayerSoundEffect : MonoBehaviour
         while (audioManager == null)
         {
             audioManager = FindObjectOfType<AudioManager>();
-            yield return null;
-        }
+            yield return null;     }
     }
     public void AnaiAttackSFX()
     {
@@ -26,7 +31,12 @@ public class PlayerSoundEffect : MonoBehaviour
     }
     public void AnaiWalkingSFX()
     {
-        audioManager.Play("AnaiWalking");
+        if (footstep == 0)
+            audioManager.Play("AnaiWalking");
+        footstep++;
+        if (footstep == footstepTime)
+            footstep = 0;
+
     }
 
     public void AnaiPunchSFX()
@@ -38,7 +48,15 @@ public class PlayerSoundEffect : MonoBehaviour
     {
         audioManager.Play("AnaiKick");
     }
-    
+
+    public void AnaiRunSFX()
+    {
+        if (runStep == 0)
+            audioManager.Play("AnaiRun");
+        runStep++;
+        if (runStep == runStepTime)
+            runStep = 0;
+    }
     public void PlayerPickupSFX()
     {
         audioManager.Play("PlayerPickup");

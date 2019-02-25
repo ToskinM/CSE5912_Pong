@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     private bool onGround = true;
     private FollowCamera cameraScript;
     private AudioManager audioManager;
+    private PlayerSoundEffect playerSoundEffect;
 
     //follow variables
     private BoxCollider boxCollider;
@@ -30,6 +31,9 @@ public class PlayerMovement : MonoBehaviour, IMovement
     const float tooCloseRadius = 4f;
     public GameObject otherCharacter;
     public float smoothTime = 2f;
+
+    private int footstep;
+    public int footstepTime = 5;
 
     private Quaternion rotation = Quaternion.identity;
 
@@ -41,6 +45,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
         terrain = GameObject.Find("Terrain").GetComponent<TerrainCollider>();
         body = GetComponent<Rigidbody>();
         cameraScript = Camera.main.GetComponent<FollowCamera>();
+        playerSoundEffect = GameObject.Find("Anai").GetComponent<PlayerSoundEffect>();
     }
 
     void Start()
@@ -55,7 +60,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
         Action = Actions.Chilling;
         Jumping = false;
-
+        footstep = 0;
         GameStateController.OnPaused += HandlePauseEvent;
     }
 
@@ -63,6 +68,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     {
         // Damping
         body.velocity *= 0.98f;
+        isAnai = GameObject.Find("Anai").GetComponent<AnaiController>().Playing;
     }
 
     void SetMovementState()
@@ -74,6 +80,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
                 Action = Actions.Running;
                 moveSpeed = runSpeed;
             }
+            if (isAnai)
+                playerSoundEffect.AnaiRunSFX();
         }
         else if (Input.GetButton("Crouch") && Action != Actions.Running)
         {
@@ -89,7 +97,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
             {
                 Action = Actions.Walking;
                 moveSpeed = walkSpeed;
-                //GetComponent<PlayerSoundEffect>().AnaiWalkingSFX();
+                if (isAnai)
+                    playerSoundEffect.AnaiWalkingSFX();
             }
         }
     }
