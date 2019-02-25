@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface INPCMovement
 {
-
+    bool Active { get; set; }
 }
