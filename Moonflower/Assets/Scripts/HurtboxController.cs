@@ -5,13 +5,18 @@ using UnityEngine;
 public class HurtboxController : MonoBehaviour
 {
     [HideInInspector] public GameObject source;
+    [HideInInspector] public CharacterStats sourceCharacterStats;
 
     public int damage;
-    public CharacterStats sourceCharacterStats;
+
+    private void Awake()
+    {
+        source = gameObject.transform.root.gameObject;
+        sourceCharacterStats = source.GetComponent<CharacterStats>();
+    }
 
     void Start()
     {
-        source = gameObject.transform.root.gameObject;
         Disable();
     }
 
