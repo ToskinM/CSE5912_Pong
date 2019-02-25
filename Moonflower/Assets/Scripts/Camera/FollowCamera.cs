@@ -45,6 +45,7 @@ public class FollowCamera : MonoBehaviour
         offset = target.position - transform.position;
 
         SceneTracker.current.camera = this;
+        GameStateController.OnPaused += HandlePauseEvent;
     }
 
     void Update()
@@ -277,5 +278,11 @@ public class FollowCamera : MonoBehaviour
             lockonIndicator.SetActive(false);
         }
 
+    }
+
+    // Disable player movement controls when game is paused
+    void HandlePauseEvent(bool isPaused)
+    {
+        enabled = !isPaused;
     }
 }
