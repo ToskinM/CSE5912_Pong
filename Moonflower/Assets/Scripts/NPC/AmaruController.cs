@@ -9,6 +9,7 @@ public class AmaruController : MonoBehaviour
     public GameObject Player;
     public GameObject WalkArea;
     public GameObject DialoguePanel;
+    public bool dialogueActive = false;
 
     const float engagementRadius = 15f;
     const float tooCloseRad = 4f;
@@ -17,8 +18,8 @@ public class AmaruController : MonoBehaviour
     NPCMovement npc;
     NavMeshAgent agent;
     DialogueTrigger talkTrig;
-    IPlayerController playerController; 
-    
+    IPlayerController playerController;
+    Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +65,7 @@ public class AmaruController : MonoBehaviour
         {
             npc.UpdateMovement();
         }
+        dialogueActive = talkTrig.DialogueActive();
 
     }
 
@@ -82,4 +84,6 @@ public class AmaruController : MonoBehaviour
     {
         enabled = !isPaused;
     }
+
+
 }
