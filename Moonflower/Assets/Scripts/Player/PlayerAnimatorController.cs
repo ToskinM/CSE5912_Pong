@@ -12,6 +12,7 @@ public class PlayerAnimatorController : MonoBehaviour
     private const string key_isJump = "IsJump";
     private const string key_isDead = "IsDead";
     private const string key_isCrouch = "IsCrouch";
+    private const string key_isBlock = "IsBlock";
     private Animator animator;
     private PlayerCombatController combatController;
 
@@ -35,6 +36,7 @@ public class PlayerAnimatorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        animator.SetBool(key_isBlock, combatController.IsBlocking);
         animator.SetBool(key_isWalk, movement.Action == Actions.Walking);
         animator.SetBool(key_isRun, movement.Action == Actions.Running);
         animator.SetBool(key_isJump, movement.Jumping);
