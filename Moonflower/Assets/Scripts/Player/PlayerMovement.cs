@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     private FollowCamera cameraScript;
     private AudioManager audioManager;
     private PlayerSoundEffect playerSoundEffect;
-
+    private bool returnGrav = false;
     //follow variables
     private BoxCollider boxCollider;
     const float bufferRadius = 5f;
@@ -268,6 +268,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
     {
         if (collision.collider.Equals(terrain))
         {
+            if(returnGrav)
+                Physics.gravity = new Vector3(0, -88.3f, 0);
             if (!onGround)
             {
                 onGround = true;
@@ -275,7 +277,16 @@ public class PlayerMovement : MonoBehaviour, IMovement
             }
         }
     }
-
+    public void KickJump()
+    {
+        Physics.gravity = new Vector3(0, -22.1f, 0);
+        if (onGround)
+        {
+            body.AddRelativeForce(Vector3.up * 10, ForceMode.Impulse);
+            onGround = false;
+        }
+        returnGrav = true;
+    }
     public void MovementUpdate()
     {
         if (!cameraScript.freeRoam && !cameraScript.switching)
