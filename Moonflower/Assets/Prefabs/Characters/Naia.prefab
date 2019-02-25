@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6900419877611807001}
+  - component: {fileID: 7165297318680436231}
   m_Layer: 9
   m_Name: NPCWeapon
   m_TagString: Untagged
@@ -31,6 +32,19 @@ Transform:
   m_Father: {fileID: 6900419879104588744}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7165297318680436231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6900419877611807000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40dc719ddb0f7048bb2a9ebb520c332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseDamage: 1
 --- !u!1 &6900419877834236489
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,15 +448,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aggression: 2
-  hasWeaponOut: 0
-  weapon: {fileID: 6900419877611807000}
-  deathEffect: {fileID: 0}
-  inCombat: 0
-  isHit: 0
+  ragdollPrefab: {fileID: 0}
+  deathEffect: {fileID: 1270126634788680, guid: 54bd8c7da32a6874bbc9f5487750acaf,
+    type: 3}
   isAttacking: 0
+  weapon: {fileID: 7165297318680436231}
   attack: 0
   combatTarget: {fileID: 0}
   attackDistance: 2.6
+  attackTimeout: 0.5
+  npcMovement: {fileID: 0}
 --- !u!114 &6900419879104588740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,7 +471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackHurtboxes:
-  - {fileID: 4218119674716689794}
+  - {fileID: 9055083406016766410}
 --- !u!95 &6900419879104588747
 Animator:
   serializedVersion: 3
@@ -496,6 +511,8 @@ MonoBehaviour:
   Cunning: 0
   Charisma: 0
   Stealth: 0
+  strengthExperience: 0
+  HUD: {fileID: 0}
 --- !u!195 &6900419879104588743
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -707,11 +724,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hurtbox
       objectReference: {fileID: 0}
-    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
-        type: 3}
-      propertyPath: damage
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -777,17 +789,33 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: damage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: sourceCharacterStats
+      value: 
+      objectReference: {fileID: 6900419879104588741}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e191d953f9f69b468286e1cae6a7f57, type: 3}
---- !u!1 &4218119674716689794 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7298912431453931981, guid: 3e191d953f9f69b468286e1cae6a7f57,
-    type: 3}
-  m_PrefabInstance: {fileID: 6900419878263299151}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2764681446511011961 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
     type: 3}
   m_PrefabInstance: {fileID: 6900419878263299151}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9055083406016766410 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
+    type: 3}
+  m_PrefabInstance: {fileID: 6900419878263299151}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7816da57fe59251489a2c43e5a3e7048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
