@@ -44,6 +44,7 @@ public class NaiaController : MonoBehaviour
         playerController = Player.GetComponent<IPlayerController>();
 
         engageController = EngageOptPanel.GetComponent<EngagementOptionsController>();
+        combatController.npcMovement = movement;
 
         GameStateController.OnPaused += HandlePauseEvent;
     }

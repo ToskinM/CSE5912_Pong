@@ -7,8 +7,14 @@ public class SceneTracker : MonoBehaviour
     public static SceneTracker current;
 
     public new FollowCamera camera; // Reference created in Camera script
+    public GameObject dummyHUD;
+    public AudioManager AudioController;
+    public GameStateController GameStateController;
     public GameObject anai; // Reference created in Anai controller
     public GameObject mimbi; // Reference created in Mimbi controller
+
+
+
     public List<GameObject> npcs = new List<GameObject>(); // NPCs add themselves to this list
     public List<int> deadNPCs = new List<int>(); // NPCs add themselves to this list
     public Dictionary<int, NPCTransformInfo> npcsD = new Dictionary<int, NPCTransformInfo>(); // NPCs add themselves to this list

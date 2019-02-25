@@ -33,7 +33,9 @@ public class CharacterStats : MonoBehaviour
     {
         // Data drive specific values for each separate entity
         //if (HUD.GetComponent<PlayerHealthDisplay>())
-            display = HUD.GetComponent<PlayerHealthDisplay>();
+        if (HUD == null)
+            HUD = SceneTracker.current.dummyHUD;
+        display = HUD.GetComponent<PlayerHealthDisplay>();
     }
 
     // Not sure how combat/interactions are going to be implemented beforehand (script-wise) so just leaving general methods for now
