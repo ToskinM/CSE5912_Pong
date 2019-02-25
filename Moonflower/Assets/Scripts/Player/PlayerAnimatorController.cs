@@ -62,6 +62,10 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.SetTrigger(key_IsHitTrigger);
     }
 
+    public void TriggerDeath()
+    {
+        animator.SetTrigger(key_isDead);
+    }
     public void EnableHurtbox(int index)
     {
         attackHurtboxes[index].Enable(combatController.GetAttackDamage(index));
