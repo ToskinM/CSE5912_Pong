@@ -259,6 +259,12 @@ public class NPCMovement : MonoBehaviour, IMovement
             else
             {
                 Chill();
+
+                // look at target
+                Vector3 relative = player.transform.position - self.transform.position;
+                float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+                //self.transform.rotation = Quaternion.Euler(0, angle, 0);
+                self.transform.rotation = Quaternion.RotateTowards(self.transform.rotation, Quaternion.Euler(0, angle, 0), Time.deltaTime * 300f);
             }
         }
         else
@@ -296,7 +302,6 @@ public class NPCMovement : MonoBehaviour, IMovement
             {
                 pauseCount++;
             }
-
         }
         else
         {

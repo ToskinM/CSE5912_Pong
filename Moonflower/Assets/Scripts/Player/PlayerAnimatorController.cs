@@ -53,6 +53,7 @@ public class PlayerAnimatorController : MonoBehaviour
     public void TriggerAttack()
     {
         // The jump on kick is now called by an animation event
+
         animator.SetTrigger(key_AttackTrigger);
     }
     public void TriggerHit()

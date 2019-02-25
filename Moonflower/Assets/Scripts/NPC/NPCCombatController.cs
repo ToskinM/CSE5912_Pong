@@ -295,6 +295,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
         // Broadcast that we've lost aggro
         OnAggroUpdated?.Invoke(false);
+        npcMovement.Chill();
     }
 
     // Set aggression to Frenzied
