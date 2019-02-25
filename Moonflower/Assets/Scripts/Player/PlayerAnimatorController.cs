@@ -11,6 +11,7 @@ public class PlayerAnimatorController : MonoBehaviour
     private const string key_Attack = "Attack";
     private const string key_isJump = "IsJump";
     private const string key_isDead = "IsDead";
+    private const string key_isCrouch = "IsCrouch";
     private Animator animator;
     private PlayerCombatController combatController;
 
@@ -37,6 +38,7 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.SetBool(key_isWalk, movement.Action == Actions.Walking);
         animator.SetBool(key_isRun, movement.Action == Actions.Running);
         animator.SetBool(key_isJump, movement.Jumping);
+        animator.SetBool(key_isCrouch, movement.Action == Actions.Sneaking);
 
         if (walkParticles || runParticles || standingParticles)
         {
