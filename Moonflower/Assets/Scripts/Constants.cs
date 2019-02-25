@@ -40,6 +40,7 @@ public static class Constants
     public const string PUMPKIN_ICON = itemFolder + "Pumpkin";
     public const string FLUTE_ICON = itemFolder + "Flute";
     public const string JAR_ICON = itemFolder + "Jar";
+    public const string PINEAPPLE_ICON = itemFolder + "Pineapple"; 
 
     //life petal names
     const string flowerFolder = "Life Petals/";

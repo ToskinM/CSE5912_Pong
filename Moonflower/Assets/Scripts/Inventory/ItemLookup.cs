@@ -53,6 +53,8 @@ public class ItemLookup
                 return Resources.Load<Sprite>(Constants.CHIPA_ICON);
             case FLUTE_NAME:
                 return Resources.Load<Sprite>(Constants.FLUTE_ICON);
+            case PINEAPPLE_NAME:
+                return Resources.Load<Sprite>(Constants.PINEAPPLE_ICON);
             default:
                 return null;
         }

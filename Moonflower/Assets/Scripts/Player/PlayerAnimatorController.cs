@@ -11,6 +11,8 @@ public class PlayerAnimatorController : MonoBehaviour
     private const string key_Attack = "Attack";
     private const string key_isJump = "IsJump";
     private const string key_isDead = "IsDead";
+    private const string key_isCrouch = "IsCrouch";
+    private const string key_isBlock = "IsBlock";
     private Animator animator;
     private PlayerCombatController combatController;
 
@@ -19,6 +21,7 @@ public class PlayerAnimatorController : MonoBehaviour
     public GameObject walkParticles;
     public GameObject runParticles;
     public GameObject standingParticles;
+    public PlayerMovement playerMovement { get; set; }
     
     // Start is called before the first frame update
     void Start()
@@ -26,16 +29,18 @@ public class PlayerAnimatorController : MonoBehaviour
         animator = GetComponent<Animator>();
         movement = GetComponent<PlayerMovement>();
         combatController = GetComponent<PlayerCombatController>();
-
+        playerMovement = gameObject.GetComponent<PlayerMovement>();
         GameStateController.OnPaused += HandlePauseEvent;
     }
 
     // Update is called once per frame
     void Update()
     {
+        animator.SetBool(key_isBlock, combatController.IsBlocking);
         animator.SetBool(key_isWalk, movement.Action == Actions.Walking);
         animator.SetBool(key_isRun, movement.Action == Actions.Running);
         animator.SetBool(key_isJump, movement.Jumping);
+        animator.SetBool(key_isCrouch, movement.Action == Actions.Sneaking);
 
         if (walkParticles || runParticles || standingParticles)
         {
@@ -47,6 +52,11 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void TriggerAttack()
     {
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Attack01"))
+        {
+            playerMovement.KickJump();
+        }
+
         animator.SetTrigger(key_AttackTrigger);
     }
     public void TriggerHit()
@@ -54,6 +64,10 @@ public class PlayerAnimatorController : MonoBehaviour
         animator.SetTrigger(key_IsHitTrigger);
     }
 
+    public void TriggerDeath()
+    {
+        animator.SetTrigger(key_isDead);
+    }
     public void EnableHurtbox(int index)
     {
         attackHurtboxes[index].Enable(combatController.GetAttackDamage(index));

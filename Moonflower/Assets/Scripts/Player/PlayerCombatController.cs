@@ -215,7 +215,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     private void Die()
     {
         Debug.Log(gameObject.name + " has died");
-
+        animator.TriggerDeath();
         InCombat = false;
 
         if (ragdollPrefab != null)

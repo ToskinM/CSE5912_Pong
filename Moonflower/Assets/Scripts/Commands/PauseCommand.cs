@@ -17,12 +17,12 @@ public class PauseCommand : ICommand
         if (gameStateController.Paused)
         {
             SceneManager.UnloadSceneAsync(Constants.SCENE_PAUSEMENU);
-            gameStateController.TogglePause();
+            gameStateController.unPauseGame();
         }
         else if (SceneManager.GetActiveScene().name == Constants.SCENE_GAME)
         {
             SceneManager.LoadScene(Constants.SCENE_PAUSEMENU, LoadSceneMode.Additive);
-            gameStateController.TogglePause();
+            gameStateController.PauseGame();
             //SceneManager.SetActiveScene(SceneManager.GetSceneByName(Constants.SCENE_PAUSEMENU));
         }
     }
