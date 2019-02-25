@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4455506336538295113}
-  m_Layer: 9
+  m_Layer: 14
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 4455506336644270065}
   - component: {fileID: 4455506336644270071}
   - component: {fileID: 4455506336644270070}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 4455506336905227649}
   - component: {fileID: 4455506336905227655}
   - component: {fileID: 4455506336905227654}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 4455506337059882366}
   - component: {fileID: 4455506337059882361}
   - component: {fileID: 4455506337059882360}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Pole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 4455506337163549199}
   - component: {fileID: 4455506337163549197}
   - component: {fileID: 4455506337163549196}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: Arms (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,16 +410,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aggression: 0
-  hasWeaponOut: 0
-  weapon: {fileID: 0}
+  ragdollPrefab: {fileID: 0}
   deathEffect: {fileID: 1270126634788680, guid: 54bd8c7da32a6874bbc9f5487750acaf,
     type: 3}
-  inCombat: 0
-  isHit: 0
   isAttacking: 0
+  weapon: {fileID: 0}
   attack: 0
   combatTarget: {fileID: 0}
   attackDistance: 2.6
+  attackTimeout: 0.5
+  npcMovement: {fileID: 0}
 --- !u!136 &4455506337610914227
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -470,6 +470,8 @@ MonoBehaviour:
   Cunning: 0
   Charisma: 0
   Stealth: 0
+  strengthExperience: 0
+  HUD: {fileID: 0}
 --- !u!95 &4455506337610914231
 Animator:
   serializedVersion: 3
@@ -538,7 +540,7 @@ GameObject:
   - component: {fileID: 4455506337901184414}
   - component: {fileID: 4455506337901184409}
   - component: {fileID: 4455506337901184408}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -628,6 +630,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FieldOfViewMesh (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1473994413046636443, guid: 1cb3c902b5c416142bc5d83825a46fe8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1473994413046636439, guid: 1cb3c902b5c416142bc5d83825a46fe8,
         type: 3}

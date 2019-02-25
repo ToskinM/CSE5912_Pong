@@ -28,9 +28,10 @@ public class FollowCamera : MonoBehaviour
 
     private readonly float freeRoamMoveSpeed = 0.4f;
     private readonly float yRotationMax = 60f;
-    private readonly float yRotationMin = -30;
-    private readonly float followDistanceMax = 3f;
+    private readonly float yRotationMin = -15f;
+    private readonly float followDistanceMax = 2f;
     private readonly float followDistanceMin = 0.5f;
+    private readonly float collisionOffsetMultiplier = 0.5f;
 
     private void Awake()
     {
@@ -122,7 +123,7 @@ public class FollowCamera : MonoBehaviour
                 {
                     //the x and z coordinates are pushed away from the wall by hit.normal.
                     //the y coordinate stays the same.
-                    newPosition = new Vector3(wallHit.point.x + wallHit.normal.x * 0.2f, newPosition.y, wallHit.point.z + wallHit.normal.z * 0.2f);
+                    newPosition = new Vector3(wallHit.point.x + wallHit.normal.x * collisionOffsetMultiplier, newPosition.y, wallHit.point.z + wallHit.normal.z * collisionOffsetMultiplier);
                 }
             }
             
