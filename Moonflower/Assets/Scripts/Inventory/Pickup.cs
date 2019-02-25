@@ -32,7 +32,7 @@ public class Pickup : MonoBehaviour
         playerStat = PlayerAnai.GetComponent<CharacterStats>();
         playerInventory = PlayerAnai.GetComponent<PlayerInventory>();
         soundEffect = PlayerAnai.GetComponent<PlayerSoundEffect>();
-        CurrentPlayer = PlayerAnai;
+        CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
     }
 
     //private IEnumerator GetAudioManager()
@@ -111,19 +111,16 @@ public class Pickup : MonoBehaviour
         inventoryAdd.SetText(s);
     }
 
-    private void CheckCurrentPlayer()
+    private void UpdateCurrentPlayer()
     {
-        if (PlayerAnai.GetComponent<AnaiController>().Playing == true)
-            CurrentPlayer = PlayerAnai;
-        else
-            CurrentPlayer = PlayerMimbi;
+        CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        CheckCurrentPlayer();
+        UpdateCurrentPlayer();
 
         GameObject closest = FindClosest();
         if (Vector3.Distance(FindClosest().transform.position, CurrentPlayer.transform.position) <= distanceToPickup)

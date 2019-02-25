@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     private bool blockOffCooldown;
     private bool onGround = true;
     private FollowCamera cameraScript;
-    private AudioManager audioManager;
+    //private AudioManager audioManager;
     private PlayerSoundEffect playerSoundEffect;
     private bool returnGrav = false;
     //follow variables

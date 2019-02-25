@@ -61,7 +61,12 @@ public class PlayerSoundEffect : MonoBehaviour
     {
         audioManager.Play("PlayerPickup");
     }
-    
+
+    public void MimbiAttackSFX()
+    {
+        audioManager.Play("MimbiAttack");
+    }
+
 // Update is called once per frame
     void Update()
     {

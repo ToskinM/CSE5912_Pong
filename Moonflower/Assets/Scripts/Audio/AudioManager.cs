@@ -75,6 +75,7 @@ public class AudioManager : MonoBehaviour
         if (s != null)
         {
             s.source.Play();
+            Debug.Log("I am Playing "+ s.name);
         }
         else if (s.source = null)
         { Debug.Log("why no audio source!?"); }

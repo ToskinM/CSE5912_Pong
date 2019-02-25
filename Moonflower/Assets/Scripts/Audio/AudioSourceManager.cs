@@ -6,11 +6,11 @@ public class AudioSourceManager : MonoBehaviour
 {
     public GameObject Anai;
     public GameObject Mimbi;
-    private GameObject Player;
+    private GameObject CurrentPlayer;
     // Start is called before the first frame update
     void Start()
     {
-        
+        CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
     }
 
     public AudioSource GetAnaiAudioSource()
@@ -23,11 +23,7 @@ public class AudioSourceManager : MonoBehaviour
     }
     public AudioSource GetCurrentPlayerAudioSource()
     {
-        if (Anai.GetComponent<AnaiController>().Playing == true)
-            Player = Anai;
-        else
-            Player = Mimbi;
-        return Player.GetComponent<AudioSource>();
+        return CurrentPlayer.GetComponent<AudioSource>();
     }
 
 

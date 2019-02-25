@@ -26,6 +26,10 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     private int damage;
     public GameObject blockPlaceholder;
 
+    private GameObject currentPlayer;
+    private GameObject anai;
+    private GameObject mimbi;
+
     private float timeSinceLastHurt;
     private float timeSinceLastAttack;
     private readonly float hurtDelay = 0.5f;
@@ -36,8 +40,8 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     private const string BLOCK_AXIS = "Block";
     private const string SHEATHE_AXIS = "Sheathe/Unsheathe";
 
-    private AudioManager audioManager;
-
+    //private AudioManager audioManager;
+    private PlayerSoundEffect playerSoundEffect;
 
     void Awake()
     {
@@ -55,22 +59,19 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         }
         blockPlaceholder.SetActive(IsBlocking);
 
-        StartCoroutine(GetAudioManager());
-
         GameStateController.OnPaused += HandlePauseEvent;
+
+        anai = GameObject.Find("Anai");
+        mimbi = GameObject.Find("Anai");
+
+        playerSoundEffect = GameObject.Find("Anai").GetComponent<PlayerSoundEffect>();
+        currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
     }
 
-    private IEnumerator GetAudioManager()
-    {
-        while (audioManager == null)
-        {
-            audioManager = FindObjectOfType<AudioManager>();
-            yield return null;
-        }
-    }
 
     void Update()
     {
+        UpdateCurrentPlayer();
         if (canAttack)
         {
             timeSinceLastHurt += Time.deltaTime;
@@ -136,6 +137,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
             SetWeaponSheathed(false); // take out weapon if its not already out
         else
             Swing();
+
     }
     private void Swing()
     {
@@ -143,6 +145,11 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         timeSinceLastAttack = 0f;
 
         animator.TriggerAttack();
+        if (currentPlayer = anai)
+            playerSoundEffect.AnaiAttackSFX();
+        else
+            playerSoundEffect.MimbiAttackSFX();
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -186,6 +193,8 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     {
         animator.TriggerHit();
         SetStunned(1);
+        if (currentPlayer = anai)
+            playerSoundEffect.AnaiPunchSFX();
     }
     public void SetStunned(int stunned)
     {
@@ -246,14 +255,15 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         damage = weapon.baseDamage;
     }
 
-    public void PlayAttackSFX()
-    {
-        audioManager.Play("AttackSwing");
-    }
 
     // Disable player combat controls when game is paused
     void HandlePauseEvent(bool isPaused)
     {
         enabled = !isPaused;
+    }
+
+    private void UpdateCurrentPlayer()
+    {
+        currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
     }
 }
