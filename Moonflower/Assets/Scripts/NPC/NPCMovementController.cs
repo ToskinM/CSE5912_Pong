@@ -7,6 +7,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
 {
     public Actions Action { get; set; }
     public bool Jumping { get; set; }
+    public bool Active { get; set; } = true; 
 
     public enum MoveState { follow, wander, wanderfollow, chill }
     public MoveState state = MoveState.chill;
@@ -195,75 +196,77 @@ public class NPCMovementController : MonoBehaviour, IMovement
 
     public void UpdateMovement()
     {
-        if (!agent.enabled)
-            agent.enabled = true;
-
-
-        if (stunned || swinging)
+        if (Active)
         {
-            Chill(); 
-        }
+            if (!agent.enabled)
+                agent.enabled = true;
 
-        // Dont move if we're stunned or swinging our weapon
-        switch (state)
-        {
-            case MoveState.wander:
-                if (canWander)
-                {
-                    //Debug.Log("I'm wandering!!");
-                    wander.UpdateMovement();
-                    Action = wander.Action;
-                }
-                break;
-            case MoveState.follow:
-                if (canFollow)
-                { 
-                    //Debug.Log("I'm following");
-                    follow.UpdateMovement();
-                    Action = follow.Action; 
-                }
-                break;
-            case MoveState.wanderfollow:
-                if (canWander && canFollow)
-                {
-                    float maxDist = wander.wanderAreaRadius; 
-                    if (DistanceFrom(target) < maxDist*1.3f && !gettingBack)
+
+            if (stunned || swinging)
+            {
+                Chill();
+            }
+
+            // Dont move if we're stunned or swinging our weapon
+            switch (state)
+            {
+                case MoveState.wander:
+                    if (canWander)
                     {
-
-                        wander.SetOrigin(target.transform.position);
+                        Debug.Log("I'm wandering!!");
                         wander.UpdateMovement();
                         Action = wander.Action;
                     }
-                    else 
+                    break;
+                case MoveState.follow:
+                    if (canFollow)
                     {
+                        Debug.Log("I'm following");
                         follow.UpdateMovement();
                         Action = follow.Action;
-                        gettingBack = DistanceFrom(target) > maxDist / 1.7; 
-                        if(!gettingBack)
+                    }
+                    break;
+                case MoveState.wanderfollow:
+                    if (canWander && canFollow)
+                    {
+                        float maxDist = wander.wanderAreaRadius;
+                        if (DistanceFrom(target) < maxDist * 1.3f && !gettingBack)
                         {
-                            wander.ResumeMovement(); 
+
+                            wander.SetOrigin(target.transform.position);
+                            wander.UpdateMovement();
+                            Action = wander.Action;
+                        }
+                        else
+                        {
+                            follow.UpdateMovement();
+                            Action = follow.Action;
+                            gettingBack = DistanceFrom(target) > maxDist / 1.7;
+                            if (!gettingBack)
+                            {
+                                wander.ResumeMovement();
+                            }
                         }
                     }
-                }
-                break;
-            case MoveState.chill:
-                //Debug.Log("I'm chilling");
-                break;
-            default:
-                break;
-        }
-
-        if (stickingAround)
-        {
-            stickAroundCount++;
-            if (stickAroundCount > stickAroundMax * 60)
-            {
-                state = defaultState; 
-                stickingAround = false;
-                stickAroundCount = 0;
+                    break;
+                case MoveState.chill:
+                    //Debug.Log("I'm chilling");
+                    break;
+                default:
+                    break;
             }
-        }
-            
+
+            if (stickingAround)
+            {
+                stickAroundCount++;
+                if (stickAroundCount > stickAroundMax * 60)
+                {
+                    state = defaultState;
+                    stickingAround = false;
+                    stickAroundCount = 0;
+                }
+            }
+        }  
         
     }
 

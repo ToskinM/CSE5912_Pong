@@ -37,8 +37,6 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
     {
         commonSetup(selfOb, targetOb);
 
-        //default
-        destination = new Vector3(0, 0, 0);
 
     }
 
@@ -48,7 +46,6 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
         commonSetup(selfOb, targetOb);
 
         followDist = followDistance;
-        self.transform.position = destination;
     }
 
     //initialize so player CAN wander CANNOT engage
@@ -58,7 +55,6 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
 
         followDist = followDistance;
         tooCloseRadius = tooCloseDistance; 
-        self.transform.position = destination;
     }
 
 
@@ -69,7 +65,7 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
         Target = targetOb;
         agent = self.GetComponent<NavMeshAgent>();
         baseSpeed = agent.speed * 1.5f;
-
+        destination = selfOb.transform.position;
     }
 
 
