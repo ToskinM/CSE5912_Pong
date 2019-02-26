@@ -75,7 +75,7 @@ public class AudioManager : MonoBehaviour
         if (s != null)
         {
             s.source.Play();
-            Debug.Log("I am Playing "+ s.clip);
+            //Debug.Log("I am Playing "+ s.clip +" "+ s.source.volume);
         }
         else if (s.source = null)
         { Debug.Log("why no audio source!?"); }
@@ -112,7 +112,7 @@ public class AudioManager : MonoBehaviour
     public void ChangeVolume(string name,float vol)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.source.volume = vol;
+            s.source.volume = vol;
     }
 
     //Change Volume
@@ -128,7 +128,7 @@ public class AudioManager : MonoBehaviour
     {
         foreach (Sound s in category)
         {
-            s.source.volume = vol;
+                s.source.volume = vol;
             avalibleArea.HearableArea(s.source, vol);
         }
     }

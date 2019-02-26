@@ -9,26 +9,30 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
     public bool Jumping { get; set; }
 
     public bool Active { get; set; }
-    public bool AvoidsPlayer { get; set; } = false;
+    public bool AvoidsTarget { get; set; } = false;
     public bool stunned;
     public bool swinging;
 
-    public GameObject player;
+    public GameObject target;
     GameObject self;
     //bool canWander;
 
     NavMeshAgent agent;
     Vector3 destination;
-    Vector3 wanderAreaOrigin;
-    float wanderAreaRadius = 5f; //default
 
-    float avoidsPlayerRadius = 10f;
+
+    public Vector3 wanderAreaOrigin;
+    public float wanderAreaRadius = 5f; //default
+    float avoidsTargetRadius = 10f;
+
+
 
     const float bufferDist = .2f; //max dist from destination point before going somewhere else
     int pauseCount = 0; //keeps track of how long NPC has been chilling at destination
     int lingerLength; //length of pause 
     const int smallPause = 1, largePause = 4; //max and min pause lengths
 
+    float baseSpeed; 
 
     void Start()
     {
@@ -36,10 +40,10 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
     }
 
     //initialize so player CANNOT wander CANNOT engage
-    public NPCWanderMove(GameObject selfOb, GameObject playerOb)
+    public NPCWanderMove(GameObject selfOb)
     {
         Active = false; 
-        commonSetup(selfOb, playerOb);
+        commonSetup(selfOb);
 
         //default
         destination = new Vector3(0, 0, 0);
@@ -48,10 +52,23 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
     }
 
     //initialize so player CAN wander CANNOT engage
-    public NPCWanderMove(GameObject selfOb, GameObject playerOb, Vector3 wanderOrigin, float wanderRadius)
+    public NPCWanderMove(GameObject selfOb, Vector3 wanderOrigin, float wanderRadius)
     {
         Active = true; 
-        commonSetup(selfOb, playerOb);
+        commonSetup(selfOb);
+
+        wanderAreaOrigin = wanderOrigin;
+        wanderAreaRadius = wanderRadius;
+        destination = getRandomDest();
+        self.transform.position = destination;
+    }
+
+    //initialize so player CAN wander CANNOT engage
+    public NPCWanderMove(GameObject selfOb, Vector3 wanderOrigin, float wanderRadius, GameObject avoidTarget)
+    {
+        target = avoidTarget; 
+        Active = true;
+        commonSetup(selfOb);
 
         wanderAreaOrigin = wanderOrigin;
         wanderAreaRadius = wanderRadius;
@@ -60,13 +77,13 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
     }
 
     //called by all constructors
-    private void commonSetup(GameObject selfOb, GameObject playerOb)
+    private void commonSetup(GameObject selfOb)
     {
-        player = playerOb;
         self = selfOb;
         agent = self.GetComponent<NavMeshAgent>();
 
         lingerLength = getRandomPause();
+        baseSpeed = agent.speed;
     }
 
 
@@ -74,14 +91,14 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
     {
         if (Active)
         {
-            float destDistFromPlayer = Vector3.Distance(player.transform.position, destination);
-            if (AvoidsPlayer && destDistFromPlayer < avoidsPlayerRadius)
+            float distFromTarget = getXZDist(target.transform.position, self.transform.position);
+            if (AvoidsTarget && distFromTarget < avoidsTargetRadius)
             {
                 agent.isStopped = false;
-                //Action = Actions.Walking;
-                destination = getRandomDest();
+                backup(); 
             }
 
+            agent.speed = baseSpeed; 
             bool atDest = getXZDist(self.transform.position, destination) <= bufferDist;
             if (atDest && !agent.isStopped)
             {
@@ -141,8 +158,8 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
     //make sure npc give player a bit of space 
     public void SetAvoidsPlayerRadius(float dist)
     {
-        AvoidsPlayer = true;
-        avoidsPlayerRadius = dist;
+        AvoidsTarget = true;
+        avoidsTargetRadius = dist;
     }
 
     //stop NPC movement
@@ -159,6 +176,17 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
             Action = Actions.Walking;
         agent.isStopped = false;
         agent.SetDestination(loc);
+    }
+
+    private void backup()
+    {
+
+        Vector3 targetDirection = self.transform.position - target.transform.position;
+        Vector3 newDest = self.transform.position + targetDirection.normalized * 10;
+        destination = getRandomDest(newDest, 1f);
+        GoHere(destination);
+        agent.speed *= 2;
+
     }
 
     // always gets a reachable point on the navmesh
@@ -183,9 +211,9 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
             viablePosition = NavMesh.SamplePosition(new Vector3(x, self.transform.position.y, z), out hit, radius, NavMesh.AllAreas);
             viablePath = agent.CalculatePath(hit.position, new NavMeshPath());
 
-            if (AvoidsPlayer && viablePath)
+            if (AvoidsTarget && viablePath)
             {
-                notTooClose = getXZDist(hit.position, player.transform.position) > avoidsPlayerRadius;
+                notTooClose = getXZDist(hit.position, target.transform.position) > avoidsTargetRadius;
             }
             count++;
 

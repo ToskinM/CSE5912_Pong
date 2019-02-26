@@ -7,15 +7,16 @@ using TMPro;
 public class AmaruController : MonoBehaviour
 {
     public GameObject Player;
-    public GameObject WalkArea;
+    public GameObject WalkCenter;
     public GameObject DialoguePanel;
     public bool dialogueActive = false;
 
     const float engagementRadius = 15f;
     const float tooCloseRad = 4f;
-    const float bufferDist = 5f; 
+    const float bufferDist = 5f;
+    const float wanderRad = 30f; 
     bool engaging = false;
-    NPCMovement npc;
+    NPCMovementController npc;
     NavMeshAgent agent;
     DialogueTrigger talkTrig;
     IPlayerController playerController;
@@ -25,12 +26,11 @@ public class AmaruController : MonoBehaviour
     void Start()
     {
         //npc = gameObject.AddComponent<NPCMovement>();
-        float walkRad = WalkArea.GetComponent<Renderer>().bounds.size.x;
-        Vector3 walkOrigin = WalkArea.GetComponent<Renderer>().bounds.center;
         agent = GetComponent<NavMeshAgent>();
 
-        npc = new NPCMovement(gameObject, Player, walkOrigin, walkRad, engagementRadius);
-        npc.SetEngagementDistances(engagementRadius, bufferDist, tooCloseRad);
+        npc = new NPCMovementController(gameObject);
+        npc.FollowPlayer(bufferDist, tooCloseRad); 
+        npc.Wander(WalkCenter.transform.position, wanderRad);
 
         talkTrig = new DialogueTrigger(DialoguePanel, Constants.AMARU_ICON, Constants.AMARU_INTRO_DIALOGUE);
         playerController = Player.GetComponent<IPlayerController>();
@@ -48,13 +48,14 @@ public class AmaruController : MonoBehaviour
 
             npc.UpdateMovement();
 
-            if (npc.Engaging && !talkTrig.Complete)
+            if (npc.DistanceFrom(Player) < engagementRadius && !talkTrig.Complete)
             {
                 startEngagement();
+                npc.Follow(); 
             }
-            else if (!npc.Wandering)
+            else if (npc.state != NPCMovementController.MoveState.wander)
             {
-                npc.ResumeWandering();
+                npc.Wander();
                 if (talkTrig.DialogueActive())
                 {
                     talkTrig.EndDialogue();

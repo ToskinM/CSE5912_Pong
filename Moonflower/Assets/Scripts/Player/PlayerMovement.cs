@@ -124,8 +124,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
             if (Action != Actions.Running)
             {
                 body.AddForce(new Vector3(0f, 30f, 0f), ForceMode.Impulse);
-            } else { 
-            
+            } else {
+
                 body.AddForce(new Vector3(0f, 40f, 0f), ForceMode.Impulse);
             }
 
@@ -234,7 +234,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
             SetMovementState();
 
             DetectDodgeInput(new Vector3(0f, 0f, 30f));
-        
+
             // Dertermine angle we should face from input angle
             float angle = Mathf.Atan2(horizontalInput, verticalInput) * (180 / Mathf.PI);
             angle += cameraScript.transform.rotation.eulerAngles.y;
@@ -268,7 +268,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.Equals(terrain))
+        if (transform.InverseTransformDirection(collision.transform.position).y < 0)
         {
             if(returnGrav)
                 Physics.gravity = new Vector3(0, -88.3f, 0);
