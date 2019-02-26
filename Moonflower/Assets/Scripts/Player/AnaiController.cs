@@ -85,7 +85,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
             tag = "Companion";
             agent.enabled = true;
             playerAnimate.movement = npcMove;
-            boxCollider.enabled = false;
+            //boxCollider.enabled = false;
         }
     }
 
