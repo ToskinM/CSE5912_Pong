@@ -10,7 +10,8 @@ public class CurrentPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        DontDestroyOnLoad(gameObject);
+
     }
     private void CheckCurrentPlayer()
     {
@@ -26,6 +27,15 @@ public class CurrentPlayer : MonoBehaviour
     {
         return CurrentPlayerObj;
     }
+    public GameObject GetAnai()
+    {
+        return PlayerAnaiObj;
+    }
+    public GameObject GetMimbi()
+    {
+        return PlayerMimbiObj;
+    }
+
     // Update is called once per frame
     void Update()
     {

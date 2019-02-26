@@ -21,6 +21,7 @@ public class PlayerHealthDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Anai = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetAnai();
         appleControl = new LifeAppleController(Apple);
         flowerControl = new LifeFlowerController(Flower);
         anaiController = Anai.GetComponent<AnaiController>();

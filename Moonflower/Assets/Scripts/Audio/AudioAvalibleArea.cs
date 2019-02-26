@@ -12,19 +12,15 @@ public class AudioAvalibleArea : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerAnai = GameObject.Find("Anai");
-        PlayerMimbi = GameObject.Find("Mimbi");
+        GetCurrentPlayer();
     }
-    private void CheckCurrentPlayer()
+    private void GetCurrentPlayer()
     {
-        if (PlayerAnai.GetComponent<AnaiController>().Playing == true)
-            CurrentPlayer = PlayerAnai;
-        else
-            CurrentPlayer = PlayerMimbi;
+        CurrentPlayer = GameObject.Find("Player");
     }
     public void HearableArea(AudioSource audioSource, float volume)
     {
-        CheckCurrentPlayer();
+        GetCurrentPlayer();
         Vector3 x = CurrentPlayer.transform.position;
         if (Vector3.Distance(audioSource.transform.position, CurrentPlayer.transform.position) <= hearableRadius)
         {

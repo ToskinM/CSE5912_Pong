@@ -47,20 +47,22 @@ public class Pickup : MonoBehaviour
     private GameObject FindClosest()
     {
         allCollidable = GameObject.FindGameObjectsWithTag("Collectable");
-        GameObject nearestObj = allCollidable[0];
-        float nearest = Vector3.Distance(allCollidable[0].transform.position, CurrentPlayer.transform.position);
-        foreach (GameObject g in allCollidable)
-        {
-            if (Vector3.Distance(g.transform.position, CurrentPlayer.transform.position) < nearest)
+
+            GameObject nearestObj = allCollidable[0];
+            float nearest = Vector3.Distance(allCollidable[0].transform.position, CurrentPlayer.transform.position);
+            foreach (GameObject g in allCollidable)
             {
-                nearest = Vector3.Distance(g.transform.position, CurrentPlayer.transform.position);
-                nearestObj = g;
+                if (Vector3.Distance(g.transform.position, CurrentPlayer.transform.position) < nearest)
+                {
+                    nearest = Vector3.Distance(g.transform.position, CurrentPlayer.transform.position);
+                    nearestObj = g;
+                }
+                //remove halo if not nearest anymore
+                if (g != nearestObj)
+                    g.GetComponent<InventoryStat>().SetHalo(false);
             }
-            //remove halo if not nearest anymore
-            if (g!=nearestObj)
-                g.GetComponent<InventoryStat>().SetHalo(false);
-        }
-        return nearestObj;
+            return nearestObj;
+
     }
 
     public void DoPickup(GameObject obj)
