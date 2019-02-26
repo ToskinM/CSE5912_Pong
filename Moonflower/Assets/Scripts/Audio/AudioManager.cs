@@ -72,13 +72,22 @@ public class AudioManager : MonoBehaviour
     public void Play (string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s != null)
+        if (s != null&s.source!=null)
         {
             s.source.Play();
             Debug.Log("I am Playing "+name+ s.source.clip +" "+ s.clip);
         }
-        else if (s.source = null)
-        { Debug.Log("why no audio source!?"); }
+        if (s.source == null)
+        {
+            if (s.name.Contains("Anai"))
+                s.source = audioSources.GetAnaiAudioSource();
+            else if (s.name.Contains("Mimbi"))
+                s.source = audioSources.GetMimbiAudioSource();
+            //else if (s.name.Contains("Player"))
+            //s.source = audioSources.GetCurrentPlayerAudioSource();
+            else
+                s.source = gameObject.AddComponent<AudioSource>();
+        }
         else
         { Debug.Log("there is no music source"); }
     }

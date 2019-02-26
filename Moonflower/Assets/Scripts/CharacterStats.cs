@@ -59,7 +59,7 @@ public class CharacterStats : MonoBehaviour
             CurrentHealth -= damage;
             if (display != null)
                 display.HitHealth(CurrentHealth, MaxHealth);
-            //Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
+            Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
 
             if (hitPoint != Vector3.zero)
                 ObjectPoolController.current.CheckoutTemporary((GameObject)Resources.Load("Effects/HitEffect_Damage"), hitPoint, 1);
