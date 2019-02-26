@@ -241,10 +241,10 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         //Destroy(gameObject, 0.5f);
     }
 
-    public int GetAttackDamage(int attackHurtbox)
+    public int GetAttackDamage(int attack)
     {
         if (weapon != null)
-            return (int)((weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[attackHurtbox]);
+            return (int)((weapon.baseDamage * (1 + (Stats.Strength * 0.25))) * attackMultipliers[attack]);
         else
             return 0;
     }
