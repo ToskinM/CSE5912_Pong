@@ -9,7 +9,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
     public bool Jumping { get; set; }
 
     public enum MoveState { follow, wander, wanderfollow, chill }
-    MoveState state = MoveState.chill;
+    public MoveState state = MoveState.chill;
     MoveState defaultState = MoveState.chill; 
 
     NPCWanderMove wander;
@@ -20,7 +20,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
     public bool stunned;
     public bool swinging;
 
-    public GameObject player;
+    public GameObject Player;
     GameObject self;
     GameObject target; 
     private bool stickingAround = false;
@@ -41,8 +41,9 @@ public class NPCMovementController : MonoBehaviour, IMovement
      *  THIS IS ALL INITIALIZATION METHODS
      */
     //initialize so player CANNOT wander CANNOT engage
-    public NPCMovementController(GameObject selfOb)
+    public NPCMovementController(GameObject selfOb, GameObject playerOb)
     {
+        Player = playerOb; 
         commonSetup(selfOb);
         canFollow = false;
         canWander = false;
@@ -90,11 +91,11 @@ public class NPCMovementController : MonoBehaviour, IMovement
         canFollow = true;
         if (follow == null)
         {
-            follow = new NPCFollowMove(self, player, followDist);
+            follow = new NPCFollowMove(self, Player, followDist);
         }
         else
         {
-            follow.Target = player;
+            follow.Target = Player;
             follow.SetFollowingDist(followDist);
         }
         state = MoveState.follow;
@@ -104,11 +105,11 @@ public class NPCMovementController : MonoBehaviour, IMovement
         canFollow = true;
         if (follow == null)
         {
-            follow = new NPCFollowMove(self, player, followDist, tooClose);
+            follow = new NPCFollowMove(self, Player, followDist, tooClose);
         }
         else
         {
-            follow.Target = player;
+            follow.Target = Player;
             follow.SetFollowArea(followDist,tooClose);
         }
         state = MoveState.follow;
@@ -152,7 +153,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
         {
             wander.SetArea(target.transform.position, maxDistAway);
         }
-        target = player;
+        target = Player;
         state = MoveState.wanderfollow;
     }
     public void SetDefault(MoveState dfs)
@@ -186,6 +187,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
             case MoveState.wander:
                 if (canWander)
                 {
+                    //Debug.Log("I'm wandering!!");
                     wander.UpdateMovement();
                     Action = wander.Action;
                 }
@@ -193,6 +195,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
             case MoveState.follow:
                 if (canFollow)
                 {
+                    //Debug.Log("I'm following");
                     follow.UpdateMovement();
                     Action = follow.Action; 
                 }
@@ -200,12 +203,14 @@ public class NPCMovementController : MonoBehaviour, IMovement
             case MoveState.wanderfollow:
                 if (canWander)
                 {
-                    wander.SetOrigin(player.transform.position);
+                    //Debug.Log("I'm wander following");
+                    wander.SetOrigin(Player.transform.position);
                     wander.UpdateMovement();
                     Action = follow.Action; 
                 }
                 break;
             case MoveState.chill:
+                //Debug.Log("I'm chilling");
                 break;
             default:
                 break;

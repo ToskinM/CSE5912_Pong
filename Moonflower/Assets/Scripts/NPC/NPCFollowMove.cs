@@ -5,10 +5,10 @@ using UnityEngine.AI;
 
 public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
 {
-    public Actions Action { get; set; }
+    public Actions Action { get; set; } 
     public bool Jumping { get; set; }
 
-    public bool Active { get; set; }
+    public bool Active { get; set; } = true; 
     public GameObject Target; 
 
     public bool stunned;
@@ -36,7 +36,6 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
     public NPCFollowMove(GameObject selfOb, GameObject targetOb)
     {
         commonSetup(selfOb, targetOb);
-        Target = targetOb; 
 
         //default
         destination = new Vector3(0, 0, 0);
@@ -67,8 +66,9 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
     private void commonSetup(GameObject selfOb, GameObject targetOb)
     {
         self = selfOb;
+        Target = targetOb;
         agent = self.GetComponent<NavMeshAgent>();
-        baseSpeed = agent.speed;
+        baseSpeed = agent.speed * 1.5f;
 
     }
 
@@ -80,10 +80,10 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
             if (!agent.enabled)
                 agent.enabled = true;
 
-            float distFromPlayer = getXZDist(Target.transform.position, self.transform.position);
-            if (distFromPlayer < followDist)
+            float distFromTarget = getXZDist(Target.transform.position, self.transform.position);
+            if (distFromTarget < followDist)
             {
-                if (distFromPlayer < tooCloseRadius)
+                if (distFromTarget < tooCloseRadius)
                 {
                     Vector3 targetDirection = self.transform.position - Target.transform.position;
                     Vector3 newDest = self.transform.position + targetDirection.normalized * 10;
@@ -93,11 +93,15 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
                 }
                 else
                 {
+                    agent.speed = baseSpeed;
                     Chill();
                 }
             }
             else
+            {
+                agent.speed = baseSpeed;
                 GoHere(Target.transform.position);
+            }
         }
     }
 

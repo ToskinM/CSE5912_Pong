@@ -28,7 +28,7 @@ public class AmaruController : MonoBehaviour
         //npc = gameObject.AddComponent<NPCMovement>();
         agent = GetComponent<NavMeshAgent>();
 
-        npc = new NPCMovementController(gameObject);
+        npc = new NPCMovementController(gameObject,Player);
         npc.FollowPlayer(bufferDist, tooCloseRad); 
         npc.Wander(WalkCenter.transform.position, wanderRad);
 

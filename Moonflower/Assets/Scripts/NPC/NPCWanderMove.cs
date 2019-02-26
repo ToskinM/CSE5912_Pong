@@ -42,7 +42,7 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
     //initialize so player CANNOT wander CANNOT engage
     public NPCWanderMove(GameObject selfOb)
     {
-        Active = false; 
+        Active = true; 
         commonSetup(selfOb);
 
         //default
@@ -91,11 +91,14 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
     {
         if (Active)
         {
-            float distFromTarget = getXZDist(target.transform.position, self.transform.position);
-            if (AvoidsTarget && distFromTarget < avoidsTargetRadius)
+            if (AvoidsTarget)
             {
-                agent.isStopped = false;
-                backup(); 
+                float distFromTarget = getXZDist(target.transform.position, self.transform.position);
+                if (distFromTarget < avoidsTargetRadius)
+                {
+                    agent.isStopped = false;
+                    backup();
+                }
             }
 
             agent.speed = baseSpeed; 
