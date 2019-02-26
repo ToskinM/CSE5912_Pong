@@ -18,10 +18,13 @@ public class LifeFlowerController : MonoBehaviour
     //private CharacterStats playerStat;
     //private TextMeshProUGUI healthText;
     private List<Image> petals;
+    private List<Image> healingPetals = new List<Image>();
+    private Dictionary<Image, petalState> healingState = new Dictionary<Image, petalState>();
+    private Dictionary<Image, int> healingCount = new Dictionary<Image, int>(); 
+    private List<Image> fallingPetals = new List<Image>(); 
     private Dictionary<Image, petalState> stateOfPetal; 
     private Image currPetal;
-    private Image fallingPetal;
-    private bool fallLeft = true;  
+    Dictionary<Image, bool> fallLeft = new Dictionary<Image, bool>(); 
     private PetalFactory petalFactory;
 
 
@@ -36,9 +39,6 @@ public class LifeFlowerController : MonoBehaviour
     public LifeFlowerController(GameObject flowerOb)
     {
         Flower = flowerOb;
-        //Player = playerOb; 
-        //playerStat = Player.GetComponent<CharacterStats>();
-       //healthText = gameObject.GetComponent<TextMeshProUGUI>();
         petalFactory = new PetalFactory();
 
         petals = new List<Image>();
@@ -82,38 +82,71 @@ public class LifeFlowerController : MonoBehaviour
         }
         if(healing)
         {
-            petalState currState = stateOfPetal[currPetal];
-            if (currState != petalState.full)
+            List<Image> toRemove = new List<Image>();
+            foreach (Image healingPetal in healingPetals)
             {
-                if (healCount % 10 == 0)
+                petalState currState = stateOfPetal[healingPetal];
+                if (currState != petalState.full)
                 {
-                    petalState newState = currState-1;
-                    currPetal.sprite = getPetal(newState); 
-                    updatePetalState(currPetal, newState);
+                    int count = healingCount[healingPetal];
+                    if (count % 7 == 0)
+                    {
+                        petalState newState = currState - 1;
+                        healingPetal.sprite = getPetal(newState);
+                        updateHealPetalState(currPetal, newState);
+                    }
+                    //replace count
+                    healingCount.Remove(healingPetal);
+                    count++;  
+                    healingCount.Add(healingPetal,count);
                 }
-                healCount++; 
+                else
+                {
+                    toRemove.Add(healingPetal); 
+                }
             }
-            else
+
+            while(toRemove.Count > 0)
             {
-                healing = false;
-                healCount = 0; 
+                Image d = toRemove[0];
+                toRemove.Remove(d);
+                healingPetals.Remove(d);
             }
+            if (healingPetals.Count == 0)
+                healing = false;
         }
         if(falling)
         {
-            fallingPetal.transform.position -= new Vector3(0, 1);
-            fallingPetal.color -= new Color(0, 0, 0, 0.02f);
-            if(fallLeft)
-                fallingPetal.transform.RotateAround(fallingPetal.transform.position, Vector3.forward, 80*Time.deltaTime);
-            else
-                fallingPetal.transform.RotateAround(fallingPetal.transform.position,-Vector3.forward, 80 * Time.deltaTime);
-
-            if (fallingPetal.color.a <= 0)
+            List<Image> toDestroy = new List<Image>(); 
+            foreach (Image fallingPetal in fallingPetals)
             {
-                Destroy(fallingPetal.gameObject);
-                falling = false; 
+                fallingPetal.transform.position -= new Vector3(0, 1);
+                fallingPetal.color -= new Color(0, 0, 0, 0.02f);
+                if (fallLeft[fallingPetal])
+                    fallingPetal.transform.RotateAround(fallingPetal.transform.position, Vector3.forward, 80 * Time.deltaTime);
+                else
+                    fallingPetal.transform.RotateAround(fallingPetal.transform.position, -Vector3.forward, 80 * Time.deltaTime);
+
+                if (fallingPetal.color.a <= 0)
+                {
+                    fallLeft.Remove(fallingPetal);
+                    //Destroy(fallingPetal.gameObject);
+                    toDestroy.Add(fallingPetal); 
+                }
             }
+
+            while(toDestroy.Count > 0)
+            {
+                Image d = toDestroy[0];
+                toDestroy.Remove(d);
+                fallingPetals.Remove(d);
+                Destroy(d.gameObject);  
+            }
+
+            if (fallingPetals.Count == 0)
+                falling = false;
         }
+        
     }
 
     public void HitHealth(int current, int max)
@@ -164,7 +197,12 @@ public class LifeFlowerController : MonoBehaviour
             {
                 currPetal = petals[newIndex];
                 currPetal.gameObject.SetActive(true);
+                healingState.Add(currPetal, stateOfPetal[currPetal]);
+                updatePetalState(currPetal, petalState.full);
+                healingPetals.Add(currPetal);
+                healingCount.Add(currPetal, 0); 
             }
+
         }
         healing = true;
     }
@@ -231,32 +269,6 @@ public class LifeFlowerController : MonoBehaviour
             updatePetalState(petal, petalState.full);
         }
 
-        //switch (stateOfPetal[petal])
-        //{
-        //    case petalState.full:
-        //        petal.sprite = petalFactory.GetDecayPetal1();
-        //        updatePetalState(petal, petalState.down1); 
-        //        break;
-        //    case petalState.down1:
-        //        petal.sprite = petalFactory.GetDecayPetal2();
-        //        updatePetalState(petal, petalState.down2);
-        //        break;
-        //    case petalState.down2:
-        //        petal.sprite = petalFactory.GetDecayPetal3();
-        //        updatePetalState(petal, petalState.down3);
-        //        break;
-        //    case petalState.down3:
-        //        cloneFallingPetal(petal); 
-        //        falling = true; 
-        //        petal.gameObject.SetActive(false); 
-        //        updatePetalState(petal, petalState.gone);
-        //        int newIndex = petals.IndexOf(petal) + 1;
-        //        if (newIndex < petals.Count)
-        //            currPetal = petals[newIndex];
-        //        else
-        //            Dead = true; 
-        //        break;
-        //}
     }
 
     private void cloneFallingPetal(Image petal)
@@ -264,8 +276,9 @@ public class LifeFlowerController : MonoBehaviour
         GameObject petalOb = Instantiate(petal.gameObject, Flower.transform);
         petalOb.transform.position = petal.transform.position;
         petalOb.transform.rotation = petal.transform.rotation;
-        fallingPetal = petalOb.GetComponent<Image>();
-        fallLeft = petals.IndexOf(petal) <= 1; 
+        Image fallingPetal = petalOb.GetComponent<Image>();
+        fallingPetals.Add(fallingPetal); 
+        fallLeft.Add(fallingPetal, petals.IndexOf(petal) <= 1); 
     }
 
 
@@ -282,5 +295,17 @@ public class LifeFlowerController : MonoBehaviour
         }
     }
 
+    private void updateHealPetalState(Image petal, petalState state)
+    {
+        if (healingState.ContainsKey(petal))
+        {   
+            healingState.Remove(petal);
+            healingState.Add(petal, state);
+        }
+        else
+        {
+            healingState.Add(petal, state);
+        }
+    }
 
 }

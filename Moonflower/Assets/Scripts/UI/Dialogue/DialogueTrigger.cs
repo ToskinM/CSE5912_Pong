@@ -9,6 +9,7 @@ public class DialogueTrigger : MonoBehaviour
 {
     public bool Complete { get { return complete; } }
     bool complete = false;
+    public bool engaged = false;
 
     GameObject panel;
     Image icon;
@@ -21,7 +22,6 @@ public class DialogueTrigger : MonoBehaviour
     string spriteFile;
     string exitText = "Okay. See you around!";
 
-    public bool engaged = false;
 
     enum PanelState { down, rising, up, falling }
     PanelState pState = PanelState.down;
@@ -32,7 +32,7 @@ public class DialogueTrigger : MonoBehaviour
     Button currB;
     Vector3 upPos;
     Vector3 downPos;
-    bool notFrozen = true;
+
 
     int slowDownFrac = 2;
     int pauseCount = 0;
@@ -105,10 +105,10 @@ public class DialogueTrigger : MonoBehaviour
 
                     if (Input.GetKeyDown(KeyCode.Return))
                     {
-                        if (notFrozen)
+                        if (!engaged)
                         {
                             freezeCommand.Execute();
-                            notFrozen = false;
+                            engaged = true;
                         }
                         switch (tState)
                         {
@@ -139,7 +139,6 @@ public class DialogueTrigger : MonoBehaviour
                                 }
                                 break;
                         }
-                        engaged = true;
                     }
                     break;
 
@@ -164,11 +163,8 @@ public class DialogueTrigger : MonoBehaviour
         destroyButtons();
         //active = false;
         pState = PanelState.falling;
-        engaged = false;
         freezeCommand.Unexecute();
-        notFrozen = true;
-
-        //LevelManager.current.dialogueCamera.StopDialogueCamera(gameObject.transform);
+        engaged = false;
     }
 
     public bool DialogueActive()
@@ -274,10 +270,10 @@ public class DialogueTrigger : MonoBehaviour
 
     private void gotoNext(int i)
     {
-        if (notFrozen)
+        if (!engaged)
         {
             freezeCommand.Execute();
-            notFrozen = false;
+            engaged = true;
         }
         tState = TextState.typing;
         string prev = graph.current.text;
