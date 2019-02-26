@@ -94,12 +94,12 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
                 else
                 {
                     agent.speed = baseSpeed;
+                    Action = Actions.Walking; 
                     Chill();
                 }
             }
             else
             {
-                agent.speed = baseSpeed;
                 GoHere(Target.transform.position);
             }
         }

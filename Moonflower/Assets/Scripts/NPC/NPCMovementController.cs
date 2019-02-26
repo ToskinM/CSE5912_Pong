@@ -313,6 +313,13 @@ public class NPCMovementController : MonoBehaviour, IMovement
 
     }
 
+    public void Run()
+    {
+        follow.Action = Actions.Running;
+        agent.speed = baseSpeed * 2;
+    }
+    
+
     public void RunToPlayer()
     {
         Action = Actions.Running;
@@ -320,7 +327,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
 
         stickingAround = true;
         state = MoveState.follow;
-        follow.SetFollowingDist(follow.followDist / 1.5f); 
+        //follow.SetFollowingDist(follow.followDist/1.5); 
     }
     private void WalkToPlayer()
     {

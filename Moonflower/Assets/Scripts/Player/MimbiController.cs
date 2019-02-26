@@ -103,7 +103,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
 
     public void Summon()
     {
-        npcMove.RunToPlayer();
+        npcMove.Run();
     }
 
     // Disable updates when gaame is paused
