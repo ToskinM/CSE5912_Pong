@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class AudioAvalibleArea : MonoBehaviour
 {
-    public GameObject PlayerAnai;
-    public GameObject PlayerMimbi;
     private GameObject CurrentPlayer;
     public int hearableRadius;
 
@@ -16,7 +14,7 @@ public class AudioAvalibleArea : MonoBehaviour
     }
     private void GetCurrentPlayer()
     {
-        CurrentPlayer = GameObject.Find("Player");
+        CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
     }
     public void HearableArea(AudioSource audioSource, float volume)
     {

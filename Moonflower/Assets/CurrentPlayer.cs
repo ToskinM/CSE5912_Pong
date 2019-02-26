@@ -11,6 +11,7 @@ public class CurrentPlayer : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        CurrentPlayerObj = PlayerAnaiObj;
 
     }
     private void CheckCurrentPlayer()
@@ -34,6 +35,22 @@ public class CurrentPlayer : MonoBehaviour
     public GameObject GetMimbi()
     {
         return PlayerMimbiObj;
+    }
+
+    public bool IsAnai()
+    {
+        if (CurrentPlayerObj == PlayerAnaiObj)
+            return true;
+        else
+            return false;
+    }
+
+    public bool IsMimbi()
+    {
+        if (CurrentPlayerObj == PlayerMimbiObj)
+            return true;
+        else
+            return false;
     }
 
     // Update is called once per frame
