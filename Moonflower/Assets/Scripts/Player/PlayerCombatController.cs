@@ -26,7 +26,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     private int damage;
     public GameObject blockPlaceholder;
 
-    private GameObject currentPlayer;
+    public GameObject currentPlayer;
     private GameObject anai;
     private GameObject mimbi;
 
@@ -62,7 +62,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         GameStateController.OnPaused += HandlePauseEvent;
 
         anai = GameObject.Find("Anai");
-        mimbi = GameObject.Find("Anai");
+        mimbi = GameObject.Find("Mimbi");
 
         playerSoundEffect = GameObject.Find("Anai").GetComponent<PlayerSoundEffect>();
         currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
@@ -145,7 +145,9 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         timeSinceLastAttack = 0f;
 
         animator.TriggerAttack();
-        if (currentPlayer = anai)
+        //Debug.Log(currentPlayer);
+        bool isAnai = GameObject.Find("Anai").GetComponent<AnaiController>().Playing;
+        if (isAnai)
             playerSoundEffect.AnaiAttackSFX();
         else
             playerSoundEffect.MimbiAttackSFX();

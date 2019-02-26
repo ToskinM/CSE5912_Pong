@@ -66,6 +66,7 @@ public class PlayerSoundEffect : MonoBehaviour
 
     public void MimbiAttackSFX()
     {
+        Debug.Log("playme");
         audioManager.Play("MimbiAttack");
     }
 
