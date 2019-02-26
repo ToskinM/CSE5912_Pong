@@ -7,7 +7,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
 {
     public Actions Action { get; set; }
     public bool Jumping { get; set; }
-    public bool Active { get; set; } = true; 
+    //public bool Active { get; set; } = true; 
 
     public enum MoveState { follow, wander, wanderfollow, chill }
     public MoveState state = MoveState.chill;
@@ -196,7 +196,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
 
     public void UpdateMovement()
     {
-        if (Active)
+        //if (Active)
         {
             if (!agent.enabled)
                 agent.enabled = true;
@@ -213,7 +213,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
                 case MoveState.wander:
                     if (canWander)
                     {
-                        Debug.Log("I'm wandering!!");
+                        //Debug.Log("I'm wandering!!");
                         wander.UpdateMovement();
                         Action = wander.Action;
                     }
@@ -221,7 +221,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
                 case MoveState.follow:
                     if (canFollow)
                     {
-                        Debug.Log("I'm following");
+                        //Debug.Log("I'm following");
                         follow.UpdateMovement();
                         Action = follow.Action;
                     }
