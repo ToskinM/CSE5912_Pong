@@ -15,16 +15,18 @@ public class AudioSourceManager : MonoBehaviour
 
     public AudioSource GetAnaiAudioSource()
     {
-        return Anai.GetComponent<AudioSource>();
+        return Anai.AddComponent<AudioSource>();
     }
     public AudioSource GetMimbiAudioSource()
     {
-        return Mimbi.GetComponent<AudioSource>();
+        return Mimbi.AddComponent<AudioSource>();
     }
     public AudioSource GetCurrentPlayerAudioSource()
     {
-        return CurrentPlayer.GetComponent<AudioSource>();
+        return CurrentPlayer.AddComponent<AudioSource>();
     }
+
+
 
 
     // Update is called once per frame
