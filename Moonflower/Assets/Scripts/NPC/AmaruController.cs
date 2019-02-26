@@ -45,13 +45,18 @@ public class AmaruController : MonoBehaviour
     {
         if (playerController.Playing)
         {
+            if(talkTrig.engaged && playerController.TalkingPartner!=gameObject)
+                playerController.TalkingPartner = gameObject;
+            else if(!talkTrig.engaged && playerController.TalkingPartner!=null)
+                playerController.TalkingPartner = null;
+
             talkTrig.Update();
 
             npc.UpdateMovement();
 
             if (npc.DistanceFrom(Player) < engagementRadius && !talkTrig.Complete)
             {
-                startEngagement();
+                startEngagement(); 
                 npc.Follow(); 
             }
             else if (npc.state != NPCMovementController.MoveState.wander)
@@ -60,6 +65,7 @@ public class AmaruController : MonoBehaviour
                 if (talkTrig.DialogueActive())
                 {
                     talkTrig.EndDialogue();
+                     
                 }
             }
         }

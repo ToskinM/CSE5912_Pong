@@ -10,6 +10,8 @@ public class MimbiController : MonoBehaviour, IPlayerController
     public bool Playing { get; set; }
     public GameObject Anai;
 
+    public GameObject TalkingPartner { get; set; }
+
     private float moveSpeed;
     private Vector3 velocity = Vector3.zero;
     public float smoothTime = 2f;

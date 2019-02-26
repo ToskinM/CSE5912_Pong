@@ -10,6 +10,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
     public bool Playing { get; set; }
     public GameObject Mimbi;
     public GameObject HUD;
+    public GameObject TalkingPartner { get; set; } 
 
     Sprite icon;
 
