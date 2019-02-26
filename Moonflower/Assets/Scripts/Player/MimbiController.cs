@@ -17,8 +17,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
 
 
     PlayerMovement playMove;
-    PlayerAnimatorController playerAnimate; 
-    //public NPCMovement npcMove;
+    PlayerAnimatorController playerAnimate;
     public NPCMovementController npcMove; 
     PlayerCombatController playCombat;
     NavMeshAgent agent;
@@ -40,14 +39,11 @@ public class MimbiController : MonoBehaviour, IPlayerController
         playCombat = GetComponent<PlayerCombatController>();
         playerAnimate = GetComponent<PlayerAnimatorController>();
         boxCollider = GetComponent<BoxCollider>();
-        //npcMove = new NPCMovement(gameObject, Anai, Anai.transform.position, wanderRadius);
         npcMove = new NPCMovementController(gameObject, Anai);
         npcMove.WanderFollowPlayer(wanderRadius);
         npcMove.SetDefault(NPCMovementController.MoveState.wanderfollow); 
 
         playerAnimate.movement = npcMove;
-
-        //npcMove.SetAvoidsPlayerRadius(tooCloseRadius);  
 
         GameStateController.OnPaused += HandlePauseEvent;
 
@@ -65,8 +61,6 @@ public class MimbiController : MonoBehaviour, IPlayerController
         }
         else
         {
-            //Debug.Log("Mimbi is a free agent");
-            //npcMove.StayClose(Anai.transform.position); 
             npcMove.UpdateMovement();
         }
     }

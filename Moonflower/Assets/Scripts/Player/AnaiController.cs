@@ -22,7 +22,8 @@ public class AnaiController : MonoBehaviour, IPlayerController
     PlayerCombatController playCombat;
 
     public PlayerMovement playMove;
-    public NPCMovement npcMove;
+    //public NPCMovement npcMove;
+    public NPCMovementController npcMove; 
     PlayerAnimatorController playerAnimate;
     CharacterStats stats;
     NavMeshAgent agent;
@@ -48,10 +49,12 @@ public class AnaiController : MonoBehaviour, IPlayerController
         playerAnimate = GetComponent<PlayerAnimatorController>();
         boxCollider = GetComponent<BoxCollider>();
         stats = GetComponent<CharacterStats>();
-        npcMove = new NPCMovement(gameObject, Mimbi);
+        //npcMove = new NPCMovement(gameObject, Mimbi);
+        npcMove = new NPCMovementController(gameObject, Mimbi);
 
-        npcMove.SetFollowingDist(followDist);
-        npcMove.SetAvoidsPlayerRadius(tooCloseRadius);
+        npcMove.FollowPlayer(followDist, tooCloseRadius); 
+        //npcMove.SetFollowingDist(followDist);
+        //npcMove.SetAvoidsPlayerRadius(tooCloseRadius);
 
         GameStateController.OnPaused += HandlePauseEvent;
         playerAnimate.movement = playMove;

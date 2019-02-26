@@ -73,7 +73,7 @@ public class ItemLookup
             case ROPE_NAME:
                 return "sa";
             case JAR_NAME:
-                return "";
+                return "japepo";
             case PUMPKIN_NAME:
                 return "andai";
             case CHIPA_NAME:
