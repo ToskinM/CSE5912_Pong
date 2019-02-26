@@ -18,7 +18,8 @@ public class MimbiController : MonoBehaviour, IPlayerController
 
     PlayerMovement playMove;
     PlayerAnimatorController playerAnimate; 
-    public NPCMovement npcMove; 
+    public NPCMovement npcMove;
+    //public NPCMovementController npcMove; 
     PlayerCombatController playCombat;
     NavMeshAgent agent;
     BoxCollider boxCollider; 
@@ -38,12 +39,14 @@ public class MimbiController : MonoBehaviour, IPlayerController
         playMove = GetComponent<PlayerMovement>();
         playCombat = GetComponent<PlayerCombatController>();
         playerAnimate = GetComponent<PlayerAnimatorController>();
-        boxCollider = GetComponent<BoxCollider>(); 
+        boxCollider = GetComponent<BoxCollider>();
         npcMove = new NPCMovement(gameObject, Anai, Anai.transform.position, wanderRadius);
+        //npcMove = new NPCMovementController(gameObject, Anai);
+        //npcMove.WanderFollowPlayer(wanderRadius);  
 
         playerAnimate.movement = npcMove;
 
-        npcMove.SetAvoidsPlayerRadius(tooCloseRadius);  
+        //npcMove.SetAvoidsPlayerRadius(tooCloseRadius);  
 
         GameStateController.OnPaused += HandlePauseEvent;
 
