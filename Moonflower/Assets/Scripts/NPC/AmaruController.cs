@@ -31,6 +31,7 @@ public class AmaruController : MonoBehaviour
         npc = new NPCMovementController(gameObject,Player);
         npc.FollowPlayer(bufferDist, tooCloseRad); 
         npc.Wander(WalkCenter.transform.position, wanderRad);
+        npc.SetDefault(NPCMovementController.MoveState.wander); 
 
         talkTrig = new DialogueTrigger(DialoguePanel, Constants.AMARU_ICON, Constants.AMARU_INTRO_DIALOGUE);
         playerController = Player.GetComponent<IPlayerController>();

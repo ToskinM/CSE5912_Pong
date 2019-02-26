@@ -27,6 +27,8 @@ public class NPCMovementController : MonoBehaviour, IMovement
     int stickAroundCount = 0;
     const int stickAroundMax = 10;
 
+    bool gettingBack = false; 
+
     NavMeshAgent agent;
     float baseSpeed;
 
@@ -130,7 +132,8 @@ public class NPCMovementController : MonoBehaviour, IMovement
     }
     public void WanderFollow(GameObject followTarget, float maxDistAway)
     {
-        canWander = true; 
+        canWander = true;
+        canFollow = true; 
         if(wander == null)
         {
             wander = new NPCWanderMove(self, target.transform.position, maxDistAway);
@@ -139,12 +142,24 @@ public class NPCMovementController : MonoBehaviour, IMovement
         {
             wander.SetArea(target.transform.position, maxDistAway);
         }
+
+        if(follow == null)
+        {
+            follow = new NPCFollowMove(self, followTarget, maxDistAway/2); 
+        }
+        else
+        {
+            follow.Target = followTarget;
+            follow.SetFollowingDist(maxDistAway/2); 
+        }
         target = followTarget; 
         state = MoveState.wanderfollow;
     }
     public void WanderFollowPlayer(float maxDistAway)
     {
         canWander = true;
+        canFollow = true; 
+        target = Player;
         if (wander == null)
         {
             wander = new NPCWanderMove(self, target.transform.position, maxDistAway);
@@ -153,7 +168,15 @@ public class NPCMovementController : MonoBehaviour, IMovement
         {
             wander.SetArea(target.transform.position, maxDistAway);
         }
-        target = Player;
+        if (follow == null)
+        {
+            follow = new NPCFollowMove(self, target, maxDistAway/2);
+        }
+        else
+        {
+            follow.Target = target;
+            follow.SetFollowingDist(maxDistAway/2);
+        }
         state = MoveState.wanderfollow;
     }
     public void SetDefault(MoveState dfs)
@@ -194,19 +217,33 @@ public class NPCMovementController : MonoBehaviour, IMovement
                 break;
             case MoveState.follow:
                 if (canFollow)
-                {
+                { 
                     //Debug.Log("I'm following");
                     follow.UpdateMovement();
                     Action = follow.Action; 
                 }
                 break;
             case MoveState.wanderfollow:
-                if (canWander)
+                if (canWander && canFollow)
                 {
-                    //Debug.Log("I'm wander following");
-                    wander.SetOrigin(Player.transform.position);
-                    wander.UpdateMovement();
-                    Action = follow.Action; 
+                    float maxDist = wander.wanderAreaRadius; 
+                    if (DistanceFrom(target) < maxDist*1.3f && !gettingBack)
+                    {
+
+                        wander.SetOrigin(target.transform.position);
+                        wander.UpdateMovement();
+                        Action = wander.Action;
+                    }
+                    else 
+                    {
+                        follow.UpdateMovement();
+                        Action = follow.Action;
+                        gettingBack = DistanceFrom(target) > maxDist / 1.7; 
+                        if(!gettingBack)
+                        {
+                            wander.ResumeMovement(); 
+                        }
+                    }
                 }
                 break;
             case MoveState.chill:
@@ -284,6 +321,12 @@ public class NPCMovementController : MonoBehaviour, IMovement
         stickingAround = true;
         state = MoveState.follow;
         follow.SetFollowingDist(follow.followDist / 1.5f); 
+    }
+    private void WalkToPlayer()
+    {
+        Action = Actions.Walking;
+        state = MoveState.follow;
+        follow.SetFollowingDist(follow.followDist / 1.5f);
     }
 
     public float DistanceFrom(GameObject a)
