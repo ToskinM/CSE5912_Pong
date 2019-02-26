@@ -39,7 +39,7 @@ public class StealthDetection : MonoBehaviour
             timeSinceLastAction += Time.deltaTime;  // Wait some time before the decay starts
         }
 
-        Debug.Log(Awareness.ToString() + " , "  + timeSinceLastAction.ToString());
+        //Debug.Log(Awareness.ToString() + " , "  + timeSinceLastAction.ToString());
     }
 
     void DetectionWhileNeutral(GameObject player, float distance)
