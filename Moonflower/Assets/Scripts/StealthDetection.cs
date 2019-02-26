@@ -38,6 +38,8 @@ public class StealthDetection : MonoBehaviour
         {
             timeSinceLastAction += Time.deltaTime;  // Wait some time before the decay starts
         }
+
+        Debug.Log(Awareness.ToString() + " , "  + timeSinceLastAction.ToString());
     }
 
     void DetectionWhileNeutral(GameObject player, float distance)
@@ -68,11 +70,11 @@ public class StealthDetection : MonoBehaviour
         // Once suspicion meter is past its threshold, turn into suspicious state
         if (suspicionMeter >= 100f)
         {
-            StartCoroutine(BecomeSuspiciousAfterDelay(3f));
+            StartCoroutine(BecomeSuspiciousAfterDelay(0f));
         }
         else if (suspicionMeter <= 0f)
         {
-            StartCoroutine(BecomeNeutralAfterDelay(3f));
+            StartCoroutine(BecomeNeutralAfterDelay(0f));
         }
     }
 
@@ -98,17 +100,27 @@ public class StealthDetection : MonoBehaviour
 
         if (suspicionMeter >= 200f)
         {
-            StartCoroutine(BecomeAlertedAfterDelay(3f, player));
+            StartCoroutine(BecomeAlertedAfterDelay(2f, player));
         }
         else if (suspicionMeter <= 100f)
         {
-            StartCoroutine(BecomeSuspiciousAfterDelay(3f));
+            StartCoroutine(BecomeNeutralAfterDelay(0f));
         }
     }
 
-    void DetectionWhileAlert()
+    void DetectionWhileAlert(GameObject player, float distance)
     {
+        Actions playerAction = player.GetComponent<PlayerMovement>().Action;
+        if (playerAction == Actions.Walking || playerAction == Actions.Running)
+        {
+            nav.destination = player.transform.position;
+            timeSinceLastAction = 0f;
+        }
 
+        if (suspicionMeter <= 100f)
+        {
+            StartCoroutine(BecomeNeutralAfterDelay(0f));
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -137,6 +149,7 @@ public class StealthDetection : MonoBehaviour
             }
             else if (Awareness == AwarenessLevel.Alerted)
             {
+                DetectionWhileAlert(player, distance);
             }
         }
     }
