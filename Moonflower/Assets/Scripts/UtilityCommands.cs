@@ -43,13 +43,13 @@ public class UtilityCommands : MonoBehaviour
         {
             DebugViewCmd.Execute();
         }
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            QuickSaveCmd.Execute();
-        }
-        if (Input.GetKeyDown(KeyCode.F9))
-        {
-            QuickLoadCmd.Execute();
-        }
+        //if (Input.GetKeyDown(KeyCode.F5))
+        //{
+        //    QuickSaveCmd.Execute();
+        //}
+        //if (Input.GetKeyDown(KeyCode.F9))
+        //{
+        //    QuickLoadCmd.Execute();
+        //}
     }
 }
