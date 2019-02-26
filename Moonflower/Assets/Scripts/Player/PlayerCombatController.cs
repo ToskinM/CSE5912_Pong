@@ -147,7 +147,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         animator.TriggerAttack();
         //Debug.Log(currentPlayer);
         bool isAnai = GameObject.Find("Anai").GetComponent<AnaiController>().Playing;
-        if (isAnai)
+        if (currentPlayer.name == "Anai")
             playerSoundEffect.AnaiAttackSFX();
         else
             playerSoundEffect.MimbiAttackSFX();
