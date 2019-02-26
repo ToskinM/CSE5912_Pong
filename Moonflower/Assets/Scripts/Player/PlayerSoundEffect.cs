@@ -32,7 +32,9 @@ public class PlayerSoundEffect : MonoBehaviour
     public void AnaiWalkingSFX()
     {
         if (footstep == 0)
+        {
             audioManager.Play("AnaiWalking");
+        }
         footstep++;
         if (footstep == footstepTime)
             footstep = 0;
