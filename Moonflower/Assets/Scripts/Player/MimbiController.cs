@@ -47,7 +47,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
 
         GameStateController.OnPaused += HandlePauseEvent;
 
-        SceneTracker.current.mimbi = gameObject;
+        LevelManager.current.mimbi = gameObject;
     }
 
     // Update is called once per frame

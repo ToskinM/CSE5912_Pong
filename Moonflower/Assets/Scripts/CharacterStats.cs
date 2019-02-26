@@ -34,7 +34,7 @@ public class CharacterStats : MonoBehaviour
         // Data drive specific values for each separate entity
         //if (HUD.GetComponent<PlayerHealthDisplay>())
         if (HUD == null)
-            HUD = SceneTracker.current.dummyHUD;
+            HUD = LevelManager.current.dummyHUD;
         display = HUD.GetComponent<PlayerHealthDisplay>();
     }
 

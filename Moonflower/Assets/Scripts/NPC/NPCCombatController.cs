@@ -338,7 +338,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         //Debug.Log(gameObject.name + " has died");
 
         // Tell the tracker we have died
-        SceneTracker.current.RegisterNPCDeath(gameObject);
+        LevelManager.current.RegisterNPCDeath(gameObject);
 
         // Stop combat
         DeAggro();

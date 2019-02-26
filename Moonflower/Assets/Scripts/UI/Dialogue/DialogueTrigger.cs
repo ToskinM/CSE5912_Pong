@@ -154,6 +154,8 @@ public class DialogueTrigger : MonoBehaviour
         icon.sprite = new IconFactory().GetIcon(spriteFile);
         tState = TextState.typing;
         //freezeCommand.Execute();
+
+        //LevelManager.current.dialogueCamera.RequestDialogueCamera(gameObject.transform);
     }
 
     public void EndDialogue()
@@ -165,6 +167,8 @@ public class DialogueTrigger : MonoBehaviour
         engaged = false;
         freezeCommand.Unexecute();
         notFrozen = true;
+
+        //LevelManager.current.dialogueCamera.StopDialogueCamera(gameObject.transform);
     }
 
     public bool DialogueActive()

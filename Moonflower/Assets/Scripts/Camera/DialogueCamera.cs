@@ -4,45 +4,73 @@ using UnityEngine;
 
 public class DialogueCamera : MonoBehaviour
 {
-    //public Transform target;
-    //public float switchTime = 0.3f;
+    public Transform dialogueTarget;
+    public Transform dialoguePosition;
 
-    //void Start()
+    public float switchTime = 0.3f;
+    public bool relocating = false;
+
+    void Start()
+    {
+        LevelManager.current.dialogueCamera = this;
+        enabled = false;
+    }
+
+    //private void OnDisable()
     //{
-
+    //    StartCoroutine(
+    //        PositionCamera(GetCameraTarget(GameObject.FindGameObjectWithTag("Player"))));
     //}
 
-    //private void OnEnable()
-    //{
-    //    StartCoroutine(MoveCameraToNewTarget(GetCameraTarget(GameObject.FindGameObjectWithTag("Player"))));
-    //}
+    public void OnEnable()
+    {
+        dialoguePosition = GetCameraTarget(GameObject.FindGameObjectWithTag("Player"));
+        StartCoroutine(PositionCamera(dialoguePosition));
+    }
+    public void OnDisable()
+    {
+        dialogueTarget = null;
+        //    StartCoroutine(
+        //        PositionCamera(GetCameraTarget(GameObject.FindGameObjectWithTag("Player"))));
+    }
 
-    //void Update()
-    //{
+    void Update()
+    {
+        if (!relocating)
+            transform.position = dialoguePosition.position;
 
-    //}
+        Vector3 headPosition = dialogueTarget.position + Vector3.up;
+        transform.LookAt(headPosition);
+    }
 
-    //private IEnumerator MoveCameraToNewTarget(Transform newTarget)
-    //{
-    //    switchTransform.position = target.position;
-    //    Vector3 startingPosition = target.position;
-    //    target = switchTransform;
+    public Transform GetCameraTarget(GameObject character)
+    {
+        // Find gameobject tagged as the camera look target (ONLY searches one hierarchy level deep)
+        foreach (Transform transform in character.transform)
+        {
+            if (transform.tag == "CameraTarget")
+            {
+                return transform;
+            }
+        }
 
-    //    float currentAngleY = transform.eulerAngles.y;
-    //    float startingXRotation = xRotation;
+        Debug.Log("Failed to get camera target.");
+        return null;
+    }
 
-    //    Interpolate target position and xRotation to new target
-    //    float t = 0;
-    //    while (t < switchTime)
-    //    {
-    //        xRotation = Mathf.LerpAngle(startingXRotation, startingXRotation + (newTarget.eulerAngles.y - currentAngleY), t / switchTime);
-    //        switchTransform.position = Vector3.Lerp(startingPosition, newTarget.position, t / switchTime);
+    private IEnumerator PositionCamera(Transform newTarget)
+    {
+        relocating = true;
+        Vector3 startingPosition = transform.position;
+        Vector3 targetPosition = newTarget.position;
 
-    //        t += Time.deltaTime * 1;
-    //        yield return null;
-    //    }
+        //Interpolate target position to new target
+        for (float t = 0; t < switchTime; t += Time.deltaTime * 1)
+        {
+            transform.position = Vector3.Lerp(startingPosition, targetPosition, t / switchTime);
 
-    //    target = newTarget;
-    //    switchTransform.position = transform.position;
-    //}
+            yield return null;
+        }
+        relocating = false;
+    }
 }

@@ -10,12 +10,12 @@ public class NPCData : MonoBehaviour
 
     public NPCData()
     {
-        SceneTracker.current.SaveNPCs(out aliveNPCs);
+        LevelManager.current.SaveNPCs(out aliveNPCs);
     }
 
     public void Load()
     {
-        SceneTracker.current.LoadNPCs(aliveNPCs);
+        LevelManager.current.LoadNPCs(aliveNPCs);
     }
 }
 

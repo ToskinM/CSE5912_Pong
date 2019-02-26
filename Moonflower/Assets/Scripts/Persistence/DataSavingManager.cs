@@ -36,8 +36,8 @@ public class DataSavingManager : MonoBehaviour
     private void GetReferences()
     {
         anaiDataFilePath = Application.persistentDataPath + "/AnaiInfo.dat";
-        anai = SceneTracker.current.anai;
-        mimbi = SceneTracker.current.mimbi;
+        anai = LevelManager.current.anai;
+        mimbi = LevelManager.current.mimbi;
     }
 
     public void SaveGame()
@@ -45,7 +45,7 @@ public class DataSavingManager : MonoBehaviour
         BinaryFormatter binaryFormatter = new BinaryFormatter();
 
         SavePlayerInfo(binaryFormatter);
-        cameraData = new CameraData(SceneTracker.current.camera);
+        cameraData = new CameraData(LevelManager.current.mainCamera);
         npcData = new NPCData();
     }
     public void LoadGame()
@@ -84,8 +84,8 @@ public class DataSavingManager : MonoBehaviour
         //    anai.transform.SetPositionAndRotation(anaiData.transform.position, anaiData.transform.rotation);
         //}
 
-        anaiData?.Load(SceneTracker.current.anai);
-        mimbiData?.Load(SceneTracker.current.mimbi);
+        anaiData?.Load(LevelManager.current.anai);
+        mimbiData?.Load(LevelManager.current.mimbi);
 
     }
 

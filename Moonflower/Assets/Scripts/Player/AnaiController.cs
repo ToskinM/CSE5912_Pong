@@ -56,7 +56,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
         GameStateController.OnPaused += HandlePauseEvent;
         playerAnimate.movement = playMove;
 
-        SceneTracker.current.anai = gameObject;
+        LevelManager.current.anai = gameObject;
     }
 
     void DetectCharacterSwitchInput()

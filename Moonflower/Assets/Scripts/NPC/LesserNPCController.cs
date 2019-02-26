@@ -42,7 +42,7 @@ public class LesserNPCController : MonoBehaviour
         //talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.AMARU_ICON);
         GameStateController.OnPaused += HandlePauseEvent;
 
-        SceneTracker.current.RegisterNPC(gameObject);
+        LevelManager.current.RegisterNPC(gameObject);
     }
 
     void Update()

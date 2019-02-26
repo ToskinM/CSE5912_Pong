@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneTracker : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
-    public static SceneTracker current;
+    public static LevelManager current;
 
-    public new FollowCamera camera; // Reference created in Camera script
+    public new FollowCamera mainCamera; // Reference created in Camera script
+    public new DialogueCamera dialogueCamera; // Reference created in Camera script
     public GameObject dummyHUD;
     public AudioManager AudioController;
     public GameStateController GameStateController;
@@ -41,10 +42,20 @@ public class SceneTracker : MonoBehaviour
         deadNPCs.Clear();
     }
 
-    private IEnumerator Start()
+    private void Start()
     {
-        yield return new WaitForSeconds(1);
-        DataSavingManager.current.npcData?.Load();
+        //yield return new WaitForSeconds(1);
+        //DataSavingManager.current.npcData?.Load();
+    }
+
+    public void RequestDialogueCamera(Transform dialogueTarget)
+    {
+        dialogueCamera.dialogueTarget = dialogueTarget;
+        dialogueCamera.enabled = true;
+    }
+    public void StopDialogueCamera()
+    {
+        dialogueCamera.enabled = false;
     }
 
     public void RegisterNPC(GameObject npc)
