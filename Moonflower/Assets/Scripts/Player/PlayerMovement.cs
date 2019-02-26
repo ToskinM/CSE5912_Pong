@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     {
         // Damping
         body.velocity *= 0.98f;
-        isAnai = GameObject.Find("Anai").GetComponent<AnaiController>().Playing;
+        isAnai = GameObject.Find("Player").GetComponent<CurrentPlayer>().IsAnai();
     }
 
     void SetMovementState()

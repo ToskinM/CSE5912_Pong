@@ -11,13 +11,11 @@ public class Pickup : MonoBehaviour
 
     public CharacterStats Stats { get; private set; }
     public GameObject PlayerAnai;
-    public GameObject PlayerMimbi;
     private GameObject CurrentPlayer;
 
     private CharacterStats playerStat;
     //private InventoryManager inventoryManager;
     private PlayerInventory playerInventory;
-    //private AudioManager audioManager;
     private PlayerSoundEffect soundEffect;
 
     public TextMeshProUGUI inventoryAdd;
