@@ -50,7 +50,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
         boxCollider = GetComponent<BoxCollider>();
         stats = GetComponent<CharacterStats>();
         npcMove = new NPCMovementController(gameObject, Mimbi);
-        npcMove.Active = false; 
+//        npcMove.Active = false; 
         npcMove.FollowPlayer(followDist, tooCloseRadius); 
 
         GameStateController.OnPaused += HandlePauseEvent;
@@ -80,7 +80,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
         }
         else
         {
-            npcMove.Active = true; 
+//            npcMove.Active = true; 
             playCombat.enabled = false;
             gameObject.layer = 0;
             tag = "Companion";
