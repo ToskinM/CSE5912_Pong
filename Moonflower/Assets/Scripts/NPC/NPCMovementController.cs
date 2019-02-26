@@ -230,7 +230,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
                     if (canWander && canFollow)
                     {
                         float maxDist = wander.wanderAreaRadius;
-                        if (DistanceFrom(target) < maxDist * 1.3f && !gettingBack)
+                        if (DistanceFrom(target) < maxDist * 1.3f && !gettingBack && !stickingAround)
                         {
 
                             wander.SetOrigin(target.transform.position);
@@ -242,7 +242,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
                             follow.UpdateMovement();
                             Action = follow.Action;
                             gettingBack = DistanceFrom(target) > maxDist / 1.7;
-                            if (!gettingBack)
+                            if (!gettingBack && !stickingAround)
                             {
                                 wander.ResumeMovement();
                             }
@@ -261,7 +261,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
                 stickAroundCount++;
                 if (stickAroundCount > stickAroundMax * 60)
                 {
-                    state = defaultState;
+                    Reset(); 
                     stickingAround = false;
                     stickAroundCount = 0;
                 }
@@ -327,10 +327,11 @@ public class NPCMovementController : MonoBehaviour, IMovement
     {
         Action = Actions.Running;
         agent.speed = baseSpeed * 2;
+        follow.Target = Player; 
 
         stickingAround = true;
-        state = MoveState.follow;
-        //follow.SetFollowingDist(follow.followDist/1.5); 
+        if(state != MoveState.wanderfollow)
+            state = MoveState.follow; 
     }
     private void WalkToPlayer()
     {
