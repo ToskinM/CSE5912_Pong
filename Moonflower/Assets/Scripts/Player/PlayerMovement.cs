@@ -270,7 +270,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (transform.InverseTransformDirection(collision.transform.position).y < 0)
+        if (collision.collider.Equals(terrain) || transform.InverseTransformDirection(collision.transform.position).y < 0)
         {
             if(returnGrav)
                 Physics.gravity = new Vector3(0, -88.3f, 0);
