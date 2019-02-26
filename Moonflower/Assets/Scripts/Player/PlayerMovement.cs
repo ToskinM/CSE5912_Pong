@@ -101,6 +101,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
                 moveSpeed = walkSpeed;
                 if (isAnai)
                     playerSoundEffect.AnaiWalkingSFX();
+                else
+                    playerSoundEffect.MimbiWalkSFX();
             }
         }
     }

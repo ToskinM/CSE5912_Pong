@@ -6,7 +6,7 @@ public class CurrentPlayer : MonoBehaviour
 {
     public GameObject PlayerAnaiObj;
     public GameObject PlayerMimbiObj;
-    private GameObject CurrentPlayerObj;
+    public GameObject CurrentPlayerObj;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +14,9 @@ public class CurrentPlayer : MonoBehaviour
     }
     private void CheckCurrentPlayer()
     {
+        PlayerAnaiObj = GameObject.Find("Anai");
+        PlayerMimbiObj = GameObject.Find("Mimbi");
+
         if (PlayerAnaiObj.GetComponent<AnaiController>().Playing == true)
             CurrentPlayerObj = PlayerAnaiObj;
         else

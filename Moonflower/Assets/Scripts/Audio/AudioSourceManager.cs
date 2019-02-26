@@ -11,6 +11,8 @@ public class AudioSourceManager : MonoBehaviour
     void Start()
     {
         CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
+        Anai = GameObject.Find("Anai");
+        Mimbi = GameObject.Find("Mimbi");
     }
 
     public AudioSource GetAnaiAudioSource()

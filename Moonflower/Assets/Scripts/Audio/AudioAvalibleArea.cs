@@ -12,6 +12,8 @@ public class AudioAvalibleArea : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PlayerAnai = GameObject.Find("Anai");
+        PlayerMimbi = GameObject.Find("Mimbi");
     }
     private void CheckCurrentPlayer()
     {
