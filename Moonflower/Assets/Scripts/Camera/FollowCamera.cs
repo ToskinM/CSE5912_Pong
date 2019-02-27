@@ -87,6 +87,8 @@ public class FollowCamera : MonoBehaviour
                         yRotation = Mathf.Clamp(yRotation, yRotationMin, yRotationMax);
                     else
                         yRotation = Mathf.Clamp(yRotation, -90f, 90f);
+
+                    xRotation = xRotation % 360;
                 }
             }
 
@@ -135,7 +137,7 @@ public class FollowCamera : MonoBehaviour
         // Find new camera position, Staying behind player, in range
         Vector3 newPosition = target.position - (rotation * offset * followDistanceMultiplier);
 
-        if (accountForCollision)
+        if (accountForCollision && !switching)
         {
             // Account for collision with objects in camMask
             RaycastHit wallHit = new RaycastHit();
@@ -235,13 +237,11 @@ public class FollowCamera : MonoBehaviour
         float startingYRotation = yRotation;
 
         // Smoothly reset the camera behind player
-        float t = 0;
-        while (t < switchTime)
+        for (float t = 0; t < switchTime; t += Time.deltaTime)
         {
-            xRotation = Mathf.LerpAngle(xRotation, startingXRotation + (target.eulerAngles.y - currentAngleY), t);
-            yRotation = Mathf.LerpAngle(yRotation, startingYRotation + (15f - currentAngleX), t);
+            xRotation = Mathf.LerpAngle(xRotation, target.eulerAngles.y, t / switchTime);
+            yRotation = Mathf.LerpAngle(yRotation, startingYRotation + (15f - currentAngleX), t / switchTime);
 
-            t += Time.deltaTime * 5;
             yield return null;
         }
 
@@ -258,9 +258,11 @@ public class FollowCamera : MonoBehaviour
     private IEnumerator MoveCameraToNewTarget(Transform newTarget)
     {
         switching = true;
+
         switchTransform.position = target.position;
-        Vector3 startingPosition = target.position;
         target = switchTransform;
+
+        Vector3 startingPosition = target.position;
 
         float currentAngleY = transform.eulerAngles.y;
         float startingXRotation = xRotation;
@@ -268,7 +270,8 @@ public class FollowCamera : MonoBehaviour
         // Interpolate target position and xRotation to new target
         for (float t = 0; t < switchTime; t += Time.deltaTime * 0.5f)
         {
-            xRotation = Mathf.LerpAngle(startingXRotation, startingXRotation + (newTarget.eulerAngles.y - currentAngleY), t / switchTime);
+            xRotation = Mathf.LerpAngle(startingXRotation, newTarget.eulerAngles.y, t / switchTime);
+            //xRotation = Mathf.LerpAngle(startingXRotation, startingXRotation + (newTarget.eulerAngles.y - currentAngleY), t / switchTime);
             switchTransform.position = Vector3.Lerp(startingPosition, newTarget.position, t / switchTime);
 
             yield return null;
@@ -276,6 +279,7 @@ public class FollowCamera : MonoBehaviour
 
         target = newTarget;
         switchTransform.position = transform.position;
+
         switching = false;
     }
     public IEnumerator TransitionFromDialogue(Vector3 startingPosition)

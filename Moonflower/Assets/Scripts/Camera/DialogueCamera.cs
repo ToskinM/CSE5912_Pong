@@ -37,7 +37,7 @@ public class DialogueCamera : MonoBehaviour
         SetRendering(false);
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (state != DialogueCameraState.Transitioning)
         {
