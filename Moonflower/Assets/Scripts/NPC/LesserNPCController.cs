@@ -16,7 +16,7 @@ public class LesserNPCController : MonoBehaviour
 
     private bool engaging = false;
     private NPCMovement movement;
-    private NPCCombatController combatController;
+    public NPCCombatController combatController;
     private NavMeshAgent agent;
     private AmaruDialogueTrigger talkTrig;
     private IPlayerController playerController;
@@ -92,7 +92,7 @@ public class LesserNPCController : MonoBehaviour
                 talkTrig.StartDialogue();
     }
 
-    private void HandleOnAggroUpdated(bool aggroed)
+    private void HandleOnAggroUpdated(bool aggroed, GameObject aggroTarget)
     {
         if (aggroed)
         {
