@@ -49,12 +49,19 @@ public class NPCAnimationController : MonoBehaviour
 
         if (agent)
         {
+            if (agent.isStopped)
+            {
+                animator.SetBool(key_IsRun, false);
+                animator.SetBool(key_IsWalk, false);
+                return;
+            }
+
             if (agent.velocity.magnitude > agent.speed * (2f/3f)) // Run
             {
                 animator.SetBool(key_IsRun, true);
                 animator.SetBool(key_IsWalk, false);
             }
-            else if (agent.velocity.magnitude > 0)  // Walk
+            else if (agent.velocity.magnitude > 0.1f)  // Walk
             {
                 animator.SetBool(key_IsRun, false);
                 animator.SetBool(key_IsWalk, true);

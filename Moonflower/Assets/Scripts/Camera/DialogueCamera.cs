@@ -136,7 +136,6 @@ public class DialogueCamera : MonoBehaviour
         transform.SetPositionAndRotation(startingTransform.position, startingTransform.rotation);
 
         Vector3 startingPosition = transform.position;
-        Vector3 targetPosition = newTarget.position;
 
         Quaternion startingRotation = transform.rotation;
 
@@ -158,8 +157,6 @@ public class DialogueCamera : MonoBehaviour
 
         Vector3 startingPosition = transform.position;
         Quaternion startingRotation = transform.rotation;
-
-        Vector3 targetPosition = LevelManager.current.mainCamera.transform.position;
 
         //Interpolate target position to new target
         for (float t = 0; t < switchTime; t += Time.deltaTime * 1)

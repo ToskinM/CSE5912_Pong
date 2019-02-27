@@ -242,34 +242,37 @@ public class NPCMovement : MonoBehaviour, IMovement
 
     private void Attack()
     {
-        float distFromPlayer = getXZDist(player.transform.position, self.transform.position);
-        SetWandering(false);
-
-        // If we're within buffer radius
-        if (distFromPlayer < bufferRadius)
+        if (player)
         {
-            if (distFromPlayer < tooCloseRadius)
+            float distFromPlayer = getXZDist(player.transform.position, self.transform.position);
+            SetWandering(false);
+
+            // If we're within buffer radius
+            if (distFromPlayer < bufferRadius)
             {
-                // Move back a bit
-                Vector3 targetDirection = self.transform.position - player.transform.position;
-                Vector3 newDest = self.transform.position + targetDirection.normalized * 10;
-                destination = getRandomDest(newDest, 1f);
-                GoHere(destination);
-                agent.speed *= 2;
+                if (distFromPlayer < tooCloseRadius)
+                {
+                    // Move back a bit
+                    Vector3 targetDirection = self.transform.position - player.transform.position;
+                    Vector3 newDest = self.transform.position + targetDirection.normalized * 10;
+                    destination = getRandomDest(newDest, 1f);
+                    GoHere(destination);
+                    agent.speed *= 2;
+                }
+                else
+                {
+                    Chill();
+
+                    // look at target
+                    Vector3 relative = player.transform.position - self.transform.position;
+                    float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+                    //self.transform.rotation = Quaternion.Euler(0, angle, 0);
+                    self.transform.rotation = Quaternion.RotateTowards(self.transform.rotation, Quaternion.Euler(0, angle, 0), Time.deltaTime * 300f);
+                }
             }
             else
-            {
-                Chill();
-
-                // look at target
-                Vector3 relative = player.transform.position - self.transform.position;
-                float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
-                //self.transform.rotation = Quaternion.Euler(0, angle, 0);
-                self.transform.rotation = Quaternion.RotateTowards(self.transform.rotation, Quaternion.Euler(0, angle, 0), Time.deltaTime * 300f);
-            }
+                GoHere(player.transform.position); // pursue combat target
         }
-        else
-            GoHere(player.transform.position); // pursue combat target
     }
 
     private void Wander()

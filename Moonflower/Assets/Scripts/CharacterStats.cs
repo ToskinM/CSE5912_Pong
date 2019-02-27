@@ -8,9 +8,9 @@ public class CharacterStats : MonoBehaviour
     // In case of NPC's, stats will serve as requirement checks against player's stats to determine success of an action
 
     // Combat-related stats
-    public int Strength;
+    public int Strength;        // +25% to weapon base damage per level
     public int Attack;
-    public int Defense;
+    public int Defense;         // Reduces incoming damage by 1% per level
     public int MaxHealth;
     public int CurrentHealth;
 
@@ -56,7 +56,8 @@ public class CharacterStats : MonoBehaviour
     {
         if (!blocked)
         {
-            CurrentHealth -= damage;
+            CurrentHealth -= DefenceCalculation(damage);
+
             if (display != null)
                 display.HitHealth(CurrentHealth, MaxHealth);
             //Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
@@ -114,5 +115,10 @@ public class CharacterStats : MonoBehaviour
             strengthExperience = 0;
             Strength++;
         }
+    }
+
+    private int DefenceCalculation(int damage)
+    {
+        return (int)Mathf.Ceil( damage * (Mathf.Clamp((100f - Defense) / 100f, 0f, 1f)) );
     }
 }

@@ -15,6 +15,8 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     public enum Aggression { Passive, Unaggressive, Aggressive, Frenzied };
     public Aggression aggression;
 
+    public NPCCombatController[] allies;
+
     public GameObject ragdollPrefab;
     private readonly float[] attackMultipliers = new float[] { 0f, 1f };
 
@@ -37,8 +39,11 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     private NPCAnimationController npcAnimationController;
     public NPCMovement npcMovement;
 
-    public delegate void AggroUpdate(bool aggroed);
+    public delegate void AggroUpdate(bool aggroed, GameObject aggroTarget);
     public event AggroUpdate OnAggroUpdated;
+
+    public delegate void DeathUpdate(NPCCombatController npc);
+    public event DeathUpdate OnDeath;
 
     private AudioManager audioManager;
 
@@ -61,6 +66,8 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             Frenzy();
 
         StartCoroutine(GetAudioManager());
+
+
         GameStateController.OnPaused += HandlePauseEvent;
     }
 
@@ -227,10 +234,12 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     {
         if (InCombat)
         {
-            // Deaggro if we cant find target in time
+            // Deaggro if we have no combatTarget
             if (combatTarget == null)
             {
                 DeAggro();
+
+                // Stop Deaggro timer
                 if (deaggroCoroutine != null)
                 {
                     StopCoroutine(deaggroCoroutine);
@@ -239,7 +248,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
                 return;
             }
 
-            // Deaggro if we cant find target in time
+            // Cancel Deaggro timer if we can see target
             if (fieldOfView.IsInFieldOfView(combatTarget.transform))
             {
                 if (deaggroCoroutine != null)
@@ -249,6 +258,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
                 }
 
             }
+            // Deaggro if we cant find target in time
             else if (deaggroCoroutine == null)
                 deaggroCoroutine = StartCoroutine(WaitForDeaggro());
         }
@@ -270,26 +280,26 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             }
         }
     }
-    private void Aggro(GameObject aggroTarget, bool forceAggression)
+    public void Aggro(GameObject aggroTarget, bool forceAggression)
     {
         if (aggression > Aggression.Passive || forceAggression)
         {
-            //if (combatTarget != aggroTarget)
-            //{
             if (!InCombat)
                 InCombat = true;
 
             combatTarget = aggroTarget;
             //Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
-            //}
 
             // Broadcast that we've aggroed
-            OnAggroUpdated?.Invoke(true);
+            OnAggroUpdated?.Invoke(true, aggroTarget);
         }
     }
 
     private void DeAggro()
     {
+        // Broadcast that we've lost aggro
+        OnAggroUpdated?.Invoke(false, combatTarget);
+
         if (InCombat)
             InCombat = false;
 
@@ -297,8 +307,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         //Debug.Log(gameObject.name + " stopped combat");
         Sheathe();
 
-        // Broadcast that we've lost aggro
-        OnAggroUpdated?.Invoke(false);
+
         npcMovement.Chill();
     }
 
@@ -333,9 +342,10 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     }
 
     // Death cleanup and Sequence
-    private IEnumerator Die()
+    private IEnumerator Die()   
     {
         //Debug.Log(gameObject.name + " has died");
+        OnDeath?.Invoke(this);
 
         // Tell the tracker we have died
         LevelManager.current.RegisterNPCDeath(gameObject);
