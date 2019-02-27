@@ -9,33 +9,25 @@ public class LifeFlowerController : MonoBehaviour
     public GameObject Flower;
     //public GameObject Player;
 
-    public bool Dead = false;
-
-    private bool healing = false;
-    private bool falling = false; 
     private enum petalState { full, down1, down2, down3, gone}
 
     //private CharacterStats playerStat;
     //private TextMeshProUGUI healthText;
     private List<Image> petals;
-    private List<Image> healingPetals = new List<Image>();
     private Dictionary<Image, List<petalState>> healingState = new Dictionary<Image, List<petalState>>();
     private Dictionary<Image, int> healingCount = new Dictionary<Image, int>(); 
     private List<Image> fallingPetals = new List<Image>(); 
     private Dictionary<Image, petalState> stateOfPetal; 
-    private Image currPetal;
     Dictionary<Image, bool> fallLeft = new Dictionary<Image, bool>(); 
     private PetalFactory petalFactory;
 
-
+    //for hit shake
     private bool damageDelt = false;
     private int shakeCount = 0;
-    private int maxShake = 20;
-    private int healCount = 0; 
+    private  const int maxShake = 24; 
     private Vector3 initPosition;
 
     int currPetalIndex = 0;
-    int stablePetalIndex = 0; 
 
     // Start is called before the first frame update
     public LifeFlowerController(GameObject flowerOb)
@@ -53,7 +45,6 @@ public class LifeFlowerController : MonoBehaviour
             healingCount.Add(petal, 0); 
             stateOfPetal.Add(petal, petalState.full); 
         }
-        currPetal = petals[0];
 
         initPosition = Flower.transform.position;
 
@@ -180,7 +171,8 @@ public class LifeFlowerController : MonoBehaviour
         {
             if (shakeCount < maxShake)
             {
-                if (shakeCount < 5 || (shakeCount > 10 && shakeCount < 15))
+                int shakeSegment = maxShake / 4; 
+                if (shakeCount < shakeSegment || (shakeCount > shakeSegment*2 && shakeCount < shakeSegment*3))
                 {
                     Flower.transform.position = new Vector3(Flower.transform.position.x - 0.3f, Flower.transform.position.y);
                 }
@@ -211,31 +203,26 @@ public class LifeFlowerController : MonoBehaviour
         float newFrac;
         if (fracHealth > 4f / 5f)
         {
-            currPetal = petals[0];
             currPetalIndex = 0; 
             newFrac = fracHealth - 4f / 5f;
         }
         else if (fracHealth > 3f / 5f)
         {
-            currPetal = petals[1];
             currPetalIndex = 1;
             newFrac = fracHealth - 3f / 5f;
         }
         else if (fracHealth > 2f / 5f)
         {
-            currPetal = petals[2];
             currPetalIndex = 2;
             newFrac = fracHealth - 2f / 5f;
         }
         else if (fracHealth > 1f / 5f)
         {
-            currPetal = petals[3];
             currPetalIndex = 3;
             newFrac = fracHealth - 1f / 5f;
         }
         else
         {
-            currPetal = petals[4];
             currPetalIndex = 4;
             newFrac = fracHealth;
         }
@@ -303,7 +290,6 @@ public class LifeFlowerController : MonoBehaviour
         updatePetalState(petal, petalState.full);
 
         //add petal to healing petals list and set heal count to 0
-        healingPetals.Add(petal);
         healingCount.Add(petal, 0);
     }
 

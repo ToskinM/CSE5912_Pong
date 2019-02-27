@@ -35,16 +35,6 @@ public class PlayerInventory : MonoBehaviour
             ItemObjMap.Add(objName, obj);
             ItemAmountMap.Add(objName, 1);
         }
-
-        if(objName.Equals(ItemLookup.MOONFLOWER_NAME))
-        {
-            display.Heal();
-        }
-
-        if (objName.Equals(ItemLookup.WOLFAPPLE_NAME))
-        {
-            display.Heal(); 
-        }
     }
 
     public int GetObjNumber(string obj)
