@@ -20,6 +20,8 @@ public class ItemLookup
     public const string PAINT_NAME = "Paint";
     public const string STAFF_NAME = "Staff";
     public const string CORN_NAME = "Corn";
+    public const string BOW_NAME = "Bow";
+    public const string ARROW_NAME = "Arrow";
 
 
     public GameObject GetObject(string name)
@@ -55,6 +57,14 @@ public class ItemLookup
                 return Resources.Load<Sprite>(Constants.FLUTE_ICON);
             case PINEAPPLE_NAME:
                 return Resources.Load<Sprite>(Constants.PINEAPPLE_ICON);
+            case FISH_NAME:
+                return Resources.Load<Sprite>(Constants.FISH_ICON);
+            case PEANUT_NAME:
+                return Resources.Load<Sprite>(Constants.PEANUT_ICON);
+            case BOW_NAME:
+                return Resources.Load<Sprite>(Constants.BOW_ICON);
+            case ARROW_NAME:
+                return Resources.Load<Sprite>(Constants.ARROW_ICON);
             default:
                 return null;
         }
@@ -93,7 +103,11 @@ public class ItemLookup
             case STAFF_NAME:
                 return "pokoka";
             case CORN_NAME:
-                return "avati"; 
+                return "avati";
+            case BOW_NAME:
+                return "";
+            case ARROW_NAME:
+                return "hu'y"; 
             default:
                 return "";
         }
