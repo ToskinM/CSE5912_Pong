@@ -13,13 +13,13 @@ public class CameraData
     public CameraData(FollowCamera camera)
     {
         cameraController = camera;
-        xRotation = cameraController.xRotation;
-        yRotation = cameraController.yRotation;
+        xRotation = cameraController.yRotation;
+        yRotation = cameraController.xRotation;
     }
 
     public void Load()
     {
-        cameraController.xRotation = xRotation;
-        cameraController.yRotation = yRotation;
+        cameraController.yRotation = xRotation;
+        cameraController.xRotation = yRotation;
     }
 }

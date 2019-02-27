@@ -8,7 +8,7 @@ public class FollowCamera : MonoBehaviour
     public float followDistanceMultiplier = 1f;
     public float rotateSpeed = 5f;
     public GameObject lockonIndicator;
-    public Transform switchTransform;
+    private Transform switchTransform;
     [HideInInspector] public bool freeRoam;
     public bool Frozen { get; set; } = false;
     public float switchTime = 1f;
@@ -25,8 +25,8 @@ public class FollowCamera : MonoBehaviour
     private bool lockedOn;
 
     private Quaternion rotation = Quaternion.identity;
-    public float xRotation;
     public float yRotation;
+    public float xRotation;
     private Vector3 offset;
 
     private readonly float freeRoamMoveSpeed = 0.4f;
@@ -56,6 +56,7 @@ public class FollowCamera : MonoBehaviour
         transform.position = target.position + new Vector3(0, 1, -5);
         offset = target.position - transform.position;
 
+
         LevelManager.current.mainCamera = this;
         GameStateController.OnPaused += HandlePauseEvent;
     }
@@ -81,14 +82,14 @@ public class FollowCamera : MonoBehaviour
             {
                 if (!Input.GetButtonDown("LockOn") && !switching)
                 {
-                    xRotation += Input.GetAxis("Mouse X") * rotateSpeed;
-                    yRotation += -Input.GetAxis("Mouse Y") * rotateSpeed;
+                    yRotation += Input.GetAxis("Mouse X") * rotateSpeed;
+                    xRotation += -Input.GetAxis("Mouse Y") * rotateSpeed;
                     if (!freeRoam)
-                        yRotation = Mathf.Clamp(yRotation, yRotationMin, yRotationMax);
+                        xRotation = Mathf.Clamp(xRotation, yRotationMin, yRotationMax);
                     else
-                        yRotation = Mathf.Clamp(yRotation, -90f, 90f);
+                        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-                    xRotation = xRotation % 360;
+                    yRotation = yRotation % 360;
                 }
             }
 
@@ -115,13 +116,13 @@ public class FollowCamera : MonoBehaviour
             }
             if (lockOnTarget == null || switching)
             {
-                rotation = Quaternion.Euler(yRotation, xRotation, 0);
+                rotation = Quaternion.Euler(xRotation, yRotation, 0);
             }
             else if (!switching && lockedOn && lockOnTarget != null)
             {
                 Vector3 relative = lockOnTarget.transform.position - target.position;
                 float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
-                rotation = Quaternion.Euler(yRotation, angle, 0);
+                rotation = Quaternion.Euler(xRotation, angle, 0);
             }
             
             // update position
@@ -155,7 +156,7 @@ public class FollowCamera : MonoBehaviour
 
     private void UpdateFreeRotation()
     {
-        transform.rotation = Quaternion.Euler(yRotation, xRotation, 0);
+        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
     }
 
     private void UpdateFreeMovement()
@@ -218,7 +219,7 @@ public class FollowCamera : MonoBehaviour
         if (lockedOn)
         {
             // Adjust xRotation to match where we're currently looking (so it doesn't snap back to the pre-lockOn direction)
-            xRotation = xRotation + (transform.eulerAngles.y - xRotation);
+            yRotation = yRotation + (transform.eulerAngles.y - yRotation);
 
             lockedOn = false;
             lockOnTarget = null;
@@ -233,14 +234,14 @@ public class FollowCamera : MonoBehaviour
         float currentAngleY = transform.eulerAngles.y;
         float currentAngleX = transform.eulerAngles.x;
 
-        float startingXRotation = xRotation;
-        float startingYRotation = yRotation;
+        float startingXRotation = yRotation;
+        float startingYRotation = xRotation;
 
         // Smoothly reset the camera behind player
-        for (float t = 0; t < switchTime; t += Time.deltaTime)
+        for (float t = 0; t < switchTime; t += Time.deltaTime * 1.5f)
         {
-            xRotation = Mathf.LerpAngle(xRotation, target.eulerAngles.y, t / switchTime);
-            yRotation = Mathf.LerpAngle(yRotation, startingYRotation + (15f - currentAngleX), t / switchTime);
+            yRotation = Mathf.LerpAngle(yRotation, target.eulerAngles.y, t / switchTime);
+            xRotation = Mathf.LerpAngle(xRotation, startingYRotation + (15f - currentAngleX), t / switchTime);
 
             yield return null;
         }
@@ -255,31 +256,33 @@ public class FollowCamera : MonoBehaviour
 
         StartCoroutine(MoveCameraToNewTarget(GetCameraTarget(GameObject.FindGameObjectWithTag("Player"))));
     }
-    private IEnumerator MoveCameraToNewTarget(Transform newTarget)
+    private IEnumerator MoveCameraToNewTarget(Transform newCameraTarget)
     {
         switching = true;
+        switchTransform = Instantiate((GameObject)Resources.Load("SwitchTransform")).transform;
 
         switchTransform.position = target.position;
+
         target = switchTransform;
 
         Vector3 startingPosition = target.position;
-
-        float currentAngleY = transform.eulerAngles.y;
-        float startingXRotation = xRotation;
+        //float currentAngleY = transform.eulerAngles.y;
+        float startingYRotation = yRotation;
 
         // Interpolate target position and xRotation to new target
-        for (float t = 0; t < switchTime; t += Time.deltaTime * 0.5f)
+        for (float t = 0; t < switchTime; t += Time.deltaTime)
         {
-            xRotation = Mathf.LerpAngle(startingXRotation, newTarget.eulerAngles.y, t / switchTime);
-            //xRotation = Mathf.LerpAngle(startingXRotation, startingXRotation + (newTarget.eulerAngles.y - currentAngleY), t / switchTime);
-            switchTransform.position = Vector3.Lerp(startingPosition, newTarget.position, t / switchTime);
+            switchTransform.position = Vector3.Lerp(startingPosition, newCameraTarget.position, t / switchTime);
+            yRotation = Mathf.LerpAngle(startingYRotation, newCameraTarget.eulerAngles.y, t / switchTime);
 
             yield return null;
         }
 
-        target = newTarget;
-        switchTransform.position = transform.position;
+        target = newCameraTarget;
 
+        Destroy(switchTransform.gameObject);
+        switchTransform = null;
+        //switchTransform.position = transform.position;
         switching = false;
     }
     public IEnumerator TransitionFromDialogue(Vector3 startingPosition)
@@ -294,7 +297,7 @@ public class FollowCamera : MonoBehaviour
         // Interpolate target position and xRotation to new target
         for (float t = 0; t < switchTime; t += Time.deltaTime * 1)
         {
-            rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, Mathf.LerpAngle(startingAngleY, xRotation, t / switchTime), rotation.eulerAngles.z);
+            rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, Mathf.LerpAngle(startingAngleY, yRotation, t / switchTime), rotation.eulerAngles.z);
             switchTransform.position = Vector3.Lerp(startingPosition, targetPosition, t / switchTime);
 
             yield return null;
