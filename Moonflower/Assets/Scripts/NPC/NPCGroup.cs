@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NPCGroup : MonoBehaviour
 {
+    public string groupName;
     public List<LesserNPCController> NPCs;
     public bool assistInCombat;
     public bool destroyIfEmpty;
