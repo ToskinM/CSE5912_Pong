@@ -8,60 +8,56 @@ public class PlayerHealthDisplay : MonoBehaviour
 {
     public GameObject Flower;
     public GameObject Apple; 
-    public GameObject Anai; 
+    //public GameObject Anai;
+    private CurrentPlayer playerInfo; 
 
-    public bool Dead { get { return appleControl.Dead || flowerControl.Dead; } }
 
     private bool playerIsAnai = true; 
 
     private LifeAppleController appleControl;
     private LifeFlowerController flowerControl;
-    private AnaiController anaiController; 
+    private CharacterStats anaiStats;
+    private CharacterStats mimbiStats;
 
     // Start is called before the first frame update
     void Start()
     {
-        Anai = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetAnai();
+        playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>(); 
         appleControl = new LifeAppleController(Apple);
         flowerControl = new LifeFlowerController(Flower);
-        anaiController = Anai.GetComponent<AnaiController>();
-
+        anaiStats = playerInfo.PlayerAnaiObj.GetComponent<CharacterStats>();
+        mimbiStats = playerInfo.PlayerMimbiObj.GetComponent<CharacterStats>();
     }
 
     void Update()
     {
-        if (playerIsAnai && !anaiController.Playing)
+        if (playerIsAnai != playerInfo.IsAnai())
             switchPlayer();
 
-        if (!playerIsAnai && anaiController.Playing)
-            switchPlayer(); 
 
-        if (playerIsAnai)
-            flowerControl.UpdateFlower();
+        if (playerInfo.IsAnai())
+        {
+            float healthFrac = 1.0f * anaiStats.CurrentHealth / anaiStats.MaxHealth;
+            flowerControl.UpdateFlower(healthFrac);
+        }
         else
-            appleControl.UpdateApple(); 
+        {
+            float healthFrac = 1.0f * mimbiStats.CurrentHealth / mimbiStats.MaxHealth;
+            appleControl.UpdateApple(healthFrac);
+        } 
     }
 
     public void HitHealth(int current, int max)
     {
-        if (playerIsAnai)
-            flowerControl.HitHealth(current,max);
+        if (playerInfo.IsAnai())
+            flowerControl.Hit(); 
         else
-            appleControl.HitHealth(current,max); 
+            appleControl.Hit(); 
 
     }
-
-    public void Heal()
-    {
-        if (playerIsAnai)
-            flowerControl.HealPetal();
-        else
-            appleControl.HealApple(); 
-    }
-
     private void switchPlayer()
     {
-        playerIsAnai = !playerIsAnai;
+        playerIsAnai = playerInfo.IsAnai();
         if(playerIsAnai)
         {
             Flower.SetActive(true);

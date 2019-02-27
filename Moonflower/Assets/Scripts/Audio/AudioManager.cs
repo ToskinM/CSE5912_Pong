@@ -55,11 +55,11 @@ public class AudioManager : MonoBehaviour
                 else if (s.name.Contains("Mimbi"))
                     s.source = audioSources.GetMimbiAudioSource();
                 //else if (s.name.Contains("Player"))
-                //s.source = audioSources.GetCurrentPlayerAudioSource();
+                    //s.source = audioSources.GetCurrentPlayerAudioSource();
                 else
                     s.source = gameObject.AddComponent<AudioSource>();
             }
-
+                
             s.source.clip = s.clip;
             s.source.volume = vol;
             s.source.pitch = s.pitch;
@@ -89,9 +89,9 @@ public class AudioManager : MonoBehaviour
                 s.source = gameObject.AddComponent<AudioSource>();
         }
         else
-        {
-            //Debug.Log("there is no music source");
-        }
+        { 
+        //Debug.Log("there is no music source"); 
+    }
     }
     public void PlayBackground(string name)
     {
@@ -123,7 +123,7 @@ public class AudioManager : MonoBehaviour
     public void ChangeVolume(string name, float vol)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.source.volume = vol;
+            s.source.volume = vol;
     }
 
     //Change Volume
@@ -139,7 +139,7 @@ public class AudioManager : MonoBehaviour
     {
         foreach (Sound s in category)
         {
-            s.source.volume = vol;
+                s.source.volume = vol;
             avalibleArea.HearableArea(s.source, vol);
         }
     }

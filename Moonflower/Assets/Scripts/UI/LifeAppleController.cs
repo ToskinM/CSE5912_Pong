@@ -10,17 +10,14 @@ public class LifeAppleController : MonoBehaviour
 {
     public GameObject Apple;
 
-    public bool Dead = false;
-
     private Image appleImage; 
-    private bool healing = false;
-    private int healIndex = 0; 
-    private int healIncrementNum = 4; 
     private enum appleState { full, rotting, dead}
 
     private List<Sprite> apples;
     private appleState currState = appleState.full;
-    private int currRotIndex = 0;
+    private appleState goalState = appleState.full; 
+    private int goalRotIndex = -1; 
+    private int currRotIndex = -1;
     private AppleFactory factory;
 
 
@@ -42,6 +39,7 @@ public class LifeAppleController : MonoBehaviour
 
         initPosition = Apple.transform.position;
 
+        apples.Add(factory.GetHealthyApple());
         apples.Add(factory.GetRot1());
         apples.Add(factory.GetRot2());
         apples.Add(factory.GetRot3());
@@ -60,12 +58,36 @@ public class LifeAppleController : MonoBehaviour
         apples.Add(factory.GetRot16());
         apples.Add(factory.GetRot17());
         apples.Add(factory.GetRot18());
+        apples.Add(factory.GetDeadApple()); 
 
     }
 
-    public void UpdateApple()
+    public void UpdateApple(float healthFrac)
     {
-        if(damageDelt)
+        updateState(healthFrac);
+        //graphic needs changing
+        if(goalRotIndex!= currRotIndex)
+        {
+            //too healthy
+            if(currRotIndex < goalRotIndex)
+            {
+                rotApple();  
+
+            }
+            //too rotten
+            else
+            {
+                healApple(); 
+            }
+
+        }
+        else
+        {
+            healCount = 0; 
+        }
+
+        //hit shake 
+        if (damageDelt)
         {
             if (shakeCount < maxShake)
             {
@@ -87,79 +109,48 @@ public class LifeAppleController : MonoBehaviour
                 Apple.transform.position = initPosition; 
             }
         }
-        if(healing)
-        {
-            if (healCount % 6 == 0)
-            {
-                currRotIndex--;
-                if (currRotIndex < 0)
-                {
-                    currRotIndex = 0;
-                    currState = appleState.full;
-                    appleImage.sprite = factory.GetHealthyApple();
-                }
-                else
-                {
-                    appleImage.sprite = apples[currRotIndex];
-                }
-                healIndex++;
-            }
-            healCount++;
-            //healing = currState != appleState.full && currRotIndex != 3 && currRotIndex != 8 && currRotIndex != 13;
-            healing = currState != appleState.full && healIndex < healIncrementNum;
-            if (!healing)
-            {
-                healCount = 0;
-                healIndex = 0; 
-            }
-        }
     }
 
-    public void HitHealth(int curr, int max)
+    private void rotApple()
     {
-        if (!Dead)
+        currRotIndex = goalRotIndex;
+        if (currRotIndex >= apples.Count)
         {
-            float healthFrac = 1.0f * curr / max; 
-            if (healthFrac > 19f / 20f)
-            {
-                appleImage.sprite = factory.GetHealthyApple();
-                currState = appleState.full;
-            }
-            else if(healthFrac > 1f/20f)
-            {
-                float newFrac = (healthFrac - 1f / 20f) * (20f / 18f); 
-                int index = (int)Math.Round(newFrac*apples.Count);
-                index = 18 - index;  
-                if(index < apples.Count)
-                    appleImage.sprite = apples[index];
-                currState = appleState.rotting; 
-            }
-            else 
-            {
-                appleImage.sprite = factory.GetDeadApple();
-                Dead = true;
-                currState = appleState.dead;
-            }
-            //else
-            //{
-            //    currRotIndex++;
-            //    appleImage.sprite = apples[currRotIndex];
-            //}
-            damageDelt = true;
+            appleImage.sprite = apples[apples.Count - 1];
+            currRotIndex = apples.Count - 1; 
         }
-
+        else
+        {
+            appleImage.sprite = apples[currRotIndex];
+        }
     }
 
-    public void HealApple()
+    private void healApple()
     {
-        if (currState != appleState.full)
+        if (healCount % 6 == 0)
         {
-            healing = true;
-            healCount = 0;
+            currRotIndex--;
+            if (currRotIndex < 0)
+            {
+                currRotIndex = 0;
+            }
+            appleImage.sprite = apples[currRotIndex];
+
         }
+        healCount++;
+    }
+
+    private void updateState(float healthFrac)
+    {
+        int index = (int)Math.Round(healthFrac * apples.Count);
+        goalRotIndex = apples.Count - index;
 
     }
 
+    public void Hit()
+    {
+        damageDelt = true; 
 
+    }
 
 }

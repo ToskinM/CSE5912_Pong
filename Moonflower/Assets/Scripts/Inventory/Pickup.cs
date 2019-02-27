@@ -12,8 +12,10 @@ public class Pickup : MonoBehaviour
     public CharacterStats Stats { get; private set; }
     public GameObject PlayerAnai;
     private GameObject CurrentPlayer;
+    private CurrentPlayer playerInfo; 
 
-    private CharacterStats playerStat;
+    private CharacterStats anaiStat;
+    private CharacterStats mimbiStat; 
     //private InventoryManager inventoryManager;
     private PlayerInventory playerInventory;
     private PlayerSoundEffect soundEffect;
@@ -27,7 +29,10 @@ public class Pickup : MonoBehaviour
     {
         //StartCoroutine(GetAudioManager());
         //inventoryManager = FindObjectOfType<InventoryManager>();
-        playerStat = PlayerAnai.GetComponent<CharacterStats>();
+        playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
+        anaiStat = playerInfo.PlayerAnaiObj.GetComponent<CharacterStats>();
+        mimbiStat = playerInfo.PlayerMimbiObj.GetComponent<CharacterStats>(); 
+
         playerInventory = PlayerAnai.GetComponent<PlayerInventory>();
         soundEffect = PlayerAnai.GetComponent<PlayerSoundEffect>();
         CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
@@ -77,11 +82,12 @@ public class Pickup : MonoBehaviour
             if (obj.GetComponent<InventoryStat>().AnaiObject)
             {
                 TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Anai");
-                playerStat.AddHealth(health);
+                anaiStat.AddHealth(health);
             }
             else if (obj.GetComponent<InventoryStat>().MimbiObject)
             {
                 TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
+                mimbiStat.AddHealth(health);
             }
             else
             {
