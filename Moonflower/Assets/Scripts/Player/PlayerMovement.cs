@@ -287,7 +287,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
         Physics.gravity = new Vector3(0, -22.1f, 0);
         if (onGround)
         {
-            body.AddRelativeForce(Vector3.up * 10, ForceMode.Impulse);
+            body.AddRelativeForce(Vector3.up * 7, ForceMode.Impulse);
             onGround = false;
         }
         returnGrav = true;
