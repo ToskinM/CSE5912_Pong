@@ -35,7 +35,7 @@ public class AudioManager : MonoBehaviour
         audioSources = GetComponent<AudioSourceManager>();
         //Assign music clip to audio source
         AssignToAudioSource(sounds, soundVol);
-        AssignToAudioSource(backgrounds,backgroundVol);
+        AssignToAudioSource(backgrounds, backgroundVol);
         //Play Background wind Sound
         PlayBackground("background");
         //Set hearable area
@@ -55,11 +55,11 @@ public class AudioManager : MonoBehaviour
                 else if (s.name.Contains("Mimbi"))
                     s.source = audioSources.GetMimbiAudioSource();
                 //else if (s.name.Contains("Player"))
-                    //s.source = audioSources.GetCurrentPlayerAudioSource();
+                //s.source = audioSources.GetCurrentPlayerAudioSource();
                 else
                     s.source = gameObject.AddComponent<AudioSource>();
             }
-                
+
             s.source.clip = s.clip;
             s.source.volume = vol;
             s.source.pitch = s.pitch;
@@ -69,13 +69,13 @@ public class AudioManager : MonoBehaviour
 
 
 
-    public void Play (string name)
+    public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s != null&s.source!=null)
+        if (s != null & s.source != null)
         {
             s.source.Play();
-            Debug.Log("I am Playing "+name+ s.source.clip +" "+ s.clip);
+            //Debug.Log("I am Playing "+name+ s.source.clip +" "+ s.clip);
         }
         if (s.source == null)
         {
@@ -89,7 +89,9 @@ public class AudioManager : MonoBehaviour
                 s.source = gameObject.AddComponent<AudioSource>();
         }
         else
-        { Debug.Log("there is no music source"); }
+        {
+            //Debug.Log("there is no music source");
+        }
     }
     public void PlayBackground(string name)
     {
@@ -113,15 +115,15 @@ public class AudioManager : MonoBehaviour
         else
         { Debug.Log("there is no music source"); }
     }
-    public void Pause (string name)
+    public void Pause(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.Pause();
     }
-    public void ChangeVolume(string name,float vol)
+    public void ChangeVolume(string name, float vol)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-            s.source.volume = vol;
+        s.source.volume = vol;
     }
 
     //Change Volume
@@ -137,7 +139,7 @@ public class AudioManager : MonoBehaviour
     {
         foreach (Sound s in category)
         {
-                s.source.volume = vol;
+            s.source.volume = vol;
             avalibleArea.HearableArea(s.source, vol);
         }
     }
@@ -153,9 +155,7 @@ public class AudioManager : MonoBehaviour
 
     void Update()
     {
-        UpdateVol(backgrounds,backgroundVol);
+        UpdateVol(backgrounds, backgroundVol);
         UpdateVol(sounds, soundVol);
     }
-
-
 }

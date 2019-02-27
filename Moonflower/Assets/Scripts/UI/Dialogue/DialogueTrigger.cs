@@ -154,7 +154,8 @@ public class DialogueTrigger : MonoBehaviour
         tState = TextState.typing;
         //freezeCommand.Execute();
 
-        //LevelManager.current.dialogueCamera.RequestDialogueCamera(gameObject.transform);
+        // Start dialogue camera this this npc 
+        LevelManager.current.RequestDialogueCamera();
     }
 
     public void EndDialogue()
@@ -165,6 +166,9 @@ public class DialogueTrigger : MonoBehaviour
         pState = PanelState.falling;
         freezeCommand.Unexecute();
         engaged = false;
+
+        // Exit dialogue camera 
+        LevelManager.current.ReturnDialogueCamera();
     }
 
     public bool DialogueActive()

@@ -11,10 +11,13 @@ public class FollowCamera : MonoBehaviour
     public Transform switchTransform;
     [HideInInspector] public bool freeRoam;
     public bool Frozen { get; set; } = false;
-    public float switchTime = 0.3f;
+    public float switchTime = 1f;
     [HideInInspector] public bool switching;
     public bool accountForCollision = true;
     public LayerMask collisionLayers;
+
+    private Camera camera;
+    private AudioListener audioListener;
 
     private Transform target;
     private Transform targetCombatTransform;
@@ -37,6 +40,14 @@ public class FollowCamera : MonoBehaviour
     {
         // Get player target
         target = GetCameraTarget(GameObject.FindGameObjectWithTag("Player"));
+        camera = GetComponent<Camera>();
+        audioListener = GetComponent<AudioListener>();
+    }
+
+    public void SetRendering(bool rendering)
+    {
+        camera.enabled = rendering;
+        audioListener.enabled = rendering;
     }
 
     void Start()
@@ -110,30 +121,36 @@ public class FollowCamera : MonoBehaviour
                 float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
                 rotation = Quaternion.Euler(yRotation, angle, 0);
             }
-
-            // Find new camera position, Staying behind player, in range
-            Vector3 newPosition = target.position - (rotation * offset * followDistanceMultiplier);
-
-            if (accountForCollision)
-            {
-                // Account for collision with objects in camMask
-                RaycastHit wallHit = new RaycastHit();
-                //linecast from your player (targetFollow) to your cameras mask (camMask) to find collisions.
-                if (Physics.Linecast(target.transform.position, newPosition, out wallHit, collisionLayers))
-                {
-                    //the x and z coordinates are pushed away from the wall by hit.normal.
-                    //the y coordinate stays the same.
-                    newPosition = new Vector3(wallHit.point.x + wallHit.normal.x * collisionOffsetMultiplier, newPosition.y, wallHit.point.z + wallHit.normal.z * collisionOffsetMultiplier);
-                }
-            }
             
             // update position
-            transform.position = newPosition;
+            transform.position = GetNewPosition();
 
             // Look at the target
             transform.LookAt(target);
         }
     }
+
+    private Vector3 GetNewPosition()
+    {
+        // Find new camera position, Staying behind player, in range
+        Vector3 newPosition = target.position - (rotation * offset * followDistanceMultiplier);
+
+        if (accountForCollision)
+        {
+            // Account for collision with objects in camMask
+            RaycastHit wallHit = new RaycastHit();
+            //linecast from your player (targetFollow) to your cameras mask (camMask) to find collisions.
+            if (Physics.Linecast(target.transform.position, newPosition, out wallHit, collisionLayers))
+            {
+                //the x and z coordinates are pushed away from the wall by hit.normal.
+                //the y coordinate stays the same.
+                newPosition = new Vector3(wallHit.point.x + wallHit.normal.x * collisionOffsetMultiplier, newPosition.y, wallHit.point.z + wallHit.normal.z * collisionOffsetMultiplier);
+            }
+        }
+
+        return newPosition;
+    }
+
     private void UpdateFreeRotation()
     {
         transform.rotation = Quaternion.Euler(yRotation, xRotation, 0);
@@ -233,7 +250,9 @@ public class FollowCamera : MonoBehaviour
 
     private void SwitchTarget()
     {
-        LockOff();
+        if (lockedOn)
+            LockOff();
+
         StartCoroutine(MoveCameraToNewTarget(GetCameraTarget(GameObject.FindGameObjectWithTag("Player"))));
     }
     private IEnumerator MoveCameraToNewTarget(Transform newTarget)
@@ -247,18 +266,36 @@ public class FollowCamera : MonoBehaviour
         float startingXRotation = xRotation;
 
         // Interpolate target position and xRotation to new target
-        float t = 0;
-        while (t < switchTime)
+        for (float t = 0; t < switchTime; t += Time.deltaTime * 0.5f)
         {
             xRotation = Mathf.LerpAngle(startingXRotation, startingXRotation + (newTarget.eulerAngles.y - currentAngleY), t / switchTime);
             switchTransform.position = Vector3.Lerp(startingPosition, newTarget.position, t / switchTime);
 
-            t += Time.deltaTime * 1;
             yield return null;
         }
 
         target = newTarget;
         switchTransform.position = transform.position;
+        switching = false;
+    }
+    public IEnumerator TransitionFromDialogue(Vector3 startingPosition)
+    {
+        switching = true;
+
+        Vector3 targetPosition = GetNewPosition();
+        //Vector3 startingPosition = transform.position;
+
+        float startingAngleY = transform.eulerAngles.y;
+
+        // Interpolate target position and xRotation to new target
+        for (float t = 0; t < switchTime; t += Time.deltaTime * 1)
+        {
+            rotation.eulerAngles = new Vector3(rotation.eulerAngles.x, Mathf.LerpAngle(startingAngleY, xRotation, t / switchTime), rotation.eulerAngles.z);
+            switchTransform.position = Vector3.Lerp(startingPosition, targetPosition, t / switchTime);
+
+            yield return null;
+        }
+
         switching = false;
     }
 

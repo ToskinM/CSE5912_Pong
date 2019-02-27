@@ -55,9 +55,11 @@ public class AnaiController : MonoBehaviour, IPlayerController
         npcMove.FollowPlayer(followDist, tooCloseRadius); 
 
         GameStateController.OnPaused += HandlePauseEvent;
+        GameStateController.OnFreezePlayer += HandleFreezeEvent;
+
         playerAnimate.movement = playMove;
 
-        LevelManager.current.anai = gameObject;
+        LevelManager.current.anai = this;
     }
 
     void DetectCharacterSwitchInput()
@@ -125,5 +127,11 @@ public class AnaiController : MonoBehaviour, IPlayerController
     void HandlePauseEvent(bool isPaused)
     {
         enabled = !isPaused;
+    }
+    // Disable player controls
+    void HandleFreezeEvent(bool frozen)
+    {
+        playMove.Action = Actions.Chilling;
+        enabled = !frozen;
     }
 }

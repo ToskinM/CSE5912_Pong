@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
         Action = Actions.Chilling;
         Jumping = false;
         footstep = 0;
+
         GameStateController.OnPaused += HandlePauseEvent;
     }
 
@@ -303,8 +304,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     void MakeNoiseUponLanding()
     {
-        if (NoiseRaised != null)
-            NoiseRaised();
+        NoiseRaised?.Invoke();
     }
 
     // Disable player movement controls when game is paused

@@ -4,43 +4,60 @@ using UnityEngine;
 
 public class DialogueCamera : MonoBehaviour
 {
-    public Transform dialogueTarget;
-    public Transform dialoguePosition;
+    private enum DialogueCameraState { Dormant, Transitioning, Active }
+    private DialogueCameraState state;
 
-    public float switchTime = 0.3f;
-    public bool relocating = false;
+    [HideInInspector] public Transform dialogueTarget;
+    [HideInInspector] public Transform dialoguePosition;
+
+    public float switchTime = 0.5f;
+
+    private Transform playerTransform;
+
+    private Camera camera;
+    private AudioListener audioListener;
+    GameStateController gameStateController;
+
+    private void Awake()
+    {
+        camera = GetComponent<Camera>();
+        audioListener = GetComponent<AudioListener>();
+
+        dialoguePosition = GetCameraTarget(GameObject.FindGameObjectWithTag("Player"));
+        playerTransform = dialoguePosition.root;
+    }
 
     void Start()
     {
+        state = DialogueCameraState.Dormant;
+
         LevelManager.current.dialogueCamera = this;
-        enabled = false;
-    }
+        gameStateController = LevelManager.current.GameStateController;
 
-    //private void OnDisable()
-    //{
-    //    StartCoroutine(
-    //        PositionCamera(GetCameraTarget(GameObject.FindGameObjectWithTag("Player"))));
-    //}
-
-    public void OnEnable()
-    {
-        dialoguePosition = GetCameraTarget(GameObject.FindGameObjectWithTag("Player"));
-        StartCoroutine(PositionCamera(dialoguePosition));
-    }
-    public void OnDisable()
-    {
-        dialogueTarget = null;
-        //    StartCoroutine(
-        //        PositionCamera(GetCameraTarget(GameObject.FindGameObjectWithTag("Player"))));
+        SetRendering(false);
     }
 
     void Update()
     {
-        if (!relocating)
+        if (state != DialogueCameraState.Transitioning)
+        {
             transform.position = dialoguePosition.position;
+        }
 
-        Vector3 headPosition = dialogueTarget.position + Vector3.up;
-        transform.LookAt(headPosition);
+        if (dialogueTarget)
+        {
+            Vector3 relative = dialogueTarget.position - playerTransform.position;
+            float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+            playerTransform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            transform.LookAt(GetFocusPoint());
+        }
+    }
+
+    private Vector3 GetFocusPoint()
+    {
+        return dialogueTarget.position + Vector3.up;
+        //return ((dialogueTarget.position + playerTransform.position) / 2) + Vector3.up;
     }
 
     public Transform GetCameraTarget(GameObject character)
@@ -48,7 +65,7 @@ public class DialogueCamera : MonoBehaviour
         // Find gameobject tagged as the camera look target (ONLY searches one hierarchy level deep)
         foreach (Transform transform in character.transform)
         {
-            if (transform.tag == "CameraTarget")
+            if (transform.tag == "DialogueCameraTarget")
             {
                 return transform;
             }
@@ -58,19 +75,101 @@ public class DialogueCamera : MonoBehaviour
         return null;
     }
 
-    private IEnumerator PositionCamera(Transform newTarget)
+    public void SetRendering(bool rendering)
     {
-        relocating = true;
+        camera.enabled = rendering;
+        audioListener.enabled = rendering;
+    }
+
+    // Smoothly transition to dialogue perspective
+    public void Enter(Transform dialogueTarget, Transform startPosition)
+    {
+        gameStateController.SetPlayerFrozen(true);
+
+        this.dialogueTarget = dialogueTarget;
+        SetRendering(true);
+
+        // Look transition camera to look at who we're talking to
+        StartCoroutine(TransitionToDialogue(dialoguePosition, startPosition));
+    }
+    // Instantly pop into dialogue perspective
+    public void InstantEnter(Transform dialogueTarget)
+    {
+        // freeze player control (and switching)
+        gameStateController.SetPlayerFrozen(true);
+
+        this.dialogueTarget = dialogueTarget;
+        SetRendering(true);
+
+        state = DialogueCameraState.Active;
+    }
+
+    public void BeginExit(Transform mainCameraTransform)
+    {
+        dialogueTarget = null;
+
+        // release player control (and switching)
+        gameStateController.SetPlayerFrozen(false);
+
+        // Transition camera back to our main camera
+        StartCoroutine(TransitionToMainCamera(mainCameraTransform));
+    }
+    public void BeginInstantExit()
+    {
+        dialogueTarget = null;
+
+        gameStateController.SetPlayerFrozen(false);
+        Exit();
+    }
+    private void Exit()
+    {
+        SetRendering(false);
+        state = DialogueCameraState.Dormant;
+
+        LevelManager.current.mainCamera.SetRendering(true);
+    }
+
+    private IEnumerator TransitionToDialogue(Transform newTarget, Transform startingTransform)
+    {
+        state = DialogueCameraState.Transitioning;
+
+        transform.SetPositionAndRotation(startingTransform.position, startingTransform.rotation);
+
         Vector3 startingPosition = transform.position;
         Vector3 targetPosition = newTarget.position;
+
+        Quaternion startingRotation = transform.rotation;
+
 
         //Interpolate target position to new target
         for (float t = 0; t < switchTime; t += Time.deltaTime * 1)
         {
-            transform.position = Vector3.Lerp(startingPosition, targetPosition, t / switchTime);
+            transform.position = Vector3.Lerp(startingPosition, newTarget.position, t / switchTime);
+            transform.rotation = Quaternion.Lerp(startingRotation, Quaternion.LookRotation(GetFocusPoint() - (dialoguePosition.position), Vector3.up), t / switchTime);
 
             yield return null;
         }
-        relocating = false;
+
+        state = DialogueCameraState.Active;
+    }
+    private IEnumerator TransitionToMainCamera(Transform mainCameraTransform)
+    {
+        state = DialogueCameraState.Transitioning;
+
+        Vector3 startingPosition = transform.position;
+        Quaternion startingRotation = transform.rotation;
+
+        Vector3 targetPosition = LevelManager.current.mainCamera.transform.position;
+
+        //Interpolate target position to new target
+        for (float t = 0; t < switchTime; t += Time.deltaTime * 1)
+        {
+            transform.position = Vector3.Lerp(startingPosition, mainCameraTransform.position, t / switchTime);
+            transform.rotation = Quaternion.Lerp(startingRotation, mainCameraTransform.rotation, t / switchTime);
+
+            yield return null;
+        }
+
+        Exit();
     }
 }

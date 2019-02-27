@@ -11,10 +11,8 @@ public class LevelManager : MonoBehaviour
     public GameObject dummyHUD;
     public AudioManager AudioController;
     public GameStateController GameStateController;
-    public GameObject anai; // Reference created in Anai controller
-    public GameObject mimbi; // Reference created in Mimbi controller
-
-
+    public AnaiController anai; // Reference created in Anai controller
+    public MimbiController mimbi; // Reference created in Mimbi controller
 
     public List<GameObject> npcs = new List<GameObject>(); // NPCs add themselves to this list
     public List<int> deadNPCs = new List<int>(); // NPCs add themselves to this list
@@ -48,14 +46,14 @@ public class LevelManager : MonoBehaviour
         //DataSavingManager.current.npcData?.Load();
     }
 
-    public void RequestDialogueCamera(Transform dialogueTarget)
+    public void RequestDialogueCamera()
     {
-        dialogueCamera.dialogueTarget = dialogueTarget;
-        dialogueCamera.enabled = true;
+        dialogueCamera.Enter(anai.TalkingPartner.transform, mainCamera.transform);
+        mainCamera.SetRendering(false);
     }
-    public void StopDialogueCamera()
+    public void ReturnDialogueCamera()
     {
-        dialogueCamera.enabled = false;
+        dialogueCamera.BeginExit(mainCamera.transform);
     }
 
     public void RegisterNPC(GameObject npc)

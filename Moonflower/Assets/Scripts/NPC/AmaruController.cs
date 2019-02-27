@@ -56,6 +56,8 @@ public class AmaruController : MonoBehaviour
 
             if (npc.DistanceFrom(Player) < engagementRadius && !talkTrig.Complete)
             {
+                playerController.TalkingPartner = gameObject;
+
                 startEngagement(); 
                 npc.Follow(); 
             }

@@ -7,7 +7,6 @@ public class GameStateController : MonoBehaviour
     public GameObject Player;
     public GameObject MainCamera;
 
-
     public bool Paused;
     public bool DebugModeOn;
 
@@ -15,6 +14,9 @@ public class GameStateController : MonoBehaviour
 
     public delegate void Pause(bool isPaused);
     public static event Pause OnPaused;
+
+    public delegate void FreezePlayer(bool freeze);
+    public static event FreezePlayer OnFreezePlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -80,5 +82,10 @@ public class GameStateController : MonoBehaviour
     {
         PlayerMovement playerMovement = Player.GetComponent<PlayerMovement>();
         playerMovement.enabled = true;
+    }
+
+    public void SetPlayerFrozen(bool frozen)
+    {
+        OnFreezePlayer?.Invoke(frozen);
     }
 }

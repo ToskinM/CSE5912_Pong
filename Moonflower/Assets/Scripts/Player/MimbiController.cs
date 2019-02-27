@@ -48,8 +48,9 @@ public class MimbiController : MonoBehaviour, IPlayerController
         playerAnimate.movement = npcMove;
 
         GameStateController.OnPaused += HandlePauseEvent;
+        GameStateController.OnFreezePlayer += HandleFreezeEvent;
 
-        LevelManager.current.mimbi = gameObject;
+        LevelManager.current.mimbi = this;
     }
 
     // Update is called once per frame
@@ -106,5 +107,10 @@ public class MimbiController : MonoBehaviour, IPlayerController
     void HandlePauseEvent(bool isPaused)
     {
         enabled = !isPaused;
-}
+    }
+    // Disable player controls
+    void HandleFreezeEvent(bool frozen)
+    {
+        enabled = !frozen;
+    }
 }
