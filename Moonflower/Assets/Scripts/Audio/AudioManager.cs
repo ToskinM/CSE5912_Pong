@@ -75,7 +75,7 @@ public class AudioManager : MonoBehaviour
         if (s != null&s.source!=null)
         {
             s.source.Play();
-            Debug.Log("I am Playing "+name+ s.source.clip +" "+ s.clip);
+            //Debug.Log("I am Playing "+name+ s.source.clip +" "+ s.clip);
         }
         if (s.source == null)
         {
@@ -89,7 +89,9 @@ public class AudioManager : MonoBehaviour
                 s.source = gameObject.AddComponent<AudioSource>();
         }
         else
-        { Debug.Log("there is no music source"); }
+        { 
+        //Debug.Log("there is no music source"); 
+            }
     }
     public void PlayBackground(string name)
     {

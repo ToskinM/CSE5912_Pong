@@ -16,7 +16,8 @@ public class PlayerHealthDisplay : MonoBehaviour
 
     private LifeAppleController appleControl;
     private LifeFlowerController flowerControl;
-    private AnaiController anaiController; 
+    private AnaiController anaiController;
+    private CharacterStats anaiStats; 
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,7 @@ public class PlayerHealthDisplay : MonoBehaviour
         appleControl = new LifeAppleController(Apple);
         flowerControl = new LifeFlowerController(Flower);
         anaiController = Anai.GetComponent<AnaiController>();
-
+        anaiStats = Anai.GetComponent<CharacterStats>(); 
     }
 
     void Update()
@@ -37,7 +38,7 @@ public class PlayerHealthDisplay : MonoBehaviour
             switchPlayer(); 
 
         if (playerIsAnai)
-            flowerControl.UpdateFlower();
+            flowerControl.UpdateFlower(1.0f*anaiStats.CurrentHealth/anaiStats.MaxHealth);
         else
             appleControl.UpdateApple(); 
     }
@@ -45,17 +46,19 @@ public class PlayerHealthDisplay : MonoBehaviour
     public void HitHealth(int current, int max)
     {
         if (playerIsAnai)
-            flowerControl.HitHealth(current,max);
+            flowerControl.Hit(); 
+        //flowerControl.HitHealth(current,max);
         else
-            appleControl.HitHealth(current,max); 
+            appleControl.HitHealth(current, max); 
 
     }
 
     public void Heal()
     {
-        if (playerIsAnai)
-            flowerControl.HealPetal();
-        else
+        //if (playerIsAnai)
+            //flowerControl.HealPetal();
+        //else
+        if(!playerIsAnai)
             appleControl.HealApple(); 
     }
 
