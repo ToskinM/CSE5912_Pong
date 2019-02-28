@@ -13,6 +13,7 @@ public class SpawnActionWheel : MonoBehaviour
     void Start()
     {
         gameStateController = GameStateManager.GetComponent<GameStateController>();
+        GameStateController.OnFreezePlayer += HandleFreezeEvent;
     }
 
     // Update is called once per frame
@@ -35,5 +36,10 @@ public class SpawnActionWheel : MonoBehaviour
             Destroy(activeWheel);
             gameStateController.UnpauseGame();
         }
+    }
+
+    public void HandleFreezeEvent(bool frozen)
+    {
+        enabled = !frozen;
     }
 }
