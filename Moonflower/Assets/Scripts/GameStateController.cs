@@ -18,15 +18,16 @@ public class GameStateController : MonoBehaviour
     public delegate void FreezePlayer(bool freeze);
     public static event FreezePlayer OnFreezePlayer;
 
-    // Start is called before the first frame update
     void Start()
     {
         Paused = false;
         DebugModeOn = false;
         camControl = MainCamera.GetComponent<FollowCamera>();
+
+        // Lock Mouse on game start
+        SetMouseLock(true);
     }
 
-    // Update is called once per frame
     void Update()
     {
         camControl = MainCamera.GetComponent<FollowCamera>();
@@ -43,6 +44,19 @@ public class GameStateController : MonoBehaviour
         EnablePlayerMovement(!DebugModeOn);
     }
 
+    public void SetMouseLock(bool doLock)
+    {
+        if (doLock)   // Lock
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else          // Unlock
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
 
     public void TogglePause()
     {

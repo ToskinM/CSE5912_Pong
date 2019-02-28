@@ -25,11 +25,13 @@ public class SpawnActionWheel : MonoBehaviour
     {
         if (Input.GetButtonDown("Interact"))
         {
+            gameStateController.SetMouseLock(false);
             gameStateController.PauseGame();
             activeWheel = Instantiate(ActionWheelPrefab, Input.mousePosition, Quaternion.identity, transform);
         }
         else if (Input.GetButtonUp("Interact"))
         {
+            gameStateController.SetMouseLock(true);
             Destroy(activeWheel);
             gameStateController.unPauseGame();
         }

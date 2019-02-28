@@ -9,8 +9,8 @@ public class LevelManager : MonoBehaviour
     public new FollowCamera mainCamera; // Reference created in Camera script
     public new DialogueCamera dialogueCamera; // Reference created in Camera script
     public GameObject dummyHUD;
-    public AudioManager AudioController;
-    public GameStateController GameStateController;
+    public AudioManager audioController;
+    public GameStateController gameStateController;
     public AnaiController anai; // Reference created in Anai controller
     public MimbiController mimbi; // Reference created in Mimbi controller
 
@@ -48,11 +48,13 @@ public class LevelManager : MonoBehaviour
 
     public void RequestDialogueCamera()
     {
+        gameStateController.SetMouseLock(false);
         dialogueCamera.Enter(anai.TalkingPartner.transform, mainCamera.transform);
         mainCamera.SetRendering(false);
     }
     public void ReturnDialogueCamera()
     {
+        gameStateController.SetMouseLock(true);
         dialogueCamera.BeginExit(mainCamera.transform);
     }
 

@@ -7,7 +7,6 @@ public class ActionWheel : MonoBehaviour
 {
     private Image UIImage;
 
-    // Start is called before the first frame update
     void Start()
     {
         UIImage = GetComponent<Image>();

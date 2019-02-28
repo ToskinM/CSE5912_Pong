@@ -97,6 +97,11 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
                     agent.angularSpeed = baseAngularSpeed;
                     Action = Actions.Walking; 
                     Chill();
+
+                    // Stay facing who we're following (only needed in combat)
+                    Vector3 relative = Target.transform.position - agent.transform.position;
+                    float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+                    agent.transform.rotation = Quaternion.Lerp(agent.transform.rotation, Quaternion.Euler(0, angle, 0), Time.deltaTime * 10);
                 }
             }
             else

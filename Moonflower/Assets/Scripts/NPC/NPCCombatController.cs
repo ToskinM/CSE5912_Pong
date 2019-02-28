@@ -15,8 +15,6 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     public enum Aggression { Passive, Unaggressive, Aggressive, Frenzied };
     public Aggression aggression;
 
-    public NPCCombatController[] allies;
-
     public GameObject ragdollPrefab;
     private readonly float[] attackMultipliers = new float[] { 0f, 1f };
 
@@ -31,7 +29,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     private float hurtDelay = 0.2f;
     private float deaggroTime = 3;
     private Coroutine deaggroCoroutine = null;
-    public float attackDistance = 5f;
+    public float attackDistance = 2.6f;
     [HideInInspector] public float attackTimeout = 20f;
     private float timeSinceLastAttack;
 

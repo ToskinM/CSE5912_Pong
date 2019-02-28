@@ -32,7 +32,7 @@ public class DialogueCamera : MonoBehaviour
         state = DialogueCameraState.Dormant;
 
         LevelManager.current.dialogueCamera = this;
-        gameStateController = LevelManager.current.GameStateController;
+        gameStateController = LevelManager.current.gameStateController;
 
         SetRendering(false);
     }

@@ -103,6 +103,7 @@ public class LesserNPCController : MonoBehaviour
         }
         else
         {
+            movement.Reset();
             //movement.Attacking = false;
         }
     }
