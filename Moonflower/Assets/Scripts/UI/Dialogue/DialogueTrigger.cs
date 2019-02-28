@@ -103,7 +103,7 @@ public class DialogueTrigger : MonoBehaviour
                             break;
                     }
 
-                    if (Input.GetKeyDown(KeyCode.Return))
+                    if (Input.GetKeyDown(KeyCode.Space))
                     {
                         if (!engaged)
                         {
