@@ -128,6 +128,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             if (tag == "PlayerHurtbox" || tag == "Hurtbox")
             {
                 Aggro(other.gameObject.transform.root.gameObject, false);
+
                 if (aggression == Aggression.Unaggressive)
                     aggression = Aggression.Aggressive;
 
@@ -287,16 +288,20 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     {
         if (aggression > Aggression.Passive || forceAggression)
         {
-            fieldOfView.SetCombatMode(true);
+            // Dont constantly aggro
+            if (aggroTarget != combatTarget)
+            {
+                fieldOfView.SetCombatMode(true);
 
-            if (!InCombat)
-                InCombat = true;
+                if (!InCombat)
+                    InCombat = true;
 
-            combatTarget = aggroTarget;
-            //Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
+                combatTarget = aggroTarget;
+                //Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
 
-            // Broadcast that we've aggroed
-            OnAggroUpdated?.Invoke(true, aggroTarget);
+                // Broadcast that we've aggroed
+                OnAggroUpdated?.Invoke(true, aggroTarget);
+            }
         }
     }
 

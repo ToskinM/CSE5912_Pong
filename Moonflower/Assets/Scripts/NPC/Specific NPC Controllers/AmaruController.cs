@@ -16,6 +16,7 @@ public class AmaruController : MonoBehaviour
     const float bufferDist = 5f;
     const float wanderRad = 30f; 
     bool engaging = false;
+
     NPCMovementController npc;
     NavMeshAgent agent;
     DialogueTrigger talkTrig;

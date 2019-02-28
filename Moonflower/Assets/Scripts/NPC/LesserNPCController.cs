@@ -96,6 +96,7 @@ public class LesserNPCController : MonoBehaviour
     {
         if (aggroed)
         {
+            Debug.Log("aggro");
             movement.Follow(combatController.combatTarget, combatController.attackDistance, 0.5f);
             movement.SetHoldGround(false); 
             //movement.player = combatController.combatTarget;
