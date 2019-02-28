@@ -42,6 +42,7 @@ public class DialogueTrigger : MonoBehaviour
     DialogueGraph graph;
     DialogueFactory factory;
     bool noExit = true;
+    bool first = true; 
 
 
     public DialogueTrigger(GameObject p, string characterSprite, string graphName)
@@ -55,7 +56,10 @@ public class DialogueTrigger : MonoBehaviour
         buttons = new List<Button>();
         templateButton = panel.transform.GetChild(2).GetComponent<Button>();
         exitButton = panel.transform.GetChild(3).GetComponent<Button>();
-        exitButton.onClick.AddListener(endConvo);
+        //exitButton.onClick.AddListener(endConvo);
+        //exitButton.onClick.AddListener(delegate { Debug.Log("why do you hate me"); });
+        exitButton.onClick.AddListener(delegate { endConvo(); });
+
 
         freezeCommand = new FreezeCameraCommand();
         spriteFile = characterSprite;
@@ -66,6 +70,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void Update()
     {
+        Debug.Log("What is first " + first);
         if (pState != PanelState.down)
         {
             switch (pState)
@@ -304,6 +309,17 @@ public class DialogueTrigger : MonoBehaviour
 
     private void displayOptions()
     {
+        if (first)
+        {
+            Button b = Instantiate(exitButton, exitButton.transform.position, exitButton.transform.rotation);
+            b.transform.SetParent(panel.transform, false);
+            b.transform.position = new Vector3(exitButton.transform.position.x, exitButton.transform.position.y);
+            b.onClick.AddListener(delegate { endConvo(); });
+            exitButton.gameObject.SetActive(false);
+            first = false;
+            Debug.Log("made a clone");
+        }
+
         int numOptions = graph.current.answers.Count;
         if (numOptions > 0)
         {
@@ -358,6 +374,8 @@ public class DialogueTrigger : MonoBehaviour
 
     private void forceOptions()
     {
+
+
         resetCounts();
         destroyButtons();
         int numOptions = graph.current.answers.Count;
