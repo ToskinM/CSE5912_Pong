@@ -9,7 +9,8 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
     public bool Jumping { get; set; }
 
     public bool Active { get; set; } = true; 
-    public GameObject Target; 
+    public GameObject Target;
+    public bool HoldGround { get; set; } = false; 
 
     public bool stunned;
     public bool swinging;
@@ -25,7 +26,8 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
     public float followDist = 5; //default
     float tooCloseRadius = 2.5f;
 
-    float baseSpeed; 
+    float baseSpeed;
+    float baseAngularSpeed; 
 
     void Start()
     {
@@ -65,6 +67,7 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
         Target = targetOb;
         agent = self.GetComponent<NavMeshAgent>();
         baseSpeed = agent.speed * 1.5f;
+        baseAngularSpeed = agent.angularSpeed; 
         destination = selfOb.transform.position;
     }
 
@@ -78,9 +81,10 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
 
             float distFromTarget = getXZDist(Target.transform.position, self.transform.position);
             if (distFromTarget < followDist)
-            {
-                if (distFromTarget < tooCloseRadius)
+            { 
+                if (!HoldGround && distFromTarget < tooCloseRadius)
                 {
+                    agent.angularSpeed = 0; 
                     Vector3 targetDirection = self.transform.position - Target.transform.position;
                     Vector3 newDest = self.transform.position + targetDirection.normalized * 10;
                     destination = getRandomDest(newDest, 1f);
@@ -90,6 +94,7 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
                 else
                 {
                     agent.speed = baseSpeed;
+                    agent.angularSpeed = baseAngularSpeed;
                     Action = Actions.Walking; 
                     Chill();
                 }

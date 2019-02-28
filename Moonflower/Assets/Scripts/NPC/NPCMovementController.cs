@@ -63,10 +63,10 @@ public class NPCMovementController : MonoBehaviour, IMovement
 
     public void Follow(GameObject target, float followDist, float tooClose) 
     {
-        canFollow = true; 
-        if(follow == null)
+        if(!canFollow)
         {
-            follow = new NPCFollowMove(self, target, followDist, tooClose); 
+            follow = new NPCFollowMove(self, target, followDist, tooClose);
+            canFollow = true;
         }
         else 
         {
@@ -77,10 +77,10 @@ public class NPCMovementController : MonoBehaviour, IMovement
     }
     public void Follow(GameObject target, float followDist) 
     {
-        canFollow = true;
-        if (follow == null)
+        if (!canFollow)
         {
             follow = new NPCFollowMove(self, target, followDist);
+            canFollow = true;
         }
         else
         {
@@ -91,10 +91,10 @@ public class NPCMovementController : MonoBehaviour, IMovement
     }
     public void FollowPlayer(float followDist)
     {
-        canFollow = true;
-        if (follow == null)
+        if (!canFollow)
         {
             follow = new NPCFollowMove(self, Player, followDist);
+            canFollow = true;
         }
         else
         {
@@ -105,10 +105,10 @@ public class NPCMovementController : MonoBehaviour, IMovement
     }
     public void FollowPlayer(float followDist, float tooClose)
     {
-        canFollow = true;
-        if (follow == null)
+        if (!canFollow)
         {
             follow = new NPCFollowMove(self, Player, followDist, tooClose);
+            canFollow = true;
         }
         else
         {
@@ -120,10 +120,10 @@ public class NPCMovementController : MonoBehaviour, IMovement
 
     public void Wander(Vector3 origin, float wanderDistance)
     {
-        canWander = true;
-        if (wander == null)
+        if (!canWander)
         {
             wander = new NPCWanderMove(self, origin, wanderDistance);
+            canWander = true;
         }
         else
         {
@@ -133,20 +133,21 @@ public class NPCMovementController : MonoBehaviour, IMovement
     }
     public void WanderFollow(GameObject followTarget, float maxDistAway)
     {
-        canWander = true;
-        canFollow = true; 
-        if(wander == null)
+         
+        if(!canWander)
         {
             wander = new NPCWanderMove(self, target.transform.position, maxDistAway);
+            canWander = true;
         }
         else
         {
             wander.SetArea(target.transform.position, maxDistAway);
         }
 
-        if(follow == null)
+        if(!canFollow)
         {
-            follow = new NPCFollowMove(self, followTarget, maxDistAway/2); 
+            follow = new NPCFollowMove(self, followTarget, maxDistAway/2);
+            canFollow = true;
         }
         else
         {
@@ -158,20 +159,20 @@ public class NPCMovementController : MonoBehaviour, IMovement
     }
     public void WanderFollowPlayer(float maxDistAway)
     {
-        canWander = true;
-        canFollow = true; 
         target = Player;
-        if (wander == null)
+        if (canWander)
         {
             wander = new NPCWanderMove(self, target.transform.position, maxDistAway);
+            canWander = true;
         }
         else
         {
             wander.SetArea(target.transform.position, maxDistAway);
         }
-        if (follow == null)
+        if (!canFollow)
         {
             follow = new NPCFollowMove(self, target, maxDistAway/2);
+            canFollow = true;
         }
         else
         {
@@ -184,7 +185,11 @@ public class NPCMovementController : MonoBehaviour, IMovement
     {
         defaultState = dfs; 
     }
-
+    public void SetHoldGround(bool hold)
+    {
+        if (canFollow)
+            follow.HoldGround = hold; 
+    }
 
     /*
      * 
@@ -312,8 +317,8 @@ public class NPCMovementController : MonoBehaviour, IMovement
     public void Reset()
     {
         state = defaultState;
-        agent.speed = baseSpeed; 
-
+        agent.speed = baseSpeed;
+        SetHoldGround(false); 
     }
 
     public void Run()

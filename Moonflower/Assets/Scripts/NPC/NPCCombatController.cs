@@ -37,7 +37,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
     private FieldOfView fieldOfView;
     private NPCAnimationController npcAnimationController;
-    public NPCMovement npcMovement;
+    public NPCMovementController npcMovement;
 
     public delegate void AggroUpdate(bool aggroed, GameObject aggroTarget);
     public event AggroUpdate OnAggroUpdated;
@@ -89,7 +89,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             isAttacking = false;
         }
 
-        if (npcMovement)
+        if (npcMovement!=null)
         {
             npcMovement.swinging = isAttacking;
         }
@@ -167,10 +167,13 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     }
     public void SetStunned(int stunned)
     {
-        if (stunned == 1)
-            npcMovement.stunned = true;
-        else
-            npcMovement.stunned = false;
+        if (npcMovement != null)
+        {
+            if (stunned == 1)
+                npcMovement.stunned = true;
+            else
+                npcMovement.stunned = false;
+        }
     }
 
     public void StartFight(GameObject player)
@@ -307,8 +310,8 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         //Debug.Log(gameObject.name + " stopped combat");
         Sheathe();
 
-
-        npcMovement.Chill();
+        if(npcMovement != null)
+            npcMovement.Chill();
     }
 
     // Set aggression to Frenzied

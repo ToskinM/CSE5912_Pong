@@ -41,11 +41,11 @@ public class MimbiController : MonoBehaviour, IPlayerController
         playCombat = GetComponent<PlayerCombatController>();
         playerAnimate = GetComponent<PlayerAnimatorController>();
         boxCollider = GetComponent<BoxCollider>();
-        npcMove = new NPCMovementController(gameObject, Anai);
-        npcMove.WanderFollowPlayer(wanderRadius);
-        npcMove.SetDefault(NPCMovementController.MoveState.wanderfollow); 
+        //npcMove = new NPCMovementController(gameObject, Anai);
+        //npcMove.WanderFollowPlayer(wanderRadius);
+        //npcMove.SetDefault(NPCMovementController.MoveState.wanderfollow); 
 
-        playerAnimate.movement = npcMove;
+        //playerAnimate.movement = npcMove;
 
         GameStateController.OnPaused += HandlePauseEvent;
         GameStateController.OnFreezePlayer += HandleFreezeEvent;
@@ -58,14 +58,14 @@ public class MimbiController : MonoBehaviour, IPlayerController
     {
         DetectCharacterSwitchInput();
 
-        if (Playing)
-        {
-            playMove.MovementUpdate();
-        }
-        else
-        {
-            npcMove.UpdateMovement();
-        }
+        //if (Playing)
+        //{
+        //    playMove.MovementUpdate();
+        //}
+        //else
+        //{
+        //    npcMove.UpdateMovement();
+        //}
     }
 
     void DetectCharacterSwitchInput()
@@ -80,27 +80,27 @@ public class MimbiController : MonoBehaviour, IPlayerController
             {
         if (switchToThis)
         {
-            playCombat.enabled = true;
+                playCombat.enabled = true;
                 gameObject.layer = 10;
                 tag = "Player";
                 agent.enabled = false;
-            playerAnimate.movement = playMove;
+                playerAnimate.movement = playMove;
                 boxCollider.enabled = true; 
             }
             else
             {
-            playCombat.enabled = false;
+                playCombat.enabled = false;
                 gameObject.layer = 0;
                 tag = "Companion";
                 agent.enabled = true;
-            playerAnimate.movement = npcMove;
+                playerAnimate.movement = npcMove;
                 boxCollider.enabled = false; 
             }
         }
 
     public void Summon()
     {
-        npcMove.RunToPlayer();
+        //npcMove.RunToPlayer();
     }
 
     // Disable updates when gaame is paused

@@ -14,11 +14,11 @@ public class LesserNPCController : MonoBehaviour
     public float tooCloseRad = 4f;
     public float bufferDist = 5f;
 
-    private bool engaging = false;
-    private NPCMovement movement;
+    //private bool engaging = false;
+    private NPCMovementController movement;
     public NPCCombatController combatController;
     private NavMeshAgent agent;
-    private AmaruDialogueTrigger talkTrig;
+    private DialogueTrigger talkTrig;
     private IPlayerController playerController;
 
     private void Awake()
@@ -27,8 +27,8 @@ public class LesserNPCController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         combatController = GetComponent<NPCCombatController>();
         playerController = Player.GetComponent<IPlayerController>();
-        movement = new NPCMovement(gameObject, Player);
-        movement.SetEngagementDistances(5, combatController.attackDistance + 0.5f, 1);
+        movement = new NPCMovementController(gameObject, Player);
+        //movement.SetEngagementDistances(5, combatController.attackDistance + 0.5f, 1);
     }
 
     void Start()
@@ -53,18 +53,18 @@ public class LesserNPCController : MonoBehaviour
             {
                 talkTrig.Update();
 
-                if (movement.Engaging && !talkTrig.Complete)
-                {
-                    StartEngagement();
-                }
-                else if (!movement.Wandering)
-                {
-                    movement.ResumeWandering();
-                    if (talkTrig.DialogueActive())
-                    {
-                        talkTrig.EndDialogue();
-                    }
-                }
+                //if (!talkTrig.Complete)
+                //{
+                //    StartEngagement();
+                //}
+                //else if (!movement.Wandering)
+                //{
+                //    movement.ResumeWandering();
+                //    if (talkTrig.DialogueActive())
+                //    {
+                //        talkTrig.EndDialogue();
+                //    }
+                //}
             }
         }
         else
@@ -85,7 +85,7 @@ public class LesserNPCController : MonoBehaviour
 
     private void StartEngagement()
     {
-        engaging = true;
+        //engaging = true;
 
         if (talkTrig != null)
             if (!talkTrig.DialogueActive())
@@ -96,12 +96,14 @@ public class LesserNPCController : MonoBehaviour
     {
         if (aggroed)
         {
-            movement.player = combatController.combatTarget;
-            movement.Attacking = true;
+            movement.Follow(combatController.combatTarget, combatController.attackDistance, 1.5f);
+            movement.SetHoldGround(true); 
+            //movement.player = combatController.combatTarget;
+            //movement.Attacking = true;
         }
         else
         {
-            movement.Attacking = false;
+            //movement.Attacking = false;
         }
     }
 
