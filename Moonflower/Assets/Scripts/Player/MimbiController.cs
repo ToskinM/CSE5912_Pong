@@ -63,7 +63,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
             playMove.MovementUpdate();
         }
         else
-        {
+        { 
             npcMove.UpdateMovement();
         }
     }

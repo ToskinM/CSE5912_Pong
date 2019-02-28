@@ -160,7 +160,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
     public void WanderFollowPlayer(float maxDistAway)
     {
         target = Player;
-        if (canWander)
+        if (!canWander)
         {
             wander = new NPCWanderMove(self, target.transform.position, maxDistAway);
             canWander = true;
@@ -233,7 +233,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
                     break;
                 case MoveState.wanderfollow:
                     if (canWander && canFollow)
-                    {
+                    { 
                         float maxDist = wander.wanderAreaRadius;
                         if (DistanceFrom(target) < maxDist * 1.3f && !gettingBack && !stickingAround)
                         {
