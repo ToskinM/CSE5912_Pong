@@ -35,18 +35,11 @@ public class PlayerSoundEffect : MonoBehaviour
     }
     public void AnaiWalkingSFX()
     {
-        //if (footstep == 0)
-        //{
-            audioManager.Play("AnaiWalking");
-        //}
-        //footstep++;
-        //if (footstep == footstepTime)
-            //footstep = 0;
-
+        audioManager.Play("AnaiWalking");
     }
     public void AnaiSneakingSFX()
     {
-
+        audioManager.Play("AnaiWalking");
     }
 
     public void AnaiPunchSFX()
@@ -61,7 +54,6 @@ public class PlayerSoundEffect : MonoBehaviour
 
     public void AnaiRunSFX()
     {
-        Debug.Log("Anai Run !!!");
         audioManager.Play("AnaiRun");
 
     }
