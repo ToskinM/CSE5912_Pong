@@ -32,7 +32,8 @@ public class AudioManager : MonoBehaviour
         soundVol = 1;
         backgroundVol = 1;
         //Get AudioSource
-        audioSources = GetComponent<AudioSourceManager>();
+        //audioSources = GetComponent<AudioSourceManager>();
+        StartCoroutine(GetAudioSourceManager());
         //Assign music clip to audio source
         AssignToAudioSource(sounds, soundVol);
         AssignToAudioSource(backgrounds, backgroundVol);
@@ -44,6 +45,15 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    private IEnumerator GetAudioSourceManager()
+    {
+        while (audioSources == null)
+        {
+            audioSources = FindObjectOfType<AudioSourceManager>();
+            yield return null;
+        }
+    }
+
     private void AssignToAudioSource(Sound[] category, float vol)
     {
         foreach (Sound s in category)
@@ -51,11 +61,11 @@ public class AudioManager : MonoBehaviour
             if (s.source == null)
             {
                 if (s.name.Contains("Anai"))
-                    s.source = audioSources.GetAnaiAudioSource();
+                    s.source = audioSources.AddAnaiAudioSource();
                 else if (s.name.Contains("Mimbi"))
-                    s.source = audioSources.GetMimbiAudioSource();
+                    s.source = audioSources.AddMimbiAudioSource();
                 //else if (s.name.Contains("Player"))
-                    //s.source = audioSources.GetCurrentPlayerAudioSource();
+                    //s.source = audioSources.AddCurrentPlayerAudioSource();
                 else
                     s.source = gameObject.AddComponent<AudioSource>();
             }
@@ -77,21 +87,18 @@ public class AudioManager : MonoBehaviour
             s.source.Play();
             //Debug.Log("I am Playing "+name+ s.source.clip +" "+ s.clip);
         }
+        //Add back audio source
         if (s.source == null)
         {
             if (s.name.Contains("Anai"))
-                s.source = audioSources.GetAnaiAudioSource();
+                s.source = audioSources.AddAnaiAudioSource();
             else if (s.name.Contains("Mimbi"))
-                s.source = audioSources.GetMimbiAudioSource();
+                s.source = audioSources.AddMimbiAudioSource();
             //else if (s.name.Contains("Player"))
-            //s.source = audioSources.GetCurrentPlayerAudioSource();
+            //s.source = audioSources.AddCurrentPlayerAudioSource();
             else
                 s.source = gameObject.AddComponent<AudioSource>();
         }
-        else
-        { 
-        //Debug.Log("there is no music source"); 
-    }
     }
     public void PlayBackground(string name)
     {
@@ -101,9 +108,9 @@ public class AudioManager : MonoBehaviour
             s.source.Play();
         }
         else if (s.source = null)
-        { Debug.Log("why no audio source!?"); }
+            Debug.Log("why no audio source!?");
         else
-        { Debug.Log("there is no music source"); }
+            Debug.Log("there is no music source");
     }
     public void PlayTest(string name)
     {
@@ -113,7 +120,7 @@ public class AudioManager : MonoBehaviour
             s.source.PlayOneShot(s.source.clip);
         }
         else
-        { Debug.Log("there is no music source"); }
+            Debug.Log("there is no music source");
     }
     public void Pause(string name)
     {
@@ -126,20 +133,31 @@ public class AudioManager : MonoBehaviour
             s.source.volume = vol;
     }
 
+    //Sneaking Change Volume
+    public void ChangeFootStep()
+    {
+        Sound s = Array.Find(sounds, sound => sound.name.Contains("Walk"));
+        s.source.volume = s.source.volume * 0.1f;
+    }
+
     //Change Volume
     public void ChangeSoundVol(float vol)
     {
         soundVol = vol;
+        UpdateVol(sounds, soundVol);
     }
     public void ChangeBackgroundVol(float vol)
     {
         backgroundVol = vol;
+        UpdateVol(backgrounds, backgroundVol);
     }
+
+    //Update Changed Volume
     public void UpdateVol(Sound[] category, float vol)
     {
         foreach (Sound s in category)
         {
-                s.source.volume = vol;
+            s.source.volume = vol;
             avalibleArea.HearableArea(s.source, vol);
         }
     }
@@ -155,7 +173,6 @@ public class AudioManager : MonoBehaviour
 
     void Update()
     {
-        UpdateVol(backgrounds, backgroundVol);
-        UpdateVol(sounds, soundVol);
+
     }
 }
