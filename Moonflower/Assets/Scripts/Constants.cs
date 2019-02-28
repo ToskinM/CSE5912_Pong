@@ -5,7 +5,7 @@ using UnityEngine;
 public static class Constants
 {
     // Scene Names
-    public const string SCENE_GAME = "SampleScene";
+    public const string SCENE_GAME = "The Village";
     public const string SCENE_PERSISTENT = "Persistent";
     public const string SCENE_MAINMENU = "Main Menu";
     public const string SCENE_LOADING = "Loading";
@@ -45,6 +45,7 @@ public static class Constants
     public const string PEANUT_ICON = itemFolder + "Peanuts";
     public const string BOW_ICON = itemFolder + "Bow";
     public const string ARROW_ICON = itemFolder + "Arrow";
+    public const string CORN_ICON = itemFolder + "Corn";
 
     //life petal names
     const string flowerFolder = "Life Petals/";

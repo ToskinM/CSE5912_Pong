@@ -33,7 +33,7 @@ public class SpawnActionWheel : MonoBehaviour
         {
             gameStateController.SetMouseLock(true);
             Destroy(activeWheel);
-            gameStateController.unPauseGame();
+            gameStateController.UnpauseGame();
         }
     }
 }
