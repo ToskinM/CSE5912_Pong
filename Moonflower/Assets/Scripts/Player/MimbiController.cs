@@ -58,14 +58,14 @@ public class MimbiController : MonoBehaviour, IPlayerController
     {
         DetectCharacterSwitchInput();
 
-        //if (Playing)
-        //{
-        //    playMove.MovementUpdate();
-        //}
-        //else
-        //{
-        //    npcMove.UpdateMovement();
-        //}
+        if (Playing)
+        {
+            playMove.MovementUpdate();
+        }
+        else
+        {
+            npcMove.UpdateMovement();
+        }
     }
 
     void DetectCharacterSwitchInput()
