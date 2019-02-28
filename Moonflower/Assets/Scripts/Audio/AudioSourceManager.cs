@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AudioSourceManager : MonoBehaviour
 {
-    public GameObject Anai;
-    public GameObject Mimbi;
+    private GameObject Anai;
+    private GameObject Mimbi;
     private GameObject CurrentPlayer;
     // Start is called before the first frame update
     void Start()
@@ -15,15 +15,15 @@ public class AudioSourceManager : MonoBehaviour
         Mimbi = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetMimbi();
     }
 
-    public AudioSource GetAnaiAudioSource()
+    public AudioSource AddAnaiAudioSource()
     {
         return Anai.AddComponent<AudioSource>();
     }
-    public AudioSource GetMimbiAudioSource()
+    public AudioSource AddMimbiAudioSource()
     {
         return Mimbi.AddComponent<AudioSource>();
     }
-    public AudioSource GetCurrentPlayerAudioSource()
+    public AudioSource AddCurrentPlayerAudioSource()
     {
         return CurrentPlayer.AddComponent<AudioSource>();
     }
