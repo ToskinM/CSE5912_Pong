@@ -8,6 +8,8 @@ public class FieldOfView : MonoBehaviour
     [Range(0, 360)]
     public float viewAngle;
 
+    private float startingViewAngle;
+
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
@@ -26,6 +28,8 @@ public class FieldOfView : MonoBehaviour
 
     void Start()
     {
+        startingViewAngle = viewAngle;
+
         foundMaterial = Resources.Load<Material>("Materials/TriggerRed");
         emptyMaterial = Resources.Load<Material>("Materials/TriggerYellow");
 
@@ -37,6 +41,18 @@ public class FieldOfView : MonoBehaviour
         }
 
         StartCoroutine("FindTargetsWithDelay", 0.2f);
+    }
+
+    public void SetCombatMode(bool combatMode)
+    {
+        if (combatMode)
+        {
+            viewAngle = Mathf.Clamp(startingViewAngle * 2, 0, 360);
+        }
+        else
+        {
+            viewAngle = Mathf.Clamp(startingViewAngle, 0, 360);
+        }
     }
 
 

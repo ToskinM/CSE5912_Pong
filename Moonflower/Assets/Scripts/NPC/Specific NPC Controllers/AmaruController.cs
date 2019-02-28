@@ -11,7 +11,7 @@ public class AmaruController : MonoBehaviour
     public GameObject DialoguePanel;
     public bool dialogueActive = false;
 
-    const float engagementRadius = 15f;
+    const float engagementRadius = 5f;
     const float tooCloseRad = 4f;
     const float bufferDist = 5f;
     const float wanderRad = 30f; 

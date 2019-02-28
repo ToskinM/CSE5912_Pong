@@ -31,7 +31,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     private float hurtDelay = 0.2f;
     private float deaggroTime = 3;
     private Coroutine deaggroCoroutine = null;
-    public float attackDistance = 2.6f;
+    public float attackDistance = 5f;
     [HideInInspector] public float attackTimeout = 20f;
     private float timeSinceLastAttack;
 
@@ -287,6 +287,8 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     {
         if (aggression > Aggression.Passive || forceAggression)
         {
+            fieldOfView.SetCombatMode(true);
+
             if (!InCombat)
                 InCombat = true;
 
@@ -300,8 +302,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
     private void DeAggro()
     {
-        // Broadcast that we've lost aggro
-        OnAggroUpdated?.Invoke(false, combatTarget);
+        fieldOfView.SetCombatMode(false);
 
         if (InCombat)
             InCombat = false;
@@ -312,6 +313,9 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
         if(npcMovement != null)
             npcMovement.Chill();
+
+        // Broadcast that we've lost aggro
+        OnAggroUpdated?.Invoke(false, combatTarget);
     }
 
     // Set aggression to Frenzied

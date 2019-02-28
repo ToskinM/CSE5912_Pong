@@ -715,13 +715,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4966332044745484}
   - component: {fileID: 95439465833848182}
-  - component: {fileID: 136319692572959824}
-  - component: {fileID: 1468746725}
-  - component: {fileID: 1468746726}
-  - component: {fileID: 1468746727}
-  - component: {fileID: 1468746728}
   - component: {fileID: 1468746729}
   - component: {fileID: 1468746733}
+  - component: {fileID: 1468746726}
+  - component: {fileID: 1468746728}
+  - component: {fileID: 1468746725}
+  - component: {fileID: 1468746727}
+  - component: {fileID: 136319692572959824}
   - component: {fileID: 3116732539371463168}
   m_Layer: 9
   m_Name: MouseKnight
@@ -767,107 +767,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &136319692572959824
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298671735298112}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.51
-  m_Height: 1.2320688
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.65, z: 0}
---- !u!114 &1468746725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298671735298112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68655665de1db9b41ad317b508226a9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewRadius: 13
-  viewAngle: 90
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
-  visibleTargets: []
-  closestTarget: {fileID: 0}
-  focusedTarget: {fileID: 0}
-  viewMeshFilter: {fileID: 7840462490694451851}
---- !u!114 &1468746726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298671735298112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 357281d658feb5945b34a60f6f111765, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 0}
-  DialoguePanel: {fileID: 0}
-  engagementRadius: 15
-  tooCloseRad: 4
-  bufferDist: 5
---- !u!195 &1468746727
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298671735298112}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 4
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 720
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
---- !u!114 &1468746728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298671735298112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0906979d9dba25841b61e1f5bc6ae5eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aggression: 1
-  ragdollPrefab: {fileID: 1298671735298112, guid: 536fcf3c0e86ecb44b738d2721978483,
-    type: 3}
-  deathEffect: {fileID: 1270126634788680, guid: 54bd8c7da32a6874bbc9f5487750acaf,
-    type: 3}
-  isAttacking: 0
-  weapon: {fileID: 934448058}
-  attack: 0
-  combatTarget: {fileID: 0}
-  attackDistance: 2.6
-  attackTimeout: 0.5
-  npcMovement: {fileID: 0}
 --- !u!114 &1468746729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -904,6 +803,109 @@ MonoBehaviour:
   Stealth: 0
   strengthExperience: 0
   HUD: {fileID: 0}
+--- !u!114 &1468746726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298671735298112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 357281d658feb5945b34a60f6f111765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  DialoguePanel: {fileID: 0}
+  engagementRadius: 15
+  tooCloseRad: 4
+  bufferDist: 5
+  combatController: {fileID: 1468746728}
+--- !u!114 &1468746728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298671735298112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0906979d9dba25841b61e1f5bc6ae5eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aggression: 1
+  allies: []
+  ragdollPrefab: {fileID: 1298671735298112, guid: 536fcf3c0e86ecb44b738d2721978483,
+    type: 3}
+  deathEffect: {fileID: 1270126634788680, guid: 54bd8c7da32a6874bbc9f5487750acaf,
+    type: 3}
+  isAttacking: 0
+  weapon: {fileID: 934448058}
+  attack: 0
+  combatTarget: {fileID: 0}
+  attackDistance: 2.6
+  attackTimeout: 0.5
+  npcMovement: {fileID: 0}
+--- !u!114 &1468746725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298671735298112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68655665de1db9b41ad317b508226a9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 13
+  viewAngle: 90
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  visibleTargets: []
+  closestTarget: {fileID: 0}
+  focusedTarget: {fileID: 0}
+  viewMeshFilter: {fileID: 7840462490694451851}
+--- !u!195 &1468746727
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298671735298112}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 720
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!136 &136319692572959824
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298671735298112}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.51
+  m_Height: 1.2320688
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.65, z: 0}
 --- !u!54 &3116732539371463168
 Rigidbody:
   m_ObjectHideFlags: 0

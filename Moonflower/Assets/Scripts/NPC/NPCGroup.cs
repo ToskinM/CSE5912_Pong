@@ -12,6 +12,9 @@ public class NPCGroup : MonoBehaviour
 
     void Start()
     {
+        // Remove any null refernces
+        while (NPCs.Remove(null)) { }
+
         // Subscribe to events
         foreach (LesserNPCController npc in NPCs)
         {
