@@ -41,11 +41,11 @@ public class MimbiController : MonoBehaviour, IPlayerController
         playCombat = GetComponent<PlayerCombatController>();
         playerAnimate = GetComponent<PlayerAnimatorController>();
         boxCollider = GetComponent<BoxCollider>();
-        //npcMove = new NPCMovementController(gameObject, Anai);
-        //npcMove.WanderFollowPlayer(wanderRadius);
-        //npcMove.SetDefault(NPCMovementController.MoveState.wanderfollow); 
+        npcMove = new NPCMovementController(gameObject, Anai);
+        npcMove.WanderFollowPlayer(wanderRadius);
+        npcMove.SetDefault(NPCMovementController.MoveState.wanderfollow); 
 
-        //playerAnimate.movement = npcMove;
+        playerAnimate.movement = npcMove;
 
         GameStateController.OnPaused += HandlePauseEvent;
         GameStateController.OnFreezePlayer += HandleFreezeEvent;
@@ -100,7 +100,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
 
     public void Summon()
     {
-        //npcMove.RunToPlayer();
+        npcMove.RunToPlayer();
     }
 
     // Disable updates when gaame is paused
