@@ -8,16 +8,18 @@ public class AudioSourceManager : MonoBehaviour
     private GameObject Mimbi;
     private GameObject CurrentPlayer;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
-        Anai = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetAnai();
-        Mimbi = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetMimbi();
+
+        Anai = LevelManager.current.anai.gameObject;
+        Mimbi = LevelManager.current.mimbi.gameObject;
     }
 
     public AudioSource AddAnaiAudioSource()
     {
-        return Anai.AddComponent<AudioSource>();
+        AudioSource audioSource = Anai.AddComponent<AudioSource>();
+        return audioSource;
     }
     public AudioSource AddMimbiAudioSource()
     {
