@@ -16,8 +16,8 @@ public class CurrentPlayer : MonoBehaviour
     }
     private void CheckCurrentPlayer()
     {
-        PlayerAnaiObj = GameObject.Find("Anai");
-        PlayerMimbiObj = GameObject.Find("Mimbi");
+        PlayerAnaiObj = LevelManager.current.anai.gameObject;
+        PlayerMimbiObj = LevelManager.current.mimbi.gameObject;
 
         if (PlayerAnaiObj.GetComponent<AnaiController>().Playing == true)
             CurrentPlayerObj = PlayerAnaiObj;
