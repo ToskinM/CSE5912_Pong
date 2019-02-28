@@ -24,7 +24,6 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
-
         if (current == null)
         {
             //DontDestroyOnLoad(gameObject);
