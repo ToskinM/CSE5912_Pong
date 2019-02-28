@@ -181,7 +181,7 @@ public class ShowInventory : MonoBehaviour
     {
         DestroyItemIcons();
         InventoryPanel.SetActive(false);
-        gameController.unPauseGame();
+        gameController.UnpauseGame();
         //inventoryText.gameObject.SetActive(false);
     }
 

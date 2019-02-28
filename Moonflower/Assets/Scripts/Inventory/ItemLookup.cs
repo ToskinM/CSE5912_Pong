@@ -65,6 +65,8 @@ public class ItemLookup
                 return Resources.Load<Sprite>(Constants.BOW_ICON);
             case ARROW_NAME:
                 return Resources.Load<Sprite>(Constants.ARROW_ICON);
+            case CORN_NAME:
+                return Resources.Load<Sprite>(Constants.CORN_ICON);
             default:
                 return null;
         }
@@ -105,7 +107,7 @@ public class ItemLookup
             case CORN_NAME:
                 return "avati";
             case BOW_NAME:
-                return "";
+                return "yvyrapa";
             case ARROW_NAME:
                 return "hu'y"; 
             default:

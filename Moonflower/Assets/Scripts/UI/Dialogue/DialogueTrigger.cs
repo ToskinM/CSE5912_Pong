@@ -208,22 +208,31 @@ public class DialogueTrigger : MonoBehaviour
     private void typeText()
     {
         string dialogue = graph.current.text;
+        int currDiaIndex = typeIndex / slowDownFrac;
         switch (tState)
         {
             case TextState.typing:
-                if (typeIndex % slowDownFrac == 0)
-                    text.text = dialogue.Substring(0, typeIndex / slowDownFrac);
 
+                if (typeIndex % slowDownFrac == 0 && currDiaIndex < dialogue.Length)
+                {
+                    text.text += dialogue[currDiaIndex]; //.Substring(0, typeIndex / slowDownFrac);
+                }
                 typeIndex++;
-                int currDiaIndex = typeIndex / slowDownFrac;
+                if (currDiaIndex > 1 && punctuation.IndexOf(dialogue[currDiaIndex - 2]) != -1)
+                    tState = TextState.paused;
+
+                //if (currDiaIndex >= dialogue.Length)
+                //{
+                //    typeIndex = 0; 
+                //}
+
                 //if (currDiaIndex == dialogue.Length)
                 //{
                 //    typeIndex = 0;
                 //    typing = false;
                 //    state = TextState.options;  
                 //}
-                if (currDiaIndex > 1 && punctuation.IndexOf(dialogue[currDiaIndex - 2]) != -1)
-                    tState = TextState.paused;
+
                 break;
 
             case TextState.paused:
@@ -231,7 +240,7 @@ public class DialogueTrigger : MonoBehaviour
                 if (pauseCount == pauseMax)
                 {
                     pauseCount = 0;
-                    if (typeIndex / slowDownFrac == dialogue.Length)
+                    if (currDiaIndex >= dialogue.Length)
                     {
                         resetCounts();
                         if (hasOptions())
@@ -290,6 +299,7 @@ public class DialogueTrigger : MonoBehaviour
         }
         destroyButtons();
         resetCounts();
+        text.text = ""; 
     }
 
     private void displayOptions()

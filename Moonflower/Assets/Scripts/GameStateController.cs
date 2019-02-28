@@ -74,22 +74,30 @@ public class GameStateController : MonoBehaviour
 
     public void TogglePause()
     {
-        Paused = !Paused;
+        if (Paused)
+        {
+            UnpauseGame();
+        }
+        else
+        {
+            PauseGame();
+        }
+        
         OnPaused?.Invoke(Paused);
 
         if (camControl.Frozen)
             UnfreezeCamera();
         else
             FreezeCamera(); 
-
     }
+
     public void PauseGame()
     {
         Paused = true;
         camControl.Frozen = true;
         OnPaused?.Invoke(Paused);
     }
-    public void unPauseGame()
+    public void UnpauseGame()
     {
         Paused = false;
         camControl.Frozen = false;
