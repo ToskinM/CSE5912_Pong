@@ -9,7 +9,7 @@ public class AnaiData
     // Controller
     public AnaiController anaiController;
     public bool playing;
-    public NPCMovement movement;
+    public NPCMovementController movement;
 
     // Movement
     public PlayerMovement playerMovement;

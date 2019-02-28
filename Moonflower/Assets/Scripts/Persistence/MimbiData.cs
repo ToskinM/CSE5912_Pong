@@ -9,7 +9,7 @@ public class MimbiData
     // Controller
     public MimbiController mimbiController;
     public bool playing;
-    public NPCMovement movement;
+    public NPCMovementController movement;
 
     // Movement
     public PlayerMovement playerMovement;
