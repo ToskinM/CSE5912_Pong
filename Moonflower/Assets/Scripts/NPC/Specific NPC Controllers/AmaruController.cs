@@ -56,7 +56,7 @@ public class AmaruController : MonoBehaviour
 
             if (npc.DistanceFrom(Player) < engagementRadius && !talkTrig.Complete)
             {
-                startEngagement(); 
+                StartTalk(); 
                 npc.Follow(); 
             }
             else if (npc.state != NPCMovementController.MoveState.wander)
@@ -77,7 +77,7 @@ public class AmaruController : MonoBehaviour
 
     }
 
-    private void startEngagement()
+    public void StartTalk()
     {
         playerController.TalkingPartner = gameObject;
 
@@ -87,6 +87,11 @@ public class AmaruController : MonoBehaviour
         {
             talkTrig.StartDialogue();
         }
+    }
+
+    private void indicateInterest()
+    {
+
     }
 
     // Disable updates when gaame is paused
