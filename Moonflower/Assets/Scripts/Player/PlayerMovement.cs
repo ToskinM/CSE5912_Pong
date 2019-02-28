@@ -83,8 +83,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
                 Action = Actions.Running;
                 moveSpeed = runSpeed;
             }
-            if (isAnai)
-                playerSoundEffect.AnaiRunSFX();
         }
         else if (Input.GetButton("Crouch") && Action != Actions.Running)
         {
@@ -101,7 +99,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
                 Action = Actions.Walking;
                 moveSpeed = walkSpeed;
                 if (isAnai)
-                    playerSoundEffect.AnaiWalkingSFX();
+                {}
                 else
                     playerSoundEffect.MimbiWalkSFX();
             }

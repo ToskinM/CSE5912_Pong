@@ -62,13 +62,21 @@ public class GameStateController : MonoBehaviour
     {
         if (doLock)   // Lock
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            menuLayers++;
+            if (menuLayers > 0)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
         }
         else          // Unlock
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            menuLayers--;
+            if (menuLayers <= 0)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
         }
     }
 

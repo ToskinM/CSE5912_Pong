@@ -149,7 +149,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         //Debug.Log(currentPlayer);
         bool isAnai = GameObject.Find("Anai").GetComponent<AnaiController>().Playing;
         if (currentPlayer.name == "Anai")
-            playerSoundEffect.AnaiAttackSFX();
+        {}//playerSoundEffect.AnaiAttackSFX();
         else
             playerSoundEffect.MimbiAttackSFX();
 
@@ -196,8 +196,8 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     {
         animator.TriggerHit();
         SetStunned(1);
-        if (currentPlayer = anai)
-            playerSoundEffect.AnaiPunchSFX();
+        //if (currentPlayer = anai)
+            //playerSoundEffect.AnaiPunchSFX();
     }
     public void SetStunned(int stunned)
     {
