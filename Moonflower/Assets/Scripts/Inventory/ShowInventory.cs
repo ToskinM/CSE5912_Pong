@@ -28,7 +28,6 @@ public class ShowInventory : MonoBehaviour
     private int toggleCount = 0; 
 
 
-    // Start is called before the first frame update
     void Awake()
     {
         xOffset = Screen.width / 5;
@@ -40,7 +39,6 @@ public class ShowInventory : MonoBehaviour
         InvoButton.onClick.AddListener(showInv);
    }
 
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetMouseButton(0) && toggleEnabled)
@@ -77,10 +75,12 @@ public class ShowInventory : MonoBehaviour
         show = !show; 
         if(show)
         {
+            GameStateController.current.SetMouseLock(false);
             ShowInvList();
         }
         else
         {
+            GameStateController.current.SetMouseLock(true);
             HideInvList(); 
         }
     }

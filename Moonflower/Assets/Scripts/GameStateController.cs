@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameStateController : MonoBehaviour
 {
+    public static GameStateController current;
+
     public GameObject Player;
     public GameObject MainCamera;
 
@@ -18,8 +20,20 @@ public class GameStateController : MonoBehaviour
     public delegate void FreezePlayer(bool freeze);
     public static event FreezePlayer OnFreezePlayer;
 
+    private int menuLayers = 0;
+
     void Start()
     {
+        if (current == null)
+        {
+            //DontDestroyOnLoad(gameObject);
+            current = this;
+        }
+        else if (current != null)
+        {
+            Destroy(gameObject);
+        }
+
         Paused = false;
         DebugModeOn = false;
         camControl = MainCamera.GetComponent<FollowCamera>();
