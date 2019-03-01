@@ -66891,9 +66891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0592b69fb9fb84e938da77f0a8252cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  footstepTime: 8
   mimbiFootStepTime: 6
-  runStepTime: 5
 --- !u!114 &1769887632 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1769887639, guid: 71ea9cd348b57ee4b91d4ecea6aa60e6,
@@ -68715,6 +68713,11 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: AnaiAttackSwing
+    clip: {fileID: 8300000, guid: 2df32346d10514728a933156df1619ea, type: 3}
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
   - name: AnaiWalking
     clip: {fileID: 8300000, guid: ac78556313208496297938b2fb09be29, type: 3}
     pitch: 1
@@ -68740,7 +68743,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: MimbiWalk
+  - name: MimbiWalking
     clip: {fileID: 8300000, guid: 9d2fe6e446a304228aef63cc3781d07d, type: 3}
     pitch: 1
     loop: 0
@@ -68751,6 +68754,65 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
+  audioSounds:
+  - categoryName: Anai
+    sounds:
+    - name: AnaiWalking
+      clip: {fileID: 8300000, guid: ac78556313208496297938b2fb09be29, type: 3}
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: AnaiAttackSwing
+      clip: {fileID: 8300000, guid: 2df32346d10514728a933156df1619ea, type: 3}
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: AnaiPunch
+      clip: {fileID: 8300000, guid: cb5686462037244209b1a239d97dbc2b, type: 3}
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: AnaiKick
+      clip: {fileID: 8300000, guid: 261d1a61d8fad4bd2964de80627232a1, type: 3}
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: AnaiRun
+      clip: {fileID: 8300000, guid: a52988c7c00284d4997a16752da6eef9, type: 3}
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+  - categoryName: Mimbi
+    sounds:
+    - name: MimbiWalking
+      clip: {fileID: 8300000, guid: 9d2fe6e446a304228aef63cc3781d07d, type: 3}
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: MimbiAttack
+      clip: {fileID: 8300000, guid: 80a588043ec034f34af6897dd8c4183e, type: 3}
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+  - categoryName: Player
+    sounds:
+    - name: PlayerPickup
+      clip: {fileID: 8300000, guid: 1d52674fca61c4df092a5301765fd976, type: 3}
+      pitch: 1
+      loop: 0
+      source: {fileID: 0}
+  - categoryName: Enemy
+    sounds: []
+  - categoryName: NPC
+    sounds: []
+  audioBackgrounds:
+  - categoryName: Environment
+    sounds:
+    - name: Wind
+      clip: {fileID: 8300000, guid: ecfa5fc3c162c422f94a5e9d057f301a, type: 3}
+      pitch: 1
+      loop: 1
+      source: {fileID: 0}
   soundVol: 0
   backgroundVol: 0
 --- !u!4 &1832774177

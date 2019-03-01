@@ -10,28 +10,20 @@ public class PickupArea : MonoBehaviour
     private CharacterStats playerStat;
     //private InventoryManager inventoryManager;
     private PlayerInventory playerInventory;
-    private AudioManager audioManager;
+    private PlayerSoundEffect soundEffect;
 
     private List<GameObject> currentCollisions = new List<GameObject>();
     private GameObject[] allCollidable;
     public TextMeshProUGUI inventoryAdd;
     void Start()
     {
-        StartCoroutine(GetAudioManager());
         //inventoryManager = FindObjectOfType<InventoryManager>();
         playerStat = Player.GetComponent<CharacterStats>();
         playerInventory = Player.GetComponent<PlayerInventory>();
+        soundEffect = Player.GetComponent<PlayerSoundEffect>();
 
     }
 
-    private IEnumerator GetAudioManager()
-    {
-        while (audioManager == null)
-        {
-            audioManager = FindObjectOfType<AudioManager>();
-            yield return null;
-        }
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -65,7 +57,7 @@ public class PickupArea : MonoBehaviour
  
     private void PlayPickup()
     {
-        audioManager.Play("pickup01");
+        soundEffect.PlayerPickupSFX();
     }
 
     public void textUpdate(string s)

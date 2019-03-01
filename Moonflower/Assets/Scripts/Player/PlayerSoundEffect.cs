@@ -7,18 +7,20 @@ public class PlayerSoundEffect : MonoBehaviour
     private AudioManager audioManager;
     private bool walk;
     private int mimbiStep;
-    private int footstep;
-    private int runStep;
-    public int footstepTime = 8;
+    //private int footstep;
+    //private int runStep;
+    //public int footstepTime = 8;
     public int mimbiFootStepTime = 6;
-    public int runStepTime = 5;
+    //public int runStepTime = 5;
+    private readonly string anai = "Anai";
+    private readonly string mimbi = "Mimbi";
 
 
     // Start is called before the first frame update
     void Start()
     {
         mimbiStep = 0;
-        footstep = 0;
+        //footstep = 0;
         walk = false;
         StartCoroutine(GetAudioManager());
     }
@@ -31,55 +33,65 @@ public class PlayerSoundEffect : MonoBehaviour
     }
     public void AnaiAttackSFX()
     {
-        audioManager.Play("AnaiAttackSwing");
+        audioManager.Play(anai,"AnaiAttackSwing");
     }
     public void AnaiWalkingSFX()
     {
-        audioManager.ResumeNormal("AnaiWalking");
-        audioManager.Play("AnaiWalking");
+        audioManager.ResumeNormal(anai,"AnaiWalking");
+        audioManager.Play(anai, "AnaiWalking");
     }
     public void AnaiSneakingSFX()
     {
-        audioManager.PlayFootStep("AnaiWalking");
+        audioManager.PlaySneakFootStep(anai,"AnaiWalking");
     }
 
     public void AnaiPunchSFX()
     {
-        audioManager.Play("AnaiPunch");
+        audioManager.Play(anai, "AnaiPunch");
     }
 
     public void AnaiKickSFX()
     {
-        audioManager.Play("AnaiKick");
+        audioManager.Play(anai, "AnaiKick");
     }
 
     public void AnaiRunSFX()
     {
-        audioManager.Play("AnaiRun");
+        audioManager.Play(anai, "AnaiRun");
 
     }
     public void PlayerPickupSFX()
     {
-        audioManager.Play("PlayerPickup");
+        audioManager.Play("Player", "PlayerPickup");
     }
 
     public void MimbiAttackSFX()
     {
-        audioManager.Play("MimbiAttack");
+        audioManager.Play(mimbi,"MimbiAttack");
     }
 
-    public void MimbiWalkSFX()
+    public void MimbiWalkingSFX()
     {
         if (mimbiStep == 0)
         {
-            audioManager.Play("MimbiWalk");
+            audioManager.Play(mimbi,"MimbiWalking");
         }
         mimbiStep++;
         if (mimbiStep == mimbiFootStepTime)
             mimbiStep = 0;
     }
 
-// Update is called once per frame
+    public void AnaiMute()
+    {
+        audioManager.MuteCategoryVol(anai);
+    }
+    public void AnaiResume()
+    {
+        audioManager.ResumeCategoryVol(anai);
+    }
+
+
+    // Update is called once per frame
     void Update()
     {
 

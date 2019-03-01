@@ -101,7 +101,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
                 if (isAnai)
                 {}
                 else
-                    playerSoundEffect.MimbiWalkSFX();
+                    playerSoundEffect.MimbiWalkingSFX();
             }
         }
     }

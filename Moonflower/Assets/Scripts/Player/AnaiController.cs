@@ -34,8 +34,9 @@ public class AnaiController : MonoBehaviour, IPlayerController
     float followDist = 8f;
 
     public enum PlayerStates { exploring, talking, fighting, distracting}
-    public PlayerStates CurrState = PlayerStates.exploring; 
+    public PlayerStates CurrState = PlayerStates.exploring;
 
+    private PlayerSoundEffect playerSoundEffect;
 
     void Start()
     {
@@ -60,6 +61,8 @@ public class AnaiController : MonoBehaviour, IPlayerController
         playerAnimate.movement = playMove;
 
         LevelManager.current.anai = this;
+
+        playerSoundEffect = GetComponent<PlayerSoundEffect>();
     }
 
     void DetectCharacterSwitchInput()
@@ -74,16 +77,19 @@ public class AnaiController : MonoBehaviour, IPlayerController
     {
         if (switchToThis)
         {
+            playerSoundEffect.AnaiResume();
             playCombat.enabled = true;
             gameObject.layer = 10;
             tag = "Player";
             agent.enabled = false;
             playerAnimate.movement = playMove;
             boxCollider.enabled = true;
+
         }
         else
         {
-//            npcMove.Active = true; 
+            playerSoundEffect.AnaiMute();
+            //            npcMove.Active = true; 
             playCombat.enabled = false;
             gameObject.layer = 0;
             tag = "Companion";
