@@ -70,7 +70,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void Update()
     {
-        Debug.Log("What is first " + first);
+        //Debug.Log("What is first " + first);
         if (pState != PanelState.down)
         {
             switch (pState)

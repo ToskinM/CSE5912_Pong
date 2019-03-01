@@ -23,13 +23,14 @@ public class FieldOfView : MonoBehaviour
     private int edgeResolveIterations = 1;
     private float edgeDstThreshold = 1;
 
-    public MeshFilter viewMeshFilter;
-    Mesh viewMesh;
+    private MeshFilter viewMeshFilter;
+    private Mesh viewMesh;
 
     void Start()
     {
         startingViewAngle = viewAngle;
 
+        viewMeshFilter = Instantiate(Resources.Load<GameObject>("Debug/FieldOfViewMesh"), transform).GetComponent<MeshFilter>();
         foundMaterial = Resources.Load<Material>("Materials/TriggerRed");
         emptyMaterial = Resources.Load<Material>("Materials/TriggerYellow");
 

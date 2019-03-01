@@ -66,6 +66,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         mimbi = GameObject.Find("Mimbi");
 
         playerSoundEffect = GameObject.Find("Anai").GetComponent<PlayerSoundEffect>();
+
         //currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
         currentPlayer = LevelManager.current.currentPlayer;
 
@@ -149,7 +150,10 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
         animator.TriggerAttack();
         //Debug.Log(currentPlayer);
-        bool isAnai = GameObject.Find("Anai").GetComponent<AnaiController>().Playing;
+
+        bool isAnai = gameObject == LevelManager.current.currentPlayer;
+        //bool isAnai = GameObject.Find("Anai").GetComponent<AnaiController>().Playing;
+
         if (currentPlayer.name == "Anai")
         {}//playerSoundEffect.AnaiAttackSFX();
         else
