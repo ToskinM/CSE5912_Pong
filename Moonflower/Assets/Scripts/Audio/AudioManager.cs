@@ -7,8 +7,8 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     //private AudioList AllSound ;
-    public Sound[] sounds;
-    public Sound[] backgrounds;
+    //public Sound[] sounds;
+    //public Sound[] backgrounds;
     public Audio[] audioSounds;
     public Audio[] audioBackgrounds;
 
@@ -68,7 +68,10 @@ public class AudioManager : MonoBehaviour
                     ReAddAudioSource(a, s);
                 }
                 s.source.clip = s.clip;
-                s.source.volume = vol;
+                //if (s.clip.name.Contains("footstep"))
+                //    s.source.volume = vol * 0.2f;
+                //else
+                    s.source.volume = vol;
                 s.source.pitch = s.pitch;
                 s.source.loop = s.loop;
             }
@@ -147,11 +150,11 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void Pause(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.source.Pause();
-    }
+    //public void Pause(string name)
+    //{
+    //    Sound s = Array.Find(sounds, sound => sound.name == name);
+    //    s.source.Pause();
+    //}
 
     //Sneaking Change Volume
     public void ChangeFootStep(AudioSource s)
@@ -163,7 +166,10 @@ public class AudioManager : MonoBehaviour
     {
         Audio a = Array.Find(audioSounds, sound => sound.categoryName.Contains(category));
         Sound s = Array.Find(a.sounds, sound => sound.name == name);
-        s.source.volume = soundVol;
+        //if (s.name.Contains("run") || s.name.Contains("walk"))
+        //    s.source.volume = soundVol * 0.2f;
+        //else
+            s.source.volume = soundVol;
     }
 
     //Change Volume
@@ -175,7 +181,7 @@ public class AudioManager : MonoBehaviour
     public void ChangeBackgroundVol(float vol)
     {
         backgroundVol = vol;
-        UpdateVol(backgrounds, backgroundVol);
+        UpdateVol(audioBackgrounds, backgroundVol);
     }
 
     //Update Changed Volume
