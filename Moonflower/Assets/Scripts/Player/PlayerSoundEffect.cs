@@ -35,11 +35,12 @@ public class PlayerSoundEffect : MonoBehaviour
     }
     public void AnaiWalkingSFX()
     {
+        audioManager.ResumeNormal("AnaiWalking");
         audioManager.Play("AnaiWalking");
     }
     public void AnaiSneakingSFX()
     {
-        audioManager.Play("AnaiWalking");
+        audioManager.PlayFootStep("AnaiWalking");
     }
 
     public void AnaiPunchSFX()

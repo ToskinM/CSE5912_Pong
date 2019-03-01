@@ -35,17 +35,9 @@ public class Pickup : MonoBehaviour
 
         playerInventory = PlayerAnai.GetComponent<PlayerInventory>();
         soundEffect = PlayerAnai.GetComponent<PlayerSoundEffect>();
-        CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
+        CurrentPlayer = playerInfo.GetCurrentPlayer();
     }
 
-    //private IEnumerator GetAudioManager()
-    //{
-    //    while (audioManager == null)
-    //    {
-    //        audioManager = FindObjectOfType<AudioManager>();
-    //        yield return null;
-    //    }
-    //}
 
     private GameObject FindClosest()
     {
@@ -66,6 +58,28 @@ public class Pickup : MonoBehaviour
             }
             return nearestObj;
 
+    }
+    private void DecidePickup()
+    {
+        UpdateCurrentPlayer();
+        GameObject closest = FindClosest();
+        if (Vector3.Distance(FindClosest().transform.position, CurrentPlayer.transform.position) <= distanceToPickup)
+        {
+            if (closest != null)
+            {
+                closest.GetComponent<InventoryStat>().SetHalo(true);
+            }
+            if (Input.GetButtonDown("Pickup"))
+            {
+                DoPickup(FindClosest());
+            }
+
+        }
+        else
+        {
+            if (closest != null)
+                closest.GetComponent<InventoryStat>().SetHalo(false);
+        }
     }
 
     public void DoPickup(GameObject obj)
@@ -96,10 +110,8 @@ public class Pickup : MonoBehaviour
             //Add to inventory
             playerInventory.AddObj(obj.gameObject);
             //Destroy Gameobject after collect
-            //obj.gameObject.SetActive(false);
             Destroy(obj.gameObject);
-            //Play Pickup audio clip
-            //PlayPickup();
+            //Play Pickup audio clip;
             soundEffect.PlayerPickupSFX();
         }
     }
@@ -107,45 +119,22 @@ public class Pickup : MonoBehaviour
     {
         inventoryAdd.gameObject.SetActive(false);
     }
-    //private void PlayPickup()
-    //{
-    //    audioManager.Play("pickup01");
-    //}
 
     public void TextUpdate(string s)
     {
         inventoryAdd.SetText(s);
     }
 
+    //To be delete
     private void UpdateCurrentPlayer()
     {
         CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
     }
 
+
     // Update is called once per frame
     void Update()
     {
-
-        UpdateCurrentPlayer();
-
-        GameObject closest = FindClosest();
-        if (Vector3.Distance(FindClosest().transform.position, CurrentPlayer.transform.position) <= distanceToPickup)
-        {
-            if (closest != null)
-            {
-                closest.GetComponent<InventoryStat>().SetHalo(true);
-            }
-            if (Input.GetButtonDown("Pickup"))
-            {
-                DoPickup(FindClosest());
-            }
-
-        }
-        else
-        {
-            if(closest != null)
-                closest.GetComponent<InventoryStat>().SetHalo(false);
-        }
-
+        DecidePickup();
     }
 }

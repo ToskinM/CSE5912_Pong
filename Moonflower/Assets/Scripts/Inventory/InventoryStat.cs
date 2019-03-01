@@ -30,6 +30,10 @@ public class InventoryStat : MonoBehaviour
     void Start()
     {
         currentTime = FindObjectOfType<SkyColors>().GetDayNight();
+        if (currentTime ==null)
+        {
+            currentTime = SkyColors.SkyCategory.Sunset;
+        }
     }
     public void SetHalo(bool decide)
     {
@@ -48,33 +52,5 @@ public class InventoryStat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (DayNight != DayNightCateogry.AllDay)
-        //{
-        //    currentTime = FindObjectOfType<SkyColors>().GetDayNight();
-
-        //    if (currentTime == SkyColors.SkyCategory.Sunset)
-        //    {
-        //        Debug.Log(currentTime);
-        //        gameObject.SetActive(true);
-        //    }
-        //    else if (currentTime == SkyColors.SkyCategory.Day)
-        //    {
-        //        Debug.Log(currentTime);
-        //        if (DayNight == DayNightCateogry.Day)
-        //            gameObject.SetActive(true);
-        //        else
-        //            gameObject.SetActive(false);
-        //    }
-        //    else
-        //    {
-        //        Debug.Log(currentTime);
-        //        if (DayNight == DayNightCateogry.Night)
-        //            gameObject.SetActive(true);
-        //        else
-        //            gameObject.SetActive(false);
-        //    }
-        //}
-            
-
     }
 }

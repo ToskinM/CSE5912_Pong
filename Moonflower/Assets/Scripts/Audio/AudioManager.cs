@@ -32,7 +32,6 @@ public class AudioManager : MonoBehaviour
         soundVol = 1;
         backgroundVol = 1;
         //Get AudioSource
-        //audioSources = GetComponent<AudioSourceManager>();
         StartCoroutine(GetAudioSourceManager());
         //Assign music clip to audio source
         AssignToAudioSource(sounds, soundVol);
@@ -122,6 +121,26 @@ public class AudioManager : MonoBehaviour
         else
             Debug.Log("there is no music source");
     }
+    public void PlayFootStep(string name)
+    {
+        ChangeFootStep(name);
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s != null & s.source != null)
+        {
+            s.source.Play();
+        }
+        //Add back audio source
+        if (s.source == null)
+        {
+            if (s.name.Contains("Anai"))
+                s.source = audioSources.AddAnaiAudioSource();
+            else if (s.name.Contains("Mimbi"))
+                s.source = audioSources.AddMimbiAudioSource();
+            else
+                s.source = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
     public void Pause(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -134,10 +153,15 @@ public class AudioManager : MonoBehaviour
     }
 
     //Sneaking Change Volume
-    public void ChangeFootStep()
+    public void ChangeFootStep(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name.Contains("Walk"));
-        s.source.volume = s.source.volume * 0.1f;
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        s.source.volume = s.source.volume * 0.5f;
+    }
+    public void ResumeNormal(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        s.source.volume = soundVol;
     }
 
     //Change Volume

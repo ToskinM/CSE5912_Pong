@@ -12,16 +12,19 @@ public class ShowItem : MonoBehaviour
     void Start()
     {
         allCollidable = GameObject.FindGameObjectsWithTag("Collectable");
-
     }
 
     private void CheckDayNightCycletoShowItems()
     {
         //Get Current Time
         currentTime = FindObjectOfType<SkyColors>().GetDayNight();
-
+        //Get All items
         foreach (GameObject collidableObj in allCollidable)
         {
+            if (collidableObj == null)
+            {
+                break;
+            }
             InventoryStat.DayNightCateogry dayNightCateogry;
             dayNightCateogry = collidableObj.GetComponent<InventoryStat>().GetDayNightCategory();
             if (dayNightCateogry == InventoryStat.DayNightCateogry.AllDay || currentTime == SkyColors.SkyCategory.Sunset)
