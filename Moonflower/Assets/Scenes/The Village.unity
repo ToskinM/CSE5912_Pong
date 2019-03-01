@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.4852417, g: 0.9310331, b: 1.487578, a: 1}
+  m_IndirectSpecularColor: {r: 0.4856699, g: 0.9311671, b: 1.4875607, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -41893,7 +41893,6 @@ Transform:
   - {fileID: 1921800996}
   - {fileID: 1106823986}
   - {fileID: 1602111877}
-  - {fileID: 5175512043621049118}
   m_Father: {fileID: 1123900000}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -69736,16 +69735,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b383673484730405eaaece22e575a43b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sounds:
+  - name: PlayerPickup
+    clip: {fileID: 8300000, guid: 1d52674fca61c4df092a5301765fd976, type: 3}
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AnaiAttackSwing
+    clip: {fileID: 8300000, guid: 2df32346d10514728a933156df1619ea, type: 3}
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AnaiAttackSwing
+    clip: {fileID: 8300000, guid: 2df32346d10514728a933156df1619ea, type: 3}
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AnaiWalking
+    clip: {fileID: 8300000, guid: ac78556313208496297938b2fb09be29, type: 3}
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AnaiPunch
+    clip: {fileID: 8300000, guid: cb5686462037244209b1a239d97dbc2b, type: 3}
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AnaiKick
+    clip: {fileID: 8300000, guid: 2df32346d10514728a933156df1619ea, type: 3}
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AnaiRun
+    clip: {fileID: 8300000, guid: a52988c7c00284d4997a16752da6eef9, type: 3}
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: MimbiAttack
+    clip: {fileID: 8300000, guid: 80a588043ec034f34af6897dd8c4183e, type: 3}
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: MimbiWalking
+    clip: {fileID: 8300000, guid: 9d2fe6e446a304228aef63cc3781d07d, type: 3}
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  backgrounds:
+  - name: background
+    clip: {fileID: 8300000, guid: ecfa5fc3c162c422f94a5e9d057f301a, type: 3}
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
   audioSounds:
   - categoryName: Anai
     sounds:
-    - name: AnaiWalking(1)
-      clip: {fileID: 8300000, guid: 0396037009bde4fb4823b6fbde67e831, type: 3}
-      pitch: 1
-      loop: 0
-      source: {fileID: 0}
-    - name: AnaiWalking(2)
-      clip: {fileID: 8300000, guid: b01e5eb96a21645df8ded6b67bd76ee4, type: 3}
+    - name: AnaiWalking
+      clip: {fileID: 8300000, guid: ac78556313208496297938b2fb09be29, type: 3}
       pitch: 1
       loop: 0
       source: {fileID: 0}
@@ -80004,12 +80050,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c5a85e59c7a3aa4fb0d78fa2469ead6, type: 3}
---- !u!4 &5175512043621049118 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5175512043621049118, guid: 5452621c79b4747d98709a3e9fe59499,
-    type: 3}
-  m_PrefabInstance: {fileID: 6191375922846971338}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6138445420209193731
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80114,80 +80154,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9859e96f009e4c94fab12d4384f0a808, type: 3}
---- !u!1001 &6191375922846971338
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1125131833}
-    m_Modifications:
-    - target: {fileID: 3390400006334480035, guid: 5452621c79b4747d98709a3e9fe59499,
-        type: 3}
-      propertyPath: m_Name
-      value: rope
-      objectReference: {fileID: 0}
-    - target: {fileID: 3390400006334480035, guid: 5452621c79b4747d98709a3e9fe59499,
-        type: 3}
-      propertyPath: m_TagString
-      value: Collectable
-      objectReference: {fileID: 0}
-    - target: {fileID: 5175512043621049118, guid: 5452621c79b4747d98709a3e9fe59499,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 366.92737
-      objectReference: {fileID: 0}
-    - target: {fileID: 5175512043621049118, guid: 5452621c79b4747d98709a3e9fe59499,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 109.47801
-      objectReference: {fileID: 0}
-    - target: {fileID: 5175512043621049118, guid: 5452621c79b4747d98709a3e9fe59499,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 8.31889
-      objectReference: {fileID: 0}
-    - target: {fileID: 5175512043621049118, guid: 5452621c79b4747d98709a3e9fe59499,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5175512043621049118, guid: 5452621c79b4747d98709a3e9fe59499,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5175512043621049118, guid: 5452621c79b4747d98709a3e9fe59499,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5175512043621049118, guid: 5452621c79b4747d98709a3e9fe59499,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5175512043621049118, guid: 5452621c79b4747d98709a3e9fe59499,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 5175512043621049118, guid: 5452621c79b4747d98709a3e9fe59499,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5175512043621049118, guid: 5452621c79b4747d98709a3e9fe59499,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5175512043621049118, guid: 5452621c79b4747d98709a3e9fe59499,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5452621c79b4747d98709a3e9fe59499, type: 3}
 --- !u!114 &6762178116091552856
 MonoBehaviour:
   m_ObjectHideFlags: 0
