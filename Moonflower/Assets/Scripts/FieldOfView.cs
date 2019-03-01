@@ -13,6 +13,8 @@ public class FieldOfView : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
+    public NPCCombatController npcCombatController;
+
     [HideInInspector] public List<Transform> visibleTargets = new List<Transform>();
     [HideInInspector] public Transform closestTarget = null;
     [HideInInspector] public Transform focusedTarget = null;
@@ -44,6 +46,30 @@ public class FieldOfView : MonoBehaviour
         StartCoroutine("FindTargetsWithDelay", 0.2f);
     }
 
+    public void SetAggressionMode()
+    {
+        NPCCombatController.Aggression aggression = npcCombatController.aggression;
+
+        switch (aggression)
+        {
+            case NPCCombatController.Aggression.Passive:
+                targetMask = 0;
+                break;
+            case NPCCombatController.Aggression.Unaggressive:
+                targetMask |= 1 << LayerMask.NameToLayer("Player");
+                break;
+            case NPCCombatController.Aggression.Aggressive:
+                targetMask |= 1 << LayerMask.NameToLayer("Player");
+                break;
+            case NPCCombatController.Aggression.Frenzied:
+                targetMask |= 1 << LayerMask.NameToLayer("NPC");
+                targetMask |= 1 << LayerMask.NameToLayer("Player");
+                break;
+            default:
+                break;
+        }
+    }
+
     public void SetCombatMode(bool combatMode)
     {
         if (combatMode)
@@ -61,6 +87,11 @@ public class FieldOfView : MonoBehaviour
     {
         while (true)
         {
+            if (npcCombatController)
+            {
+                SetAggressionMode();
+            }
+
             yield return new WaitForSeconds(delay);
             FindVisibleTargets();
             GetClosestTarget();

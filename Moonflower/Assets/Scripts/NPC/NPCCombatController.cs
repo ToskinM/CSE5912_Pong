@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class NPCCombatController : MonoBehaviour, ICombatController
@@ -9,33 +10,36 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     [HideInInspector] public bool InCombat { get; private set; } = false;
     [HideInInspector] public bool IsDead { get; private set; } = false;
     [HideInInspector] public bool HasWeaponOut { get; private set; } = false;
+    [HideInInspector] public bool Active { get; set; } = true;
 
-    public bool Active { get; set; } = true;
-
-    public enum Aggression { Passive, Unaggressive, Aggressive, Frenzied };
+    [Header("Aggression")]
     public Aggression aggression;
-
-    public GameObject ragdollPrefab;
-    private readonly float[] attackMultipliers = new float[] { 0f, 1f };
-
-    public GameObject deathEffect;
-
-    public bool isAttacking;
-    public Weapon weapon;
-    [HideInInspector] public int attack;
+    public enum Aggression { Passive, Unaggressive, Aggressive, Frenzied };
+    private Coroutine deaggroCoroutine = null;
     [HideInInspector] public GameObject combatTarget = null;
+    private float deaggroTime = 3;
+    private List<GameObject> aggressors;
 
+    [Header("Death Effects")]
+    public GameObject ragdollPrefab;
+    public GameObject deathEffect;
     private float timeSinceLastHurt;
     private float hurtDelay = 0.2f;
-    private float deaggroTime = 3;
-    private Coroutine deaggroCoroutine = null;
+
+    [Header("Weapon")]
+    public Weapon weapon;
     public float attackDistance = 2.6f;
+    private readonly float[] attackMultipliers = new float[] { 0f, 1f };
+    [HideInInspector] public bool isAttacking;
+    [HideInInspector] public int attack;
     [HideInInspector] public float attackTimeout = 20f;
     private float timeSinceLastAttack;
 
     private FieldOfView fieldOfView;
     private NPCAnimationController npcAnimationController;
-    public NPCMovementController npcMovement;
+    [HideInInspector] public NPCMovementController npcMovement;
+    private AudioManager audioManager;
+    [HideInInspector] public NPCGroup group;
 
     public delegate void AggroUpdate(bool aggroed, GameObject aggroTarget);
     public event AggroUpdate OnAggroUpdated;
@@ -43,7 +47,6 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     public delegate void DeathUpdate(NPCCombatController npc);
     public event DeathUpdate OnDeath;
 
-    private AudioManager audioManager;
 
     private void Awake()
     {
@@ -64,7 +67,6 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             Frenzy();
 
         StartCoroutine(GetAudioManager());
-
 
         GameStateController.OnPaused += HandlePauseEvent;
     }
@@ -125,10 +127,11 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             // Handle Hurtboxes
             if (tag == "PlayerHurtbox" || tag == "Hurtbox")
             {
-                Aggro(other.gameObject.transform.root.gameObject, false);
+                // Ignore this hit if group behavior disallows hurting eachother
+                if (!HitAllowedByGroupBehavior(other.gameObject.transform.root.gameObject))
+                    return;
 
-                if (aggression == Aggression.Unaggressive)
-                    aggression = Aggression.Aggressive;
+                Aggro(other.gameObject.transform.root.gameObject, false);
 
                 if (timeSinceLastHurt > hurtDelay)
                 {
@@ -157,6 +160,23 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         }
 
         return locPos;
+    }
+
+    private bool HitAllowedByGroupBehavior(GameObject aggressor)
+    {
+        if (group && group.IsInGroup(aggressor))
+        {
+            // If we are grouped with the aggressor, only allow the hit if the group allows inter-aggression
+            if (group.canHurtEachother)
+                return false;
+            else
+                return true;
+        }
+        // If we're not grouped with the aggressor, allow the hit
+        else
+        {
+            return true;
+        }
     }
 
     public void Stagger()
@@ -218,10 +238,14 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     private void ManageCombat()
     {
         // Attack if we can see the target and they're close enough
-        if (fieldOfView.IsInFieldOfView(combatTarget.transform) && Vector3.Distance(combatTarget.transform.position, transform.position) < attackDistance)
+        if (Vector3.Distance(combatTarget.transform.position, transform.position) < attackDistance)
         {
             Attack();
         }
+        //if (fieldOfView.IsInFieldOfView(combatTarget.transform) && Vector3.Distance(combatTarget.transform.position, transform.position) < attackDistance)
+        //{
+        //    Attack();
+        //}
 
     }
     private void Attack()
@@ -301,6 +325,17 @@ public class NPCCombatController : MonoBehaviour, ICombatController
                 OnAggroUpdated?.Invoke(true, aggroTarget);
             }
         }
+    }
+
+    private void AddAggressor(GameObject aggressor)
+    {
+        if (!aggressors.Contains(aggressor))
+            aggressors.Add(aggressor);
+    }
+    private void RemoveAggressor(GameObject aggressor)
+    {
+        if (aggressors.Contains(aggressor))
+            aggressors.Remove(aggressor);
     }
 
     private void DeAggro()

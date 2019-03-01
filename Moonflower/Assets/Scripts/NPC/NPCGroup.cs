@@ -8,6 +8,7 @@ public class NPCGroup : MonoBehaviour
     public List<LesserNPCController> NPCs;
 
     public bool assistInCombat;
+    public bool canHurtEachother;
     public bool destroyIfEmpty;
 
     void Start()
@@ -18,9 +19,22 @@ public class NPCGroup : MonoBehaviour
         // Subscribe to events
         foreach (LesserNPCController npc in NPCs)
         {
+            npc.combatController.group = this;
             npc.combatController.OnAggroUpdated += HandleAggroEvent;
             npc.combatController.OnDeath += HandleDeathEvent;
         }
+    }
+
+    public bool IsInGroup(GameObject npc)
+    {
+        foreach (LesserNPCController member in NPCs)
+        {
+            if (member.gameObject == npc)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Aggro the group if a member is attacked

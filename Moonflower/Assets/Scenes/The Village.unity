@@ -9419,7 +9419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1468746728, guid: 0717d70c0de52434486d20a500d4f6c4, type: 3}
       propertyPath: aggression
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1468746728, guid: 0717d70c0de52434486d20a500d4f6c4, type: 3}
       propertyPath: allies.Array.data[0]
@@ -19330,14 +19330,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aggression: 2
+  combatTarget: {fileID: 0}
   ragdollPrefab: {fileID: 0}
   deathEffect: {fileID: 1270126634788680, guid: 54bd8c7da32a6874bbc9f5487750acaf,
     type: 3}
-  isAttacking: 0
   weapon: {fileID: 6762178116091552856}
-  attack: 0
-  combatTarget: {fileID: 0}
   attackDistance: 2.6
+  isAttacking: 0
+  attack: 0
   attackTimeout: 0.5
   npcMovement: {fileID: 0}
 --- !u!114 &493941888
@@ -19360,6 +19360,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 1
+  npcCombatController: {fileID: 0}
   visibleTargets: []
   closestTarget: {fileID: 0}
   focusedTarget: {fileID: 0}
@@ -24053,6 +24054,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1468746725, guid: 0717d70c0de52434486d20a500d4f6c4, type: 3}
+      propertyPath: npcCombatController
+      value: 
+      objectReference: {fileID: 1400222862}
     - target: {fileID: 7121838432159388064, guid: 0717d70c0de52434486d20a500d4f6c4,
         type: 3}
       propertyPath: m_RootOrder
@@ -37738,7 +37743,7 @@ RectTransform:
   m_Children:
   - {fileID: 1217105333}
   m_Father: {fileID: 131087828}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -52033,6 +52038,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textPrefab: {fileID: 3679697606893947188, guid: 64b2cf6af5ee6324fbbc891055913b46,
     type: 3}
+--- !u!114 &1400222862 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1468746728, guid: 0717d70c0de52434486d20a500d4f6c4,
+    type: 3}
+  m_PrefabInstance: {fileID: 593647126}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0906979d9dba25841b61e1f5bc6ae5eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1401110030
 PrefabInstance:
   m_ObjectHideFlags: 0

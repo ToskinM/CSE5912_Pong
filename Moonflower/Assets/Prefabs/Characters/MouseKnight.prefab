@@ -833,15 +833,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aggression: 1
+  combatTarget: {fileID: 0}
   ragdollPrefab: {fileID: 1298671735298112, guid: 536fcf3c0e86ecb44b738d2721978483,
     type: 3}
   deathEffect: {fileID: 1270126634788680, guid: 54bd8c7da32a6874bbc9f5487750acaf,
     type: 3}
-  isAttacking: 0
   weapon: {fileID: 934448058}
-  attack: 0
-  combatTarget: {fileID: 0}
   attackDistance: 2.7
+  isAttacking: 0
+  attack: 0
   attackTimeout: 0.5
   npcMovement: {fileID: 0}
 --- !u!114 &1468746725
@@ -863,7 +863,8 @@ MonoBehaviour:
     m_Bits: 1024
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
+  npcCombatController: {fileID: 1468746728}
   visibleTargets: []
   closestTarget: {fileID: 0}
   focusedTarget: {fileID: 0}
