@@ -14,7 +14,8 @@ public class AudioAvalibleArea : MonoBehaviour
     }
     private void GetCurrentPlayer()
     {
-        CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
+        //CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
+        CurrentPlayer = LevelManager.current.currentPlayer;
     }
     public void HearableArea(AudioSource audioSource, float volume)
     {

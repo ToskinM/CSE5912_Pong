@@ -10,7 +10,8 @@ public class AudioSourceManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
+        //CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
+        CurrentPlayer = LevelManager.current.currentPlayer;
 
         Anai = LevelManager.current.anai.gameObject;
         Mimbi = LevelManager.current.mimbi.gameObject;

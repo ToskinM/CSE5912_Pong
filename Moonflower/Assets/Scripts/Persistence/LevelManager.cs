@@ -6,14 +6,21 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager current;
 
+    [Header("Controllers")]
+    public GameStateController gameStateController;
+    public AudioManager audioController;
+    public GameObject dummyHUD;
+
+    [Header("Cameras")]
     public new FollowCamera mainCamera; // Reference created in Camera script
     public new DialogueCamera dialogueCamera; // Reference created in Camera script
-    public GameObject dummyHUD;
-    public AudioManager audioController;
-    public GameStateController gameStateController;
+
+    [Header("Player   (These should be set in the editor!)")]
     public AnaiController anai; // Reference created in Anai controller
     public MimbiController mimbi; // Reference created in Mimbi controller
+    public GameObject currentPlayer;
 
+    [Header("NPCs")]
     public List<GameObject> npcs = new List<GameObject>(); // NPCs add themselves to this list
     public List<int> deadNPCs = new List<int>(); // NPCs add themselves to this list
     public Dictionary<int, NPCTransformInfo> npcsD = new Dictionary<int, NPCTransformInfo>(); // NPCs add themselves to this list
@@ -33,6 +40,8 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        currentPlayer = anai.gameObject;
 
         npcs.Clear();
         npcsD.Clear();

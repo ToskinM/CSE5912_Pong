@@ -10,8 +10,8 @@ public class Pickup : MonoBehaviour
     public int distanceToPickup = 5;
 
     public CharacterStats Stats { get; private set; }
-    public GameObject PlayerAnai;
-    private GameObject CurrentPlayer;
+    public GameObject playerAnai;
+    private GameObject currentPlayer;
     private CurrentPlayer playerInfo; 
 
     private CharacterStats anaiStat;
@@ -27,15 +27,20 @@ public class Pickup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!playerAnai)
+            playerAnai = gameObject;
+
         //StartCoroutine(GetAudioManager());
         //inventoryManager = FindObjectOfType<InventoryManager>();
         playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
         anaiStat = playerInfo.PlayerAnaiObj.GetComponent<CharacterStats>();
         mimbiStat = playerInfo.PlayerMimbiObj.GetComponent<CharacterStats>(); 
 
-        playerInventory = PlayerAnai.GetComponent<PlayerInventory>();
-        soundEffect = PlayerAnai.GetComponent<PlayerSoundEffect>();
-        CurrentPlayer = playerInfo.GetCurrentPlayer();
+        playerInventory = playerAnai.GetComponent<PlayerInventory>();
+        soundEffect = playerAnai.GetComponent<PlayerSoundEffect>();
+
+        //CurrentPlayer = playerInfo.GetCurrentPlayer();
+        currentPlayer = LevelManager.current.currentPlayer;
     }
 
 
@@ -44,12 +49,12 @@ public class Pickup : MonoBehaviour
         allCollidable = GameObject.FindGameObjectsWithTag("Collectable");
 
             GameObject nearestObj = allCollidable[0];
-            float nearest = Vector3.Distance(allCollidable[0].transform.position, CurrentPlayer.transform.position);
+            float nearest = Vector3.Distance(allCollidable[0].transform.position, currentPlayer.transform.position);
             foreach (GameObject g in allCollidable)
             {
-                if (Vector3.Distance(g.transform.position, CurrentPlayer.transform.position) < nearest)
+                if (Vector3.Distance(g.transform.position, currentPlayer.transform.position) < nearest)
                 {
-                    nearest = Vector3.Distance(g.transform.position, CurrentPlayer.transform.position);
+                    nearest = Vector3.Distance(g.transform.position, currentPlayer.transform.position);
                     nearestObj = g;
                 }
                 //remove halo if not nearest anymore
@@ -63,7 +68,7 @@ public class Pickup : MonoBehaviour
     {
         UpdateCurrentPlayer();
         GameObject closest = FindClosest();
-        if (Vector3.Distance(FindClosest().transform.position, CurrentPlayer.transform.position) <= distanceToPickup)
+        if (Vector3.Distance(FindClosest().transform.position, currentPlayer.transform.position) <= distanceToPickup)
         {
             if (closest != null)
             {
@@ -128,7 +133,8 @@ public class Pickup : MonoBehaviour
     //To be delete
     private void UpdateCurrentPlayer()
     {
-        CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
+        //currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
+        currentPlayer = LevelManager.current.currentPlayer;
     }
 
 

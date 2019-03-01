@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI; 
+using UnityEngine.AI;
 
 [Serializable]
 public class MimbiController : MonoBehaviour, IPlayerController
@@ -20,13 +20,13 @@ public class MimbiController : MonoBehaviour, IPlayerController
 
     PlayerMovement playMove;
     PlayerAnimatorController playerAnimate;
-    public NPCMovementController npcMove; 
+    public NPCMovementController npcMove;
     PlayerCombatController playCombat;
     NavMeshAgent agent;
-    BoxCollider boxCollider; 
+    BoxCollider boxCollider;
     const float bufferRadius = 5f;
     const float tooCloseRadius = 4f;
-    float wanderRadius = 15f; 
+    float wanderRadius = 15f;
 
 
     // Start is called before the first frame update
@@ -43,7 +43,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
         boxCollider = GetComponent<BoxCollider>();
         npcMove = new NPCMovementController(gameObject, Anai);
         npcMove.WanderFollowPlayer(wanderRadius);
-        npcMove.SetDefault(NPCMovementController.MoveState.wanderfollow); 
+        npcMove.SetDefault(NPCMovementController.MoveState.wanderfollow);
 
         playerAnimate.movement = npcMove;
 
@@ -63,7 +63,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
             playMove.MovementUpdate();
         }
         else
-        { 
+        {
             npcMove.UpdateMovement();
         }
     }
@@ -77,26 +77,28 @@ public class MimbiController : MonoBehaviour, IPlayerController
         }
     }
     public void Switch(bool switchToThis)
-            {
+    {
         if (switchToThis)
         {
-                playCombat.enabled = true;
-                gameObject.layer = 10;
-                tag = "Player";
-                agent.enabled = false;
-                playerAnimate.movement = playMove;
-                boxCollider.enabled = true; 
-            }
-            else
-            {
-                playCombat.enabled = false;
-                gameObject.layer = 0;
-                tag = "Companion";
-                agent.enabled = true;
-                playerAnimate.movement = npcMove;
-                boxCollider.enabled = false; 
-            }
+            playCombat.enabled = true;
+            gameObject.layer = 10;
+            tag = "Player";
+            agent.enabled = false;
+            playerAnimate.movement = playMove;
+            boxCollider.enabled = true;
+
+            LevelManager.current.currentPlayer = gameObject;
         }
+        else
+        {
+            playCombat.enabled = false;
+            gameObject.layer = 0;
+            tag = "Companion";
+            agent.enabled = true;
+            playerAnimate.movement = npcMove;
+            boxCollider.enabled = false;
+        }
+    }
 
     public void Summon()
     {

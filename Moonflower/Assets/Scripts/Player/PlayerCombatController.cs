@@ -66,7 +66,9 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         mimbi = GameObject.Find("Mimbi");
 
         playerSoundEffect = GameObject.Find("Anai").GetComponent<PlayerSoundEffect>();
-        currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
+        //currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
+        currentPlayer = LevelManager.current.currentPlayer;
+
     }
 
 
@@ -273,6 +275,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     private void UpdateCurrentPlayer()
     {
-        currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
+        //currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
+        currentPlayer = LevelManager.current.currentPlayer;
     }
 }

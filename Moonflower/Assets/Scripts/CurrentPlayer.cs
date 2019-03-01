@@ -24,10 +24,10 @@ public class CurrentPlayer : MonoBehaviour
         else
             CurrentPlayerObj = PlayerMimbiObj;
     }
-    public GameObject GetCurrentPlayer()
-    {
-        return CurrentPlayerObj;
-    }
+    //public GameObject GetCurrentPlayer()
+    //{
+    //    return CurrentPlayerObj;
+    //}
     public GameObject GetAnai()
     {
         return PlayerAnaiObj;

@@ -10,7 +10,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
     public bool Playing { get; set; }
     public GameObject Mimbi;
     public GameObject HUD;
-    public GameObject TalkingPartner { get; set; } 
+    public GameObject TalkingPartner { get; set; }
 
     Sprite icon;
 
@@ -24,7 +24,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
 
     public PlayerMovement playMove;
     //public NPCMovement npcMove;
-    public NPCMovementController npcMove; 
+    public NPCMovementController npcMove;
     PlayerAnimatorController playerAnimate;
     CharacterStats stats;
     NavMeshAgent agent;
@@ -33,7 +33,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
     const float tooCloseRadius = 2f;
     float followDist = 8f;
 
-    public enum PlayerStates { exploring, talking, fighting, distracting}
+    public enum PlayerStates { exploring, talking, fighting, distracting }
     public PlayerStates CurrState = PlayerStates.exploring;
 
     private PlayerSoundEffect playerSoundEffect;
@@ -52,8 +52,8 @@ public class AnaiController : MonoBehaviour, IPlayerController
         boxCollider = GetComponent<BoxCollider>();
         stats = GetComponent<CharacterStats>();
         npcMove = new NPCMovementController(gameObject, Mimbi);
-//        npcMove.Active = false; 
-        npcMove.FollowPlayer(followDist, tooCloseRadius); 
+        //        npcMove.Active = false; 
+        npcMove.FollowPlayer(followDist, tooCloseRadius);
 
         GameStateController.OnPaused += HandlePauseEvent;
         GameStateController.OnFreezePlayer += HandleFreezeEvent;
@@ -85,6 +85,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
             playerAnimate.movement = playMove;
             boxCollider.enabled = true;
 
+            LevelManager.current.currentPlayer = gameObject;
         }
         else
         {
@@ -117,8 +118,8 @@ public class AnaiController : MonoBehaviour, IPlayerController
         {
             if (CurrState == PlayerStates.talking)
                 playCombat.canAttack = false;
-            else if(!playCombat.canAttack)
-                playCombat.canAttack = true; 
+            else if (!playCombat.canAttack)
+                playCombat.canAttack = true;
             playMove.MovementUpdate();
 
         }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.4852417, g: 0.9310331, b: 1.487578, a: 1}
+  m_IndirectSpecularColor: {r: 0.4855957, g: 0.9311419, b: 1.4875678, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3215,6 +3215,10 @@ PrefabInstance:
       objectReference: {fileID: 1699434386}
     - target: {fileID: 1438201467, guid: b79f69662e2dd1f44bd394896bd2c9c0, type: 3}
       propertyPath: PlayerAnai
+      value: 
+      objectReference: {fileID: 1438201454}
+    - target: {fileID: 1438201467, guid: b79f69662e2dd1f44bd394896bd2c9c0, type: 3}
+      propertyPath: playerAnai
       value: 
       objectReference: {fileID: 1438201454}
     - target: {fileID: 8600915336361656953, guid: b79f69662e2dd1f44bd394896bd2c9c0,
@@ -60000,13 +60004,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f60861c42654d3428f1316a3afc4060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  dialogueCamera: {fileID: 870437004}
-  dummyHUD: {fileID: 378621941}
-  audioController: {fileID: 1832774176}
   gameStateController: {fileID: 710919853}
+  audioController: {fileID: 1832774176}
+  dummyHUD: {fileID: 378621941}
+  mainCamera: {fileID: 9223168436234152037}
+  dialogueCamera: {fileID: 870437004}
   anai: {fileID: 85873065}
   mimbi: {fileID: 899378617}
+  currentPlayer: {fileID: 1438201454}
   npcs: []
   deadNPCs: 
 --- !u!4 &1630125740
@@ -66917,7 +66922,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceToPickup: 5
-  PlayerAnai: {fileID: 1769887628}
+  playerAnai: {fileID: 0}
   inventoryAdd: {fileID: 1699434386}
   playerMovement: {fileID: 0}
 --- !u!1001 &1770113482
@@ -79302,16 +79307,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 493941882}
     m_Modifications:
-    - target: {fileID: 1473994413046636443, guid: 1cb3c902b5c416142bc5d83825a46fe8,
-        type: 3}
-      propertyPath: m_Name
-      value: FieldOfViewMesh
-      objectReference: {fileID: 0}
-    - target: {fileID: 1473994413046636443, guid: 1cb3c902b5c416142bc5d83825a46fe8,
-        type: 3}
-      propertyPath: m_Layer
-      value: 13
-      objectReference: {fileID: 0}
     - target: {fileID: 1473994413046636439, guid: 1cb3c902b5c416142bc5d83825a46fe8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -79381,6 +79376,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1473994413046636443, guid: 1cb3c902b5c416142bc5d83825a46fe8,
+        type: 3}
+      propertyPath: m_Name
+      value: FieldOfViewMesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 1473994413046636443, guid: 1cb3c902b5c416142bc5d83825a46fe8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cb3c902b5c416142bc5d83825a46fe8, type: 3}
@@ -79522,3 +79527,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccceb218af17c33438251bd503f0d6c1, type: 3}
+--- !u!114 &9223168436234152037 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9223168436455768625, guid: ccceb218af17c33438251bd503f0d6c1,
+    type: 3}
+  m_PrefabInstance: {fileID: 9223168436234152036}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c121f99fa15fa40a8ba63ccb961636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
