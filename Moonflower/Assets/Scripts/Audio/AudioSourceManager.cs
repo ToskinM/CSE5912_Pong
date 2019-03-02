@@ -32,15 +32,15 @@ public class AudioSourceManager : MonoBehaviour
         return CurrentPlayer.AddComponent<AudioSource>();
     }
 
-    public AudioSource AddNPCPlayerAudioSource()
-    {
-        foreach (GameObject npc in LevelManager.current.npcs)
-        {
-            if (npc.name.Contains("Mouse"))
-                return npc.AddComponent<AudioSource>();
-        }
-        return NPCs == null ? null : (AudioSource)null;
-    }
+    //public AudioSource AddNPCPlayerAudioSource()
+    //{
+    //    //foreach (GameObject npc in LevelManager.current.npcs)
+    //    //{
+    //    //    if (npc.name.Contains("Mouse"))
+    //    //        return npc.AddComponent<AudioSource>();
+    //    //}
+    //    //return NPCs == null ? null : (AudioSource)null;
+    //}
 
 
     // Update is called once per frame
