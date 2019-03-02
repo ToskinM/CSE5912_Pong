@@ -5,11 +5,7 @@ using UnityEngine;
 public class PlayerSoundEffect : MonoBehaviour
 {
     private AudioManager audioManager;
-    private bool walk;
     private int mimbiStep;
-    //private int footstep;
-    //private int runStep;
-    //public int footstepTime = 8;
     public int mimbiFootStepTime = 6;
     //public int runStepTime = 5;
     private readonly string anai = "Anai";
@@ -20,8 +16,6 @@ public class PlayerSoundEffect : MonoBehaviour
     void Start()
     {
         mimbiStep = 0;
-        //footstep = 0;
-        walk = false;
         StartCoroutine(GetAudioManager());
     }
     public IEnumerator GetAudioManager()

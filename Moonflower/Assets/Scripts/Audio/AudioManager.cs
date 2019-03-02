@@ -87,7 +87,7 @@ public class AudioManager : MonoBehaviour
         if (s != null & s.source != null)
         {
             s.source.Play();
-            //Debug.Log("I am Playing "+name+ s.source.clip +" "+ s.clip);
+            Debug.Log("I am Playing "+name+ s.source.clip);
         }
         //Add back audio source
         if (s.source == null)
@@ -223,11 +223,28 @@ public class AudioManager : MonoBehaviour
             s.source = audioSources.AddAnaiAudioSource();
         else if (a.categoryName.Contains("Mimbi"))
             s.source = audioSources.AddMimbiAudioSource();
+        else if (a.categoryName.Contains("Mouse"))
+        {}//s.source = audioSources.AddNPCPlayerAudioSource();
         //else if (s.name.Contains("Player"))
         //s.source = audioSources.AddCurrentPlayerAudioSource();
         else
             s.source = gameObject.AddComponent<AudioSource>();
     }
+    public void ReAddAllAudioSource(GameObject obj, String category)
+    {
+        Audio a = Array.Find(audioSounds, sound => sound.categoryName.Contains(category));
+        Sound[] soundList = a.sounds;
+        foreach (Sound s in soundList)
+        {
+            s.source = obj.AddComponent<AudioSource>();
+            s.source.clip = s.clip;
+            s.source.volume = soundVol;
+            s.source.pitch = s.pitch;
+            s.source.loop = s.loop;
+        }
+
+    }
+
 
     void Update()
     {
