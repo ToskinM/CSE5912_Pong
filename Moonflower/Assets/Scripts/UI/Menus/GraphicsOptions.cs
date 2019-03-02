@@ -36,7 +36,6 @@ public class GraphicsOptions : MonoBehaviour
             WindowValueChangedHandler(windowDropDown);
         });
 
-        Debug.Log(Screen.currentResolution);
         supportedResolutions = Screen.resolutions;
         PopulateResolutionDropdown(supportedResolutions);
         resolutionDropDown.onValueChanged.AddListener(delegate {
@@ -60,7 +59,15 @@ public class GraphicsOptions : MonoBehaviour
             case FullScreenMode.Windowed:
                 windowDropDown.value = 2;
                 break;
-            default:
+            default:    // If we're in unity editor, show this in dropdown
+                List<Dropdown.OptionData> editorLockOption = new List<Dropdown.OptionData>();
+                Dropdown.OptionData option = new Dropdown.OptionData
+                {
+                    text = "Unity Editor"
+                };
+                editorLockOption.Add(option);
+                windowDropDown.options = editorLockOption;
+                windowDropDown.value = 0;
                 break;
         }
     }

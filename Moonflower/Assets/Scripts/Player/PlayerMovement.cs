@@ -46,7 +46,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
     {
         terrain = GameObject.Find("Terrain").GetComponent<TerrainCollider>();
         body = GetComponent<Rigidbody>();
-        cameraScript = Camera.main.GetComponent<FollowCamera>();
+        cameraScript = LevelManager.current.mainCamera;
+        //cameraScript = Camera.main.GetComponent<FollowCamera>();
         playerSoundEffect = GameObject.Find("Anai").GetComponent<PlayerSoundEffect>();
     }
 

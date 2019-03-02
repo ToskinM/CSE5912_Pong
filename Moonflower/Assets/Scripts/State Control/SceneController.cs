@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 // Unity Tutorial Script
 
 public class SceneController : MonoBehaviour
@@ -13,12 +14,12 @@ public class SceneController : MonoBehaviour
     public event Action AfterSceneLoad;
     public CanvasGroup faderCanvasGroup;
     public float fadeDuration = 1f;
-    public string startingSceneName = Constants.SCENE_STARTUP;
-    //public SaveData ballSaveData;
-    public bool isThePersistentController = false;
 
     public GameObject loadingUI;
-    public GameObject loadingBar;
+    public CanvasGroup backgroundCanvasGroup;
+    public Slider loadingBar;
+    public TextMeshProUGUI progressText;
+
 
     private bool isFading;
     private void Start()
@@ -34,6 +35,7 @@ public class SceneController : MonoBehaviour
             Destroy(gameObject);
         }
 
+        loadingUI.SetActive(false);
         faderCanvasGroup.alpha = 1f;
         //yield return StartCoroutine(LoadSceneAndSetActive(startingSceneName));
         StartCoroutine(Fade(0f));
@@ -48,24 +50,22 @@ public class SceneController : MonoBehaviour
     private IEnumerator FadeAndSwitchScenes(string sceneName)
     {
         yield return StartCoroutine(Fade(1f));
-        if (BeforeSceneUnload != null)
-            BeforeSceneUnload();
+        BeforeSceneUnload?.Invoke();
+        yield return SceneManager.LoadSceneAsync(Constants.SCENE_LOADING, LoadSceneMode.Additive);
         yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        yield return StartCoroutine(ShowLoadingScreen());
+        //yield return StartCoroutine(ShowLoadingScreen());
         yield return StartCoroutine(LoadSceneAndSetActive(sceneName));
-        if (AfterSceneLoad != null)
-            AfterSceneLoad();
+        yield return SceneManager.UnloadSceneAsync(Constants.SCENE_LOADING);
+        AfterSceneLoad?.Invoke();
 
         yield return StartCoroutine(Fade(0f));
     }
     private IEnumerator SwitchScenesNoFadeNoLoad(string sceneName)
     {
-        if (BeforeSceneUnload != null)
-            BeforeSceneUnload();
+        BeforeSceneUnload?.Invoke();
         yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         yield return StartCoroutine(LoadSceneAndSetActive(sceneName));
-        if (AfterSceneLoad != null)
-            AfterSceneLoad();
+        AfterSceneLoad?.Invoke();
     }
     private IEnumerator ShowLoadingScreen()
     {
@@ -78,10 +78,25 @@ public class SceneController : MonoBehaviour
             slider.value = i/100f;
         }
         loadingUI.SetActive(false);
+
     }
     private IEnumerator LoadSceneAndSetActive(string sceneName)
     {
-        yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        //yield return asyncLoad;
+
+        loadingUI.SetActive(true);
+        StartCoroutine(FadeLoadingBackground(1f));
+        loadingBar.value = 0f;
+        while (!asyncLoad.isDone)
+        {
+            loadingBar.value = asyncLoad.progress;
+            progressText.text = asyncLoad.progress * 100 + "%";
+            yield return null;
+        }
+        StartCoroutine(FadeLoadingBackground(0f));
+        loadingUI.SetActive(false);
+
         Scene newlyLoadedScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
         SceneManager.SetActiveScene(newlyLoadedScene);
     }
@@ -98,5 +113,19 @@ public class SceneController : MonoBehaviour
         }
         isFading = false;
         faderCanvasGroup.blocksRaycasts = false;
+    }
+    private IEnumerator FadeLoadingBackground(float finalAlpha)
+    {
+        isFading = true;
+        backgroundCanvasGroup.blocksRaycasts = true;
+        float fadeSpeed = Mathf.Abs(backgroundCanvasGroup.alpha - finalAlpha) / (fadeDuration / 3);
+        while (!Mathf.Approximately(backgroundCanvasGroup.alpha, finalAlpha))
+        {
+            backgroundCanvasGroup.alpha = Mathf.MoveTowards(backgroundCanvasGroup.alpha, finalAlpha,
+                fadeSpeed * Time.deltaTime);
+            yield return null;
+        }
+        isFading = false;
+        backgroundCanvasGroup.blocksRaycasts = false;
     }
 }

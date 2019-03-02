@@ -8,7 +8,7 @@ public static class Constants
     public const string SCENE_VILLAGE = "The Village";
     public const string SCENE_PERSISTENT = "Persistent";
     public const string SCENE_MAINMENU = "Main Menu";
-    public const string SCENE_LOADING = "Loading";
+    public const string SCENE_LOADING = "LoadingScene";
     public const string SCENE_STARTUP = "StartUp";
     public const string SCENE_QUITPOPUP = "Quit Nag Popup";
     public const string SCENE_PAUSEMENU = "Pause Menu"; 

@@ -59,7 +59,8 @@ public class MainMenuBehavior : MonoBehaviour
     void DelayMethod()
     {
         //if no delay sound won't play for "start"
-        play.Execute();
+        //play.Execute();
+        SceneController.current.FadeAndLoadScene(Constants.SCENE_VILLAGE);
     }
 
     public void Win()
