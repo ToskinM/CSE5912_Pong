@@ -117,4 +117,5 @@ public class LevelManager : MonoBehaviour
             npcs[index].GetComponent<NPCCombatController>().Kill();
         }
     }
+
 }

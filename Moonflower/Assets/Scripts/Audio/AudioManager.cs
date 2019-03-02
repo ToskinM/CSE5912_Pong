@@ -223,6 +223,8 @@ public class AudioManager : MonoBehaviour
             s.source = audioSources.AddAnaiAudioSource();
         else if (a.categoryName.Contains("Mimbi"))
             s.source = audioSources.AddMimbiAudioSource();
+        else if (a.categoryName.Contains("Mouse"))
+            s.source = audioSources.AddNPCPlayerAudioSource();
         //else if (s.name.Contains("Player"))
         //s.source = audioSources.AddCurrentPlayerAudioSource();
         else
