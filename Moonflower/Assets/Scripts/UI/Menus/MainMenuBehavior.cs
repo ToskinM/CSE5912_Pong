@@ -6,13 +6,15 @@ using UnityEngine.UI;
 
 public class MainMenuBehavior : MonoBehaviour
 {
-    public GameObject MainMenu, OptionsMenu; 
+    public GameObject MainMenu, OptionsMenu, Title; 
     public Button start, options, quit, back;
     //public AudioClip MusicClip;
     //public AudioSource MusicSource;
     public ICommand play, nag;
     public Slider musicSlider;
     public Slider audioSlider;
+
+    public MainMenuCamera mainMenuCamera;
 
     //private AudioManager audioManager;
     private float originalMusicVol;
@@ -30,10 +32,13 @@ public class MainMenuBehavior : MonoBehaviour
         options.onClick.AddListener(Options);
         quit.onClick.AddListener(QuitGame);
         back.onClick.AddListener(GoBack);
+
         musicSlider.value = FindObjectOfType<AudioManager>().GetBackgroundVolume();
         audioSlider.value = FindObjectOfType<AudioManager>().GetSoundVolume();
+
         originalMusicVol = musicSlider.value;
         originalAudioVol = audioSlider.value;
+
         play = new PlayCommand();
         nag = new NagCommand();
 
@@ -44,7 +49,7 @@ public class MainMenuBehavior : MonoBehaviour
         sceneController = FindObjectOfType<SceneController>();
         if (sceneController != null)
         {
-            sceneController.FadeAndLoadScene(Constants.SCENE_GAME);
+            sceneController.FadeAndLoadScene(Constants.SCENE_VILLAGE);
         }
         else
         {
@@ -70,22 +75,39 @@ public class MainMenuBehavior : MonoBehaviour
     public void GoBack()
     {
         //FindObjectOfType<AudioManager>().Play("Menu");
-        MainMenu.SetActive(true);
-        OptionsMenu.SetActive(false);
+        //Title.SetActive(true);
+        //MainMenu.SetActive(true);
+        //OptionsMenu.SetActive(false);
+
+        if (mainMenuCamera)
+        {
+            mainMenuCamera.SetPosition(0);
+        }
     }
 
     public void Options()
     {
         //FindObjectOfType<AudioManager>().Play("Menu");
-        MainMenu.SetActive(false);
-        OptionsMenu.SetActive(true);
+        //Title.SetActive(false);
+        //MainMenu.SetActive(false);
+        //OptionsMenu.SetActive(true);
         //goOption.Execute();
+
+        if (mainMenuCamera)
+        {
+            mainMenuCamera.SetPosition(1);
+        }
     }
 
     public void QuitGame()
     {
         //FindObjectOfType<AudioManager>().Play("Menu");
         nag.Execute();
+
+        if (mainMenuCamera)
+        {
+            mainMenuCamera.SetPosition(2);
+        }
 
         //Application.Quit(); // this doesn't affect the unity editor, only a built application
     }

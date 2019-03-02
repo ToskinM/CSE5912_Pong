@@ -11,14 +11,16 @@ public class AudioSourceManager : MonoBehaviour
     void Awake()
     {
         //CurrentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
-        CurrentPlayer = LevelManager.current.currentPlayer;
 
-        Anai = LevelManager.current.anai.gameObject;
-        Mimbi = LevelManager.current.mimbi.gameObject;
     }
 
     public AudioSource AddAnaiAudioSource()
     {
+        CurrentPlayer = LevelManager.current.currentPlayer;
+
+        Anai = LevelManager.current.anai.gameObject;
+        Mimbi = LevelManager.current.mimbi.gameObject;
+
         AudioSource audioSource = Anai.AddComponent<AudioSource>();
         return audioSource;
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public static class Constants
 {
     // Scene Names
-    public const string SCENE_GAME = "The Village";
+    public const string SCENE_VILLAGE = "The Village";
     public const string SCENE_PERSISTENT = "Persistent";
     public const string SCENE_MAINMENU = "Main Menu";
     public const string SCENE_LOADING = "Loading";

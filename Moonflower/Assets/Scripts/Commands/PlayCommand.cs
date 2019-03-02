@@ -7,7 +7,7 @@ public class PlayCommand : ICommand
 {
     public void Execute()
     {
-        SceneManager.LoadScene(Constants.SCENE_GAME);
+        SceneManager.LoadScene(Constants.SCENE_VILLAGE);
     }
 
     public void Unexecute()

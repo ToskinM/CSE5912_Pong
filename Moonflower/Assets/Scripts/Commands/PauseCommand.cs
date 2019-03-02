@@ -19,7 +19,7 @@ public class PauseCommand : ICommand
             SceneManager.UnloadSceneAsync(Constants.SCENE_PAUSEMENU);
             gameStateController.UnpauseGame();
         }
-        else if (SceneManager.GetActiveScene().name == Constants.SCENE_GAME)
+        else if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
         {
             SceneManager.LoadScene(Constants.SCENE_PAUSEMENU, LoadSceneMode.Additive);
             gameStateController.PauseGame();
