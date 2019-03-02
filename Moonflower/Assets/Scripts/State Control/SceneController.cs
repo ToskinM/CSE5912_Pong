@@ -49,45 +49,41 @@ public class SceneController : MonoBehaviour
     }
     private IEnumerator FadeAndSwitchScenes(string sceneName)
     {
+        // Fade to black
         yield return StartCoroutine(Fade(1f));
         BeforeSceneUnload?.Invoke();
+
+        // load loading scene
         yield return SceneManager.LoadSceneAsync(Constants.SCENE_LOADING, LoadSceneMode.Additive);
+
+        // Unload previous scene
         yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        //yield return StartCoroutine(ShowLoadingScreen());
         yield return StartCoroutine(LoadSceneAndSetActive(sceneName));
+
+        // Unload loading scene
         yield return SceneManager.UnloadSceneAsync(Constants.SCENE_LOADING);
         AfterSceneLoad?.Invoke();
 
+        // Fade to new scene
         yield return StartCoroutine(Fade(0f));
     }
-    private IEnumerator SwitchScenesNoFadeNoLoad(string sceneName)
+    private IEnumerator SwitchScenesNoFadeNoLS(string sceneName)
     {
         BeforeSceneUnload?.Invoke();
         yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        yield return StartCoroutine(LoadSceneAndSetActive(sceneName));
+        yield return StartCoroutine(LoadSceneAndSetActiveNoLS(sceneName));
         AfterSceneLoad?.Invoke();
     }
-    private IEnumerator ShowLoadingScreen()
-    {
-        Slider slider = loadingBar.GetComponent<Slider>();
-        slider.value = 0f;
-        loadingUI.SetActive(true);
-        for (int i = 0; i < 100; i++)
-        {
-            yield return null;
-            slider.value = i/100f;
-        }
-        loadingUI.SetActive(false);
 
-    }
     private IEnumerator LoadSceneAndSetActive(string sceneName)
     {
+        loadingUI.SetActive(true);
+        yield return StartCoroutine(FadeLoadingBackground(1f));
+        loadingBar.value = 0f;
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         //yield return asyncLoad;
 
-        loadingUI.SetActive(true);
-        StartCoroutine(FadeLoadingBackground(1f));
-        loadingBar.value = 0f;
         while (!asyncLoad.isDone)
         {
             loadingBar.value = asyncLoad.progress;
@@ -100,6 +96,14 @@ public class SceneController : MonoBehaviour
         Scene newlyLoadedScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
         SceneManager.SetActiveScene(newlyLoadedScene);
     }
+
+    private IEnumerator LoadSceneAndSetActiveNoLS(string sceneName)
+    {
+        yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        Scene newlyLoadedScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
+        SceneManager.SetActiveScene(newlyLoadedScene);
+    }
+
     private IEnumerator Fade(float finalAlpha)
     {
         isFading = true;
