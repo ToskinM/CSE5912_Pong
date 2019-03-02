@@ -22,14 +22,21 @@ public class NPCSoundEffect : MonoBehaviour
     }
     public void NPCWalkingSFX()
     {
+        if (gameObject.GetComponent<AudioSource>() == null)
+            audioManager.ReAddSpecificAudioSource(gameObject, NPC, "Walking");
+
         audioManager.Play(NPC, "Walking");
     }
     public void NPCAttackSFX()
     {
+        if (gameObject.GetComponent<AudioSource>() == null)
+            audioManager.ReAddSpecificAudioSource(gameObject, NPC, "Attack");
         audioManager.Play(NPC, "Attack");
     }
     public void NPCGetHit()
     {
+        if (gameObject.GetComponent<AudioSource>() == null)
+            audioManager.ReAddSpecificAudioSource(gameObject, NPC, "GetHit");
         audioManager.Play(NPC, "GetHit");
     }
 

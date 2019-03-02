@@ -230,6 +230,17 @@ public class AudioManager : MonoBehaviour
         else
             s.source = gameObject.AddComponent<AudioSource>();
     }
+    public void ReAddSpecificAudioSource(GameObject obj, String category, string name)
+    {
+        Audio a = Array.Find(audioSounds, sound => sound.categoryName.Contains(category));
+        Sound s = Array.Find(a.sounds, sound => sound.name == name);
+        s.source = obj.AddComponent<AudioSource>();
+        s.source.clip = s.clip;
+        s.source.volume = soundVol;
+        s.source.pitch = s.pitch;
+        s.source.loop = s.loop;
+    }
+
 
     void Update()
     {
