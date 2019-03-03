@@ -37,9 +37,9 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(GetAudioSourceManager());
         //Assign music clip to audio source
         AssignToAudioSource(audioSounds, soundVol);
-        AssignToAudioSource(audioBackgrounds, soundVol);
+        AssignToAudioSource(audioBackgrounds, backgroundVol);
         //Play Background wind Sound
-        PlayBackground("Environment", "Wind");
+        //PlayBackground("Environment", "Wind");
         //Set hearable area
         avalibleArea = GetComponent<AudioAvalibleArea>();
 
@@ -66,14 +66,17 @@ public class AudioManager : MonoBehaviour
                 if (s.source == null)
                 {
                     ReAddAudioSource(a, s);
+                    s.source.clip = s.clip;
+                    s.source.volume = vol;
+                    s.source.pitch = s.pitch;
+                    s.source.loop = s.loop;
+                    s.source.spatialBlend = 0.5f;
                 }
-                s.source.clip = s.clip;
+
                 //if (s.clip.name.Contains("footstep"))
                 //    s.source.volume = vol * 0.2f;
                 //else
-                    s.source.volume = vol;
-                s.source.pitch = s.pitch;
-                s.source.loop = s.loop;
+                    
             }
         }
     }
@@ -241,6 +244,7 @@ public class AudioManager : MonoBehaviour
             s.source.volume = soundVol;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
+            s.source.spatialBlend = 0.5f;
         }
 
     }
