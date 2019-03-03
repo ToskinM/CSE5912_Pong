@@ -22,7 +22,8 @@ public class HouseDoor : MonoBehaviour
     {
         if (other.Equals(GameObject.Find("Anai").GetComponent<Collider>()) && (GameObject.Find("Anai").GetComponent<AnaiController>().Playing == true) || other.Equals(GameObject.Find("Mimbi").GetComponent<Collider>()) && (GameObject.Find("Mimbi").GetComponent<MimbiController>().Playing == true))
         {
-                SceneManager.LoadScene(targetScene);
+            //SceneManager.LoadScene(targetScene);
+            SceneController.current.FadeAndLoadScene(targetScene);
         }
     }
 }
