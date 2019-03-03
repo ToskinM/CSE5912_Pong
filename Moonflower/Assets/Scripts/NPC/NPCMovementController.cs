@@ -7,7 +7,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
 {
     public Actions Action { get; set; }
     public bool Jumping { get; set; }
-    //public bool Active { get; set; } = true; 
+    public bool Active = true; 
 
     public enum MoveState { follow, wander, wanderfollow, chill }
     public MoveState state = MoveState.chill;
@@ -201,7 +201,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
 
     public void UpdateMovement()
     {
-        //if (Active)
+        if (Active)
         {
             if (!agent.enabled)
                 agent.enabled = true;

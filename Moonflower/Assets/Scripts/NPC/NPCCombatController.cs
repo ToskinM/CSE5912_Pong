@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class NPCCombatController : MonoBehaviour, ICombatController
 {
@@ -35,6 +36,8 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     [HideInInspector] public float attackTimeout = 20f;
     private float timeSinceLastAttack;
 
+    private Rigidbody rigidbody;
+    private NavMeshAgent navMeshAgent;
     private FieldOfView fieldOfView;
     private NPCAnimationController npcAnimationController;
     [HideInInspector] public NPCMovementController npcMovement;
@@ -53,6 +56,8 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         Stats = gameObject.GetComponent<CharacterStats>();
         fieldOfView = GetComponent<FieldOfView>();
         npcAnimationController = GetComponent<NPCAnimationController>();
+        rigidbody = GetComponent<Rigidbody>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     void Start()
@@ -183,6 +188,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     {
         npcAnimationController.TriggerHit();
         SetStunned(1);
+        //StartCoroutine(Backstep());
     }
     public void SetStunned(int stunned)
     {
@@ -255,6 +261,23 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
         npcAnimationController.TriggerAttack();
     }
+    private IEnumerator Backstep()
+    {
+        npcMovement.Active = false;
+        navMeshAgent.enabled = false;
+        rigidbody.isKinematic = false;
+        rigidbody.useGravity = true;
+
+        Vector3 jumpforce = (Vector3.back * 2f) + Vector3.up;
+        rigidbody.AddRelativeForce(jumpforce * 5, ForceMode.Impulse);
+        yield return new WaitForSeconds(1);
+
+        rigidbody.isKinematic = true;
+        rigidbody.useGravity = false;
+        navMeshAgent.enabled = true;
+        npcMovement.Active = true;
+    }
+
 
     private void CheckAggression()
     {
