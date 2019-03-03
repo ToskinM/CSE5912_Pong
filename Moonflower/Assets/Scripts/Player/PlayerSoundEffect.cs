@@ -89,6 +89,12 @@ public class PlayerSoundEffect : MonoBehaviour
             audioManager.PlaySneakFootStep(mimbi, "MimbiRuning(2)");
     }
 
+    public void MimbiGetHitSFX()
+    {
+        audioManager.PlaySneakFootStep(mimbi, "MimbiGetHit");
+        Debug.Log("get hit");
+    }
+
     public void AnaiMute()
     {
         audioManager.MuteCategoryVol(anai);

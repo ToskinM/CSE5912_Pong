@@ -206,9 +206,10 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     public void Stagger()
     {
         animator.TriggerHit();
+        if (LevelManager.current.currentPlayer == LevelManager.current.mimbi)
+            playerSoundEffect.MimbiGetHitSFX();
         SetStunned(1);
-        //if (currentPlayer = anai)
-            //playerSoundEffect.AnaiPunchSFX();
+
     }
     public void SetStunned(int stunned)
     {
