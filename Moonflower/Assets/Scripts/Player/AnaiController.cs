@@ -116,6 +116,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
 
         if (Playing)
         {
+            print("Anai play");
             if (CurrState == PlayerStates.talking)
                 playCombat.canAttack = false;
             else if (!playCombat.canAttack)
