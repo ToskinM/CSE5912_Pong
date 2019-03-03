@@ -24,8 +24,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
     private bool blockOffCooldown;
     private bool onGround = true;
     private FollowCamera cameraScript;
-    //private AudioManager audioManager;
-    private PlayerSoundEffect playerSoundEffect;
     private bool returnGrav = false;
     //follow variables
     private BoxCollider boxCollider;
@@ -33,9 +31,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
     const float tooCloseRadius = 4f;
     public GameObject otherCharacter;
     public float smoothTime = 2f;
-
-    private int footstep;
-    public int footstepTime = 5;
 
     private Quaternion rotation = Quaternion.identity;
 
@@ -48,7 +43,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
         body = GetComponent<Rigidbody>();
         cameraScript = LevelManager.current.mainCamera;
         //cameraScript = Camera.main.GetComponent<FollowCamera>();
-        playerSoundEffect = GameObject.Find("Anai").GetComponent<PlayerSoundEffect>();
     }
 
     void Start()
@@ -63,7 +57,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
         Action = Actions.Chilling;
         Jumping = false;
-        footstep = 0;
 
         GameStateController.OnPaused += HandlePauseEvent;
     }
@@ -101,10 +94,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
             {
                 Action = Actions.Walking;
                 moveSpeed = walkSpeed;
-                if (isAnai)
-                {}
-                else
-                    playerSoundEffect.MimbiWalkingSFX();
             }
         }
     }

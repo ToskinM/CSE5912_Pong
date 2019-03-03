@@ -39,7 +39,7 @@ public class AudioManager : MonoBehaviour
         AssignToAudioSource(audioSounds, soundVol);
         AssignToAudioSource(audioBackgrounds, backgroundVol);
         //Play Background wind Sound
-        //PlayBackground("Environment", "Wind");
+        PlayBackground("Environment", "Wind");
         //Set hearable area
         avalibleArea = GetComponent<AudioAvalibleArea>();
 
@@ -70,7 +70,7 @@ public class AudioManager : MonoBehaviour
                     s.source.volume = vol;
                     s.source.pitch = s.pitch;
                     s.source.loop = s.loop;
-                    s.source.spatialBlend = 0.5f;
+                    s.source.spatialBlend = 1f;
                 }
 
                 //if (s.clip.name.Contains("footstep"))
@@ -90,7 +90,7 @@ public class AudioManager : MonoBehaviour
         if (s != null & s.source != null)
         {
             s.source.Play();
-            Debug.Log("I am Playing "+name+ s.source.clip);
+            //Debug.Log("I am Playing "+name+ s.source.clip);
         }
         //Add back audio source
         if (s.source == null)
@@ -244,7 +244,7 @@ public class AudioManager : MonoBehaviour
             s.source.volume = soundVol;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
-            s.source.spatialBlend = 0.5f;
+            s.source.spatialBlend = 1;
         }
 
     }

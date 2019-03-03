@@ -5,9 +5,6 @@ using UnityEngine;
 public class PlayerSoundEffect : MonoBehaviour
 {
     private AudioManager audioManager;
-    private int mimbiStep;
-    public int mimbiFootStepTime = 6;
-    //public int runStepTime = 5;
     private readonly string anai = "Anai";
     private readonly string mimbi = "Mimbi";
 
@@ -15,7 +12,6 @@ public class PlayerSoundEffect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mimbiStep = 0;
         StartCoroutine(GetAudioManager());
     }
     public IEnumerator GetAudioManager()
@@ -78,13 +74,19 @@ public class PlayerSoundEffect : MonoBehaviour
 
     public void MimbiWalkingSFX()
     {
-        if (mimbiStep == 0)
-        {
-            audioManager.Play(mimbi,"MimbiWalking");
-        }
-        mimbiStep++;
-        if (mimbiStep == mimbiFootStepTime)
-            mimbiStep = 0;
+        int x = Random.Range(1, 3);
+        if (x == 1)
+            audioManager.PlaySneakFootStep(mimbi, "MimbiWalking(1)");
+        else
+            audioManager.PlaySneakFootStep(mimbi, "MimbiWalking(2)");
+    }
+    public void MimbiRuningSFX()
+    {
+        int x = Random.Range(1, 3);
+        if (x == 1)
+            audioManager.PlaySneakFootStep(mimbi, "MimbiRuning(1)");
+        else
+            audioManager.PlaySneakFootStep(mimbi, "MimbiRuning(2)");
     }
 
     public void AnaiMute()
