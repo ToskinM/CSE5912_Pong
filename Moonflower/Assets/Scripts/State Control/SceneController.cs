@@ -39,6 +39,7 @@ public class SceneController : MonoBehaviour
 
         loadscreen.SetActive(false);
         faderCanvasGroup.alpha = 1f;
+        loadscreenCanvasGroup.alpha = 0f;
         StartCoroutine(Fade(0f));
     }
 
