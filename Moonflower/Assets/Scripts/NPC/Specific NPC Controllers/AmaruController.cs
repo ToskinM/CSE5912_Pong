@@ -80,12 +80,11 @@ public class AmaruController : MonoBehaviour
 
     public void StartTalk()
     {
-        playerController.TalkingPartner = gameObject;
-
         engaging = true;
 
         if (!talkTrig.DialogueActive())
         {
+            playerController.TalkingPartner = gameObject;
             talkTrig.StartDialogue();
         }
     }

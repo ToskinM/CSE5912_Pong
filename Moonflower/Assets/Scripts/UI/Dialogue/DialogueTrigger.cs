@@ -161,6 +161,13 @@ public class DialogueTrigger : MonoBehaviour
 
         // Start dialogue camera this this npc 
         LevelManager.current.RequestDialogueCamera();
+
+        LevelManager.current.anai.OnHit += CombatCancelDialogue;
+    }
+
+    private void CombatCancelDialogue(GameObject aggressor)
+    {
+        EndDialogue();
     }
 
     public void EndDialogue()

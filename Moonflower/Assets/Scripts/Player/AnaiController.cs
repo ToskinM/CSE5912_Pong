@@ -38,6 +38,9 @@ public class AnaiController : MonoBehaviour, IPlayerController
 
     private PlayerSoundEffect playerSoundEffect;
 
+    public delegate void HitUpdate(GameObject aggressor);
+    public event HitUpdate OnHit;
+
     void Start()
     {
         Playing = true;
@@ -129,6 +132,16 @@ public class AnaiController : MonoBehaviour, IPlayerController
             npcMove.UpdateMovement();
         }
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Get Tag
+        string tag = other.tag;
+
+        // Handle Hurtboxes
+        if (tag == "Hurtbox")
+            OnHit?.Invoke(other.gameObject);
     }
 
     // Disable updates when gaame is paused

@@ -43,6 +43,9 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     //private AudioManager audioManager;
     private PlayerSoundEffect playerSoundEffect;
 
+    public delegate void HitUpdate(GameObject aggressor);
+    public event HitUpdate OnHit;
+
     void Awake()
     {
         Stats = gameObject.GetComponent<CharacterStats>();
@@ -171,6 +174,8 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         {
             if (timeSinceLastHurt > hurtDelay)
             {
+                OnHit?.Invoke(other.gameObject);
+
                 // Get hurtbox information
                 HurtboxController hurtboxController = other.gameObject.GetComponent<HurtboxController>();
                 GameObject source = hurtboxController.source;
