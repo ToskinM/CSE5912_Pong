@@ -24,7 +24,6 @@ public class NPCSoundEffect : MonoBehaviour
     {
         if (gameObject.GetComponent<AudioSource>() == null)
             audioManager.ReAddAllAudioSource(gameObject, NPC);
-
         audioManager.Play(NPC, "Walking");
     }
     public void NPCAttackSFX()

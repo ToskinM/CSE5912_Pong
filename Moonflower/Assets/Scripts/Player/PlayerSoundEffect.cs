@@ -76,17 +76,17 @@ public class PlayerSoundEffect : MonoBehaviour
     {
         int x = Random.Range(1, 3);
         if (x == 1)
-            audioManager.PlaySneakFootStep(mimbi, "MimbiWalking(1)");
+            audioManager.Play(mimbi, "MimbiWalking(1)");
         else
-            audioManager.PlaySneakFootStep(mimbi, "MimbiWalking(2)");
+            audioManager.Play(mimbi, "MimbiWalking(2)");
     }
     public void MimbiRuningSFX()
     {
         int x = Random.Range(1, 3);
         if (x == 1)
-            audioManager.PlaySneakFootStep(mimbi, "MimbiRuning(1)");
+            audioManager.Play(mimbi, "MimbiRuning(1)");
         else
-            audioManager.PlaySneakFootStep(mimbi, "MimbiRuning(2)");
+            audioManager.Play(mimbi, "MimbiRuning(2)");
     }
 
     public void MimbiGetHitSFX()
