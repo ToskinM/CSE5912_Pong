@@ -15,17 +15,16 @@ public class DialogueTrigger : MonoBehaviour
     Image icon;
     TextMeshProUGUI text;
     Button templateButton;
-    Button exitButton;
     ICommand freezeCommand;
 
     List<Button> buttons;
     string spriteFile;
-    string exitText = "Okay. See you around!";
+    string exitText = "You have to go? Okay, see you around!";
 
 
     enum PanelState { down, rising, up, falling }
     PanelState pState = PanelState.down;
-    enum TextState { typing, paused, options, done }//, ending}
+    enum TextState { typing, paused, options, done, ending}
     TextState tState = TextState.done;
     int typeIndex = 0;
     const int fadeMax = 30;
@@ -41,8 +40,7 @@ public class DialogueTrigger : MonoBehaviour
 
     DialogueGraph graph;
     DialogueFactory factory;
-    bool noExit = true;
-    bool first = true; 
+    bool noExit = true; 
 
 
     public DialogueTrigger(GameObject p, string characterSprite, string graphName)
@@ -55,10 +53,6 @@ public class DialogueTrigger : MonoBehaviour
         text = panel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         buttons = new List<Button>();
         templateButton = panel.transform.GetChild(2).GetComponent<Button>();
-        exitButton = panel.transform.GetChild(3).GetComponent<Button>();
-        //exitButton.onClick.AddListener(endConvo);
-        //exitButton.onClick.AddListener(delegate { Debug.Log("why do you hate me"); });
-        exitButton.onClick.AddListener(delegate { endConvo(); });
 
 
         freezeCommand = new FreezeCameraCommand();
@@ -70,6 +64,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void Update()
     {
+
         //Debug.Log("What is first " + first);
         if (pState != PanelState.down)
         {
@@ -94,11 +89,16 @@ public class DialogueTrigger : MonoBehaviour
                     break;
 
                 case PanelState.up:
+                    if (Input.GetKeyDown(KeyCode.X))
+                    {
+                        endConvo();
+                    }
+
                     switch (tState)
                     {
-                        //case TextState.ending:
-                        //typeEnding(); 
-                        //break;
+                        case TextState.ending:
+                        typeEnding(); 
+                        break;
                         case TextState.typing:
                         case TextState.paused:
                             typeText();
@@ -117,16 +117,18 @@ public class DialogueTrigger : MonoBehaviour
                         }
                         switch (tState)
                         {
-                            //case TextState.ending:
-                            //if(!text.text.Equals(exitText))
-                            //{
-                            //    text.text = graph.current.text;
-                            //}
-                            //else
-                            //{
-                            //    pState = PanelState.down;
-                            //}
-                            //break; 
+                            case TextState.ending:
+                                if(!text.text.Equals(exitText))
+                                {
+                                    text.text = exitText;
+                                }
+                                else
+                                {
+                                    //pState = PanelState.falling;
+                                    complete = true; 
+                                    EndDialogue();
+                                }
+                                break; 
                             case TextState.typing:
                             case TextState.paused:
                                 text.text = graph.current.text;
@@ -195,26 +197,36 @@ public class DialogueTrigger : MonoBehaviour
 
     private void endConvo()
     {
-        Debug.Log("I got clicked!");
-        //tState = TextState.ending;
-        typeIndex = 0;
+        if (tState != TextState.ending)
+        {
+            tState = TextState.ending;
+            text.text = "";
+            typeIndex = 0;
+            destroyButtons();
+        }
+        else
+        {
+            complete = true;
+            text.text = exitText;
+            EndDialogue(); 
+        }
     }
 
     private void typeEnding()
     {
-        if (typeIndex % slowDownFrac == 0)
-            text.text = exitText.Substring(0, typeIndex / slowDownFrac);
+        int currDiaIndex = typeIndex / slowDownFrac;
+        if (typeIndex % slowDownFrac == 0 && currDiaIndex < exitText.Length)
+            text.text += exitText[currDiaIndex];
 
         typeIndex++;
-        int currDiaIndex = typeIndex / slowDownFrac;
         //if (currDiaIndex == dialogue.Length)
         //{
         //    typeIndex = 0;
         //    typing = false;
         //    state = TextState.options;  
         //}
-        if (currDiaIndex > 1 && punctuation.IndexOf(exitText[currDiaIndex - 2]) != -1)
-            tState = TextState.paused;
+        //if (currDiaIndex > 1 && punctuation.IndexOf(exitText[currDiaIndex - 2]) != -1)
+            //tState = TextState.paused;
     }
 
     private void typeText()
@@ -316,17 +328,6 @@ public class DialogueTrigger : MonoBehaviour
 
     private void displayOptions()
     {
-        if (first)
-        {
-            Button b = Instantiate(exitButton, exitButton.transform.position, exitButton.transform.rotation);
-            b.transform.SetParent(panel.transform, false);
-            b.transform.position = new Vector3(exitButton.transform.position.x, exitButton.transform.position.y);
-            b.onClick.AddListener(delegate { endConvo(); });
-            exitButton.gameObject.SetActive(false);
-            first = false;
-            Debug.Log("made a clone");
-        }
-
         int numOptions = graph.current.answers.Count;
         if (numOptions > 0)
         {
