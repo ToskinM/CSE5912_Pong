@@ -59,7 +59,13 @@ public class PlayerSoundEffect : MonoBehaviour
 
     public void AnaiRunSFX()
     {
-        audioManager.Play(anai, "AnaiRun");
+        for (int i = 0; i < 2; i++)
+        {
+            if (i == 0)
+                audioManager.Play(anai, "AnaiRun(1)");
+            else
+                audioManager.Play(anai, "AnaiRun(2)");
+        }
 
     }
     public void PlayerPickupSFX()
