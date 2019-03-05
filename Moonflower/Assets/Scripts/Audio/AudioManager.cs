@@ -69,7 +69,7 @@ public class AudioManager : MonoBehaviour
         if (s != null & s.source != null)
         {
             s.source.Play();
-            //Debug.Log("I am Playing "+name+ s.source.clip);
+            Debug.Log("I am Playing "+name+ s.source.clip);
         }
         //Add back audio source
         if (s.source == null)
