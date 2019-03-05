@@ -6,6 +6,8 @@ public class NPCSoundEffect : MonoBehaviour
 {
     private AudioManager audioManager;
     private readonly string NPC = "NPC Mouse";
+    private readonly string NPC_Human = "NPC Human";
+
 
     // Start is called before the first frame update
     void Start()
