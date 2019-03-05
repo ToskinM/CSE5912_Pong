@@ -31,7 +31,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     public Weapon weapon;
     public float attackDistance = 2.6f;
     private readonly float[] attackMultipliers = new float[] { 0f, 1f };
-    [HideInInspector] public bool isAttacking;
+    public bool isAttacking;
     [HideInInspector] public int attack;
     [HideInInspector] public float attackTimeout = 20f;
     private float timeSinceLastAttack;
@@ -94,7 +94,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             isAttacking = false;
         }
 
-        if (npcMovement!=null)
+        if (npcMovement != null)
         {
             npcMovement.swinging = isAttacking;
         }
@@ -197,7 +197,11 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             if (stunned == 1)
                 npcMovement.stunned = true;
             else
+            {
                 npcMovement.stunned = false;
+                //if (Random.Range(0, 100) > 0)
+                    //StartCoroutine(Backstep());
+            }
         }
     }
 
@@ -269,7 +273,9 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         rigidbody.useGravity = true;
 
         Vector3 jumpforce = (Vector3.back * 2f) + Vector3.up;
-        rigidbody.AddRelativeForce(jumpforce * 5, ForceMode.Impulse);
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.AddRelativeForce(jumpforce * 6, ForceMode.Impulse);
+        rigidbody.velocity = Vector3.zero;
         yield return new WaitForSeconds(1);
 
         rigidbody.isKinematic = true;
@@ -314,7 +320,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
         // Search for a target OR closer target
         Transform possibleTarget = fieldOfView?.closestTarget;
-        if (possibleTarget != null )
+        if (possibleTarget != null)
         {
             if (aggression == Aggression.Aggressive)
             {
@@ -372,7 +378,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         //Debug.Log(gameObject.name + " stopped combat");
         Sheathe();
 
-        if(npcMovement != null)
+        if (npcMovement != null)
             npcMovement.Chill();
 
         // Broadcast that we've lost aggro
@@ -410,7 +416,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     }
 
     // Death cleanup and Sequence
-    private IEnumerator Die()   
+    private IEnumerator Die()
     {
         //Debug.Log(gameObject.name + " has died");
         OnDeath?.Invoke(this);
