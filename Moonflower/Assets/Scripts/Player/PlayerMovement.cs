@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     {
         terrain = GameObject.Find("Terrain").GetComponent<TerrainCollider>();
         body = GetComponent<Rigidbody>();
-        cameraScript = LevelManager.current.mainCamera;
+        
         //cameraScript = Camera.main.GetComponent<FollowCamera>();
     }
 
@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
         moveSpeed = walkSpeed;
         blockCooldown = blockCooldownTime;
         blockOffCooldown = true;
-
+        cameraScript = LevelManager.current.mainCamera;
         Action = Actions.Chilling;
         Jumping = false;
 
@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
     {
         // Damping
         body.velocity *= 0.98f;
-
+        
         //isAnai = GameObject.Find("Player").GetComponent<CurrentPlayer>().IsAnai();
         isAnai = gameObject == LevelManager.current.currentPlayer;
     }
