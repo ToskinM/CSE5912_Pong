@@ -98,22 +98,24 @@ public class Pickup : MonoBehaviour
             //Get items's health
             int health = obj.GetComponent<InventoryStat>().GetHealth();
 
+            bool objectUsedImmediately = false; 
             if (obj.GetComponent<InventoryStat>().AnaiObject)
             {
                 TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Anai");
-                anaiStat.AddHealth(health);
+               objectUsedImmediately = !anaiStat.AddHealth(health);
             }
             else if (obj.GetComponent<InventoryStat>().MimbiObject)
             {
                 TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
-                mimbiStat.AddHealth(health);
+                objectUsedImmediately = !mimbiStat.AddHealth(health);
             }
             else
             {
                 TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected. ");
             }
             //Add to inventory
-            playerInventory.AddObj(obj.gameObject);
+            if(!objectUsedImmediately)
+                playerInventory.AddObj(obj.gameObject);
             //Destroy Gameobject after collect
             Destroy(obj.gameObject);
             //Play Pickup audio clip;
