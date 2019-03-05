@@ -67,6 +67,12 @@ public class ItemLookup
                 return Resources.Load<Sprite>(Constants.ARROW_ICON);
             case CORN_NAME:
                 return Resources.Load<Sprite>(Constants.CORN_ICON);
+            case STAFF_NAME:
+                return Resources.Load<Sprite>(Constants.STAFF_ICON);
+            case PAINT_NAME:
+                return Resources.Load<Sprite>(Constants.PAINT_ICON);
+            case SWEETPOTATO_NAME:
+                return Resources.Load<Sprite>(Constants.SWEETPOTATO_ICON);
             default:
                 return null;
         }

@@ -46,6 +46,9 @@ public static class Constants
     public const string BOW_ICON = itemFolder + "Bow";
     public const string ARROW_ICON = itemFolder + "Arrow";
     public const string CORN_ICON = itemFolder + "Corn";
+    public const string STAFF_ICON = itemFolder + "Jewel Staff";
+    public const string SWEETPOTATO_ICON = itemFolder + "Sweet Potato";
+    public const string PAINT_ICON = itemFolder + "Paint Pots";
 
     //life petal names
     const string flowerFolder = "Life Petals/";

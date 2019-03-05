@@ -41,11 +41,23 @@ public class ShowInventory : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButton(0) && toggleEnabled)
+        if(Input.GetKeyDown(KeyCode.I))// && toggleEnabled)
         {
-            toggleEnabled = false; 
-            inEnglish = !inEnglish; 
+            showInv(); 
+            toggleEnabled = false;
             foreach(GameObject item in items)
+            {
+                string itemName = names[items.IndexOf(item)];
+                item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = lookup.GetGuaraniName(itemName);
+
+
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            inEnglish = !inEnglish;
+            foreach (GameObject item in items)
             {
                 string itemName = names[items.IndexOf(item)];
                 if (inEnglish)
@@ -59,15 +71,15 @@ public class ShowInventory : MonoBehaviour
 
             }
         }
-        else
-        {
-            toggleCount++; 
-            if(toggleCount > toggleMax)
-            {
-                toggleCount = 0;
-                toggleEnabled = true; 
-            }
-        }
+        //else
+        //{
+        //    toggleCount++; 
+        //    if(toggleCount > toggleMax)
+        //    {
+        //        toggleCount = 0;
+        //        toggleEnabled = true; 
+        //    }
+        //}
     }
 
     private void showInv()
@@ -144,7 +156,7 @@ public class ShowInventory : MonoBehaviour
             }
 
             RectTransform rect = InvContentPanel.GetComponent<RectTransform>();
-            rect.sizeDelta = new Vector2(rect.sizeDelta.x, currRow * heightDim); 
+            rect.sizeDelta = new Vector2(rect.sizeDelta.x, 1.3f*currRow * heightDim); 
         }
         else
         {

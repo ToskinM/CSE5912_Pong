@@ -91,11 +91,16 @@ public class CharacterStats : MonoBehaviour
     {
         return Stealth >= otherStealth;
     }
-    public void AddHealth (int amount)
+    public bool AddHealth (int amount) //returns true if health was actually added
     {
+        int initialHealth = CurrentHealth; 
         CurrentHealth = CurrentHealth + amount;
         if (CurrentHealth >= MaxHealth)
+        {
             CurrentHealth = MaxHealth;
+        }
+
+        return !(initialHealth == CurrentHealth); 
     }
 
     public void TrainStrengthHit()
