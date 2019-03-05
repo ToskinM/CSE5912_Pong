@@ -7,6 +7,8 @@ public class HouseDoor : MonoBehaviour
 {
     public string targetScene;
     private SceneController sceneController;
+    public bool toInteriorScene = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +25,14 @@ public class HouseDoor : MonoBehaviour
         if (other.Equals(GameObject.Find("Anai").GetComponent<Collider>()) && (GameObject.Find("Anai").GetComponent<AnaiController>().Playing == true) || other.Equals(GameObject.Find("Mimbi").GetComponent<Collider>()) && (GameObject.Find("Mimbi").GetComponent<MimbiController>().Playing == true))
         {
             //SceneManager.LoadScene(targetScene);
-            SceneController.current.FadeAndLoadSceneNoLS(targetScene);
+            if (toInteriorScene)
+            {
+                SceneController.current.FadeAndLoadSceneNoLS(targetScene);
+            }
+            else
+            {
+                SceneController.current.FadeAndLoadScene(targetScene);
+            }
         }
     }
 }
