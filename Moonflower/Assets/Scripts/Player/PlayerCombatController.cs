@@ -281,7 +281,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     // Disable player combat controls when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
 
     // Disable player combat controls

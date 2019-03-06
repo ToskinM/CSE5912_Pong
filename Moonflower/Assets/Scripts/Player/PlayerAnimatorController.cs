@@ -87,6 +87,6 @@ public class PlayerAnimatorController : MonoBehaviour
     // Disable player animation when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        animator.enabled = !isPaused;
+        //animator.enabled = !isPaused;
     }
 }

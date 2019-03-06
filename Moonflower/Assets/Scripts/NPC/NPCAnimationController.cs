@@ -116,6 +116,6 @@ public class NPCAnimationController : MonoBehaviour
     // Disable updates when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
 }

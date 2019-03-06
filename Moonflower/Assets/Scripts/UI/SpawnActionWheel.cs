@@ -9,6 +9,8 @@ public class SpawnActionWheel : MonoBehaviour
     private GameStateController gameStateController;
     private GameObject activeWheel;
 
+    private bool wheelAvailable;
+
     void Start()
     {
         gameStateController = GameStateManager.GetComponent<GameStateController>();
@@ -25,7 +27,8 @@ public class SpawnActionWheel : MonoBehaviour
 
     void Update()
     {
-        DetectInteraction();
+        if (wheelAvailable)
+            DetectInteraction();
     }
 
     public void DetectInteraction()
@@ -46,6 +49,6 @@ public class SpawnActionWheel : MonoBehaviour
 
     public void HandleFreezeEvent(bool frozen)
     {
-        enabled = !frozen;
+        wheelAvailable = !frozen;
     }
 }

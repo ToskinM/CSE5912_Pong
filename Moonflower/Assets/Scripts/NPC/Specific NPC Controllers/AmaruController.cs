@@ -103,7 +103,7 @@ public class AmaruController : MonoBehaviour
     // Disable updates when gaame is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
 
 

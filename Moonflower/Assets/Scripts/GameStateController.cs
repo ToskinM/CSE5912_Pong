@@ -37,7 +37,7 @@ public class GameStateController : MonoBehaviour
 
         Paused = false;
         DebugModeOn = false;
-        camControl = MainCamera.GetComponent<FollowCamera>();
+        camControl = LevelManager.current.mainCamera;
 
         // Lock Mouse on game start
         SetMouseLock(true);
@@ -45,7 +45,7 @@ public class GameStateController : MonoBehaviour
 
     void Update()
     {
-        camControl = MainCamera.GetComponent<FollowCamera>();
+        camControl = LevelManager.current.mainCamera;
     }
 
     public void ToggleDebugMode()
@@ -53,7 +53,7 @@ public class GameStateController : MonoBehaviour
         DebugModeOn = !DebugModeOn;
 
         //CameraController camControl = MainCamera.GetComponent<CameraController>();
-        camControl = MainCamera.GetComponent<FollowCamera>();
+        camControl = LevelManager.current.mainCamera;
 
         camControl.SetFreeRoam(DebugModeOn);
         EnablePlayerMovement(!DebugModeOn);
@@ -108,7 +108,7 @@ public class GameStateController : MonoBehaviour
             Paused = true;
             if (camControl)
                 camControl.Frozen = true;
-            OnPaused?.Invoke(Paused);
+            //OnPaused?.Invoke(Paused);
             SetMouseLock(false);
             Time.timeScale = 0;
         }
@@ -121,7 +121,7 @@ public class GameStateController : MonoBehaviour
             Paused = false;
             if (camControl)
                 camControl.Frozen = false;
-            OnPaused?.Invoke(Paused);
+            //OnPaused?.Invoke(Paused);
             SetMouseLock(true);
             Time.timeScale = 1;
         }
@@ -132,7 +132,7 @@ public class GameStateController : MonoBehaviour
         Paused = false;
         if (camControl)
             camControl.Frozen = false;
-        OnPaused?.Invoke(Paused);
+        //OnPaused?.Invoke(Paused);
         SetMouseLock(true);
         Time.timeScale = 1;
     }

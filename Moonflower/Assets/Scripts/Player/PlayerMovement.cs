@@ -307,6 +307,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
     // Disable player movement controls when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
 }

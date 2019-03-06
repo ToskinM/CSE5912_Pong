@@ -17,6 +17,7 @@ public class FollowCamera : MonoBehaviour
     public LayerMask collisionLayers;
 
     private Camera camera;
+    private FieldOfView fieldOfView;
     private AudioListener audioListener;
 
     private Transform target;
@@ -42,6 +43,7 @@ public class FollowCamera : MonoBehaviour
         target = GetCameraTarget(GameObject.FindGameObjectWithTag("Player"));
         camera = GetComponent<Camera>();
         audioListener = GetComponent<AudioListener>();
+        fieldOfView = GetComponent<FieldOfView>();
     }
 
     public void SetRendering(bool rendering)
@@ -198,7 +200,7 @@ public class FollowCamera : MonoBehaviour
 
     private void ManageLockOn()
     {
-        Transform targetInView = gameObject.GetComponent<FieldOfView>().focusedTarget;
+        Transform targetInView = fieldOfView.focusedTarget;
         if (lockedOn && lockOnTarget != null)
         {
             LockOff();
@@ -335,6 +337,6 @@ public class FollowCamera : MonoBehaviour
     // Disable player movement controls when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
 }
