@@ -6,6 +6,8 @@ public class NPCSoundEffect : MonoBehaviour
 {
     private AudioManager audioManager;
     private readonly string NPC = "NPC Mouse";
+    private readonly string NPC_Human = "NPC Human";
+
 
     // Start is called before the first frame update
     void Start()
@@ -23,20 +25,43 @@ public class NPCSoundEffect : MonoBehaviour
     public void NPCWalkingSFX()
     {
         if (gameObject.GetComponent<AudioSource>() == null)
-            audioManager.ReAddAllAudioSource(gameObject, NPC);
-        audioManager.Play(NPC, "Walking");
+            audioManager.ReAddAllAudioSource(gameObject, DecideWhichNPC());
+        for (int i = 0; i < 2; i++)
+        {
+            if (i == 0)
+                audioManager.Play(DecideWhichNPC(), "Walking(1)");
+            else
+                audioManager.Play(DecideWhichNPC(), "Walking(2)");
+        }
+       
     }
+
+    public void NPCRuningSFX()
+    {
+        if (gameObject.GetComponent<AudioSource>() == null)
+            audioManager.ReAddAllAudioSource(gameObject, DecideWhichNPC());
+        audioManager.Play(DecideWhichNPC(), "Runing");
+    }
+
     public void NPCAttackSFX()
     {
         if (gameObject.GetComponent<AudioSource>() == null)
-            audioManager.ReAddAllAudioSource(gameObject, NPC);
-        audioManager.Play(NPC, "Attack");
+            audioManager.ReAddAllAudioSource(gameObject, DecideWhichNPC());
+        audioManager.Play(DecideWhichNPC(), "Attack");
     }
     public void NPCGetHit()
     {
         if (gameObject.GetComponent<AudioSource>() == null)
-            audioManager.ReAddAllAudioSource(gameObject, NPC);
-        audioManager.Play(NPC, "GetHit");
+            audioManager.ReAddAllAudioSource(gameObject, DecideWhichNPC());
+        audioManager.Play(DecideWhichNPC(), "GetHit");
+    }
+
+    public string DecideWhichNPC()
+    {
+        if (gameObject.name.Contains("Mouse"))
+            return NPC;
+        else
+            return NPC_Human;
     }
 
 

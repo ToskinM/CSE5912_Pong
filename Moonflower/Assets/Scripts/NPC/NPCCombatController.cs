@@ -72,8 +72,15 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             Frenzy();
 
         StartCoroutine(GetAudioManager());
+    }
 
+    private void OnEnable()
+    {
         GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
     }
 
     private IEnumerator GetAudioManager()

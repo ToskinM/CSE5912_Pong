@@ -36,10 +36,16 @@ public class AmaruController : MonoBehaviour
 
         talkTrig = new DialogueTrigger(DialoguePanel, Constants.AMARU_ICON, Constants.AMARU_INTRO_DIALOGUE);
         playerController = Player.GetComponent<IPlayerController>();
-
-        GameStateController.OnPaused += HandlePauseEvent;
     }
 
+    private void OnEnable()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
+    }
 
     // Update is called once per frame
     void Update()

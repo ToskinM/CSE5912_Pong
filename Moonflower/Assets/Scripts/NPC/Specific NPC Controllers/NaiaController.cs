@@ -31,7 +31,7 @@ public class NaiaController : MonoBehaviour
     {
         // Initialize Components
         playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
-        Player = playerInfo.GetAnai(); 
+        Player = LevelManager.current.anai.gameObject; 
         agent = GetComponent<NavMeshAgent>();
         combatController = GetComponent<NPCCombatController>();
 
@@ -45,10 +45,16 @@ public class NaiaController : MonoBehaviour
 
         engageController = EngageOptPanel.GetComponent<EngagementOptionsController>();
         combatController.npcMovement = movement; 
-
-        GameStateController.OnPaused += HandlePauseEvent;
     }
 
+    private void OnEnable()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
+    }
 
     void Update()
     {

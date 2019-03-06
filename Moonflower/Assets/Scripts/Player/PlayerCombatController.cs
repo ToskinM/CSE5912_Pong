@@ -62,9 +62,6 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         }
         blockPlaceholder.SetActive(IsBlocking);
 
-        GameStateController.OnPaused += HandlePauseEvent;
-        GameStateController.OnFreezePlayer += HandleFreezeEvent;
-
         anai = GameObject.Find("Anai");
         mimbi = GameObject.Find("Mimbi");
 
@@ -75,6 +72,16 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     }
 
+    private void OnEnable()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+        GameStateController.OnFreezePlayer += HandleFreezeEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
+        GameStateController.OnFreezePlayer -= HandleFreezeEvent;
+    }
 
     void Update()
     {
