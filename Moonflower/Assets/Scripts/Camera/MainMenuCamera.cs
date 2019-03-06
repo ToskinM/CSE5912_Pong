@@ -21,6 +21,7 @@ public class MainMenuCamera : MonoBehaviour
     void Start()
     {
         transform.SetPositionAndRotation(positions[0].position, positions[0].rotation);
+        transform.rotation *= Quaternion.Euler(-25, 0, 0);
 
         // Fade In
         faderCanvasGroup.alpha = 1f;
@@ -30,6 +31,13 @@ public class MainMenuCamera : MonoBehaviour
 
     private void Update()
     {
+        if (!Mathf.Approximately(transform.localRotation.eulerAngles.x, positions[currentPosition].localRotation.eulerAngles.x))
+        {
+            Debug.Log(transform.localRotation + "derp" + positions[currentPosition].localRotation);
+            //Quaternion.Lerp(transform.rotation, positions[currentPosition].rotation, Time.deltaTime * 10);
+            Quaternion.RotateTowards(transform.localRotation, positions[currentPosition].localRotation, 1);
+        }
+
         //if (!isMoving)
         //{
         //    isMoving = true;
