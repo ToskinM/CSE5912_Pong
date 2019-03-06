@@ -69,12 +69,16 @@ public class AudioManager : MonoBehaviour
         if (s != null & s.source != null)
         {
             s.source.Play();
-            Debug.Log("I am Playing "+name+ s.source.clip);
+            //Debug.Log("I am Playing "+name+ s.source.clip);
         }
         //Add back audio source
         if (s.source == null)
         {
             AddAllAudioSource(category);
+            if (a.categoryName=="BGM")
+            {
+                BMGAddAllAudioSource(category);
+            }
         }
     }
     public void PlayBackground(string category, string name)
@@ -234,6 +238,17 @@ public class AudioManager : MonoBehaviour
         s.source.loop = s.loop;
         s.source.spatialBlend = 1;
     }
+    public void BGMAddSourceOtherComponent(Sound s)
+    {
+        s.source.clip = s.clip;
+        s.source.volume = soundVol;
+        s.source.pitch = s.pitch;
+        s.source.loop = s.loop;
+        s.source.spatialBlend = 0;
+    }
+
+
+
     public void AddAllAudioSource(String category)
     {
         Audio a = Array.Find(audioSounds, sound => sound.categoryName.Contains(category));
@@ -242,6 +257,16 @@ public class AudioManager : MonoBehaviour
         {
             ReAddAudioSource(a, s);
             AddSourceOtherComponent(s);
+        }
+    }
+    public void BMGAddAllAudioSource(String category)
+    {
+        Audio a = Array.Find(audioSounds, sound => sound.categoryName.Contains(category));
+        Sound[] soundList = a.sounds;
+        foreach (Sound s in soundList)
+        {
+            ReAddAudioSource(a, s);
+            BGMAddSourceOtherComponent(s);
         }
     }
 

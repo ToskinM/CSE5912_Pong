@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.4855957, g: 0.9311419, b: 1.4875678, a: 1}
+  m_IndirectSpecularColor: {r: 0.4852417, g: 0.9310331, b: 1.487578, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8134,7 +8134,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1803890278}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1213616678
 PrefabInstance:
@@ -8940,7 +8940,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1803890278}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1400079086
 MonoBehaviour:
@@ -13121,7 +13121,6 @@ Transform:
   m_LocalPosition: {x: -33.814285, y: 3.2753754, z: -44.551403}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1832774177}
   - {fileID: 1400079085}
   - {fileID: 1201526871}
   - {fileID: 2086444035}
@@ -13203,151 +13202,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f8835a0f81a6c1489b93bed7c675488, type: 3}
---- !u!1 &1832774175
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1832774177}
-  - component: {fileID: 1832774176}
-  - component: {fileID: 1832774178}
-  - component: {fileID: 1832774179}
-  - component: {fileID: 1832774180}
-  m_Layer: 0
-  m_Name: Audio
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1832774176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1832774175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b383673484730405eaaece22e575a43b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSounds:
-  - categoryName: Anai
-    sounds:
-    - name: AnaiWalking
-      clip: {fileID: 8300000, guid: ac78556313208496297938b2fb09be29, type: 3}
-      pitch: 1
-      loop: 0
-      source: {fileID: 0}
-    - name: AnaiAttackSwing
-      clip: {fileID: 8300000, guid: 2df32346d10514728a933156df1619ea, type: 3}
-      pitch: 1
-      loop: 0
-      source: {fileID: 0}
-    - name: AnaiPunch
-      clip: {fileID: 8300000, guid: cb5686462037244209b1a239d97dbc2b, type: 3}
-      pitch: 1
-      loop: 0
-      source: {fileID: 0}
-    - name: AnaiKick
-      clip: {fileID: 8300000, guid: 261d1a61d8fad4bd2964de80627232a1, type: 3}
-      pitch: 1
-      loop: 0
-      source: {fileID: 0}
-    - name: AnaiRun
-      clip: {fileID: 8300000, guid: a52988c7c00284d4997a16752da6eef9, type: 3}
-      pitch: 1
-      loop: 0
-      source: {fileID: 0}
-  - categoryName: Mimbi
-    sounds:
-    - name: MimbiWalking
-      clip: {fileID: 8300000, guid: 9d2fe6e446a304228aef63cc3781d07d, type: 3}
-      pitch: 1
-      loop: 0
-      source: {fileID: 0}
-    - name: MimbiAttack
-      clip: {fileID: 8300000, guid: 80a588043ec034f34af6897dd8c4183e, type: 3}
-      pitch: 1
-      loop: 0
-      source: {fileID: 0}
-  - categoryName: Player
-    sounds:
-    - name: PlayerPickup
-      clip: {fileID: 8300000, guid: 1d52674fca61c4df092a5301765fd976, type: 3}
-      pitch: 1
-      loop: 0
-      source: {fileID: 0}
-  - categoryName: Enemy
-    sounds: []
-  - categoryName: NPC
-    sounds: []
-  audioBackgrounds:
-  - categoryName: Environment
-    sounds:
-    - name: Wind
-      clip: {fileID: 8300000, guid: ecfa5fc3c162c422f94a5e9d057f301a, type: 3}
-      pitch: 1
-      loop: 1
-      source: {fileID: 0}
-  soundVol: 0
-  backgroundVol: 0
---- !u!4 &1832774177
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1832774175}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30.892542, y: 2.4846249, z: -10.268246}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1803890278}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1832774178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1832774175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 791cbcb20ef5c45e7992ab6092ca996b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
---- !u!114 &1832774179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1832774175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adf7af31ed9d54acb99de72a7d2132d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hearableRadius: 100
---- !u!114 &1832774180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1832774175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b16de83d5c28048bfae724417e1cbe65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1876373433
 PrefabInstance:
   m_ObjectHideFlags: 0
