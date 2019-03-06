@@ -9,17 +9,18 @@ public class PauseCommand : ICommand
 
     public PauseCommand()
     {
-        gameStateController = GameObject.Find("Game State Manager").GetComponent<GameStateController>();
+        gameStateController = GameStateController.current;
     }
 
     public void Execute()
     {
+        gameStateController = GameStateController.current;
         if (gameStateController.Paused)
         {
             SceneManager.UnloadSceneAsync(Constants.SCENE_PAUSEMENU);
             gameStateController.UnpauseGame();
         }
-        else if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+        else if (SceneManager.GetActiveScene().name != Constants.SCENE_MAINMENU)
         {
             SceneManager.LoadScene(Constants.SCENE_PAUSEMENU, LoadSceneMode.Additive);
             gameStateController.PauseGame();
@@ -29,6 +30,7 @@ public class PauseCommand : ICommand
 
     public void Unexecute()
     {
+        gameStateController = GameStateController.current;
         SceneManager.LoadScene(Constants.SCENE_PAUSEMENU, LoadSceneMode.Additive);
         gameStateController.TogglePause();
     }

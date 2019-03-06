@@ -62,10 +62,10 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         }
         blockPlaceholder.SetActive(IsBlocking);
 
-        anai = GameObject.Find("Anai");
-        mimbi = GameObject.Find("Mimbi");
+        anai = LevelManager.current.anai.gameObject;
+        mimbi = LevelManager.current.mimbi.gameObject;
 
-        playerSoundEffect = GameObject.Find("Anai").GetComponent<PlayerSoundEffect>();
+        playerSoundEffect = anai.GetComponent<PlayerSoundEffect>();
 
         //currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
         currentPlayer = LevelManager.current.currentPlayer;
