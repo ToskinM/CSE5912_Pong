@@ -18,6 +18,7 @@ public class SceneController : MonoBehaviour
     public float fadeDuration = 1f;
     private const float pseudoDeltaTime = 0.025f;
     private bool isFading;
+    public bool isLoading;
 
     [Header("Loadscreen")]
     public GameObject loadscreen;
@@ -48,7 +49,7 @@ public class SceneController : MonoBehaviour
     //
     public void FadeAndLoadScene(String sceneName)
     {
-        if (!isFading)
+        if (!isFading && !isLoading)
         {
             StartCoroutine(FadeAndSwitchScenes(sceneName));
         }
@@ -56,7 +57,7 @@ public class SceneController : MonoBehaviour
     // (without sexy loadscreen)
     public void FadeAndLoadSceneNoLS(String sceneName)
     {
-        if (!isFading)
+        if (!isFading && !isLoading)
         {
             StartCoroutine(FadeAndSwitchScenesNoLS(sceneName));
         }
@@ -65,6 +66,8 @@ public class SceneController : MonoBehaviour
 
     private IEnumerator FadeAndSwitchScenes(string sceneName)
     {
+        isLoading = true;
+
         // Fade to black
         yield return StartCoroutine(Fade(1f));
         BeforeSceneUnload?.Invoke();
@@ -80,6 +83,7 @@ public class SceneController : MonoBehaviour
         // Unload loading scene
         yield return SceneManager.UnloadSceneAsync(Constants.SCENE_LOADING);
         AfterSceneLoad?.Invoke();
+        isLoading = false;
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
@@ -87,6 +91,8 @@ public class SceneController : MonoBehaviour
 
     private IEnumerator FadeAndSwitchScenesNoLS(string sceneName)
     {
+        isLoading = true;
+
         // Fade to black
         yield return StartCoroutine(Fade(1f));
         BeforeSceneUnload?.Invoke();
@@ -102,6 +108,7 @@ public class SceneController : MonoBehaviour
         // Unload loading scene
         yield return SceneManager.UnloadSceneAsync(Constants.SCENE_LOADING);
         AfterSceneLoad?.Invoke();
+        isLoading = false;
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
