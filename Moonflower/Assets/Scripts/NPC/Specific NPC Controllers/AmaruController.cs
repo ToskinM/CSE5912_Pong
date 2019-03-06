@@ -15,7 +15,6 @@ public class AmaruController : MonoBehaviour
     const float tooCloseRad = 4f;
     const float bufferDist = 5f;
     const float wanderRad = 30f; 
-    bool engaging = false;
 
     NPCMovementController npc;
     NavMeshAgent agent;
@@ -77,7 +76,6 @@ public class AmaruController : MonoBehaviour
     //start current conversation
     public void StartTalk()
     {
-        engaging = true;
 
         if (!talkTrig.DialogueActive())
         {

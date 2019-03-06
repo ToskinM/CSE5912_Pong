@@ -11,7 +11,7 @@ public class NaiaController : MonoBehaviour
     public GameObject DialoguePanel;
     public GameObject EngageOptPanel;
 
-    public float engagementRadius = 7f;
+    public float engagementRadius = 5f;
     public float tooCloseRad = 4f;
     public float bufferDist = 5f;
 
@@ -26,7 +26,6 @@ public class NaiaController : MonoBehaviour
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
-    bool engaging = false;
 
     private void Awake()
     {
@@ -74,18 +73,6 @@ public class NaiaController : MonoBehaviour
                 {
                     StartTalk();
                 }
-                //else if (movement.state != NPCMovementController.MoveState.chill)
-                //{
-                //    movement.Reset();
-                //    if (currState == NaiaEngageType.talk)
-                //        currState = NaiaEngageType.chill;
-
-                //    if (talkTrig.DialogueActive())
-                //    {
-                //        playerController.TalkingPartner = null;
-                //        talkTrig.EndDialogue();
-                //    }
-                //}
                 break;
             case NaiaEngageType.fight:
                 Debug.Log("fighting"); 
@@ -142,7 +129,6 @@ public class NaiaController : MonoBehaviour
 
     public void StartTalk()
     {
-        engaging = true;
         movement.FollowPlayer(3.5f);
         currState = NaiaEngageType.talk;
         combatController.Active = false;
@@ -160,7 +146,6 @@ public class NaiaController : MonoBehaviour
 
         if (talkTrig.DialogueActive())
         {
-            Debug.Log("set talking partner null"); 
             playerController.TalkingPartner = null;
             talkTrig.EndDialogue();
         }

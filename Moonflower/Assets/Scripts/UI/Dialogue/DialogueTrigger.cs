@@ -41,20 +41,12 @@ public class DialogueTrigger : MonoBehaviour
     {
         panel = p;
         panelInfo = panel.GetComponent<DialoguePanelInfo>(); 
-        //icon = panel.transform.GetChild(0).GetComponent<Image>();
-        //text = panel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         buttons = new List<Button>();
-        //templateButton = panel.transform.GetChild(2).GetComponent<Button>();
-
-        //upPos = panel.transform.position;
-        //downPos = new Vector3(upPos.x, upPos.y - icon.rectTransform.rect.height);
-        //panel.transform.position = downPos;
 
         factory = new DialogueFactory();
         graph = factory.GetDialogue(graphName);
         graph.Restart();
 
-        //freezeCommand = new FreezeCameraCommand();
         spriteFile = characterSprite;
 
     }
@@ -66,7 +58,6 @@ public class DialogueTrigger : MonoBehaviour
             switch (pState)
             {
                 case PanelState.rising:
-                    Debug.Log("Panel is rising");
                     panel.transform.position += new Vector3(0, 4, 0);
                     if (panel.transform.position.y >= panelInfo.UpPosition.y)
                     {
@@ -76,7 +67,6 @@ public class DialogueTrigger : MonoBehaviour
                     break;
 
                 case PanelState.falling:
-                    Debug.Log("Panel is falling");
                     panel.transform.position -= new Vector3(0, 4, 0);
                     if (panel.transform.position.y <= panelInfo.DownPosition.y)
                     {
@@ -85,7 +75,6 @@ public class DialogueTrigger : MonoBehaviour
                     break;
 
                 case PanelState.up:
-                    Debug.Log("Panel is up"); 
                     //easy exit 
                     if (Input.GetKeyDown(KeyCode.X))
                     {
@@ -113,12 +102,6 @@ public class DialogueTrigger : MonoBehaviour
                     //easy skip through
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
-                        Debug.Log("We got a space bar!"); 
-                        //if (!engaged)
-                        //{
-                        //    freezeCommand.Execute();
-                        //    engaged = true;
-                        //}
                         switch (tState)
                         {
                             case TextState.ending:
@@ -137,23 +120,19 @@ public class DialogueTrigger : MonoBehaviour
                                 break; 
                             case TextState.typing:
                             case TextState.paused:
-                                Debug.Log("we gonna fill in the text");
                                 //display all the dialogue text
                                 panelInfo.Text.text = graph.current.text;
                                 typeIndex = 0;
                                 tState = TextState.options;
                                 break;
                             case TextState.options:
-                                Debug.Log("we gonna fill in the options");
                                 //display all the available options
                                 forceOptions();
                                 tState = TextState.done;
                                 break;
                             case TextState.done:
-                                Debug.Log("we gonna go to next option");
                                 if (!hasOptions()) // if there are no option buttons
                                 {
-                                    Debug.Log("for real");
                                     //go to next node in tree (no branching)
                                     gotoNext(-1);
                                 }
@@ -178,7 +157,6 @@ public class DialogueTrigger : MonoBehaviour
         panel.SetActive(true);
         panelInfo.Icon.sprite = new IconFactory().GetIcon(spriteFile);
         tState = TextState.typing;
-        //freezeCommand.Execute();
 
         // Start dialogue camera this this npc 
         LevelManager.current.RequestDialogueCamera();
@@ -193,12 +171,8 @@ public class DialogueTrigger : MonoBehaviour
 
     public void EndDialogue()
     {
-        //panel.SetActive(false);
         destroyButtons();
-        //active = false;
         pState = PanelState.falling;
-        Debug.Log("set panel falling"); 
-        //freezeCommand.Unexecute();
         engaged = false;
 
         // Exit dialogue camera 
@@ -239,14 +213,6 @@ public class DialogueTrigger : MonoBehaviour
             panelInfo.Text.text += exitText[currDiaIndex];
 
         typeIndex++;
-        //if (currDiaIndex == dialogue.Length)
-        //{
-        //    typeIndex = 0;
-        //    typing = false;
-        //    state = TextState.options;  
-        //}
-        //if (currDiaIndex > 1 && punctuation.IndexOf(exitText[currDiaIndex - 2]) != -1)
-            //tState = TextState.paused;
     }
 
     private void typeText()
@@ -271,18 +237,6 @@ public class DialogueTrigger : MonoBehaviour
                 }
                 else if (currDiaIndex > 1 && punctuation.IndexOf(dialogue[currDiaIndex - 2]) != -1)
                     tState = TextState.paused;
-
-                //if (currDiaIndex >= dialogue.Length)
-                //{
-                //    typeIndex = 0; 
-                //}
-
-                //if (currDiaIndex == dialogue.Length)
-                //{
-                //    typeIndex = 0;
-                //    typing = false;
-                //    state = TextState.options;  
-                //}
 
                 break;
 
@@ -350,7 +304,6 @@ public class DialogueTrigger : MonoBehaviour
         if (next.Equals(prev))
         {
             //terminate conversation
-            Debug.Log("we finished");
             EndDialogue();
             complete = true;
         }
