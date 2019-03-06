@@ -29,7 +29,7 @@ MonoBehaviour:
   m_Name: Event
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -40, y: -56}
+  position: {x: -40, y: -88}
   ports:
     keys:
     - input
@@ -46,13 +46,21 @@ MonoBehaviour:
       _connectionType: 0
       _dynamic: 0
   trigger:
-  - _target: {fileID: 493941883, guid: f780537c5387a4b47bd7247429224b55, type: 3}
-    _methodName: FIGHT
-    _args: []
-    _dynamic: 0
-    _typeName: SerializableEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-    dirty: 0
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 493941883, guid: f780537c5387a4b47bd7247429224b55, type: 3}
+        m_MethodName: Fight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114542151671002978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +86,9 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: output
+        node: {fileID: 114347788850708108}
+        reroutePoints: []
+      - fieldName: output
         node: {fileID: 114621925554861206}
         reroutePoints: []
       _direction: 0
@@ -91,7 +102,7 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 0
       _dynamic: 0
-  text: Bye Bitch
+  text: Bye Bitch.
   answers: []
 --- !u!114 &114621925554861206
 MonoBehaviour:
@@ -134,5 +145,5 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 0
       _dynamic: 0
-  text: This is a test
+  text: This is a test.
   answers: []

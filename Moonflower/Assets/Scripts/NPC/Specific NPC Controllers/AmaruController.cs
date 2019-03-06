@@ -68,12 +68,7 @@ public class AmaruController : MonoBehaviour
             }
             else if (npc.state != NPCMovementController.MoveState.wander)
             {
-                npc.Wander();
-                if (talkTrig.DialogueActive())
-                {
-                    playerController.TalkingPartner = null;
-                    talkTrig.EndDialogue();
-                }
+                EndTalk(); 
             }
         }
         else
@@ -92,6 +87,16 @@ public class AmaruController : MonoBehaviour
         {
             playerController.TalkingPartner = gameObject;
             talkTrig.StartDialogue();
+        }
+    }
+
+    public void EndTalk()
+    {
+        npc.Reset();
+        if (talkTrig.DialogueActive())
+        {
+            playerController.TalkingPartner = null;
+            talkTrig.EndDialogue();
         }
     }
 
