@@ -13,10 +13,6 @@ public class DialogueTrigger : MonoBehaviour
 
     GameObject panel;
     DialoguePanelInfo panelInfo; 
-    //Image icon;
-    //TextMeshProUGUI text;
-    //Button templateButton;
-    //ICommand freezeCommand;
 
     List<Button> buttons;
     string spriteFile;
@@ -30,8 +26,6 @@ public class DialogueTrigger : MonoBehaviour
     int typeIndex = 0;
     const int fadeMax = 30;
     Button currB;
-    Vector3 upPos;
-    Vector3 downPos;
 
 
     int slowDownFrac = 2;
@@ -74,9 +68,9 @@ public class DialogueTrigger : MonoBehaviour
                 case PanelState.rising:
                     Debug.Log("Panel is rising");
                     panel.transform.position += new Vector3(0, 4, 0);
-                    if (panel.transform.position.y >= upPos.y)
+                    if (panel.transform.position.y >= panelInfo.UpPosition.y)
                     {
-                        panel.transform.position = upPos;
+                        panel.transform.position = panelInfo.UpPosition;
                         pState = PanelState.up;
                     }
                     break;
@@ -84,7 +78,7 @@ public class DialogueTrigger : MonoBehaviour
                 case PanelState.falling:
                     Debug.Log("Panel is falling");
                     panel.transform.position -= new Vector3(0, 4, 0);
-                    if (panel.transform.position.y <= downPos.y)
+                    if (panel.transform.position.y <= panelInfo.DownPosition.y)
                     {
                         pState = PanelState.down;
                     }

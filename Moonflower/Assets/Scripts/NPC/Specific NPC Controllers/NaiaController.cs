@@ -111,8 +111,8 @@ public class NaiaController : MonoBehaviour
                     }
                     else
                     {
-
-                        talkTrig.EndDialogue();
+                        EndTalk(); 
+                        //talkTrig.EndDialogue();
                         
                     }
                 }
