@@ -21,6 +21,7 @@ public class GameStateController : MonoBehaviour
     public static event FreezePlayer OnFreezePlayer;
 
     private int menuLayers = 0;
+    private int pauseLayers = 0;
 
     void Start()
     {
@@ -101,17 +102,36 @@ public class GameStateController : MonoBehaviour
 
     public void PauseGame()
     {
-        Paused = true;
-        camControl.Frozen = true;
-        OnPaused?.Invoke(Paused);
-        SetMouseLock(false);
+        pauseLayers++;
+        if (pauseLayers > 0)
+        {
+            Paused = true;
+            camControl.Frozen = true;
+            OnPaused?.Invoke(Paused);
+            SetMouseLock(false);
+            Time.timeScale = 0;
+        }
     }
     public void UnpauseGame()
     {
+        pauseLayers--;
+        if (pauseLayers <= 0)
+        {
+            Paused = false;
+            camControl.Frozen = false;
+            OnPaused?.Invoke(Paused);
+            SetMouseLock(true);
+            Time.timeScale = 1;
+        }
+    }
+    public void ForceUnpause()
+    {
+        pauseLayers = 0;
         Paused = false;
         camControl.Frozen = false;
         OnPaused?.Invoke(Paused);
         SetMouseLock(true);
+        Time.timeScale = 1;
     }
 
     public void FreezeCamera()

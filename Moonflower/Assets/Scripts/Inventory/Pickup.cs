@@ -24,7 +24,6 @@ public class Pickup : MonoBehaviour
 
     public PlayerMovement playerMovement;
 
-    // Start is called before the first frame update
     void Start()
     {
         if (!playerAnai)
@@ -33,8 +32,9 @@ public class Pickup : MonoBehaviour
         //StartCoroutine(GetAudioManager());
         //inventoryManager = FindObjectOfType<InventoryManager>();
         playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
-        anaiStat = playerInfo.PlayerAnaiObj.GetComponent<CharacterStats>();
-        mimbiStat = playerInfo.PlayerMimbiObj.GetComponent<CharacterStats>(); 
+
+        anaiStat = LevelManager.current.anai.GetComponent<CharacterStats>();
+        mimbiStat = LevelManager.current.mimbi.GetComponent<CharacterStats>(); 
 
         playerInventory = playerAnai.GetComponent<PlayerInventory>();
         soundEffect = playerAnai.GetComponent<PlayerSoundEffect>();
@@ -42,7 +42,6 @@ public class Pickup : MonoBehaviour
         //CurrentPlayer = playerInfo.GetCurrentPlayer();
         currentPlayer = LevelManager.current.currentPlayer;
     }
-
 
     private GameObject FindClosest()
     {

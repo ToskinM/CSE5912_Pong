@@ -28,8 +28,6 @@ public class MimbiController : MonoBehaviour, IPlayerController
     const float tooCloseRadius = 4f;
     float wanderRadius = 15f;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         Playing = false;
@@ -47,13 +45,20 @@ public class MimbiController : MonoBehaviour, IPlayerController
 
         playerAnimate.movement = npcMove;
 
-        GameStateController.OnPaused += HandlePauseEvent;
-        GameStateController.OnFreezePlayer += HandleFreezeEvent;
-
         LevelManager.current.mimbi = this;
     }
 
-    // Update is called once per frame
+    private void OnEnable()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+        GameStateController.OnFreezePlayer += HandleFreezeEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
+        GameStateController.OnFreezePlayer -= HandleFreezeEvent;
+    }
+
     void Update()
     {
         DetectCharacterSwitchInput();

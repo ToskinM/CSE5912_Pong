@@ -24,13 +24,12 @@ public class InventoryStat : MonoBehaviour
 
     SkyColors.SkyCategory currentTime;
 
-
-
-    // Start is called before the first frame update
     void Start()
     {
-        currentTime = FindObjectOfType<SkyColors>().GetDayNight();
-        if (currentTime ==null)
+        SkyColors skyColors = FindObjectOfType<SkyColors>();
+        if (skyColors)
+            currentTime = skyColors.GetDayNight();
+        if (currentTime == null)
         {
             currentTime = SkyColors.SkyCategory.Sunset;
         }

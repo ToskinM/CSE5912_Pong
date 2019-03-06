@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseMenuBehavior : MonoBehaviour
@@ -44,7 +45,10 @@ public class PauseMenuBehavior : MonoBehaviour
 
     public void MainMenu()
     {
-        returnMain.Execute();
+        //returnMain.Execute();
+        //GameStateController.current.ForceUnpause();
+        SceneManager.UnloadSceneAsync(Constants.SCENE_PAUSEMENU);
+        SceneController.current.FadeAndLoadSceneNoLS(Constants.SCENE_MAINMENU);
         //FindObjectOfType<AudioManager>().Play("Menu");
     }
 
@@ -52,7 +56,7 @@ public class PauseMenuBehavior : MonoBehaviour
     {
         nag.Execute();
         //FindObjectOfType<AudioManager>().Play("Menu");
-        //Application.Quit(); // this doesn't affect the unity editor, only a built application
+        Application.Quit(); // this doesn't affect the unity editor, only a built application
     }
 
     public void GoBack()

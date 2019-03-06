@@ -58,14 +58,22 @@ public class AnaiController : MonoBehaviour, IPlayerController
         //        npcMove.Active = false; 
         npcMove.FollowPlayer(followDist, tooCloseRadius);
 
-        GameStateController.OnPaused += HandlePauseEvent;
-        GameStateController.OnFreezePlayer += HandleFreezeEvent;
-
         playerAnimate.movement = playMove;
 
         LevelManager.current.anai = this;
 
         playerSoundEffect = GetComponent<PlayerSoundEffect>();
+    }
+
+    private void OnEnable()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+        GameStateController.OnFreezePlayer += HandleFreezeEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
+        GameStateController.OnFreezePlayer -= HandleFreezeEvent;
     }
 
     void DetectCharacterSwitchInput()

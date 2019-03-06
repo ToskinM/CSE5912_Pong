@@ -30,7 +30,15 @@ public class PlayerAnimatorController : MonoBehaviour
         movement = GetComponent<PlayerMovement>();
         combatController = GetComponent<PlayerCombatController>();
         playerMovement = gameObject.GetComponent<PlayerMovement>();
+    }
+
+    private void OnEnable()
+    {
         GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
     }
 
     // Update is called once per frame

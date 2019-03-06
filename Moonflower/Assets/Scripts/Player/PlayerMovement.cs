@@ -57,8 +57,15 @@ public class PlayerMovement : MonoBehaviour, IMovement
         cameraScript = LevelManager.current.mainCamera;
         Action = Actions.Chilling;
         Jumping = false;
+    }
 
+    private void OnEnable()
+    {
         GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
     }
 
     private void Update()
@@ -91,10 +98,10 @@ public class PlayerMovement : MonoBehaviour, IMovement
         else
         {
             //if (WalkConditionCheck())
-            {
+            //{
                 Action = Actions.Walking;
                 moveSpeed = walkSpeed;
-            }
+            //}
         }
     }
 

@@ -42,6 +42,7 @@ public class MainMenuBehavior : MonoBehaviour
         play = new PlayCommand();
         nag = new NagCommand();
 
+        GameStateController.current.SetMouseLock(false);
     }
     public void StartGame()
     {

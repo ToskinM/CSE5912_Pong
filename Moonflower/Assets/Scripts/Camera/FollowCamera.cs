@@ -56,9 +56,16 @@ public class FollowCamera : MonoBehaviour
         transform.position = target.position + new Vector3(0, 1, -5);
         offset = target.position - transform.position;
 
-
         LevelManager.current.mainCamera = this;
+    }
+
+    private void OnEnable()
+    {
         GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
     }
 
     void Update()

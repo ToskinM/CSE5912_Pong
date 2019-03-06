@@ -9,14 +9,20 @@ public class SpawnActionWheel : MonoBehaviour
     private GameStateController gameStateController;
     private GameObject activeWheel;
 
-    // Start is called before the first frame update
     void Start()
     {
         gameStateController = GameStateManager.GetComponent<GameStateController>();
-        GameStateController.OnFreezePlayer += HandleFreezeEvent;
     }
 
-    // Update is called once per frame
+    private void OnEnable()
+    {
+        GameStateController.OnFreezePlayer += HandleFreezeEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnFreezePlayer -= HandleFreezeEvent;
+    }
+
     void Update()
     {
         DetectInteraction();

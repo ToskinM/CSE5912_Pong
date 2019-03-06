@@ -32,9 +32,13 @@ public class NPCAnimationController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
     }
 
-    void Start()
+    private void OnEnable()
     {
         GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
     }
 
     void Update()
@@ -109,7 +113,7 @@ public class NPCAnimationController : MonoBehaviour
         attackHurtboxes[index].Disable();
     }
 
-    // Disable updates when gaame is paused
+    // Disable updates when game is paused
     void HandlePauseEvent(bool isPaused)
     {
         enabled = !isPaused;

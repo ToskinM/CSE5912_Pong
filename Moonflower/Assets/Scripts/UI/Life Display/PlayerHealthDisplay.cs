@@ -25,8 +25,9 @@ public class PlayerHealthDisplay : MonoBehaviour
         playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>(); 
         appleControl = new LifeAppleController(Apple);
         flowerControl = new LifeFlowerController(Flower);
-        anaiStats = playerInfo.PlayerAnaiObj.GetComponent<CharacterStats>();
-        mimbiStats = playerInfo.PlayerMimbiObj.GetComponent<CharacterStats>();
+
+        anaiStats = LevelManager.current.anai.GetComponent<CharacterStats>();
+        mimbiStats = LevelManager.current.mimbi.GetComponent<CharacterStats>();
     }
 
     void Update()
