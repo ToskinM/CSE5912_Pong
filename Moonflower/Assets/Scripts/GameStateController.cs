@@ -106,7 +106,8 @@ public class GameStateController : MonoBehaviour
         if (pauseLayers > 0)
         {
             Paused = true;
-            camControl.Frozen = true;
+            if (camControl)
+                camControl.Frozen = true;
             OnPaused?.Invoke(Paused);
             SetMouseLock(false);
             Time.timeScale = 0;
@@ -118,7 +119,8 @@ public class GameStateController : MonoBehaviour
         if (pauseLayers <= 0)
         {
             Paused = false;
-            camControl.Frozen = false;
+            if (camControl)
+                camControl.Frozen = false;
             OnPaused?.Invoke(Paused);
             SetMouseLock(true);
             Time.timeScale = 1;
@@ -128,7 +130,8 @@ public class GameStateController : MonoBehaviour
     {
         pauseLayers = 0;
         Paused = false;
-        camControl.Frozen = false;
+        if (camControl)
+            camControl.Frozen = false;
         OnPaused?.Invoke(Paused);
         SetMouseLock(true);
         Time.timeScale = 1;
