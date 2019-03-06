@@ -242,7 +242,7 @@ public class DialogueTrigger : MonoBehaviour
                     text.text += dialogue[currDiaIndex]; //.Substring(0, typeIndex / slowDownFrac);
                 }
                 typeIndex++;
-                if (currDiaIndex > 1 && punctuation.IndexOf(dialogue[currDiaIndex - 2]) != -1)
+                if (currDiaIndex > 1 && currDiaIndex < dialogue.Length && punctuation.IndexOf(dialogue[currDiaIndex - 2]) != -1)
                     tState = TextState.paused;
 
                 //if (currDiaIndex >= dialogue.Length)
