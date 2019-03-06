@@ -15,7 +15,6 @@ public class AmaruController : MonoBehaviour
     const float tooCloseRad = 4f;
     const float bufferDist = 5f;
     const float wanderRad = 30f; 
-    bool engaging = false;
 
     NPCMovementController npc;
     NavMeshAgent agent;
@@ -52,11 +51,6 @@ public class AmaruController : MonoBehaviour
     {
         if (playerController.Playing)
         {
-            //if(talkTrig.engaged && playerController.TalkingPartner!=gameObject)
-            //    playerController.TalkingPartner = gameObject;
-            //else if(!talkTrig.engaged && playerController.TalkingPartner!=null)
-            //    playerController.TalkingPartner = null;
-
             talkTrig.Update();
 
             npc.UpdateMovement();
@@ -68,12 +62,7 @@ public class AmaruController : MonoBehaviour
             }
             else if (npc.state != NPCMovementController.MoveState.wander)
             {
-                npc.Wander();
-                if (talkTrig.DialogueActive())
-                {
-                    playerController.TalkingPartner = null;
-                    talkTrig.EndDialogue();
-                }
+                EndTalk(); 
             }
         }
         else
@@ -84,14 +73,25 @@ public class AmaruController : MonoBehaviour
 
     }
 
+    //start current conversation
     public void StartTalk()
     {
-        engaging = true;
 
         if (!talkTrig.DialogueActive())
         {
             playerController.TalkingPartner = gameObject;
             talkTrig.StartDialogue();
+        }
+    }
+
+    //end current conversation
+    public void EndTalk()
+    {
+        npc.Reset();
+        if (talkTrig.DialogueActive())
+        {
+            playerController.TalkingPartner = null;
+            talkTrig.EndDialogue();
         }
     }
 

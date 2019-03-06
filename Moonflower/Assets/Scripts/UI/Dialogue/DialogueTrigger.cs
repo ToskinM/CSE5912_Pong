@@ -12,10 +12,7 @@ public class DialogueTrigger : MonoBehaviour
     public bool engaged = false;
 
     GameObject panel;
-    Image icon;
-    TextMeshProUGUI text;
-    Button templateButton;
-    ICommand freezeCommand;
+    DialoguePanelInfo panelInfo; 
 
     List<Button> buttons;
     string spriteFile;
@@ -29,8 +26,6 @@ public class DialogueTrigger : MonoBehaviour
     int typeIndex = 0;
     const int fadeMax = 30;
     Button currB;
-    Vector3 upPos;
-    Vector3 downPos;
 
 
     int slowDownFrac = 2;
@@ -40,88 +35,82 @@ public class DialogueTrigger : MonoBehaviour
 
     DialogueGraph graph;
     DialogueFactory factory;
-    bool noExit = true; 
 
 
     public DialogueTrigger(GameObject p, string characterSprite, string graphName)
     {
+        panel = p;
+        panelInfo = panel.GetComponent<DialoguePanelInfo>(); 
+        buttons = new List<Button>();
+
         factory = new DialogueFactory();
         graph = factory.GetDialogue(graphName);
         graph.Restart();
-        panel = p;
-        icon = panel.transform.GetChild(0).GetComponent<Image>();
-        text = panel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        buttons = new List<Button>();
-        templateButton = panel.transform.GetChild(2).GetComponent<Button>();
 
-
-        freezeCommand = new FreezeCameraCommand();
         spriteFile = characterSprite;
-        upPos = panel.transform.position;
-        downPos = new Vector3(upPos.x, upPos.y - icon.rectTransform.rect.height);
-        panel.transform.position = downPos;
+
     }
 
     public void Update()
     {
-
-        //Debug.Log("What is first " + first);
         if (pState != PanelState.down)
         {
             switch (pState)
             {
                 case PanelState.rising:
-                    panel.transform.position += new Vector3(0, 4);
-                    if (panel.transform.position.y >= upPos.y)
+                    panel.transform.position += new Vector3(0, 4, 0);
+                    if (panel.transform.position.y >= panelInfo.UpPosition.y)
                     {
-                        panel.transform.position = upPos;
+                        panel.transform.position = panelInfo.UpPosition;
                         pState = PanelState.up;
                     }
                     break;
 
                 case PanelState.falling:
-                    panel.transform.position -= new Vector3(0, 4);
-                    if (panel.transform.position.y <= downPos.y)
+                    panel.transform.position -= new Vector3(0, 4, 0);
+                    if (panel.transform.position.y <= panelInfo.DownPosition.y)
                     {
                         pState = PanelState.down;
-                        panel.SetActive(false);
                     }
                     break;
 
                 case PanelState.up:
+                    //easy exit 
                     if (Input.GetKeyDown(KeyCode.X))
                     {
                         endConvo();
                     }
 
+                    //type out dialgoue text 
                     switch (tState)
                     {
+                        //type out the ending text all pretty
                         case TextState.ending:
-                        typeEnding(); 
-                        break;
+                            typeEnding();
+                            break;
+                        //type out the dialogue text all pretty
                         case TextState.typing:
                         case TextState.paused:
                             typeText();
                             break;
+                        //display the options all pretty
                         case TextState.options:
                             displayOptions();
                             break;
                     }
 
+                    //easy skip through
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
-                        if (!engaged)
-                        {
-                            freezeCommand.Execute();
-                            engaged = true;
-                        }
                         switch (tState)
                         {
                             case TextState.ending:
-                                if(!text.text.Equals(exitText))
+                                //display all the exit text
+                                if(!panelInfo.Text.text.Equals(exitText))
                                 {
-                                    text.text = exitText;
+                                    panelInfo.Text.text = exitText;
                                 }
+                                //deactivate dialogue convo
                                 else
                                 {
                                     //pState = PanelState.falling;
@@ -131,22 +120,31 @@ public class DialogueTrigger : MonoBehaviour
                                 break; 
                             case TextState.typing:
                             case TextState.paused:
-                                text.text = graph.current.text;
+                                //display all the dialogue text
+                                panelInfo.Text.text = graph.current.text;
                                 typeIndex = 0;
                                 tState = TextState.options;
                                 break;
                             case TextState.options:
+                                //display all the available options
                                 forceOptions();
                                 tState = TextState.done;
                                 break;
                             case TextState.done:
-                                if (!hasOptions())
+                                if (!hasOptions()) // if there are no option buttons
                                 {
+                                    //go to next node in tree (no branching)
                                     gotoNext(-1);
                                 }
                                 break;
+                            default:
+                                Debug.Log("This shouldn't happen");
+                                break;
                         }
                     }
+                    break;
+                case PanelState.down:
+                    panel.SetActive(false);
                     break;
 
             }
@@ -157,9 +155,8 @@ public class DialogueTrigger : MonoBehaviour
     {
         pState = PanelState.rising;
         panel.SetActive(true);
-        icon.sprite = new IconFactory().GetIcon(spriteFile);
+        panelInfo.Icon.sprite = new IconFactory().GetIcon(spriteFile);
         tState = TextState.typing;
-        //freezeCommand.Execute();
 
         // Start dialogue camera this this npc 
         LevelManager.current.RequestDialogueCamera();
@@ -174,11 +171,8 @@ public class DialogueTrigger : MonoBehaviour
 
     public void EndDialogue()
     {
-        //panel.SetActive(false);
         destroyButtons();
-        //active = false;
         pState = PanelState.falling;
-        freezeCommand.Unexecute();
         engaged = false;
 
         // Exit dialogue camera 
@@ -200,14 +194,14 @@ public class DialogueTrigger : MonoBehaviour
         if (tState != TextState.ending)
         {
             tState = TextState.ending;
-            text.text = "";
+            panelInfo.Text.text = "";
             typeIndex = 0;
             destroyButtons();
         }
         else
         {
             complete = true;
-            text.text = exitText;
+            panelInfo.Text.text = exitText;
             EndDialogue(); 
         }
     }
@@ -216,17 +210,9 @@ public class DialogueTrigger : MonoBehaviour
     {
         int currDiaIndex = typeIndex / slowDownFrac;
         if (typeIndex % slowDownFrac == 0 && currDiaIndex < exitText.Length)
-            text.text += exitText[currDiaIndex];
+            panelInfo.Text.text += exitText[currDiaIndex];
 
         typeIndex++;
-        //if (currDiaIndex == dialogue.Length)
-        //{
-        //    typeIndex = 0;
-        //    typing = false;
-        //    state = TextState.options;  
-        //}
-        //if (currDiaIndex > 1 && punctuation.IndexOf(exitText[currDiaIndex - 2]) != -1)
-            //tState = TextState.paused;
     }
 
     private void typeText()
@@ -239,23 +225,18 @@ public class DialogueTrigger : MonoBehaviour
 
                 if (typeIndex % slowDownFrac == 0 && currDiaIndex < dialogue.Length)
                 {
-                    text.text += dialogue[currDiaIndex]; //.Substring(0, typeIndex / slowDownFrac);
+                    panelInfo.Text.text += dialogue[currDiaIndex]; //.Substring(0, typeIndex / slowDownFrac);
                 }
                 typeIndex++;
-                if (currDiaIndex > 1 && punctuation.IndexOf(dialogue[currDiaIndex - 2]) != -1)
+                if (currDiaIndex >= dialogue.Length)
+                {
+                    if (hasOptions())
+                        tState = TextState.options;
+                    else
+                        tState = TextState.done;
+                }
+                else if (currDiaIndex > 1 && punctuation.IndexOf(dialogue[currDiaIndex - 2]) != -1)
                     tState = TextState.paused;
-
-                //if (currDiaIndex >= dialogue.Length)
-                //{
-                //    typeIndex = 0; 
-                //}
-
-                //if (currDiaIndex == dialogue.Length)
-                //{
-                //    typeIndex = 0;
-                //    typing = false;
-                //    state = TextState.options;  
-                //}
 
                 break;
 
@@ -309,26 +290,33 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (!engaged)
         {
-            freezeCommand.Execute();
+            //freezeCommand.Execute();
             engaged = true;
         }
+
+        //set to type out new dialogue text 
         tState = TextState.typing;
         string prev = graph.current.text;
         graph.GetNext(i);
         string next = graph.current.text;
+
+        //if we didn't go to a new node on the tree, then we're at end of branch
         if (next.Equals(prev))
         {
+            //terminate conversation
             EndDialogue();
             complete = true;
         }
+        //reset panel
         destroyButtons();
         resetCounts();
-        text.text = ""; 
+        panelInfo.Text.text = ""; 
     }
 
     private void displayOptions()
     {
         int numOptions = graph.current.answers.Count;
+        Button template = panelInfo.TemplateButton; 
         if (numOptions > 0)
         {
             if (buttons.Count != numOptions)
@@ -337,9 +325,9 @@ public class DialogueTrigger : MonoBehaviour
                 int offset = Screen.height / 21;
                 for (int i = 0; i < numOptions; i++)
                 {
-                    Button b = Instantiate(templateButton, templateButton.transform.position, templateButton.transform.rotation);
+                    Button b = Instantiate(template, template.transform.position, template.transform.rotation);
                     b.transform.SetParent(panel.transform, false);
-                    b.transform.position = new Vector3(templateButton.transform.position.x, templateButton.transform.position.y - currOffset);
+                    b.transform.position = new Vector3(template.transform.position.x, template.transform.position.y - currOffset);
                     currOffset += offset;
 
                     buttons.Add(b);
@@ -383,7 +371,7 @@ public class DialogueTrigger : MonoBehaviour
     private void forceOptions()
     {
 
-
+        Button template = panelInfo.TemplateButton;
         resetCounts();
         destroyButtons();
         int numOptions = graph.current.answers.Count;
@@ -393,9 +381,9 @@ public class DialogueTrigger : MonoBehaviour
             int offset = Screen.height / 21;
             for (int i = 0; i < numOptions; i++)
             {
-                Button b = Instantiate(templateButton, templateButton.transform.position, templateButton.transform.rotation);
+                Button b = Instantiate(template, template.transform.position, template.transform.rotation);
                 b.transform.SetParent(panel.transform, false);
-                b.transform.position = new Vector3(templateButton.transform.position.x, templateButton.transform.position.y - currOffset);
+                b.transform.position = new Vector3(template.transform.position.x, template.transform.position.y - currOffset);
                 currOffset += offset;
 
                 buttons.Add(b);

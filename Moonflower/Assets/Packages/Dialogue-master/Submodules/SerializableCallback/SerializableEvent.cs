@@ -1,7 +1,10 @@
-﻿[System.Serializable]
+﻿
+using UnityEngine;
+[System.Serializable]
 public class SerializableEvent : SerializableEventBase {
 	public void Invoke() {
-		if (invokable == null) Cache();
+        Debug.Log("then we invoke");
+        if (invokable == null) Cache();
 		if (_dynamic) {
 			InvokableEvent call = invokable as InvokableEvent;
 			call.Invoke();
@@ -11,7 +14,8 @@ public class SerializableEvent : SerializableEventBase {
 	}
 
 	protected override void Cache() {
-		if (_target == null || string.IsNullOrEmpty(_methodName)) {
+        Debug.Log("apparently we're caching");
+        if (_target == null || string.IsNullOrEmpty(_methodName)) {
 			invokable = new InvokableEvent(null, null);
 		} else {
 			if (_dynamic) {
