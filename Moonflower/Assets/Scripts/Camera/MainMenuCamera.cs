@@ -21,49 +21,64 @@ public class MainMenuCamera : MonoBehaviour
     void Start()
     {
         transform.SetPositionAndRotation(positions[0].position, positions[0].rotation);
-        transform.rotation *= Quaternion.Euler(-25, 0, 0);
+        transform.position += new Vector3(0, 0.15f, 0);
 
         // Fade In
         faderCanvasGroup.alpha = 1f;
+        mainCanvasGroup.alpha = 0f;
         faderCanvasGroup.blocksRaycasts = false;
         StartCoroutine(RequestFade(0f, fadeDuration * 3f));
     }
 
     private void Update()
     {
-        if (!Mathf.Approximately(transform.localRotation.eulerAngles.x, positions[currentPosition].localRotation.eulerAngles.x))
+        // Initial decend effect
+        if (!(Mathf.Abs(transform.position.y - positions[currentPosition].position.y) < 0.01f))
         {
-            Debug.Log(transform.localRotation + "derp" + positions[currentPosition].localRotation);
-            //Quaternion.Lerp(transform.rotation, positions[currentPosition].rotation, Time.deltaTime * 10);
-            Quaternion.RotateTowards(transform.localRotation, positions[currentPosition].localRotation, 1);
+            transform.position = Vector3.MoveTowards(transform.position, positions[currentPosition].position, Mathf.Abs(positions[currentPosition].position.y - transform.position.y) * 0.01f);
         }
 
         //if (!isMoving)
         //{
         //    isMoving = true;
-        //    Debug.Log("rotate   ");
-
         //    StartCoroutine(Sway());
         //}
     }
 
     private IEnumerator Sway()
     {
-        Vector3 randomSwayAngle = new Vector3(Random.Range(-2, 2), Random.Range(-2, 2), 0f);
-        Quaternion newAngle = transform.rotation * Quaternion.Euler(randomSwayAngle);
-
-        while (transform.rotation != newAngle)
+        Vector3 randomSway = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), 0f);
+        Vector3 newPosition = transform.position + randomSway;
+        while (transform.position != newPosition)
         {
+            Debug.Log("derp");
             //transform.rotation = Quaternion.Lerp(transform.rotation, newAngle, Time.deltaTime * 1f);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, newAngle, Time.deltaTime * 1f);
+            transform.position = Vector3.MoveTowards(transform.position, newPosition, Vector3.Magnitude(newPosition - transform.position));
             yield return null;
         }
-        while (transform.rotation != positions[currentPosition].rotation)
+        while (transform.position != positions[currentPosition].position)
         {
             //transform.rotation = Quaternion.Lerp(transform.rotation, positions[currentPosition].rotation, Time.deltaTime * 1f);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, positions[currentPosition].rotation, Time.deltaTime * 1f);
+            transform.position = Vector3.MoveTowards(transform.position, positions[currentPosition].position, Vector3.Magnitude(positions[currentPosition].position - transform.position));
             yield return null;
         }
+
+        //Vector3 randomSwayAngle = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), 0f);
+        //Quaternion newAngle = transform.rotation * Quaternion.Euler(randomSwayAngle);
+
+        //while (transform.rotation != newAngle)
+        //{
+        //    Debug.Log("derp");
+        //    //transform.rotation = Quaternion.Lerp(transform.rotation, newAngle, Time.deltaTime * 1f);
+        //    transform.rotation = Quaternion.RotateTowards(transform.rotation, newAngle, Vector3.Angle(transform.rotation.eulerAngles, newAngle.eulerAngles) * 1f + 0.001f);
+        //    yield return null;
+        //}
+        //while (transform.rotation != positions[currentPosition].rotation)
+        //{
+        //    //transform.rotation = Quaternion.Lerp(transform.rotation, positions[currentPosition].rotation, Time.deltaTime * 1f);
+        //    transform.rotation = Quaternion.RotateTowards(transform.rotation, positions[currentPosition].rotation, Vector3.Angle(transform.rotation.eulerAngles, newAngle.eulerAngles) * 1f + 0.001f);
+        //    yield return null;
+        //}
         isMoving = false;
     }
 
