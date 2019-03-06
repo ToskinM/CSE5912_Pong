@@ -15,7 +15,7 @@ public class DialogueTrigger : MonoBehaviour
     Image icon;
     TextMeshProUGUI text;
     Button templateButton;
-    ICommand freezeCommand;
+    //ICommand freezeCommand;
 
     List<Button> buttons;
     string spriteFile;
@@ -45,33 +45,34 @@ public class DialogueTrigger : MonoBehaviour
 
     public DialogueTrigger(GameObject p, string characterSprite, string graphName)
     {
-        factory = new DialogueFactory();
-        graph = factory.GetDialogue(graphName);
-        graph.Restart();
         panel = p;
         icon = panel.transform.GetChild(0).GetComponent<Image>();
         text = panel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         buttons = new List<Button>();
         templateButton = panel.transform.GetChild(2).GetComponent<Button>();
 
-
-        freezeCommand = new FreezeCameraCommand();
-        spriteFile = characterSprite;
         upPos = panel.transform.position;
         downPos = new Vector3(upPos.x, upPos.y - icon.rectTransform.rect.height);
         panel.transform.position = downPos;
+
+        factory = new DialogueFactory();
+        graph = factory.GetDialogue(graphName);
+        graph.Restart();
+
+        //freezeCommand = new FreezeCameraCommand();
+        spriteFile = characterSprite;
+
     }
 
     public void Update()
     {
-
-        //Debug.Log("What is first " + first);
         if (pState != PanelState.down)
         {
             switch (pState)
             {
                 case PanelState.rising:
-                    panel.transform.position += new Vector3(0, 4);
+                    Debug.Log("Panel is rising");
+                    panel.transform.position += new Vector3(0, 4, 0);
                     if (panel.transform.position.y >= upPos.y)
                     {
                         panel.transform.position = upPos;
@@ -80,48 +81,58 @@ public class DialogueTrigger : MonoBehaviour
                     break;
 
                 case PanelState.falling:
-                    panel.transform.position -= new Vector3(0, 4);
+                    Debug.Log("Panel is falling");
+                    panel.transform.position -= new Vector3(0, 4, 0);
                     if (panel.transform.position.y <= downPos.y)
                     {
                         pState = PanelState.down;
-                        panel.SetActive(false);
                     }
                     break;
 
                 case PanelState.up:
+                    Debug.Log("Panel is up"); 
+                    //easy exit 
                     if (Input.GetKeyDown(KeyCode.X))
                     {
                         endConvo();
                     }
 
+                    //type out dialgoue text 
                     switch (tState)
                     {
+                        //type out the ending text all pretty
                         case TextState.ending:
-                        typeEnding(); 
-                        break;
+                            typeEnding();
+                            break;
+                        //type out the dialogue text all pretty
                         case TextState.typing:
                         case TextState.paused:
                             typeText();
                             break;
+                        //display the options all pretty
                         case TextState.options:
                             displayOptions();
                             break;
                     }
 
+                    //easy skip through
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
-                        if (!engaged)
-                        {
-                            freezeCommand.Execute();
-                            engaged = true;
-                        }
+                        Debug.Log("We got a space bar!"); 
+                        //if (!engaged)
+                        //{
+                        //    freezeCommand.Execute();
+                        //    engaged = true;
+                        //}
                         switch (tState)
                         {
                             case TextState.ending:
+                                //display all the exit text
                                 if(!text.text.Equals(exitText))
                                 {
                                     text.text = exitText;
                                 }
+                                //deactivate dialogue convo
                                 else
                                 {
                                     //pState = PanelState.falling;
@@ -131,22 +142,35 @@ public class DialogueTrigger : MonoBehaviour
                                 break; 
                             case TextState.typing:
                             case TextState.paused:
+                                Debug.Log("we gonna fill in the text");
+                                //display all the dialogue text
                                 text.text = graph.current.text;
                                 typeIndex = 0;
                                 tState = TextState.options;
                                 break;
                             case TextState.options:
+                                Debug.Log("we gonna fill in the options");
+                                //display all the available options
                                 forceOptions();
                                 tState = TextState.done;
                                 break;
                             case TextState.done:
-                                if (!hasOptions())
+                                Debug.Log("we gonna go to next option");
+                                if (!hasOptions()) // if there are no option buttons
                                 {
+                                    Debug.Log("for real");
+                                    //go to next node in tree (no branching)
                                     gotoNext(-1);
                                 }
                                 break;
+                            default:
+                                Debug.Log("This shouldn't happen");
+                                break;
                         }
                     }
+                    break;
+                case PanelState.down:
+                    panel.SetActive(false);
                     break;
 
             }
@@ -178,7 +202,8 @@ public class DialogueTrigger : MonoBehaviour
         destroyButtons();
         //active = false;
         pState = PanelState.falling;
-        freezeCommand.Unexecute();
+        Debug.Log("set panel falling"); 
+        //freezeCommand.Unexecute();
         engaged = false;
 
         // Exit dialogue camera 
@@ -242,7 +267,14 @@ public class DialogueTrigger : MonoBehaviour
                     text.text += dialogue[currDiaIndex]; //.Substring(0, typeIndex / slowDownFrac);
                 }
                 typeIndex++;
-                if (currDiaIndex > 1 && punctuation.IndexOf(dialogue[currDiaIndex - 2]) != -1)
+                if (currDiaIndex >= dialogue.Length)
+                {
+                    if (hasOptions())
+                        tState = TextState.options;
+                    else
+                        tState = TextState.done;
+                }
+                else if (currDiaIndex > 1 && punctuation.IndexOf(dialogue[currDiaIndex - 2]) != -1)
                     tState = TextState.paused;
 
                 //if (currDiaIndex >= dialogue.Length)
@@ -309,18 +341,25 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (!engaged)
         {
-            freezeCommand.Execute();
+            //freezeCommand.Execute();
             engaged = true;
         }
+
+        //set to type out new dialogue text 
         tState = TextState.typing;
         string prev = graph.current.text;
         graph.GetNext(i);
         string next = graph.current.text;
+
+        //if we didn't go to a new node on the tree, then we're at end of branch
         if (next.Equals(prev))
         {
+            //terminate conversation
+            Debug.Log("we finished");
             EndDialogue();
             complete = true;
         }
+        //reset panel
         destroyButtons();
         resetCounts();
         text.text = ""; 

@@ -91,8 +91,10 @@ public static class Constants
 
     //Amaru
     public const string TEST_DIALOGUE = dialogueFolder + "New Dialogue Graph";
-    public const string AMARU_INTRO_DIALOGUE = dialogueFolder + "Amaru Intro Dialogue"; 
+    public const string AMARU_INTRO_DIALOGUE = dialogueFolder + "Amaru Intro Dialogue";
     //Naia
+    public const string NAIA_INTRO_DIALOGUE = dialogueFolder + "Naia Intro";
+
     //Sypave
     //Jeruti
     //Pinon
