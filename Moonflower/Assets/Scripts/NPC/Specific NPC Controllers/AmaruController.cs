@@ -52,11 +52,6 @@ public class AmaruController : MonoBehaviour
     {
         if (playerController.Playing)
         {
-            //if(talkTrig.engaged && playerController.TalkingPartner!=gameObject)
-            //    playerController.TalkingPartner = gameObject;
-            //else if(!talkTrig.engaged && playerController.TalkingPartner!=null)
-            //    playerController.TalkingPartner = null;
-
             talkTrig.Update();
 
             npc.UpdateMovement();
@@ -79,6 +74,7 @@ public class AmaruController : MonoBehaviour
 
     }
 
+    //start current conversation
     public void StartTalk()
     {
         engaging = true;
@@ -90,6 +86,7 @@ public class AmaruController : MonoBehaviour
         }
     }
 
+    //end current conversation
     public void EndTalk()
     {
         npc.Reset();

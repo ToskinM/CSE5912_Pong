@@ -26,7 +26,12 @@ public class NaiaController : MonoBehaviour
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
-    bool engaging = false; 
+    bool engaging = false;
+
+    private void Awake()
+    {
+        talkTrig = new DialogueTrigger(DialoguePanel, Constants.NAIA_ICON, Constants.NAIA_INTRO_DIALOGUE);
+    }
 
     void Start()
     {
@@ -41,7 +46,6 @@ public class NaiaController : MonoBehaviour
         movement = new NPCMovementController(gameObject, Player);
 
 
-        talkTrig = new DialogueTrigger(DialoguePanel, Constants.NAIA_ICON,Constants.NAIA_INTRO_DIALOGUE);
         playerController = Player.GetComponent<IPlayerController>();
 
         engageController = EngageOptPanel.GetComponent<EngagementOptionsController>();

@@ -12,9 +12,10 @@ public class DialogueTrigger : MonoBehaviour
     public bool engaged = false;
 
     GameObject panel;
-    Image icon;
-    TextMeshProUGUI text;
-    Button templateButton;
+    DialoguePanelInfo panelInfo; 
+    //Image icon;
+    //TextMeshProUGUI text;
+    //Button templateButton;
     //ICommand freezeCommand;
 
     List<Button> buttons;
@@ -40,20 +41,20 @@ public class DialogueTrigger : MonoBehaviour
 
     DialogueGraph graph;
     DialogueFactory factory;
-    bool noExit = true; 
 
 
     public DialogueTrigger(GameObject p, string characterSprite, string graphName)
     {
         panel = p;
-        icon = panel.transform.GetChild(0).GetComponent<Image>();
-        text = panel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        panelInfo = panel.GetComponent<DialoguePanelInfo>(); 
+        //icon = panel.transform.GetChild(0).GetComponent<Image>();
+        //text = panel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         buttons = new List<Button>();
-        templateButton = panel.transform.GetChild(2).GetComponent<Button>();
+        //templateButton = panel.transform.GetChild(2).GetComponent<Button>();
 
-        upPos = panel.transform.position;
-        downPos = new Vector3(upPos.x, upPos.y - icon.rectTransform.rect.height);
-        panel.transform.position = downPos;
+        //upPos = panel.transform.position;
+        //downPos = new Vector3(upPos.x, upPos.y - icon.rectTransform.rect.height);
+        //panel.transform.position = downPos;
 
         factory = new DialogueFactory();
         graph = factory.GetDialogue(graphName);
@@ -128,9 +129,9 @@ public class DialogueTrigger : MonoBehaviour
                         {
                             case TextState.ending:
                                 //display all the exit text
-                                if(!text.text.Equals(exitText))
+                                if(!panelInfo.Text.text.Equals(exitText))
                                 {
-                                    text.text = exitText;
+                                    panelInfo.Text.text = exitText;
                                 }
                                 //deactivate dialogue convo
                                 else
@@ -144,7 +145,7 @@ public class DialogueTrigger : MonoBehaviour
                             case TextState.paused:
                                 Debug.Log("we gonna fill in the text");
                                 //display all the dialogue text
-                                text.text = graph.current.text;
+                                panelInfo.Text.text = graph.current.text;
                                 typeIndex = 0;
                                 tState = TextState.options;
                                 break;
@@ -181,7 +182,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         pState = PanelState.rising;
         panel.SetActive(true);
-        icon.sprite = new IconFactory().GetIcon(spriteFile);
+        panelInfo.Icon.sprite = new IconFactory().GetIcon(spriteFile);
         tState = TextState.typing;
         //freezeCommand.Execute();
 
@@ -225,14 +226,14 @@ public class DialogueTrigger : MonoBehaviour
         if (tState != TextState.ending)
         {
             tState = TextState.ending;
-            text.text = "";
+            panelInfo.Text.text = "";
             typeIndex = 0;
             destroyButtons();
         }
         else
         {
             complete = true;
-            text.text = exitText;
+            panelInfo.Text.text = exitText;
             EndDialogue(); 
         }
     }
@@ -241,7 +242,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         int currDiaIndex = typeIndex / slowDownFrac;
         if (typeIndex % slowDownFrac == 0 && currDiaIndex < exitText.Length)
-            text.text += exitText[currDiaIndex];
+            panelInfo.Text.text += exitText[currDiaIndex];
 
         typeIndex++;
         //if (currDiaIndex == dialogue.Length)
@@ -264,7 +265,7 @@ public class DialogueTrigger : MonoBehaviour
 
                 if (typeIndex % slowDownFrac == 0 && currDiaIndex < dialogue.Length)
                 {
-                    text.text += dialogue[currDiaIndex]; //.Substring(0, typeIndex / slowDownFrac);
+                    panelInfo.Text.text += dialogue[currDiaIndex]; //.Substring(0, typeIndex / slowDownFrac);
                 }
                 typeIndex++;
                 if (currDiaIndex >= dialogue.Length)
@@ -362,12 +363,13 @@ public class DialogueTrigger : MonoBehaviour
         //reset panel
         destroyButtons();
         resetCounts();
-        text.text = ""; 
+        panelInfo.Text.text = ""; 
     }
 
     private void displayOptions()
     {
         int numOptions = graph.current.answers.Count;
+        Button template = panelInfo.TemplateButton; 
         if (numOptions > 0)
         {
             if (buttons.Count != numOptions)
@@ -376,9 +378,9 @@ public class DialogueTrigger : MonoBehaviour
                 int offset = Screen.height / 21;
                 for (int i = 0; i < numOptions; i++)
                 {
-                    Button b = Instantiate(templateButton, templateButton.transform.position, templateButton.transform.rotation);
+                    Button b = Instantiate(template, template.transform.position, template.transform.rotation);
                     b.transform.SetParent(panel.transform, false);
-                    b.transform.position = new Vector3(templateButton.transform.position.x, templateButton.transform.position.y - currOffset);
+                    b.transform.position = new Vector3(template.transform.position.x, template.transform.position.y - currOffset);
                     currOffset += offset;
 
                     buttons.Add(b);
@@ -422,7 +424,7 @@ public class DialogueTrigger : MonoBehaviour
     private void forceOptions()
     {
 
-
+        Button template = panelInfo.TemplateButton;
         resetCounts();
         destroyButtons();
         int numOptions = graph.current.answers.Count;
@@ -432,9 +434,9 @@ public class DialogueTrigger : MonoBehaviour
             int offset = Screen.height / 21;
             for (int i = 0; i < numOptions; i++)
             {
-                Button b = Instantiate(templateButton, templateButton.transform.position, templateButton.transform.rotation);
+                Button b = Instantiate(template, template.transform.position, template.transform.rotation);
                 b.transform.SetParent(panel.transform, false);
-                b.transform.position = new Vector3(templateButton.transform.position.x, templateButton.transform.position.y - currOffset);
+                b.transform.position = new Vector3(template.transform.position.x, template.transform.position.y - currOffset);
                 currOffset += offset;
 
                 buttons.Add(b);

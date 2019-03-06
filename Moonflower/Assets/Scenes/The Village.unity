@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.4852417, g: 0.9310331, b: 1.487578, a: 1}
+  m_IndirectSpecularColor: {r: 0.48066366, g: 0.9257534, b: 1.4880309, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7612,6 +7612,7 @@ GameObject:
   - component: {fileID: 213513783}
   - component: {fileID: 213513785}
   - component: {fileID: 213513784}
+  - component: {fileID: 213513786}
   m_Layer: 5
   m_Name: Dialogue Panel
   m_TagString: Untagged
@@ -7678,6 +7679,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 213513782}
   m_CullTransparentMesh: 0
+--- !u!114 &213513786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213513782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35649112e6c72494e8c0f810f3ebdb1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpPosition: {x: 0, y: 0, z: 0}
+  DownPosition: {x: 0, y: 0, z: 0}
+  Icon: {fileID: 1174531714}
+  Text: {fileID: 270105709}
+  TemplateButton: {fileID: 1833776880}
 --- !u!1001 &222176869
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18905,6 +18923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetScene: Amaru House
+  toInteriorScene: 1
 --- !u!65 &519837007
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -51605,6 +51624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetScene: Anai House
+  toInteriorScene: 1
 --- !u!1001 &1471074767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60830,6 +60850,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 493941883, guid: f780537c5387a4b47bd7247429224b55, type: 3}
+      propertyPath: DialoguePanel
+      value: 
+      objectReference: {fileID: 213513782}
+    - target: {fileID: 493941883, guid: f780537c5387a4b47bd7247429224b55, type: 3}
+      propertyPath: EngageOptPanel
+      value: 
+      objectReference: {fileID: 510043232}
     - target: {fileID: 493941880, guid: f780537c5387a4b47bd7247429224b55, type: 3}
       propertyPath: m_Name
       value: Naia
@@ -60878,14 +60906,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.19800001
       objectReference: {fileID: 0}
-    - target: {fileID: 493941883, guid: f780537c5387a4b47bd7247429224b55, type: 3}
-      propertyPath: DialoguePanel
-      value: 
-      objectReference: {fileID: 213513782}
-    - target: {fileID: 493941883, guid: f780537c5387a4b47bd7247429224b55, type: 3}
-      propertyPath: EngageOptPanel
-      value: 
-      objectReference: {fileID: 510043232}
     - target: {fileID: 493941885, guid: f780537c5387a4b47bd7247429224b55, type: 3}
       propertyPath: HUD
       value: 
@@ -67753,6 +67773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetScene: Naia House
+  toInteriorScene: 1
 --- !u!65 &1885275242
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -76952,6 +76973,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6900419879104588741, guid: 2c69415200fd0914682a9abdace5da15,
+        type: 3}
+      propertyPath: HUD
+      value: 
+      objectReference: {fileID: 378621941}
     - target: {fileID: 6900419879104588748, guid: 2c69415200fd0914682a9abdace5da15,
         type: 3}
       propertyPath: m_Name
@@ -76962,11 +76988,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6900419879104588741, guid: 2c69415200fd0914682a9abdace5da15,
-        type: 3}
-      propertyPath: HUD
-      value: 
-      objectReference: {fileID: 378621941}
     - target: {fileID: 6900419879104588744, guid: 2c69415200fd0914682a9abdace5da15,
         type: 3}
       propertyPath: m_LocalPosition.x
