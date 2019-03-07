@@ -181,7 +181,6 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
             SetWeaponSheathed(false); // take out weapon if its not already out
         else
             Swing();
-
     }
 
     // When we hit something, acknowledge it

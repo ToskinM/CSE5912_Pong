@@ -78,7 +78,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
 
     void DetectCharacterSwitchInput()
     {
-        if (Input.GetButtonDown("Switch"))
+        if (Input.GetButtonDown("Switch") && !LevelManager.current.currentPlayer.GetComponent<PlayerCombatController>().InCombat)
         {
             Playing = !Playing;
             Switch(Playing);
