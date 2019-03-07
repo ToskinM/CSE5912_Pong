@@ -5,7 +5,7 @@ using TMPro;
 
 public class FeedbackText : MonoBehaviour
 {
-    public TextMeshProUGUI text;
+    TextMeshProUGUI text;
     MeshRenderer textMeshRenderer;
 
     private enum State {displayed, fadingIn, fadingOut, gone}
@@ -18,6 +18,7 @@ public class FeedbackText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        text = GetComponent<TextMeshProUGUI>();
         textMeshRenderer = textMeshRenderer.GetComponent<MeshRenderer>();
         Color color = textMeshRenderer.material.color; 
         textMeshRenderer.material.color = new Color(color.r, color.g, color.b, 0);

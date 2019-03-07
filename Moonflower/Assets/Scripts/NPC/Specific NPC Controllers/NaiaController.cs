@@ -10,7 +10,7 @@ public class NaiaController : MonoBehaviour, INPCController
 {
 
     public GameObject DialoguePanel;
-    public GameObject EngageOptPanel;
+    public GameObject feedback; 
     public Sprite Icon { get; set; }
 
     public float engagementRadius = 5f;
@@ -24,6 +24,7 @@ public class NaiaController : MonoBehaviour, INPCController
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
     private IPlayerController playerController;
+    private FeedbackText feedbackText; 
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
@@ -42,7 +43,7 @@ public class NaiaController : MonoBehaviour, INPCController
         movement = new NPCMovementController(gameObject, Player);
         Icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
         talkTrig = new DialogueTrigger(DialoguePanel, Icon, Constants.NAIA_INTRO_DIALOGUE);
-
+        feedbackText = feedback.GetComponent<FeedbackText>(); 
 
         playerController = Player.GetComponent<IPlayerController>();
 
@@ -141,7 +142,7 @@ public class NaiaController : MonoBehaviour, INPCController
     }
     public void Gift(string giftName)
     {
-        if (acceptableGifts.Contains(giftName))
+        if (new ItemLookup().IsWeapon(giftName))
         {
             displayFeedback("Naia likes the " + giftName + ".");
         }
@@ -165,7 +166,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
     private void displayFeedback(string text)
     {
-
+        feedbackText.ShowText(text); 
     }
 
     // Disable player combat controls when game is paused
