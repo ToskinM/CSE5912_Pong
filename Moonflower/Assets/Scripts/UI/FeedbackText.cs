@@ -6,11 +6,11 @@ using TMPro;
 public class FeedbackText : MonoBehaviour
 {
     TextMeshProUGUI text;
-    MeshRenderer textMeshRenderer;
+    //MeshRenderer textMeshRenderer;
 
     private enum State {displayed, fadingIn, fadingOut, gone}
     State state = State.gone;
-    float inc = .05f;
+    const float inc = 0.01f;
 
     int timerMax = 30;
     int timerCount = 0; 
@@ -19,9 +19,9 @@ public class FeedbackText : MonoBehaviour
     void Start()
     {
         text = GetComponent<TextMeshProUGUI>();
-        textMeshRenderer = textMeshRenderer.GetComponent<MeshRenderer>();
-        Color color = textMeshRenderer.material.color; 
-        textMeshRenderer.material.color = new Color(color.r, color.g, color.b, 0);
+        //textMeshRenderer = textMeshRenderer.GetComponent<MeshRenderer>();
+        Color color = text.faceColor; 
+        text.faceColor = new Color(color.r, color.g, color.b, 0);
 
     }
 
@@ -31,21 +31,21 @@ public class FeedbackText : MonoBehaviour
         switch (state)
         {
             case State.fadingIn:
-                Color color = textMeshRenderer.material.color;
-                textMeshRenderer.material.color = new Color(color.r, color.g, color.b, color.a + inc);
-                if (textMeshRenderer.material.color.a >= 1)
-                {
-                    textMeshRenderer.material.color = new Color(color.r, color.g, color.b, 1);
-                    state = State.displayed;
-                }
+                Color color = text.faceColor;
+                //text.faceColor = new Color(color.r, color.g, color.b, color.a + inc);
+                //if (text.faceColor.a >= 1)
+                //{
+                //    text.faceColor = new Color(color.r, color.g, color.b, 1);
+                //    state = State.displayed;
+                //}
                 break;
             case State.fadingOut:
         
-                color = textMeshRenderer.material.color;
-                textMeshRenderer.material.color = new Color(color.r, color.g, color.b, color.a - inc);
-                if (textMeshRenderer.material.color.a <= 0)
+                color = text.faceColor;
+                text.faceColor = new Color(color.r, color.g, color.b, color.a - inc);
+                if (text.faceColor.a <= 0)
                 {
-                    textMeshRenderer.material.color = new Color(color.r, color.g, color.b, 0);
+                    text.faceColor = new Color(color.r, color.g, color.b, 0);
                     state = State.gone;
                 }
                 break;

@@ -70,6 +70,7 @@ public class NaiaController : MonoBehaviour, INPCController
                 break;
             case NaiaEngageType.fight:
                 Debug.Log("fighting");
+                displayFeedback("Naia started fighting you"); 
                 combatController.Active = true;
 
                 if (combatController.InCombat)
@@ -81,6 +82,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
             case NaiaEngageType.talk:
                 Debug.Log("talking");
+                displayFeedback("Naia started talking to you");
                 //combatController.Active = false;
 
                 if (playerController.Playing)
