@@ -24,7 +24,6 @@ public class NaiaController : MonoBehaviour, INPCController
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
     private IPlayerController playerController;
-    private EngagementOptionsController engageController;
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
@@ -46,7 +45,6 @@ public class NaiaController : MonoBehaviour, INPCController
 
         playerController = Player.GetComponent<IPlayerController>();
 
-        engageController = EngageOptPanel.GetComponent<EngagementOptionsController>();
         combatController.npcMovement = movement;
     }
 

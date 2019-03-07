@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.4852417, g: 0.9310331, b: 1.487578, a: 1}
+  m_IndirectSpecularColor: {r: 0.48066366, g: 0.9257534, b: 1.4880309, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7619,7 +7619,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &213513783
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7696,6 +7696,7 @@ MonoBehaviour:
   Icon: {fileID: 1174531714}
   Text: {fileID: 270105709}
   TemplateButton: {fileID: 1833776880}
+  IsUp: 0
 --- !u!1001 &222176869
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18334,7 +18335,6 @@ GameObject:
   - component: {fileID: 510043233}
   - component: {fileID: 510043236}
   - component: {fileID: 510043235}
-  - component: {fileID: 510043237}
   - component: {fileID: 510043234}
   m_Layer: 5
   m_Name: Utility Canvas
@@ -18426,24 +18426,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &510043237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 510043232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b73786cdc520431e8c7d18b7fa49f2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panel: {fileID: 0}
-  TalkButton: {fileID: 0}
-  DistractButton: {fileID: 0}
-  GiveButton: {fileID: 0}
-  icon: {fileID: 0}
-  Showing: 0
 --- !u!1001 &512604104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60977,6 +60959,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 493941883, guid: f780537c5387a4b47bd7247429224b55, type: 3}
+      propertyPath: DialoguePanel
+      value: 
+      objectReference: {fileID: 213513782}
+    - target: {fileID: 493941883, guid: f780537c5387a4b47bd7247429224b55, type: 3}
+      propertyPath: EngageOptPanel
+      value: 
+      objectReference: {fileID: 510043232}
     - target: {fileID: 493941880, guid: f780537c5387a4b47bd7247429224b55, type: 3}
       propertyPath: m_Name
       value: Naia
@@ -61025,14 +61015,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.19800001
       objectReference: {fileID: 0}
-    - target: {fileID: 493941883, guid: f780537c5387a4b47bd7247429224b55, type: 3}
-      propertyPath: DialoguePanel
-      value: 
-      objectReference: {fileID: 213513782}
-    - target: {fileID: 493941883, guid: f780537c5387a4b47bd7247429224b55, type: 3}
-      propertyPath: EngageOptPanel
-      value: 
-      objectReference: {fileID: 510043232}
     - target: {fileID: 493941885, guid: f780537c5387a4b47bd7247429224b55, type: 3}
       propertyPath: HUD
       value: 
@@ -77165,6 +77147,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6900419879104588741, guid: 2c69415200fd0914682a9abdace5da15,
+        type: 3}
+      propertyPath: HUD
+      value: 
+      objectReference: {fileID: 378621941}
     - target: {fileID: 6900419879104588748, guid: 2c69415200fd0914682a9abdace5da15,
         type: 3}
       propertyPath: m_Name
@@ -77175,11 +77162,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6900419879104588741, guid: 2c69415200fd0914682a9abdace5da15,
-        type: 3}
-      propertyPath: HUD
-      value: 
-      objectReference: {fileID: 378621941}
     - target: {fileID: 6900419879104588744, guid: 2c69415200fd0914682a9abdace5da15,
         type: 3}
       propertyPath: m_LocalPosition.x
