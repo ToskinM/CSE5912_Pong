@@ -109,6 +109,15 @@ public class MimbiController : MonoBehaviour, IPlayerController
         }
     }
 
+    public void Chill()
+    {
+        npcMove.Chill(); 
+    }
+    public void Reset()
+    {
+        npcMove.Reset(); 
+    }
+
     public void Summon()
     {
         npcMove.RunToPlayer();

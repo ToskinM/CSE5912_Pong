@@ -56,6 +56,8 @@ public class AnaiController : MonoBehaviour, IPlayerController
         boxCollider = GetComponent<BoxCollider>();
         stats = GetComponent<CharacterStats>();
         npcMove = new NPCMovementController(gameObject, Mimbi);
+        mimbiController = Mimbi.GetComponent<MimbiController>(); 
+
         //        npcMove.Active = false; 
         npcMove.FollowPlayer(followDist, tooCloseRadius);
 
@@ -142,7 +144,18 @@ public class AnaiController : MonoBehaviour, IPlayerController
             {
                 npcMove.UpdateMovement();
             }
+
+            if(TalkingPartner != null)
+            {
+                mimbiController.Chill(); 
+            }
+            else
+            {
+                mimbiController.Reset(); 
+            }
         }
+
+
     }
 
     private void OnTriggerEnter(Collider other)
