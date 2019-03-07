@@ -10,7 +10,7 @@ public class NaiaController : MonoBehaviour, INPCController
 {
 
     public GameObject DialoguePanel;
-    public GameObject EngageOptPanel;
+    public GameObject feedback; 
     public Sprite Icon { get; set; }
 
     public float engagementRadius = 5f;
@@ -24,9 +24,11 @@ public class NaiaController : MonoBehaviour, INPCController
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
     private IPlayerController playerController;
+    private FeedbackText feedbackText; 
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
+    private List<string> acceptableGifts;
 
     void Start()
     {
@@ -41,11 +43,15 @@ public class NaiaController : MonoBehaviour, INPCController
         movement = new NPCMovementController(gameObject, Player);
         Icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
         talkTrig = new DialogueTrigger(DialoguePanel, Icon, Constants.NAIA_INTRO_DIALOGUE);
-
+        feedbackText = feedback.GetComponent<FeedbackText>(); 
 
         playerController = Player.GetComponent<IPlayerController>();
 
         combatController.npcMovement = movement;
+
+        acceptableGifts = new List<string>();
+        acceptableGifts.Add(ItemLookup.BOW_NAME);
+        acceptableGifts.Add(ItemLookup.ARROW_NAME);
     }
 
     void Update()
@@ -64,6 +70,7 @@ public class NaiaController : MonoBehaviour, INPCController
                 break;
             case NaiaEngageType.fight:
                 Debug.Log("fighting");
+                displayFeedback("Naia started fighting you"); 
                 combatController.Active = true;
 
                 if (combatController.InCombat)
@@ -75,6 +82,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
             case NaiaEngageType.talk:
                 Debug.Log("talking");
+                displayFeedback("Naia started talking to you");
                 //combatController.Active = false;
 
                 if (playerController.Playing)
@@ -136,7 +144,14 @@ public class NaiaController : MonoBehaviour, INPCController
     }
     public void Gift(string giftName)
     {
-
+        if (new ItemLookup().IsWeapon(giftName))
+        {
+            displayFeedback("Naia likes the " + giftName + ".");
+        }
+        else
+        {
+            displayFeedback("Why would Naia want the " + giftName + "?");
+        }
     }
     public void Distract()
     {
@@ -151,6 +166,10 @@ public class NaiaController : MonoBehaviour, INPCController
         Debug.Log("Yo time to fight");
     }
 
+    private void displayFeedback(string text)
+    {
+        feedbackText.ShowText(text); 
+    }
 
     // Disable player combat controls when game is paused
     void HandlePauseEvent(bool isPaused)

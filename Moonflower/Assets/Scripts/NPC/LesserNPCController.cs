@@ -90,7 +90,14 @@ public class LesserNPCController : MonoBehaviour, INPCController
     }
     public void Gift(string giftName)
     {
-
+        if (new ItemLookup().IsFood(giftName))
+        {
+            displayFeedback("Amaru loves the " + giftName + "!");
+        }
+        else
+        {
+            displayFeedback("Amaru has no use for " + giftName + "...");
+        }
     }
     public void Distract()
     {
@@ -108,6 +115,11 @@ public class LesserNPCController : MonoBehaviour, INPCController
         if (talkTrig != null)
             if (!talkTrig.DialogueActive())
                 talkTrig.StartDialogue();
+    }
+
+    private void displayFeedback(string text)
+    {
+
     }
 
     private void HandleOnAggroUpdated(bool aggroed, GameObject aggroTarget)

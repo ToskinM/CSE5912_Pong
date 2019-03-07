@@ -23,6 +23,7 @@ public class AmaruController : MonoBehaviour, INPCController
     DialogueTrigger talkTrig;
     IPlayerController playerController;
     Animator animator;
+    private List<string> acceptableGifts;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,10 @@ public class AmaruController : MonoBehaviour, INPCController
 
         talkTrig = new DialogueTrigger(DialoguePanel, Icon, Constants.AMARU_INTRO_DIALOGUE);
         playerController = Player.GetComponent<IPlayerController>();
+
+        acceptableGifts = new List<string>();
+        acceptableGifts.Add(ItemLookup.JAR_NAME);
+        acceptableGifts.Add(ItemLookup.ROPE_NAME);
     }
 
     // Update is called once per frame
@@ -52,7 +57,7 @@ public class AmaruController : MonoBehaviour, INPCController
 
             if (npc.DistanceFrom(Player) < engagementRadius && playerController.TalkingPartner == null && !talkTrig.Complete)
             {
-                StartTalk();
+                //StartTalk();
                 indicateInterest();
                 npc.Follow();
             }
@@ -72,7 +77,14 @@ public class AmaruController : MonoBehaviour, INPCController
     }
     public void Gift(string giftName)
     {
-
+        if(new ItemLookup().IsContainer(giftName))
+        {
+            displayFeedback("Amaru loves the " + giftName + "!");
+        }
+        else
+        {
+            displayFeedback("Amaru has no use for " + giftName + "...");
+        }
     }
     public void Distract()
     {
@@ -103,6 +115,11 @@ public class AmaruController : MonoBehaviour, INPCController
             playerController.TalkingPartner = null;
             talkTrig.EndDialogue();
         }
+    }
+
+    private void displayFeedback(string text)
+    {
+
     }
 
     private void indicateInterest()
