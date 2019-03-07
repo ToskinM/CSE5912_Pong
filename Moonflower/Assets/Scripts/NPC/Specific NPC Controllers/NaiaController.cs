@@ -151,7 +151,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
     public void Talk()
     {
-
+        StartTalk(); 
     }
     public void Gift(string giftName)
     {
