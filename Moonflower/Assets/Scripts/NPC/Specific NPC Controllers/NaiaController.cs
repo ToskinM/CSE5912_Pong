@@ -5,11 +5,12 @@ using UnityEngine.AI;
 using UnityEngine.UI; 
 using TMPro;
 
-public class NaiaController : MonoBehaviour
+public class NaiaController : MonoBehaviour, INPCController
 {
 
     public GameObject DialoguePanel;
     public GameObject EngageOptPanel;
+    public Sprite Icon { get; set; }
 
     public float engagementRadius = 5f;
     public float tooCloseRad = 4f;
@@ -27,11 +28,6 @@ public class NaiaController : MonoBehaviour
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
 
-    private void Awake()
-    {
-        talkTrig = new DialogueTrigger(DialoguePanel, Constants.NAIA_ICON, Constants.NAIA_INTRO_DIALOGUE);
-    }
-
     void Start()
     {
         // Initialize Components
@@ -43,6 +39,8 @@ public class NaiaController : MonoBehaviour
         // Setup Movement
         Vector3 walkOrigin = transform.position;
         movement = new NPCMovementController(gameObject, Player);
+        Icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
+        talkTrig = new DialogueTrigger(DialoguePanel, Icon, Constants.NAIA_INTRO_DIALOGUE);
 
 
         playerController = Player.GetComponent<IPlayerController>();
@@ -149,6 +147,23 @@ public class NaiaController : MonoBehaviour
             playerController.TalkingPartner = null;
             talkTrig.EndDialogue();
         }
+    }
+
+    public void Talk()
+    {
+        StartTalk(); 
+    }
+    public void Gift(string giftName)
+    {
+
+    }
+    public void Distract()
+    {
+
+    }
+    public void Inspect()
+    {
+
     }
 
     private void startTalking()
