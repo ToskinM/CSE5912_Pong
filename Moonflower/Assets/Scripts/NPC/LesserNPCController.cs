@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 
-public class LesserNPCController : MonoBehaviour
+public class LesserNPCController : MonoBehaviour, INPCController
 {
     public GameObject Player;
     //public GameObject WalkArea;
     public GameObject DialoguePanel;
+    public Sprite Icon { get; set; }
 
     public float engagementRadius = 15f;
     public float tooCloseRad = 4f;
@@ -80,6 +81,23 @@ public class LesserNPCController : MonoBehaviour
         }
 
         movement.UpdateMovement();
+    }
+
+    public void Talk()
+    {
+
+    }
+    public void Gift(string giftName)
+    {
+
+    }
+    public void Distract()
+    {
+
+    }
+    public void Inspect()
+    {
+
     }
 
     private void StartEngagement()

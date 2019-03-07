@@ -10,7 +10,7 @@ public class AmaruController : MonoBehaviour
     public GameObject Player;
     public GameObject WalkCenter;
     public GameObject DialoguePanel;
-    public Sprite Icon; 
+    public Sprite Icon { get; set; }
     public bool dialogueActive = false;
 
     const float engagementRadius = 5f;
@@ -74,6 +74,23 @@ public class AmaruController : MonoBehaviour
             npc.UpdateMovement();
         }
         dialogueActive = talkTrig.DialogueActive();
+
+    }
+
+    public void Talk()
+    {
+
+    }
+    public void Gift(string giftName)
+    {
+
+    }
+    public void Distract()
+    {
+
+    }
+    public void Inspect()
+    {
 
     }
 

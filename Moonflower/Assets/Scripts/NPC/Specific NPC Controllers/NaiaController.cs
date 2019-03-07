@@ -5,12 +5,12 @@ using UnityEngine.AI;
 using UnityEngine.UI; 
 using TMPro;
 
-public class NaiaController : MonoBehaviour
+public class NaiaController : MonoBehaviour, INPCController
 {
 
     public GameObject DialoguePanel;
     public GameObject EngageOptPanel;
-    public Sprite Icon;
+    public Sprite Icon { get; set; }
 
     public float engagementRadius = 5f;
     public float tooCloseRad = 4f;
@@ -147,6 +147,23 @@ public class NaiaController : MonoBehaviour
             playerController.TalkingPartner = null;
             talkTrig.EndDialogue();
         }
+    }
+
+    public void Talk()
+    {
+
+    }
+    public void Gift(string giftName)
+    {
+
+    }
+    public void Distract()
+    {
+
+    }
+    public void Inspect()
+    {
+
     }
 
     private void startTalking()
