@@ -154,7 +154,14 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
                     if (!IsBlocking)
                         Stagger();
-                    Stats.TakeDamage(damage, source.name, hurtboxController.sourceCharacterStats, GetContactPoint(other), IsBlocking);
+
+                    ICombatController sourceCombatController = null;
+                    sourceCombatController = source.GetComponent<NPCCombatController>();
+                    if (sourceCombatController == null)
+                    {
+                        sourceCombatController = source.GetComponent<PlayerCombatController>();
+                    }
+                    Stats.TakeDamage(damage, source.name, hurtboxController.sourceCharacterStats, sourceCombatController, GetContactPoint(other), IsBlocking);
                 }
             }
 
@@ -272,6 +279,12 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
         npcAnimationController.TriggerAttack();
     }
+
+    public void AcknowledgeHaveHit(GameObject whoWeHit)
+    {
+        //Aggro(whoWeHit, false);
+    }
+
     private IEnumerator Backstep()
     {
         npcMovement.Active = false;
@@ -322,7 +335,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             }
             // Deaggro if we cant find target in time
             else if (deaggroCoroutine == null)
-                deaggroCoroutine = StartCoroutine(WaitForDeaggro());
+                deaggroCoroutine = StartCoroutine(DeaggroTimeout());
         }
 
         // Search for a target OR closer target
@@ -400,7 +413,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     }
 
     // Start deaggro timer
-    private IEnumerator WaitForDeaggro()
+    private IEnumerator DeaggroTimeout()
     {
         yield return new WaitForSeconds(deaggroTime);
         DeAggro();

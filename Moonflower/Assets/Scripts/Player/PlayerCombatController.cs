@@ -7,16 +7,21 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     // Interface Members
     [HideInInspector] public CharacterStats Stats { get; private set; }
     [HideInInspector] public bool IsBlocking { get; private set; } = false;
-    [HideInInspector] public bool InCombat { get; private set; } = false;
+    [HideInInspector] public bool InCombat { get { return inCombat; } private set { inCombat = value; } }
+    public bool inCombat;
     [HideInInspector] public bool IsDead { get; private set; } = false;
     [HideInInspector] public bool HasWeaponOut { get; private set; } = false;
 
-    public PlayerAnimatorController animator { get; private set; }
+    public PlayerAnimatorController Animator { get; private set; }
     public PlayerMovement playerMovement;
 
+    private Coroutine stopCombatCoroutine = null;
 
     [HideInInspector] public bool isAttacking;
     [HideInInspector] public float attackTimeout = 0.5f;
+    private readonly float combatTimeout = 3f;
+    private readonly float combatLossDistance = 3f;
+    private GameObject currentAggressor;
 
     public bool canAttack = true;
     //public bool isBlocking;
@@ -49,7 +54,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     void Awake()
     {
         Stats = gameObject.GetComponent<CharacterStats>();
-        animator = gameObject.GetComponent<PlayerAnimatorController>();
+        Animator = gameObject.GetComponent<PlayerAnimatorController>();
         playerMovement = GetComponent<PlayerMovement>();
     }
 
@@ -86,6 +91,10 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     void Update()
     {
         UpdateCurrentPlayer();
+
+        if (currentAggressor)
+            CheckAggressorDistance();
+
         if (canAttack)
         {
             timeSinceLastHurt += Time.deltaTime;
@@ -121,6 +130,27 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         }
     }
 
+    private void CheckAggressorDistance()
+    {
+        Debug.Log(currentAggressor);
+
+        if (Vector3.Distance(transform.position, currentAggressor.transform.position) > combatLossDistance)
+        {
+            // Stop combat if we get too far away
+            if (stopCombatCoroutine == null)
+                stopCombatCoroutine = StartCoroutine(CombatTimeout());
+        }
+        else
+        {
+            // cancel combat loss if we get to close 
+            if (stopCombatCoroutine != null)
+            {
+                StopCoroutine(stopCombatCoroutine);
+                stopCombatCoroutine = null;
+            }
+        }
+    }
+
     // Sheathe/Unsheathe weapon
     public void SetWeaponSheathed(bool sheathe)
     {
@@ -153,12 +183,21 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
             Swing();
 
     }
+
+    // When we hit something, acknowledge it
+    public void AcknowledgeHaveHit(GameObject whoWeHit)
+    {
+        //Debug.Log(gameObject.name + " hit " + whoWeHit.name);
+        currentAggressor = whoWeHit;
+        InCombat = true;
+    }
+
     private void Swing()
     {
         isAttacking = true;
         timeSinceLastAttack = 0f;
 
-        animator.TriggerAttack();
+        Animator.TriggerAttack();
         //Debug.Log(currentPlayer);
 
         bool isAnai = gameObject == LevelManager.current.currentPlayer;
@@ -179,6 +218,9 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         // Handle Hurtboxes
         if (tag == "Hurtbox")
         {
+            InCombat = true;
+
+            // Get hit if we're not recovering
             if (timeSinceLastHurt > hurtDelay)
             {
                 OnHit?.Invoke(other.gameObject);
@@ -186,11 +228,13 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
                 // Get hurtbox information
                 HurtboxController hurtboxController = other.gameObject.GetComponent<HurtboxController>();
                 GameObject source = hurtboxController.source;
+                currentAggressor = source;
+
                 int damage = hurtboxController.damage;
 
                 if (!IsBlocking)
                     Stagger();
-                Stats.TakeDamage(damage, source.name, hurtboxController.sourceCharacterStats, GetContactPoint(other), IsBlocking);
+                Stats.TakeDamage(damage, source.name, hurtboxController.sourceCharacterStats, source.GetComponent<NPCCombatController>(), GetContactPoint(other), IsBlocking);
             }
         }
 
@@ -210,9 +254,18 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         return locPos;
     }
 
+    private IEnumerator CombatTimeout()
+    {
+        Debug.Log("timeoutstart");
+        yield return new WaitForSeconds(combatTimeout);
+        currentAggressor = null;
+        InCombat = false;
+        inCombat = false;
+    }
+
     public void Stagger()
     {
-        animator.TriggerHit();
+        Animator.TriggerHit();
         if (LevelManager.current.currentPlayer == LevelManager.current.mimbi)
             playerSoundEffect.MimbiGetHitSFX();
         SetStunned(1);
@@ -246,7 +299,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     private void Die()
     {
         Debug.Log(gameObject.name + " has died");
-        animator.TriggerDeath();
+        Animator.TriggerDeath();
         InCombat = false;
 
         if (ragdollPrefab != null)

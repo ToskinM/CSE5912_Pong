@@ -11,4 +11,5 @@ public interface ICombatController
     bool HasWeaponOut { get; }
 
     void Stagger();
+    void AcknowledgeHaveHit(GameObject whoWeHit);
 }

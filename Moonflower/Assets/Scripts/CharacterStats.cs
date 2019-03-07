@@ -52,7 +52,7 @@ public class CharacterStats : MonoBehaviour
             display.HitHealth(CurrentHealth, MaxHealth); 
         //Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
     }
-    public void TakeDamage(int damage, string sourceName, CharacterStats sourceCharacterStats, Vector3 hitPoint, bool blocked)
+    public void TakeDamage(int damage, string sourceName, CharacterStats sourceCharacterStats, ICombatController combatController, Vector3 hitPoint, bool blocked)
     {
         if (!blocked)
         {
@@ -70,6 +70,8 @@ public class CharacterStats : MonoBehaviour
             if (hitPoint != Vector3.zero)
                 ObjectPoolController.current.CheckoutTemporary((GameObject)Resources.Load("Effects/HitEffect_Blocked"), hitPoint, 1);
         }
+
+        combatController.AcknowledgeHaveHit(gameObject);
 
         if (CurrentHealth <= 0)
             sourceCharacterStats.TrainStrengthKill();
