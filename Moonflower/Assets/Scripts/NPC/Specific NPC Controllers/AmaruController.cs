@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.UI; 
 using TMPro;
 
-public class AmaruController : MonoBehaviour
+public class AmaruController : MonoBehaviour, INPCController
 {
     public GameObject Player;
     public GameObject WalkCenter;
@@ -41,15 +41,6 @@ public class AmaruController : MonoBehaviour
         playerController = Player.GetComponent<IPlayerController>();
     }
 
-    private void OnEnable()
-    {
-        GameStateController.OnPaused += HandlePauseEvent;
-    }
-    private void OnDisable()
-    {
-        GameStateController.OnPaused -= HandlePauseEvent;
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -61,7 +52,8 @@ public class AmaruController : MonoBehaviour
 
             if (npc.DistanceFrom(Player) < engagementRadius && !talkTrig.Complete)
             {
-                StartTalk(); 
+                StartTalk();
+                indicateInterest(); 
                 npc.Follow(); 
             }
             else if (npc.state != NPCMovementController.MoveState.wander)
@@ -79,7 +71,7 @@ public class AmaruController : MonoBehaviour
 
     public void Talk()
     {
-
+        StartTalk(); 
     }
     public void Gift(string giftName)
     {
@@ -127,5 +119,15 @@ public class AmaruController : MonoBehaviour
         //enabled = !isPaused;
     }
 
+
+
+    private void OnEnable()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
+    }
 
 }
