@@ -16,7 +16,7 @@ public class AmaruController : MonoBehaviour, INPCController
     const float engagementRadius = 5f;
     const float tooCloseRad = 4f;
     const float bufferDist = 5f;
-    const float wanderRad = 30f; 
+    const float wanderRad = 30f;
 
     NPCMovementController npc;
     NavMeshAgent agent;
@@ -30,12 +30,12 @@ public class AmaruController : MonoBehaviour, INPCController
         //npc = gameObject.AddComponent<NPCMovement>();
         agent = GetComponent<NavMeshAgent>();
 
-        npc = new NPCMovementController(gameObject,Player);
-        npc.FollowPlayer(bufferDist, tooCloseRad); 
+        npc = new NPCMovementController(gameObject, Player);
+        npc.FollowPlayer(bufferDist, tooCloseRad);
         npc.Wander(WalkCenter.transform.position, wanderRad);
         npc.SetDefault(NPCMovementController.MoveState.wander);
 
-        Icon = new IconFactory().GetIcon(Constants.AMARU_ICON); 
+        Icon = new IconFactory().GetIcon(Constants.AMARU_ICON);
 
         talkTrig = new DialogueTrigger(DialoguePanel, Icon, Constants.AMARU_INTRO_DIALOGUE);
         playerController = Player.GetComponent<IPlayerController>();
@@ -53,8 +53,8 @@ public class AmaruController : MonoBehaviour, INPCController
             if (npc.DistanceFrom(Player) < engagementRadius && playerController.TalkingPartner == null && !talkTrig.Complete)
             {
                 StartTalk();
-                indicateInterest(); 
-                npc.Follow(); 
+                indicateInterest();
+                npc.Follow();
             }
         }
         else
@@ -67,7 +67,7 @@ public class AmaruController : MonoBehaviour, INPCController
 
     public void Talk()
     {
-        StartTalk(); 
+        StartTalk();
     }
     public void Gift(string giftName)
     {
@@ -127,3 +127,4 @@ public class AmaruController : MonoBehaviour, INPCController
     }
 
 }
+

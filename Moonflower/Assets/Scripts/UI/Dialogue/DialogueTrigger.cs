@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine; 
 using UnityEngine.UI;
 using TMPro;
+using TMPro;
 using Dialogue;
 
 public class DialogueTrigger : MonoBehaviour
@@ -12,17 +13,18 @@ public class DialogueTrigger : MonoBehaviour
     public bool engaged = false;
 
     GameObject panel;
-    DialoguePanelInfo panelInfo; 
+    RectTransform panelTransform;
+    DialoguePanelInfo panelInfo;
 
     List<Button> buttons;
-    Sprite icon; 
+    Sprite icon;
     string spriteFile;
     string exitText = "You have to go? Okay, see you around!";
 
 
     enum PanelState { down, rising, up, falling }
     PanelState pState = PanelState.down;
-    enum TextState { typing, paused, options, done, ending}
+    enum TextState { typing, paused, options, done, ending }
     TextState tState = TextState.done;
     int typeIndex = 0;
     const int fadeMax = 30;
@@ -41,122 +43,139 @@ public class DialogueTrigger : MonoBehaviour
     public DialogueTrigger(GameObject p, Sprite iconSprite, string graphName)
     {
         panel = p;
-        panelInfo = panel.GetComponent<DialoguePanelInfo>(); 
+        panelTransform = panel.GetComponent<RectTransform>();
+        panelInfo = panel.GetComponent<DialoguePanelInfo>();
         buttons = new List<Button>();
 
         factory = new DialogueFactory();
         graph = factory.GetDialogue(graphName);
         graph.Restart();
 
-        icon = iconSprite; 
+        icon = iconSprite;
         //spriteFile = characterSprite;
 
     }
 
     public void Update()
     {
-        if (pState != PanelState.down)
+        //disable if panel down and enable is panel is up 
+        if (panelInfo.IsUp)
         {
-            switch (pState)
+            if (!panel.activeSelf)
             {
-                case PanelState.rising:
-                    panel.transform.position += new Vector3(0, 4, 0);
-                    if (panel.transform.position.y >= panelInfo.UpPosition.y)
-                    {
-                        panel.transform.position = panelInfo.UpPosition;
-                        pState = PanelState.up;
-                    }
-                    break;
+                panel.SetActive(true);
+            }
+        }
+        else
+        {
+            if (panel.activeSelf)
+            {
+                panel.SetActive(false);
+            }
+        }
 
-                case PanelState.falling:
-                    panel.transform.position -= new Vector3(0, 4, 0);
-                    if (panel.transform.position.y <= panelInfo.DownPosition.y)
-                    {
-                        pState = PanelState.down;
-                    }
-                    break;
+        switch (pState)
+        {
+            case PanelState.rising:
+                if (!panelInfo.IsUp)
+                    panelInfo.IsUp = true;
+                panel.transform.position += new Vector3(0, 4, 0);
+                if (panel.transform.position.y >= panelInfo.UpPosition.y)
+                {
+                    panel.transform.position = panelInfo.UpPosition;
+                    pState = PanelState.up;
+                }
+                break;
 
-                case PanelState.up:
-                    //easy exit 
-                    if (Input.GetKeyDown(KeyCode.X))
-                    {
-                        endConvo();
-                    }
+            case PanelState.falling:
+                if (!panelInfo.IsUp)
+                    panelInfo.IsUp = true;
+                panel.transform.position -= new Vector3(0, 4, 0);
+                if (panel.transform.position.y <= panelInfo.DownPosition.y)
+                {
+                    pState = PanelState.down;
+                    panelInfo.IsUp = false;
+                }
+                break;
 
-                    //type out dialgoue text 
+            case PanelState.up:
+                if (!panelInfo.IsUp)
+                    panelInfo.IsUp = true;
+                //easy exit 
+                if (Input.GetKeyDown(KeyCode.X))
+                {
+                    endConvo();
+                }
+
+                //type out dialgoue text 
+                switch (tState)
+                {
+                    //type out the ending text all pretty
+                    case TextState.ending:
+                        typeEnding();
+                        break;
+                    //type out the dialogue text all pretty
+                    case TextState.typing:
+                    case TextState.paused:
+                        typeText();
+                        break;
+                    //display the options all pretty
+                    case TextState.options:
+                        displayOptions();
+                        break;
+                }
+
+                //easy skip through
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
                     switch (tState)
                     {
-                        //type out the ending text all pretty
                         case TextState.ending:
-                            typeEnding();
+                            //display all the exit text
+                            if (!panelInfo.Text.text.Equals(exitText))
+                            {
+                                panelInfo.Text.text = exitText;
+                            }
+                            //deactivate dialogue convo
+                            else
+                            {
+                                //pState = PanelState.falling;
+                                complete = true;
+                                EndDialogue();
+                            }
                             break;
-                        //type out the dialogue text all pretty
                         case TextState.typing:
                         case TextState.paused:
-                            typeText();
+                            //display all the dialogue text
+                            panelInfo.Text.text = graph.current.text;
+                            typeIndex = 0;
+                            tState = TextState.options;
                             break;
-                        //display the options all pretty
                         case TextState.options:
-                            displayOptions();
+                            //display all the available options
+                            forceOptions();
+                            tState = TextState.done;
+                            break;
+                        case TextState.done:
+                            if (!hasOptions()) // if there are no option buttons
+                            {
+                                //go to next node in tree (no branching)
+                                gotoNext(-1);
+                            }
+                            break;
+                        default:
+                            Debug.Log("This shouldn't happen");
                             break;
                     }
+                }
+                break;
 
-                    //easy skip through
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        switch (tState)
-                        {
-                            case TextState.ending:
-                                //display all the exit text
-                                if(!panelInfo.Text.text.Equals(exitText))
-                                {
-                                    panelInfo.Text.text = exitText;
-                                }
-                                //deactivate dialogue convo
-                                else
-                                {
-                                    //pState = PanelState.falling;
-                                    complete = true; 
-                                    EndDialogue();
-                                }
-                                break; 
-                            case TextState.typing:
-                            case TextState.paused:
-                                //display all the dialogue text
-                                panelInfo.Text.text = graph.current.text;
-                                typeIndex = 0;
-                                tState = TextState.options;
-                                break;
-                            case TextState.options:
-                                //display all the available options
-                                forceOptions();
-                                tState = TextState.done;
-                                break;
-                            case TextState.done:
-                                if (!hasOptions()) // if there are no option buttons
-                                {
-                                    //go to next node in tree (no branching)
-                                    gotoNext(-1);
-                                }
-                                break;
-                            default:
-                                Debug.Log("This shouldn't happen");
-                                break;
-                        }
-                    }
-                    break;
-                case PanelState.down:
-                    panel.SetActive(false);
-                    break;
-
-            }
         }
     }
 
     public void StartDialogue()
     {
         pState = PanelState.rising;
-        panel.SetActive(true);
         panelInfo.Icon.sprite = icon;  //new IconFactory().GetIcon(spriteFile);
         tState = TextState.typing;
 
@@ -204,7 +223,7 @@ public class DialogueTrigger : MonoBehaviour
         {
             complete = true;
             panelInfo.Text.text = exitText;
-            EndDialogue(); 
+            EndDialogue();
         }
     }
 
@@ -312,13 +331,13 @@ public class DialogueTrigger : MonoBehaviour
         //reset panel
         destroyButtons();
         resetCounts();
-        panelInfo.Text.text = ""; 
+        panelInfo.Text.text = "";
     }
 
     private void displayOptions()
     {
         int numOptions = graph.current.answers.Count;
-        Button template = panelInfo.TemplateButton; 
+        Button template = panelInfo.TemplateButton;
         if (numOptions > 0)
         {
             if (buttons.Count != numOptions)

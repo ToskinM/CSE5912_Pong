@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.UI; 
 using TMPro;
 
+
 public class NaiaController : MonoBehaviour, INPCController
 {
 
@@ -23,7 +24,7 @@ public class NaiaController : MonoBehaviour, INPCController
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
     private IPlayerController playerController;
-    private EngagementOptionsController engageController; 
+    private EngagementOptionsController engageController;
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
@@ -32,7 +33,7 @@ public class NaiaController : MonoBehaviour, INPCController
     {
         // Initialize Components
         playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
-        Player = LevelManager.current.anai.gameObject; 
+        Player = LevelManager.current.anai.gameObject;
         agent = GetComponent<NavMeshAgent>();
         combatController = GetComponent<NPCCombatController>();
 
@@ -56,7 +57,7 @@ public class NaiaController : MonoBehaviour, INPCController
         switch (currState)
         {
             case NaiaEngageType.chill:
-                Debug.Log("chilling"); 
+                Debug.Log("chilling");
                 //combatController.Active = true;
                 if (playerController.Playing && playerController.TalkingPartner == null && playerDist < engagementRadius && !talkTrig.Complete)
                 {
@@ -64,7 +65,7 @@ public class NaiaController : MonoBehaviour, INPCController
                 }
                 break;
             case NaiaEngageType.fight:
-                Debug.Log("fighting"); 
+                Debug.Log("fighting");
                 combatController.Active = true;
 
                 if (combatController.InCombat)
@@ -75,7 +76,7 @@ public class NaiaController : MonoBehaviour, INPCController
                 break;
 
             case NaiaEngageType.talk:
-                Debug.Log("talking"); 
+                Debug.Log("talking");
                 //combatController.Active = false;
 
                 if (playerController.Playing)
@@ -87,18 +88,18 @@ public class NaiaController : MonoBehaviour, INPCController
                     }
                     else
                     {
-                        EndTalk(); 
+                        EndTalk();
                         //talkTrig.EndDialogue();
-                        
+
                     }
                 }
                 break;
-        
+
         }
 
-        if(combatController.Active && combatController.InCombat)
+        if (combatController.Active && combatController.InCombat)
         {
-            currState = NaiaEngageType.fight; 
+            currState = NaiaEngageType.fight;
         }
 
         movement.UpdateMovement();
@@ -132,7 +133,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
     public void Talk()
     {
-        StartTalk(); 
+        StartTalk();
     }
     public void Gift(string giftName)
     {
