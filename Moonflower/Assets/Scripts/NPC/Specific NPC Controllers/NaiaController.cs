@@ -56,7 +56,7 @@ public class NaiaController : MonoBehaviour, INPCController
         {
             case NaiaEngageType.chill:
                 Debug.Log("chilling");
-                //combatController.Active = true;
+                combatController.Active = false;
                 if (playerController.Playing && playerController.TalkingPartner == null && playerDist < engagementRadius && !talkTrig.Complete)
                 {
                     StartTalk();
