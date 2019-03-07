@@ -37,6 +37,12 @@ public class FollowCamera : MonoBehaviour
     private readonly float followDistanceMin = 0.5f;
     private readonly float collisionOffsetMultiplier = 0.5f;
 
+    public delegate void LockonUpdate(GameObject target);
+    public event LockonUpdate OnLockon;
+
+    public delegate void LockoffUpdate();
+    public event LockoffUpdate OnLockoff;
+
     private void Awake()
     {
         // Get player target
@@ -221,6 +227,8 @@ public class FollowCamera : MonoBehaviour
 
         lockOnTarget = targetToLockTo;
         ToggleLockonIndicator(true);
+
+        OnLockon?.Invoke(targetToLockTo.gameObject);
     }
     private void LockOff()
     {
@@ -233,6 +241,8 @@ public class FollowCamera : MonoBehaviour
             lockedOn = false;
             lockOnTarget = null;
             ToggleLockonIndicator(false);
+
+            OnLockoff?.Invoke();
         }
     }
     private IEnumerator ResetCamera()

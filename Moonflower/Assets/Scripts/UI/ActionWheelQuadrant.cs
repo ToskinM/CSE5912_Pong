@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ActionWheel : MonoBehaviour
+public class ActionWheelQuadrant : MonoBehaviour
 {
     private Image UIImage;
 
