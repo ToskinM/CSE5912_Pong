@@ -148,7 +148,6 @@ public class DialogueTrigger : MonoBehaviour
                 case PanelState.down:
                     panel.SetActive(false);
                     break;
-
             }
         }
     }
