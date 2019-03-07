@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI; 
 using TMPro;
 
 public class AmaruController : MonoBehaviour
@@ -9,6 +10,7 @@ public class AmaruController : MonoBehaviour
     public GameObject Player;
     public GameObject WalkCenter;
     public GameObject DialoguePanel;
+    public Sprite Icon; 
     public bool dialogueActive = false;
 
     const float engagementRadius = 5f;
@@ -31,9 +33,11 @@ public class AmaruController : MonoBehaviour
         npc = new NPCMovementController(gameObject,Player);
         npc.FollowPlayer(bufferDist, tooCloseRad); 
         npc.Wander(WalkCenter.transform.position, wanderRad);
-        npc.SetDefault(NPCMovementController.MoveState.wander); 
+        npc.SetDefault(NPCMovementController.MoveState.wander);
 
-        talkTrig = new DialogueTrigger(DialoguePanel, Constants.AMARU_ICON, Constants.AMARU_INTRO_DIALOGUE);
+        Icon = new IconFactory().GetIcon(Constants.AMARU_ICON); 
+
+        talkTrig = new DialogueTrigger(DialoguePanel, Icon, Constants.AMARU_INTRO_DIALOGUE);
         playerController = Player.GetComponent<IPlayerController>();
     }
 

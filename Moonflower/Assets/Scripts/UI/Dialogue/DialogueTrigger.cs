@@ -15,6 +15,7 @@ public class DialogueTrigger : MonoBehaviour
     DialoguePanelInfo panelInfo; 
 
     List<Button> buttons;
+    Sprite icon; 
     string spriteFile;
     string exitText = "You have to go? Okay, see you around!";
 
@@ -37,7 +38,7 @@ public class DialogueTrigger : MonoBehaviour
     DialogueFactory factory;
 
 
-    public DialogueTrigger(GameObject p, string characterSprite, string graphName)
+    public DialogueTrigger(GameObject p, Sprite iconSprite, string graphName)
     {
         panel = p;
         panelInfo = panel.GetComponent<DialoguePanelInfo>(); 
@@ -47,7 +48,8 @@ public class DialogueTrigger : MonoBehaviour
         graph = factory.GetDialogue(graphName);
         graph.Restart();
 
-        spriteFile = characterSprite;
+        icon = iconSprite; 
+        //spriteFile = characterSprite;
 
     }
 
@@ -155,7 +157,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         pState = PanelState.rising;
         panel.SetActive(true);
-        panelInfo.Icon.sprite = new IconFactory().GetIcon(spriteFile);
+        panelInfo.Icon.sprite = icon;  //new IconFactory().GetIcon(spriteFile);
         tState = TextState.typing;
 
         // Start dialogue camera this this npc 
