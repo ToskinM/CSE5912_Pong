@@ -310,7 +310,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         if (InCombat)
         {
             // Deaggro if we have no combatTarget
-            if (combatTarget == null)
+            if (!combatTarget || !combatTarget.activeInHierarchy)
             {
                 DeAggro();
 
