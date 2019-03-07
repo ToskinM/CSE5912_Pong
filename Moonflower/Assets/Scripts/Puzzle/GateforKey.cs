@@ -49,7 +49,13 @@ public class GateforKey : MonoBehaviour
         }
     }
 
-
+    public void Close()
+    {
+        if (opened)
+        {
+            opened = false;
+        }
+    }
     public void TimedOpenUp(float time)
     {
         if(!opened)
