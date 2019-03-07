@@ -27,6 +27,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
+    private List<string> acceptableGifts;
 
     void Start()
     {
@@ -46,6 +47,10 @@ public class NaiaController : MonoBehaviour, INPCController
         playerController = Player.GetComponent<IPlayerController>();
 
         combatController.npcMovement = movement;
+
+        acceptableGifts = new List<string>();
+        acceptableGifts.Add(ItemLookup.BOW_NAME);
+        acceptableGifts.Add(ItemLookup.ARROW_NAME);
     }
 
     void Update()
@@ -136,7 +141,14 @@ public class NaiaController : MonoBehaviour, INPCController
     }
     public void Gift(string giftName)
     {
-
+        if (acceptableGifts.Contains(giftName))
+        {
+            displayFeedback("Naia likes the " + giftName + ".");
+        }
+        else
+        {
+            displayFeedback("Why would Naia want the " + giftName + "?");
+        }
     }
     public void Distract()
     {
@@ -151,6 +163,10 @@ public class NaiaController : MonoBehaviour, INPCController
         Debug.Log("Yo time to fight");
     }
 
+    private void displayFeedback(string text)
+    {
+
+    }
 
     // Disable player combat controls when game is paused
     void HandlePauseEvent(bool isPaused)
