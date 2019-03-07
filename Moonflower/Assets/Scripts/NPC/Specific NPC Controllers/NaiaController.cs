@@ -49,15 +49,6 @@ public class NaiaController : MonoBehaviour, INPCController
         combatController.npcMovement = movement;
     }
 
-    private void OnEnable()
-    {
-        GameStateController.OnPaused += HandlePauseEvent;
-    }
-    private void OnDisable()
-    {
-        GameStateController.OnPaused -= HandlePauseEvent;
-    }
-
     void Update()
     {
         float playerDist = movement.DistanceFrom(Player);  //getXZDist(transform.position, Player.transform.position);
@@ -115,16 +106,6 @@ public class NaiaController : MonoBehaviour, INPCController
     }
 
 
-    private float getXZDist(Vector3 a, Vector3 b)
-    {
-        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.z - b.z);
-
-    }
-    public void Fight()
-    {
-        Debug.Log("Yo time to fight"); 
-    }
-
     public void StartTalk()
     {
         movement.FollowPlayer(3.5f);
@@ -166,23 +147,24 @@ public class NaiaController : MonoBehaviour, INPCController
     {
 
     }
-
-    private void startTalking()
+    public void Fight()
     {
-        currState = NaiaEngageType.talk;
-        combatController.Active = false;
-
-        if (!talkTrig.DialogueActive())
-        {
-            talkTrig.StartDialogue();
-
-        }
-
+        Debug.Log("Yo time to fight");
     }
+
 
     // Disable player combat controls when game is paused
     void HandlePauseEvent(bool isPaused)
     {
         //enabled = !isPaused;
+    }
+
+    private void OnEnable()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
     }
 }

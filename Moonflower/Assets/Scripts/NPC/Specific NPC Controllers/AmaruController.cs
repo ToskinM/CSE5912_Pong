@@ -50,15 +50,11 @@ public class AmaruController : MonoBehaviour, INPCController
 
             npc.UpdateMovement();
 
-            if (npc.DistanceFrom(Player) < engagementRadius && !talkTrig.Complete)
+            if (npc.DistanceFrom(Player) < engagementRadius && playerController.TalkingPartner == null && !talkTrig.Complete)
             {
                 StartTalk();
                 indicateInterest(); 
                 npc.Follow(); 
-            }
-            else if (npc.state != NPCMovementController.MoveState.wander)
-            {
-                EndTalk(); 
             }
         }
         else
