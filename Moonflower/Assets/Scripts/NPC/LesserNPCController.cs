@@ -83,6 +83,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
         movement.UpdateMovement();
     }
 
+    // Action Wheel Interactions
     public void Talk()
     {
 

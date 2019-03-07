@@ -63,7 +63,7 @@ public class LevelManager : MonoBehaviour
     public void ReturnDialogueCamera()
     {
         gameStateController.SetMouseLock(true);
-        dialogueCamera.BeginExit(mainCamera.transform);
+        dialogueCamera.StartExit(mainCamera.transform);
     }
 
     public void RegisterNPC(GameObject npc)

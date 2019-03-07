@@ -169,6 +169,57 @@ public class DialogueTrigger : MonoBehaviour
                 }
                 break;
 
+<<<<<<< HEAD
+=======
+                    //easy skip through
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        switch (tState)
+                        {
+                            case TextState.ending:
+                                //display all the exit text
+                                if(!panelInfo.Text.text.Equals(exitText))
+                                {
+                                    panelInfo.Text.text = exitText;
+                                }
+                                //deactivate dialogue convo
+                                else
+                                {
+                                    //pState = PanelState.falling;
+                                    complete = true; 
+                                    EndDialogue();
+                                }
+                                break; 
+                            case TextState.typing:
+                            case TextState.paused:
+                                //display all the dialogue text
+                                panelInfo.Text.text = graph.current.text;
+                                typeIndex = 0;
+                                tState = TextState.options;
+                                break;
+                            case TextState.options:
+                                //display all the available options
+                                forceOptions();
+                                tState = TextState.done;
+                                break;
+                            case TextState.done:
+                                if (!hasOptions()) // if there are no option buttons
+                                {
+                                    //go to next node in tree (no branching)
+                                    gotoNext(-1);
+                                }
+                                break;
+                            default:
+                                Debug.Log("This shouldn't happen");
+                                break;
+                        }
+                    }
+                    break;
+                case PanelState.down:
+                    panel.SetActive(false);
+                    break;
+            }
+>>>>>>> f502f71319ea3d1187f52e2334746351749652d1
         }
     }
 

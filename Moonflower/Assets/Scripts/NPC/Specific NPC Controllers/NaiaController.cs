@@ -129,6 +129,7 @@ public class NaiaController : MonoBehaviour, INPCController
         }
     }
 
+    // Action Wheel Interactions
     public void Talk()
     {
         StartTalk();

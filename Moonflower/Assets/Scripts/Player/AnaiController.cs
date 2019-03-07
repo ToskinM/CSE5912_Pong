@@ -7,6 +7,7 @@ using UnityEngine.AI;
 [Serializable]
 public class AnaiController : MonoBehaviour, IPlayerController
 {
+    public bool active = true;
     public bool Playing { get; set; }
     public GameObject Mimbi;
     public GameObject HUD;
@@ -47,7 +48,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
         moveSpeed = 5f;
 
         icon = new IconFactory().GetIcon(Constants.ANAI_ICON);
-        Mimbi = GameObject.Find("Mimbi");
+        Mimbi = LevelManager.current.mimbi.gameObject;
         agent = GetComponent<NavMeshAgent>();
         playMove = GetComponent<PlayerMovement>();
         playCombat = GetComponent<PlayerCombatController>();
@@ -122,24 +123,26 @@ public class AnaiController : MonoBehaviour, IPlayerController
     // Update is called once per frame
     void Update()
     {
-        DetectCharacterSwitchInput();
-        DetectSummonCompanionInput();
-
-        if (Playing)
+        if (active)
         {
-            print("Anai play");
-            if (CurrState == PlayerStates.talking)
-                playCombat.canAttack = false;
-            else if (!playCombat.canAttack)
-                playCombat.canAttack = true;
-            playMove.MovementUpdate();
+            DetectCharacterSwitchInput();
+            DetectSummonCompanionInput();
 
-        }
-        else
-        {
-            npcMove.UpdateMovement();
-        }
+            if (Playing)
+            {
+                print("Anai play");
+                if (CurrState == PlayerStates.talking)
+                    playCombat.canAttack = false;
+                else if (!playCombat.canAttack)
+                    playCombat.canAttack = true;
+                playMove.MovementUpdate();
 
+            }
+            else
+            {
+                npcMove.UpdateMovement();
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -161,6 +164,6 @@ public class AnaiController : MonoBehaviour, IPlayerController
     void HandleFreezeEvent(bool frozen)
     {
         playMove.Action = Actions.Chilling;
-        enabled = !frozen;
+        active = !frozen;
     }
 }

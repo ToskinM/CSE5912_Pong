@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerCombatController : MonoBehaviour, ICombatController
 {
+    public bool active = true;
+
     // Interface Members
     [HideInInspector] public CharacterStats Stats { get; private set; }
     [HideInInspector] public bool IsBlocking { get; private set; } = false;
@@ -90,43 +92,46 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     void Update()
     {
-        UpdateCurrentPlayer();
-
-        if (currentAggressor)
-            CheckAggressorDistance();
-
-        if (canAttack)
+        if (active)
         {
-            timeSinceLastHurt += Time.deltaTime;
-            timeSinceLastAttack += Time.deltaTime;
-            if (timeSinceLastAttack > attackTimeout)
-            {
-                isAttacking = false;
-            }
+            UpdateCurrentPlayer();
 
-            // Detect attack input (on button down)
-            if (Input.GetButtonDown(ATTACK_AXIS))
-            {
-                Attack();
-            }
+            if (currentAggressor)
+                CheckAggressorDistance();
 
-            // Detect sheathing input (on button down)
-            if (Input.GetButtonDown(SHEATHE_AXIS))
+            if (canAttack)
             {
-                SetWeaponSheathed(HasWeaponOut);
-            }
+                timeSinceLastHurt += Time.deltaTime;
+                timeSinceLastAttack += Time.deltaTime;
+                if (timeSinceLastAttack > attackTimeout)
+                {
+                    isAttacking = false;
+                }
 
-            // Detect blocking input (on button down)
-            if (Input.GetButtonDown(BLOCK_AXIS))
-            {
-                SetBlock(true);
-            }
-            else if (Input.GetButtonUp(BLOCK_AXIS))
-            {
-                SetBlock(false);
-            }
+                // Detect attack input (on button down)
+                if (Input.GetButtonDown(ATTACK_AXIS))
+                {
+                    Attack();
+                }
 
-            CheckDeath();
+                // Detect sheathing input (on button down)
+                if (Input.GetButtonDown(SHEATHE_AXIS))
+                {
+                    SetWeaponSheathed(HasWeaponOut);
+                }
+
+                // Detect blocking input (on button down)
+                if (Input.GetButtonDown(BLOCK_AXIS))
+                {
+                    SetBlock(true);
+                }
+                else if (Input.GetButtonUp(BLOCK_AXIS))
+                {
+                    SetBlock(false);
+                }
+
+                CheckDeath();
+            }
         }
     }
 
@@ -339,7 +344,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     // Disable player combat controls
     void HandleFreezeEvent(bool frozen)
     {
-        enabled = !frozen;
+        active = !frozen;
     }
 
     private void UpdateCurrentPlayer()

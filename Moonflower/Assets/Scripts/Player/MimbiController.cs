@@ -7,6 +7,7 @@ using UnityEngine.AI;
 [Serializable]
 public class MimbiController : MonoBehaviour, IPlayerController
 {
+    public bool active = true;
     public bool Playing { get; set; }
     public GameObject Anai;
 
@@ -33,7 +34,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
         Playing = false;
         moveSpeed = 5f;
 
-        Anai = GameObject.Find("Anai");
+        Anai = LevelManager.current.anai.gameObject;
         agent = GetComponent<NavMeshAgent>();
         playMove = GetComponent<PlayerMovement>();
         playCombat = GetComponent<PlayerCombatController>();
@@ -61,15 +62,18 @@ public class MimbiController : MonoBehaviour, IPlayerController
 
     void Update()
     {
-        DetectCharacterSwitchInput();
+        if (active)
+        {
+            DetectCharacterSwitchInput();
 
-        if (Playing)
-        {
-            playMove.MovementUpdate();
-        }
-        else
-        {
-            npcMove.UpdateMovement();
+            if (Playing)
+            {
+                playMove.MovementUpdate();
+            }
+            else
+            {
+                npcMove.UpdateMovement();
+            }
         }
     }
 
@@ -118,6 +122,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
     // Disable player controls
     void HandleFreezeEvent(bool frozen)
     {
-        enabled = !frozen;
+        playMove.Action = Actions.Chilling;
+        active = !frozen;
     }
 }
