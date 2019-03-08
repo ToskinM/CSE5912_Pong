@@ -77,9 +77,6 @@ public class AmaruController : MonoBehaviour, INPCController
     }
     public void Gift(string giftName)
     {
-<<<<<<< HEAD
-        Debug.Log(gameObject.name + " was given " + giftName);
-=======
         if(new ItemLookup().IsContainer(giftName))
         {
             displayFeedback("Amaru loves the " + giftName + "!");
@@ -88,7 +85,6 @@ public class AmaruController : MonoBehaviour, INPCController
         {
             displayFeedback("Amaru has no use for " + giftName + "...");
         }
->>>>>>> 28dfafe1093141efae195ff79f57ea59fe386ff2
     }
     public void Distract()
     {
