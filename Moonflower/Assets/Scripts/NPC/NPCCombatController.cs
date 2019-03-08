@@ -387,7 +387,14 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             aggressors.Remove(aggressor);
     }
 
-    public void DeAggro()
+    public void Subdue()
+    {
+        DeAggro();
+        if (aggression != Aggression.Passive)
+            aggression--;
+    }
+
+    private void DeAggro()
     {
         fieldOfView.SetCombatMode(false);
 

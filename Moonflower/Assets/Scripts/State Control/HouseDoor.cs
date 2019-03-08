@@ -11,9 +11,11 @@ public class HouseDoor : MonoBehaviour
     private GameObject player;
     private GameObject spawn;
     public string thisScene;
+    public AudioSource BGM;
     // Start is called before the first frame update
     void Start()
     {
+
     }
 
     // Update is called once per frame
@@ -36,13 +38,24 @@ public class HouseDoor : MonoBehaviour
             //SceneManager.LoadScene(targetScene);
             if (toInteriorScene)
             {
+                while (BGM.volume > 0.01)
+                {
+                    BGM.volume -= BGM.volume * Time.deltaTime * 0.01f;
 
+                }
                 SceneController.current.FadeAndLoadSceneNoLS(targetScene);
+
             }
             else
             {
+                while (BGM.volume > 0.01)
+                {
+                    BGM.volume -= BGM.volume * Time.deltaTime * 0.01f;
+
+                }
                 SceneController.current.FadeAndLoadScene(targetScene);
             }
+
         }
     }
 }

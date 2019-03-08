@@ -24,6 +24,7 @@ public class AmaruController : MonoBehaviour, INPCController
     IPlayerController playerController;
     Animator animator;
     private List<string> acceptableGifts;
+    private FeedbackText feedbackText;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,7 @@ public class AmaruController : MonoBehaviour, INPCController
 
         talkTrig = new DialogueTrigger(DialoguePanel, Icon, Constants.AMARU_INTRO_DIALOGUE);
         playerController = Player.GetComponent<IPlayerController>();
+        feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         acceptableGifts = new List<string>();
         acceptableGifts.Add(ItemLookup.JAR_NAME);
@@ -87,7 +89,7 @@ public class AmaruController : MonoBehaviour, INPCController
         }
         else
         {
-            displayFeedback("Amaru has no use for " + giftName + "...");
+            displayFeedback("Amaru has no use for a " + giftName + "...");
         }
     }
     public void Distract()
@@ -123,7 +125,7 @@ public class AmaruController : MonoBehaviour, INPCController
 
     private void displayFeedback(string text)
     {
-
+        feedbackText.ShowText(text);
     }
 
     private void indicateInterest()

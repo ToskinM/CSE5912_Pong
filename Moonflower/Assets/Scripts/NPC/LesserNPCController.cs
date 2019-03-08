@@ -21,6 +21,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
     private IPlayerController playerController;
+    private FeedbackText feedback;
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
         playerController = Player.GetComponent<IPlayerController>();
         movement = new NPCMovementController(gameObject, Player);
         //movement.SetEngagementDistances(5, combatController.attackDistance + 0.5f, 1);
+
     }
 
     void Start()
@@ -43,6 +45,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
         //talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.AMARU_ICON);
 
         LevelManager.current.RegisterNPC(gameObject);
+        feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
     }
 
     void Update()
@@ -93,7 +96,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
         if (new ItemLookup().IsFood(giftName))
         {
             displayFeedback("They loves the " + giftName + "!");
-            combatController.DeAggro(); 
+            combatController.Subdue(); 
         }
         else
         {
@@ -120,7 +123,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
     private void displayFeedback(string text)
     {
-
+        feedback.ShowText(text);
     }
 
     private void HandleOnAggroUpdated(bool aggroed, GameObject aggroTarget)
