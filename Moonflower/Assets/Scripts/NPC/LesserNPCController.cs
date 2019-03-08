@@ -96,7 +96,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
         if (new ItemLookup().IsFood(giftName))
         {
             displayFeedback("They loves the " + giftName + "!");
-            combatController.DeAggro(); 
+            combatController.Subdue(); 
         }
         else
         {
