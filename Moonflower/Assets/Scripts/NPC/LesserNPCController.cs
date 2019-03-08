@@ -92,11 +92,12 @@ public class LesserNPCController : MonoBehaviour, INPCController
     {
         if (new ItemLookup().IsFood(giftName))
         {
-            displayFeedback("Amaru loves the " + giftName + "!");
+            displayFeedback("They loves the " + giftName + "!");
+            combatController.DeAggro(); 
         }
         else
         {
-            displayFeedback("Amaru has no use for " + giftName + "...");
+            displayFeedback("They has no use for " + giftName + "...");
         }
     }
     public void Distract()
