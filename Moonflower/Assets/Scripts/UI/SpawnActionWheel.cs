@@ -21,7 +21,7 @@ public class SpawnActionWheel : MonoBehaviour
     private bool wheelShowing = false;
     private bool inRange = false;
 
-    private float activationRange = 3f;
+    private float activationRange = 5f;
 
     void Start()
     {
