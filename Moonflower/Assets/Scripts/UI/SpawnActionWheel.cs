@@ -83,6 +83,7 @@ public class SpawnActionWheel : MonoBehaviour
         {
             case 0:
                 targetController.Inspect();
+
                 break;
             case 1:
                 targetController.Talk();
@@ -93,7 +94,10 @@ public class SpawnActionWheel : MonoBehaviour
                 break;
             case 3:
                 if (inventory.HasInv())
+                {
                     inventory.ShowGiftInventory(targetController);
+                    interactionPopup.SetActive(false);
+                }
                 else
                     feedback.ShowText("You have nothing to give."); 
 
