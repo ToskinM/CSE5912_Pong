@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    public static LevelManager current;
+    public static LevelManager current = null;
 
     [Header("Controllers")]
     public GameStateController gameStateController;
@@ -31,7 +31,7 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
-        if (current == null)
+        if (!current)
         {
             //DontDestroyOnLoad(gameObject);
             current = this;

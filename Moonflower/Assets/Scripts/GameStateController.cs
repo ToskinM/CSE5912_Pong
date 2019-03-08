@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameStateController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GameStateController : MonoBehaviour
 
     public bool Paused;
     public bool DebugModeOn;
+    public bool cameraAvailable;
 
     private FollowCamera camControl;
 
@@ -37,15 +39,24 @@ public class GameStateController : MonoBehaviour
 
         Paused = false;
         DebugModeOn = false;
-        camControl = LevelManager.current.mainCamera;
 
         // Lock Mouse on game start
-        SetMouseLock(true);
+        if (SceneManager.GetActiveScene().name != Constants.SCENE_MAINMENU)
+        {
+            SetMouseLock(true);
+        }
+
+        if (LevelManager.current && LevelManager.current.mainCamera)
+        {
+            cameraAvailable = true;
+            camControl = LevelManager.current.mainCamera;
+        }
     }
 
     void Update()
     {
-        camControl = LevelManager.current.mainCamera;
+        if (cameraAvailable)
+            camControl = LevelManager.current.mainCamera;
     }
 
     public void ToggleDebugMode()
@@ -53,10 +64,12 @@ public class GameStateController : MonoBehaviour
         DebugModeOn = !DebugModeOn;
 
         //CameraController camControl = MainCamera.GetComponent<CameraController>();
-        camControl = LevelManager.current.mainCamera;
-
-        camControl.SetFreeRoam(DebugModeOn);
-        EnablePlayerMovement(!DebugModeOn);
+        if (cameraAvailable)
+        {
+            camControl = LevelManager.current.mainCamera;
+            camControl.SetFreeRoam(DebugModeOn);
+            EnablePlayerMovement(!DebugModeOn);
+        }
     }
 
     public void SetMouseLock(bool doLock)
@@ -79,6 +92,14 @@ public class GameStateController : MonoBehaviour
                 Cursor.visible = true;
             }
         }
+    }
+
+    public void ForceMouseUnlock()
+    {
+        menuLayers = 0;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void TogglePause()

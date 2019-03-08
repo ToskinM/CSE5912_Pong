@@ -186,7 +186,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         if (group && group.IsInGroup(aggressor))
         {
             // If we are grouped with the aggressor, only allow the hit if the group allows inter-aggression
-            if (group.canHurtEachother)
+            if (group.cantHurtEachother)
                 return false;
             else
                 return true;
