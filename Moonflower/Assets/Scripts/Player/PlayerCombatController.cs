@@ -188,6 +188,12 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
             Swing();
     }
 
+    public void GoHurt()
+    {
+        playerMovement.body.AddForce(transform.forward*50f, ForceMode.Impulse);
+        playerMovement.body.AddForce(new Vector3(0, 2, 0), ForceMode.Impulse);
+    }
+
     // When we hit something, acknowledge it
     public void AcknowledgeHaveHit(GameObject whoWeHit)
     {
