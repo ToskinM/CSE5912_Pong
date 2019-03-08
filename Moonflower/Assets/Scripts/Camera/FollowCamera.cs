@@ -230,7 +230,7 @@ public class FollowCamera : MonoBehaviour
 
         OnLockon?.Invoke(targetToLockTo.gameObject);
     }
-    private void LockOff()
+    public void LockOff()
     {
         // unlock if locked on
         if (lockedOn)

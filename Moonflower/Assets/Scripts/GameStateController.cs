@@ -63,8 +63,8 @@ public class GameStateController : MonoBehaviour
     {
         if (doLock)   // Lock
         {
-            menuLayers++;
-            if (menuLayers > 0)
+            menuLayers = (int)Mathf.Clamp(menuLayers - 1, 0, float.PositiveInfinity);
+            if (menuLayers <= 0)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -72,8 +72,8 @@ public class GameStateController : MonoBehaviour
         }
         else          // Unlock
         {
-            menuLayers--;
-            if (menuLayers <= 0)
+            menuLayers++;
+            if (menuLayers > 0)
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
@@ -115,7 +115,7 @@ public class GameStateController : MonoBehaviour
     }
     public void UnpauseGame()
     {
-        pauseLayers--;
+        pauseLayers = (int)Mathf.Clamp(pauseLayers - 1, 0, float.PositiveInfinity);
         if (pauseLayers <= 0)
         {
             Paused = false;
