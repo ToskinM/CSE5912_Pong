@@ -33,7 +33,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
     const float bufferRadius = 5f;
     const float tooCloseRadius = 2f;
     float followDist = 8f;
-
+    SpawnPoint spawnPoint;
     public enum PlayerStates { exploring, talking, fighting, distracting }
     public PlayerStates CurrState = PlayerStates.exploring;
 
@@ -46,7 +46,8 @@ public class AnaiController : MonoBehaviour, IPlayerController
     {
         Playing = true;
         moveSpeed = 5f;
-
+        spawnPoint = GameObject.Find("Spawner").GetComponent<SpawnPoint>();
+        spawnPoint.Spawn();
         icon = new IconFactory().GetIcon(Constants.ANAI_ICON);
         Mimbi = LevelManager.current.mimbi.gameObject;
         agent = GetComponent<NavMeshAgent>();
@@ -56,6 +57,8 @@ public class AnaiController : MonoBehaviour, IPlayerController
         boxCollider = GetComponent<BoxCollider>();
         stats = GetComponent<CharacterStats>();
         npcMove = new NPCMovementController(gameObject, Mimbi);
+        mimbiController = Mimbi.GetComponent<MimbiController>(); 
+
         //        npcMove.Active = false; 
         npcMove.FollowPlayer(followDist, tooCloseRadius);
 
@@ -142,7 +145,18 @@ public class AnaiController : MonoBehaviour, IPlayerController
             {
                 npcMove.UpdateMovement();
             }
+
+            if(TalkingPartner != null)
+            {
+                mimbiController.Chill(); 
+            }
+            else
+            {
+                mimbiController.Reset(); 
+            }
         }
+
+
     }
 
     private void OnTriggerEnter(Collider other)
