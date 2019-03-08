@@ -126,8 +126,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
     }
     public void DontJump()
     {
-        onGround = false;
-        Jumping = false;
+        //onGround = false;
+        //Jumping = false;
     }
     void SetJump()
     {
@@ -136,23 +136,21 @@ public class PlayerMovement : MonoBehaviour, IMovement
             //Action = Actions.Chilling;
             Jumping = true;
 
-            if (Action != Actions.Running)
+            if (Action != Actions.Running && LevelManager.current.currentPlayer.name == "Anai")
             {
-                if (LevelManager.current.currentPlayer.name == "Anai")
-                {
+
                     Debug.Log("true");
                     body.AddForce(new Vector3(0f, 30f, 0f), ForceMode.Impulse);
                     onGround = false;
-                }
+
                     
                 //body.AddForce(transform.forward, ForceMode.Impulse);
             } else {
-                if (LevelManager.current.currentPlayer == LevelManager.current.anai)
-                {
+
                     Debug.Log("true");
                     body.AddForce(new Vector3(0f, 40f, 0f), ForceMode.Impulse);
                     onGround = false;
-                }
+
             }
         }
         else if (onGround)
@@ -311,7 +309,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
         {
             body.AddRelativeForce(Vector3.up * 7, ForceMode.Impulse);
             onGround = false;
-            Jumping = false;
         }
         returnGrav = true;
     }
