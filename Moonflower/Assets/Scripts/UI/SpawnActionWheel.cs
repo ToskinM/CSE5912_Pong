@@ -18,6 +18,7 @@ public class SpawnActionWheel : MonoBehaviour
 
     private GameObject target;
     private INPCController targetController;
+    private FeedbackText feedback; 
 
     private bool wheelAvailable = true;
     private bool wheelShowing = false;
@@ -40,6 +41,7 @@ public class SpawnActionWheel : MonoBehaviour
         followCamera = LevelManager.current.mainCamera;
 
         inventory = GameObject.Find("HUD").GetComponent<ShowInventory>(); 
+        feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
     }
 
     private void OnEnable()
@@ -90,8 +92,12 @@ public class SpawnActionWheel : MonoBehaviour
                 targetController.Distract();
                 break;
             case 3:
-                inventory.ShowGiftInventory(targetController); 
-                targetController.Gift("none");
+                if (inventory.HasInv())
+                    inventory.ShowGiftInventory(targetController);
+                else
+                    feedback.ShowText("You have nothing to give."); 
+
+                //targetController.Gift("none");
                 break;
             default:
                 break;

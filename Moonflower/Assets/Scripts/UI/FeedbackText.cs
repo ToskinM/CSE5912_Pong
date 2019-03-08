@@ -33,7 +33,7 @@ public class FeedbackText : MonoBehaviour
             case State.fadingIn:
                 Color color = text.color;
                 text.color = new Color(color.r, color.g, color.b, color.a + inc);
-
+                Debug.Log("show fading in");
                 if (text.color.a >= 1)
                 {
                     text.color = new Color(color.r, color.g, color.b, 1);
@@ -41,15 +41,18 @@ public class FeedbackText : MonoBehaviour
                 }
                 break;
             case State.fadingOut:
+                Debug.Log("show fading out");
                 color = text.color;
                 text.color = new Color(color.r, color.g, color.b, color.a - inc);
-                if (text.faceColor.a <= 0)
+                Debug.Log(color.a);
+                if (text.color.a <= 0)
                 {
                     text.color = new Color(color.r, color.g, color.b, 0);
                     state = State.gone;
                 }
                 break;
             case State.displayed:
+                Debug.Log("show the text!");
                 color = text.color;
                 if (text.color.a <= 1)
                 {
@@ -63,7 +66,10 @@ public class FeedbackText : MonoBehaviour
                     timerCount = 0;
                 }
                 break;
-        
+            case State.gone:
+                color = text.color;
+                text.color = new Color(color.r, color.g, color.b, 0);
+                break;
         }
 
     }
@@ -73,9 +79,13 @@ public class FeedbackText : MonoBehaviour
         timerCount = 0;
         text.text = t;
         if (state == State.gone || state == State.fadingOut)
+        {
             state = State.fadingIn;
+        }
         else
-            state = State.displayed; 
+        {
+            state = State.displayed;
+        }
     }
 
     public void KillText()

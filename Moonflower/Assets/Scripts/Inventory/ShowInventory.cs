@@ -77,6 +77,11 @@ public class ShowInventory : MonoBehaviour
         }
     }
 
+    public bool HasInv()
+    {
+        return playerInventory.ItemNames.Count > 0; 
+    }
+
     public void ShowGiftInventory(INPCController controller)
     {
         buttonActive = true;

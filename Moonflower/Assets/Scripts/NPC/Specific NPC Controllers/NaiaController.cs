@@ -10,7 +10,6 @@ public class NaiaController : MonoBehaviour, INPCController
 {
 
     public GameObject DialoguePanel;
-    public GameObject feedback; 
     public Sprite Icon { get; set; }
 
     public float engagementRadius = 5f;
@@ -43,7 +42,7 @@ public class NaiaController : MonoBehaviour, INPCController
         movement = new NPCMovementController(gameObject, Player);
         Icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
         talkTrig = new DialogueTrigger(DialoguePanel, Icon, Constants.NAIA_INTRO_DIALOGUE);
-        feedbackText = feedback.GetComponent<FeedbackText>(); 
+        feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         playerController = Player.GetComponent<IPlayerController>();
 
@@ -65,7 +64,7 @@ public class NaiaController : MonoBehaviour, INPCController
                 combatController.Active = false;
                 if (playerController.Playing && playerController.TalkingPartner == null && playerDist < engagementRadius && !talkTrig.Complete)
                 {
-                    StartTalk();
+                    //StartTalk();
                 }
                 break;
             case NaiaEngageType.fight:
