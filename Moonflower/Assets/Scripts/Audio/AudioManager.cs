@@ -155,9 +155,6 @@ public class AudioManager : MonoBehaviour
     {
         Audio a = Array.Find(audioSounds, sound => sound.categoryName.Contains(category));
         Sound s = Array.Find(a.sounds, sound => sound.name == name);
-        //if (s.name.Contains("run") || s.name.Contains("walk"))
-        //    s.source.volume = soundVol * 0.2f;
-        //else
         if (s.source != null)
             s.source.volume = soundVol;
     }
@@ -275,27 +272,6 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    //public void AssignToAudioSource(Audio[] category, float vol)
-    //{
-    //    foreach (Audio a in category)
-    //    {
-    //        Sound[] soundList = a.sounds;
-    //        foreach (Sound s in soundList)
-    //        {
-    //            if (s.source == null)
-    //            {
-    //                ReAddAudioSource(a, s);
-
-    //            }
-    //            AddSourceOtherComponent(s);
-
-    //            //if (s.clip.name.Contains("footstep"))
-    //            //    s.source.volume = vol * 0.2f;
-    //            //else
-
-    //        }
-    //    }
-    //}
 
 
 }

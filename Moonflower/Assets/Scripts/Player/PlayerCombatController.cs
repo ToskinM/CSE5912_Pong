@@ -137,7 +137,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     private void CheckAggressorDistance()
     {
-        Debug.Log(currentAggressor);
+        //Debug.Log(currentAggressor);
 
         if (Vector3.Distance(transform.position, currentAggressor.transform.position) > combatLossDistance)
         {
@@ -186,6 +186,12 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
             SetWeaponSheathed(false); // take out weapon if its not already out
         else
             Swing();
+    }
+
+    public void GoHurt()
+    {
+        playerMovement.body.AddForce(transform.forward * 30f, ForceMode.Impulse);
+        playerMovement.body.AddForce(new Vector3(0, 2, 0), ForceMode.Impulse);
     }
 
     // When we hit something, acknowledge it
@@ -260,7 +266,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     private IEnumerator CombatTimeout()
     {
-        Debug.Log("timeoutstart");
+
         yield return new WaitForSeconds(combatTimeout);
         currentAggressor = null;
         InCombat = false;

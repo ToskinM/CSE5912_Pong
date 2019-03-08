@@ -16,7 +16,7 @@ public class SceneController : MonoBehaviour
     [Header("Fade To/From Black")]
     public CanvasGroup faderCanvasGroup;
     public float fadeDuration = 1f;
-    private const float pseudoDeltaTime = 0.025f;
+    private const float pseudoDeltaTime = 0.05f;
     private bool isFading;
     public bool isLoading;
 

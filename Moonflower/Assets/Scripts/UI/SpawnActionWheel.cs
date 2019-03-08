@@ -26,7 +26,7 @@ public class SpawnActionWheel : MonoBehaviour
 
     private float activationRange = 5f;
 
-    void Start()
+    private void Awake()
     {
         if (current == null)
         {
@@ -36,7 +36,10 @@ public class SpawnActionWheel : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
 
+    void Start()
+    {
         gameStateController = GameStateController.current;
         followCamera = LevelManager.current.mainCamera;
 
@@ -46,21 +49,36 @@ public class SpawnActionWheel : MonoBehaviour
 
     private void OnEnable()
     {
+        followCamera = LevelManager.current.mainCamera;
         GameStateController.OnFreezePlayer += HandleFreezeEvent;
 
-        LevelManager.current.mainCamera.OnLockon += HandleLockonEvent;
-        LevelManager.current.mainCamera.OnLockoff += HandleLockoffEvent;
+        if (!LevelManager.current)
+        {
+            Debug.Log("LevelManager null");
+        }
+        else if (!LevelManager.current.mainCamera)
+        {
+            Debug.Log("mainCamera null");
+        }
+
+        followCamera.OnLockon += HandleLockonEvent;
+        followCamera.OnLockoff += HandleLockoffEvent;
     }
     private void OnDisable()
     {
         GameStateController.OnFreezePlayer -= HandleFreezeEvent;
 
-        LevelManager.current.mainCamera.OnLockon -= HandleLockonEvent;
-        LevelManager.current.mainCamera.OnLockoff -= HandleLockoffEvent;
+        followCamera.OnLockon -= HandleLockonEvent;
+        followCamera.OnLockoff -= HandleLockoffEvent;
     }
 
     void Update()
     {
+        if (followCamera != LevelManager.current.mainCamera)
+        {
+            followCamera = LevelManager.current.mainCamera;
+        }
+
         if (wheelAvailable)
         {
             if (target && Vector3.Distance(target.transform.position, LevelManager.current.currentPlayer.transform.position) <= activationRange)
