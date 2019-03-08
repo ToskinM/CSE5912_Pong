@@ -14,6 +14,8 @@ public class SpawnActionWheel : MonoBehaviour
 
     private ActionWheel activeWheel;
 
+    private ShowInventory inventory; 
+
     private GameObject target;
     private INPCController targetController;
 
@@ -36,6 +38,8 @@ public class SpawnActionWheel : MonoBehaviour
 
         gameStateController = GameStateController.current;
         followCamera = LevelManager.current.mainCamera;
+
+        inventory = GameObject.Find("HUD").GetComponent<ShowInventory>(); 
     }
 
     private void OnEnable()
@@ -86,6 +90,7 @@ public class SpawnActionWheel : MonoBehaviour
                 targetController.Distract();
                 break;
             case 3:
+                inventory.ShowGiftInventory(targetController); 
                 targetController.Gift("none");
                 break;
             default:
