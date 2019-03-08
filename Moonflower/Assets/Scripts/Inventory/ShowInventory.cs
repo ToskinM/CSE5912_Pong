@@ -35,7 +35,7 @@ public class ShowInventory : MonoBehaviour
         InvItemTemplate = InvContentPanel.transform.GetChild(0).gameObject; 
         show = false;
         playerInventory = Player.GetComponent<PlayerInventory>();
-        gameController = GameObject.Find("Game State Manager").GetComponent<GameStateController>();
+        gameController = GameStateController.current;
         InvoButton.onClick.AddListener(showInv);
    }
 

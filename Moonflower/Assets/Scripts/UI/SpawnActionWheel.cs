@@ -21,7 +21,7 @@ public class SpawnActionWheel : MonoBehaviour
     private bool wheelShowing = false;
     private bool inRange = false;
 
-    private float activationRange = 10f;
+    private float activationRange = 3f;
 
     void Start()
     {
@@ -34,7 +34,7 @@ public class SpawnActionWheel : MonoBehaviour
             Destroy(gameObject);
         }
 
-        gameStateController = GameStateManager.GetComponent<GameStateController>();
+        gameStateController = GameStateController.current;
         followCamera = LevelManager.current.mainCamera;
     }
 
