@@ -61,7 +61,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
         GameStateController.OnPaused += HandlePauseEvent;
         GameStateController.OnFreezePlayer += HandleFreezeEvent;
 
-        playerAnimate.movement = playMove;
+        //playerAnimate.playerMovement = playMove;
 
         LevelManager.current.anai = this;
 
@@ -85,7 +85,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
             gameObject.layer = 10;
             tag = "Player";
             agent.enabled = false;
-            playerAnimate.movement = playMove;
+            //playerAnimate.playerMovement = playMove;
             boxCollider.enabled = true;
 
             LevelManager.current.currentPlayer = gameObject;
@@ -98,7 +98,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
             gameObject.layer = 0;
             tag = "Companion";
             agent.enabled = true;
-            playerAnimate.movement = npcMove;
+            //playerAnimate.playerMovement = npcMove;
             //boxCollider.enabled = false;
         }
     }

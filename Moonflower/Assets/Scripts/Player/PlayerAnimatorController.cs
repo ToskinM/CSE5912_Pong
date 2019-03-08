@@ -14,39 +14,44 @@ public class PlayerAnimatorController : MonoBehaviour
     private const string key_isCrouch = "IsCrouch";
     private const string key_isBlock = "IsBlock";
     private Animator animator;
-    private PlayerCombatController combatController;
+    private Animator companionAnimator;
+    public PlayerCombatController combatController;
+    private PlayerController playerController;
+    private PlayerMovementController playerMovement;
 
-    public IMovement movement { get; set; } 
     public HurtboxController[] attackHurtboxes;
     public GameObject walkParticles;
     public GameObject runParticles;
     public GameObject standingParticles;
-    public PlayerMovement playerMovement { get; set; }
     
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
-        movement = GetComponent<PlayerMovement>();
+        playerController = GetComponent<PlayerController>();
+        playerMovement = GetComponent<PlayerMovementController>();
         combatController = GetComponent<PlayerCombatController>();
-        playerMovement = gameObject.GetComponent<PlayerMovement>();
+
+        animator = playerController.GetActivePlayerObject().GetComponent<Animator>();
+        companionAnimator = playerController.GetCompanionObject().GetComponent<Animator>();
+
         GameStateController.OnPaused += HandlePauseEvent;
+        PlayerController.OnCharacterSwitch += SetActiveCharacter;
     }
 
     // Update is called once per frame
     void Update()
     {
         animator.SetBool(key_isBlock, combatController.IsBlocking);
-        animator.SetBool(key_isWalk, movement.Action == Actions.Walking);
-        animator.SetBool(key_isRun, movement.Action == Actions.Running);
-        animator.SetBool(key_isJump, movement.Jumping);
-        animator.SetBool(key_isCrouch, movement.Action == Actions.Sneaking);
+        animator.SetBool(key_isWalk, playerMovement.Action == PlayerMovementController.Actions.Walking);
+        animator.SetBool(key_isRun, playerMovement.Action == PlayerMovementController.Actions.Running);
+        animator.SetBool(key_isJump, playerMovement.Jumping);
+        animator.SetBool(key_isCrouch, playerMovement.Action == PlayerMovementController.Actions.Sneaking);
 
         if (walkParticles || runParticles || standingParticles)
         {
-            standingParticles.SetActive(!(movement.Action == Actions.Running || movement.Action == Actions.Walking));
-            walkParticles.SetActive(movement.Action == Actions.Walking);
-            runParticles.SetActive(movement.Action == Actions.Running);
+            standingParticles.SetActive(!(playerMovement.Action == PlayerMovementController.Actions.Running || playerMovement.Action == PlayerMovementController.Actions.Walking));
+            walkParticles.SetActive(playerMovement.Action == PlayerMovementController.Actions.Walking);
+            runParticles.SetActive(playerMovement.Action == PlayerMovementController.Actions.Running);
         }
     }
 
@@ -56,6 +61,7 @@ public class PlayerAnimatorController : MonoBehaviour
 
         animator.SetTrigger(key_AttackTrigger);
     }
+
     public void TriggerHit()
     {
         animator.SetTrigger(key_IsHitTrigger);
@@ -65,9 +71,10 @@ public class PlayerAnimatorController : MonoBehaviour
     {
         animator.SetTrigger(key_isDead);
     }
+
     public void EnableHurtbox(int index)
     {
-        attackHurtboxes[index].Enable(combatController.GetAttackDamage(index));
+        attackHurtboxes[index].Enable(PlayerController.instance.GetComponent<PlayerCombatController>().GetAttackDamage(index));
     }
 
     public void DisableHurtbox(int index)
@@ -75,10 +82,24 @@ public class PlayerAnimatorController : MonoBehaviour
         attackHurtboxes[index].Disable();
     }
 
-
     // Disable player animation when game is paused
     void HandlePauseEvent(bool isPaused)
     {
         animator.enabled = !isPaused;
+    }
+
+    public void SetActiveCharacter(PlayerController.PlayerCharacter activeChar)
+    {
+        animator = playerController.GetActivePlayerObject().GetComponent<Animator>();
+        companionAnimator = playerController.GetCompanionObject().GetComponent<Animator>();
+    }
+
+    // Called in the PlayerController
+    public void UpdateCompanionAnimation(PlayerController.PlayerCharacter activeChar)
+    {
+        companionAnimator.SetBool(key_isWalk, playerMovement.CompanionMovementController.Action == Actions.Walking);
+        companionAnimator.SetBool(key_isRun, playerMovement.CompanionMovementController.Action == Actions.Running);
+        companionAnimator.SetBool(key_isJump, playerMovement.CompanionMovementController.Jumping);
+        companionAnimator.SetBool(key_isCrouch, playerMovement.CompanionMovementController.Action == Actions.Sneaking);
     }
 }

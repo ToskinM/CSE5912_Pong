@@ -19,7 +19,6 @@ public class NPCAnimationController : MonoBehaviour
     private NavMeshAgent agent;
     private NPCCombatController combatController;
     private LesserNPCController controller;
-    private NPCMovementController movement;
 
     public HurtboxController[] attackHurtboxes;
 

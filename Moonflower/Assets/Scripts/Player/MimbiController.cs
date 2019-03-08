@@ -45,7 +45,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
         npcMove.WanderFollowPlayer(wanderRadius);
         npcMove.SetDefault(NPCMovementController.MoveState.wanderfollow);
 
-        playerAnimate.movement = npcMove;
+        //playerAnimate.playerMovement = npcMove;
 
         GameStateController.OnPaused += HandlePauseEvent;
         GameStateController.OnFreezePlayer += HandleFreezeEvent;
@@ -84,7 +84,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
             gameObject.layer = 10;
             tag = "Player";
             agent.enabled = false;
-            playerAnimate.movement = playMove;
+            //playerAnimate.playerMovement = playMove;
             boxCollider.enabled = true;
 
             LevelManager.current.currentPlayer = gameObject;
@@ -95,7 +95,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
             gameObject.layer = 0;
             tag = "Companion";
             agent.enabled = true;
-            playerAnimate.movement = npcMove;
+            //playerAnimate.playerMovement = npcMove;
             boxCollider.enabled = false;
         }
     }

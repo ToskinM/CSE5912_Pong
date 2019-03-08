@@ -12,7 +12,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     [HideInInspector] public bool HasWeaponOut { get; private set; } = false;
 
     public PlayerAnimatorController animator { get; private set; }
-    public PlayerMovement playerMovement;
+    public PlayerMovementController playerMovement;
 
 
     [HideInInspector] public bool isAttacking;
@@ -27,8 +27,6 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     public GameObject blockPlaceholder;
 
     public GameObject currentPlayer;
-    private GameObject anai;
-    private GameObject mimbi;
 
     private float timeSinceLastHurt;
     private float timeSinceLastAttack;
@@ -48,9 +46,9 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     void Awake()
     {
-        Stats = gameObject.GetComponent<CharacterStats>();
-        animator = gameObject.GetComponent<PlayerAnimatorController>();
-        playerMovement = GetComponent<PlayerMovement>();
+        Stats = GetComponent<CharacterStats>();
+        animator = GetComponent<PlayerAnimatorController>();
+        playerMovement = GetComponent<PlayerMovementController>();
     }
 
     void Start()
@@ -65,8 +63,8 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         GameStateController.OnPaused += HandlePauseEvent;
         GameStateController.OnFreezePlayer += HandleFreezeEvent;
 
-        anai = GameObject.Find("Anai");
-        mimbi = GameObject.Find("Mimbi");
+        PlayerController.OnCharacterSwitch += SwitchActiveCharacter;
+        PlayerColliderListener.OnHurtboxHit += HandleHurtboxCollision;
 
         playerSoundEffect = GameObject.Find("Anai").GetComponent<PlayerSoundEffect>();
 
@@ -78,7 +76,6 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     void Update()
     {
-        UpdateCurrentPlayer();
         if (canAttack)
         {
             timeSinceLastHurt += Time.deltaTime;
@@ -164,37 +161,26 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    void HandleHurtboxCollision(Collider other)
     {
-        // Get Tag
-        string tag = other.tag;
+        OnHit?.Invoke(other.gameObject);
 
-        // Handle Hurtboxes
-        if (tag == "Hurtbox")
-        {
-            if (timeSinceLastHurt > hurtDelay)
-            {
-                OnHit?.Invoke(other.gameObject);
-
-                // Get hurtbox information
-                HurtboxController hurtboxController = other.gameObject.GetComponent<HurtboxController>();
-                GameObject source = hurtboxController.source;
-                int damage = hurtboxController.damage;
-
-                if (!IsBlocking)
-                    Stagger();
-                Stats.TakeDamage(damage, source.name, hurtboxController.sourceCharacterStats, GetContactPoint(other), IsBlocking);
-            }
-        }
-
+        // Get hurtbox information
+        HurtboxController hurtboxController = other.gameObject.GetComponent<HurtboxController>();
+        GameObject source = hurtboxController.source;
+        int damage = hurtboxController.damage;
         timeSinceLastHurt = 0f;
+
+        if (!IsBlocking)
+            Stagger();
+        Stats.TakeDamage(damage, source.name, hurtboxController.sourceCharacterStats, GetContactPoint(other), IsBlocking);
     }
 
     private Vector3 GetContactPoint(Collider other)
     {
         Vector3 locPos = Vector3.zero;
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, other.transform.position - transform.position, out hit, LayerMask.GetMask("Debug")))
+        if (Physics.Raycast(currentPlayer.transform.position, other.transform.position - currentPlayer.transform.position, out hit, LayerMask.GetMask("Debug")))
         {
             //Debug.Log("Point of contact: " + hit.point);
             locPos = hit.point;
@@ -213,9 +199,9 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     public void SetStunned(int stunned)
     {
         if (stunned == 1)
-            playerMovement.stunned = true;
+            playerMovement.Stunned = true;
         else
-            playerMovement.stunned = false;
+            PlayerController.instance.GetComponent<PlayerMovementController>().Stunned = false;
     }
 
     // Check if we should be dead
@@ -244,7 +230,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         if (ragdollPrefab != null)
         {
             // Spawn ragdoll and have it match our pose
-            GameObject ragdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
+            GameObject ragdoll = Instantiate(ragdollPrefab, currentPlayer.transform.position, currentPlayer.transform.rotation);
             ragdoll.GetComponent<Ragdoll>().MatchPose(gameObject.GetComponentsInChildren<Transform>());
         }
 
@@ -282,9 +268,9 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         enabled = !frozen;
     }
 
-    private void UpdateCurrentPlayer()
+    void SwitchActiveCharacter(PlayerController.PlayerCharacter activeChar)
     {
-        //currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
-        currentPlayer = LevelManager.current.currentPlayer;
+        currentPlayer = PlayerController.instance.GetActivePlayerObject();
     }
+
 }

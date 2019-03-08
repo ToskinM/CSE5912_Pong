@@ -10,37 +10,29 @@ public class Pickup : MonoBehaviour
     public int distanceToPickup = 5;
 
     public CharacterStats Stats { get; private set; }
-    public GameObject playerAnai;
+    //public GameObject playerAnai;
     private GameObject currentPlayer;
-    private CurrentPlayer playerInfo; 
 
-    private CharacterStats anaiStat;
-    private CharacterStats mimbiStat; 
-    //private InventoryManager inventoryManager;
+    //private CharacterStats anaiStat;
+    //private CharacterStats mimbiStat;
+    private CharacterStats playerStats;
     private PlayerInventory playerInventory;
     private PlayerSoundEffect soundEffect;
 
     public TextMeshProUGUI inventoryAdd;
 
-    public PlayerMovement playerMovement;
-
     // Start is called before the first frame update
     void Start()
     {
-        if (!playerAnai)
-            playerAnai = gameObject;
+        playerStats = GetComponent<CharacterStats>();
+        playerInventory = GetComponent<PlayerInventory>();
+        //anaiStat = playerInfo.PlayerAnaiObj.GetComponent<CharacterStats>();
+        //mimbiStat = playerInfo.PlayerMimbiObj.GetComponent<CharacterStats>(); 
 
-        //StartCoroutine(GetAudioManager());
-        //inventoryManager = FindObjectOfType<InventoryManager>();
-        playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
-        anaiStat = playerInfo.PlayerAnaiObj.GetComponent<CharacterStats>();
-        mimbiStat = playerInfo.PlayerMimbiObj.GetComponent<CharacterStats>(); 
+        //soundEffect = playerAnai.GetComponent<PlayerSoundEffect>();
 
-        playerInventory = playerAnai.GetComponent<PlayerInventory>();
-        soundEffect = playerAnai.GetComponent<PlayerSoundEffect>();
-
-        //CurrentPlayer = playerInfo.GetCurrentPlayer();
-        currentPlayer = LevelManager.current.currentPlayer;
+        currentPlayer = PlayerController.instance.GetActivePlayerObject();
+        PlayerController.OnCharacterSwitch += SwitchActiveCharacter;
     }
 
 
@@ -64,9 +56,9 @@ public class Pickup : MonoBehaviour
             return nearestObj;
 
     }
+
     private void DecidePickup()
     {
-        UpdateCurrentPlayer();
         GameObject closest = FindClosest();
         if (Vector3.Distance(FindClosest().transform.position, currentPlayer.transform.position) <= distanceToPickup)
         {
@@ -101,12 +93,12 @@ public class Pickup : MonoBehaviour
             if (obj.GetComponent<InventoryStat>().AnaiObject)
             {
                 TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Anai");
-                anaiStat.AddHealth(health);
+                //anaiStat.AddHealth(health);
             }
             else if (obj.GetComponent<InventoryStat>().MimbiObject)
             {
                 TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
-                mimbiStat.AddHealth(health);
+                //mimbiStat.AddHealth(health);
             }
             else
             {
@@ -117,7 +109,7 @@ public class Pickup : MonoBehaviour
             //Destroy Gameobject after collect
             Destroy(obj.gameObject);
             //Play Pickup audio clip;
-            soundEffect.PlayerPickupSFX();
+            //soundEffect.PlayerPickupSFX();
         }
     }
     void DelayMethod()
@@ -130,17 +122,14 @@ public class Pickup : MonoBehaviour
         inventoryAdd.SetText(s);
     }
 
-    //To be delete
-    private void UpdateCurrentPlayer()
-    {
-        //currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
-        currentPlayer = LevelManager.current.currentPlayer;
-    }
-
-
     // Update is called once per frame
     void Update()
     {
         DecidePickup();
+    }
+
+    void SwitchActiveCharacter(PlayerController.PlayerCharacter activeChar)
+    {
+        currentPlayer = PlayerController.instance.GetActivePlayerObject();
     }
 }

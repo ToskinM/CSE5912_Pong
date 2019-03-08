@@ -14,6 +14,9 @@ public class StealthDetection : MonoBehaviour
     private float timeToClearSuspicion = 3f;
     private float timeSinceLastAction;
 
+    private GameObject player;
+    private PlayerMovementController playerMovementControls;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -126,7 +129,11 @@ public class StealthDetection : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
+        {
+            player = other.gameObject;
+            playerMovementControls = player.GetComponent<PlayerMovementController>();
             PlayerMovement.NoiseRaised += HandleNoiseRaised;
+        }
     }
 
     void OnTriggerStay(Collider other)
