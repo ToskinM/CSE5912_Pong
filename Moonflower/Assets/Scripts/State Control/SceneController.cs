@@ -71,7 +71,7 @@ public class SceneController : MonoBehaviour
         // Fade to black
         yield return StartCoroutine(Fade(1f));
         BeforeSceneUnload?.Invoke();
-        GameStateController.current.ForceUnpause();
+        GameStateController.current?.ForceUnpause();
 
         // load loading scene
         yield return SceneManager.LoadSceneAsync(Constants.SCENE_LOADING, LoadSceneMode.Additive);
@@ -96,7 +96,7 @@ public class SceneController : MonoBehaviour
         // Fade to black
         yield return StartCoroutine(Fade(1f));
         BeforeSceneUnload?.Invoke();
-        GameStateController.current.ForceUnpause();
+        GameStateController.current?.ForceUnpause();
 
         // load loading scene
         yield return SceneManager.LoadSceneAsync(Constants.SCENE_LOADING, LoadSceneMode.Additive);
