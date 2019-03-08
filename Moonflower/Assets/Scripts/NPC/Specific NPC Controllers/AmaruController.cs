@@ -13,9 +13,9 @@ public class AmaruController : MonoBehaviour, INPCController
     public Sprite Icon { get; set; }
     public bool dialogueActive = false;
 
-    const float engagementRadius = 5f;
-    const float tooCloseRad = 4f;
-    const float bufferDist = 5f;
+    const float engagementRadius = 9f;
+    const float tooCloseRad = 3f;
+    const float bufferDist = 4f;
     const float wanderRad = 30f;
 
     NPCMovementController npc;
@@ -55,11 +55,15 @@ public class AmaruController : MonoBehaviour, INPCController
 
             npc.UpdateMovement();
 
-            if (npc.DistanceFrom(Player) < engagementRadius && playerController.TalkingPartner == null && !talkTrig.Complete)
+            if (npc.DistanceFrom(Player) < engagementRadius && !talkTrig.Complete)
             {
                 //StartTalk();
                 indicateInterest();
                 npc.Follow();
+            }
+            else
+            {
+                npc.Reset(); 
             }
         }
         else
@@ -88,11 +92,11 @@ public class AmaruController : MonoBehaviour, INPCController
     }
     public void Distract()
     {
-        Debug.Log(gameObject.name + " was distracted");
+
     }
     public void Inspect()
     {
-        Debug.Log(gameObject.name + " was inspected");
+
     }
 
     //start current conversation
