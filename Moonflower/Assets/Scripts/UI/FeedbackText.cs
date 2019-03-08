@@ -12,7 +12,7 @@ public class FeedbackText : MonoBehaviour
     State state = State.gone;
     const float inc = 0.05f;
 
-    int timerMax = 30;
+    const int timerMax = 80;
     int timerCount = 0; 
 
     // Start is called before the first frame update
@@ -33,6 +33,7 @@ public class FeedbackText : MonoBehaviour
             case State.fadingIn:
                 Color color = text.color;
                 text.color = new Color(color.r, color.g, color.b, color.a + inc);
+
                 if (text.color.a >= 1)
                 {
                     text.color = new Color(color.r, color.g, color.b, 1);
@@ -40,7 +41,6 @@ public class FeedbackText : MonoBehaviour
                 }
                 break;
             case State.fadingOut:
-        
                 color = text.color;
                 text.color = new Color(color.r, color.g, color.b, color.a - inc);
                 if (text.faceColor.a <= 0)
@@ -50,7 +50,12 @@ public class FeedbackText : MonoBehaviour
                 }
                 break;
             case State.displayed:
-                Debug.Log(timerCount); 
+                color = text.color;
+                if (text.color.a <= 1)
+                {
+                    text.color = new Color(color.r, color.g, color.b, 1);
+                    state = State.displayed;
+                }
                 timerCount++;
                 if (timerCount >= timerMax)
                 {
@@ -65,8 +70,12 @@ public class FeedbackText : MonoBehaviour
 
     public void ShowText(string t)
     {
+        timerCount = 0;
         text.text = t;
-        state = State.fadingIn; 
+        if (state == State.gone || state == State.fadingOut)
+            state = State.fadingIn;
+        else
+            state = State.displayed; 
     }
 
     public void KillText()

@@ -19,10 +19,12 @@ public class Pickup : MonoBehaviour
     //private InventoryManager inventoryManager;
     private PlayerInventory playerInventory;
     private PlayerSoundEffect soundEffect;
+    private FeedbackText feedback; 
 
     public TextMeshProUGUI inventoryAdd;
 
     public PlayerMovement playerMovement;
+
 
     void Start()
     {
@@ -38,6 +40,7 @@ public class Pickup : MonoBehaviour
 
         playerInventory = playerAnai.GetComponent<PlayerInventory>();
         soundEffect = playerAnai.GetComponent<PlayerSoundEffect>();
+        feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         //CurrentPlayer = playerInfo.GetCurrentPlayer();
         currentPlayer = LevelManager.current.currentPlayer;
@@ -100,17 +103,23 @@ public class Pickup : MonoBehaviour
             bool objectUsedImmediately = false; 
             if (obj.GetComponent<InventoryStat>().AnaiObject)
             {
-                TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Anai");
+                string objName = obj.GetComponent<InventoryStat>().Name;
+                //TextUpdate(objName + " is collected, " + health + " [health] were add to Anai");
+                feedback.ShowText("You have found a " + objName); 
                objectUsedImmediately = !anaiStat.AddHealth(health);
             }
             else if (obj.GetComponent<InventoryStat>().MimbiObject)
             {
-                TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
+                string objName = obj.GetComponent<InventoryStat>().Name;
+                //TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
+                feedback.ShowText("You have found a " + objName);
                 objectUsedImmediately = !mimbiStat.AddHealth(health);
             }
             else
             {
-                TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected. ");
+                //TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected. ");
+                string objName = obj.GetComponent<InventoryStat>().Name;
+                feedback.ShowText("You have found a " + objName);
             }
             //Add to inventory
             if(!objectUsedImmediately)

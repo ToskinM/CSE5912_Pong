@@ -41,7 +41,7 @@ public class ShowInventory : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I))// && toggleEnabled)
+        if(Input.GetKeyDown(KeyCode.I))
         {
             showInv(); 
             toggleEnabled = false;
@@ -71,15 +71,6 @@ public class ShowInventory : MonoBehaviour
 
             }
         }
-        //else
-        //{
-        //    toggleCount++; 
-        //    if(toggleCount > toggleMax)
-        //    {
-        //        toggleCount = 0;
-        //        toggleEnabled = true; 
-        //    }
-        //}
     }
 
     private void showInv()
@@ -97,12 +88,6 @@ public class ShowInventory : MonoBehaviour
         }
     }
 
-    //public void TextUpdate()
-    //{
-    //    string displayText = "No of Moonflower: " + playerInventory.GetObjNumber(MoonFlower) + "\nNo of WolfApple: " + playerInventory.GetObjNumber(WolfApple); 
-    //    //inventoryText.SetText(displayText);
-    //}
-
     public void ItemUpdate()
     {
         InvItemTemplate.SetActive(true);
@@ -117,25 +102,17 @@ public class ShowInventory : MonoBehaviour
             foreach (string item in playerInventory.ItemNames)
             {
                 GameObject newItem;
-                //if(first)
-                //{
-                //    newItem = InvItemTemplate;
-                //    currCol = 1;
-                //    first = false; 
-                //}
-                //else
+                newItem = Instantiate(InvItemTemplate, InvContentPanel.transform);
+                newItem.transform.position = InvItemTemplate.transform.position + new Vector3(xOffset * currCol, -yOffset * currRow, 0);
+                items.Add(newItem); 
+                currCol++; 
+                if(currCol > numCols)
                 {
-                    newItem = Instantiate(InvItemTemplate, InvContentPanel.transform);
-                    newItem.transform.position = InvItemTemplate.transform.position + new Vector3(xOffset * currCol, -yOffset * currRow, 0);
-                    items.Add(newItem); 
-                    currCol++; 
-                    if(currCol > numCols)
-                    {
-                        currRow++;
-                        currCol = 0; 
-                    }
-
+                    currRow++;
+                    currCol = 0; 
                 }
+
+                
                 names.Add(item);
 
                 Image icon = newItem.transform.GetChild(0).GetComponent<Image>();
@@ -156,9 +133,10 @@ public class ShowInventory : MonoBehaviour
             }
 
             RectTransform rect = InvContentPanel.GetComponent<RectTransform>();
-
-            if(currRow > 3)
-                rect.sizeDelta = new Vector2(rect.sizeDelta.x, 1.3f*currRow * heightDim); 
+            if (currRow >= 2)
+                rect.sizeDelta = new Vector2(rect.sizeDelta.x, 1.2f*currRow * heightDim); 
+            else
+                rect.sizeDelta = new Vector2(0, 0);
         }
         else
         {
