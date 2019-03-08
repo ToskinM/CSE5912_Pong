@@ -72,15 +72,15 @@ public class AmaruController : MonoBehaviour, INPCController
     }
     public void Gift(string giftName)
     {
-
+        Debug.Log(gameObject.name + " was given " + giftName);
     }
     public void Distract()
     {
-
+        Debug.Log(gameObject.name + " was distracted");
     }
     public void Inspect()
     {
-
+        Debug.Log(gameObject.name + " was inspected");
     }
 
     //start current conversation

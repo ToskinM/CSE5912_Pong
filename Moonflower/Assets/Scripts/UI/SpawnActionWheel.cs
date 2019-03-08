@@ -4,17 +4,36 @@ using UnityEngine;
 
 public class SpawnActionWheel : MonoBehaviour
 {
+    public static SpawnActionWheel current;
+
     public GameObject ActionWheelPrefab;
     public GameObject GameStateManager;
+    public GameObject interactionPopup;
     private GameStateController gameStateController;
     private FollowCamera followCamera;
 
     private ActionWheel activeWheel;
 
+    private GameObject target;
+    private INPCController targetController;
+
     private bool wheelAvailable = true;
+    private bool wheelShowing = false;
+    private bool inRange = false;
+
+    private float activationRange = 10f;
 
     void Start()
     {
+        if (current == null)
+        {
+            current = this;
+        }
+        else if (current != null)
+        {
+            Destroy(gameObject);
+        }
+
         gameStateController = GameStateManager.GetComponent<GameStateController>();
         followCamera = LevelManager.current.mainCamera;
     }
@@ -37,30 +56,73 @@ public class SpawnActionWheel : MonoBehaviour
     void Update()
     {
         if (wheelAvailable)
-            DetectInteraction();
+        {
+            if (target && Vector3.Distance(target.transform.position, LevelManager.current.currentPlayer.transform.position) <= activationRange)
+            {
+                if (!wheelShowing)
+                    interactionPopup.SetActive(true);
+                DetectInteraction();
+            }
+            else
+            {
+                interactionPopup.SetActive(false);
+            }
+        }
     }
 
-    private void GetNPCInfo()
+    private void HandleWheelSelection(int selection)
     {
-
+        HideWheel();
+        switch (selection)
+        {
+            case 0:
+                targetController.Inspect();
+                break;
+            case 1:
+                targetController.Talk();
+                followCamera.LockOff();
+                break;
+            case 2:
+                targetController.Distract();
+                break;
+            case 3:
+                targetController.Gift("none");
+                break;
+            default:
+                break;
+        }
     }
 
     public void DetectInteraction()
     {
         if (Input.GetButtonDown("Interact") && activeWheel)
         {
-            gameStateController.SetMouseLock(false);
-            gameStateController.PauseGame();
-            activeWheel.gameObject.SetActive(true);
-            //activeWheel = Instantiate(ActionWheelPrefab, Input.mousePosition, Quaternion.identity, transform);
+            ShowWheel();
         }
         else if (Input.GetButtonUp("Interact") && activeWheel)
         {
-            gameStateController.SetMouseLock(true);
-            activeWheel.gameObject.SetActive(false);
-            //Destroy(activeWheel);
-            gameStateController.UnpauseGame();
+            HideWheel();
         }
+    }
+
+    private void ShowWheel()
+    {
+        //gameStateController.SetMouseLock(false);
+        gameStateController.PauseGame();
+        interactionPopup.SetActive(false);
+        activeWheel.gameObject.SetActive(true);
+        wheelShowing = true;
+
+        activeWheel.OnSelectOption += HandleWheelSelection;
+    }
+    private void HideWheel()
+    {
+        //gameStateController.SetMouseLock(true);
+        activeWheel.gameObject.SetActive(false);
+        wheelShowing = false;
+        gameStateController.UnpauseGame();
+
+        activeWheel.OnSelectOption -= HandleWheelSelection;
     }
 
     public void HandleLockonEvent(GameObject target)
@@ -68,8 +130,9 @@ public class SpawnActionWheel : MonoBehaviour
         INPCController targetNPC = target.GetComponent<INPCController>();
         if (targetNPC != null)
         {
+            this.target = target;
+            targetController = targetNPC;
             activeWheel = Instantiate(ActionWheelPrefab, Input.mousePosition, Quaternion.identity, transform).GetComponent<ActionWheel>();
-            Debug.Log(targetNPC.GetType().ToString());
 
             activeWheel.Initialize(targetNPC.Icon);
             activeWheel.gameObject.SetActive(false);
@@ -80,8 +143,12 @@ public class SpawnActionWheel : MonoBehaviour
         if (activeWheel)
         {
             Destroy(activeWheel.gameObject);
+            target = null;
+            targetController = null;
             activeWheel = null;
         }
+
+        //interactionPopup.SetActive(false);
     }
 
     public void HandleFreezeEvent(bool frozen)
