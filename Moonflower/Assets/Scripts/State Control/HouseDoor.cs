@@ -40,16 +40,22 @@ public class HouseDoor : MonoBehaviour
             {
                 while (BGM.volume > 0.01)
                 {
-                    BGM.volume = BGM.volume * 0.1f;
+                    BGM.volume -= BGM.volume * Time.deltaTime * 0.01f;
 
                 }
-
                 SceneController.current.FadeAndLoadSceneNoLS(targetScene);
+
             }
             else
             {
+                while (BGM.volume > 0.01)
+                {
+                    BGM.volume -= BGM.volume * Time.deltaTime * 0.01f;
+
+                }
                 SceneController.current.FadeAndLoadScene(targetScene);
             }
+
         }
     }
 }
