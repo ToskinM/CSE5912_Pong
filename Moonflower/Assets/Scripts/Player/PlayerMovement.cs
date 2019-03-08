@@ -114,21 +114,46 @@ public class PlayerMovement : MonoBehaviour, IMovement
         return releaseRun || releaseSneak || neutralState;
     }
 
+    public void Jump()
+    {
+        Jumping = false;
+        if (Action != Actions.Running && onGround)
+            body.AddForce(new Vector3(0f, 30f, 0f), ForceMode.Impulse);
+        else if (Action == Actions.Running && onGround)
+            body.AddForce(new Vector3(0f, 40f, 0f), ForceMode.Impulse);
+        //onGround = false;
+
+    }
+    public void DontJump()
+    {
+        onGround = false;
+        Jumping = false;
+    }
     void SetJump()
     {
         if (Input.GetButtonDown("Jump") && onGround)
         {
             //Action = Actions.Chilling;
             Jumping = true;
-            onGround = false;
+
             if (Action != Actions.Running)
             {
-                body.AddForce(new Vector3(0f, 30f, 0f), ForceMode.Impulse);
+                if (LevelManager.current.currentPlayer.name == "Anai")
+                {
+                    Debug.Log("true");
+                    body.AddForce(new Vector3(0f, 30f, 0f), ForceMode.Impulse);
+                    onGround = false;
+                }
+                    
+                //body.AddForce(transform.forward, ForceMode.Impulse);
             } else {
-
-                body.AddForce(new Vector3(0f, 40f, 0f), ForceMode.Impulse);
+                if (LevelManager.current.currentPlayer == LevelManager.current.anai)
+                {
+                    Debug.Log("true");
+                    body.AddForce(new Vector3(0f, 40f, 0f), ForceMode.Impulse);
+                    onGround = false;
+                }
             }
-
         }
         else if (onGround)
         {
@@ -286,6 +311,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
         {
             body.AddRelativeForce(Vector3.up * 7, ForceMode.Impulse);
             onGround = false;
+            Jumping = false;
         }
         returnGrav = true;
     }
