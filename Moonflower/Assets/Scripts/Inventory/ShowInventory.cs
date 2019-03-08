@@ -124,18 +124,18 @@ public class ShowInventory : MonoBehaviour
                 //    first = false; 
                 //}
                 //else
-                {
-                    newItem = Instantiate(InvItemTemplate, InvContentPanel.transform);
-                    newItem.transform.position = InvItemTemplate.transform.position + new Vector3(xOffset * currCol, -yOffset * currRow, 0);
-                    items.Add(newItem); 
-                    currCol++; 
-                    if(currCol > numCols)
-                    {
-                        currRow++;
-                        currCol = 0; 
-                    }
 
+                newItem = Instantiate(InvItemTemplate, InvContentPanel.transform);
+                newItem.transform.position = InvItemTemplate.transform.position + new Vector3(xOffset * currCol, -yOffset * currRow, 0);
+                items.Add(newItem); 
+                currCol++; 
+                if(currCol > numCols)
+                {
+                    currRow++;
+                    currCol = 0; 
                 }
+
+                
                 names.Add(item);
 
                 Image icon = newItem.transform.GetChild(0).GetComponent<Image>();
@@ -156,9 +156,11 @@ public class ShowInventory : MonoBehaviour
             }
 
             RectTransform rect = InvContentPanel.GetComponent<RectTransform>();
-
-            if(currRow > 3)
-                rect.sizeDelta = new Vector2(rect.sizeDelta.x, 1.3f*currRow * heightDim); 
+            Debug.Log("row " + currRow); 
+            if (currRow >= 2)
+                rect.sizeDelta = new Vector2(rect.sizeDelta.x, 1.2f*currRow * heightDim); 
+            else
+                rect.sizeDelta = new Vector2(0, 0);
         }
         else
         {
