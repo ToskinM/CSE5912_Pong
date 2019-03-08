@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311947, g: 0.38074005, b: 0.35872722, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2498,8 +2498,8 @@ RectTransform:
   - {fileID: 619393584}
   - {fileID: 923288892}
   - {fileID: 1482738369}
-  - {fileID: 448515893}
   - {fileID: 673510597}
+  - {fileID: 448515893}
   m_Father: {fileID: 449762969}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3199,7 +3199,7 @@ RectTransform:
   - {fileID: 1325618968}
   - {fileID: 1430495524}
   m_Father: {fileID: 369703239}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5376,10 +5376,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mimbi
       objectReference: {fileID: 0}
-    - target: {fileID: 574423208, guid: 24bae5f0d34626a459d9f0f207247a1a, type: 3}
-      propertyPath: Anai
-      value: 
-      objectReference: {fileID: 157348644}
     - target: {fileID: 574423207, guid: 24bae5f0d34626a459d9f0f207247a1a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.38
@@ -5424,6 +5420,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 574423208, guid: 24bae5f0d34626a459d9f0f207247a1a, type: 3}
+      propertyPath: Anai
+      value: 
+      objectReference: {fileID: 157348644}
     - target: {fileID: 574423210, guid: 24bae5f0d34626a459d9f0f207247a1a, type: 3}
       propertyPath: otherCharacter
       value: 
@@ -8441,6 +8441,7 @@ MonoBehaviour:
   targetScene: The Village
   toInteriorScene: 0
   thisScene: Anai House
+  BGM: {fileID: 30638208}
 --- !u!65 &1286477681
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12830,7 +12831,6 @@ MonoBehaviour:
   InventoryPanel: {fileID: 893813552}
   InvContentPanel: {fileID: 1466127590}
   Player: {fileID: 0}
-  InvoButton: {fileID: 63864881}
   gameController: {fileID: 1819681082}
 --- !u!114 &1954491026
 MonoBehaviour:
