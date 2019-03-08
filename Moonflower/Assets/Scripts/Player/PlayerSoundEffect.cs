@@ -80,12 +80,23 @@ public class PlayerSoundEffect : MonoBehaviour
 
     public void MimbiWalkingSFX()
     {
+        audioManager.ResumeNormal(mimbi, "MimbiWalking(1)");
+        audioManager.ResumeNormal(mimbi, "MimbiWalking(2)");
         int x = Random.Range(1, 3);
         if (x == 1)
             audioManager.Play(mimbi, "MimbiWalking(1)");
         else
             audioManager.Play(mimbi, "MimbiWalking(2)");
     }
+    public void MimbiSneakingSFX()
+    {
+        int x = Random.Range(1, 3);
+        if (x == 1)
+            audioManager.PlaySneakFootStep(mimbi, "MimbiWalking(1)");
+        else
+            audioManager.PlaySneakFootStep(mimbi, "MimbiWalking(2)");
+    }
+
     public void MimbiRuningSFX()
     {
         int x = Random.Range(1, 3);
