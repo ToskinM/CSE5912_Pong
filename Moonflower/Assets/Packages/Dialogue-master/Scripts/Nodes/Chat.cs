@@ -33,6 +33,7 @@ namespace Dialogue {
         }
 
         public override void Trigger() {
+            Debug.Log("We got a new dialogue base");
             (graph as DialogueGraph).current = this;
         }
     }

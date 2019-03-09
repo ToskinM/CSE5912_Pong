@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 
-public class LesserNPCController : MonoBehaviour
+public class LesserNPCController : MonoBehaviour, INPCController
 {
     public GameObject Player;
     //public GameObject WalkArea;
     public GameObject DialoguePanel;
+    public Sprite Icon { get; set; }
 
     public float engagementRadius = 15f;
     public float tooCloseRad = 4f;
@@ -20,6 +21,7 @@ public class LesserNPCController : MonoBehaviour
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
     private IPlayerController playerController;
+    private FeedbackText feedback;
 
     private void Awake()
     {
@@ -29,6 +31,7 @@ public class LesserNPCController : MonoBehaviour
         playerController = Player.GetComponent<IPlayerController>();
         movement = new NPCMovementController(gameObject, Player);
         //movement.SetEngagementDistances(5, combatController.attackDistance + 0.5f, 1);
+
     }
 
     void Start()
@@ -40,9 +43,9 @@ public class LesserNPCController : MonoBehaviour
         combatController.npcMovement = movement;
 
         //talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.AMARU_ICON);
-        GameStateController.OnPaused += HandlePauseEvent;
 
         LevelManager.current.RegisterNPC(gameObject);
+        feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
     }
 
     void Update()
@@ -83,6 +86,32 @@ public class LesserNPCController : MonoBehaviour
         movement.UpdateMovement();
     }
 
+    // Action Wheel Interactions
+    public void Talk()
+    {
+
+    }
+    public void Gift(string giftName)
+    {
+        if (new ItemLookup().IsFood(giftName))
+        {
+            displayFeedback("They loves the " + giftName + "!");
+            combatController.Subdue(); 
+        }
+        else
+        {
+            displayFeedback("They has no use for " + giftName + "...");
+        }
+    }
+    public void Distract()
+    {
+
+    }
+    public void Inspect()
+    {
+
+    }
+
     private void StartEngagement()
     {
         //engaging = true;
@@ -90,6 +119,11 @@ public class LesserNPCController : MonoBehaviour
         if (talkTrig != null)
             if (!talkTrig.DialogueActive())
                 talkTrig.StartDialogue();
+    }
+
+    private void displayFeedback(string text)
+    {
+        feedback.ShowText(text);
     }
 
     private void HandleOnAggroUpdated(bool aggroed, GameObject aggroTarget)
@@ -110,12 +144,16 @@ public class LesserNPCController : MonoBehaviour
 
     private void OnEnable()
     {
+        GameStateController.OnPaused += HandlePauseEvent;
+
         // Subscribe to recieve OnAggroUpdated event
         if (combatController)
             combatController.OnAggroUpdated += HandleOnAggroUpdated;
     }
     private void OnDisable()
     {
+        GameStateController.OnPaused -= HandlePauseEvent;
+
         // Unsubscribe from recieving OnAggroUpdated event
         if (combatController)
             combatController.OnAggroUpdated -= HandleOnAggroUpdated;
@@ -124,6 +162,6 @@ public class LesserNPCController : MonoBehaviour
     // Disable player combat controls when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
 }
 }

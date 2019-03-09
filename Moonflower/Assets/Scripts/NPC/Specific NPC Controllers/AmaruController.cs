@@ -2,26 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI; 
 using TMPro;
 
-public class AmaruController : MonoBehaviour
+public class AmaruController : MonoBehaviour, INPCController
 {
     public GameObject Player;
     public GameObject WalkCenter;
     public GameObject DialoguePanel;
+    public Sprite Icon { get; set; }
     public bool dialogueActive = false;
 
-    const float engagementRadius = 5f;
-    const float tooCloseRad = 4f;
-    const float bufferDist = 5f;
-    const float wanderRad = 30f; 
-    bool engaging = false;
+    const float engagementRadius = 9f;
+    const float tooCloseRad = 3f;
+    const float bufferDist = 4f;
+    const float wanderRad = 30f;
 
     NPCMovementController npc;
     NavMeshAgent agent;
     DialogueTrigger talkTrig;
     IPlayerController playerController;
     Animator animator;
+    private List<string> acceptableGifts;
+    private FeedbackText feedbackText;
 
     // Start is called before the first frame update
     void Start()
@@ -29,45 +32,40 @@ public class AmaruController : MonoBehaviour
         //npc = gameObject.AddComponent<NPCMovement>();
         agent = GetComponent<NavMeshAgent>();
 
-        npc = new NPCMovementController(gameObject,Player);
-        npc.FollowPlayer(bufferDist, tooCloseRad); 
+        npc = new NPCMovementController(gameObject, Player);
+        npc.FollowPlayer(bufferDist, tooCloseRad);
         npc.Wander(WalkCenter.transform.position, wanderRad);
-        npc.SetDefault(NPCMovementController.MoveState.wander); 
+        npc.SetDefault(NPCMovementController.MoveState.wander);
 
-        talkTrig = new DialogueTrigger(DialoguePanel, Constants.AMARU_ICON, Constants.AMARU_INTRO_DIALOGUE);
+        Icon = new IconFactory().GetIcon(Constants.AMARU_ICON);
+
+        talkTrig = new DialogueTrigger(DialoguePanel, Icon, Constants.AMARU_INTRO_DIALOGUE);
         playerController = Player.GetComponent<IPlayerController>();
+        feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
-        GameStateController.OnPaused += HandlePauseEvent;
+        acceptableGifts = new List<string>();
+        acceptableGifts.Add(ItemLookup.JAR_NAME);
+        acceptableGifts.Add(ItemLookup.ROPE_NAME);
     }
-
 
     // Update is called once per frame
     void Update()
     {
         if (playerController.Playing)
         {
-            //if(talkTrig.engaged && playerController.TalkingPartner!=gameObject)
-            //    playerController.TalkingPartner = gameObject;
-            //else if(!talkTrig.engaged && playerController.TalkingPartner!=null)
-            //    playerController.TalkingPartner = null;
-
             talkTrig.Update();
 
             npc.UpdateMovement();
 
             if (npc.DistanceFrom(Player) < engagementRadius && !talkTrig.Complete)
             {
-                StartTalk(); 
-                npc.Follow(); 
+                //StartTalk();
+                indicateInterest();
+                npc.Follow();
             }
-            else if (npc.state != NPCMovementController.MoveState.wander)
+            else
             {
-                npc.Wander();
-                if (talkTrig.DialogueActive())
-                {
-                    playerController.TalkingPartner = null;
-                    talkTrig.EndDialogue();
-                }
+                npc.Reset(); 
             }
         }
         else
@@ -78,15 +76,56 @@ public class AmaruController : MonoBehaviour
 
     }
 
+    // Action Wheel Interactions
+    public void Talk()
+    {
+        StartTalk();
+    }
+    public void Gift(string giftName)
+    {
+        if(new ItemLookup().IsContainer(giftName))
+        {
+            displayFeedback("Amaru loves the " + giftName + "!");
+        }
+        else
+        {
+            displayFeedback("Amaru has no use for a " + giftName + "...");
+        }
+    }
+    public void Distract()
+    {
+
+    }
+    public void Inspect()
+    {
+
+    }
+
+    //start current conversation
     public void StartTalk()
     {
-        engaging = true;
 
         if (!talkTrig.DialogueActive())
         {
             playerController.TalkingPartner = gameObject;
             talkTrig.StartDialogue();
         }
+    }
+
+    //end current conversation
+    public void EndTalk()
+    {
+        npc.Reset();
+        if (talkTrig.DialogueActive())
+        {
+            playerController.TalkingPartner = null;
+            talkTrig.EndDialogue();
+        }
+    }
+
+    private void displayFeedback(string text)
+    {
+        feedbackText.ShowText(text);
     }
 
     private void indicateInterest()
@@ -97,8 +136,19 @@ public class AmaruController : MonoBehaviour
     // Disable updates when gaame is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
 
 
+
+    private void OnEnable()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
+    }
+
 }
+

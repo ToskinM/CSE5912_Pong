@@ -139,5 +139,16 @@ public class GraphicsOptions : MonoBehaviour
     private void UpdateWindowAndResolution()
     {
         Screen.SetResolution(currentResolution.width, currentResolution.height, currentFullScreenMode, currentResolution.refreshRate);
+
+        PlayerPrefs.SetInt("graphics_windowMode", (int)currentFullScreenMode);
+        PlayerPrefs.SetString("graphics_resolution", currentResolution.width + "x" + currentResolution.height);
+        PlayerPrefs.SetInt("graphics_refreshHz", currentResolution.refreshRate);
+    }
+
+    private void LoadGraphicsPrefs()
+    {
+        int windowMode = PlayerPrefs.GetInt("graphics_windowMode", (int)currentFullScreenMode);
+        String resolution = PlayerPrefs.GetString("graphics_resolution", currentResolution.width + "x" + currentResolution.height);
+        int refreshRate = PlayerPrefs.GetInt("graphics_refreshHz", 0);
     }
 }

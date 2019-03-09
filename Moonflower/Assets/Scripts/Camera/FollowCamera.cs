@@ -17,6 +17,7 @@ public class FollowCamera : MonoBehaviour
     public LayerMask collisionLayers;
 
     private Camera camera;
+    private FieldOfView fieldOfView;
     private AudioListener audioListener;
 
     private Transform target;
@@ -36,12 +37,19 @@ public class FollowCamera : MonoBehaviour
     private readonly float followDistanceMin = 0.5f;
     private readonly float collisionOffsetMultiplier = 0.5f;
 
+    public delegate void LockonUpdate(GameObject target);
+    public event LockonUpdate OnLockon;
+
+    public delegate void LockoffUpdate();
+    public event LockoffUpdate OnLockoff;
+
     private void Awake()
     {
         // Get player target
         target = GetCameraTarget(GameObject.FindGameObjectWithTag("Player"));
         camera = GetComponent<Camera>();
         audioListener = GetComponent<AudioListener>();
+        fieldOfView = GetComponent<FieldOfView>();
     }
 
     public void SetRendering(bool rendering)
@@ -56,9 +64,16 @@ public class FollowCamera : MonoBehaviour
         transform.position = target.position + new Vector3(0, 1, -5);
         offset = target.position - transform.position;
 
+        //LevelManager.current.mainCamera = this;
+    }
 
-        LevelManager.current.mainCamera = this;
+    private void OnEnable()
+    {
         GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
     }
 
     void Update()
@@ -191,7 +206,7 @@ public class FollowCamera : MonoBehaviour
 
     private void ManageLockOn()
     {
-        Transform targetInView = gameObject.GetComponent<FieldOfView>().focusedTarget;
+        Transform targetInView = fieldOfView.focusedTarget;
         if (lockedOn && lockOnTarget != null)
         {
             LockOff();
@@ -212,8 +227,10 @@ public class FollowCamera : MonoBehaviour
 
         lockOnTarget = targetToLockTo;
         ToggleLockonIndicator(true);
+
+        OnLockon?.Invoke(targetToLockTo.gameObject);
     }
-    private void LockOff()
+    public void LockOff()
     {
         // unlock if locked on
         if (lockedOn)
@@ -224,6 +241,8 @@ public class FollowCamera : MonoBehaviour
             lockedOn = false;
             lockOnTarget = null;
             ToggleLockonIndicator(false);
+
+            OnLockoff?.Invoke();
         }
     }
     private IEnumerator ResetCamera()
@@ -328,6 +347,6 @@ public class FollowCamera : MonoBehaviour
     // Disable player movement controls when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
 }

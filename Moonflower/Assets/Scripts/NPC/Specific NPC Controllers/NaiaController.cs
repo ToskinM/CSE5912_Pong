@@ -5,13 +5,14 @@ using UnityEngine.AI;
 using UnityEngine.UI; 
 using TMPro;
 
-public class NaiaController : MonoBehaviour
+
+public class NaiaController : MonoBehaviour, INPCController
 {
 
     public GameObject DialoguePanel;
-    public GameObject EngageOptPanel; 
+    public Sprite Icon { get; set; }
 
-    public float engagementRadius = 15f;
+    public float engagementRadius = 5f;
     public float tooCloseRad = 4f;
     public float bufferDist = 5f;
 
@@ -20,111 +21,161 @@ public class NaiaController : MonoBehaviour
     private NPCMovementController movement;
     private NPCCombatController combatController;
     private NavMeshAgent agent;
-    private NaiaDialogueTrigger talkTrig;
+    private DialogueTrigger talkTrig;
     private IPlayerController playerController;
-    private EngagementOptionsController engageController; 
+    private FeedbackText feedbackText; 
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
+    private List<string> acceptableGifts;
 
     void Start()
     {
         // Initialize Components
         playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
-        Player = playerInfo.GetAnai(); 
+        Player = LevelManager.current.anai.gameObject;
         agent = GetComponent<NavMeshAgent>();
         combatController = GetComponent<NPCCombatController>();
 
         // Setup Movement
         Vector3 walkOrigin = transform.position;
         movement = new NPCMovementController(gameObject, Player);
+        Icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
+        talkTrig = new DialogueTrigger(DialoguePanel, Icon, Constants.NAIA_INTRO_DIALOGUE);
+        feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
-
-        talkTrig = new NaiaDialogueTrigger(DialoguePanel, Constants.NAIA_ICON);
         playerController = Player.GetComponent<IPlayerController>();
 
-        engageController = EngageOptPanel.GetComponent<EngagementOptionsController>();
-        combatController.npcMovement = movement; 
+        combatController.npcMovement = movement;
 
-        GameStateController.OnPaused += HandlePauseEvent;
+        acceptableGifts = new List<string>();
+        acceptableGifts.Add(ItemLookup.BOW_NAME);
+        acceptableGifts.Add(ItemLookup.ARROW_NAME);
     }
-
 
     void Update()
     {
-        float playerDist = getXZDist(transform.position, Player.transform.position);
+        float playerDist = movement.DistanceFrom(Player);  //getXZDist(transform.position, Player.transform.position);
 
-        if (currState == NaiaEngageType.chill)
+        switch (currState)
         {
-            combatController.Active = true;
-        }
-        else if(currState == NaiaEngageType.fight)
-        {
-            combatController.Active = true; 
-
-            if (combatController.InCombat)
-            {
-                movement.Follow(combatController.combatTarget, combatController.attackDistance, 1.5f);
-                movement.SetHoldGround(true); 
-            }
-        }
-        else if(currState == NaiaEngageType.talk)
-        {
-            combatController.Active = false;
-
-
-            if (playerController.Playing)
-            {
-                if (talkTrig.engaged)
-                    movement.FollowPlayer(3.5f);
-
-                if (!talkTrig.Complete)
+            case NaiaEngageType.chill:
+                Debug.Log("chilling");
+                combatController.Active = false;
+                if (playerController.Playing && playerController.TalkingPartner == null && playerDist < engagementRadius && !talkTrig.Complete)
                 {
-                    talkTrig.Update();
+                    //StartTalk();
                 }
-                else
+                break;
+            case NaiaEngageType.fight:
+                Debug.Log("fighting");
+                combatController.Active = true;
+
+                if (combatController.InCombat)
                 {
-                    {
-                        talkTrig.EndDialogue();
-                        movement.Reset(); 
-                        currState = NaiaEngageType.fight;
-                        combatController.StartFight(Player); 
+                    movement.Follow(combatController.combatTarget, combatController.attackDistance, 1.5f);
+                    movement.SetHoldGround(true);
+                }
+                break;
+
+            case NaiaEngageType.talk:
+                Debug.Log("talking");
+                //combatController.Active = false;
+
+                if (playerController.Playing)
+                {
+
+                    if (talkTrig.Complete)
+                    { 
+                        EndTalk();
+                        //talkTrig.EndDialogue();
+
                     }
                 }
-            }
+                break;
+
         }
 
-        if(combatController.Active && combatController.InCombat)
+        if (combatController.Active && combatController.InCombat)
         {
-            currState = NaiaEngageType.fight; 
+            currState = NaiaEngageType.fight;
         }
 
         movement.UpdateMovement();
+        talkTrig.Update();
     }
 
 
-    private float getXZDist(Vector3 a, Vector3 b)
+    public void StartTalk()
     {
-        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.z - b.z);
-
-    }
-
-    private void startTalking()
-    {
+        movement.FollowPlayer(3.5f);
         currState = NaiaEngageType.talk;
         combatController.Active = false;
 
         if (!talkTrig.DialogueActive())
         {
+            playerController.TalkingPartner = gameObject;
             talkTrig.StartDialogue();
-
         }
+    }
+    public void EndTalk()
+    {
+        if (currState != NaiaEngageType.fight)
+            movement.Reset();
 
+        if (talkTrig.DialogueActive())
+        {
+            playerController.TalkingPartner = null;
+            talkTrig.EndDialogue();
+        }
+    }
+
+    // Action Wheel Interactions
+    public void Talk()
+    {
+        StartTalk();
+    }
+    public void Gift(string giftName)
+    {
+        if (new ItemLookup().IsWeapon(giftName))
+        {
+            displayFeedback("Naia likes the " + giftName + ".");
+        }
+        else
+        {
+            displayFeedback("Why would Naia want the " + giftName + "?");
+        }
+    }
+    public void Distract()
+    {
+
+    }
+    public void Inspect()
+    {
+
+    }
+    public void Fight()
+    {
+        Debug.Log("Yo time to fight");
+    }
+
+    private void displayFeedback(string text)
+    {
+        feedbackText.ShowText(text); 
     }
 
     // Disable player combat controls when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
+    }
+
+    private void OnEnable()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
     }
 }

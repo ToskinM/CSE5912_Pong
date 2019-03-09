@@ -10,7 +10,7 @@ public class ShowInventory : MonoBehaviour
     public GameObject InventoryPanel;
     public GameObject InvContentPanel; 
     public GameObject Player;
-    public Button InvoButton; 
+    //public Button InvoButton; 
 
     List<GameObject> items = new List<GameObject>();
     List<string> names = new List<string>(); 
@@ -19,6 +19,10 @@ public class ShowInventory : MonoBehaviour
     ItemLookup lookup = new ItemLookup(); 
     private PlayerInventory playerInventory;
     private bool show;
+    private bool buttonActive = false;
+    INPCController receiverController;
+
+
     private float xOffset;
     private float yOffset;
     private int numCols = 4;
@@ -35,17 +39,29 @@ public class ShowInventory : MonoBehaviour
         InvItemTemplate = InvContentPanel.transform.GetChild(0).gameObject; 
         show = false;
         playerInventory = Player.GetComponent<PlayerInventory>();
-        gameController = GameObject.Find("Game State Manager").GetComponent<GameStateController>();
-        InvoButton.onClick.AddListener(showInv);
+        gameController = GameStateController.current;
+        //InvoButton.onClick.AddListener(showInv);
    }
 
     void Update()
     {
-        if(Input.GetMouseButton(0) && toggleEnabled)
+        if(Input.GetKeyDown(KeyCode.I))
         {
-            toggleEnabled = false; 
-            inEnglish = !inEnglish; 
+            showInv(); 
+            toggleEnabled = false;
             foreach(GameObject item in items)
+            {
+                string itemName = names[items.IndexOf(item)];
+                item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = lookup.GetGuaraniName(itemName);
+
+
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            inEnglish = !inEnglish;
+            foreach (GameObject item in items)
             {
                 string itemName = names[items.IndexOf(item)];
                 if (inEnglish)
@@ -59,15 +75,28 @@ public class ShowInventory : MonoBehaviour
 
             }
         }
-        else
-        {
-            toggleCount++; 
-            if(toggleCount > toggleMax)
-            {
-                toggleCount = 0;
-                toggleEnabled = true; 
-            }
-        }
+    }
+
+    public bool HasInv()
+    {
+        return playerInventory.ItemNames.Count > 0; 
+    }
+
+    public void ShowGiftInventory(INPCController controller)
+    {
+        buttonActive = true;
+        ShowInvList();
+        receiverController = controller;
+        GameStateController.current.SetMouseLock(false);
+    }
+
+    private void giftToNPC(string objName)
+    {
+        HideInvList();
+        buttonActive = false;
+        receiverController.Gift(objName);
+        receiverController = null;
+        playerInventory.RemoveObj(objName); 
     }
 
     private void showInv()
@@ -85,12 +114,6 @@ public class ShowInventory : MonoBehaviour
         }
     }
 
-    //public void TextUpdate()
-    //{
-    //    string displayText = "No of Moonflower: " + playerInventory.GetObjNumber(MoonFlower) + "\nNo of WolfApple: " + playerInventory.GetObjNumber(WolfApple); 
-    //    //inventoryText.SetText(displayText);
-    //}
-
     public void ItemUpdate()
     {
         InvItemTemplate.SetActive(true);
@@ -104,32 +127,35 @@ public class ShowInventory : MonoBehaviour
             float heightDim = 10; 
             foreach (string item in playerInventory.ItemNames)
             {
+                //make a copy of the inventory item template 
                 GameObject newItem;
-                //if(first)
-                //{
-                //    newItem = InvItemTemplate;
-                //    currCol = 1;
-                //    first = false; 
-                //}
-                //else
+                newItem = Instantiate(InvItemTemplate, InvContentPanel.transform);
+                newItem.transform.position = InvItemTemplate.transform.position + new Vector3(xOffset * currCol, -yOffset * currRow, 0);
+                items.Add(newItem); 
+                //update place in inventory grid
+                currCol++; 
+                if(currCol > numCols)
                 {
-                    newItem = Instantiate(InvItemTemplate, InvContentPanel.transform);
-                    newItem.transform.position = InvItemTemplate.transform.position + new Vector3(xOffset * currCol, -yOffset * currRow, 0);
-                    items.Add(newItem); 
-                    currCol++; 
-                    if(currCol > numCols)
-                    {
-                        currRow++;
-                        currCol = 0; 
-                    }
-
+                    currRow++;
+                    currCol = 0; 
                 }
+
+                
                 names.Add(item);
 
+                //get all components of the template
                 Image icon = newItem.transform.GetChild(0).GetComponent<Image>();
                 TextMeshProUGUI itemName = newItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
                 TextMeshProUGUI itemNum = newItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+                Button invButton = newItem.transform.GetChild(3).GetComponent<Button>();
 
+                //set up or deactivate button accordingly
+                if (buttonActive)
+                    invButton.onClick.AddListener(delegate { giftToNPC(item); });
+                else
+                    invButton.gameObject.SetActive(false);
+
+                //get for content scroll info
                 heightDim = icon.gameObject.GetComponent<RectTransform>().rect.height * 2.3f;
 
                 icon.sprite = lookup.GetSprite(item);
@@ -144,7 +170,10 @@ public class ShowInventory : MonoBehaviour
             }
 
             RectTransform rect = InvContentPanel.GetComponent<RectTransform>();
-            rect.sizeDelta = new Vector2(rect.sizeDelta.x, currRow * heightDim); 
+            if (currRow >= 2)
+                rect.sizeDelta = new Vector2(rect.sizeDelta.x, 1.2f*currRow * heightDim); 
+            else
+                rect.sizeDelta = new Vector2(0, 0);
         }
         else
         {
@@ -173,7 +202,7 @@ public class ShowInventory : MonoBehaviour
     {
         ItemUpdate();
         InventoryPanel.SetActive(true);
-        gameController.PauseGame();
+        GameStateController.current.PauseGame();
         //inventoryText.gameObject.SetActive(true);
     }
 
@@ -181,7 +210,7 @@ public class ShowInventory : MonoBehaviour
     {
         DestroyItemIcons();
         InventoryPanel.SetActive(false);
-        gameController.UnpauseGame();
+        GameStateController.current.UnpauseGame();
         //inventoryText.gameObject.SetActive(false);
     }
 

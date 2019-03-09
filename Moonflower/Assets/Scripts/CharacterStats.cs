@@ -57,7 +57,7 @@ public class CharacterStats : MonoBehaviour
             display.HitHealth(CurrentHealth, MaxHealth); 
         //Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
     }
-    public void TakeDamage(int damage, string sourceName, CharacterStats sourceCharacterStats, Vector3 hitPoint, bool blocked)
+    public void TakeDamage(int damage, string sourceName, CharacterStats sourceCharacterStats, ICombatController combatController, Vector3 hitPoint, bool blocked)
     {
         if (!blocked)
         {
@@ -75,6 +75,8 @@ public class CharacterStats : MonoBehaviour
             if (hitPoint != Vector3.zero)
                 ObjectPoolController.current.CheckoutTemporary((GameObject)Resources.Load("Effects/HitEffect_Blocked"), hitPoint, 1);
         }
+
+        combatController.AcknowledgeHaveHit(gameObject);
 
         if (CurrentHealth <= 0)
             sourceCharacterStats.TrainStrengthKill();
@@ -96,11 +98,16 @@ public class CharacterStats : MonoBehaviour
     {
         return Stealth >= otherStealth;
     }
-    public void AddHealth (int amount)
+    public bool AddHealth (int amount) //returns true if health was actually added
     {
+        int initialHealth = CurrentHealth; 
         CurrentHealth = CurrentHealth + amount;
         if (CurrentHealth >= MaxHealth)
+        {
             CurrentHealth = MaxHealth;
+        }
+
+        return !(initialHealth == CurrentHealth); 
     }
 
     public void TrainStrengthHit()

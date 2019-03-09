@@ -104,10 +104,16 @@ public class DialogueCamera : MonoBehaviour
         state = DialogueCameraState.Active;
     }
 
-    public void BeginExit(Transform mainCameraTransform)
+    public void StartExit(Transform mainCameraTransform)
+    {
+        StartCoroutine(BeginExit(mainCameraTransform));
+    }
+
+    private IEnumerator BeginExit(Transform mainCameraTransform)
     {
         dialogueTarget = null;
 
+        yield return new WaitForSeconds(0.3f);
         // release player control (and switching)
         gameStateController.SetPlayerFrozen(false);
 

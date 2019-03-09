@@ -23,7 +23,7 @@ public class PlayerAnimatorController : MonoBehaviour
     public GameObject walkParticles;
     public GameObject runParticles;
     public GameObject standingParticles;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,8 +34,16 @@ public class PlayerAnimatorController : MonoBehaviour
         animator = playerController.GetActivePlayerObject().GetComponent<Animator>();
         companionAnimator = playerController.GetCompanionObject().GetComponent<Animator>();
 
+    }
+
+    void OnEnable()
+    {
         GameStateController.OnPaused += HandlePauseEvent;
         PlayerController.OnCharacterSwitch += SetActiveCharacter;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
     }
 
     // Update is called once per frame
@@ -85,7 +93,7 @@ public class PlayerAnimatorController : MonoBehaviour
     // Disable player animation when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        animator.enabled = !isPaused;
+        //animator.enabled = !isPaused;
     }
 
     public void SetActiveCharacter(PlayerController.PlayerCharacter activeChar)

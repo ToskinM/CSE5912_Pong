@@ -16,15 +16,17 @@ public class AudioManager : MonoBehaviour
     public float backgroundVol;
 
     public static AudioManager instance;
-    private AudioAvalibleArea avalibleArea;
+    //private AudioAvalibleArea avalibleArea;
     private AudioSourceManager audioSources;
 
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
         if (instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
             instance = this;
+        }
         else
         {
             Destroy(gameObject);
@@ -36,12 +38,12 @@ public class AudioManager : MonoBehaviour
         //Get AudioSource
         StartCoroutine(GetAudioSourceManager());
         //Assign music clip to audio source
-        AssignToAudioSource(audioSounds, soundVol);
-        AssignToAudioSource(audioBackgrounds, backgroundVol);
+            //AssignToAudioSource(audioSounds, soundVol);
+            //AssignToAudioSource(audioBackgrounds, backgroundVol);
         //Play Background wind Sound
-        //PlayBackground("Environment", "Wind");
+        PlayBackground("Environment", "Wind");
         //Set hearable area
-        avalibleArea = GetComponent<AudioAvalibleArea>();
+        //avalibleArea = GetComponent<AudioAvalibleArea>();
 
 
     }
@@ -56,30 +58,7 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    public void AssignToAudioSource(Audio[] category, float vol)
-    {
-        foreach(Audio a in category)
-        {
-            Sound[] soundList = a.sounds;
-            foreach (Sound s in soundList)
-            {
-                if (s.source == null)
-                {
-                    ReAddAudioSource(a, s);
-                    s.source.clip = s.clip;
-                    s.source.volume = vol;
-                    s.source.pitch = s.pitch;
-                    s.source.loop = s.loop;
-                    s.source.spatialBlend = 0.5f;
-                }
-
-                //if (s.clip.name.Contains("footstep"))
-                //    s.source.volume = vol * 0.2f;
-                //else
-                    
-            }
-        }
-    }
+   
 
     //Play
     public void Play(string category,string name)
@@ -95,7 +74,11 @@ public class AudioManager : MonoBehaviour
         //Add back audio source
         if (s.source == null)
         {
-            ReAddAudioSource(a, s);
+            AddAllAudioSource(category);
+            if (a.categoryName=="BGM")
+            {
+                BMGAddAllAudioSource(category);
+            }
         }
     }
     public void PlayBackground(string category, string name)
@@ -128,6 +111,7 @@ public class AudioManager : MonoBehaviour
         if (s.source == null)
         {
             ReAddAudioSource(a, s);
+            AddSourceOtherComponent(s);
         }
     }
 
@@ -139,6 +123,7 @@ public class AudioManager : MonoBehaviour
         Sound[] soundList = a.sounds;
         foreach (Sound s in soundList)
         {
+            if (s.source!=null)
             s.source.volume = 0;
         }
     }
@@ -149,7 +134,8 @@ public class AudioManager : MonoBehaviour
         Sound[] soundList = a.sounds;
         foreach (Sound s in soundList)
         {
-            s.source.volume = soundVol;
+            if (s.source != null)
+                s.source.volume = soundVol;
         }
     }
 
@@ -169,9 +155,7 @@ public class AudioManager : MonoBehaviour
     {
         Audio a = Array.Find(audioSounds, sound => sound.categoryName.Contains(category));
         Sound s = Array.Find(a.sounds, sound => sound.name == name);
-        //if (s.name.Contains("run") || s.name.Contains("walk"))
-        //    s.source.volume = soundVol * 0.2f;
-        //else
+        if (s.source != null)
             s.source.volume = soundVol;
     }
 
@@ -196,19 +180,10 @@ public class AudioManager : MonoBehaviour
             foreach (Sound s in soundList)
             {
                 s.source.volume = vol;
-                avalibleArea.HearableArea(s.source, vol);
+                //avalibleArea.HearableArea(s.source, vol);
             }
         }
     }
-    public void UpdateVol(Sound[] category, float vol)
-    {
-        foreach (Sound s in category)
-        {
-            s.source.volume = vol;
-            avalibleArea.HearableArea(s.source, vol);
-        }
-    }
-
     //Get Volume
     public float GetBackgroundVolume()
     {
@@ -227,12 +202,20 @@ public class AudioManager : MonoBehaviour
         else if (a.categoryName.Contains("Mimbi"))
             s.source = audioSources.AddMimbiAudioSource();
         else if (a.categoryName.Contains("Mouse"))
-        {}//s.source = audioSources.AddNPCPlayerAudioSource();
-        //else if (s.name.Contains("Player"))
-        //s.source = audioSources.AddCurrentPlayerAudioSource();
+        {
+            //do nothing for now
+            /*s.source = audioSources.AddNPCPlayerAudioSource();*/
+        }
+        else if (s.name.Contains("Player"))
+        s.source = audioSources.AddCurrentPlayerAudioSource();
         else
+        {
+            //Add audio source on audio object
             s.source = gameObject.AddComponent<AudioSource>();
+        }
+            
     }
+    //Add all SFX for certain category for certain object
     public void ReAddAllAudioSource(GameObject obj, String category)
     {
         Audio a = Array.Find(audioSounds, sound => sound.categoryName.Contains(category));
@@ -240,18 +223,55 @@ public class AudioManager : MonoBehaviour
         foreach (Sound s in soundList)
         {
             s.source = obj.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
-            s.source.volume = soundVol;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
-            s.source.spatialBlend = 0.5f;
+            AddSourceOtherComponent(s);
         }
 
     }
+    public void AddSourceOtherComponent(Sound s)
+    {
+        s.source.clip = s.clip;
+        s.source.volume = soundVol;
+        s.source.pitch = s.pitch;
+        s.source.loop = s.loop;
+        s.source.spatialBlend = 1;
+    }
+    public void BGMAddSourceOtherComponent(Sound s)
+    {
+        s.source.clip = s.clip;
+        s.source.volume = soundVol;
+        s.source.pitch = s.pitch;
+        s.source.loop = s.loop;
+        s.source.spatialBlend = 0;
+    }
 
+
+
+    public void AddAllAudioSource(String category)
+    {
+        Audio a = Array.Find(audioSounds, sound => sound.categoryName.Contains(category));
+        Sound[] soundList = a.sounds;
+        foreach (Sound s in soundList)
+        {
+            ReAddAudioSource(a, s);
+            AddSourceOtherComponent(s);
+        }
+    }
+    public void BMGAddAllAudioSource(String category)
+    {
+        Audio a = Array.Find(audioSounds, sound => sound.categoryName.Contains(category));
+        Sound[] soundList = a.sounds;
+        foreach (Sound s in soundList)
+        {
+            ReAddAudioSource(a, s);
+            BGMAddSourceOtherComponent(s);
+        }
+    }
 
     void Update()
     {
 
     }
+
+
+
 }

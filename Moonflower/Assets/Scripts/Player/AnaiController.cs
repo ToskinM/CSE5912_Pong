@@ -7,6 +7,7 @@ using UnityEngine.AI;
 [Serializable]
 public class AnaiController : MonoBehaviour, IPlayerController
 {
+    public bool active = true;
     public bool Playing { get; set; }
     public GameObject Mimbi;
     public GameObject HUD;
@@ -32,7 +33,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
     const float bufferRadius = 5f;
     const float tooCloseRadius = 2f;
     float followDist = 8f;
-
+    SpawnPoint spawnPoint;
     public enum PlayerStates { exploring, talking, fighting, distracting }
     public PlayerStates CurrState = PlayerStates.exploring;
 
@@ -45,9 +46,10 @@ public class AnaiController : MonoBehaviour, IPlayerController
     {
         Playing = true;
         moveSpeed = 5f;
-
+        spawnPoint = GameObject.Find("Spawner").GetComponent<SpawnPoint>();
+        spawnPoint.Spawn();
         icon = new IconFactory().GetIcon(Constants.ANAI_ICON);
-        Mimbi = GameObject.Find("Mimbi");
+        Mimbi = LevelManager.current.mimbi.gameObject;
         agent = GetComponent<NavMeshAgent>();
         playMove = GetComponent<PlayerMovement>();
         playCombat = GetComponent<PlayerCombatController>();
@@ -55,7 +57,9 @@ public class AnaiController : MonoBehaviour, IPlayerController
         boxCollider = GetComponent<BoxCollider>();
         stats = GetComponent<CharacterStats>();
         npcMove = new NPCMovementController(gameObject, Mimbi);
-        //        npcMove.Active = false; 
+        mimbiController = Mimbi.GetComponent<MimbiController>();
+
+        //        npcMove.Active = false;
         npcMove.FollowPlayer(followDist, tooCloseRadius);
 
         GameStateController.OnPaused += HandlePauseEvent;
@@ -68,9 +72,20 @@ public class AnaiController : MonoBehaviour, IPlayerController
         playerSoundEffect = GetComponent<PlayerSoundEffect>();
     }
 
+    private void OnEnable()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+        GameStateController.OnFreezePlayer += HandleFreezeEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
+        GameStateController.OnFreezePlayer -= HandleFreezeEvent;
+    }
+
     void DetectCharacterSwitchInput()
     {
-        if (Input.GetButtonDown("Switch"))
+        if (Input.GetButtonDown("Switch") && !LevelManager.current.currentPlayer.GetComponent<PlayerCombatController>().InCombat)
         {
             Playing = !Playing;
             Switch(Playing);
@@ -93,7 +108,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
         else
         {
             playerSoundEffect.AnaiMute();
-            //            npcMove.Active = true; 
+            //            npcMove.Active = true;
             playCombat.enabled = false;
             gameObject.layer = 0;
             tag = "Companion";
@@ -114,23 +129,36 @@ public class AnaiController : MonoBehaviour, IPlayerController
     // Update is called once per frame
     void Update()
     {
-        DetectCharacterSwitchInput();
-        DetectSummonCompanionInput();
-
-        if (Playing)
+        if (active)
         {
-            print("Anai play");
-            if (CurrState == PlayerStates.talking)
-                playCombat.canAttack = false;
-            else if (!playCombat.canAttack)
-                playCombat.canAttack = true;
-            playMove.MovementUpdate();
+            DetectCharacterSwitchInput();
+            DetectSummonCompanionInput();
 
+            if (Playing)
+            {
+                print("Anai play");
+                if (CurrState == PlayerStates.talking)
+                    playCombat.canAttack = false;
+                else if (!playCombat.canAttack)
+                    playCombat.canAttack = true;
+                playMove.MovementUpdate();
+
+            }
+            else
+            {
+                npcMove.UpdateMovement();
+            }
+
+            if(TalkingPartner != null)
+            {
+                mimbiController.Chill();
+            }
+            else
+            {
+                mimbiController.Reset();
+            }
         }
-        else
-        {
-            npcMove.UpdateMovement();
-        }
+
 
     }
 
@@ -147,12 +175,12 @@ public class AnaiController : MonoBehaviour, IPlayerController
     // Disable updates when gaame is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
     // Disable player controls
     void HandleFreezeEvent(bool frozen)
     {
         playMove.Action = Actions.Chilling;
-        enabled = !frozen;
+        active = !frozen;
     }
 }

@@ -31,7 +31,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     public Weapon weapon;
     public float attackDistance = 2.6f;
     private readonly float[] attackMultipliers = new float[] { 0f, 1f };
-    [HideInInspector] public bool isAttacking;
+    public bool isAttacking;
     [HideInInspector] public int attack;
     [HideInInspector] public float attackTimeout = 20f;
     private float timeSinceLastAttack;
@@ -72,8 +72,15 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             Frenzy();
 
         StartCoroutine(GetAudioManager());
+    }
 
+    private void OnEnable()
+    {
         GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
     }
 
     private IEnumerator GetAudioManager()
@@ -94,7 +101,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             isAttacking = false;
         }
 
-        if (npcMovement!=null)
+        if (npcMovement != null)
         {
             npcMovement.swinging = isAttacking;
         }
@@ -147,7 +154,14 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
                     if (!IsBlocking)
                         Stagger();
-                    Stats.TakeDamage(damage, source.name, hurtboxController.sourceCharacterStats, GetContactPoint(other), IsBlocking);
+
+                    ICombatController sourceCombatController = null;
+                    sourceCombatController = source.GetComponent<NPCCombatController>();
+                    if (sourceCombatController == null)
+                    {
+                        sourceCombatController = source.GetComponent<PlayerCombatController>();
+                    }
+                    Stats.TakeDamage(damage, source.name, hurtboxController.sourceCharacterStats, sourceCombatController, GetContactPoint(other), IsBlocking);
                 }
             }
 
@@ -172,7 +186,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         if (group && group.IsInGroup(aggressor))
         {
             // If we are grouped with the aggressor, only allow the hit if the group allows inter-aggression
-            if (group.canHurtEachother)
+            if (group.cantHurtEachother)
                 return false;
             else
                 return true;
@@ -197,7 +211,11 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             if (stunned == 1)
                 npcMovement.stunned = true;
             else
+            {
                 npcMovement.stunned = false;
+                //if (Random.Range(0, 100) > 0)
+                    //StartCoroutine(Backstep());
+            }
         }
     }
 
@@ -261,6 +279,12 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
         npcAnimationController.TriggerAttack();
     }
+
+    public void AcknowledgeHaveHit(GameObject whoWeHit)
+    {
+        //Aggro(whoWeHit, false);
+    }
+
     private IEnumerator Backstep()
     {
         npcMovement.Active = false;
@@ -269,7 +293,9 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         rigidbody.useGravity = true;
 
         Vector3 jumpforce = (Vector3.back * 2f) + Vector3.up;
-        rigidbody.AddRelativeForce(jumpforce * 5, ForceMode.Impulse);
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.AddRelativeForce(jumpforce * 6, ForceMode.Impulse);
+        rigidbody.velocity = Vector3.zero;
         yield return new WaitForSeconds(1);
 
         rigidbody.isKinematic = true;
@@ -284,7 +310,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         if (InCombat)
         {
             // Deaggro if we have no combatTarget
-            if (combatTarget == null)
+            if (!combatTarget || !combatTarget.activeInHierarchy)
             {
                 DeAggro();
 
@@ -309,12 +335,12 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             }
             // Deaggro if we cant find target in time
             else if (deaggroCoroutine == null)
-                deaggroCoroutine = StartCoroutine(WaitForDeaggro());
+                deaggroCoroutine = StartCoroutine(DeaggroTimeout());
         }
 
         // Search for a target OR closer target
         Transform possibleTarget = fieldOfView?.closestTarget;
-        if (possibleTarget != null )
+        if (possibleTarget != null)
         {
             if (aggression == Aggression.Aggressive)
             {
@@ -361,6 +387,13 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             aggressors.Remove(aggressor);
     }
 
+    public void Subdue()
+    {
+        DeAggro();
+        if (aggression != Aggression.Passive)
+            aggression--;
+    }
+
     private void DeAggro()
     {
         fieldOfView.SetCombatMode(false);
@@ -372,7 +405,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         //Debug.Log(gameObject.name + " stopped combat");
         Sheathe();
 
-        if(npcMovement != null)
+        if (npcMovement != null)
             npcMovement.Chill();
 
         // Broadcast that we've lost aggro
@@ -387,7 +420,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     }
 
     // Start deaggro timer
-    private IEnumerator WaitForDeaggro()
+    private IEnumerator DeaggroTimeout()
     {
         yield return new WaitForSeconds(deaggroTime);
         DeAggro();
@@ -410,7 +443,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     }
 
     // Death cleanup and Sequence
-    private IEnumerator Die()   
+    private IEnumerator Die()
     {
         //Debug.Log(gameObject.name + " has died");
         OnDeath?.Invoke(this);
@@ -450,6 +483,6 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     // Disable player combat controls when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
 }

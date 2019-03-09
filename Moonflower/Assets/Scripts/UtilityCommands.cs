@@ -8,7 +8,6 @@ public class UtilityCommands : MonoBehaviour
 
     ICommand screencapCmd, videocapCmd, pauseCmd, DebugViewCmd, QuickSaveCmd, QuickLoadCmd;
 
-    // Start is called before the first frame update
     void Start()
     {
         gameStateController = gameObject.GetComponent<GameStateController>();
@@ -20,7 +19,6 @@ public class UtilityCommands : MonoBehaviour
         QuickLoadCmd = new QuickLoadCommand();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

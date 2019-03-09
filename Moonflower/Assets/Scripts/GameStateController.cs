@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameStateController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GameStateController : MonoBehaviour
 
     public bool Paused;
     public bool DebugModeOn;
+    public bool cameraAvailable;
 
     private FollowCamera camControl;
 
@@ -21,6 +23,7 @@ public class GameStateController : MonoBehaviour
     public static event FreezePlayer OnFreezePlayer;
 
     private int menuLayers = 0;
+    private int pauseLayers = 0;
 
     void Start()
     {
@@ -36,15 +39,24 @@ public class GameStateController : MonoBehaviour
 
         Paused = false;
         DebugModeOn = false;
-        camControl = MainCamera.GetComponent<FollowCamera>();
 
         // Lock Mouse on game start
-        SetMouseLock(true);
+        if (SceneManager.GetActiveScene().name != Constants.SCENE_MAINMENU)
+        {
+            SetMouseLock(true);
+        }
+
+        if (LevelManager.current && LevelManager.current.mainCamera)
+        {
+            cameraAvailable = true;
+            camControl = LevelManager.current.mainCamera;
+        }
     }
 
     void Update()
     {
-        camControl = MainCamera.GetComponent<FollowCamera>();
+        if (cameraAvailable)
+            camControl = LevelManager.current.mainCamera;
     }
 
     public void ToggleDebugMode()
@@ -52,18 +64,20 @@ public class GameStateController : MonoBehaviour
         DebugModeOn = !DebugModeOn;
 
         //CameraController camControl = MainCamera.GetComponent<CameraController>();
-        camControl = MainCamera.GetComponent<FollowCamera>();
-
-        camControl.SetFreeRoam(DebugModeOn);
-        EnablePlayerMovement(!DebugModeOn);
+        if (cameraAvailable)
+        {
+            camControl = LevelManager.current.mainCamera;
+            camControl.SetFreeRoam(DebugModeOn);
+            EnablePlayerMovement(!DebugModeOn);
+        }
     }
 
     public void SetMouseLock(bool doLock)
     {
         if (doLock)   // Lock
         {
-            menuLayers++;
-            if (menuLayers > 0)
+            menuLayers = (int)Mathf.Clamp(menuLayers - 1, 0, float.PositiveInfinity);
+            if (menuLayers <= 0)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -71,13 +85,21 @@ public class GameStateController : MonoBehaviour
         }
         else          // Unlock
         {
-            menuLayers--;
-            if (menuLayers <= 0)
+            menuLayers++;
+            if (menuLayers > 0)
             {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
         }
+    }
+
+    public void ForceMouseUnlock()
+    {
+        menuLayers = 0;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void TogglePause()
@@ -101,17 +123,39 @@ public class GameStateController : MonoBehaviour
 
     public void PauseGame()
     {
-        Paused = true;
-        camControl.Frozen = true;
-        OnPaused?.Invoke(Paused);
-        SetMouseLock(false);
+        pauseLayers++;
+        if (pauseLayers > 0)
+        {
+            Paused = true;
+            if (camControl)
+                camControl.Frozen = true;
+            //OnPaused?.Invoke(Paused);
+            SetMouseLock(false);
+            Time.timeScale = 0;
+        }
     }
     public void UnpauseGame()
     {
+        pauseLayers = (int)Mathf.Clamp(pauseLayers - 1, 0, float.PositiveInfinity);
+        if (pauseLayers <= 0)
+        {
+            Paused = false;
+            if (camControl)
+                camControl.Frozen = false;
+            //OnPaused?.Invoke(Paused);
+            SetMouseLock(true);
+            Time.timeScale = 1;
+        }
+    }
+    public void ForceUnpause()
+    {
+        pauseLayers = 0;
         Paused = false;
-        camControl.Frozen = false;
-        OnPaused?.Invoke(Paused);
+        if (camControl)
+            camControl.Frozen = false;
+        //OnPaused?.Invoke(Paused);
         SetMouseLock(true);
+        Time.timeScale = 1;
     }
 
     public void FreezeCamera()

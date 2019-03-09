@@ -354,7 +354,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
     // Disable player combat controls when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
 
 }

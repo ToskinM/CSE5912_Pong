@@ -18,12 +18,15 @@ public class KeyForGate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (player == null)
+        {
+            player = LevelManager.current.currentPlayer;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.Equals(player.GetComponent<BoxCollider>()) || player == null)
+        if (other.Equals(player.GetComponent<BoxCollider>()))
         {
             if (time != 0)
             {

@@ -46,6 +46,9 @@ public static class Constants
     public const string BOW_ICON = itemFolder + "Bow";
     public const string ARROW_ICON = itemFolder + "Arrow";
     public const string CORN_ICON = itemFolder + "Corn";
+    public const string STAFF_ICON = itemFolder + "Jewel Staff";
+    public const string SWEETPOTATO_ICON = itemFolder + "Sweet Potato";
+    public const string PAINT_ICON = itemFolder + "Paint Pots";
 
     //life petal names
     const string flowerFolder = "Life Petals/";
@@ -88,10 +91,13 @@ public static class Constants
 
     //Amaru
     public const string TEST_DIALOGUE = dialogueFolder + "New Dialogue Graph";
-    public const string AMARU_INTRO_DIALOGUE = dialogueFolder + "Amaru Intro Dialogue"; 
+    public const string AMARU_INTRO_DIALOGUE = dialogueFolder + "Amaru Intro Dialogue";
     //Naia
+    public const string NAIA_INTRO_DIALOGUE = dialogueFolder + "Naia Intro";
+
     //Sypave
     //Jeruti
     //Pinon
     //Ysapy
+
 }

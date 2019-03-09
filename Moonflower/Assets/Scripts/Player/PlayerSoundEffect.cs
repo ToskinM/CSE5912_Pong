@@ -5,9 +5,6 @@ using UnityEngine;
 public class PlayerSoundEffect : MonoBehaviour
 {
     private AudioManager audioManager;
-    private int mimbiStep;
-    public int mimbiFootStepTime = 6;
-    //public int runStepTime = 5;
     private readonly string anai = "Anai";
     private readonly string mimbi = "Mimbi";
 
@@ -15,7 +12,6 @@ public class PlayerSoundEffect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mimbiStep = 0;
         StartCoroutine(GetAudioManager());
     }
     public IEnumerator GetAudioManager()
@@ -63,7 +59,13 @@ public class PlayerSoundEffect : MonoBehaviour
 
     public void AnaiRunSFX()
     {
-        audioManager.Play(anai, "AnaiRun");
+        for (int i = 0; i < 2; i++)
+        {
+            if (i == 0)
+                audioManager.Play(anai, "AnaiRun(1)");
+            else
+                audioManager.Play(anai, "AnaiRun(2)");
+        }
 
     }
     public void PlayerPickupSFX()
@@ -78,13 +80,36 @@ public class PlayerSoundEffect : MonoBehaviour
 
     public void MimbiWalkingSFX()
     {
-        if (mimbiStep == 0)
-        {
-            audioManager.Play(mimbi,"MimbiWalking");
-        }
-        mimbiStep++;
-        if (mimbiStep == mimbiFootStepTime)
-            mimbiStep = 0;
+        audioManager.ResumeNormal(mimbi, "MimbiWalking(1)");
+        audioManager.ResumeNormal(mimbi, "MimbiWalking(2)");
+        int x = Random.Range(1, 3);
+        if (x == 1)
+            audioManager.Play(mimbi, "MimbiWalking(1)");
+        else
+            audioManager.Play(mimbi, "MimbiWalking(2)");
+    }
+    public void MimbiSneakingSFX()
+    {
+        int x = Random.Range(1, 3);
+        if (x == 1)
+            audioManager.PlaySneakFootStep(mimbi, "MimbiWalking(1)");
+        else
+            audioManager.PlaySneakFootStep(mimbi, "MimbiWalking(2)");
+    }
+
+    public void MimbiRuningSFX()
+    {
+        int x = Random.Range(1, 3);
+        if (x == 1)
+            audioManager.Play(mimbi, "MimbiRuning(1)");
+        else
+            audioManager.Play(mimbi, "MimbiRuning(2)");
+    }
+
+    public void MimbiGetHitSFX()
+    {
+        audioManager.PlaySneakFootStep(mimbi, "MimbiGetHit");
+        Debug.Log("get hit");
     }
 
     public void AnaiMute()

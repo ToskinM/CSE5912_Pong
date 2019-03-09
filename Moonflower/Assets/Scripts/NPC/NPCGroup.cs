@@ -8,7 +8,7 @@ public class NPCGroup : MonoBehaviour
     public List<LesserNPCController> NPCs;
 
     public bool assistInCombat;
-    public bool canHurtEachother;
+    public bool cantHurtEachother;
     public bool destroyIfEmpty;
 
     void Start()

@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class MainMenuBehavior : MonoBehaviour
 {
-    public GameObject MainMenu, OptionsMenu, Title; 
+    public GameObject MainMenu, OptionsMenu;
+    public CanvasGroup Title;
     public Button start, options, quit, back;
     //public AudioClip MusicClip;
     //public AudioSource MusicSource;
@@ -16,10 +17,14 @@ public class MainMenuBehavior : MonoBehaviour
 
     public MainMenuCamera mainMenuCamera;
 
+    private bool fading = false;
+    private const float pseudoDeltaTime = 0.05f;
+
     //private AudioManager audioManager;
     private float originalMusicVol;
     private float originalAudioVol;
     private SceneController sceneController;    // Reference to the SceneController to actually do the loading and unloading of scenes.
+    AudioManager audioManager;
 
     void Awake()
     {
@@ -33,15 +38,26 @@ public class MainMenuBehavior : MonoBehaviour
         quit.onClick.AddListener(QuitGame);
         back.onClick.AddListener(GoBack);
 
-        musicSlider.value = FindObjectOfType<AudioManager>().GetBackgroundVolume();
-        audioSlider.value = FindObjectOfType<AudioManager>().GetSoundVolume();
+        audioManager = FindObjectOfType<AudioManager>();
+        if (audioManager)
+        {
+            musicSlider.value = audioManager.GetBackgroundVolume();
+            audioSlider.value = audioManager.GetSoundVolume();
 
-        originalMusicVol = musicSlider.value;
-        originalAudioVol = audioSlider.value;
+            originalMusicVol = musicSlider.value;
+            originalAudioVol = audioSlider.value;
+        }
 
         play = new PlayCommand();
         nag = new NagCommand();
 
+        //GameStateController.current.SetMouseLock(false);
+        GameStateController.current.ForceMouseUnlock();
+
+        //MainMenu.SetActive(false);
+        Title.alpha = 0f;
+
+        //StartCoroutine(FadeTitle(1f, 2f));
     }
     public void StartGame()
     {
@@ -117,7 +133,11 @@ public class MainMenuBehavior : MonoBehaviour
 
         if (Mathf.Abs(musicSlider.value-originalMusicVol)>=0.01)
         {
-            FindObjectOfType<AudioManager>().ChangeBackgroundVol(musicSlider.value);
+            if (audioManager)
+            {
+                audioManager.ChangeBackgroundVol(musicSlider.value);
+            }
+
             //FindObjectOfType<AudioManager>().PlayTest("Background");
         }
     }
@@ -139,4 +159,18 @@ public class MainMenuBehavior : MonoBehaviour
             Slider();
     }
 
+    private IEnumerator FadeTitle(float finalAlpha, float duration)
+    {
+        fading = true;
+
+        float fadeSpeed = Mathf.Abs(Title.alpha - finalAlpha) / duration;
+        while (!Mathf.Approximately(Title.alpha, finalAlpha))
+        {
+            Debug.Log("k");
+            Title.alpha = Mathf.MoveTowards(Title.alpha, finalAlpha, fadeSpeed * pseudoDeltaTime);
+            yield return null;
+        }
+
+        fading = false;
+    }
 }

@@ -24,8 +24,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
     private bool blockOffCooldown;
     private bool onGround = true;
     private FollowCamera cameraScript;
-    //private AudioManager audioManager;
-    private PlayerSoundEffect playerSoundEffect;
     private bool returnGrav = false;
     //follow variables
     private BoxCollider boxCollider;
@@ -33,9 +31,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
     const float tooCloseRadius = 4f;
     public GameObject otherCharacter;
     public float smoothTime = 2f;
-
-    private int footstep;
-    public int footstepTime = 5;
 
     private Quaternion rotation = Quaternion.identity;
 
@@ -46,9 +41,8 @@ public class PlayerMovement : MonoBehaviour, IMovement
     {
         terrain = GameObject.Find("Terrain").GetComponent<TerrainCollider>();
         body = GetComponent<Rigidbody>();
-        cameraScript = LevelManager.current.mainCamera;
+        
         //cameraScript = Camera.main.GetComponent<FollowCamera>();
-        playerSoundEffect = GameObject.Find("Anai").GetComponent<PlayerSoundEffect>();
     }
 
     void Start()
@@ -60,19 +54,25 @@ public class PlayerMovement : MonoBehaviour, IMovement
         moveSpeed = walkSpeed;
         blockCooldown = blockCooldownTime;
         blockOffCooldown = true;
-
+        cameraScript = LevelManager.current.mainCamera;
         Action = Actions.Chilling;
         Jumping = false;
-        footstep = 0;
+    }
 
+    private void OnEnable()
+    {
         GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
     }
 
     private void Update()
     {
         // Damping
         body.velocity *= 0.98f;
-
+        
         //isAnai = GameObject.Find("Player").GetComponent<CurrentPlayer>().IsAnai();
         isAnai = gameObject == LevelManager.current.currentPlayer;
     }
@@ -98,14 +98,10 @@ public class PlayerMovement : MonoBehaviour, IMovement
         else
         {
             //if (WalkConditionCheck())
-            {
+            //{
                 Action = Actions.Walking;
                 moveSpeed = walkSpeed;
-                if (isAnai)
-                {}
-                else
-                    playerSoundEffect.MimbiWalkingSFX();
-            }
+            //}
         }
     }
 
@@ -118,21 +114,44 @@ public class PlayerMovement : MonoBehaviour, IMovement
         return releaseRun || releaseSneak || neutralState;
     }
 
+    public void Jump()
+    {
+        Jumping = false;
+        if (Action != Actions.Running && onGround)
+            body.AddForce(new Vector3(0f, 30f, 0f), ForceMode.Impulse);
+        else if (Action == Actions.Running && onGround)
+            body.AddForce(new Vector3(0f, 40f, 0f), ForceMode.Impulse);
+        //onGround = false;
+
+    }
+    public void DontJump()
+    {
+        //onGround = false;
+        //Jumping = false;
+    }
     void SetJump()
     {
         if (Input.GetButtonDown("Jump") && onGround)
         {
             //Action = Actions.Chilling;
             Jumping = true;
-            onGround = false;
-            if (Action != Actions.Running)
+
+            if (Action != Actions.Running && LevelManager.current.currentPlayer.name == "Anai")
             {
-                body.AddForce(new Vector3(0f, 30f, 0f), ForceMode.Impulse);
+
+                    Debug.Log("true");
+                    body.AddForce(new Vector3(0f, 30f, 0f), ForceMode.Impulse);
+                    onGround = false;
+
+                    
+                //body.AddForce(transform.forward, ForceMode.Impulse);
             } else {
 
-                body.AddForce(new Vector3(0f, 40f, 0f), ForceMode.Impulse);
-            }
+                    Debug.Log("true");
+                    body.AddForce(new Vector3(0f, 40f, 0f), ForceMode.Impulse);
+                    onGround = false;
 
+            }
         }
         else if (onGround)
         {
@@ -311,6 +330,6 @@ public class PlayerMovement : MonoBehaviour, IMovement
     // Disable player movement controls when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
 }

@@ -25,11 +25,17 @@ public class StealthDetection : MonoBehaviour
 
         timeSinceLastAction = 0f;
         Awareness = AwarenessLevel.Neutral;
-
-        GameStateController.OnPaused += HandlePauseEvent;
     }
 
-    // Update is called once per frame
+    private void OnEnable()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
+    }
+
     void Update()
     {
         // If some time has passed since last player movement, reduce suspicion levels

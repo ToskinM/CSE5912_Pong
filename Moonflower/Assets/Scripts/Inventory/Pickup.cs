@@ -18,23 +18,34 @@ public class Pickup : MonoBehaviour
     private CharacterStats playerStats;
     private PlayerInventory playerInventory;
     private PlayerSoundEffect soundEffect;
+    private FeedbackText feedback;
 
     public TextMeshProUGUI inventoryAdd;
 
-    // Start is called before the first frame update
+    public PlayerMovement playerMovement;
+
+
     void Start()
     {
+        if (!playerAnai)
+            playerAnai = gameObject;
+
+        //StartCoroutine(GetAudioManager());
+        //inventoryManager = FindObjectOfType<InventoryManager>();
+        playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
         playerStats = GetComponent<CharacterStats>();
         playerInventory = GetComponent<PlayerInventory>();
-        //anaiStat = playerInfo.PlayerAnaiObj.GetComponent<CharacterStats>();
-        //mimbiStat = playerInfo.PlayerMimbiObj.GetComponent<CharacterStats>(); 
 
-        //soundEffect = playerAnai.GetComponent<PlayerSoundEffect>();
+        anaiStat = LevelManager.current.anai.GetComponent<CharacterStats>();
+        mimbiStat = LevelManager.current.mimbi.GetComponent<CharacterStats>();
+
+        playerInventory = playerAnai.GetComponent<PlayerInventory>();
+        soundEffect = playerAnai.GetComponent<PlayerSoundEffect>();
+        feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         currentPlayer = PlayerController.instance.GetActivePlayerObject();
         PlayerController.OnCharacterSwitch += SwitchActiveCharacter;
     }
-
 
     private GameObject FindClosest()
     {
@@ -90,22 +101,30 @@ public class Pickup : MonoBehaviour
             //Get items's health
             int health = obj.GetComponent<InventoryStat>().GetHealth();
 
+            bool objectUsedImmediately = false;
             if (obj.GetComponent<InventoryStat>().AnaiObject)
             {
-                TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Anai");
-                //anaiStat.AddHealth(health);
+                string objName = obj.GetComponent<InventoryStat>().Name;
+                //TextUpdate(objName + " is collected, " + health + " [health] were add to Anai");
+                feedback.ShowText("You have found a " + objName);
+               objectUsedImmediately = !anaiStat.AddHealth(health);
             }
             else if (obj.GetComponent<InventoryStat>().MimbiObject)
             {
-                TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
-                //mimbiStat.AddHealth(health);
+                string objName = obj.GetComponent<InventoryStat>().Name;
+                //TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
+                feedback.ShowText("You have found a " + objName);
+                objectUsedImmediately = !mimbiStat.AddHealth(health);
             }
             else
             {
-                TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected. ");
+                //TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected. ");
+                string objName = obj.GetComponent<InventoryStat>().Name;
+                feedback.ShowText("You have found a " + objName);
             }
             //Add to inventory
-            playerInventory.AddObj(obj.gameObject);
+            if(!objectUsedImmediately)
+                playerInventory.AddObj(obj.gameObject);
             //Destroy Gameobject after collect
             Destroy(obj.gameObject);
             //Play Pickup audio clip;

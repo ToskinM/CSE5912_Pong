@@ -27,6 +27,7 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
     float tooCloseRadius = 2.5f;
 
     float baseSpeed;
+    float doubleSpeed; 
     float baseAngularSpeed; 
 
     void Start()
@@ -67,6 +68,7 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
         Target = targetOb;
         agent = self.GetComponent<NavMeshAgent>();
         baseSpeed = agent.speed * 1.5f;
+        doubleSpeed = baseSpeed * 2; 
         baseAngularSpeed = agent.angularSpeed; 
         destination = selfOb.transform.position;
     }
@@ -89,7 +91,7 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
                     Vector3 newDest = self.transform.position + targetDirection.normalized * 10;
                     destination = getRandomDest(newDest, 1f);
                     GoHere(destination);
-                    agent.speed *= 2;
+                    agent.speed = doubleSpeed;
                 }
                 else
                 {
@@ -188,7 +190,7 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
     // Disable player combat controls when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
 
 }

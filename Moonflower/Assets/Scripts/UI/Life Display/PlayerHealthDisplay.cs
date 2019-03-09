@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 public class PlayerHealthDisplay : MonoBehaviour
 {
@@ -44,15 +44,15 @@ public class PlayerHealthDisplay : MonoBehaviour
         else
         {
             appleControl.UpdateApple(healthFrac);
-        } 
+        }
     }
 
     public void HitHealth(int current, int max)
     {
         if (playerController.GetActiveCharacter() == PlayerController.PlayerCharacter.Anai)
-            flowerControl.Hit(); 
+            flowerControl.Hit();
         else
-            appleControl.Hit(); 
+            appleControl.Hit();
 
     }
 

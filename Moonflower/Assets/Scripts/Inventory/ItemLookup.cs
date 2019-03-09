@@ -24,6 +24,77 @@ public class ItemLookup
     public const string ARROW_NAME = "Arrow";
 
 
+    public bool IsFood(string name)
+    {
+        switch (name)
+        {
+            case HONEY_NAME:
+            case PUMPKIN_NAME:
+            case CHIPA_NAME:
+            case CORN_NAME:
+            case SWEETPOTATO_NAME:
+            case PINEAPPLE_NAME:
+            case FISH_NAME:
+            case PEANUT_NAME:
+                return true;
+            
+            default:
+                return false;
+        }
+    }
+
+    public bool IsInstrument(string name)
+    {
+        switch (name)
+        {
+            case FLUTE_NAME:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    public bool IsMaterial(string name)
+    {
+        switch (name)
+        {
+            case ROPE_NAME:
+            case PAINT_NAME:
+            case PUMPKIN_NAME: 
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    public bool IsWeapon(string name)
+    {
+        switch (name)
+        {
+            case BOW_NAME:
+            case ARROW_NAME:
+            case STAFF_NAME:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    public bool IsContainer(string name)
+    {
+        switch (name)
+        {
+            case JAR_NAME:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
     public GameObject GetObject(string name)
     {
         switch (name)
@@ -67,6 +138,12 @@ public class ItemLookup
                 return Resources.Load<Sprite>(Constants.ARROW_ICON);
             case CORN_NAME:
                 return Resources.Load<Sprite>(Constants.CORN_ICON);
+            case STAFF_NAME:
+                return Resources.Load<Sprite>(Constants.STAFF_ICON);
+            case PAINT_NAME:
+                return Resources.Load<Sprite>(Constants.PAINT_ICON);
+            case SWEETPOTATO_NAME:
+                return Resources.Load<Sprite>(Constants.SWEETPOTATO_ICON);
             default:
                 return null;
         }

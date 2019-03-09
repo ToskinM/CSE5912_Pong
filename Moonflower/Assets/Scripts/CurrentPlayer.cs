@@ -56,6 +56,6 @@ public class CurrentPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckCurrentPlayer();
+        //CheckCurrentPlayer();
     }
 }

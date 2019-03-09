@@ -7,6 +7,7 @@ using UnityEngine.AI;
 [Serializable]
 public class MimbiController : MonoBehaviour, IPlayerController
 {
+    public bool active = true;
     public bool Playing { get; set; }
     public GameObject Anai;
 
@@ -28,14 +29,12 @@ public class MimbiController : MonoBehaviour, IPlayerController
     const float tooCloseRadius = 4f;
     float wanderRadius = 15f;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         Playing = false;
         moveSpeed = 5f;
 
-        Anai = GameObject.Find("Anai");
+        Anai = LevelManager.current.anai.gameObject;
         agent = GetComponent<NavMeshAgent>();
         playMove = GetComponent<PlayerMovement>();
         playCombat = GetComponent<PlayerCombatController>();
@@ -47,30 +46,40 @@ public class MimbiController : MonoBehaviour, IPlayerController
 
         //playerAnimate.playerMovement = npcMove;
 
-        GameStateController.OnPaused += HandlePauseEvent;
-        GameStateController.OnFreezePlayer += HandleFreezeEvent;
-
         LevelManager.current.mimbi = this;
     }
 
-    // Update is called once per frame
+    private void OnEnable()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+        GameStateController.OnFreezePlayer += HandleFreezeEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
+        GameStateController.OnFreezePlayer -= HandleFreezeEvent;
+    }
+
     void Update()
     {
-        DetectCharacterSwitchInput();
+        if (active)
+        {
+            DetectCharacterSwitchInput();
 
-        if (Playing)
-        {
-            playMove.MovementUpdate();
-        }
-        else
-        {
-            npcMove.UpdateMovement();
+            if (Playing)
+            {
+                playMove.MovementUpdate();
+            }
+            else
+            {
+                npcMove.UpdateMovement();
+            }
         }
     }
 
     void DetectCharacterSwitchInput()
     {
-        if (Input.GetButtonDown("Switch"))
+        if (Input.GetButtonDown("Switch") && !LevelManager.current.currentPlayer.GetComponent<PlayerCombatController>().InCombat)
         {
             Playing = !Playing;
             Switch(Playing);
@@ -100,6 +109,15 @@ public class MimbiController : MonoBehaviour, IPlayerController
         }
     }
 
+    public void Chill()
+    {
+        npcMove.Chill(); 
+    }
+    public void Reset()
+    {
+        npcMove.Reset(); 
+    }
+
     public void Summon()
     {
         npcMove.RunToPlayer();
@@ -108,11 +126,12 @@ public class MimbiController : MonoBehaviour, IPlayerController
     // Disable updates when gaame is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
     // Disable player controls
     void HandleFreezeEvent(bool frozen)
     {
-        enabled = !frozen;
+        playMove.Action = Actions.Chilling;
+        active = !frozen;
     }
 }

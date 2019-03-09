@@ -4,19 +4,26 @@ using UnityEngine;
 
 public class PlayerCombatController : MonoBehaviour, ICombatController
 {
+    public bool active = true;
+
     // Interface Members
     [HideInInspector] public CharacterStats Stats { get; private set; }
     [HideInInspector] public bool IsBlocking { get; private set; } = false;
-    [HideInInspector] public bool InCombat { get; private set; } = false;
+    [HideInInspector] public bool InCombat { get { return inCombat; } private set { inCombat = value; } }
+    public bool inCombat;
     [HideInInspector] public bool IsDead { get; private set; } = false;
     [HideInInspector] public bool HasWeaponOut { get; private set; } = false;
 
     public PlayerAnimatorController animator { get; private set; }
     public PlayerMovementController playerMovement;
 
+    private Coroutine stopCombatCoroutine = null;
 
     [HideInInspector] public bool isAttacking;
     [HideInInspector] public float attackTimeout = 0.5f;
+    private readonly float combatTimeout = 3f;
+    private readonly float combatLossDistance = 3f;
+    private GameObject currentAggressor;
 
     public bool canAttack = true;
     //public bool isBlocking;
@@ -60,8 +67,8 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         }
         blockPlaceholder.SetActive(IsBlocking);
 
-        GameStateController.OnPaused += HandlePauseEvent;
-        GameStateController.OnFreezePlayer += HandleFreezeEvent;
+        anai = LevelManager.current.anai.gameObject;
+        mimbi = LevelManager.current.mimbi.gameObject;
 
         PlayerController.OnCharacterSwitch += SwitchActiveCharacter;
         PlayerColliderListener.OnHurtboxHit += HandleHurtboxCollision;
@@ -73,41 +80,80 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     }
 
+    private void OnEnable()
+    {
+        GameStateController.OnPaused += HandlePauseEvent;
+        GameStateController.OnFreezePlayer += HandleFreezeEvent;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnPaused -= HandlePauseEvent;
+        GameStateController.OnFreezePlayer -= HandleFreezeEvent;
+    }
 
     void Update()
     {
-        if (canAttack)
+        if (active)
         {
-            timeSinceLastHurt += Time.deltaTime;
-            timeSinceLastAttack += Time.deltaTime;
-            if (timeSinceLastAttack > attackTimeout)
-            {
-                isAttacking = false;
-            }
+            UpdateCurrentPlayer();
 
-            // Detect attack input (on button down)
-            if (Input.GetButtonDown(ATTACK_AXIS))
-            {
-                Attack();
-            }
+            if (currentAggressor)
+                CheckAggressorDistance();
 
-            // Detect sheathing input (on button down)
-            if (Input.GetButtonDown(SHEATHE_AXIS))
+            if (canAttack)
             {
-                SetWeaponSheathed(HasWeaponOut);
-            }
+                timeSinceLastHurt += Time.deltaTime;
+                timeSinceLastAttack += Time.deltaTime;
+                if (timeSinceLastAttack > attackTimeout)
+                {
+                    isAttacking = false;
+                }
 
-            // Detect blocking input (on button down)
-            if (Input.GetButtonDown(BLOCK_AXIS))
-            {
-                SetBlock(true);
-            }
-            else if (Input.GetButtonUp(BLOCK_AXIS))
-            {
-                SetBlock(false);
-            }
+                // Detect attack input (on button down)
+                if (Input.GetButtonDown(ATTACK_AXIS))
+                {
+                    Attack();
+                }
 
-            CheckDeath();
+                // Detect sheathing input (on button down)
+                if (Input.GetButtonDown(SHEATHE_AXIS))
+                {
+                    SetWeaponSheathed(HasWeaponOut);
+                }
+
+                // Detect blocking input (on button down)
+                if (Input.GetButtonDown(BLOCK_AXIS))
+                {
+                    SetBlock(true);
+                }
+                else if (Input.GetButtonUp(BLOCK_AXIS))
+                {
+                    SetBlock(false);
+                }
+
+                CheckDeath();
+            }
+        }
+    }
+
+    private void CheckAggressorDistance()
+    {
+        //Debug.Log(currentAggressor);
+
+        if (Vector3.Distance(transform.position, currentAggressor.transform.position) > combatLossDistance)
+        {
+            // Stop combat if we get too far away
+            if (stopCombatCoroutine == null)
+                stopCombatCoroutine = StartCoroutine(CombatTimeout());
+        }
+        else
+        {
+            // cancel combat loss if we get to close
+            if (stopCombatCoroutine != null)
+            {
+                StopCoroutine(stopCombatCoroutine);
+                stopCombatCoroutine = null;
+            }
         }
     }
 
@@ -141,14 +187,28 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
             SetWeaponSheathed(false); // take out weapon if its not already out
         else
             Swing();
-
     }
+
+    public void GoHurt()
+    {
+        playerMovement.body.AddForce(transform.forward * 30f, ForceMode.Impulse);
+        playerMovement.body.AddForce(new Vector3(0, 2, 0), ForceMode.Impulse);
+    }
+
+    // When we hit something, acknowledge it
+    public void AcknowledgeHaveHit(GameObject whoWeHit)
+    {
+        //Debug.Log(gameObject.name + " hit " + whoWeHit.name);
+        currentAggressor = whoWeHit;
+        InCombat = true;
+    }
+
     private void Swing()
     {
         isAttacking = true;
         timeSinceLastAttack = 0f;
 
-        animator.TriggerAttack();
+        Animator.TriggerAttack();
         //Debug.Log(currentPlayer);
 
         bool isAnai = gameObject == LevelManager.current.currentPlayer;
@@ -189,12 +249,22 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         return locPos;
     }
 
+    private IEnumerator CombatTimeout()
+    {
+
+        yield return new WaitForSeconds(combatTimeout);
+        currentAggressor = null;
+        InCombat = false;
+        inCombat = false;
+    }
+
     public void Stagger()
     {
-        animator.TriggerHit();
+        Animator.TriggerHit();
+        if (LevelManager.current.currentPlayer == LevelManager.current.mimbi)
+            playerSoundEffect.MimbiGetHitSFX();
         SetStunned(1);
-        //if (currentPlayer = anai)
-            //playerSoundEffect.AnaiPunchSFX();
+
     }
     public void SetStunned(int stunned)
     {
@@ -224,7 +294,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     private void Die()
     {
         Debug.Log(gameObject.name + " has died");
-        animator.TriggerDeath();
+        Animator.TriggerDeath();
         InCombat = false;
 
         if (ragdollPrefab != null)
@@ -259,13 +329,13 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     // Disable player combat controls when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
 
     // Disable player combat controls
     void HandleFreezeEvent(bool frozen)
     {
-        enabled = !frozen;
+        active = !frozen;
     }
 
     void SwitchActiveCharacter(PlayerController.PlayerCharacter activeChar)
