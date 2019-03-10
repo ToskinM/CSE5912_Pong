@@ -12,7 +12,7 @@ public class PlayerMovementController : MonoBehaviour
     public bool Stunned { get; set; }
     public float MovementSpeed;
 
-    private Rigidbody body;
+    public Rigidbody body;
     private FollowCamera cameraScript;
 
     private bool onGround;

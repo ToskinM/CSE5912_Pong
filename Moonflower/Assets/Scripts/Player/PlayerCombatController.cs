@@ -67,9 +67,6 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         }
         blockPlaceholder.SetActive(IsBlocking);
 
-        anai = LevelManager.current.anai.gameObject;
-        mimbi = LevelManager.current.mimbi.gameObject;
-
         PlayerController.OnCharacterSwitch += SwitchActiveCharacter;
         PlayerColliderListener.OnHurtboxHit += HandleHurtboxCollision;
 
@@ -95,8 +92,6 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     {
         if (active)
         {
-            UpdateCurrentPlayer();
-
             if (currentAggressor)
                 CheckAggressorDistance();
 
@@ -208,7 +203,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         isAttacking = true;
         timeSinceLastAttack = 0f;
 
-        Animator.TriggerAttack();
+        animator.TriggerAttack();
         //Debug.Log(currentPlayer);
 
         bool isAnai = gameObject == LevelManager.current.currentPlayer;
@@ -233,7 +228,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
         if (!IsBlocking)
             Stagger();
-        Stats.TakeDamage(damage, source.name, hurtboxController.sourceCharacterStats, GetContactPoint(other), IsBlocking);
+        Stats.TakeDamage(damage, source.name, hurtboxController.sourceCharacterStats, source.GetComponent<NPCCombatController>(), GetContactPoint(other), IsBlocking);
     }
 
     private Vector3 GetContactPoint(Collider other)
@@ -260,7 +255,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     public void Stagger()
     {
-        Animator.TriggerHit();
+        animator.TriggerHit();
         if (LevelManager.current.currentPlayer == LevelManager.current.mimbi)
             playerSoundEffect.MimbiGetHitSFX();
         SetStunned(1);
@@ -294,7 +289,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     private void Die()
     {
         Debug.Log(gameObject.name + " has died");
-        Animator.TriggerDeath();
+        animator.TriggerDeath();
         InCombat = false;
 
         if (ragdollPrefab != null)

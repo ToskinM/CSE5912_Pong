@@ -27,20 +27,12 @@ public class Pickup : MonoBehaviour
 
     void Start()
     {
-        if (!playerAnai)
-            playerAnai = gameObject;
-
         //StartCoroutine(GetAudioManager());
         //inventoryManager = FindObjectOfType<InventoryManager>();
-        playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
         playerStats = GetComponent<CharacterStats>();
         playerInventory = GetComponent<PlayerInventory>();
 
-        anaiStat = LevelManager.current.anai.GetComponent<CharacterStats>();
-        mimbiStat = LevelManager.current.mimbi.GetComponent<CharacterStats>();
-
-        playerInventory = playerAnai.GetComponent<PlayerInventory>();
-        soundEffect = playerAnai.GetComponent<PlayerSoundEffect>();
+        soundEffect = currentPlayer.GetComponent<PlayerSoundEffect>();
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         currentPlayer = PlayerController.instance.GetActivePlayerObject();
@@ -107,14 +99,14 @@ public class Pickup : MonoBehaviour
                 string objName = obj.GetComponent<InventoryStat>().Name;
                 //TextUpdate(objName + " is collected, " + health + " [health] were add to Anai");
                 feedback.ShowText("You have found a " + objName);
-               objectUsedImmediately = !anaiStat.AddHealth(health);
+               objectUsedImmediately = !playerStats.AddHealth(health);
             }
             else if (obj.GetComponent<InventoryStat>().MimbiObject)
             {
                 string objName = obj.GetComponent<InventoryStat>().Name;
                 //TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
                 feedback.ShowText("You have found a " + objName);
-                objectUsedImmediately = !mimbiStat.AddHealth(health);
+                objectUsedImmediately = !playerStats.AddHealth(health);
             }
             else
             {
