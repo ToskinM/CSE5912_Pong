@@ -15,8 +15,6 @@ public class PlayerHealthDisplay : MonoBehaviour
     private LifeAppleController appleControl;
     private LifeFlowerController flowerControl;
     private CharacterStats playerStats;
-    //private CharacterStats anaiStats;
-    //private CharacterStats mimbiStats;
 
     void Awake()
     {

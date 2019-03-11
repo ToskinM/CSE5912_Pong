@@ -3218,6 +3218,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1438201455, guid: 51c8baa03be78fc46a1c9f85a59c1b6c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51c8baa03be78fc46a1c9f85a59c1b6c, type: 3}
 --- !u!114 &85873065 stripped
@@ -17592,6 +17596,7 @@ GameObject:
   - component: {fileID: 465188868}
   - component: {fileID: 465188867}
   - component: {fileID: 465188872}
+  - component: {fileID: 465188873}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -17737,6 +17742,20 @@ MonoBehaviour:
   Stealth: 5
   strengthExperience: 0
   HUD: {fileID: 0}
+--- !u!114 &465188873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465188864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f1c868799be4446bb2073b7126e6ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceToPickup: 5
+  inventoryAdd: {fileID: 1699434386}
 --- !u!1001 &478306374
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48106,7 +48125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InventoryPanel: {fileID: 1262600174}
   InvContentPanel: {fileID: 1012454834}
-  Player: {fileID: 1438201454}
+  Player: {fileID: 465188864}
   gameController: {fileID: 710919853}
 --- !u!1001 &1333225722
 PrefabInstance:
@@ -65273,7 +65292,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distanceToPickup: 5
   inventoryAdd: {fileID: 1699434386}
-  playerMovement: {fileID: 0}
 --- !u!1001 &1770113482
 PrefabInstance:
   m_ObjectHideFlags: 0

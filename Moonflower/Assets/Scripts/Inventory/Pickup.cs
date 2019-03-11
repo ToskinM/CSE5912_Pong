@@ -10,20 +10,14 @@ public class Pickup : MonoBehaviour
     public int distanceToPickup = 5;
 
     public CharacterStats Stats { get; private set; }
-    //public GameObject playerAnai;
     private GameObject currentPlayer;
 
-    //private CharacterStats anaiStat;
-    //private CharacterStats mimbiStat;
     private CharacterStats playerStats;
     private PlayerInventory playerInventory;
     private PlayerSoundEffect soundEffect;
     private FeedbackText feedback;
 
     public TextMeshProUGUI inventoryAdd;
-
-    public PlayerMovement playerMovement;
-
 
     void Start()
     {
@@ -32,7 +26,7 @@ public class Pickup : MonoBehaviour
         playerStats = GetComponent<CharacterStats>();
         playerInventory = GetComponent<PlayerInventory>();
 
-        soundEffect = currentPlayer.GetComponent<PlayerSoundEffect>();
+        //soundEffect = currentPlayer.GetComponent<PlayerSoundEffect>();
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         currentPlayer = PlayerController.instance.GetActivePlayerObject();
