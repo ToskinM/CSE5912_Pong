@@ -55,7 +55,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     {
         Stats = GetComponent<CharacterStats>();
         animator = GetComponent<PlayerAnimatorController>();
-        playerMovement = GetComponent<PlayerMovementController>();
+        playerMovement = FindObjectOfType< PlayerMovementController >();
     }
 
     void Start()
