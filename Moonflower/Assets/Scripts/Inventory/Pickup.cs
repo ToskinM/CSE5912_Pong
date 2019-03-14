@@ -76,45 +76,60 @@ public class Pickup : MonoBehaviour
         }
     }
 
-    public void DoPickup(GameObject obj)
+    private void CollectLifeObject(GameObject obj)
     {
-        if (obj.gameObject.tag == "Collectable")
+        //Get items's health
+        int health = obj.GetComponent<InventoryStat>().GetHealth();
+
+        bool objectUsedImmediately = false;
+        bool anaiObjectMatch = obj.GetComponent<InventoryStat>().AnaiObject && (currentPlayer.Equals(PlayerController.instance.AnaiObject));
+        bool mimbiObjectMatch = obj.GetComponent<InventoryStat>().MimbiObject && (currentPlayer.Equals(PlayerController.instance.MimbiObject));
+
+        if (anaiObjectMatch || mimbiObjectMatch)
         {
             //Add text update
             inventoryAdd.gameObject.SetActive(true);
             //Remove the text update
             Invoke("DelayMethod", 2f);
-            //Get items's health
-            int health = obj.GetComponent<InventoryStat>().GetHealth();
+            string objName = obj.GetComponent<InventoryStat>().Name;
+            feedback.ShowText("You have found a " + objName);
+            objectUsedImmediately = !playerStats.AddHealth(health);
 
-            bool objectUsedImmediately = false;
-            if (obj.GetComponent<InventoryStat>().AnaiObject)
-            {
-                string objName = obj.GetComponent<InventoryStat>().Name;
-                //TextUpdate(objName + " is collected, " + health + " [health] were add to Anai");
-                feedback.ShowText("You have found a " + objName);
-               objectUsedImmediately = !playerStats.AddHealth(health);
-            }
-            else if (obj.GetComponent<InventoryStat>().MimbiObject)
-            {
-                string objName = obj.GetComponent<InventoryStat>().Name;
-                //TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
-                feedback.ShowText("You have found a " + objName);
-                objectUsedImmediately = !playerStats.AddHealth(health);
-            }
-            else
-            {
-                //TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected. ");
-                string objName = obj.GetComponent<InventoryStat>().Name;
-                feedback.ShowText("You have found a " + objName);
-            }
             //Add to inventory
-            if(!objectUsedImmediately)
+            if (!objectUsedImmediately)
                 playerInventory.AddObj(obj.gameObject);
             //Destroy Gameobject after collect
             Destroy(obj.gameObject);
             //Play Pickup audio clip;
-            //soundEffect.PlayerPickupSFX();
+            soundEffect.PlayerPickupSFX();
+        } 
+    }
+
+    public void DoPickup(GameObject obj)
+    {
+        if (obj.gameObject.tag == "Collectable")
+        {
+            if (obj.GetComponent<InventoryStat>().AnaiObject || obj.GetComponent<InventoryStat>().MimbiObject)
+            {
+                CollectLifeObject(obj);
+            }
+            else
+            {
+                //Add text update
+                inventoryAdd.gameObject.SetActive(true);
+                //Remove the text update
+                Invoke("DelayMethod", 2f);
+                string objName = obj.GetComponent<InventoryStat>().Name;
+                feedback.ShowText("You have found a " + objName);
+
+                //Add to inventory
+                playerInventory.AddObj(obj.gameObject);
+                //Destroy Gameobject after collect
+                Destroy(obj.gameObject);
+                //Play Pickup audio clip;
+                soundEffect.PlayerPickupSFX();
+            }
+
         }
     }
     void DelayMethod()
