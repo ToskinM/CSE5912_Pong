@@ -67,7 +67,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
 
         //playerAnimate.playerMovement = playMove;
 
-        LevelManager.current.anai = this;
+        LevelManager.current.anai = this.gameObject;
 
         playerSoundEffect = GetComponent<PlayerSoundEffect>();
     }

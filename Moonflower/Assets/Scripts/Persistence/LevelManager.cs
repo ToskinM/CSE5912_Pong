@@ -16,9 +16,12 @@ public class LevelManager : MonoBehaviour
     public new DialogueCamera dialogueCamera; // Reference created in Camera script
 
     [Header("Player   (These should be set in the editor!)")]
-    public AnaiController anai; // Reference created in Anai controller
-    public MimbiController mimbi; // Reference created in Mimbi controller
+    public GameObject anai; 
+    public GameObject mimbi; 
     public GameObject currentPlayer;
+
+
+    public PlayerController player; // Reference created in Anai controller
 
     [Header("NPCs")]
     public List<GameObject> npcs = new List<GameObject>(); // NPCs add themselves to this list
@@ -41,7 +44,7 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        currentPlayer = anai.gameObject;
+        currentPlayer = anai;
 
         npcs.Clear();
         npcsD.Clear();
@@ -57,7 +60,7 @@ public class LevelManager : MonoBehaviour
     public void RequestDialogueCamera()
     {
         gameStateController.SetMouseLock(false);
-        dialogueCamera.Enter(anai.TalkingPartner.transform, mainCamera.transform);
+        dialogueCamera.Enter(player.TalkingPartner.transform, mainCamera.transform);
         mainCamera.SetRendering(false);
     }
     public void ReturnDialogueCamera()

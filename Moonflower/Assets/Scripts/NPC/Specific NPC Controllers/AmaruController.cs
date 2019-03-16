@@ -7,7 +7,7 @@ using TMPro;
 
 public class AmaruController : MonoBehaviour, INPCController
 {
-    public GameObject Player;
+    //public GameObject Player;
     public GameObject WalkCenter;
     public GameObject DialoguePanel;
     public Sprite icon { get; set; }
@@ -18,6 +18,8 @@ public class AmaruController : MonoBehaviour, INPCController
     const float bufferDist = 4f;
     const float wanderRad = 30f;
 
+    CurrentPlayer playerInfo;
+    private GameObject anai;
     NPCMovementController npc;
     NavMeshAgent agent;
     DialogueTrigger talkTrig;
@@ -30,9 +32,11 @@ public class AmaruController : MonoBehaviour, INPCController
     void Start()
     {
         //npc = gameObject.AddComponent<NPCMovement>();
+        playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
+        anai = LevelManager.current.anai;
         agent = GetComponent<NavMeshAgent>();
 
-        npc = new NPCMovementController(gameObject, Player);
+        npc = new NPCMovementController(gameObject, anai);
         npc.FollowPlayer(bufferDist, tooCloseRad);
         npc.Wander(WalkCenter.transform.position, wanderRad);
         npc.SetDefault(NPCMovementController.MoveState.wander);
@@ -40,7 +44,7 @@ public class AmaruController : MonoBehaviour, INPCController
         icon = new IconFactory().GetIcon(Constants.AMARU_ICON);
 
         talkTrig = new DialogueTrigger(DialoguePanel, icon, Constants.AMARU_INTRO_DIALOGUE);
-        playerController = Player.GetComponent<IPlayerController>();
+        playerController = LevelManager.current.player.GetComponent<IPlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         acceptableGifts = new List<string>();
@@ -57,7 +61,7 @@ public class AmaruController : MonoBehaviour, INPCController
 
             npc.UpdateMovement();
 
-            if (npc.DistanceFrom(Player) < engagementRadius && !talkTrig.Complete)
+            if (npc.DistanceFrom(anai) < engagementRadius && !talkTrig.Complete)
             {
                 //StartTalk();
                 indicateInterest();
