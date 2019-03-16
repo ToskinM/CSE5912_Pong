@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
 
     public PlayerMovementController ActivePlayerMovementControls;
     public PlayerCombatController ActivePlayerCombatControls;
+    public FieldOfView ActivePlayerInteractionFOV;
     PlayerInventory ActivePlayerInventory;
     PlayerAnimatorController ActivePlayerAnimator;
 
@@ -42,6 +43,9 @@ public class PlayerController : MonoBehaviour
 
         // Set up reference in Awake so that other scripts can reference it during Start()
         ActivePlayerObject = AnaiObject;
+
+        ActivePlayerInteractionFOV = ActivePlayerObject.GetComponent<FieldOfView>();
+
     }
 
     // Start is called before the first frame update
@@ -96,6 +100,7 @@ public class PlayerController : MonoBehaviour
     {
         activeCharacter = PlayerCharacter.Anai;
         ActivePlayerObject = AnaiObject;
+        ActivePlayerInteractionFOV = AnaiObject.GetComponent<FieldOfView>();
 
         AnaiObject.tag = "Player";
         MimbiObject.tag = "Companion";
@@ -113,6 +118,7 @@ public class PlayerController : MonoBehaviour
     {
         activeCharacter = PlayerCharacter.Mimbi;
         ActivePlayerObject = MimbiObject;
+        ActivePlayerInteractionFOV = MimbiObject.GetComponent<FieldOfView>();
 
         MimbiObject.tag = "Player";
         AnaiObject.tag = "Companion";

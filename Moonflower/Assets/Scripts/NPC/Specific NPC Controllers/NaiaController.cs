@@ -16,6 +16,12 @@ public class NaiaController : MonoBehaviour, INPCController
     public float tooCloseRad = 4f;
     public float bufferDist = 5f;
 
+    public bool canInspect = true;
+    public bool canTalk = true;
+    public bool canDistract = true;
+    public bool canGift = true;
+    [HideInInspector] public bool[] actionsAvailable { get; private set; }
+
     CurrentPlayer playerInfo;
     private GameObject Player;
     private NPCMovementController movement;
@@ -51,6 +57,8 @@ public class NaiaController : MonoBehaviour, INPCController
         acceptableGifts = new List<string>();
         acceptableGifts.Add(ItemLookup.BOW_NAME);
         acceptableGifts.Add(ItemLookup.ARROW_NAME);
+
+        actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
     }
 
     void Update()

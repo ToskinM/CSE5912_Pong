@@ -11,6 +11,7 @@ public class SpawnActionWheel : MonoBehaviour
     public GameObject interactionPopup;
     private GameStateController gameStateController;
     private FollowCamera followCamera;
+    private FieldOfView currentPlayerInteractionFOV;
 
     private ActionWheel activeWheel;
 
@@ -18,6 +19,7 @@ public class SpawnActionWheel : MonoBehaviour
 
     private GameObject target;
     private INPCController targetController;
+
     private FeedbackText feedback; 
 
     private bool wheelAvailable = true;
@@ -36,6 +38,8 @@ public class SpawnActionWheel : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
     }
 
     void Start()
@@ -44,37 +48,64 @@ public class SpawnActionWheel : MonoBehaviour
         gameStateController = GameStateController.current;
         followCamera = LevelManager.current.mainCamera;
 
+
         inventory = GameObject.Find("HUD").GetComponent<ShowInventory>(); 
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
     }
 
     private void OnEnable()
     {
+        currentPlayerInteractionFOV.OnNewClosestTarget += HandleInteractionFOVTargetUpdate;
+
+        PlayerController.OnCharacterSwitch += SwitchInteractionFOV;
+
         followCamera = LevelManager.current.mainCamera;
         GameStateController.OnFreezePlayer += HandleFreezeEvent;
 
-        if (!LevelManager.current)
-        {
-            Debug.Log("LevelManager null");
-        }
-        else if (!LevelManager.current.mainCamera)
-        {
-            Debug.Log("mainCamera null");
-        }
-
-        followCamera.OnLockon += HandleLockonEvent;
-        followCamera.OnLockoff += HandleLockoffEvent;
+        //followCamera.OnLockon += HandleLockonEvent;
+        //followCamera.OnLockoff += HandleLockoffEvent;
     }
     private void OnDisable()
     {
+        currentPlayerInteractionFOV.OnNewClosestTarget -= HandleInteractionFOVTargetUpdate;
+
+        PlayerController.OnCharacterSwitch -= SwitchInteractionFOV;
         GameStateController.OnFreezePlayer -= HandleFreezeEvent;
 
-        followCamera.OnLockon -= HandleLockonEvent;
-        followCamera.OnLockoff -= HandleLockoffEvent;
+        //followCamera.OnLockon -= HandleLockonEvent;
+        //followCamera.OnLockoff -= HandleLockoffEvent;
+    }
+
+    private void SwitchInteractionFOV(PlayerController.PlayerCharacter activeChar)
+    {
+        currentPlayerInteractionFOV.OnNewClosestTarget -= HandleInteractionFOVTargetUpdate;
+        currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
+        currentPlayerInteractionFOV.OnNewClosestTarget += HandleInteractionFOVTargetUpdate;
+    }
+    private void HandleInteractionFOVTargetUpdate(GameObject closestNPC)
+    {
+        target = closestNPC;
+        if (target != null)
+        {
+            INPCController targetNPC = target.GetComponent<INPCController>();
+            if (targetNPC != null)
+            {
+                targetController = targetNPC;
+
+                activeWheel.Initialize(targetNPC.icon, targetNPC.actionsAvailable);
+                activeWheel.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            targetController = null;
+        }
     }
 
     void Update()
     {
+        currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
+
         if (followCamera != LevelManager.current.mainCamera)
         {
             followCamera = LevelManager.current.mainCamera;
@@ -166,9 +197,8 @@ public class SpawnActionWheel : MonoBehaviour
         {
             this.target = target;
             targetController = targetNPC;
-            //activeWheel = Instantiate(ActionWheelPrefab, Input.mousePosition, Quaternion.identity, transform).GetComponent<ActionWheel>();
 
-            activeWheel.Initialize(targetNPC.icon);
+            activeWheel.Initialize(targetNPC.icon, targetNPC.actionsAvailable);
             activeWheel.gameObject.SetActive(false);
         }
     }

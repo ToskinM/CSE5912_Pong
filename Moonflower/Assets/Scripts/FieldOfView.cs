@@ -154,6 +154,7 @@ public class FieldOfView : MonoBehaviour
         else
         {
             closestTarget = null;
+            OnNewClosestTarget?.Invoke(null);
         }
     }
 

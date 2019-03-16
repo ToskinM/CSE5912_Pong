@@ -18,6 +18,12 @@ public class AmaruController : MonoBehaviour, INPCController
     const float bufferDist = 4f;
     const float wanderRad = 30f;
 
+    public bool canInspect = true;
+    public bool canTalk = true;
+    public bool canDistract = true;
+    public bool canGift = true;
+    [HideInInspector] public bool[] actionsAvailable { get; private set; }
+
     NPCMovementController npc;
     NavMeshAgent agent;
     DialogueTrigger talkTrig;
@@ -46,6 +52,8 @@ public class AmaruController : MonoBehaviour, INPCController
         acceptableGifts = new List<string>();
         acceptableGifts.Add(ItemLookup.JAR_NAME);
         acceptableGifts.Add(ItemLookup.ROPE_NAME);
+
+        actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
     }
 
     // Update is called once per frame

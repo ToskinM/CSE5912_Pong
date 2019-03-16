@@ -18,6 +18,12 @@ public class PinonController : MonoBehaviour, INPCController
     const float bufferDist = 4f;
     const float wanderRad = 10f;
 
+    public bool canInspect = true;
+    public bool canTalk = true;
+    public bool canDistract = true;
+    public bool canGift = true;
+    [HideInInspector] public bool[] actionsAvailable { get; private set; }
+
     NPCMovementController npc;
     NavMeshAgent agent;
     DialogueTrigger talkTrig;
@@ -51,6 +57,7 @@ public class PinonController : MonoBehaviour, INPCController
         //playerController = Player.GetComponent<IPlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
+        actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
     }
 
     // Update is called once per frame

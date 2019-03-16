@@ -11,7 +11,13 @@ public class LesserNPCController : MonoBehaviour, INPCController
     public Sprite icon { get; set; }
 
     public bool canSeePlayer = false;
-    public bool canBeDistracted = true;
+
+    public bool canInspect = true;
+    public bool canTalk = true;
+    public bool canDistract = true;
+    public bool canGift = true;
+    [HideInInspector] public bool[] actionsAvailable { get; private set; }
+
     public string inspectText;
 
     public float engagementRadius = 15f;
@@ -41,6 +47,8 @@ public class LesserNPCController : MonoBehaviour, INPCController
         stealthDetection = GetComponent<StealthDetection>();
 
         playerController = LevelManager.current.currentPlayer.GetComponent<IPlayerController>();
+
+        actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
     }
 
     void Start()
@@ -116,7 +124,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
     }
     public void Distract()
     {
-        if (canBeDistracted)
+        if (canDistract)
         {
 
         }

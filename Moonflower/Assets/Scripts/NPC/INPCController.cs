@@ -5,6 +5,7 @@ using UnityEngine;
 public interface INPCController
 {
     Sprite icon { get; set; }
+    bool[] actionsAvailable { get; }
 
     void Talk();
     void Gift(string giftName);
