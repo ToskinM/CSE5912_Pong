@@ -170,15 +170,15 @@ public class ShowInventory : MonoBehaviour
             }
 
             RectTransform rect = InvContentPanel.GetComponent<RectTransform>();
-            if (currRow >= 2)
+            if ((currRow == 2 && currCol > 1) || currRow > 2)
                 rect.sizeDelta = new Vector2(rect.sizeDelta.x, 1.2f*currRow * heightDim); 
             else
                 rect.sizeDelta = new Vector2(0, 0);
         }
         else
         {
-
-            //RectTransform rect = InvContentPanel.GetComponent<RectTransform>();
+            RectTransform rect = InvContentPanel.GetComponent<RectTransform>();
+            rect.sizeDelta = new Vector2(0, 0);
             //rect.sizeDelta = new Vector2(rect.rect.width, yOffset);
 
         }
