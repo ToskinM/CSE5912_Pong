@@ -98,6 +98,7 @@ public static class Constants
     //Sypave
     //Jeruti
     //Pinon
+    public const string PINON_FIRST_INTRO_DIALOGUE = dialogueFolder + "Pinon FIRST Intro";
     //Ysapy
 
 }
