@@ -306,6 +306,8 @@ public class StealthDetection : MonoBehaviour
             renderer.material.color = Color.red;
 
         Awareness = AwarenessLevel.Alerted;
+        if (awarenessMeter < alertedThreshold)
+            awarenessMeter = alertedThreshold;
         OnAwarenessUpdate?.Invoke(3);
 
         if ((int)npcCombatController.aggression > 1)
@@ -325,9 +327,7 @@ public class StealthDetection : MonoBehaviour
 
         Awareness = AwarenessLevel.Alerted;
         if (awarenessMeter < alertedThreshold)
-        {
             awarenessMeter = alertedThreshold;
-        }
 
         OnAwarenessUpdate?.Invoke(3);
 
@@ -343,6 +343,8 @@ public class StealthDetection : MonoBehaviour
             renderer.material.color = Color.yellow;
 
         Awareness = AwarenessLevel.Suspicious;
+        if (awarenessMeter < suspiciousThreshold)
+            awarenessMeter = suspiciousThreshold;
         OnAwarenessUpdate?.Invoke(2);
     }
     IEnumerator BecomeSuspiciousDelayed(float time)
@@ -353,10 +355,9 @@ public class StealthDetection : MonoBehaviour
             renderer.material.color = Color.yellow;
 
         Awareness = AwarenessLevel.Suspicious;
+
         if (awarenessMeter < suspiciousThreshold)
-        {
             awarenessMeter = suspiciousThreshold;
-        }
 
         OnAwarenessUpdate?.Invoke(2);
     }
