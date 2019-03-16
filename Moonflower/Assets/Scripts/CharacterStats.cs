@@ -105,14 +105,18 @@ public class CharacterStats : MonoBehaviour
     }
     public bool AddHealth (int amount) //returns true if health was actually added
     {
-        int initialHealth = CurrentHealth; 
-        CurrentHealth = CurrentHealth + amount;
-        if (CurrentHealth >= MaxHealth)
+        bool heals = CurrentHealth != MaxHealth;
+        if (heals)
         {
-            CurrentHealth = MaxHealth;
+            int initialHealth = CurrentHealth;
+            CurrentHealth = CurrentHealth + amount;
+            if (CurrentHealth >= MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
         }
 
-        return !(initialHealth == CurrentHealth); 
+        return heals; 
     }
 
     public void TrainStrengthHit()

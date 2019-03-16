@@ -76,14 +76,15 @@ public class Pickup : MonoBehaviour
         }
     }
 
-    private void CollectLifeObject(GameObject obj)
+    private void CollectLifeObject(GameObject obj, InventoryStat stat)
     {
+        Debug.Log("pickup life object"); 
         //Get items's health
         int health = obj.GetComponent<InventoryStat>().GetHealth();
 
         bool objectUsedImmediately = false;
-        bool anaiObjectMatch = obj.GetComponent<InventoryStat>().AnaiObject && (currentPlayer.Equals(PlayerController.instance.AnaiObject));
-        bool mimbiObjectMatch = obj.GetComponent<InventoryStat>().MimbiObject && (currentPlayer.Equals(PlayerController.instance.MimbiObject));
+        bool anaiObjectMatch = stat.AnaiObject && (currentPlayer.Equals(PlayerController.instance.AnaiObject));
+        bool mimbiObjectMatch = stat.MimbiObject && (currentPlayer.Equals(PlayerController.instance.MimbiObject));
 
         if (anaiObjectMatch || mimbiObjectMatch)
         {
@@ -93,11 +94,12 @@ public class Pickup : MonoBehaviour
             Invoke("DelayMethod", 2f);
             string objName = obj.GetComponent<InventoryStat>().Name;
             feedback.ShowText("You have found a " + objName);
-            objectUsedImmediately = !playerStats.AddHealth(health);
+            objectUsedImmediately = playerStats.AddHealth(health);
 
             //Add to inventory
             if (!objectUsedImmediately)
                 playerInventory.AddObj(obj.gameObject);
+
             //Destroy Gameobject after collect
             Destroy(obj.gameObject);
             //Play Pickup audio clip;
@@ -109,9 +111,10 @@ public class Pickup : MonoBehaviour
     {
         if (obj.gameObject.tag == "Collectable")
         {
-            if (obj.GetComponent<InventoryStat>().AnaiObject || obj.GetComponent<InventoryStat>().MimbiObject)
+            InventoryStat stat = obj.GetComponent<InventoryStat>();
+            if (stat.AnaiObject || stat.MimbiObject)
             {
-                CollectLifeObject(obj);
+                CollectLifeObject(obj,stat);
             }
             else
             {
