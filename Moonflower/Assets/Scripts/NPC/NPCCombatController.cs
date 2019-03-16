@@ -132,7 +132,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     {
         //Debug.Log(other.gameObject.name);
         if (Active)
-        {
+            {
             // Get Tag
             string tag = other.tag;
 

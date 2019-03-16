@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface INPCController
 {
-    Sprite Icon { get; set; }
+    Sprite icon { get; set; }
 
     void Talk();
     void Gift(string giftName);

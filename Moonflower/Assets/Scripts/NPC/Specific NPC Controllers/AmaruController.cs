@@ -10,7 +10,7 @@ public class AmaruController : MonoBehaviour, INPCController
     public GameObject Player;
     public GameObject WalkCenter;
     public GameObject DialoguePanel;
-    public Sprite Icon { get; set; }
+    public Sprite icon { get; set; }
     public bool dialogueActive = false;
 
     const float engagementRadius = 9f;
@@ -37,9 +37,9 @@ public class AmaruController : MonoBehaviour, INPCController
         npc.Wander(WalkCenter.transform.position, wanderRad);
         npc.SetDefault(NPCMovementController.MoveState.wander);
 
-        Icon = new IconFactory().GetIcon(Constants.AMARU_ICON);
+        icon = new IconFactory().GetIcon(Constants.AMARU_ICON);
 
-        talkTrig = new DialogueTrigger(DialoguePanel, Icon, Constants.AMARU_INTRO_DIALOGUE);
+        talkTrig = new DialogueTrigger(DialoguePanel, icon, Constants.AMARU_INTRO_DIALOGUE);
         playerController = Player.GetComponent<IPlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 

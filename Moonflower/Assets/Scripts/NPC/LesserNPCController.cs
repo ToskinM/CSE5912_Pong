@@ -6,10 +6,13 @@ using TMPro;
 
 public class LesserNPCController : MonoBehaviour, INPCController
 {
-    public GameObject Player;
-    //public GameObject WalkArea;
-    public GameObject DialoguePanel;
-    public Sprite Icon { get; set; }
+    private GameObject player;
+    public GameObject dialoguePanel;
+    public Sprite icon { get; set; }
+
+    public bool canSeePlayer = false;
+    public bool canBeDistracted = true;
+    public string inspectText;
 
     public float engagementRadius = 15f;
     public float tooCloseRad = 4f;
@@ -18,24 +21,32 @@ public class LesserNPCController : MonoBehaviour, INPCController
     //private bool engaging = false;
     private NPCMovementController movement;
     public NPCCombatController combatController;
+    public StealthDetection stealthDetection;
+
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
     private IPlayerController playerController;
     private FeedbackText feedback;
 
+    private Vector3 startPosition;
+
     private void Awake()
     {
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
-        combatController = GetComponent<NPCCombatController>();
-        playerController = Player.GetComponent<IPlayerController>();
-        movement = new NPCMovementController(gameObject, Player);
+        movement = new NPCMovementController(gameObject, player);
         //movement.SetEngagementDistances(5, combatController.attackDistance + 0.5f, 1);
 
+        combatController = GetComponent<NPCCombatController>();
+        stealthDetection = GetComponent<StealthDetection>();
+
+        playerController = LevelManager.current.currentPlayer.GetComponent<IPlayerController>();
     }
 
     void Start()
     {
+        startPosition = transform.position;
+
         // Setup Movement
         //float walkRad = WalkArea.GetComponent<Renderer>().bounds.size.x;
         Vector3 walkOrigin = transform.position;
@@ -105,7 +116,10 @@ public class LesserNPCController : MonoBehaviour, INPCController
     }
     public void Distract()
     {
+        if (canBeDistracted)
+        {
 
+        }
     }
     public void Inspect()
     {
@@ -131,15 +145,28 @@ public class LesserNPCController : MonoBehaviour, INPCController
         if (aggroed)
         {
             movement.Follow(aggroTarget, combatController.attackDistance, 0.5f);
-            movement.SetHoldGround(true); 
+            movement.SetHoldGround(true);
             //movement.player = combatController.combatTarget;
             //movement.Attacking = true;
+
+            if (stealthDetection)
+            {
+                stealthDetection.BecomeAlerted(aggroTarget);
+                stealthDetection.enabled = false;
+            }
+                
         }
         else
         {
             movement.Reset();
             //movement.Attacking = false;
+
+            if (stealthDetection)
+                stealthDetection.enabled = true;
         }
+    }
+    private void HandleOnAwarenessUpdated(int newAwareness)
+    {
     }
 
     private void OnEnable()
@@ -149,6 +176,8 @@ public class LesserNPCController : MonoBehaviour, INPCController
         // Subscribe to recieve OnAggroUpdated event
         if (combatController)
             combatController.OnAggroUpdated += HandleOnAggroUpdated;
+        if (stealthDetection)
+            stealthDetection.OnAwarenessUpdate += HandleOnAwarenessUpdated;
     }
     private void OnDisable()
     {
@@ -157,6 +186,8 @@ public class LesserNPCController : MonoBehaviour, INPCController
         // Unsubscribe from recieving OnAggroUpdated event
         if (combatController)
             combatController.OnAggroUpdated -= HandleOnAggroUpdated;
+        if (stealthDetection)
+            stealthDetection.OnAwarenessUpdate -= HandleOnAwarenessUpdated;
     }
 
     // Disable player combat controls when game is paused

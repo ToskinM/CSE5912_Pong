@@ -28,6 +28,9 @@ public class FieldOfView : MonoBehaviour
     private MeshFilter viewMeshFilter;
     private Mesh viewMesh;
 
+    public delegate void ClosestTargetUpdate(GameObject newClosestTarget);
+    public event ClosestTargetUpdate OnNewClosestTarget;
+
     void Start()
     {
         startingViewAngle = viewAngle;
@@ -128,7 +131,6 @@ public class FieldOfView : MonoBehaviour
 
     void GetClosestTarget()
     {
-        closestTarget = null;
         if (visibleTargets.Count > 0)
         {
             Transform closest = visibleTargets[0];
@@ -142,7 +144,16 @@ public class FieldOfView : MonoBehaviour
                     closestDistance = distance;
                 }
             }
-            closestTarget = closest;
+
+            if (closest != closestTarget)
+            {
+                closestTarget = closest;
+                OnNewClosestTarget?.Invoke(closestTarget.gameObject);
+            }
+        }
+        else
+        {
+            closestTarget = null;
         }
     }
 

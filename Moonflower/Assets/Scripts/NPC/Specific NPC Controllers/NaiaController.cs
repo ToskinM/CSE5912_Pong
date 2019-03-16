@@ -10,7 +10,7 @@ public class NaiaController : MonoBehaviour, INPCController
 {
 
     public GameObject DialoguePanel;
-    public Sprite Icon { get; set; }
+    public Sprite icon { get; set; }
 
     public float engagementRadius = 5f;
     public float tooCloseRad = 4f;
@@ -40,8 +40,8 @@ public class NaiaController : MonoBehaviour, INPCController
         // Setup Movement
         Vector3 walkOrigin = transform.position;
         movement = new NPCMovementController(gameObject, Player);
-        Icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
-        talkTrig = new DialogueTrigger(DialoguePanel, Icon, Constants.NAIA_INTRO_DIALOGUE);
+        icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
+        talkTrig = new DialogueTrigger(DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         playerController = Player.GetComponent<IPlayerController>();

@@ -167,7 +167,7 @@ public class SpawnActionWheel : MonoBehaviour
             targetController = targetNPC;
             activeWheel = Instantiate(ActionWheelPrefab, Input.mousePosition, Quaternion.identity, transform).GetComponent<ActionWheel>();
 
-            activeWheel.Initialize(targetNPC.Icon);
+            activeWheel.Initialize(targetNPC.icon);
             activeWheel.gameObject.SetActive(false);
         }
     }
