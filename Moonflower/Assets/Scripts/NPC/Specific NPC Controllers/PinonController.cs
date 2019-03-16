@@ -71,14 +71,14 @@ public class PinonController : MonoBehaviour, INPCController
                 //indicateInterest();
                 npc.Follow();
             }
-            else if (talkTrig.Complete)
+            else if (talkTrig.Complete && npc.state != NPCMovementController.MoveState.wander)
             {
                 npc.SetDefault(NPCMovementController.MoveState.wander); 
                 npc.Wander();
             }
             else
             { 
-                npc.Reset(); 
+                //npc.Reset(); 
             }
         }
         //else
