@@ -185,6 +185,11 @@ public class NPCMovementController : MonoBehaviour, IMovement
     {
         defaultState = dfs; 
     }
+    public void SetLoc(Vector3 pos)
+    {
+        self.transform.position = pos;
+        state = defaultState;
+    }
     public void SetHoldGround(bool hold)
     {
         if (canFollow)
@@ -338,6 +343,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
         if(state != MoveState.wanderfollow)
             state = MoveState.follow; 
     }
+
     private void WalkToPlayer()
     {
         Action = Actions.Walking;

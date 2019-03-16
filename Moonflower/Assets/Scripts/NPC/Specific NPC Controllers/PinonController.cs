@@ -5,9 +5,9 @@ using UnityEngine.AI;
 using UnityEngine.UI; 
 using TMPro;
 
-public class AmaruController : MonoBehaviour, INPCController
+public class PinonController : MonoBehaviour, INPCController
 {
-    public GameObject Player;
+    private GameObject Player;
     public GameObject WalkCenter;
     public GameObject DialoguePanel;
     public Sprite icon { get; set; }
@@ -16,60 +16,74 @@ public class AmaruController : MonoBehaviour, INPCController
     const float engagementRadius = 9f;
     const float tooCloseRad = 3f;
     const float bufferDist = 4f;
-    const float wanderRad = 30f;
+    const float wanderRad = 10f;
 
     NPCMovementController npc;
     NavMeshAgent agent;
     DialogueTrigger talkTrig;
     IPlayerController playerController;
     Animator animator;
-    private List<string> acceptableGifts;
     private FeedbackText feedbackText;
+
+    void Awake()
+    {
+
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        //npc = gameObject.AddComponent<NPCMovement>();
+        playerController = LevelManager.current.currentPlayer.GetComponent<IPlayerController>();
+        Player = LevelManager.current.currentPlayer;
         agent = GetComponent<NavMeshAgent>();
 
+        Vector3 pos = transform.position; 
         npc = new NPCMovementController(gameObject, Player);
         npc.FollowPlayer(bufferDist, tooCloseRad);
         npc.Wander(WalkCenter.transform.position, wanderRad);
-        npc.SetDefault(NPCMovementController.MoveState.wander);
+        npc.SetDefault(NPCMovementController.MoveState.chill);
+        npc.Reset();
+        npc.SetLoc(pos); 
 
-        icon = new IconFactory().GetIcon(Constants.AMARU_ICON);
+        icon = new IconFactory().GetIcon(Constants.PINON_ICON);
 
-        talkTrig = new DialogueTrigger(DialoguePanel, icon, Constants.AMARU_INTRO_DIALOGUE);
-        playerController = Player.GetComponent<IPlayerController>();
+        talkTrig = new DialogueTrigger(DialoguePanel, icon, Constants.PINON_FIRST_INTRO_DIALOGUE);
+        //playerController = Player.GetComponent<IPlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
-        acceptableGifts = new List<string>();
-        acceptableGifts.Add(ItemLookup.JAR_NAME);
-        acceptableGifts.Add(ItemLookup.ROPE_NAME);
     }
 
     // Update is called once per frame
     void Update()
     {
+//        Debug.Log("wtf"); 
         //if (playerController.Playing)
         {
+//            Debug.Log("Anai bud");
             talkTrig.Update();
 
             npc.UpdateMovement();
 
             if (npc.DistanceFrom(Player) < engagementRadius && !talkTrig.Complete)
             {
-                //StartTalk();
-                indicateInterest();
+//                Debug.Log("Close enough!"); 
+                StartTalk();
+                //indicateInterest();
                 npc.Follow();
             }
-            else
+            else if (talkTrig.Complete)
             {
+                npc.SetDefault(NPCMovementController.MoveState.wander); 
+                npc.Wander();
+            }
+            else
+            { 
                 npc.Reset(); 
             }
         }
         //else
         //{
+        //    Debug.Log("whyyy");
         //    npc.UpdateMovement();
         //}
         dialogueActive = talkTrig.DialogueActive();
@@ -83,14 +97,7 @@ public class AmaruController : MonoBehaviour, INPCController
     }
     public void Gift(string giftName)
     {
-        if(new ItemLookup().IsContainer(giftName))
-        {
-            displayFeedback("Amaru loves the " + giftName + "!");
-        }
-        else
-        {
-            displayFeedback("Amaru has no use for a " + giftName + "...");
-        }
+        displayFeedback("Pinon doesn't want anything from you.");
     }
     public void Distract()
     {
