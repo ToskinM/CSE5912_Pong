@@ -20,7 +20,6 @@ public class LevelManager : MonoBehaviour
     public GameObject mimbi; 
     public GameObject currentPlayer;
 
-
     public PlayerController player; // Reference created in Anai controller
 
     [Header("NPCs")]
