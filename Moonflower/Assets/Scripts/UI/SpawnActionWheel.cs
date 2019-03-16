@@ -40,6 +40,7 @@ public class SpawnActionWheel : MonoBehaviour
 
     void Start()
     {
+        activeWheel = ActionWheelPrefab.GetComponent<ActionWheel>(); 
         gameStateController = GameStateController.current;
         followCamera = LevelManager.current.mainCamera;
 
@@ -165,7 +166,7 @@ public class SpawnActionWheel : MonoBehaviour
         {
             this.target = target;
             targetController = targetNPC;
-            activeWheel = Instantiate(ActionWheelPrefab, Input.mousePosition, Quaternion.identity, transform).GetComponent<ActionWheel>();
+            //activeWheel = Instantiate(ActionWheelPrefab, Input.mousePosition, Quaternion.identity, transform).GetComponent<ActionWheel>();
 
             activeWheel.Initialize(targetNPC.icon);
             activeWheel.gameObject.SetActive(false);
