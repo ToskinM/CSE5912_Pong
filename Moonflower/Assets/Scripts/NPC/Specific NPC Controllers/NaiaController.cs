@@ -60,7 +60,7 @@ public class NaiaController : MonoBehaviour, INPCController
         switch (currState)
         {
             case NaiaEngageType.chill:
-                Debug.Log("chilling");
+                //Debug.Log("chilling");
                 combatController.Active = false;
                 if (playerController.Playing && playerController.TalkingPartner == null && playerDist < engagementRadius && !talkTrig.Complete)
                 {

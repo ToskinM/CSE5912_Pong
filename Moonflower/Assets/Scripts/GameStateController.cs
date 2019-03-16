@@ -170,7 +170,7 @@ public class GameStateController : MonoBehaviour
 
     private void EnablePlayerMovement(bool enabled)
     {
-        PlayerMovement playerMovement = Player.GetComponent<PlayerMovement>();
+        PlayerMovementController playerMovement = Player.GetComponent<PlayerMovementController>();
         playerMovement.enabled = true;
     }
 

@@ -2,67 +2,64 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 public class PlayerHealthDisplay : MonoBehaviour
 {
     public GameObject Flower;
-    public GameObject Apple; 
-    //public GameObject Anai;
-    private CurrentPlayer playerInfo; 
+    public GameObject Apple;
+    public GameObject PlayerObject;
 
-
-    private bool playerIsAnai = true; 
+    private PlayerController playerController;
 
     private LifeAppleController appleControl;
     private LifeFlowerController flowerControl;
-    private CharacterStats anaiStats;
-    private CharacterStats mimbiStats;
+    private CharacterStats playerStats;
+
+    void Awake()
+    {
+        playerController = PlayerObject.GetComponent<PlayerController>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>(); 
         appleControl = new LifeAppleController(Apple);
         flowerControl = new LifeFlowerController(Flower);
+        playerStats = PlayerObject.GetComponent<CharacterStats>();
 
-        anaiStats = LevelManager.current.anai.GetComponent<CharacterStats>();
-        mimbiStats = LevelManager.current.mimbi.GetComponent<CharacterStats>();
+        PlayerController.OnCharacterSwitch += SwitchHealthBar;
     }
 
     void Update()
     {
-        if (playerIsAnai != playerInfo.IsAnai())
-            switchPlayer();
+        float healthFrac = 1.0f * playerStats.CurrentHealth / playerStats.MaxHealth;
 
-
-        if (playerInfo.IsAnai())
+        if (playerController.GetActiveCharacter() == PlayerController.PlayerCharacter.Anai)
         {
-            float healthFrac = 1.0f * anaiStats.CurrentHealth / anaiStats.MaxHealth;
             flowerControl.UpdateFlower(healthFrac);
         }
         else
         {
-            float healthFrac = 1.0f * mimbiStats.CurrentHealth / mimbiStats.MaxHealth;
             appleControl.UpdateApple(healthFrac);
-        } 
+        }
     }
 
     public void HitHealth(int current, int max)
     {
-        if (playerInfo.IsAnai())
-            flowerControl.Hit(); 
+        if (playerController.GetActiveCharacter() == PlayerController.PlayerCharacter.Anai)
+            flowerControl.Hit();
         else
-            appleControl.Hit(); 
+            appleControl.Hit();
 
     }
-    private void switchPlayer()
+
+    void SwitchHealthBar(PlayerController.PlayerCharacter activeChar)
     {
-        playerIsAnai = playerInfo.IsAnai();
-        if(playerIsAnai)
+        if (activeChar == PlayerController.PlayerCharacter.Anai)
         {
             Flower.SetActive(true);
-            Apple.SetActive(false); 
+            Apple.SetActive(false);
         }
         else
         {

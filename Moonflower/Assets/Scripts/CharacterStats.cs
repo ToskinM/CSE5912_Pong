@@ -27,6 +27,8 @@ public class CharacterStats : MonoBehaviour
     private const float STRENGTH_EXPERIENCE_HIT = 2.5f;
     private const float STRENGTH_EXPERIENCE_KILL = 20f; // This will hopefully vary by character killed
 
+    // Only applicable to player object
+    private int companionHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,9 @@ public class CharacterStats : MonoBehaviour
         if (HUD == null)
             HUD = LevelManager.current.dummyHUD;
         display = HUD.GetComponent<PlayerHealthDisplay>();
+
+        companionHealth = CurrentHealth;
+        PlayerController.OnCharacterSwitch += SwapPlayerHealth;
     }
 
     // Not sure how combat/interactions are going to be implemented beforehand (script-wise) so just leaving general methods for now
@@ -127,5 +132,16 @@ public class CharacterStats : MonoBehaviour
     private int DefenceCalculation(int damage)
     {
         return (int)Mathf.Ceil( damage * (Mathf.Clamp((100f - Defense) / 100f, 0f, 1f)) );
+    }
+
+    // This method only applies to the player for switching health pools between characters
+    void SwapPlayerHealth(PlayerController.PlayerCharacter activeChar)
+    {
+        if (gameObject.Equals(PlayerController.instance.gameObject)) // Check if the object this script is attached to is the player objet
+        {
+            int temp = CurrentHealth;
+            CurrentHealth = companionHealth;
+            companionHealth = temp;
+        }
     }
 }

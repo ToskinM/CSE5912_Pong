@@ -10,40 +10,27 @@ public class Pickup : MonoBehaviour
     public int distanceToPickup = 5;
 
     public CharacterStats Stats { get; private set; }
-    public GameObject playerAnai;
     private GameObject currentPlayer;
-    private CurrentPlayer playerInfo; 
 
-    private CharacterStats anaiStat;
-    private CharacterStats mimbiStat; 
-    //private InventoryManager inventoryManager;
+    private CharacterStats playerStats;
     private PlayerInventory playerInventory;
     private PlayerSoundEffect soundEffect;
-    private FeedbackText feedback; 
+    private FeedbackText feedback;
 
     public TextMeshProUGUI inventoryAdd;
 
-    public PlayerMovement playerMovement;
-
-
     void Start()
     {
-        if (!playerAnai)
-            playerAnai = gameObject;
-
         //StartCoroutine(GetAudioManager());
         //inventoryManager = FindObjectOfType<InventoryManager>();
-        playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
+        playerStats = GetComponent<CharacterStats>();
+        playerInventory = GetComponent<PlayerInventory>();
 
-        anaiStat = LevelManager.current.anai.GetComponent<CharacterStats>();
-        mimbiStat = LevelManager.current.mimbi.GetComponent<CharacterStats>(); 
-
-        playerInventory = playerAnai.GetComponent<PlayerInventory>();
-        soundEffect = playerAnai.GetComponent<PlayerSoundEffect>();
+        //soundEffect = currentPlayer.GetComponent<PlayerSoundEffect>();
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
-        //CurrentPlayer = playerInfo.GetCurrentPlayer();
-        currentPlayer = LevelManager.current.currentPlayer;
+        currentPlayer = PlayerController.instance.GetActivePlayerObject();
+        PlayerController.OnCharacterSwitch += SwitchActiveCharacter;
     }
 
     private GameObject FindClosest()
@@ -66,9 +53,9 @@ public class Pickup : MonoBehaviour
             return nearestObj;
 
     }
+
     private void DecidePickup()
     {
-        UpdateCurrentPlayer();
         GameObject closest = FindClosest();
         if (Vector3.Distance(FindClosest().transform.position, currentPlayer.transform.position) <= distanceToPickup)
         {
@@ -89,45 +76,60 @@ public class Pickup : MonoBehaviour
         }
     }
 
-    public void DoPickup(GameObject obj)
+    private void CollectLifeObject(GameObject obj)
     {
-        if (obj.gameObject.tag == "Collectable")
+        //Get items's health
+        int health = obj.GetComponent<InventoryStat>().GetHealth();
+
+        bool objectUsedImmediately = false;
+        bool anaiObjectMatch = obj.GetComponent<InventoryStat>().AnaiObject && (currentPlayer.Equals(PlayerController.instance.AnaiObject));
+        bool mimbiObjectMatch = obj.GetComponent<InventoryStat>().MimbiObject && (currentPlayer.Equals(PlayerController.instance.MimbiObject));
+
+        if (anaiObjectMatch || mimbiObjectMatch)
         {
             //Add text update
             inventoryAdd.gameObject.SetActive(true);
             //Remove the text update
             Invoke("DelayMethod", 2f);
-            //Get items's health
-            int health = obj.GetComponent<InventoryStat>().GetHealth();
+            string objName = obj.GetComponent<InventoryStat>().Name;
+            feedback.ShowText("You have found a " + objName);
+            objectUsedImmediately = !playerStats.AddHealth(health);
 
-            bool objectUsedImmediately = false; 
-            if (obj.GetComponent<InventoryStat>().AnaiObject)
-            {
-                string objName = obj.GetComponent<InventoryStat>().Name;
-                //TextUpdate(objName + " is collected, " + health + " [health] were add to Anai");
-                feedback.ShowText("You have found a " + objName); 
-               objectUsedImmediately = !anaiStat.AddHealth(health);
-            }
-            else if (obj.GetComponent<InventoryStat>().MimbiObject)
-            {
-                string objName = obj.GetComponent<InventoryStat>().Name;
-                //TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
-                feedback.ShowText("You have found a " + objName);
-                objectUsedImmediately = !mimbiStat.AddHealth(health);
-            }
-            else
-            {
-                //TextUpdate(obj.GetComponent<InventoryStat>().Name + " is collected. ");
-                string objName = obj.GetComponent<InventoryStat>().Name;
-                feedback.ShowText("You have found a " + objName);
-            }
             //Add to inventory
-            if(!objectUsedImmediately)
+            if (!objectUsedImmediately)
                 playerInventory.AddObj(obj.gameObject);
             //Destroy Gameobject after collect
             Destroy(obj.gameObject);
             //Play Pickup audio clip;
             soundEffect.PlayerPickupSFX();
+        } 
+    }
+
+    public void DoPickup(GameObject obj)
+    {
+        if (obj.gameObject.tag == "Collectable")
+        {
+            if (obj.GetComponent<InventoryStat>().AnaiObject || obj.GetComponent<InventoryStat>().MimbiObject)
+            {
+                CollectLifeObject(obj);
+            }
+            else
+            {
+                //Add text update
+                inventoryAdd.gameObject.SetActive(true);
+                //Remove the text update
+                Invoke("DelayMethod", 2f);
+                string objName = obj.GetComponent<InventoryStat>().Name;
+                feedback.ShowText("You have found a " + objName);
+
+                //Add to inventory
+                playerInventory.AddObj(obj.gameObject);
+                //Destroy Gameobject after collect
+                Destroy(obj.gameObject);
+                //Play Pickup audio clip;
+                soundEffect.PlayerPickupSFX();
+            }
+
         }
     }
     void DelayMethod()
@@ -140,17 +142,14 @@ public class Pickup : MonoBehaviour
         inventoryAdd.SetText(s);
     }
 
-    //To be delete
-    private void UpdateCurrentPlayer()
-    {
-        //currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
-        currentPlayer = LevelManager.current.currentPlayer;
-    }
-
-
     // Update is called once per frame
     void Update()
     {
         DecidePickup();
+    }
+
+    void SwitchActiveCharacter(PlayerController.PlayerCharacter activeChar)
+    {
+        currentPlayer = PlayerController.instance.GetActivePlayerObject();
     }
 }

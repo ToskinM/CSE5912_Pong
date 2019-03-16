@@ -159,7 +159,8 @@ public class NPCCombatController : MonoBehaviour, ICombatController
                     sourceCombatController = source.GetComponent<NPCCombatController>();
                     if (sourceCombatController == null)
                     {
-                        sourceCombatController = source.GetComponent<PlayerCombatController>();
+                        //sourceCombatController = source.GetComponent<PlayerCombatController>();
+                        sourceCombatController = PlayerController.instance.GetComponent<PlayerCombatController>();  // Now uses generic Player object
                     }
                     Stats.TakeDamage(damage, source.name, hurtboxController.sourceCharacterStats, sourceCombatController, GetContactPoint(other), IsBlocking);
                 }

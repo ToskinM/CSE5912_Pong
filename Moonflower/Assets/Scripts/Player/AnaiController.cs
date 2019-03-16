@@ -57,12 +57,15 @@ public class AnaiController : MonoBehaviour, IPlayerController
         boxCollider = GetComponent<BoxCollider>();
         stats = GetComponent<CharacterStats>();
         npcMove = new NPCMovementController(gameObject, Mimbi);
-        mimbiController = Mimbi.GetComponent<MimbiController>(); 
+        mimbiController = Mimbi.GetComponent<MimbiController>();
 
-        //        npcMove.Active = false; 
+        //        npcMove.Active = false;
         npcMove.FollowPlayer(followDist, tooCloseRadius);
 
-        playerAnimate.movement = playMove;
+        GameStateController.OnPaused += HandlePauseEvent;
+        GameStateController.OnFreezePlayer += HandleFreezeEvent;
+
+        //playerAnimate.playerMovement = playMove;
 
         LevelManager.current.anai = this;
 
@@ -97,7 +100,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
             gameObject.layer = 10;
             tag = "Player";
             agent.enabled = false;
-            playerAnimate.movement = playMove;
+            //playerAnimate.playerMovement = playMove;
             boxCollider.enabled = true;
 
             LevelManager.current.currentPlayer = gameObject;
@@ -105,12 +108,12 @@ public class AnaiController : MonoBehaviour, IPlayerController
         else
         {
             playerSoundEffect.AnaiMute();
-            //            npcMove.Active = true; 
+            //            npcMove.Active = true;
             playCombat.enabled = false;
             gameObject.layer = 0;
             tag = "Companion";
             agent.enabled = true;
-            playerAnimate.movement = npcMove;
+            //playerAnimate.playerMovement = npcMove;
             //boxCollider.enabled = false;
         }
     }
@@ -148,11 +151,11 @@ public class AnaiController : MonoBehaviour, IPlayerController
 
             if(TalkingPartner != null)
             {
-                mimbiController.Chill(); 
+                mimbiController.Chill();
             }
             else
             {
-                mimbiController.Reset(); 
+                mimbiController.Reset();
             }
         }
 
