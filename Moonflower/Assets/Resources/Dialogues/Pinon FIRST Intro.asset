@@ -53,6 +53,7 @@ MonoBehaviour:
   - {fileID: 114308366849726824}
   - {fileID: 114117248706857436}
   - {fileID: 114063560890436608}
+  - {fileID: 114115149105178634}
 --- !u!114 &114006385617242688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,6 +548,53 @@ MonoBehaviour:
     voiceClip: {fileID: 0}
   - text: 'Be less entertained. '
     voiceClip: {fileID: 0}
+--- !u!114 &114115149105178634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d4b035e8545a04ca8b7c9c33635bcb, type: 3}
+  m_Name: Chat
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 296, y: -664}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114115149105178634}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: answers 0
+        node: {fileID: 114308366849726824}
+        reroutePoints: []
+      - fieldName: answers 0
+        node: {fileID: 114263495733889324}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114115149105178634}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114194550904762074}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  text: Disgraced the family name? Disappointed her beyond the point of forgiveness?
+    Let Mimbi dig up the corn again? All of the above?
+  answers: []
 --- !u!114 &114117248706857436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -942,11 +990,8 @@ MonoBehaviour:
       _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: answers 0
-        node: {fileID: 114263495733889324}
-        reroutePoints: []
-      - fieldName: answers 0
-        node: {fileID: 114308366849726824}
+      - fieldName: output
+        node: {fileID: 114115149105178634}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -992,8 +1037,7 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 1
       _dynamic: 1
-  text: 'Disgraced the family name? Disappointed her beyond the point of forgiveness?
-    Let Mimbi dig up the corn? All of the above? You know, the usual. '
+  text: 'You know, the usual. '
   answers:
   - text: 'You inspire so much confidence, Pinon. '
     voiceClip: {fileID: 0}
@@ -1175,7 +1219,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114194550904762074}
+        node: {fileID: 114115149105178634}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -1290,7 +1334,7 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 1
       _dynamic: 1
-  text: Just because I liked to explore sometimes-
+  text: Just because I like to explore sometimes-
   answers:
   - text: 'Sometimes? Try all the time. '
     voiceClip: {fileID: 0}
@@ -1389,7 +1433,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114194550904762074}
+        node: {fileID: 114115149105178634}
         reroutePoints: []
       _direction: 1
       _connectionType: 1

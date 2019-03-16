@@ -255,7 +255,7 @@ public class DialogueTrigger : MonoBehaviour
                     else
                         tState = TextState.done;
                 }
-                else if (currDiaIndex > 1 && punctuation.IndexOf(dialogue[currDiaIndex - 2]) != -1)
+                else if (currDiaIndex > 1 && punctuation.IndexOf(dialogue[currDiaIndex - 1]) != -1)
                     tState = TextState.paused;
 
                 break;
