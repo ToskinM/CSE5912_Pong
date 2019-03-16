@@ -18,17 +18,14 @@ public class AmaruController : MonoBehaviour, INPCController
     const float bufferDist = 4f;
     const float wanderRad = 30f;
 
-<<<<<<< HEAD
     public bool canInspect = true;
     public bool canTalk = true;
     public bool canDistract = true;
     public bool canGift = true;
     [HideInInspector] public bool[] actionsAvailable { get; private set; }
 
-=======
     CurrentPlayer playerInfo;
     private GameObject anai;
->>>>>>> 67bb087c59ad71985a4921cad4512b5c7df9e176
     NPCMovementController npc;
     NavMeshAgent agent;
     DialogueTrigger talkTrig;

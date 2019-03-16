@@ -4,72 +4,96 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 
-public class LesserNPCController : MonoBehaviour
+public class LesserNPCController : MonoBehaviour, INPCController
 {
-    public GameObject Player;
-    //public GameObject WalkArea;
-    public GameObject DialoguePanel;
+    private GameObject player;
+    public GameObject dialoguePanel;
+    public Sprite icon { get; set; }
+
+    public bool canSeePlayer = false;
+
+    public bool canInspect = true;
+    public bool canTalk = true;
+    public bool canDistract = true;
+    public bool canGift = true;
+    [HideInInspector] public bool[] actionsAvailable { get; private set; }
+
+    public string inspectText;
 
     public float engagementRadius = 15f;
     public float tooCloseRad = 4f;
     public float bufferDist = 5f;
 
-    private bool engaging = false;
-    private NPCMovement movement;
-    private NPCCombatController combatController;
+    //private bool engaging = false;
+    private NPCMovementController movement;
+    public NPCCombatController combatController;
+    public StealthDetection stealthDetection;
+
     private NavMeshAgent agent;
-    private AmaruDialogueTrigger talkTrig;
-    private IPlayerController playerController;
+    private DialogueTrigger talkTrig;
+    private PlayerController playerController;
+    private FeedbackText feedback;
+
+    private Vector3 startPosition;
 
     private void Awake()
     {
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
+        movement = new NPCMovementController(gameObject, player);
+        //movement.SetEngagementDistances(5, combatController.attackDistance + 0.5f, 1);
+
         combatController = GetComponent<NPCCombatController>();
-        playerController = Player.GetComponent<IPlayerController>();
-        movement = new NPCMovement(gameObject, Player, 1);
-        movement.SetEngagementDistances(5, combatController.attackDistance, 1);
+        stealthDetection = GetComponent<StealthDetection>();
+
+<<<<<<< HEAD
+        playerController = LevelManager.current.currentPlayer.GetComponent<IPlayerController>();
+
+        actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
+=======
+        playerController = LevelManager.current.player.GetComponent<PlayerController>();
+>>>>>>> 67bb087c59ad71985a4921cad4512b5c7df9e176
     }
 
     void Start()
     {
+        startPosition = transform.position;
+
         // Setup Movement
         //float walkRad = WalkArea.GetComponent<Renderer>().bounds.size.x;
         Vector3 walkOrigin = transform.position;
 
+        combatController.npcMovement = movement;
 
         //talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.AMARU_ICON);
-<<<<<<< HEAD
 
-        SceneTracker.current.RegisterNPC(gameObject);
-=======
-        GameStateController.OnPaused += HandlePauseEvent;
->>>>>>> 2c90202525534e8cd76a92dcb00eb4491719b828
+        LevelManager.current.RegisterNPC(gameObject);
+        feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
     }
 
     void Update()
     {
         if (talkTrig != null)
         {
-            if (playerController.Playing)
-            {
-                talkTrig.Update();
+            //if (playerController.Playing)
+            //{
+                //talkTrig.Update();
 
-                if (movement.Engaging && !talkTrig.Complete)
-                {
-                    StartEngagement();
-                }
-                else if (!movement.Wandering)
-                {
-                    movement.ResumeWandering();
-                    if (talkTrig.DialogueActive())
-                    {
-                        talkTrig.EndDialogue();
-                    }
-                }
+                //if (!talkTrig.Complete)
+                //{
+                //    StartEngagement();
+                //}
+                //else if (!movement.Wandering)
+                //{
+                //    movement.ResumeWandering();
+                //    if (talkTrig.DialogueActive())
+                //    {
+                //        talkTrig.EndDialogue();
+                //    }
+                //}
             }
-        }
-        else
+        //}
+        //else
         {
             //if (combatController.inCombat)
             //{
@@ -85,44 +109,102 @@ public class LesserNPCController : MonoBehaviour
         movement.UpdateMovement();
     }
 
+    // Action Wheel Interactions
+    public void Talk()
+    {
+
+    }
+    public void Gift(string giftName)
+    {
+        if (new ItemLookup().IsFood(giftName))
+        {
+            displayFeedback("They loves the " + giftName + "!");
+            combatController.Subdue(); 
+        }
+        else
+        {
+            displayFeedback("They has no use for " + giftName + "...");
+        }
+    }
+    public void Distract()
+    {
+        if (canDistract)
+        {
+
+        }
+    }
+    public void Inspect()
+    {
+
+    }
+
     private void StartEngagement()
     {
-        engaging = true;
+        //engaging = true;
 
         if (talkTrig != null)
             if (!talkTrig.DialogueActive())
                 talkTrig.StartDialogue();
     }
 
-    private void HandleOnAggroUpdated(bool aggroed)
+    private void displayFeedback(string text)
+    {
+        feedback.ShowText(text);
+    }
+
+    private void HandleOnAggroUpdated(bool aggroed, GameObject aggroTarget)
     {
         if (aggroed)
         {
-            movement.player = combatController.combatTarget;
-            movement.Attacking = true;
+            movement.Follow(aggroTarget, combatController.attackDistance, 0.5f);
+            movement.SetHoldGround(true);
+            //movement.player = combatController.combatTarget;
+            //movement.Attacking = true;
+
+            if (stealthDetection && stealthDetection.enabled == true)
+            {
+                stealthDetection.BecomeAlerted(aggroTarget);
+                stealthDetection.enabled = false;
+            }
+                
         }
         else
         {
-            movement.Attacking = false;
+            movement.Reset();
+            //movement.Attacking = false;
+
+            if (stealthDetection)
+                stealthDetection.enabled = true;
         }
+    }
+    private void HandleOnAwarenessUpdated(int newAwareness)
+    {
     }
 
     private void OnEnable()
     {
+        GameStateController.OnPaused += HandlePauseEvent;
+
         // Subscribe to recieve OnAggroUpdated event
         if (combatController)
             combatController.OnAggroUpdated += HandleOnAggroUpdated;
+        if (stealthDetection)
+            stealthDetection.OnAwarenessUpdate += HandleOnAwarenessUpdated;
     }
     private void OnDisable()
     {
+        GameStateController.OnPaused -= HandlePauseEvent;
+
         // Unsubscribe from recieving OnAggroUpdated event
         if (combatController)
             combatController.OnAggroUpdated -= HandleOnAggroUpdated;
+        if (stealthDetection)
+            stealthDetection.OnAwarenessUpdate -= HandleOnAwarenessUpdated;
     }
 
     // Disable player combat controls when game is paused
     void HandlePauseEvent(bool isPaused)
     {
-        enabled = !isPaused;
+        //enabled = !isPaused;
     }
 }

@@ -63,6 +63,8 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
         LevelManager.current.RegisterNPC(gameObject);
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
+
+        actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
     }
 
     void Update()
