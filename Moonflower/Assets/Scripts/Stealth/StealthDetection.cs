@@ -138,20 +138,20 @@ public class StealthDetection : MonoBehaviour
         if (distance <= stealthCollider.radius * 0.7)
         {
             // Add small amounts of suspicion if player is walking
-            if (player.GetComponent<PlayerMovement>().Action == Actions.Walking)
+            if (PlayerController.instance.ActivePlayerMovementControls.Action == PlayerMovementController.Actions.Walking)
             {
                 awarenessMeter += baseAwarenessGrowth;
                 timeSinceLastAction = 0f;
             }
             // Add bigger amounts of suspicion if player is running
-            else if (player.GetComponent<PlayerMovement>().Action == Actions.Running)
+            else if (PlayerController.instance.ActivePlayerMovementControls.Action == PlayerMovementController.Actions.Running)
             {
                 awarenessMeter += baseAwarenessGrowth * runningMultiplier;
                 timeSinceLastAction = 0f;
             }
         }
         // If player is within the detection range but is further than half its radius
-        else if (distance <= stealthCollider.radius && player.GetComponent<PlayerMovement>().Action == Actions.Running)
+        else if (distance <= stealthCollider.radius && PlayerController.instance.ActivePlayerMovementControls.Action == PlayerMovementController.Actions.Running)
         {
             awarenessMeter += 3f;
             timeSinceLastAction = 0f;
@@ -170,19 +170,19 @@ public class StealthDetection : MonoBehaviour
 
     void DetectionWhileSuspicious(GameObject player, float distance)
     {
-        if (player.GetComponent<PlayerMovement>().Action == Actions.Walking)
+        if (PlayerController.instance.ActivePlayerMovementControls.Action == PlayerMovementController.Actions.Walking)
         {
             awarenessMeter += baseAwarenessGrowth * suspiciousMultiplier;
             timeSinceLastAction = 0f;
         }
         // Add bigger amounts of suspicion if player is running
-        else if (player.GetComponent<PlayerMovement>().Action == Actions.Running)
+        else if (PlayerController.instance.ActivePlayerMovementControls.Action == PlayerMovementController.Actions.Running)
         {
             awarenessMeter += baseAwarenessGrowth * runningMultiplier * suspiciousMultiplier;
             timeSinceLastAction = 0f;
         }
         // Add smaller amounts of suspicion if player is sneaking
-        else if (player.GetComponent<PlayerMovement>().Action == Actions.Sneaking)
+        else if (PlayerController.instance.ActivePlayerMovementControls.Action == PlayerMovementController.Actions.Sneaking)
         {
             awarenessMeter += baseAwarenessGrowth * sneakingMultiplier;
             timeSinceLastAction = 0f;
@@ -200,10 +200,10 @@ public class StealthDetection : MonoBehaviour
 
     void DetectionWhileAlert(GameObject player, float distance)
     {
-        Actions playerAction = player.GetComponent<PlayerMovement>().Action;
+        PlayerMovementController.Actions playerAction = PlayerController.instance.ActivePlayerMovementControls.Action;
         if ((int)npcCombatController.aggression > 1 && !npcCombatController.InCombat)
         {
-            if (playerAction == Actions.Walking || playerAction == Actions.Running)
+            if (playerAction == PlayerMovementController.Actions.Walking || playerAction == PlayerMovementController.Actions.Running)
             {
                 nav.destination = player.transform.position;
                 timeSinceLastAction = 0f;

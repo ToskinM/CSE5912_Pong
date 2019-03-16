@@ -82,7 +82,7 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void EnableHurtbox(int index)
     {
-        attackHurtboxes[index].Enable(PlayerController.instance.GetComponent<PlayerCombatController>().GetAttackDamage(index));
+        attackHurtboxes[index].Enable(PlayerController.instance.ActivePlayerCombatControls.GetAttackDamage(index));
     }
 
     public void DisableHurtbox(int index)

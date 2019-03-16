@@ -6,7 +6,7 @@ using static PlayerController;
 public class PlayerMovementController : MonoBehaviour
 {
     public enum Actions { Walking, Running, Chilling, Sneaking };
-    public Actions Action { get; set; }
+    public Actions Action;
 
     public bool Jumping { get; set; }
     public bool Stunned { get; set; }

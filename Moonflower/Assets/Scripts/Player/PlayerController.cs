@@ -13,8 +13,8 @@ public class PlayerController : MonoBehaviour
     public GameObject AnaiObject;
     public GameObject MimbiObject;
 
-    PlayerMovementController ActivePlayerMovementControls;
-    PlayerCombatController ActivePlayerCombatControls;
+    public PlayerMovementController ActivePlayerMovementControls;
+    public PlayerCombatController ActivePlayerCombatControls;
     PlayerInventory ActivePlayerInventory;
     PlayerAnimatorController ActivePlayerAnimator;
 

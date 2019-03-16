@@ -50,9 +50,14 @@ public class CharacterStats : MonoBehaviour
         return Attack;
     }
 
+    private void RemoveHealth(int amount)
+    {
+        CurrentHealth = Mathf.Clamp(CurrentHealth - amount, 0, MaxHealth);
+    }
+
     public void TakeDamage(int damage, string sourceName)
     {
-        CurrentHealth -= damage;
+        RemoveHealth(DefenceCalculation(damage));
         if (display != null)
             display.HitHealth(CurrentHealth, MaxHealth); 
         //Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
@@ -61,7 +66,7 @@ public class CharacterStats : MonoBehaviour
     {
         if (!blocked)
         {
-            CurrentHealth -= DefenceCalculation(damage);
+            RemoveHealth(DefenceCalculation(damage));
 
             if (display != null)
                 display.HitHealth(CurrentHealth, MaxHealth);

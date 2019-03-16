@@ -266,7 +266,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         if (stunned == 1)
             playerMovement.Stunned = true;
         else
-            PlayerController.instance.GetComponent<PlayerMovementController>().Stunned = false;
+            PlayerController.instance.ActivePlayerMovementControls.Stunned = false;
     }
 
     // Check if we should be dead
