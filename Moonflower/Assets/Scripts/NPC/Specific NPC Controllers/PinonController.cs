@@ -56,17 +56,17 @@ public class PinonController : MonoBehaviour, INPCController
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("wtf"); 
-        if (playerController.Playing)
+//        Debug.Log("wtf"); 
+        //if (playerController.Playing)
         {
-            Debug.Log("Anai bud");
+//            Debug.Log("Anai bud");
             talkTrig.Update();
 
             npc.UpdateMovement();
 
             if (npc.DistanceFrom(Player) < engagementRadius && !talkTrig.Complete)
             {
-                Debug.Log("Close enough!"); 
+//                Debug.Log("Close enough!"); 
                 StartTalk();
                 //indicateInterest();
                 npc.Follow();
@@ -81,11 +81,11 @@ public class PinonController : MonoBehaviour, INPCController
                 npc.Reset(); 
             }
         }
-        else
-        {
-            Debug.Log("whyyy");
-            npc.UpdateMovement();
-        }
+        //else
+        //{
+        //    Debug.Log("whyyy");
+        //    npc.UpdateMovement();
+        //}
         dialogueActive = talkTrig.DialogueActive();
 
     }
