@@ -95,6 +95,11 @@ public class SpawnActionWheel : MonoBehaviour
                 activeWheel.Initialize(targetNPC.icon, targetNPC.actionsAvailable);
                 activeWheel.gameObject.SetActive(false);
             }
+            else
+            {
+                target = null;
+                targetController = null;
+            }
         }
         else
         {
@@ -129,6 +134,8 @@ public class SpawnActionWheel : MonoBehaviour
     private void HandleWheelSelection(int selection)
     {
         HideWheel();
+        Debug.Log(selection);
+
         switch (selection)
         {
             case 0:
