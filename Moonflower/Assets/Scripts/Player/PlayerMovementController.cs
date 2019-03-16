@@ -322,7 +322,19 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (activeChar == PlayerCharacter.Anai)
         {
-            MimbiPassiveController.UpdateMovement();
+            if (playerController.TalkingPartner == null)
+            {
+                MimbiPassiveController.UpdateMovement();
+            }
+            else
+            {
+                if (MimbiPassiveController.Action != global::Actions.Chilling)
+                {
+                    MimbiPassiveController.Chill();
+                }
+                MimbiPassiveController.Action = global::Actions.Chilling;
+                MimbiPassiveController.Reset();
+            }
         }
         else
         {

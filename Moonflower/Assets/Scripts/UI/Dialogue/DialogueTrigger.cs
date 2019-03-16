@@ -37,10 +37,12 @@ public class DialogueTrigger : MonoBehaviour
 
     DialogueGraph graph;
     DialogueFactory factory;
+    GameObject partner; 
 
 
-    public DialogueTrigger(GameObject p, Sprite iconSprite, string graphName)
+    public DialogueTrigger(GameObject person, GameObject p, Sprite iconSprite, string graphName)
     {
+        partner = person; 
         panel = p;
         panelTransform = panel.GetComponent<RectTransform>();
         panelInfo = panel.GetComponent<DialoguePanelInfo>();
@@ -177,11 +179,11 @@ public class DialogueTrigger : MonoBehaviour
         pState = PanelState.rising;
         panelInfo.Icon.sprite = icon;  //new IconFactory().GetIcon(spriteFile);
         tState = TextState.typing;
+        LevelManager.current.player.TalkingPartner = partner;
 
         // Start dialogue camera this this npc 
         LevelManager.current.RequestDialogueCamera();
 
-        //TODO Bring this back somehow? 
         //LevelManager.current.anai.OnHit += CombatCancelDialogue;
     }
 
@@ -192,6 +194,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void EndDialogue()
     {
+        LevelManager.current.player.TalkingPartner = null;
         destroyButtons();
         pState = PanelState.falling;
         engaged = false;
@@ -257,7 +260,9 @@ public class DialogueTrigger : MonoBehaviour
                         tState = TextState.done;
                 }
                 else if (currDiaIndex > 1 && punctuation.IndexOf(dialogue[currDiaIndex - 1]) != -1)
+                {
                     tState = TextState.paused;
+                }
 
                 break;
 

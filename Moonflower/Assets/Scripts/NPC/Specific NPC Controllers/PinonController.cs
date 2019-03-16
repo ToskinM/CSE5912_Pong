@@ -7,7 +7,7 @@ using TMPro;
 
 public class PinonController : MonoBehaviour, INPCController
 {
-    public GameObject Player;
+    //public GameObject Player;
     public GameObject WalkCenter;
     public GameObject DialoguePanel;
     public Sprite icon { get; set; }
@@ -37,9 +37,9 @@ public class PinonController : MonoBehaviour, INPCController
     {
         //playerController = LevelManager.current.currentPlayer.GetComponent<IPlayerController>();
         // Player = LevelManager.current.currentPlayer;
-        playerController = Player.GetComponent<PlayerController>();
+        playerController = LevelManager.current.player.GetComponent<PlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
-        currentPlayer = Player.GetComponent<CurrentPlayer>();
+        currentPlayer = LevelManager.current.player.GetComponent<CurrentPlayer>();
         anai = currentPlayer.GetAnai();
 
         agent = GetComponent<NavMeshAgent>();
@@ -54,7 +54,7 @@ public class PinonController : MonoBehaviour, INPCController
 
 
         icon = new IconFactory().GetIcon(Constants.PINON_ICON);
-        talkTrig = new DialogueTrigger(DialoguePanel, icon, Constants.PINON_FIRST_INTRO_DIALOGUE);
+        talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.PINON_FIRST_INTRO_DIALOGUE);
 
 
        
@@ -121,7 +121,7 @@ public class PinonController : MonoBehaviour, INPCController
 
         if (!talkTrig.DialogueActive())
         {
-            playerController.TalkingPartner = gameObject;
+            //playerController.TalkingPartner = gameObject;
             talkTrig.StartDialogue();
         }
     }
@@ -132,7 +132,7 @@ public class PinonController : MonoBehaviour, INPCController
         npc.Reset();
         if (talkTrig.DialogueActive())
         {
-            playerController.TalkingPartner = null;
+            //playerController.TalkingPartner = null;
             talkTrig.EndDialogue();
         }
     }

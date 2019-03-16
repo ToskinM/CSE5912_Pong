@@ -23,7 +23,7 @@ public class AmaruController : MonoBehaviour, INPCController
     NPCMovementController npc;
     NavMeshAgent agent;
     DialogueTrigger talkTrig;
-    IPlayerController playerController;
+    PlayerController playerController;
     Animator animator;
     private List<string> acceptableGifts;
     private FeedbackText feedbackText;
@@ -43,8 +43,8 @@ public class AmaruController : MonoBehaviour, INPCController
 
         icon = new IconFactory().GetIcon(Constants.AMARU_ICON);
 
-        talkTrig = new DialogueTrigger(DialoguePanel, icon, Constants.AMARU_INTRO_DIALOGUE);
-        playerController = LevelManager.current.player.GetComponent<IPlayerController>();
+        talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.AMARU_INTRO_DIALOGUE);
+        playerController = LevelManager.current.player.GetComponent<PlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         acceptableGifts = new List<string>();
@@ -111,7 +111,7 @@ public class AmaruController : MonoBehaviour, INPCController
 
         if (!talkTrig.DialogueActive())
         {
-            playerController.TalkingPartner = gameObject;
+            //playerController.TalkingPartner = gameObject;
             talkTrig.StartDialogue();
         }
     }
@@ -122,7 +122,7 @@ public class AmaruController : MonoBehaviour, INPCController
         npc.Reset();
         if (talkTrig.DialogueActive())
         {
-            playerController.TalkingPartner = null;
+            //playerController.TalkingPartner = null;
             talkTrig.EndDialogue();
         }
     }

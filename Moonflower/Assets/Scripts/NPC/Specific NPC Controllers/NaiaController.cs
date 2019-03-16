@@ -41,7 +41,7 @@ public class NaiaController : MonoBehaviour, INPCController
         Vector3 walkOrigin = transform.position;
         movement = new NPCMovementController(gameObject, anai);
         icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
-        talkTrig = new DialogueTrigger(DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
+        talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         playerController = LevelManager.current.player.GetComponent<PlayerController>();
@@ -114,7 +114,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
         if (!talkTrig.DialogueActive())
         {
-            playerController.TalkingPartner = gameObject;
+            //playerController.TalkingPartner = gameObject;
             talkTrig.StartDialogue();
         }
     }
@@ -125,7 +125,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
         if (talkTrig.DialogueActive())
         {
-            playerController.TalkingPartner = null;
+            //playerController.TalkingPartner = null;
             talkTrig.EndDialogue();
         }
     }
