@@ -19,10 +19,15 @@ public class ActionWheel : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < 4; i++)
-        {
-            buttons[i].onClick.AddListener(() => OnButtonClick(i));
-        }
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    buttons[i].onClick.AddListener(() => OnButtonClick(i));
+        //}
+
+        buttons[0].onClick.AddListener(() => OnButtonClick(0));
+        buttons[1].onClick.AddListener(() => OnButtonClick(1));
+        buttons[2].onClick.AddListener(() => OnButtonClick(2));
+        buttons[3].onClick.AddListener(() => OnButtonClick(3));
 
         //inspectButton.onClick.AddListener(() => OnButtonClick(0));
         //talkButton.onClick.AddListener(() => OnButtonClick(1));
