@@ -8,7 +8,7 @@ public class StealthCollider : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        stealthDetection.TriggerEnterReaction(other);
+        //stealthDetection.TriggerEnterReaction(other);
     }
 
     void OnTriggerStay(Collider other)
@@ -18,6 +18,6 @@ public class StealthCollider : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        stealthDetection.TriggerExitReaction(other);
+        //stealthDetection.TriggerExitReaction(other);
     }
 }

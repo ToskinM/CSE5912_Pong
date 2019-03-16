@@ -149,7 +149,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
             //movement.player = combatController.combatTarget;
             //movement.Attacking = true;
 
-            if (stealthDetection)
+            if (stealthDetection && stealthDetection.enabled == true)
             {
                 stealthDetection.BecomeAlerted(aggroTarget);
                 stealthDetection.enabled = false;
@@ -194,5 +194,5 @@ public class LesserNPCController : MonoBehaviour, INPCController
     void HandlePauseEvent(bool isPaused)
     {
         //enabled = !isPaused;
-}
+    }
 }

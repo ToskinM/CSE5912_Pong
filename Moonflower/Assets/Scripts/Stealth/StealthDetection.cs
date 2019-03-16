@@ -44,6 +44,7 @@ public class StealthDetection : MonoBehaviour
 
     void Start()
     {
+        // Initialize Awareness Level
         switch (Awareness)
         {
             case AwarenessLevel.Distracted:
@@ -85,17 +86,8 @@ public class StealthDetection : MonoBehaviour
             timeSinceLastAction += Time.deltaTime;  // Wait some time before the decay starts
         }
 
+        // Update meter value
         UpdateAwareness();
-
-        //if (awarenessLevel > alertedThreshold)
-        //    if (Awareness < AwarenessLevel.Alerted)    
-        //        BecomeAlerted(LevelManager.current.currentPlayer);
-        //else if (awarenessLevel > suspiciousThreshold)
-        //    BecomeSuspicious();
-        //else
-        //    BecomeNeutral();
-
-        //Debug.Log(Awareness.ToString() + " , "  + timeSinceLastAction.ToString());
     }
 
     void UpdateAwareness()
@@ -104,6 +96,7 @@ public class StealthDetection : MonoBehaviour
 
         if (awarenessMeter >= alertedThreshold)
         {
+            // When alert threshold crossed, become alerted if not already
             if (Awareness == AwarenessLevel.Suspicious || Awareness == AwarenessLevel.Neutral)
             {
                 BecomeAlerted(LevelManager.current.currentPlayer);
@@ -111,6 +104,7 @@ public class StealthDetection : MonoBehaviour
         }
         else if (awarenessMeter >= suspiciousThreshold)
         {
+            // When suspicious threshold crossed, become suspicious if not already
             if (Awareness == AwarenessLevel.Neutral)
             {
                 BecomeSuspicious();
@@ -118,6 +112,7 @@ public class StealthDetection : MonoBehaviour
         }
         else if (awarenessMeter == 0)
         {
+            // return to neutral once meter is empty
             if (Awareness == AwarenessLevel.Suspicious || Awareness == AwarenessLevel.Alerted)
             {
                 BecomeNeutral();
@@ -125,11 +120,22 @@ public class StealthDetection : MonoBehaviour
         }
         else if (awarenessMeter < suspiciousThreshold)
         {
+            // return to suspicious state if alerted when we drop below susp threshold
             if (Awareness == AwarenessLevel.Alerted)
             {
                 BecomeSuspicious();
             }
         }
+    }
+
+    private void RaiseAwarenessMeter(float amount)
+    {
+        awarenessMeter += amount; // might add stealth mod here
+        timeSinceLastAction = 0f;
+    }
+    private void LowerAwarenessMeter(float amount)
+    {
+        awarenessMeter -= amount;
     }
 
     void DetectionWhileNeutral(GameObject player, float distance)
@@ -140,62 +146,37 @@ public class StealthDetection : MonoBehaviour
             // Add small amounts of suspicion if player is walking
             if (PlayerController.instance.ActivePlayerMovementControls.Action == PlayerMovementController.Actions.Walking)
             {
-                awarenessMeter += baseAwarenessGrowth;
-                timeSinceLastAction = 0f;
+                RaiseAwarenessMeter(baseAwarenessGrowth);
             }
             // Add bigger amounts of suspicion if player is running
             else if (PlayerController.instance.ActivePlayerMovementControls.Action == PlayerMovementController.Actions.Running)
             {
-                awarenessMeter += baseAwarenessGrowth * runningMultiplier;
-                timeSinceLastAction = 0f;
+                RaiseAwarenessMeter(baseAwarenessGrowth * runningMultiplier);
             }
         }
         // If player is within the detection range but is further than half its radius
         else if (distance <= stealthCollider.radius && PlayerController.instance.ActivePlayerMovementControls.Action == PlayerMovementController.Actions.Running)
         {
-            awarenessMeter += 3f;
-            timeSinceLastAction = 0f;
+            RaiseAwarenessMeter(baseAwarenessGrowth);
         }
-
-        // Once suspicion meter is past its threshold, turn into suspicious state
-        //if (awarenessMeter >= suspiciousThreshold)
-        //{
-        //    StartCoroutine(BecomeSuspiciousDelayed(0f));
-        //}
-        //else if (awarenessMeter < 0f)
-        //{
-        //    StartCoroutine(BecomeNeutralDelayed(0f));
-        //}
     }
 
     void DetectionWhileSuspicious(GameObject player, float distance)
     {
         if (PlayerController.instance.ActivePlayerMovementControls.Action == PlayerMovementController.Actions.Walking)
         {
-            awarenessMeter += baseAwarenessGrowth * suspiciousMultiplier;
-            timeSinceLastAction = 0f;
+            RaiseAwarenessMeter(baseAwarenessGrowth * suspiciousMultiplier);
         }
         // Add bigger amounts of suspicion if player is running
         else if (PlayerController.instance.ActivePlayerMovementControls.Action == PlayerMovementController.Actions.Running)
         {
-            awarenessMeter += baseAwarenessGrowth * runningMultiplier * suspiciousMultiplier;
-            timeSinceLastAction = 0f;
+            RaiseAwarenessMeter(baseAwarenessGrowth * runningMultiplier * suspiciousMultiplier);
         }
         // Add smaller amounts of suspicion if player is sneaking
         else if (PlayerController.instance.ActivePlayerMovementControls.Action == PlayerMovementController.Actions.Sneaking)
         {
-            awarenessMeter += baseAwarenessGrowth * sneakingMultiplier;
-            timeSinceLastAction = 0f;
+            RaiseAwarenessMeter(baseAwarenessGrowth * sneakingMultiplier);
         }
-
-        //if (awarenessMeter >= 200f)
-        //{
-        //    StartCoroutine(BecomeAlertedDelayed(2f, player));
-        //}
-        //else if (awarenessMeter <= 100f)
-        //{
-        //    StartCoroutine(BecomeNeutralDelayed(0f));
-        //}
     }
 
     void DetectionWhileAlert(GameObject player, float distance)
@@ -209,13 +190,10 @@ public class StealthDetection : MonoBehaviour
                 timeSinceLastAction = 0f;
             }
         }
-
-        //if (awarenessMeter <= 100f)
-        //{
-        //    StartCoroutine(BecomeNeutralDelayed(0f));
-        //}
     }
 
+
+    // Trigger MEthods
     public void TriggerEnterReaction(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -308,15 +286,15 @@ public class StealthDetection : MonoBehaviour
     {
         if (Awareness == AwarenessLevel.Neutral)
         {
-            awarenessMeter -= baseDecayRate;
+            LowerAwarenessMeter(baseDecayRate);
         }
         else if (Awareness == AwarenessLevel.Suspicious)
         {
-            awarenessMeter -= baseDecayRate * decayMultiplierSuspicious;
+            LowerAwarenessMeter(baseDecayRate * decayMultiplierSuspicious);
         }
         else if (Awareness == AwarenessLevel.Alerted)
         {
-            awarenessMeter -= baseDecayRate * decayMultiplierAlerted;
+            LowerAwarenessMeter(baseDecayRate * decayMultiplierAlerted);
         }
 
         awarenessMeter = Mathf.Clamp(awarenessMeter, 0, 1000);
