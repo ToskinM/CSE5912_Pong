@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.48066366, g: 0.9257534, b: 1.4880309, a: 1}
+  m_IndirectSpecularColor: {r: 0.4855957, g: 0.9311419, b: 1.4875678, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -17717,6 +17717,7 @@ MonoBehaviour:
   MimbiObject: {fileID: 574423205}
   ActivePlayerMovementControls: {fileID: 0}
   ActivePlayerCombatControls: {fileID: 0}
+  ActivePlayerInteractionFOV: {fileID: 0}
 --- !u!114 &465188872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21102,6 +21103,30 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 899378616}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &574423206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574423205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68655665de1db9b41ad317b508226a9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 4
+  viewAngle: 80
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 512
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 1
+  npcCombatController: {fileID: 0}
+  visibleTargets: []
+  closestTarget: {fileID: 0}
+  focusedTarget: {fileID: 0}
 --- !u!4 &574423214 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 574423207, guid: 24bae5f0d34626a459d9f0f207247a1a,
@@ -42593,10 +42618,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 320f755b02b8b4abca7a18c854d06070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 465188864}
   WalkCenter: {fileID: 182660005}
   DialoguePanel: {fileID: 213513782}
   dialogueActive: 0
+  canInspect: 1
+  canTalk: 1
+  canDistract: 1
+  canGift: 1
 --- !u!136 &1184658067
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -51171,6 +51199,30 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 85873064}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1438201455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438201454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68655665de1db9b41ad317b508226a9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 3
+  viewAngle: 80
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 512
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 1
+  npcCombatController: {fileID: 0}
+  visibleTargets: []
+  closestTarget: {fileID: 0}
+  focusedTarget: {fileID: 0}
 --- !u!114 &1438201467
 MonoBehaviour:
   m_ObjectHideFlags: 0
