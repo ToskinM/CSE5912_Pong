@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.4852417, g: 0.9310331, b: 1.487578, a: 1}
+  m_IndirectSpecularColor: {r: 0.4855957, g: 0.9311419, b: 1.4875678, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10874,6 +10874,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1533486653}
   - component: {fileID: 1533486654}
+  - component: {fileID: 1533486655}
   m_Layer: 0
   m_Name: Options Menu
   m_TagString: Untagged
@@ -10911,6 +10912,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   windowDropDown: {fileID: 2127774229}
   resolutionDropDown: {fileID: 1903468254}
+--- !u!114 &1533486655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533486652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58357214e213c045b1b20007514e37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicSlider: {fileID: 711255939}
+  effectsSlider: {fileID: 1333253982}
 --- !u!1001 &1547726715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13067,7 +13082,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1760444797
 AudioSource:

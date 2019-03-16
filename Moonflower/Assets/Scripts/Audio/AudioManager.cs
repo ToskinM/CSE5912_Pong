@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioManager instance;
+
     //private AudioList AllSound ;
     //public Sound[] sounds;
     //public Sound[] backgrounds;
@@ -15,7 +17,6 @@ public class AudioManager : MonoBehaviour
     public float soundVol;
     public float backgroundVol;
 
-    public static AudioManager instance;
     //private AudioAvalibleArea avalibleArea;
     private AudioSourceManager audioSources;
 
@@ -32,20 +33,22 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         //Assign vol
-        soundVol = 1;
-        backgroundVol = 1;
+        backgroundVol = PlayerPrefs.GetFloat("volumeMusic", 0.75f);
+        soundVol = PlayerPrefs.GetFloat("volumeEffects", 0.75f);
+
         //Get AudioSource
         StartCoroutine(GetAudioSourceManager());
         //Assign music clip to audio source
             //AssignToAudioSource(audioSounds, soundVol);
             //AssignToAudioSource(audioBackgrounds, backgroundVol);
+
         //Play Background wind Sound
         PlayBackground("Environment", "Wind");
+
         //Set hearable area
         //avalibleArea = GetComponent<AudioAvalibleArea>();
-
-
     }
 
     private IEnumerator GetAudioSourceManager()
@@ -269,9 +272,7 @@ public class AudioManager : MonoBehaviour
 
     void Update()
     {
-
+        backgroundVol = PlayerPrefs.GetFloat("volumeMusic", 0.75f);
+        soundVol = PlayerPrefs.GetFloat("volumeEffects", 0.75f);
     }
-
-
-
 }

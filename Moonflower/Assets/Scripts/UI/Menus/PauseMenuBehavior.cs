@@ -118,10 +118,8 @@ public class PauseMenuBehavior : MonoBehaviour
 
     void Update()
     {
-        if (OptionsMenu.activeInHierarchy == true)
-            Slider();
-
-
+        //if (OptionsMenu.activeInHierarchy == true)
+        //    Slider();
     }
 }
 
