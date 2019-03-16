@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public enum PlayerCharacter { Anai, Mimbi };
     private PlayerCharacter activeCharacter;
 
+    public GameObject TalkingPartner { get; set; }
     public GameObject AnaiObject;
     public GameObject MimbiObject;
 
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
         ActivePlayerInteractionFOV = ActivePlayerObject.GetComponent<FieldOfView>();
 
+        LevelManager.current.player = this;
     }
 
     // Start is called before the first frame update
@@ -153,6 +155,11 @@ public class PlayerController : MonoBehaviour
     public PlayerCharacter GetActiveCharacter()
     {
         return activeCharacter;
+    }
+
+    public bool AnaiIsActive()
+    {
+        return activeCharacter == PlayerCharacter.Anai; 
     }
 
     public GameObject GetActivePlayerObject()

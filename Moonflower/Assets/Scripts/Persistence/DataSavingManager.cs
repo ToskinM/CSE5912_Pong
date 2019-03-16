@@ -36,8 +36,8 @@ public class DataSavingManager : MonoBehaviour
     private void GetReferences()
     {
         anaiDataFilePath = Application.persistentDataPath + "/AnaiInfo.dat";
-        anai = LevelManager.current.anai.gameObject;
-        mimbi = LevelManager.current.mimbi.gameObject;
+        anai = LevelManager.current.anai;
+        mimbi = LevelManager.current.mimbi;
     }
 
     public void SaveGame()
@@ -84,8 +84,8 @@ public class DataSavingManager : MonoBehaviour
         //    anai.transform.SetPositionAndRotation(anaiData.transform.position, anaiData.transform.rotation);
         //}
 
-        anaiData?.Load(LevelManager.current.anai.gameObject);
-        mimbiData?.Load(LevelManager.current.mimbi.gameObject);
+        anaiData?.Load(LevelManager.current.anai);
+        mimbiData?.Load(LevelManager.current.mimbi);
 
     }
 

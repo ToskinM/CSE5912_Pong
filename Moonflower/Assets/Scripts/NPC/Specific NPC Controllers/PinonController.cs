@@ -7,7 +7,7 @@ using TMPro;
 
 public class PinonController : MonoBehaviour, INPCController
 {
-    private GameObject Player;
+    //public GameObject Player;
     public GameObject WalkCenter;
     public GameObject DialoguePanel;
     public Sprite icon { get; set; }
@@ -27,9 +27,11 @@ public class PinonController : MonoBehaviour, INPCController
     NPCMovementController npc;
     NavMeshAgent agent;
     DialogueTrigger talkTrig;
-    IPlayerController playerController;
+    PlayerController playerController;
     Animator animator;
     private FeedbackText feedbackText;
+    private GameObject anai;
+    private CurrentPlayer currentPlayer; 
 
     void Awake()
     {
@@ -39,39 +41,47 @@ public class PinonController : MonoBehaviour, INPCController
     // Start is called before the first frame update
     void Start()
     {
-        playerController = LevelManager.current.currentPlayer.GetComponent<IPlayerController>();
-        Player = LevelManager.current.currentPlayer;
+        //playerController = LevelManager.current.currentPlayer.GetComponent<IPlayerController>();
+        // Player = LevelManager.current.currentPlayer;
+        playerController = LevelManager.current.player.GetComponent<PlayerController>();
+        feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
+        currentPlayer = LevelManager.current.player.GetComponent<CurrentPlayer>();
+        anai = currentPlayer.GetAnai();
+
         agent = GetComponent<NavMeshAgent>();
 
         Vector3 pos = transform.position; 
-        npc = new NPCMovementController(gameObject, Player);
+        npc = new NPCMovementController(gameObject, anai);
         npc.FollowPlayer(bufferDist, tooCloseRad);
         npc.Wander(WalkCenter.transform.position, wanderRad);
         npc.SetDefault(NPCMovementController.MoveState.chill);
         npc.Reset();
-        npc.SetLoc(pos); 
+        npc.SetLoc(pos);
+
 
         icon = new IconFactory().GetIcon(Constants.PINON_ICON);
+        talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.PINON_FIRST_INTRO_DIALOGUE);
 
-        talkTrig = new DialogueTrigger(DialoguePanel, icon, Constants.PINON_FIRST_INTRO_DIALOGUE);
-        //playerController = Player.GetComponent<IPlayerController>();
-        feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
+<<<<<<< HEAD
         actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
+=======
+       
+>>>>>>> 67bb087c59ad71985a4921cad4512b5c7df9e176
     }
 
     // Update is called once per frame
     void Update()
     {
 //        Debug.Log("wtf"); 
-        //if (playerController.Playing)
+        if (currentPlayer.IsAnai())
         {
 //            Debug.Log("Anai bud");
             talkTrig.Update();
 
             npc.UpdateMovement();
 
-            if (npc.DistanceFrom(Player) < engagementRadius && !talkTrig.Complete)
+            if (npc.DistanceFrom(anai) < engagementRadius && !talkTrig.Complete)
             {
 //                Debug.Log("Close enough!"); 
                 StartTalk();
@@ -88,11 +98,11 @@ public class PinonController : MonoBehaviour, INPCController
                 //npc.Reset(); 
             }
         }
-        //else
-        //{
-        //    Debug.Log("whyyy");
-        //    npc.UpdateMovement();
-        //}
+        else
+        {
+            Debug.Log("whyyy");
+            npc.UpdateMovement();
+        }
         dialogueActive = talkTrig.DialogueActive();
 
     }
@@ -121,7 +131,7 @@ public class PinonController : MonoBehaviour, INPCController
 
         if (!talkTrig.DialogueActive())
         {
-            playerController.TalkingPartner = gameObject;
+            //playerController.TalkingPartner = gameObject;
             talkTrig.StartDialogue();
         }
     }
@@ -132,7 +142,7 @@ public class PinonController : MonoBehaviour, INPCController
         npc.Reset();
         if (talkTrig.DialogueActive())
         {
-            playerController.TalkingPartner = null;
+            //playerController.TalkingPartner = null;
             talkTrig.EndDialogue();
         }
     }

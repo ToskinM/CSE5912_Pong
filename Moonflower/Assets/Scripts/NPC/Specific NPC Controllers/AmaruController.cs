@@ -7,7 +7,7 @@ using TMPro;
 
 public class AmaruController : MonoBehaviour, INPCController
 {
-    public GameObject Player;
+    //public GameObject Player;
     public GameObject WalkCenter;
     public GameObject DialoguePanel;
     public Sprite icon { get; set; }
@@ -18,16 +18,21 @@ public class AmaruController : MonoBehaviour, INPCController
     const float bufferDist = 4f;
     const float wanderRad = 30f;
 
+<<<<<<< HEAD
     public bool canInspect = true;
     public bool canTalk = true;
     public bool canDistract = true;
     public bool canGift = true;
     [HideInInspector] public bool[] actionsAvailable { get; private set; }
 
+=======
+    CurrentPlayer playerInfo;
+    private GameObject anai;
+>>>>>>> 67bb087c59ad71985a4921cad4512b5c7df9e176
     NPCMovementController npc;
     NavMeshAgent agent;
     DialogueTrigger talkTrig;
-    IPlayerController playerController;
+    PlayerController playerController;
     Animator animator;
     private List<string> acceptableGifts;
     private FeedbackText feedbackText;
@@ -36,17 +41,19 @@ public class AmaruController : MonoBehaviour, INPCController
     void Start()
     {
         //npc = gameObject.AddComponent<NPCMovement>();
+        playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
+        anai = LevelManager.current.anai;
         agent = GetComponent<NavMeshAgent>();
 
-        npc = new NPCMovementController(gameObject, Player);
+        npc = new NPCMovementController(gameObject, anai);
         npc.FollowPlayer(bufferDist, tooCloseRad);
         npc.Wander(WalkCenter.transform.position, wanderRad);
         npc.SetDefault(NPCMovementController.MoveState.wander);
 
         icon = new IconFactory().GetIcon(Constants.AMARU_ICON);
 
-        talkTrig = new DialogueTrigger(DialoguePanel, icon, Constants.AMARU_INTRO_DIALOGUE);
-        playerController = Player.GetComponent<IPlayerController>();
+        talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.AMARU_INTRO_DIALOGUE);
+        playerController = LevelManager.current.player.GetComponent<PlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         acceptableGifts = new List<string>();
@@ -65,7 +72,7 @@ public class AmaruController : MonoBehaviour, INPCController
 
             npc.UpdateMovement();
 
-            if (npc.DistanceFrom(Player) < engagementRadius && !talkTrig.Complete)
+            if (npc.DistanceFrom(anai) < engagementRadius && !talkTrig.Complete)
             {
                 //StartTalk();
                 indicateInterest();
@@ -115,7 +122,7 @@ public class AmaruController : MonoBehaviour, INPCController
 
         if (!talkTrig.DialogueActive())
         {
-            playerController.TalkingPartner = gameObject;
+            //playerController.TalkingPartner = gameObject;
             talkTrig.StartDialogue();
         }
     }
@@ -126,7 +133,7 @@ public class AmaruController : MonoBehaviour, INPCController
         npc.Reset();
         if (talkTrig.DialogueActive())
         {
-            playerController.TalkingPartner = null;
+            //playerController.TalkingPartner = null;
             talkTrig.EndDialogue();
         }
     }

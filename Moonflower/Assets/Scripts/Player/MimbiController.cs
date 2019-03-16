@@ -34,7 +34,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
         Playing = false;
         moveSpeed = 5f;
 
-        Anai = LevelManager.current.anai.gameObject;
+        Anai = LevelManager.current.anai;
         agent = GetComponent<NavMeshAgent>();
         playMove = GetComponent<PlayerMovement>();
         playCombat = GetComponent<PlayerCombatController>();
@@ -46,7 +46,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
 
         //playerAnimate.playerMovement = npcMove;
 
-        LevelManager.current.mimbi = this;
+        LevelManager.current.mimbi = this.gameObject;
     }
 
     private void OnEnable()

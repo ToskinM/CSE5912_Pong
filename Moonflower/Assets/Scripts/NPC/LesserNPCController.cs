@@ -31,7 +31,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
-    private IPlayerController playerController;
+    private PlayerController playerController;
     private FeedbackText feedback;
 
     private Vector3 startPosition;
@@ -46,9 +46,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
         combatController = GetComponent<NPCCombatController>();
         stealthDetection = GetComponent<StealthDetection>();
 
-        playerController = LevelManager.current.currentPlayer.GetComponent<IPlayerController>();
-
-        actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
+        playerController = LevelManager.current.player.GetComponent<PlayerController>();
     }
 
     void Start()
@@ -71,9 +69,9 @@ public class LesserNPCController : MonoBehaviour, INPCController
     {
         if (talkTrig != null)
         {
-            if (playerController.Playing)
-            {
-                talkTrig.Update();
+            //if (playerController.Playing)
+            //{
+                //talkTrig.Update();
 
                 //if (!talkTrig.Complete)
                 //{
@@ -88,8 +86,8 @@ public class LesserNPCController : MonoBehaviour, INPCController
                 //    }
                 //}
             }
-        }
-        else
+        //}
+        //else
         {
             //if (combatController.inCombat)
             //{

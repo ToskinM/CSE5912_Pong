@@ -23,12 +23,12 @@ public class NaiaController : MonoBehaviour, INPCController
     [HideInInspector] public bool[] actionsAvailable { get; private set; }
 
     CurrentPlayer playerInfo;
-    private GameObject Player;
+    private GameObject anai;
     private NPCMovementController movement;
     private NPCCombatController combatController;
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
-    private IPlayerController playerController;
+    private PlayerController playerController;
     private FeedbackText feedbackText; 
 
     private enum NaiaEngageType { talk, fight, chill }
@@ -39,18 +39,18 @@ public class NaiaController : MonoBehaviour, INPCController
     {
         // Initialize Components
         playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
-        Player = LevelManager.current.anai.gameObject;
+        anai = LevelManager.current.anai;
         agent = GetComponent<NavMeshAgent>();
         combatController = GetComponent<NPCCombatController>();
 
         // Setup Movement
         Vector3 walkOrigin = transform.position;
-        movement = new NPCMovementController(gameObject, Player);
+        movement = new NPCMovementController(gameObject, anai);
         icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
-        talkTrig = new DialogueTrigger(DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
+        talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
-        playerController = Player.GetComponent<IPlayerController>();
+        playerController = LevelManager.current.player.GetComponent<PlayerController>();
 
         combatController.npcMovement = movement;
 
@@ -63,14 +63,14 @@ public class NaiaController : MonoBehaviour, INPCController
 
     void Update()
     {
-        float playerDist = movement.DistanceFrom(Player);  //getXZDist(transform.position, Player.transform.position);
+        float playerDist = movement.DistanceFrom(anai);  //getXZDist(transform.position, Player.transform.position);
 
         switch (currState)
         {
             case NaiaEngageType.chill:
                 //Debug.Log("chilling");
                 combatController.Active = false;
-                if (playerController.Playing && playerController.TalkingPartner == null && playerDist < engagementRadius && !talkTrig.Complete)
+                if (playerController.AnaiIsActive() && playerController.TalkingPartner == null && playerDist < engagementRadius && !talkTrig.Complete)
                 {
                     //StartTalk();
                 }
@@ -90,7 +90,7 @@ public class NaiaController : MonoBehaviour, INPCController
                 Debug.Log("talking");
                 //combatController.Active = false;
 
-                if (playerController.Playing)
+                if (playerController.AnaiIsActive())
                 {
 
                     if (talkTrig.Complete)
@@ -122,7 +122,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
         if (!talkTrig.DialogueActive())
         {
-            playerController.TalkingPartner = gameObject;
+            //playerController.TalkingPartner = gameObject;
             talkTrig.StartDialogue();
         }
     }
@@ -133,7 +133,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
         if (talkTrig.DialogueActive())
         {
-            playerController.TalkingPartner = null;
+            //playerController.TalkingPartner = null;
             talkTrig.EndDialogue();
         }
     }

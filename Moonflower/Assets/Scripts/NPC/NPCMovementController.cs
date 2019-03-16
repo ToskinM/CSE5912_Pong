@@ -12,6 +12,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
     public enum MoveState { follow, wander, wanderfollow, chill }
     public MoveState state = MoveState.chill;
     MoveState defaultState = MoveState.chill; 
+    public bool IsDefault { get { return state == defaultState; } }
 
     NPCWanderMove wander;
     NPCFollowMove follow;
