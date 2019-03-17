@@ -133,46 +133,50 @@ public class ShowInventory : MonoBehaviour
             float heightDim = 10; 
             foreach (string item in playerInventory.ItemNames)
             {
-                //make a copy of the inventory item template 
-                GameObject newItem;
-                newItem = Instantiate(InvItemTemplate, InvContentPanel.transform);
-                newItem.transform.position = InvItemTemplate.transform.position + new Vector3(xOffset * currCol, -yOffset * currRow, 0);
-                items.Add(newItem); 
-                //update place in inventory grid
-                currCol++; 
-                if(currCol > numCols)
+                if (!isGift || !lookup.IsLifeObject(item))
                 {
-                    currRow++;
-                    currCol = 0; 
+                    //make a copy of the inventory item template 
+                    GameObject newItem;
+                    newItem = Instantiate(InvItemTemplate, InvContentPanel.transform);
+                    newItem.transform.position = InvItemTemplate.transform.position + new Vector3(xOffset * currCol, -yOffset * currRow, 0);
+                    items.Add(newItem);
+                    //update place in inventory grid
+                    currCol++;
+                    if (currCol > numCols)
+                    {
+                        currRow++;
+                        currCol = 0;
+                    }
+
+
+                    names.Add(item);
+
+                    //get all components of the template
+                    Image icon = newItem.transform.GetChild(0).GetComponent<Image>();
+                    TextMeshProUGUI itemName = newItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+                    TextMeshProUGUI itemNum = newItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+
+                    Button invButton = newItem.transform.GetChild(3).GetComponent<Button>();
+
+                    //set up or deactivate button accordingly
+                    if (buttonActive)
+                        invButton.onClick.AddListener(delegate { giftToNPC(item); });
+                    else
+                        invButton.gameObject.SetActive(false);
+
+                    //get for content scroll info
+                    heightDim = icon.gameObject.GetComponent<RectTransform>().rect.height * 2.3f;
+
+                    icon.sprite = lookup.GetSprite(item);
+                    if (inEnglish)
+                        itemName.text = item;
+                    else
+                        itemName.text = lookup.GetGuaraniName(item);
+
+                    int numItem = playerInventory.ItemAmountMap[item];
+                    if (numItem > 1)
+                        itemNum.text = "" + numItem;
                 }
-
-                
-                names.Add(item);
-
-                //get all components of the template
-                Image icon = newItem.transform.GetChild(0).GetComponent<Image>();
-                TextMeshProUGUI itemName = newItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-                TextMeshProUGUI itemNum = newItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-                Button invButton = newItem.transform.GetChild(3).GetComponent<Button>();
-
-                //set up or deactivate button accordingly
-                if (buttonActive)
-                    invButton.onClick.AddListener(delegate { giftToNPC(item); });
-                else
-                    invButton.gameObject.SetActive(false);
-
-                //get for content scroll info
-                heightDim = icon.gameObject.GetComponent<RectTransform>().rect.height * 2.3f;
-
-                icon.sprite = lookup.GetSprite(item);
-                if (inEnglish)
-                    itemName.text = item;
-                else
-                    itemName.text = lookup.GetGuaraniName(item); 
-
-                int numItem = playerInventory.ItemAmountMap[item];
-                if(numItem > 1)
-                    itemNum.text = "" + numItem; 
             }
 
             RectTransform rect = InvContentPanel.GetComponent<RectTransform>();
@@ -218,7 +222,9 @@ public class ShowInventory : MonoBehaviour
         InventoryPanel.SetActive(false);
         GameStateController.current.UnpauseGame();
         //inventoryText.gameObject.SetActive(false);
-        isGift = false; 
+        isGift = false;
+        Shown = false;
+        buttonActive = false;  
     }
 
 

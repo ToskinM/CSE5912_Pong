@@ -161,8 +161,7 @@ public class SpawnActionWheel : MonoBehaviour
                 if (inventory.HasInv())
                 {
                     inventory.ShowGiftInventory(targetController);
-                    interactionPopup.SetActive(false);
-                    otherWindowUp = false; 
+                    otherWindowUp = true; 
                 }
                 else
                     feedback.ShowText("You have nothing to give."); 

@@ -95,6 +95,11 @@ public class ItemLookup
         }
     }
 
+    public bool IsLifeObject(string name)
+    {
+        return name.Equals(WOLFAPPLE_NAME) || name.Equals(MOONFLOWER_NAME); 
+    }
+
     public GameObject GetObject(string name)
     {
         switch (name)
