@@ -12,9 +12,9 @@ public class ShowInspect : MonoBehaviour
 
     private TextMeshProUGUI charName;
     private TextMeshProUGUI descrip;
-    private Image icon; 
+    private Image icon;
 
-    private bool show;
+    public bool Shown = false;
     private bool buttonActive = false;
     private InspectFactory descripFactory;
     private IconFactory iconFactory;
@@ -28,12 +28,12 @@ public class ShowInspect : MonoBehaviour
         descripFactory = new InspectFactory();
         iconFactory = new IconFactory(); 
 
-        show = false;
+        Shown = false;
    }
 
     void Update()
     {
-        if(show && Input.GetKeyDown(KeyCode.X))
+        if(Shown && Input.GetKeyDown(KeyCode.X))
         {
             Hide();
         }
@@ -44,7 +44,7 @@ public class ShowInspect : MonoBehaviour
     {
         InspectPanel.SetActive(true);
         GameStateController.current.PauseGame();
-        show = true;
+        Shown = true;
         charName.text = name;
         switch (name)
         {
@@ -88,7 +88,7 @@ public class ShowInspect : MonoBehaviour
         descrip.text = "...";
         InspectPanel.SetActive(false);
         GameStateController.current.UnpauseGame();
-        show = false; 
+        Shown = false; 
     }
 
 

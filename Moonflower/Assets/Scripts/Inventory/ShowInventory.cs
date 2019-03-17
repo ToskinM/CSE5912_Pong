@@ -18,7 +18,8 @@ public class ShowInventory : MonoBehaviour
     GameObject InvItemTemplate;
     ItemLookup lookup = new ItemLookup(); 
     private PlayerInventory playerInventory;
-    private bool show;
+    public bool Shown = false;
+    private bool isGift = false; 
     private bool buttonActive = false;
     INPCController receiverController;
 
@@ -37,7 +38,7 @@ public class ShowInventory : MonoBehaviour
         xOffset = Screen.width / 5;
         yOffset = Screen.height / 2.5f;
         InvItemTemplate = InvContentPanel.transform.GetChild(0).gameObject; 
-        show = false;
+        Shown = false;
         playerInventory = Player.GetComponent<PlayerInventory>();
         gameController = GameStateController.current;
         //InvoButton.onClick.AddListener(showInv);
@@ -45,7 +46,7 @@ public class ShowInventory : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I))
+        if(!isGift && Input.GetKeyDown(KeyCode.I))
         {
             showInv(); 
             toggleEnabled = false;
@@ -54,8 +55,11 @@ public class ShowInventory : MonoBehaviour
                 string itemName = names[items.IndexOf(item)];
                 item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = lookup.GetGuaraniName(itemName);
 
-
             }
+        }
+        if(isGift && Input.GetKeyDown(KeyCode.X))
+        {
+            HideInvList(); 
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -84,6 +88,8 @@ public class ShowInventory : MonoBehaviour
 
     public void ShowGiftInventory(INPCController controller)
     {
+        Shown = true;
+        isGift = true; 
         buttonActive = true;
         ShowInvList();
         receiverController = controller;
@@ -101,8 +107,8 @@ public class ShowInventory : MonoBehaviour
 
     private void showInv()
     {
-        show = !show; 
-        if(show)
+        Shown = !Shown; 
+        if(Shown)
         {
             GameStateController.current.SetMouseLock(false);
             ShowInvList();
@@ -212,6 +218,7 @@ public class ShowInventory : MonoBehaviour
         InventoryPanel.SetActive(false);
         GameStateController.current.UnpauseGame();
         //inventoryText.gameObject.SetActive(false);
+        isGift = false; 
     }
 
 

@@ -25,6 +25,7 @@ public class SpawnActionWheel : MonoBehaviour
     private bool wheelAvailable = true;
     private bool wheelShowing = false;
     private bool inRange = false;
+    bool otherWindowUp = false; 
 
     private float activationRange = 5f;
 
@@ -118,7 +119,7 @@ public class SpawnActionWheel : MonoBehaviour
             followCamera = LevelManager.current.mainCamera;
         }
 
-        if (wheelAvailable)
+        if (wheelAvailable && !otherWindowUp)
         {
             if (target && Vector3.Distance(target.transform.position, LevelManager.current.currentPlayer.transform.position) <= activationRange)
             {
@@ -131,6 +132,10 @@ public class SpawnActionWheel : MonoBehaviour
                 interactionPopup.SetActive(false);
             }
         }
+        else if (otherWindowUp)
+        {
+            otherWindowUp = inspect.Shown || inventory.Shown; 
+        }
     }
 
     private void HandleWheelSelection(int selection)
@@ -142,7 +147,8 @@ public class SpawnActionWheel : MonoBehaviour
         {
             case 0:
                 string targetName = targetController.Inspect();
-                inspect.Show(targetName); 
+                inspect.Show(targetName);
+                otherWindowUp = true;
                 break;
             case 1:
                 targetController.Talk();
@@ -156,6 +162,7 @@ public class SpawnActionWheel : MonoBehaviour
                 {
                     inventory.ShowGiftInventory(targetController);
                     interactionPopup.SetActive(false);
+                    otherWindowUp = false; 
                 }
                 else
                     feedback.ShowText("You have nothing to give."); 
