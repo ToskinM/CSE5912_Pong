@@ -14,7 +14,8 @@ public class SypaveController : MonoBehaviour, INPCController
 
     public float engagementRadius = 5f;
     public float tooCloseRad = 4f;
-    public float bufferDist = 5f;
+    public float bufferDist = 3.5f;
+    float paceDist = 5.5f;
 
     public bool canInspect = true;
     public bool canTalk = true;
@@ -29,7 +30,7 @@ public class SypaveController : MonoBehaviour, INPCController
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
     private PlayerController playerController;
-    private FeedbackText feedbackText; 
+    private FeedbackText feedbackText;
 
 
     void Start()
@@ -43,6 +44,10 @@ public class SypaveController : MonoBehaviour, INPCController
         // Setup Movement
         Vector3 walkOrigin = transform.position;
         movement = new NPCMovementController(gameObject, anai);
+        movement.FollowPlayer(bufferDist, tooCloseRad);
+        movement.Pace(transform.position, paceDist);
+        movement.SetDefault(NPCMovementController.MoveState.pace);
+
         icon = new IconFactory().GetIcon(Constants.SYPAVE_ICON);
         talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
@@ -70,7 +75,7 @@ public class SypaveController : MonoBehaviour, INPCController
     {
         if (talkTrig != null)
         {
-            movement.FollowPlayer(3.5f);
+            movement.FollowPlayer(bufferDist);
             combatController.Active = false;
 
             if (!talkTrig.DialogueActive())

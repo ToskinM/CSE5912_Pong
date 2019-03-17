@@ -9,15 +9,17 @@ public class NPCMovementController : MonoBehaviour, IMovement
     public bool Jumping { get; set; }
     public bool Active = true; 
 
-    public enum MoveState { follow, wander, wanderfollow, chill }
+    public enum MoveState { follow, wander, wanderfollow, pace, chill }
     public MoveState state = MoveState.chill;
     MoveState defaultState = MoveState.chill; 
     public bool IsDefault { get { return state == defaultState; } }
 
     NPCWanderMove wander;
     NPCFollowMove follow;
+    NPCPaceMove pace; 
     bool canFollow;
-    bool canWander; 
+    bool canWander;
+    bool canPace; 
 
     public bool stunned;
     public bool swinging;
@@ -51,6 +53,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
         commonSetup(selfOb);
         canFollow = false;
         canWander = false;
+        canPace = false; 
     }
 
     //called by all constructors
@@ -119,6 +122,19 @@ public class NPCMovementController : MonoBehaviour, IMovement
         state = MoveState.follow;
     }
 
+    public void Pace(Vector3 origin, float distance)
+    {
+        if (!canPace)
+        {
+            pace = new NPCPaceMove(self, origin, distance);
+            canPace = true;
+        }
+        else
+        {
+            pace.SetPath(origin, distance);
+        }
+        state = MoveState.pace;
+    }
     public void Wander(Vector3 origin, float wanderDistance)
     {
         if (!canWander)
@@ -229,6 +245,14 @@ public class NPCMovementController : MonoBehaviour, IMovement
                         Action = wander.Action;
                     }
                     break;
+                case MoveState.pace:
+                    if (canPace)
+                    {
+                        //Debug.Log("I'm wandering!!");
+                        pace.UpdateMovement();
+                        Action = follow.Action;
+                    }
+                    break;
                 case MoveState.follow:
                     if (canFollow)
                     {
@@ -299,6 +323,15 @@ public class NPCMovementController : MonoBehaviour, IMovement
             state = MoveState.follow;
         }
         return canFollow;
+    }
+    //start following
+    public bool Pace()
+    {
+        if (canPace)
+        {
+            state = MoveState.pace;
+        }
+        return canPace;
     }
 
     //start wander following
