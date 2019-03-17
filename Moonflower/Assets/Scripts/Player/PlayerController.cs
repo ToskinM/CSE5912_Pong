@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
         ActivePlayerObject = AnaiObject;
 
         ActivePlayerInteractionFOV = ActivePlayerObject.GetComponent<FieldOfView>();
+        ActivePlayerInteractionFOV.enabled = true;
 
         LevelManager.current.player = this;
     }
@@ -102,7 +103,10 @@ public class PlayerController : MonoBehaviour
     {
         activeCharacter = PlayerCharacter.Anai;
         ActivePlayerObject = AnaiObject;
+
+        MimbiObject.GetComponent<FieldOfView>().enabled = false;
         ActivePlayerInteractionFOV = AnaiObject.GetComponent<FieldOfView>();
+        ActivePlayerInteractionFOV.enabled = true;
 
         AnaiObject.tag = "Player";
         MimbiObject.tag = "Companion";
@@ -120,7 +124,10 @@ public class PlayerController : MonoBehaviour
     {
         activeCharacter = PlayerCharacter.Mimbi;
         ActivePlayerObject = MimbiObject;
+
+        AnaiObject.GetComponent<FieldOfView>().enabled = false;
         ActivePlayerInteractionFOV = MimbiObject.GetComponent<FieldOfView>();
+        ActivePlayerInteractionFOV.enabled = true;
 
         MimbiObject.tag = "Player";
         AnaiObject.tag = "Companion";
