@@ -90,15 +90,23 @@ public static class Constants
     const string dialogueFolder = "Dialogues/";
 
     //Amaru
+    public const string AMARU_NAME = "Amaru"; 
     public const string TEST_DIALOGUE = dialogueFolder + "New Dialogue Graph";
     public const string AMARU_INTRO_DIALOGUE = dialogueFolder + "Amaru Intro Dialogue";
     //Naia
+    public const string NAIA_NAME = "Naia";
     public const string NAIA_INTRO_DIALOGUE = dialogueFolder + "Naia Intro";
 
     //Sypave
+    public const string SYPAVE_NAME = "Sypave";
     //Jeruti
+    public const string JERUTI_NAME = "Jeruti";
     //Pinon
+    public const string PINON_NAME = "Pinon";
     public const string PINON_FIRST_INTRO_DIALOGUE = dialogueFolder + "Pinon FIRST Intro";
     //Ysapy
+    public const string YSAPY_NAME = "Ysapy";
 
+    //other
+    public const string MOUSE_NAME = "Mousy Boi";
 }

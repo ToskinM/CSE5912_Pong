@@ -129,9 +129,9 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
         }
     }
-    public void Inspect()
+    public string Inspect()
     {
-
+        return Constants.MOUSE_NAME; 
     }
 
     private void StartEngagement()

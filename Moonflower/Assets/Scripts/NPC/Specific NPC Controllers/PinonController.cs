@@ -116,9 +116,9 @@ public class PinonController : MonoBehaviour, INPCController
     {
 
     }
-    public void Inspect()
+    public string Inspect()
     {
-
+        return Constants.PINON_NAME; 
     }
 
     //start current conversation

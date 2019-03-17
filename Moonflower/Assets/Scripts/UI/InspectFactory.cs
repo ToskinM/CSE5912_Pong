@@ -7,103 +7,36 @@ public class InspectFactory
 
     public string GetNaia()
     {
-        return "";
+        return "She/Her\nScavenger\nBelieve her bark is as bad as her bite, and she is always ready to fight.";
     }
 
-    public Sprite GetRot1()
+    public string GetAmaru()
     {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_1);
+        return "He/Him\nGrower\nThis boy cannot possibly contain his love for his neighbors, his food, or his grain.";
     }
 
-    public Sprite GetRot2()
+    public string GetPinon()
     {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_2);
+        return "He/Him\nChild\nEager to sneak, this little brother gets you in trouble with your mother.";
     }
 
-    public Sprite GetRot3()
+    public string GetSypave()
     {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_3);
+        return "She/They\nShaman\nHealer and leader to all around, personal attention does not abound.";
     }
 
-    public Sprite GetRot4()
+    public string GetJeruti()
     {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_4);
+        return "She/Her\nCrafter\nHer heart may be bitter with grief, but her hands still long for creative relief.";
     }
 
-    public Sprite GetRot5()
+    public string GetYsapy()
     {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_5);
+        return "He/Him\nScavenger\nAlways finding a way to get away, maybe he'll say why he ventures one day.";
     }
 
-    public Sprite GetRot6()
+    public string GetMouse()
     {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_6);
+        return "They/Them\nRambunctious Rodent\nEasily frightened and easily quelled, they'd love a quick nibble before they are felled.";
     }
-
-    public Sprite GetRot7()
-    {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_7);
-    }
-
-    public Sprite GetRot8()
-    {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_8);
-    }
-
-    public Sprite GetRot9()
-    {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_9);
-    }
-
-    public Sprite GetRot10()
-    {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_10);
-    }
-
-    public Sprite GetRot11()
-    {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_11);
-    }
-
-    public Sprite GetRot12()
-    {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_12);
-    }
-
-    public Sprite GetRot13()
-    {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_13);
-    }
-
-    public Sprite GetRot14()
-    {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_14);
-    }
-
-    public Sprite GetRot15()
-    {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_15);
-    }
-
-    public Sprite GetRot16()
-    {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_16);
-    }
-
-    public Sprite GetRot17()
-    {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_17);
-    }
-
-    public Sprite GetRot18()
-    {
-        return Resources.Load<Sprite>(Constants.APPLE_ROT_18);
-    }
-
-
-    public Sprite GetDeadApple()
-    {
-        return Resources.Load<Sprite>(Constants.DEAD_APPLE);
-    }
-
 }

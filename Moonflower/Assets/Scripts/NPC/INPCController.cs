@@ -10,5 +10,5 @@ public interface INPCController
     void Talk();
     void Gift(string giftName);
     void Distract();
-    void Inspect();
+    string Inspect();
 }

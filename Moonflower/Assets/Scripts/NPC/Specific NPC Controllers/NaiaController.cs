@@ -158,9 +158,9 @@ public class NaiaController : MonoBehaviour, INPCController
     {
 
     }
-    public void Inspect()
+    public string Inspect()
     {
-
+        return Constants.NAIA_NAME;
     }
     public void Fight()
     {

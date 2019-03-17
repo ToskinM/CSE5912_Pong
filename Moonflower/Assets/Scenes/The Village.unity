@@ -40036,11 +40036,11 @@ RectTransform:
   m_LocalScale: {x: 4.437433, y: 4.437432, z: 4.437433}
   m_Children: []
   m_Father: {fileID: 1917668241}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -175, y: -2}
+  m_AnchoredPosition: {x: -177, y: -2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1083419467
@@ -48276,6 +48276,7 @@ GameObject:
   - component: {fileID: 1331754104}
   - component: {fileID: 1331754107}
   - component: {fileID: 1331754108}
+  - component: {fileID: 1331754109}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -48299,9 +48300,9 @@ RectTransform:
   - {fileID: 812827747}
   - {fileID: 185003542}
   - {fileID: 378621942}
-  - {fileID: 1917668241}
-  - {fileID: 564680385}
   - {fileID: 1818911477}
+  - {fileID: 564680385}
+  - {fileID: 1917668241}
   m_Father: {fileID: 1175751518}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48401,6 +48402,19 @@ MonoBehaviour:
   InvContentPanel: {fileID: 1012454834}
   Player: {fileID: 465188864}
   gameController: {fileID: 710919853}
+--- !u!114 &1331754109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331754102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8627bc8dbf844d668011f94724ea38b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InspectPanel: {fileID: 1917668240}
 --- !u!1001 &1333225722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53267,7 +53281,7 @@ RectTransform:
   m_Children:
   - {fileID: 517241536}
   m_Father: {fileID: 1917668241}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -53371,7 +53385,7 @@ MonoBehaviour:
     linkCount: 0
     lineCount: 1
     pageCount: 1
-    materialCount: 2
+    materialCount: 1
   m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -57638,7 +57652,7 @@ PrefabInstance:
     - target: {fileID: 7915387964042401423, guid: 6e91748f4112cca43bcd2c0ff8dbef97,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7915387964042401423, guid: 6e91748f4112cca43bcd2c0ff8dbef97,
         type: 3}
@@ -70305,7 +70319,7 @@ GameObject:
   - component: {fileID: 1917668243}
   - component: {fileID: 1917668242}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Inspect Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70322,11 +70336,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6143148, y: 0.6143148, z: 0.6143148}
   m_Children:
+  - {fileID: 1083419466}
   - {fileID: 1488449959}
   - {fileID: 2060568386}
-  - {fileID: 1083419466}
   m_Father: {fileID: 1331754103}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -75101,7 +75115,7 @@ RectTransform:
   m_Children:
   - {fileID: 1391055084}
   m_Father: {fileID: 1917668241}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -78967,7 +78981,7 @@ PrefabInstance:
     - target: {fileID: 7659383054302827922, guid: 6ca520e35275b48448b29f2e51df8e15,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7659383054302827922, guid: 6ca520e35275b48448b29f2e51df8e15,
         type: 3}

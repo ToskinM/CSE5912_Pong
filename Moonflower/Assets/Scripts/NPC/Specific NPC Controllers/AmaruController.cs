@@ -31,8 +31,7 @@ public class AmaruController : MonoBehaviour, INPCController
     DialogueTrigger talkTrig;
     PlayerController playerController;
     Animator animator;
-    private List<string> acceptableGifts;
-    private FeedbackText feedbackText;
+    private FeedbackText feedbackText; 
 
     // Start is called before the first frame update
     void Start()
@@ -52,10 +51,6 @@ public class AmaruController : MonoBehaviour, INPCController
         talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.AMARU_INTRO_DIALOGUE);
         playerController = LevelManager.current.player.GetComponent<PlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
-
-        acceptableGifts = new List<string>();
-        acceptableGifts.Add(ItemLookup.JAR_NAME);
-        acceptableGifts.Add(ItemLookup.ROPE_NAME);
 
         actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
     }
@@ -108,9 +103,9 @@ public class AmaruController : MonoBehaviour, INPCController
     {
 
     }
-    public void Inspect()
+    public string Inspect()
     {
-
+        return Constants.AMARU_NAME;
     }
 
     //start current conversation

@@ -14,7 +14,7 @@ public class SpawnActionWheel : MonoBehaviour
     private FieldOfView currentPlayerInteractionFOV;
 
     private ActionWheel activeWheel;
-
+    private ShowInspect inspect; 
     private ShowInventory inventory; 
 
     private GameObject target;
@@ -40,6 +40,8 @@ public class SpawnActionWheel : MonoBehaviour
         }
 
         currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
+    
+    
     }
 
     void Start()
@@ -48,7 +50,7 @@ public class SpawnActionWheel : MonoBehaviour
         gameStateController = GameStateController.current;
         followCamera = LevelManager.current.mainCamera;
 
-
+        inspect = GameObject.Find("HUD").GetComponent<ShowInspect>(); 
         inventory = GameObject.Find("HUD").GetComponent<ShowInventory>(); 
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
     }
@@ -139,8 +141,8 @@ public class SpawnActionWheel : MonoBehaviour
         switch (selection)
         {
             case 0:
-                targetController.Inspect();
-
+                string targetName = targetController.Inspect();
+                inspect.Show(targetName); 
                 break;
             case 1:
                 targetController.Talk();
