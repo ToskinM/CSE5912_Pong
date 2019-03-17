@@ -12,6 +12,7 @@ public class GameStateController : MonoBehaviour
 
     public bool Paused;
     public bool DebugModeOn;
+    public bool DebugViewOn;
     public bool cameraAvailable;
 
     private FollowCamera camControl;
@@ -21,6 +22,9 @@ public class GameStateController : MonoBehaviour
 
     public delegate void FreezePlayer(bool freeze);
     public static event FreezePlayer OnFreezePlayer;
+
+    public delegate void UpdateDebugView(bool debugViewOn);
+    public static event UpdateDebugView OnDebugViewToggle;
 
     private int menuLayers = 0;
     private int pauseLayers = 0;
@@ -70,6 +74,13 @@ public class GameStateController : MonoBehaviour
             camControl.SetFreeRoam(DebugModeOn);
             EnablePlayerMovement(!DebugModeOn);
         }
+    }
+
+    public void ToggleDebugView()
+    {
+        DebugViewOn = !DebugViewOn;
+
+        OnDebugViewToggle?.Invoke(DebugViewOn);
     }
 
     public void SetMouseLock(bool doLock)

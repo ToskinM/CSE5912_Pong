@@ -15,6 +15,8 @@ public class DebugViewCommand : ICommand
     public void Execute()
     {
         camera.cullingMask ^= 1 << LayerMask.NameToLayer("Debug");
+
+        GameStateController.current.ToggleDebugView();
     }
 
     public void Unexecute()

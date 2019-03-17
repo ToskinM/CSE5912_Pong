@@ -26,6 +26,7 @@ public class FieldOfView : MonoBehaviour
     private float edgeDstThreshold = 1;
 
     private MeshFilter viewMeshFilter;
+    private bool drawFOVMesh;
     private Mesh viewMesh;
 
     public delegate void ClosestTargetUpdate(GameObject newClosestTarget);
@@ -47,6 +48,15 @@ public class FieldOfView : MonoBehaviour
         }
 
         StartCoroutine("FindTargetsWithDelay", 0.2f);
+    }
+
+    private void OnEnable()
+    {
+        GameStateController.OnDebugViewToggle += HandleDebugViewToggle;
+    }
+    private void OnDisable()
+    {
+        GameStateController.OnDebugViewToggle -= HandleDebugViewToggle;
     }
 
     public void SetAggressionMode()
@@ -202,8 +212,13 @@ public class FieldOfView : MonoBehaviour
 
     void LateUpdate()
     {
-        if (viewMeshFilter)
+        if (viewMeshFilter && drawFOVMesh)
             DrawFieldOfView();
+    }
+
+    private void HandleDebugViewToggle(bool debugViewOn)
+    {
+        drawFOVMesh = debugViewOn;
     }
 
     void DrawFieldOfView()
