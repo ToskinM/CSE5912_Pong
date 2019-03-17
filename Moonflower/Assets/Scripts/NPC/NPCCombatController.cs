@@ -24,6 +24,8 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     [Header("Death Effects")]
     public GameObject ragdollPrefab;
     public GameObject deathEffect;
+
+    private GameObject frenzyEffect;
     private float timeSinceLastHurt;
     private float hurtDelay = 0.2f;
 
@@ -418,6 +420,9 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     {
         aggression = Aggression.Frenzied;
         fieldOfView.targetMask |= 1 << LayerMask.NameToLayer("NPC");
+
+        frenzyEffect = Instantiate((GameObject)Resources.Load("Effects/EnragedEffect"), transform);
+        frenzyEffect.transform.position += new Vector3(0, 0.3f, 0);
     }
 
     // Start deaggro timer
