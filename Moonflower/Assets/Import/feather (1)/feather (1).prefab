@@ -60,7 +60,7 @@ Transform:
   m_Children:
   - {fileID: 7175362441584881629}
   m_Father: {fileID: 4175131424390952006}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3284198387440698345
 GameObject:
@@ -232,6 +232,49 @@ Transform:
   m_Father: {fileID: 3136776923223592219}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8406992758899382688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2195131555912690368}
+  - component: {fileID: 4104400944952372174}
+  m_Layer: 0
+  m_Name: halo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2195131555912690368
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8406992758899382688}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.9, y: 28.7, z: -0.31888962}
+  m_LocalScale: {x: 0.66666996, y: 0.66666996, z: 0.66666996}
+  m_Children: []
+  m_Father: {fileID: 4175131424390952006}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!122 &4104400944952372174
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8406992758899382688}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4286611584
+  m_Size: 1.5
 --- !u!1 &8414670513759089101
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +284,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4175131424390952006}
+  - component: {fileID: 5970119968065262118}
   m_Layer: 0
   m_Name: feather (1)
   m_TagString: Untagged
@@ -259,7 +303,31 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2195131555912690368}
   - {fileID: 5361750963984703383}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5970119968065262118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8414670513759089101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea97fbef6a01438fad60a6aa9eacb76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: feather
+  Strength: 0
+  Attack: 0
+  Defense: 0
+  Health: 0
+  AnaiObject: 0
+  MimbiObject: 0
+  objectImage: {fileID: 0}
+  DayNight: 0
+  inventoryCat: 2
+  halo: {fileID: 4104400944952372174}

@@ -48,7 +48,9 @@ public static class Constants
     public const string CORN_ICON = itemFolder + "Corn";
     public const string STAFF_ICON = itemFolder + "Jewel Staff";
     public const string SWEETPOTATO_ICON = itemFolder + "Sweet Potato";
-    public const string PAINT_ICON = itemFolder + "Paint Pots";
+    public const string PAINT_ICON = itemFolder + "Paint Pots"; 
+    public const string DRUM_ICON = itemFolder + "Drum";
+    public const string FEATHER_ICON = itemFolder + "Feather"; 
 
     //life petal names
     const string flowerFolder = "Life Petals/";
@@ -99,6 +101,7 @@ public static class Constants
 
     //Sypave
     public const string SYPAVE_NAME = "Sypave";
+    public const string SYPAVE_INTRO_DIALOGUE = dialogueFolder + "Sypave Intro";
     //Jeruti
     public const string JERUTI_NAME = "Jeruti";
     //Pinon

@@ -14,7 +14,7 @@ public class ItemLookup
     public const string CHIPA_NAME = "Chipa";
     public const string FLUTE_NAME = "Flute";
     public const string PINEAPPLE_NAME = "Pineapple";
-    public const string SWEETPOTATO_NAME = "Sweet Potato";
+    public const string SWEETPOTATO_NAME = "Wweet potato";
     public const string PEANUT_NAME = "Peanut";
     public const string FISH_NAME = "Fish";
     public const string PAINT_NAME = "Paint";
@@ -22,6 +22,8 @@ public class ItemLookup
     public const string CORN_NAME = "Corn";
     public const string BOW_NAME = "Bow";
     public const string ARROW_NAME = "Arrow";
+    public const string FEATHER_NAME = "Feather";
+    public const string DRUM_NAME = "Drum";
 
 
     public bool IsFood(string name)
@@ -48,8 +50,8 @@ public class ItemLookup
         switch (name)
         {
             case FLUTE_NAME:
+            case DRUM_NAME:
                 return true;
-
             default:
                 return false;
         }
@@ -61,7 +63,8 @@ public class ItemLookup
         {
             case ROPE_NAME:
             case PAINT_NAME:
-            case PUMPKIN_NAME: 
+            case PUMPKIN_NAME:
+            case FEATHER_NAME:
                 return true;
 
             default:
@@ -149,6 +152,10 @@ public class ItemLookup
                 return Resources.Load<Sprite>(Constants.PAINT_ICON);
             case SWEETPOTATO_NAME:
                 return Resources.Load<Sprite>(Constants.SWEETPOTATO_ICON);
+            case DRUM_NAME:
+                return Resources.Load<Sprite>(Constants.DRUM_ICON);
+            case FEATHER_NAME:
+                return Resources.Load<Sprite>(Constants.FEATHER_ICON);
             default:
                 return null;
         }
@@ -191,7 +198,11 @@ public class ItemLookup
             case BOW_NAME:
                 return "yvyrapa";
             case ARROW_NAME:
-                return "hu'y"; 
+                return "hu'y";
+            case FEATHER_NAME:
+                return "ague";
+            case DRUM_NAME:
+                return "mbotapu";
             default:
                 return "";
         }

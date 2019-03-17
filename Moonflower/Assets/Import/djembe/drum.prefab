@@ -1344,7 +1344,7 @@ Transform:
   m_Children:
   - {fileID: 3640934162336895142}
   m_Father: {fileID: 1283344123277624433}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3608738109837929745
 GameObject:
@@ -3177,6 +3177,49 @@ Transform:
   m_Father: {fileID: 7832337453994305101}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7899812439727614374
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 859599444734164672}
+  - component: {fileID: 7164821158984022832}
+  m_Layer: 0
+  m_Name: halo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &859599444734164672
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7899812439727614374}
+  m_LocalRotation: {x: -0, y: 0.000000059604645, z: -0.0000000035528696, w: 1}
+  m_LocalPosition: {x: 18.180614, y: 0.9360049, z: -0.31879425}
+  m_LocalScale: {x: 0.73588324, y: 2.1300113, z: 1.336748}
+  m_Children: []
+  m_Father: {fileID: 1283344123277624433}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!122 &7164821158984022832
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7899812439727614374}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 8355731
+  m_Size: 1
 --- !u!1 &8031457377449108662
 GameObject:
   m_ObjectHideFlags: 0
@@ -3464,8 +3507,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1283344123277624433}
+  - component: {fileID: 6477254678354102295}
   m_Layer: 0
-  m_Name: djembe
+  m_Name: drum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3482,10 +3526,34 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 859599444734164672}
   - {fileID: 657177297493926363}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6477254678354102295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8751151550363910660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea97fbef6a01438fad60a6aa9eacb76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Drum
+  Strength: 0
+  Attack: 0
+  Defense: 0
+  Health: 0
+  AnaiObject: 0
+  MimbiObject: 0
+  objectImage: {fileID: 0}
+  DayNight: 0
+  inventoryCat: 2
+  halo: {fileID: 7164821158984022832}
 --- !u!1 &8827013091925890209
 GameObject:
   m_ObjectHideFlags: 0

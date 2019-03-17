@@ -38,18 +38,18 @@ public class SypaveController : MonoBehaviour, INPCController
         playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
         anai = LevelManager.current.anai;
         agent = GetComponent<NavMeshAgent>();
-        combatController = GetComponent<NPCCombatController>();
+       // combatController = GetComponent<NPCCombatController>();
 
         // Setup Movement
         Vector3 walkOrigin = transform.position;
         movement = new NPCMovementController(gameObject, anai);
         icon = new IconFactory().GetIcon(Constants.SYPAVE_ICON);
-        //talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
+        talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         playerController = LevelManager.current.player.GetComponent<PlayerController>();
 
-        combatController.npcMovement = movement;
+//        combatController.npcMovement = movement;
 
 
         actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
