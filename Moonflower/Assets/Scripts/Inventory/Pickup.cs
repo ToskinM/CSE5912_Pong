@@ -17,7 +17,7 @@ public class Pickup : MonoBehaviour
     private PlayerSoundEffect soundEffect;
     private FeedbackText feedback;
 
-    public TextMeshProUGUI inventoryAdd;
+    //public TextMeshProUGUI inventoryAdd;
 
     void Start()
     {
@@ -89,7 +89,7 @@ public class Pickup : MonoBehaviour
         if (anaiObjectMatch || mimbiObjectMatch)
         {
             //Add text update
-            inventoryAdd.gameObject.SetActive(true);
+            //inventoryAdd.gameObject.SetActive(true);
             //Remove the text update
             Invoke("DelayMethod", 2f);
             string objName = obj.GetComponent<InventoryStat>().Name;
@@ -119,7 +119,7 @@ public class Pickup : MonoBehaviour
             else
             {
                 //Add text update
-                inventoryAdd.gameObject.SetActive(true);
+                //inventoryAdd.gameObject.SetActive(true);
                 //Remove the text update
                 Invoke("DelayMethod", 2f);
                 string objName = obj.GetComponent<InventoryStat>().Name;
@@ -137,12 +137,12 @@ public class Pickup : MonoBehaviour
     }
     void DelayMethod()
     {
-        inventoryAdd.gameObject.SetActive(false);
+        //inventoryAdd.gameObject.SetActive(false);
     }
 
     public void TextUpdate(string s)
     {
-        inventoryAdd.SetText(s);
+        //inventoryAdd.SetText(s);
     }
 
     // Update is called once per frame
