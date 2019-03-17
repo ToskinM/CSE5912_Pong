@@ -48,14 +48,9 @@ public class ShowInventory : MonoBehaviour
     {
         if(!isGift && Input.GetKeyDown(KeyCode.I))
         {
-            showInv(); 
+            ToggleInv(); 
             toggleEnabled = false;
-            foreach(GameObject item in items)
-            {
-                string itemName = names[items.IndexOf(item)];
-                item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = lookup.GetGuaraniName(itemName);
 
-            }
         }
         if(isGift && Input.GetKeyDown(KeyCode.X))
         {
@@ -105,18 +100,25 @@ public class ShowInventory : MonoBehaviour
         playerInventory.RemoveObj(objName); 
     }
 
-    private void showInv()
+    private void ToggleInv()
     {
-        Shown = !Shown; 
-        if(Shown)
+        if(!Shown)
         {
             GameStateController.current.SetMouseLock(false);
             ShowInvList();
+            Shown = true;
+            foreach (GameObject item in items)
+            {
+                string itemName = names[items.IndexOf(item)];
+                item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = lookup.GetGuaraniName(itemName);
+
+            }
         }
         else
         {
             GameStateController.current.SetMouseLock(true);
-            HideInvList(); 
+            HideInvList();
+            Shown = false;
         }
     }
 
@@ -213,6 +215,7 @@ public class ShowInventory : MonoBehaviour
         ItemUpdate();
         InventoryPanel.SetActive(true);
         GameStateController.current.PauseGame();
+        Shown = true; 
         //inventoryText.gameObject.SetActive(true);
     }
 

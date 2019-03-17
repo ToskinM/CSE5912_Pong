@@ -16,7 +16,7 @@ public class AmaruController : MonoBehaviour, INPCController
     const float engagementRadius = 9f;
     const float tooCloseRad = 3f;
     const float bufferDist = 4f;
-    const float wanderRad = 30f;
+    const float wanderRad = 18f;
 
     public bool canInspect = true;
     public bool canTalk = true;
