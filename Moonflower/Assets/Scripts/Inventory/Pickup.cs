@@ -93,7 +93,7 @@ public class Pickup : MonoBehaviour
             //Remove the text update
             Invoke("DelayMethod", 2f);
             string objName = obj.GetComponent<InventoryStat>().Name;
-            feedback.ShowText("You have found a " + objName);
+            feedback.ShowText("You have found a " + objName.ToLower());
             objectUsedImmediately = playerStats.AddHealth(health);
 
             //Add to inventory
@@ -123,7 +123,7 @@ public class Pickup : MonoBehaviour
                 //Remove the text update
                 Invoke("DelayMethod", 2f);
                 string objName = obj.GetComponent<InventoryStat>().Name;
-                feedback.ShowText("You have found a " + objName);
+                feedback.ShowText("You have found a " + objName.ToLower());
 
                 //Add to inventory
                 playerInventory.AddObj(obj.gameObject);

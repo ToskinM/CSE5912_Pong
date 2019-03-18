@@ -108,11 +108,11 @@ public class SypaveController : MonoBehaviour, INPCController
     {
         if (new ItemLookup().IsInstrument(giftName))
         {
-            displayFeedback("Sypave likes the " + giftName + ".");
+            displayFeedback("Sypave likes the " + giftName.ToLower() + ".");
         }
         else
         {
-            displayFeedback("Sypave is not interested in the " + giftName + "?");
+            displayFeedback("Sypave is not interested in the " + giftName.ToLower() + "?");
         }
     }
     public void Distract()

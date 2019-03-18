@@ -92,11 +92,11 @@ public class AmaruController : MonoBehaviour, INPCController
     {
         if(new ItemLookup().IsContainer(giftName))
         {
-            displayFeedback("Amaru loves the " + giftName + "!");
+            displayFeedback("Amaru loves the " + giftName.ToLower() + "!");
         }
         else
         {
-            displayFeedback("Amaru has no use for a " + giftName + "...");
+            displayFeedback("Amaru has no use for a " + giftName.ToLower() + "...");
         }
     }
     public void Distract()

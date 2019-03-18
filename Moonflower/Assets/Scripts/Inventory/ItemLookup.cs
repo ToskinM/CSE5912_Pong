@@ -24,6 +24,7 @@ public class ItemLookup
     public const string ARROW_NAME = "Arrow";
     public const string FEATHER_NAME = "Feather";
     public const string DRUM_NAME = "Drum";
+    public const string NECKLACE_NAME = "Necklace";
 
 
     public bool IsFood(string name)
@@ -156,6 +157,8 @@ public class ItemLookup
                 return Resources.Load<Sprite>(Constants.DRUM_ICON);
             case FEATHER_NAME:
                 return Resources.Load<Sprite>(Constants.FEATHER_ICON);
+            case NECKLACE_NAME:
+                return Resources.Load<Sprite>(Constants.NECKLACE_ICON);
             default:
                 return null;
         }
@@ -203,6 +206,8 @@ public class ItemLookup
                 return "ague";
             case DRUM_NAME:
                 return "mbotapu";
+            case NECKLACE_NAME:
+                return "jeguaka";
             default:
                 return "";
         }

@@ -142,11 +142,11 @@ public class NaiaController : MonoBehaviour, INPCController
     {
         if (new ItemLookup().IsWeapon(giftName))
         {
-            displayFeedback("Naia likes the " + giftName + ".");
+            displayFeedback("Naia likes the " + giftName.ToLower() + ".");
         }
         else
         {
-            displayFeedback("Why would Naia want the " + giftName + "?");
+            displayFeedback("Why would Naia want the " + giftName.ToLower() + "?");
         }
     }
     public void Distract()
