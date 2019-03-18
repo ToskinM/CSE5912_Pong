@@ -12,9 +12,9 @@ public class BroomImpProjectile : MonoBehaviour, IProjectile
     public bool affectedByGravity = false;
 
     public bool seeksTarget = false;
-    public Transform targetTransform;
 
     public IHurtboxController Hurtbox { get; set; }
+    public Transform TargetTransform { get; set; }
 
     void Awake()
     {
@@ -32,9 +32,9 @@ public class BroomImpProjectile : MonoBehaviour, IProjectile
         if (seeksTarget)
         {
             if (affectedByGravity)
-                velocity = (targetTransform.position - transform.position).normalized * movementSpeed + Physics.gravity;
+                velocity = (TargetTransform.position - transform.position).normalized * movementSpeed + Physics.gravity;
             else
-                velocity = (targetTransform.position - transform.position).normalized * movementSpeed;
+                velocity = (TargetTransform.position - transform.position).normalized * movementSpeed;
 
             transform.rotation = Quaternion.LookRotation(velocity, Vector3.up);
         }

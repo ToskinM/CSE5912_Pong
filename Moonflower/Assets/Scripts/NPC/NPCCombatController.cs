@@ -309,6 +309,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         IProjectile proj = projectile.GetComponent<IProjectile>();
         proj.Hurtbox.SourceCharacterStats = Stats;
         proj.Hurtbox.Source = this.gameObject;
+        proj.TargetTransform = combatTarget.transform;
 
     }
 
