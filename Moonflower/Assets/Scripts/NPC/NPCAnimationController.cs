@@ -9,6 +9,7 @@ public class NPCAnimationController : MonoBehaviour
     private const string key_IsRun = "IsRun";
     private const string key_IsJump = "IsJump";
     private const string key_Attack = "Attack";
+    private const string key_AttackRangedTrigger = "AttackRanged";
     private const string key_AttackTrigger = "Attack";
     private const string key_IsBlocking = "IsBlocking";
     private const string key_IsHit = "IsHit";
@@ -89,6 +90,10 @@ public class NPCAnimationController : MonoBehaviour
     public void TriggerAttack()
     {
         animator.SetTrigger(key_AttackTrigger);
+    }
+    public void TriggerAttackRanged()
+    {
+        animator.SetTrigger(key_AttackRangedTrigger);
     }
     public int GetAttack()
     {

@@ -221,14 +221,17 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         OnHit?.Invoke(other.gameObject);
 
         // Get hurtbox information
-        HurtboxController hurtboxController = other.gameObject.GetComponent<HurtboxController>();
-        GameObject source = hurtboxController.source;
-        int damage = hurtboxController.damage;
+        IHurtboxController hurtboxController = other.gameObject.GetComponent<IHurtboxController>();
+        GameObject source = hurtboxController.Source;
+        int damage = hurtboxController.Damage;
         timeSinceLastHurt = 0f;
 
         if (!IsBlocking)
             Stagger();
-        Stats.TakeDamage(damage, source.name, hurtboxController.sourceCharacterStats, source.GetComponent<NPCCombatController>(), GetContactPoint(other), IsBlocking);
+        if (source)
+            Stats.TakeDamage(damage, source.name, hurtboxController.SourceCharacterStats, source.GetComponent<NPCCombatController>(), GetContactPoint(other), IsBlocking);
+        else
+            Stats.TakeDamage(damage, "Unknown");
     }
 
     private Vector3 GetContactPoint(Collider other)

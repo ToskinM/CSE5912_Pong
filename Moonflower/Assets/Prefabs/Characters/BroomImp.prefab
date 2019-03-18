@@ -4978,6 +4978,11 @@ MonoBehaviour:
   weapon: {fileID: 3885030565320690851}
   attackDistance: 4
   isAttacking: 0
+  hasRangedAttack: 1
+  projectileNode: {fileID: 7000680022089723248}
+  rangedProjectile: {fileID: 4702858596724240953, guid: 90a34aa6aeaff4b47962b8d347ecfa9c,
+    type: 3}
+  rangedAttackCooldown: 3
   attack: 0
   attackTimeout: 20
   npcMovement: {fileID: 0}
@@ -5456,9 +5461,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7816da57fe59251489a2c43e5a3e7048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  sourceCharacterStats: {fileID: 0}
-  damage: 1
 --- !u!1 &8015325799224670544
 GameObject:
   m_ObjectHideFlags: 0

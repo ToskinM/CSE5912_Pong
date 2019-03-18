@@ -1,0 +1,62 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BroomImpProjectile : MonoBehaviour, IProjectile
+{
+    public GameObject explosion;
+    public int baseDamage = 2;
+    public float movementSpeed = 5f;
+    public float lifetime = 3f;
+    private float timePassed;
+    public bool affectedByGravity = false;
+
+    public bool seeksTarget = false;
+    public Transform targetTransform;
+
+    public IHurtboxController Hurtbox { get; set; }
+
+    void Awake()
+    {
+        Hurtbox = GetComponentInChildren<IHurtboxController>();
+    }
+
+    void Update()
+    {
+        timePassed += Time.deltaTime;
+        if (timePassed > lifetime)
+            OnHit(null);
+
+        Vector3 velocity = Vector3.zero;
+
+        if (seeksTarget)
+        {
+            if (affectedByGravity)
+                velocity = (targetTransform.position - transform.position).normalized * movementSpeed + Physics.gravity;
+            else
+                velocity = (targetTransform.position - transform.position).normalized * movementSpeed;
+
+            transform.rotation = Quaternion.LookRotation(velocity, Vector3.up);
+        }
+        else
+        {
+            if (affectedByGravity)
+                velocity = transform.forward * movementSpeed + Physics.gravity;
+            else
+                velocity = transform.forward * movementSpeed;
+        }
+
+        transform.position += velocity * Time.deltaTime;
+    }
+
+    public void OnHit(GameObject other)
+    {
+        if (explosion)
+        {
+            ObjectPoolController.current.CheckoutTemporary(explosion, transform.position, 1);
+        }
+
+        gameObject.SetActive(false);
+        Destroy(gameObject, 1f);
+    }
+}

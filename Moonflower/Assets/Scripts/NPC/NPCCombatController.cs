@@ -34,9 +34,13 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     public float attackDistance = 2.6f;
     private readonly float[] attackMultipliers = new float[] { 0f, 1f };
     public bool isAttacking;
+    public bool hasRangedAttack;
+    public Transform projectileNode;
+    public GameObject rangedProjectile;
+    public float rangedAttackCooldown = 3f;
     [HideInInspector] public int attack;
     [HideInInspector] public float attackTimeout = 20f;
-    private float timeSinceLastAttack;
+    public float timeSinceLastAttack;
 
     private Rigidbody rigidbody;
     private NavMeshAgent navMeshAgent;
@@ -150,9 +154,9 @@ public class NPCCombatController : MonoBehaviour, ICombatController
                 if (timeSinceLastHurt > hurtDelay)
                 {
                     // Get hurtbox information
-                    HurtboxController hurtboxController = other.gameObject.GetComponent<HurtboxController>();
-                    GameObject source = hurtboxController.source;
-                    int damage = hurtboxController.damage;
+                    IHurtboxController hurtboxController = other.gameObject.GetComponent<IHurtboxController>();
+                    GameObject source = hurtboxController.Source;
+                    int damage = hurtboxController.Damage;
 
                     if (!IsBlocking)
                         Stagger();
@@ -164,7 +168,11 @@ public class NPCCombatController : MonoBehaviour, ICombatController
                         //sourceCombatController = source.GetComponent<PlayerCombatController>();
                         sourceCombatController = PlayerController.instance.ActivePlayerCombatControls;  // Now uses generic Player object
                     }
-                    Stats.TakeDamage(damage, source.name, hurtboxController.sourceCharacterStats, sourceCombatController, GetContactPoint(other), IsBlocking);
+
+                    if (source)
+                        Stats.TakeDamage(damage, source.name, hurtboxController.SourceCharacterStats, sourceCombatController, GetContactPoint(other), IsBlocking);
+                    else
+                        Stats.TakeDamage(damage, "Unknown");
                 }
             }
 
@@ -269,6 +277,11 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         {
             Attack();
         }
+        else
+        {
+            if (hasRangedAttack && projectileNode && timeSinceLastAttack > rangedAttackCooldown)
+                AttackProjectile();
+        }
         //if (fieldOfView.IsInFieldOfView(combatTarget.transform) && Vector3.Distance(combatTarget.transform.position, transform.position) < attackDistance)
         //{
         //    Attack();
@@ -281,6 +294,22 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         timeSinceLastAttack = 0f;
 
         npcAnimationController.TriggerAttack();
+    }
+    private void AttackProjectile()
+    {
+        isAttacking = true;
+        timeSinceLastAttack = 0f;
+
+        npcAnimationController.TriggerAttackRanged();
+    }
+    public void LaunchProjectile()
+    {
+        GameObject projectile = Instantiate(rangedProjectile, projectileNode.position, Quaternion.LookRotation(combatTarget.transform.position - transform.position));
+        projectile.transform.LookAt(combatTarget.transform.position);
+        IProjectile proj = projectile.GetComponent<IProjectile>();
+        proj.Hurtbox.SourceCharacterStats = Stats;
+        proj.Hurtbox.Source = this.gameObject;
+
     }
 
     public void AcknowledgeHaveHit(GameObject whoWeHit)

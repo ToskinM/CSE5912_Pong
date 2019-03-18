@@ -139,7 +139,7 @@ public class FollowCamera : MonoBehaviour
                 float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
                 rotation = Quaternion.Euler(xRotation, angle, 0);
             }
-            
+
             // update position
             transform.position = GetNewPosition();
 

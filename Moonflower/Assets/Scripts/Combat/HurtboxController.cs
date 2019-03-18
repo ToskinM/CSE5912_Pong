@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HurtboxController : MonoBehaviour
+public class HurtboxController : MonoBehaviour, IHurtboxController
 {
-    [HideInInspector] public GameObject source;
-    [HideInInspector] public CharacterStats sourceCharacterStats;
-
-    public int damage;
+    public GameObject Source { get; set; }
+    public CharacterStats SourceCharacterStats { get; set; }
+    public int Damage { get; set; } = 1;
 
     private void Awake()
     {
-        source = gameObject.transform.root.gameObject;
-        sourceCharacterStats = source.GetComponent<CharacterStats>();
+        Source = gameObject.transform.root.gameObject;
+        SourceCharacterStats = Source.GetComponent<CharacterStats>();
     }
 
     void Start()
@@ -23,11 +22,11 @@ public class HurtboxController : MonoBehaviour
     public void Enable(int damage)
     {
         gameObject.SetActive(true);
-        this.damage = damage;
+        this.Damage = damage;
     }
     public void Disable()
     {
         gameObject.SetActive(false);
-        this.damage = 0;
+        this.Damage = 0;
     }
 }
