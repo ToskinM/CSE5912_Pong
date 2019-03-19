@@ -77,7 +77,8 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void TriggerDeath()
     {
-        animator.SetTrigger(key_isDead);
+        animator.SetBool(key_isDead, true);
+        //animator.SetTrigger(key_isDead);
     }
 
     public void EnableHurtbox(int index)
