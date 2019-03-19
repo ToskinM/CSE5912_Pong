@@ -26,7 +26,7 @@ public class SypaveController : MonoBehaviour, INPCController
     CurrentPlayer playerInfo;
     private GameObject anai;
     private NPCMovementController movement;
-    private NPCCombatController combatController;
+    //private NPCCombatController combatController;
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
     private PlayerController playerController;
@@ -49,7 +49,7 @@ public class SypaveController : MonoBehaviour, INPCController
         movement.SetDefault(NPCMovementController.MoveState.pace);
 
         icon = new IconFactory().GetIcon(Constants.SYPAVE_ICON);
-        talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
+        talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.SYPAVE_INTRO_DIALOGUE);
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         playerController = LevelManager.current.player.GetComponent<PlayerController>();
@@ -66,43 +66,40 @@ public class SypaveController : MonoBehaviour, INPCController
 
         movement.UpdateMovement();
 
-        if(talkTrig != null)
-            talkTrig.Update();
+        talkTrig.Update();
     }
 
 
     public void StartTalk()
     {
-        if (talkTrig != null)
-        {
-            movement.FollowPlayer(bufferDist);
-            combatController.Active = false;
 
-            if (!talkTrig.DialogueActive())
-            {
-                //playerController.TalkingPartner = gameObject;
-                talkTrig.StartDialogue();
-            }
+        movement.FollowPlayer(bufferDist);
+
+        if (!talkTrig.DialogueActive())
+        {
+            //playerController.TalkingPartner = gameObject;
+            talkTrig.StartDialogue();
         }
+        
     }
     public void EndTalk()
     {
-        if (talkTrig != null)
-        {
-            movement.Reset();
+        
+        movement.Reset();
 
-            if (talkTrig.DialogueActive())
-            {
-                //playerController.TalkingPartner = null;
-                talkTrig.EndDialogue();
-            }
+        if (talkTrig.DialogueActive())
+        {
+            //playerController.TalkingPartner = null;
+            talkTrig.EndDialogue();
         }
+        
     }
 
     // Action Wheel Interactions
     public void Talk()
     {
         StartTalk();
+        Debug.Log("start talking"); 
     }
     public void Gift(string giftName)
     {
