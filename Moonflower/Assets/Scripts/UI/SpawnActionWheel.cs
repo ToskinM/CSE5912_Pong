@@ -156,6 +156,8 @@ public class SpawnActionWheel : MonoBehaviour
                 break;
             case 2:
                 targetController.Distract();
+                if (PlayerController.instance.GetActiveCharacter() == PlayerController.PlayerCharacter.Mimbi)
+                    PlayerController.instance.GetComponent<PlayerAnimatorController>().TriggerDistraction();
                 break;
             case 3:
                 if (inventory.HasInv())
@@ -183,6 +185,7 @@ public class SpawnActionWheel : MonoBehaviour
         {
             HideWheel();
         }
+
     }
 
     private void ShowWheel()
@@ -194,6 +197,7 @@ public class SpawnActionWheel : MonoBehaviour
         wheelShowing = true;
 
         activeWheel.OnSelectOption += HandleWheelSelection;
+        gameStateController.SetPlayerFrozen(true);
     }
     private void HideWheel()
     {
@@ -203,6 +207,7 @@ public class SpawnActionWheel : MonoBehaviour
         gameStateController.UnpauseGame();
 
         activeWheel.OnSelectOption -= HandleWheelSelection;
+        gameStateController.SetPlayerFrozen(false);
     }
 
     public void HandleLockonEvent(GameObject target)
