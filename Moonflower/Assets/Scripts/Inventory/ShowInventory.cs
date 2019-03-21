@@ -65,7 +65,7 @@ public class ShowInventory : MonoBehaviour
                 string itemName = names[items.IndexOf(item)];
                 if (inEnglish)
                 {
-                    item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemName;
+                    item.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemName.ToLower();
                 }
                 else
                 {
@@ -171,7 +171,7 @@ public class ShowInventory : MonoBehaviour
 
                     icon.sprite = lookup.GetSprite(item);
                     if (inEnglish)
-                        itemName.text = item;
+                        itemName.text = item.ToLower();
                     else
                         itemName.text = lookup.GetGuaraniName(item);
 

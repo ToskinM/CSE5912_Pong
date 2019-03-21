@@ -62,7 +62,7 @@ MonoBehaviour:
   - {fileID: 114913726351091182}
   - {fileID: 114900118610838934}
   - {fileID: 114355980814101744}
-  - {fileID: 114576058555150732}
+  - {fileID: 114831784765917184}
 --- !u!114 &114016397484019566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,12 +310,12 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114576058555150732}
+        node: {fileID: 114279085181870486}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _dynamic: 0
-  text: '*sigh* I know. '
+  text: '*sigh* You''ll get there. '
   answers: []
 --- !u!114 &114057445192060334
 MonoBehaviour:
@@ -518,7 +518,10 @@ MonoBehaviour:
       _node: {fileID: 114155866307175032}
       _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: input
+        node: {fileID: 114355980814101744}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _dynamic: 0
@@ -924,6 +927,9 @@ MonoBehaviour:
       - fieldName: output
         node: {fileID: 114444120285969470}
         reroutePoints: []
+      - fieldName: output
+        node: {fileID: 114037141820966060}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _dynamic: 0
@@ -938,7 +944,7 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 0
       _dynamic: 0
-  text: 'Anway, the reason I wanted to talk to you was Pinon. '
+  text: 'Anyway, the reason I wanted to talk to you was Pinon. '
   answers: []
 --- !u!114 &114290372582747316
 MonoBehaviour:
@@ -1122,6 +1128,9 @@ MonoBehaviour:
         reroutePoints: []
       - fieldName: output
         node: {fileID: 114876092346696590}
+        reroutePoints: []
+      - fieldName: output
+        node: {fileID: 114155866307175032}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1638,46 +1647,6 @@ MonoBehaviour:
       _dynamic: 0
   text: 'Very funny. That glib tongue of yours is going to get you into trouble one
     of these days. '
-  answers: []
---- !u!114 &114576058555150732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7d4b035e8545a04ca8b7c9c33635bcb, type: 3}
-  m_Name: Chat
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 3304, y: -472}
-  ports:
-    keys:
-    - input
-    - output
-    values:
-    - _fieldName: input
-      _node: {fileID: 114576058555150732}
-      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: output
-        node: {fileID: 114037141820966060}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _dynamic: 0
-    - _fieldName: output
-      _node: {fileID: 114576058555150732}
-      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _dynamic: 0
-  text: 
   answers: []
 --- !u!114 &114589393867868078
 MonoBehaviour:
@@ -2197,6 +2166,46 @@ MonoBehaviour:
     person that you can be. I''m sorry if I made you feel overwhelmed. You know I
     love you. '
   answers: []
+--- !u!114 &114831784765917184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d4b035e8545a04ca8b7c9c33635bcb, type: 3}
+  m_Name: Chat
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2232, y: 120}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114831784765917184}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 114958722326661624}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114831784765917184}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  text: 
+  answers: []
 --- !u!114 &114833886480267256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2668,11 +2677,14 @@ MonoBehaviour:
       _node: {fileID: 114958722326661624}
       _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: input
+        node: {fileID: 114831784765917184}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _dynamic: 0
-  text: 
+  text: '... You don''t know that. '
   answers: []
 --- !u!114 &114980677117106302
 MonoBehaviour:
