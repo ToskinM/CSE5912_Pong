@@ -21,7 +21,8 @@ public class PlayerAnimatorController : MonoBehaviour
     private PlayerController playerController;
     private PlayerMovementController playerMovement;
 
-    public HurtboxController[] attackHurtboxes;
+    public HurtboxController[] anaiAttackHurtboxes;
+    public HurtboxController[] mimbiAttackHurtboxes;
     public GameObject walkParticles;
     public GameObject runParticles;
     public GameObject standingParticles;
@@ -90,12 +91,26 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void EnableHurtbox(int index)
     {
-        attackHurtboxes[index].Enable(PlayerController.instance.ActivePlayerCombatControls.GetAttackDamage(index));
+        if (playerController.GetActiveCharacter() == PlayerController.PlayerCharacter.Anai)
+        {
+            anaiAttackHurtboxes[index].Enable(PlayerController.instance.ActivePlayerCombatControls.GetAttackDamage(index));
+        }
+        else
+        {
+            mimbiAttackHurtboxes[index].Enable(PlayerController.instance.ActivePlayerCombatControls.GetAttackDamage(index));
+        }
     }
 
     public void DisableHurtbox(int index)
     {
-        attackHurtboxes[index].Disable();
+        if (playerController.GetActiveCharacter() == PlayerController.PlayerCharacter.Anai)
+        {
+            anaiAttackHurtboxes[index].Disable();
+        }
+        else
+        {
+            mimbiAttackHurtboxes[index].Disable();
+        }
     }
 
     // Disable player animation when game is paused
