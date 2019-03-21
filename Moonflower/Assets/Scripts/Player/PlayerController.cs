@@ -65,6 +65,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         activeCharacter = PlayerCharacter.Anai;
+
+        DontDestroyOnLoad(AnaiObject.transform);
+        DontDestroyOnLoad(MimbiObject.transform);
     }
 
     void Update()
