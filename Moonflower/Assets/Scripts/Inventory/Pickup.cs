@@ -26,7 +26,7 @@ public class Pickup : MonoBehaviour
         playerStats = GetComponent<CharacterStats>();
         playerInventory = GetComponent<PlayerInventory>();
 
-        //soundEffect = currentPlayer.GetComponent<PlayerSoundEffect>();
+        soundEffect = PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>();
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         currentPlayer = PlayerController.instance.GetActivePlayerObject();
