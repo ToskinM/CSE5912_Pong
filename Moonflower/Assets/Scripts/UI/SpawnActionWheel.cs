@@ -25,6 +25,9 @@ public class SpawnActionWheel : MonoBehaviour
     private bool wheelAvailable = true;
     private bool wheelShowing = false;
     private bool inRange = false;
+
+    private int distractTime = 5;
+
     bool otherWindowUp = false; 
 
     private float activationRange = 5f;
@@ -118,17 +121,20 @@ public class SpawnActionWheel : MonoBehaviour
         {
             followCamera = LevelManager.current.mainCamera;
         }
-
-        if (wheelAvailable && !otherWindowUp)
+        Debug.Log("update");
+        if ( !otherWindowUp)
         {
+            Debug.Log("waiting");
             if (target && Vector3.Distance(target.transform.position, LevelManager.current.currentPlayer.transform.position) <= activationRange)
             {
+                Debug.Log("in range"); 
                 if (!wheelShowing)
                     interactionPopup.SetActive(true);
                 DetectInteraction();
             }
             else
             {
+                Debug.Log("not in range");
                 interactionPopup.SetActive(false);
             }
         }
@@ -157,7 +163,12 @@ public class SpawnActionWheel : MonoBehaviour
             case 2:
                 targetController.Distract();
                 if (PlayerController.instance.GetActiveCharacter() == PlayerController.PlayerCharacter.Mimbi)
-                    PlayerController.instance.GetComponent<PlayerAnimatorController>().TriggerDistraction();
+                {
+                    StartCoroutine("DistractionTime", distractTime);
+                    PlayerController.instance.GetComponent<PlayerAnimatorController>().EnableDistraction();
+
+                }
+                    //PlayerController.instance.GetComponent<PlayerAnimatorController>().TriggerDistraction();
                 break;
             case 3:
                 if (inventory.HasInv())
@@ -175,13 +186,21 @@ public class SpawnActionWheel : MonoBehaviour
         }
     }
 
+    IEnumerator DistractionTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        PlayerController.instance.GetComponent<PlayerAnimatorController>().DisableDistraction();
+    }
+
+
+
     public void DetectInteraction()
     {
-        if (Input.GetButtonDown("Interact") && activeWheel)
+        if (Input.GetButtonDown("Interact"))
         {
             ShowWheel();
         }
-        else if (Input.GetButtonUp("Interact") && activeWheel)
+        else if (Input.GetButtonUp("Interact"))
         {
             HideWheel();
         }

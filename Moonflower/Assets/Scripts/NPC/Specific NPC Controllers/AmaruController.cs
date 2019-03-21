@@ -101,7 +101,7 @@ public class AmaruController : MonoBehaviour, INPCController
     }
     public void Distract()
     {
-
+        Debug.Log("distracting amaru");
     }
     public string Inspect()
     {
