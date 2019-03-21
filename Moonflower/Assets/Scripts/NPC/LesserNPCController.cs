@@ -47,6 +47,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
         stealthDetection = GetComponent<StealthDetection>();
 
         playerController = LevelManager.current.player.GetComponent<PlayerController>();
+        icon = new IconFactory().GetIcon(Constants.MOUSE_ICON);
     }
 
     void Start()

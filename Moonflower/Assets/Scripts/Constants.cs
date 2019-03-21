@@ -30,6 +30,7 @@ public static class Constants
     public const string SYPAVE_ICON = characterFolder + "Sypave";
     public const string TEGU_ICON = characterFolder + "Tegu.PNG";
     public const string KURUPI_ICON = characterFolder + "Kurupi";
+    public const string MOUSE_ICON = characterFolder + "Mousy Boi";
     public const string MONAI_ICON = characterFolder + "Monai";
     const string itemFolder = "Icons/Items/";
     public const string MOONFLOWER_ICON = itemFolder + "Moonflower";
