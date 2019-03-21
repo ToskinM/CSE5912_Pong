@@ -58,7 +58,7 @@ public class AmaruController : MonoBehaviour, INPCController
     // Update is called once per frame
     void Update()
     {
-        //if (playerController.Playing)
+        if (playerInfo.IsAnai())
         {
             talkTrig.Update();
 
@@ -75,10 +75,10 @@ public class AmaruController : MonoBehaviour, INPCController
                 npc.Reset(); 
             }
         }
-        //else
-        //{
-        //    npc.UpdateMovement();
-        //}
+        else
+        {
+            npc.UpdateMovement();
+        }
         dialogueActive = talkTrig.DialogueActive();
 
     }

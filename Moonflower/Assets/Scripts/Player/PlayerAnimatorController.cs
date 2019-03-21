@@ -13,6 +13,8 @@ public class PlayerAnimatorController : MonoBehaviour
     private const string key_isDead = "IsDead";
     private const string key_isCrouch = "IsCrouch";
     private const string key_isBlock = "IsBlock";
+    private const string key_DistractTrigger = "IsCute";
+
     private Animator animator;
     private Animator companionAnimator;
     public PlayerCombatController combatController;
@@ -73,6 +75,11 @@ public class PlayerAnimatorController : MonoBehaviour
     public void TriggerHit()
     {
         animator.SetTrigger(key_IsHitTrigger);
+    }
+
+    public void TriggerDistraction()
+    {
+        animator.SetTrigger(key_DistractTrigger);
     }
 
     public void TriggerDeath()

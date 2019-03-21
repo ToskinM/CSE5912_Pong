@@ -24,8 +24,9 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
     public Vector3 wanderAreaOrigin;
     public float wanderAreaRadius = 5f; //default
     float avoidsTargetRadius = 10f;
-
-
+    float lastDist = 0f;
+    int giveUpCount = 0;
+    int giveUpMax = 30; 
 
     const float bufferDist = .2f; //max dist from destination point before going somewhere else
     int pauseCount = 0; //keeps track of how long NPC has been chilling at destination
@@ -101,8 +102,9 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
                 }
             }
 
-            agent.speed = baseSpeed; 
-            bool atDest = getXZDist(self.transform.position, destination) <= bufferDist;
+            agent.speed = baseSpeed;
+            float distFromDest = getXZDist(self.transform.position, destination);
+            bool atDest = distFromDest <= bufferDist;
             if (atDest && !agent.isStopped)
             {
                 Chill();
@@ -111,6 +113,7 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
             }
             else if (atDest)
             {
+                lastDist = distFromDest; 
                 if (pauseCount == lingerLength)
                 {
                     destination = getRandomDest();
@@ -126,6 +129,22 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
             }
             else
             {
+                if(Mathf.Abs(distFromDest - lastDist) <= bufferDist)
+                {
+                    giveUpCount++; 
+                    if(giveUpCount > giveUpMax)
+                    {
+                        Debug.Log("give up"); 
+                        destination = getRandomDest();
+                        GoHere(destination);
+                        giveUpCount = 0; 
+                    }
+                    else
+                    {
+                        giveUpCount = 0; 
+                    }
+                }
+
                 GoHere(destination);
             }
         }

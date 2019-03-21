@@ -25,6 +25,7 @@ public class PinonController : MonoBehaviour, INPCController
     [HideInInspector] public bool[] actionsAvailable { get; private set; }
 
     NPCMovementController npc;
+    Animator NPCController;
     NavMeshAgent agent;
     DialogueTrigger talkTrig;
     PlayerController playerController;
@@ -50,6 +51,7 @@ public class PinonController : MonoBehaviour, INPCController
 
         agent = GetComponent<NavMeshAgent>();
 
+        NPCController = GetComponent<Animator>();
         Vector3 pos = transform.position; 
         npc = new NPCMovementController(gameObject, anai);
         npc.FollowPlayer(bufferDist, tooCloseRad);
@@ -96,6 +98,7 @@ public class PinonController : MonoBehaviour, INPCController
             npc.UpdateMovement();
         }
         dialogueActive = talkTrig.DialogueActive();
+        NPCController.SetBool("IsTalking", dialogueActive);
 
     }
 
@@ -120,7 +123,6 @@ public class PinonController : MonoBehaviour, INPCController
     //start current conversation
     public void StartTalk()
     {
-
         if (!talkTrig.DialogueActive())
         {
             //playerController.TalkingPartner = gameObject;
@@ -132,6 +134,7 @@ public class PinonController : MonoBehaviour, INPCController
     public void EndTalk()
     {
         npc.Reset();
+
         if (talkTrig.DialogueActive())
         {
             //playerController.TalkingPartner = null;

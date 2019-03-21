@@ -224,7 +224,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             Jumping = true;
             onGround = false;
-            if (Action != Actions.Running && LevelManager.current.currentPlayer.name == "Anai")
+            if (Action != Actions.Running)
             {
                 body.AddForce(new Vector3(0f, 30f, 0f), ForceMode.Impulse);
             }
