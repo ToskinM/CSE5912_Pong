@@ -13,7 +13,6 @@ public class PlayerAnimatorController : MonoBehaviour
     private const string key_isDead = "IsDead";
     private const string key_isCrouch = "IsCrouch";
     private const string key_isBlock = "IsBlock";
-    //private const string key_DistractTrigger = "IsCute";
     private const string key_isDistract = "IsCute";
 
     private Animator animator;

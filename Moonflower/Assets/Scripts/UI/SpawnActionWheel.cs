@@ -25,6 +25,9 @@ public class SpawnActionWheel : MonoBehaviour
     private bool wheelAvailable = true;
     private bool wheelShowing = false;
     private bool inRange = false;
+
+    private int distractTime = 5;
+
     bool otherWindowUp = false; 
 
     private float activationRange = 5f;
@@ -158,8 +161,9 @@ public class SpawnActionWheel : MonoBehaviour
                 targetController.Distract();
                 if (PlayerController.instance.GetActiveCharacter() == PlayerController.PlayerCharacter.Mimbi)
                 {
+                    StartCoroutine("DistractionTime", distractTime);
                     PlayerController.instance.GetComponent<PlayerAnimatorController>().EnableDistraction();
-                    DistractionTime(1);
+
                 }
                     //PlayerController.instance.GetComponent<PlayerAnimatorController>().TriggerDistraction();
                 break;
@@ -184,6 +188,8 @@ public class SpawnActionWheel : MonoBehaviour
         yield return new WaitForSeconds(time);
         PlayerController.instance.GetComponent<PlayerAnimatorController>().DisableDistraction();
     }
+
+
 
     public void DetectInteraction()
     {
