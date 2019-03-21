@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public enum PlayerCharacter { Anai, Mimbi };
     private PlayerCharacter activeCharacter;
 
-    public GameObject TalkingPartner { get; set; }
+    public GameObject TalkingPartner;
     public GameObject AnaiObject;
     public GameObject MimbiObject;
 

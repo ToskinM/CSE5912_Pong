@@ -72,7 +72,10 @@ public class PlayerMovementController : MonoBehaviour
         // Damping
         body.velocity *= 0.98f;
 
-       if (!Stunned) DetectKeyInput(); // Controls active player character movement
+        if (!Stunned && playerController.TalkingPartner == null)
+            DetectKeyInput(); // Controls active player character movement
+        else
+            Action = Actions.Chilling;
     }
 
     // Sets the active object depending on the active character so that this script knows which object to update

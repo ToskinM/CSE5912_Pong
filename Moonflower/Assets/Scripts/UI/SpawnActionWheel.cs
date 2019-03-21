@@ -141,7 +141,7 @@ public class SpawnActionWheel : MonoBehaviour
     private void HandleWheelSelection(int selection)
     {
         HideWheel();
-        Debug.Log(selection);
+        //Debug.Log(selection);
 
         switch (selection)
         {

@@ -56,10 +56,10 @@ public class LevelManager : MonoBehaviour
         //DataSavingManager.current.npcData?.Load();
     }
 
-    public void RequestDialogueCamera()
+    public void RequestDialogueCamera(GameObject dialoguePartner)
     {
         gameStateController.SetMouseLock(false);
-        dialogueCamera.Enter(player.TalkingPartner.transform, mainCamera.transform);
+        dialogueCamera.Enter(dialoguePartner.transform, mainCamera.transform);
         mainCamera.SetRendering(false);
     }
     public void ReturnDialogueCamera()

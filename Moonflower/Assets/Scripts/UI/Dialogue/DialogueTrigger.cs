@@ -179,10 +179,10 @@ public class DialogueTrigger : MonoBehaviour
         pState = PanelState.rising;
         panelInfo.Icon.sprite = icon;  //new IconFactory().GetIcon(spriteFile);
         tState = TextState.typing;
-        LevelManager.current.player.TalkingPartner = partner;
+        PlayerController.instance.TalkingPartner = partner;
 
         // Start dialogue camera this this npc 
-        LevelManager.current.RequestDialogueCamera();
+        LevelManager.current.RequestDialogueCamera(partner);
 
         //LevelManager.current.anai.OnHit += CombatCancelDialogue;
     }
