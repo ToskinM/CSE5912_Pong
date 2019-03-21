@@ -176,15 +176,18 @@ public class DialogueTrigger : MonoBehaviour
 
     public void StartDialogue()
     {
-        pState = PanelState.rising;
-        panelInfo.Icon.sprite = icon;  //new IconFactory().GetIcon(spriteFile);
-        tState = TextState.typing;
-        PlayerController.instance.TalkingPartner = partner;
+        if (!PlayerController.instance.ActivePlayerCombatControls.InCombat)
+        {
+            pState = PanelState.rising;
+            panelInfo.Icon.sprite = icon;  //new IconFactory().GetIcon(spriteFile);
+            tState = TextState.typing;
+            PlayerController.instance.TalkingPartner = partner;
 
-        // Start dialogue camera this this npc 
-        LevelManager.current.RequestDialogueCamera(partner);
+            // Start dialogue camera this this npc 
+            LevelManager.current.RequestDialogueCamera(partner);
 
-        //LevelManager.current.anai.OnHit += CombatCancelDialogue;
+            PlayerController.instance.ActivePlayerCombatControls.OnHit += CombatCancelDialogue;
+        }
     }
 
     private void CombatCancelDialogue(GameObject aggressor)
@@ -201,6 +204,8 @@ public class DialogueTrigger : MonoBehaviour
 
         // Exit dialogue camera 
         LevelManager.current.ReturnDialogueCamera();
+
+        PlayerController.instance.ActivePlayerCombatControls.OnHit -= CombatCancelDialogue;
     }
 
     public bool DialogueActive()

@@ -137,7 +137,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     private void CheckAggressorDistance()
     {
-        //Debug.Log(currentAggressor);
+        Debug.Log(currentAggressor);
 
         if (Vector3.Distance(transform.position, currentAggressor.transform.position) > combatLossDistance)
         {
@@ -200,6 +200,13 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         //Debug.Log(gameObject.name + " hit " + whoWeHit.name);
         currentAggressor = whoWeHit;
         InCombat = true;
+
+        // cancel combat loss because we just attacked an npc
+        if (stopCombatCoroutine != null)
+        {
+            StopCoroutine(stopCombatCoroutine);
+            stopCombatCoroutine = null;
+        }
     }
 
     private void Swing()
@@ -223,7 +230,15 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     void HandleHurtboxCollision(Collider other)
     {
         OnHit?.Invoke(other.gameObject);
+        currentAggressor = other.gameObject;
         InCombat = true;
+
+        // cancel combat loss because we got hit
+        if (stopCombatCoroutine != null)
+        {
+            StopCoroutine(stopCombatCoroutine);
+            stopCombatCoroutine = null;
+        }
 
         // Get hurtbox information
         IHurtboxController hurtboxController = other.gameObject.GetComponent<IHurtboxController>();
