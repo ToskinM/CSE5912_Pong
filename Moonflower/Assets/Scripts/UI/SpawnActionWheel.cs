@@ -157,7 +157,11 @@ public class SpawnActionWheel : MonoBehaviour
             case 2:
                 targetController.Distract();
                 if (PlayerController.instance.GetActiveCharacter() == PlayerController.PlayerCharacter.Mimbi)
-                    PlayerController.instance.GetComponent<PlayerAnimatorController>().TriggerDistraction();
+                {
+                    PlayerController.instance.GetComponent<PlayerAnimatorController>().EnableDistraction();
+                    DistractionTime(1);
+                }
+                    //PlayerController.instance.GetComponent<PlayerAnimatorController>().TriggerDistraction();
                 break;
             case 3:
                 if (inventory.HasInv())
@@ -173,6 +177,12 @@ public class SpawnActionWheel : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    IEnumerator DistractionTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        PlayerController.instance.GetComponent<PlayerAnimatorController>().DisableDistraction();
     }
 
     public void DetectInteraction()
