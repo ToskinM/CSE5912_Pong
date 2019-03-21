@@ -189,4 +189,9 @@ public class GameStateController : MonoBehaviour
     {
         OnFreezePlayer?.Invoke(frozen);
     }
+
+    public void PlayerDeath()
+    {
+        
+    }
 }

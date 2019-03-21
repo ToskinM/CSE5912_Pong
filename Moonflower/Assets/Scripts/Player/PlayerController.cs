@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
 
     GameObject ActivePlayerObject;
 
+    private bool isDead = false;
+
     public delegate void SwitchCharacter(PlayerCharacter activeChar);
     public static event SwitchCharacter OnCharacterSwitch;
 
@@ -51,24 +53,34 @@ public class PlayerController : MonoBehaviour
         LevelManager.current.player = this;
     }
 
-    // Start is called before the first frame update
+    private void OnEnable()
+    {
+        ActivePlayerCombatControls.OnDeath += HandlePlayerDeath;
+    }
+    private void OnDisable()
+    {
+        ActivePlayerCombatControls.OnDeath -= HandlePlayerDeath;
+    }
+
     void Start()
     {
         activeCharacter = PlayerCharacter.Anai;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        DetectPlayerSwitchInput();
-        DetectSummonCompanionInput();
+        if (!isDead)
+        {
+            DetectPlayerSwitchInput();
+            DetectSummonCompanionInput();
+        }
 
         UpdateCompanionCharacter();
     }
 
     private void DetectPlayerSwitchInput()
     {
-        if (Input.GetButtonDown("Switch"))
+        if (Input.GetButtonDown("Switch") && !ActivePlayerCombatControls.InCombat)
         {
             SwitchActiveCharacter();
         }
@@ -191,5 +203,11 @@ public class PlayerController : MonoBehaviour
         ActivePlayerMovementControls.UpdateCompanionMovement(activeCharacter);
         // ActivePlayerCombatControls.UpdateCompanionCombat(activeCharacter);
         ActivePlayerAnimator.UpdateCompanionAnimation(activeCharacter);
+    }
+
+    private void HandlePlayerDeath()
+    {
+        isDead = true;
+        GameStateController.current.PlayerDeath();
     }
 }

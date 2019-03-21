@@ -28,7 +28,8 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     public bool canAttack = true;
     //public bool isBlocking;
 
-    public GameObject ragdollPrefab;
+    public GameObject anaiRagdollPrefab;
+    public GameObject mimbiRagdollPrefab;
     public Weapon weapon;
     private int damage;
     public GameObject blockPlaceholder;
@@ -50,6 +51,9 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     public delegate void HitUpdate(GameObject aggressor);
     public event HitUpdate OnHit;
+
+    public delegate void DeathUpdate();
+    public event DeathUpdate OnDeath;
 
     void Awake()
     {
@@ -219,6 +223,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     void HandleHurtboxCollision(Collider other)
     {
         OnHit?.Invoke(other.gameObject);
+        InCombat = true;
 
         // Get hurtbox information
         IHurtboxController hurtboxController = other.gameObject.GetComponent<IHurtboxController>();
@@ -292,19 +297,33 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     private void Die()
     {
         Debug.Log(gameObject.name + " has died");
+        SetStunned(1);
         animator.TriggerDeath();
-        InCombat = false;
 
-        if (ragdollPrefab != null)
-        {
-            // Spawn ragdoll and have it match our pose
-            GameObject ragdoll = Instantiate(ragdollPrefab, currentPlayer.transform.position, currentPlayer.transform.rotation);
-            ragdoll.GetComponent<Ragdoll>().MatchPose(gameObject.GetComponentsInChildren<Transform>());
-        }
+        OnDeath?.Invoke();
+
+        InCombat = false;
 
         //gameObject.SetActive(false);
 
         //Destroy(gameObject, 0.5f);
+    }
+
+    public void RagdollReplace(int anaiOrMimbi)
+    {
+        if (anaiOrMimbi == 0 && anaiRagdollPrefab != null)
+        {
+            // Spawn ragdoll and have it match our pose
+            GameObject ragdoll = Instantiate(anaiRagdollPrefab, currentPlayer.transform.position, currentPlayer.transform.rotation);
+            ragdoll.GetComponent<Ragdoll>().MatchPose(currentPlayer.GetComponentsInChildren<Transform>());
+        }
+        else if (anaiOrMimbi == 1 && mimbiRagdollPrefab != null)
+        {
+            // Spawn ragdoll and have it match our pose
+            GameObject ragdoll = Instantiate(mimbiRagdollPrefab, currentPlayer.transform.position, currentPlayer.transform.rotation);
+            ragdoll.GetComponent<Ragdoll>().MatchPose(currentPlayer.GetComponentsInChildren<Transform>());
+        }
+        currentPlayer.SetActive(false);
     }
 
     public int GetAttackDamage(int attack)
