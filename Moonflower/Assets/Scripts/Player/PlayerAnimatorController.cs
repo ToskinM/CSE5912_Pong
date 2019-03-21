@@ -36,7 +36,6 @@ public class PlayerAnimatorController : MonoBehaviour
 
         animator = playerController.GetActivePlayerObject().GetComponent<Animator>();
         companionAnimator = playerController.GetCompanionObject().GetComponent<Animator>();
-
     }
 
     void OnEnable()

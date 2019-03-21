@@ -203,6 +203,8 @@ public class PlayerController : MonoBehaviour
 
     void UpdateCompanionCharacter()
     {
+        if (!GetCompanionObject().activeInHierarchy) return;
+
         ActivePlayerMovementControls.UpdateCompanionMovement(activeCharacter);
         // ActivePlayerCombatControls.UpdateCompanionCombat(activeCharacter);
         ActivePlayerAnimator.UpdateCompanionAnimation(activeCharacter);
