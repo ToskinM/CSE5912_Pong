@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     public PlayerCombatController ActivePlayerCombatControls;
     public FieldOfView ActivePlayerInteractionFOV;
     PlayerInventory ActivePlayerInventory;
-    PlayerAnimatorController ActivePlayerAnimator;
+    public PlayerAnimatorController ActivePlayerAnimator;
 
     GameObject ActivePlayerObject;
 

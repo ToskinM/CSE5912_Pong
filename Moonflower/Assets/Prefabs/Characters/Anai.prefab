@@ -1352,9 +1352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7816da57fe59251489a2c43e5a3e7048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  sourceCharacterStats: {fileID: 1438201461}
-  damage: 1
 --- !u!1 &656915279
 GameObject:
   m_ObjectHideFlags: 0
@@ -2648,9 +2645,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7816da57fe59251489a2c43e5a3e7048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
-  sourceCharacterStats: {fileID: 1438201461}
-  damage: 2
 --- !u!1 &1221338749
 GameObject:
   m_ObjectHideFlags: 0
@@ -2977,6 +2971,7 @@ GameObject:
   - component: {fileID: 1438201467}
   - component: {fileID: 1438201465}
   - component: {fileID: 1438201464}
+  - component: {fileID: 1810323188967966670}
   - component: {fileID: 1438201463}
   - component: {fileID: 85873065}
   - component: {fileID: 1438201462}
@@ -3045,6 +3040,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 75.91495, y: 200.8421, z: 78.85831}
   m_Center: {x: 0, y: 40, z: 31.431894}
+--- !u!114 &1810323188967966670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438201454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f427d76af8538ca45b4633309baadfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1438201463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3057,6 +3064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 853790fe4cf3b9c4d9a2ca598e7fbf52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combatController: {fileID: 0}
   attackHurtboxes:
   - {fileID: 632203327}
   - {fileID: 1211463791}
@@ -3075,6 +3083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d79dd3f48ccd475fb284ea0ed50292b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  active: 1
   Mimbi: {fileID: 0}
   HUD: {fileID: 0}
   smoothTime: 2
@@ -3105,7 +3114,6 @@ MonoBehaviour:
   body: {fileID: 1438201458}
   otherCharacter: {fileID: 0}
   smoothTime: 2
-  footstepTime: 5
 --- !u!114 &1438201461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3170,11 +3178,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09d74e2fa40e1054aaa80dedd3cb9eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  active: 1
+  inCombat: 0
   playerMovement: {fileID: 0}
   isAttacking: 0
   attackTimeout: 0.5
   canAttack: 1
-  ragdollPrefab: {fileID: 0}
+  anaiRagdollPrefab: {fileID: 0}
+  mimbiRagdollPrefab: {fileID: 0}
   weapon: {fileID: 43770695}
   blockPlaceholder: {fileID: 1485624132}
   currentPlayer: {fileID: 0}
@@ -3191,9 +3202,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceToPickup: 5
-  playerAnai: {fileID: 1438201454}
-  inventoryAdd: {fileID: 0}
-  playerMovement: {fileID: 0}
 --- !u!114 &1438201455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3206,7 +3214,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0592b69fb9fb84e938da77f0a8252cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mimbiFootStepTime: 6
 --- !u!195 &1438201459
 NavMeshAgent:
   m_ObjectHideFlags: 0
