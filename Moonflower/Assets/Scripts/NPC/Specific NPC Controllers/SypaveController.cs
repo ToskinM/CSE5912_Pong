@@ -116,6 +116,11 @@ public class SypaveController : MonoBehaviour, INPCController
     {
 
     }
+    public void EndDistract()
+    {
+
+    }
+
     public string Inspect()
     {
         return Constants.SYPAVE_NAME;

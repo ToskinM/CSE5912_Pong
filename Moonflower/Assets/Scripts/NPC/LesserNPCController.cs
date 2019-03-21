@@ -130,6 +130,11 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
         }
     }
+
+    public void EndDistract()
+    {
+
+    }
     public string Inspect()
     {
         return Constants.MOUSE_NAME; 

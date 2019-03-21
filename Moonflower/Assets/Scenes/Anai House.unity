@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311947, g: 0.38074005, b: 0.35872722, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -118,18 +118,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 851446239}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &12437144 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 574423208, guid: 24bae5f0d34626a459d9f0f207247a1a,
-    type: 3}
-  m_PrefabInstance: {fileID: 851446239}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12437143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77fcd33a11af44cd1af39867bc71427a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &41638419
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,18 +1291,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 157348643}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &157348645 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 85873065, guid: 51c8baa03be78fc46a1c9f85a59c1b6c,
-    type: 3}
-  m_PrefabInstance: {fileID: 157348643}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157348644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d79dd3f48ccd475fb284ea0ed50292b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &160835691
 GameObject:
   m_ObjectHideFlags: 0
@@ -2323,12 +2299,12 @@ PrefabInstance:
         type: 3}
       propertyPath: anai
       value: 
-      objectReference: {fileID: 157348645}
+      objectReference: {fileID: 0}
     - target: {fileID: 913544973061084561, guid: 4d8b04be09e2bea449b382fb2c01488c,
         type: 3}
       propertyPath: mimbi
       value: 
-      objectReference: {fileID: 12437144}
+      objectReference: {fileID: 0}
     - target: {fileID: 913544973061084561, guid: 4d8b04be09e2bea449b382fb2c01488c,
         type: 3}
       propertyPath: currentPlayer
@@ -7439,6 +7415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Flower: {fileID: 0}
   Apple: {fileID: 0}
+  PlayerObject: {fileID: 0}
 --- !u!114 &1181211665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10565,6 +10542,193 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1587351921}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1599248364
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1599248373}
+  - component: {fileID: 1599248372}
+  - component: {fileID: 1599248371}
+  - component: {fileID: 1599248370}
+  - component: {fileID: 1599248369}
+  - component: {fileID: 1599248368}
+  - component: {fileID: 1599248367}
+  - component: {fileID: 1599248366}
+  - component: {fileID: 1599248365}
+  m_Layer: 0
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1599248365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599248364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f1c868799be4446bb2073b7126e6ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceToPickup: 5
+--- !u!114 &1599248366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599248364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1650f9b37ca4d54284136ed5cc15f8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Strength: 5
+  Attack: 5
+  Defense: 5
+  MaxHealth: 100
+  CurrentHealth: 100
+  Cunning: 5
+  Charisma: 5
+  Stealth: 5
+  strengthExperience: 0
+  HUD: {fileID: 0}
+--- !u!114 &1599248367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599248364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8dfeb2dc6684ec0acd28b2f9028f2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InventoryObjs: []
+  ItemNames: []
+--- !u!114 &1599248368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599248364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09d74e2fa40e1054aaa80dedd3cb9eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  inCombat: 0
+  playerMovement: {fileID: 0}
+  isAttacking: 0
+  attackTimeout: 0.5
+  canAttack: 1
+  anaiRagdollPrefab: {fileID: 1438201454, guid: a027ac0d62ba08b4b893fa689b37b8cc,
+    type: 3}
+  mimbiRagdollPrefab: {fileID: 574423205, guid: 4e865ff175b6efa4cba2d4a1a4b8d3ae,
+    type: 3}
+  weapon: {fileID: 0}
+  blockPlaceholder: {fileID: 0}
+  currentPlayer: {fileID: 0}
+--- !u!114 &1599248369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599248364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 853790fe4cf3b9c4d9a2ca598e7fbf52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatController: {fileID: 0}
+  anaiAttackHurtboxes:
+  - {fileID: 0}
+  - {fileID: 0}
+  mimbiAttackHurtboxes:
+  - {fileID: 0}
+  - {fileID: 0}
+  walkParticles: {fileID: 0}
+  runParticles: {fileID: 0}
+  standingParticles: {fileID: 0}
+--- !u!114 &1599248370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599248364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5126eacaf1aa66459b539f08a2581fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Action: 0
+  MovementSpeed: 0
+  body: {fileID: 0}
+  AnaiPassiveController: {fileID: 0}
+  MimbiPassiveController: {fileID: 0}
+  CompanionMovementController: {fileID: 0}
+  playerObject: {fileID: 0}
+--- !u!114 &1599248371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599248364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d378aa49b65af44eade08da251d531c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TalkingPartner: {fileID: 0}
+  AnaiObject: {fileID: 157348644}
+  MimbiObject: {fileID: 12437143}
+  ActivePlayerMovementControls: {fileID: 0}
+  ActivePlayerCombatControls: {fileID: 0}
+  ActivePlayerInteractionFOV: {fileID: 0}
+  ActivePlayerAnimator: {fileID: 0}
+--- !u!114 &1599248372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599248364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc7baed666e004c1abcf2bb05dfade12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerAnaiObj: {fileID: 157348644}
+  PlayerMimbiObj: {fileID: 12437143}
+  CurrentPlayerObj: {fileID: 0}
+--- !u!4 &1599248373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1599248364}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 36
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1604262392
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11771,7 +11935,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791cbcb20ef5c45e7992ab6092ca996b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
 --- !u!114 &1829859987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12780,6 +12943,7 @@ MonoBehaviour:
   InvContentPanel: {fileID: 1466127590}
   Player: {fileID: 0}
   gameController: {fileID: 1819681082}
+  Shown: 0
 --- !u!114 &1954491026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12794,6 +12958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Flower: {fileID: 400098626}
   Apple: {fileID: 1081781987}
+  PlayerObject: {fileID: 0}
 --- !u!114 &1954491027
 MonoBehaviour:
   m_ObjectHideFlags: 0
