@@ -118,17 +118,20 @@ public class SpawnActionWheel : MonoBehaviour
         {
             followCamera = LevelManager.current.mainCamera;
         }
-
-        if (wheelAvailable && !otherWindowUp)
+        Debug.Log("update");
+        if ( !otherWindowUp)
         {
+            Debug.Log("waiting");
             if (target && Vector3.Distance(target.transform.position, LevelManager.current.currentPlayer.transform.position) <= activationRange)
             {
+                Debug.Log("in range"); 
                 if (!wheelShowing)
                     interactionPopup.SetActive(true);
                 DetectInteraction();
             }
             else
             {
+                Debug.Log("not in range");
                 interactionPopup.SetActive(false);
             }
         }
@@ -177,11 +180,11 @@ public class SpawnActionWheel : MonoBehaviour
 
     public void DetectInteraction()
     {
-        if (Input.GetButtonDown("Interact") && activeWheel)
+        if (Input.GetButtonDown("Interact"))
         {
             ShowWheel();
         }
-        else if (Input.GetButtonUp("Interact") && activeWheel)
+        else if (Input.GetButtonUp("Interact"))
         {
             HideWheel();
         }
