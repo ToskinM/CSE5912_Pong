@@ -73,7 +73,7 @@ public class ShowInspect : MonoBehaviour
                 descrip.text = descripFactory.GetYsapy();
                 break;
             case Constants.MOUSE_NAME:
-                //icon.sprite = iconFactory.GetIcon(Constants.MOUSE_ICON);
+                icon.sprite = iconFactory.GetIcon(Constants.MOUSE_ICON);
                 descrip.text = descripFactory.GetMouse();
                 break;
             default:
