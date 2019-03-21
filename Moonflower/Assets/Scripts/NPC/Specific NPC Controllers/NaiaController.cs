@@ -153,6 +153,12 @@ public class NaiaController : MonoBehaviour, INPCController
     {
 
     }
+
+    public void EndDistract()
+    {
+
+    }
+
     public string Inspect()
     {
         return Constants.NAIA_NAME;
