@@ -190,6 +190,7 @@ public class SpawnActionWheel : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         PlayerController.instance.GetComponent<PlayerAnimatorController>().DisableDistraction();
+        targetController.EndDistract();
     }
 
 

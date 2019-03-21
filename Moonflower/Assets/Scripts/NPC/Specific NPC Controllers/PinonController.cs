@@ -115,6 +115,12 @@ public class PinonController : MonoBehaviour, INPCController
     {
 
     }
+
+    public void EndDistract()
+    {
+
+    }
+
     public string Inspect()
     {
         return Constants.PINON_NAME; 
