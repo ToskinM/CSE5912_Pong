@@ -114,6 +114,22 @@ public class SceneController : MonoBehaviour
         yield return StartCoroutine(Fade(0f));
     }
 
+    public void FadeOutToBlack(float multiplier = 1)
+    {
+        StartCoroutine(FadeToBlack(multiplier));
+    }
+    public void FadeInFromBlack(float multiplier = 1)
+    {
+        StartCoroutine(FadeFromBlack(multiplier));
+    }
+    public IEnumerator FadeToBlack(float multiplier = 1)
+    {
+        yield return StartCoroutine(Fade(1f, multiplier));
+    }
+    public IEnumerator FadeFromBlack(float multiplier = 1)
+    {
+        yield return StartCoroutine(Fade(0f, multiplier));
+    }
 
     // Load coroutines
     //
@@ -146,11 +162,11 @@ public class SceneController : MonoBehaviour
 
     // Fade Coroutines
     //
-    private IEnumerator Fade(float finalAlpha)
+    private IEnumerator Fade(float finalAlpha, float speedMultiplier = 1)
     {
         isFading = true;
         faderCanvasGroup.blocksRaycasts = true;
-        float fadeSpeed = Mathf.Abs(faderCanvasGroup.alpha - finalAlpha) / fadeDuration;
+        float fadeSpeed = Mathf.Abs(faderCanvasGroup.alpha - finalAlpha) / (fadeDuration * speedMultiplier);
         while (!Mathf.Approximately(faderCanvasGroup.alpha, finalAlpha))
         {
             faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, finalAlpha,

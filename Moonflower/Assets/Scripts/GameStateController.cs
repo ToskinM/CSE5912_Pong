@@ -192,6 +192,21 @@ public class GameStateController : MonoBehaviour
 
     public void PlayerDeath()
     {
-        
+        StartCoroutine(PlayerDeathSequence());
+    }
+
+    private IEnumerator PlayerDeathSequence()
+    {
+        // Wait for player death animation
+        yield return new WaitForSeconds(4f);
+
+        // Fade out to black
+        yield return StartCoroutine(SceneController.current.FadeToBlack(3f));
+
+        // Display game over menu
+        PauseGame();
+        GameObject gameOverScene = Instantiate((GameObject)Resources.Load("Menu/GameOver Canvas"));
+
+        //SceneController.current.FadeOutToBlack(5f);
     }
 }
