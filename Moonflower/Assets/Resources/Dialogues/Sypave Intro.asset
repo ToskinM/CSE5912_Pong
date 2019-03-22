@@ -84,6 +84,7 @@ MonoBehaviour:
   - {fileID: 114748809177335248}
   - {fileID: 114876790039246732}
   - {fileID: 114600835224187900}
+  - {fileID: 114304062625670428}
 --- !u!114 &114016397484019566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,8 +454,8 @@ MonoBehaviour:
       _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: answers 2
-        node: {fileID: 114243619413069302}
+      - fieldName: output
+        node: {fileID: 114304062625670428}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -500,8 +501,7 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 1
       _dynamic: 1
-  text: 'Do not take that tone with me, Anai! I have been waiting here for you for
-    hours. You could show your mother a little bit of respect. '
+  text: 'The least you could do is show your mother a little bit of respect. '
   answers:
   - text: 'Since when do you deserve it? '
     voiceClip: {fileID: 0}
@@ -957,7 +957,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114079246350747892}
+        node: {fileID: 114304062625670428}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -1329,6 +1329,50 @@ MonoBehaviour:
       _dynamic: 0
   text: 'I''m sure you will. You need to learn to be more respectful of your neighbors''
     time and emotions. '
+  answers: []
+--- !u!114 &114304062625670428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d4b035e8545a04ca8b7c9c33635bcb, type: 3}
+  m_Name: Chat
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -520, y: 280}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114304062625670428}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: answers 2
+        node: {fileID: 114243619413069302}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114304062625670428}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114079246350747892}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  text: 'Do not take that tone with me, Anai! I have been waiting here for you for
+    hours. '
   answers: []
 --- !u!114 &114309062803202694
 MonoBehaviour:

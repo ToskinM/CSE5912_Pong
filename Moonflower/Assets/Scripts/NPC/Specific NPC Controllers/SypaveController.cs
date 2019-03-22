@@ -64,6 +64,9 @@ public class SypaveController : MonoBehaviour, INPCController
     {
         float playerDist = movement.DistanceFrom(anai);  //getXZDist(transform.position, Player.transform.position);
 
+        if (talkTrig.Complete)
+            movement.Reset(); 
+
         movement.UpdateMovement();
 
         talkTrig.Update();
