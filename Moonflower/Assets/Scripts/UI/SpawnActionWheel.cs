@@ -8,7 +8,8 @@ public class SpawnActionWheel : MonoBehaviour
 
     public GameObject ActionWheelPrefab;
     public GameObject GameStateManager;
-    public GameObject interactionPopup;
+    public GameObject InteractionPopup;
+    private InteractionPopup interaction; 
     private GameStateController gameStateController;
     private FollowCamera followCamera;
     private FieldOfView currentPlayerInteractionFOV;
@@ -57,6 +58,7 @@ public class SpawnActionWheel : MonoBehaviour
         inspect = GameObject.Find("HUD").GetComponent<ShowInspect>(); 
         inventory = GameObject.Find("HUD").GetComponent<ShowInventory>(); 
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
+        interaction = InteractionPopup.GetComponent<InteractionPopup>(); 
     }
 
     private void OnEnable()
@@ -124,19 +126,23 @@ public class SpawnActionWheel : MonoBehaviour
         }
         if ( !otherWindowUp)
         {
-            if (target && Vector3.Distance(target.transform.position, LevelManager.current.currentPlayer.transform.position) <= activationRange)
+            float dist = float.MaxValue; 
+            if(target)
+                dist = Vector3.Distance(target.transform.position, LevelManager.current.currentPlayer.transform.position);
+            if (target && dist <= activationRange)
             {
                 if (!wheelShowing)
-                    interactionPopup.SetActive(true);
+                    interaction.EnableNPC(dist);
                 DetectInteraction();
             }
             else
             {
-                interactionPopup.SetActive(false);
+                interaction.DisableNPC(); 
             }
         }
-        else if (otherWindowUp)
+        else
         {
+            interaction.DisableNPC();
             otherWindowUp = inspect.Shown || inventory.Shown; 
         }
     }
@@ -209,7 +215,7 @@ public class SpawnActionWheel : MonoBehaviour
     {
         //gameStateController.SetMouseLock(false);
         gameStateController.PauseGame();
-        interactionPopup.SetActive(false);
+        interaction.DisableNPC();
         activeWheel.gameObject.SetActive(true);
         wheelShowing = true;
 

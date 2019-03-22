@@ -15,6 +15,7 @@ public class Pickup : MonoBehaviour
     private CharacterStats playerStats;
     private PlayerInventory playerInventory;
     private PlayerSoundEffect soundEffect;
+    private InteractionPopup interaction;
     private FeedbackText feedback;
 
     //public TextMeshProUGUI inventoryAdd;
@@ -27,45 +28,48 @@ public class Pickup : MonoBehaviour
         playerInventory = GetComponent<PlayerInventory>();
 
         soundEffect = PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>();
+        interaction = GameObject.Find("HUD").transform.GetChild(7).GetComponent<InteractionPopup>();
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         currentPlayer = PlayerController.instance.GetActivePlayerObject();
-        PlayerController.OnCharacterSwitch += SwitchActiveCharacter;
+        PlayerController.OnCharacterSwitch += SwitchActiveCharacter; 
     }
 
     private GameObject FindClosest()
     {
         allCollidable = GameObject.FindGameObjectsWithTag("Collectable");
 
-            GameObject nearestObj = allCollidable[0];
-            float nearest = Vector3.Distance(allCollidable[0].transform.position, currentPlayer.transform.position);
-            foreach (GameObject g in allCollidable)
+        GameObject nearestObj = allCollidable[0];
+        float nearest = Vector3.Distance(allCollidable[0].transform.position, currentPlayer.transform.position);
+        foreach (GameObject g in allCollidable)
+        {
+            if (Vector3.Distance(g.transform.position, currentPlayer.transform.position) < nearest)
             {
-                if (Vector3.Distance(g.transform.position, currentPlayer.transform.position) < nearest)
-                {
-                    nearest = Vector3.Distance(g.transform.position, currentPlayer.transform.position);
-                    nearestObj = g;
-                }
-                //remove halo if not nearest anymore
-                if (g != nearestObj)
-                    g.GetComponent<InventoryStat>().SetHalo(false);
+                nearest = Vector3.Distance(g.transform.position, currentPlayer.transform.position);
+                nearestObj = g;
             }
-            return nearestObj;
+            g.GetComponent<InventoryStat>().SetHalo(false);
+
+        }
+        return nearestObj;
 
     }
 
     private void DecidePickup()
     {
         GameObject closest = FindClosest();
-        if (Vector3.Distance(FindClosest().transform.position, currentPlayer.transform.position) <= distanceToPickup)
+        float dist = Vector3.Distance(FindClosest().transform.position, currentPlayer.transform.position);
+        if ( dist <= distanceToPickup)
         {
             if (closest != null)
             {
                 closest.GetComponent<InventoryStat>().SetHalo(true);
+                interaction.EnableItem(dist); 
             }
             if (Input.GetButtonDown("Pickup"))
             {
                 DoPickup(FindClosest());
+                interaction.DisableItem();
             }
 
         }
@@ -73,12 +77,12 @@ public class Pickup : MonoBehaviour
         {
             if (closest != null)
                 closest.GetComponent<InventoryStat>().SetHalo(false);
+            interaction.DisableItem();
         }
     }
 
     private void CollectLifeObject(GameObject obj, InventoryStat stat)
     {
-        Debug.Log("pickup life object"); 
         //Get items's health
         int health = obj.GetComponent<InventoryStat>().GetHealth();
 
@@ -149,6 +153,7 @@ public class Pickup : MonoBehaviour
     void Update()
     {
         DecidePickup();
+
     }
 
     void SwitchActiveCharacter(PlayerController.PlayerCharacter activeChar)

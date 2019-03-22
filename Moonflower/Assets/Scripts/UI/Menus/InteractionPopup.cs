@@ -6,6 +6,12 @@ using UnityEngine;
 public class InteractionPopup : MonoBehaviour
 {
     public TextMeshProUGUI text;
+    public float currDist;
+    public bool NotAllowed = false; 
+
+
+    private bool npcUsing = false;
+    private bool itemUsing = false; 
 
     private void Start()
     {
@@ -15,13 +21,51 @@ public class InteractionPopup : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        text.text = "\"E\"" + "  Interact"; // The idea is to change "E" to whatever key is defined as interaction key, i dunno if i can do this
+    public void EnableNPC(float dist)
+    { 
+        if(!NotAllowed && dist < currDist)
+        {
+            gameObject.SetActive(true);
+            npcUsing = true; 
+            currDist = dist; 
+            text.text = "\"E\"" + " to Interact";
+        }
     }
+
+    public void EnableItem(float dist)
+    {
+        if (!NotAllowed && dist < currDist)
+        {
+            gameObject.SetActive(true);
+            itemUsing = true; 
+            currDist = dist;
+            text.text = "\"E\"" + " to Pickup";
+        }
+    }
+
+    public void DisableNPC()
+    {
+        npcUsing = false; 
+        currDist = float.MaxValue; 
+    }
+
+    public void DisableItem()
+    {
+        itemUsing = false; 
+        currDist = float.MaxValue;
+    }
+
+    //private void OnEnable()
+    //{
+    //    text.text = "\"E\"" + "  Interact"; // The idea is to change "E" to whatever key is defined as interaction key, i dunno if i can do this
+    //}
 
     void Update()
     {
-        
+        if(!npcUsing && !itemUsing)
+        {
+            gameObject.SetActive(false); 
+
+        }
     }
 }
