@@ -12,6 +12,7 @@ public class BroomImpProjectile : MonoBehaviour, IProjectile
     public bool affectedByGravity = false;
 
     public bool seeksTarget = false;
+    [Range(0, 1)] public float seekStrength = 1f;
 
     public IHurtboxController Hurtbox { get; set; }
     public Transform TargetTransform { get; set; }
@@ -31,12 +32,19 @@ public class BroomImpProjectile : MonoBehaviour, IProjectile
 
         if (seeksTarget)
         {
-            if (affectedByGravity)
-                velocity = (TargetTransform.position - transform.position).normalized * movementSpeed + Physics.gravity;
-            else
-                velocity = (TargetTransform.position - transform.position).normalized * movementSpeed;
+            //if (affectedByGravity)
+            //    velocity = (TargetTransform.position - transform.position).normalized * movementSpeed + Physics.gravity;
+            //else
+            //    velocity = (TargetTransform.position - transform.position).normalized * movementSpeed;
 
-            transform.rotation = Quaternion.LookRotation(velocity, Vector3.up);
+            Quaternion lookRotation = Quaternion.LookRotation(TargetTransform.position - transform.position).normalized;
+            float rotationDelta = Quaternion.Angle(transform.rotation, lookRotation) * 0.3f * seekStrength;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, rotationDelta);
+
+            if (affectedByGravity)
+                velocity = transform.forward * movementSpeed + Physics.gravity;
+            else
+                velocity = transform.forward * movementSpeed;
         }
         else
         {
