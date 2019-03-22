@@ -28,7 +28,7 @@ public class InteractionPopup : MonoBehaviour
             gameObject.SetActive(true);
             npcUsing = true; 
             currDist = dist; 
-            text.text = "\"E\"" + " to Interact";
+            text.text = "'E' to Interact";
         }
     }
 
@@ -39,7 +39,7 @@ public class InteractionPopup : MonoBehaviour
             gameObject.SetActive(true);
             itemUsing = true; 
             currDist = dist;
-            text.text = "\"E\"" + " to Pickup";
+            text.text = "'E' to Pickup";
         }
     }
 
@@ -62,7 +62,14 @@ public class InteractionPopup : MonoBehaviour
 
     void Update()
     {
-        if(!npcUsing && !itemUsing)
+        if(NotAllowed)
+        {
+            if (npcUsing)
+                DisableNPC();
+            if (itemUsing)
+                DisableItem(); 
+        }
+        if (!npcUsing && !itemUsing)
         {
             gameObject.SetActive(false); 
 

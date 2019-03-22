@@ -14,7 +14,7 @@ public class ItemLookup
     public const string CHIPA_NAME = "Chipa";
     public const string FLUTE_NAME = "Flute";
     public const string PINEAPPLE_NAME = "Pineapple";
-    public const string SWEETPOTATO_NAME = "Wweet potato";
+    public const string SWEETPOTATO_NAME = "Sweet potato";
     public const string PEANUT_NAME = "Peanut";
     public const string FISH_NAME = "Fish";
     public const string PAINT_NAME = "Paint";

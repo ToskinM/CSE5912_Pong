@@ -59,14 +59,14 @@ public class Pickup : MonoBehaviour
     {
         GameObject closest = FindClosest();
         float dist = Vector3.Distance(FindClosest().transform.position, currentPlayer.transform.position);
-        if ( dist <= distanceToPickup)
+        if ( dist <= distanceToPickup && !interaction.NotAllowed)
         {
             if (closest != null)
             {
                 closest.GetComponent<InventoryStat>().SetHalo(true);
                 interaction.EnableItem(dist); 
             }
-            if (Input.GetButtonDown("Pickup"))
+            if (Input.GetButtonDown("Interact"))
             {
                 DoPickup(FindClosest());
                 interaction.DisableItem();

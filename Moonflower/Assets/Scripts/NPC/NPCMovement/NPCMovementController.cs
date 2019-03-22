@@ -263,7 +263,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
                 case MoveState.wander:
                     if (canWander)
                     {
-                        Debug.Log(charName + " is wandering!!");
+                        //Debug.Log(charName + " is wandering!!");
                         wander.UpdateMovement();
                         Action = wander.Action;
 

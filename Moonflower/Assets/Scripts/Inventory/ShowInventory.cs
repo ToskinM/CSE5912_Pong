@@ -10,6 +10,8 @@ public class ShowInventory : MonoBehaviour
     public GameObject InventoryPanel;
     public GameObject InvContentPanel; 
     public GameObject Player;
+    public InteractionPopup interaction;
+
     //public Button InvoButton; 
 
     List<GameObject> items = new List<GameObject>();
@@ -212,6 +214,7 @@ public class ShowInventory : MonoBehaviour
 
     public void ShowInvList()
     {
+        interaction.NotAllowed = true; 
         ItemUpdate();
         InventoryPanel.SetActive(true);
         GameStateController.current.PauseGame();
@@ -221,6 +224,7 @@ public class ShowInventory : MonoBehaviour
 
     public void HideInvList()
     {
+        interaction.NotAllowed = false; 
         DestroyItemIcons();
         InventoryPanel.SetActive(false);
         GameStateController.current.UnpauseGame();

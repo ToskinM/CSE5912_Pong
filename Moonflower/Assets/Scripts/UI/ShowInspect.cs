@@ -8,6 +8,7 @@ public class ShowInspect : MonoBehaviour
 {
     //public TextMeshProUGUI inventoryText;
     public GameObject InspectPanel;
+    public InteractionPopup interaction; 
     //public Button InvoButton; 
 
     private TextMeshProUGUI charName;
@@ -42,6 +43,7 @@ public class ShowInspect : MonoBehaviour
 
     public void Show(string name)
     {
+        interaction.NotAllowed = true; 
         InspectPanel.SetActive(true);
         GameStateController.current.PauseGame();
         Shown = true;
@@ -83,6 +85,7 @@ public class ShowInspect : MonoBehaviour
 
     public void Hide()
     {
+        interaction.NotAllowed = false; 
         icon.sprite = null;
         charName.text = "???";
         descrip.text = "...";
