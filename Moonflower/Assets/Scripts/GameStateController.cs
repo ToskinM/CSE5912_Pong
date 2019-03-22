@@ -198,10 +198,10 @@ public class GameStateController : MonoBehaviour
     private IEnumerator PlayerDeathSequence()
     {
         // Wait for player death animation
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
 
         // Fade out to black
-        yield return StartCoroutine(SceneController.current.FadeToBlack(3f));
+        //yield return StartCoroutine(SceneController.current.FadeToBlack(3f));
 
         // Display game over menu
         //PauseGame();

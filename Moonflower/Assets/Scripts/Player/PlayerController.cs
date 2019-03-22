@@ -124,7 +124,9 @@ public class PlayerController : MonoBehaviour
         ActivePlayerInteractionFOV.enabled = true;
 
         AnaiObject.tag = "Player";
+        AnaiObject.layer = 10;
         MimbiObject.tag = "Companion";
+        MimbiObject.layer = 14;
 
         // Disable Anai's AI, enable Mimbi's AI
         MimbiObject.GetComponent<NavMeshAgent>().enabled = true;
@@ -145,7 +147,9 @@ public class PlayerController : MonoBehaviour
         ActivePlayerInteractionFOV.enabled = true;
 
         MimbiObject.tag = "Player";
+        MimbiObject.layer = 10;
         AnaiObject.tag = "Companion";
+        AnaiObject.layer = 14;
 
         // Disable Mimbi's AI, enable Anai's AI
         AnaiObject.GetComponent<NavMeshAgent>().enabled = true;
