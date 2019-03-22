@@ -47,6 +47,7 @@ public class NaiaController : MonoBehaviour, INPCController
         movement = new NPCMovementController(gameObject, anai,Constants.NAIA_NAME);
         icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
         talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
+        talkTrig.SetExitText("See you around, I guess."); 
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         playerController = LevelManager.current.player.GetComponent<PlayerController>();

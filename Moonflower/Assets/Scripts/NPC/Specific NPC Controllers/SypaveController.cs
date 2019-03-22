@@ -50,6 +50,7 @@ public class SypaveController : MonoBehaviour, INPCController
 
         icon = new IconFactory().GetIcon(Constants.SYPAVE_ICON);
         talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.SYPAVE_INTRO_DIALOGUE);
+        talkTrig.SetExitText("So your 'exploration' is more important than your mother? Fine. Go."); 
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         playerController = LevelManager.current.player.GetComponent<PlayerController>();

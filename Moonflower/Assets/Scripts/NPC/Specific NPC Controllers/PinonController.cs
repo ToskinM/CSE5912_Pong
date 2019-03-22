@@ -63,7 +63,7 @@ public class PinonController : MonoBehaviour, INPCController
 
         icon = new IconFactory().GetIcon(Constants.PINON_ICON);
         talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.PINON_FIRST_INTRO_DIALOGUE);
-
+        talkTrig.SetExitText("Fine. I didn't want to talk to you either."); 
 
         actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
     }
