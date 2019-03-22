@@ -64,6 +64,9 @@ public class SypaveController : MonoBehaviour, INPCController
     {
         float playerDist = movement.DistanceFrom(anai);  //getXZDist(transform.position, Player.transform.position);
 
+        if (talkTrig.Complete)
+            movement.Reset(); 
+
         movement.UpdateMovement();
 
         talkTrig.Update();
@@ -98,8 +101,14 @@ public class SypaveController : MonoBehaviour, INPCController
     // Action Wheel Interactions
     public void Talk()
     {
-        StartTalk();
-        Debug.Log("start talking"); 
+        if (talkTrig.Complete)
+        {
+            displayFeedback("Sypave told you to get inside.");
+        }
+        else
+        {
+            StartTalk();
+        }
     }
     public void Gift(string giftName)
     {
@@ -120,7 +129,6 @@ public class SypaveController : MonoBehaviour, INPCController
     {
 
     }
-
     public string Inspect()
     {
         return Constants.SYPAVE_NAME;

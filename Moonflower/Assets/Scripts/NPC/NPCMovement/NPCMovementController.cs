@@ -9,17 +9,19 @@ public class NPCMovementController : MonoBehaviour, IMovement
     public bool Jumping { get; set; }
     public bool Active = true; 
 
-    public enum MoveState { follow, wander, wanderfollow, pace, chill }
+    public enum MoveState { follow, wander, wanderfollow, pace, chill, distractChill }
     public MoveState state = MoveState.chill;
     MoveState defaultState = MoveState.chill; 
     public bool IsDefault { get { return state == defaultState; } }
 
     NPCWanderMove wander;
     NPCFollowMove follow;
-    NPCPaceMove pace; 
+    NPCPaceMove pace;
+    NPCDistractMove distract; 
     bool canFollow;
     bool canWander;
-    bool canPace; 
+    bool canPace;
+    bool canBeDistracted; 
 
     public bool stunned;
     public bool swinging;
@@ -134,6 +136,19 @@ public class NPCMovementController : MonoBehaviour, IMovement
             pace.SetPath(origin, distance);
         }
         state = MoveState.pace;
+    }
+    public void Distracted(Vector3 origin, GameObject target)
+    {
+        if (!canBeDistracted)
+        {
+            distract = new NPCDistractMove(self, target);
+            canBeDistracted = true;
+        }
+        else
+        {
+            distract.SetTarget(target);
+        }
+        state = MoveState.distractChill;
     }
     public void Wander(Vector3 origin, float wanderDistance)
     {
@@ -282,6 +297,14 @@ public class NPCMovementController : MonoBehaviour, IMovement
                                 wander.ResumeMovement();
                             }
                         }
+                    }
+                    break;
+                case MoveState.distractChill:
+                    if(canBeDistracted)
+                    {
+                        distract.UpdateMovement();
+                        agent.isStopped = true;
+                        Action = Actions.Chilling;
                     }
                     break;
                 case MoveState.chill:

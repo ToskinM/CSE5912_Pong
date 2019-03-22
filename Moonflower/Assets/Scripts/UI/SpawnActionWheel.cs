@@ -116,25 +116,22 @@ public class SpawnActionWheel : MonoBehaviour
     void Update()
     {
         currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
+        otherWindowUp = otherWindowUp || PlayerController.instance.TalkingPartner != null; 
 
         if (followCamera != LevelManager.current.mainCamera)
         {
             followCamera = LevelManager.current.mainCamera;
         }
-        Debug.Log("update");
         if ( !otherWindowUp)
         {
-            Debug.Log("waiting");
             if (target && Vector3.Distance(target.transform.position, LevelManager.current.currentPlayer.transform.position) <= activationRange)
             {
-                Debug.Log("in range"); 
                 if (!wheelShowing)
                     interactionPopup.SetActive(true);
                 DetectInteraction();
             }
             else
             {
-                Debug.Log("not in range");
                 interactionPopup.SetActive(false);
             }
         }

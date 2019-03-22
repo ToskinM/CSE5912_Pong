@@ -105,7 +105,14 @@ public class PinonController : MonoBehaviour, INPCController
     // Action Wheel Interactions
     public void Talk()
     {
-        StartTalk();
+        if (talkTrig.Complete)
+        {
+            displayFeedback("Pinon doesn't want to talk to you.");
+        }
+        else
+        {
+            StartTalk();
+        }
     }
     public void Gift(string giftName)
     {
