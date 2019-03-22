@@ -81,6 +81,9 @@ MonoBehaviour:
   - {fileID: 114349936582688818}
   - {fileID: 114641185937775886}
   - {fileID: 114291483236286264}
+  - {fileID: 114748809177335248}
+  - {fileID: 114876790039246732}
+  - {fileID: 114600835224187900}
 --- !u!114 &114016397484019566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,7 +120,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114664932943242770}
+        node: {fileID: 114748809177335248}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -139,7 +142,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 2792, y: 168}
+  position: {x: 2840, y: 200}
   ports:
     keys:
     - input
@@ -153,11 +156,8 @@ MonoBehaviour:
       _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: answers 2
-        node: {fileID: 114519202279674802}
-        reroutePoints: []
-      - fieldName: answers 2
-        node: {fileID: 114222736420519732}
+      - fieldName: output
+        node: {fileID: 114876790039246732}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -203,8 +203,8 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 1
       _dynamic: 1
-  text: This is not a 'whatever' kind of topic, Anai! This is important. You need
-    to learn how to be a responsible member of the community, or so help me-
+  text: You need to learn how to be a responsible member of the community, or so help
+    me-
   answers:
   - text: 'You''ll what? Banish me? '
     voiceClip: {fileID: 0}
@@ -501,7 +501,7 @@ MonoBehaviour:
       _connectionType: 1
       _dynamic: 1
   text: 'Do not take that tone with me, Anai! I have been waiting here for you for
-    hours. The least you could do is show your mother a little bit of respect. '
+    hours. You could show your mother a little bit of respect. '
   answers:
   - text: 'Since when do you deserve it? '
     voiceClip: {fileID: 0}
@@ -796,7 +796,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114024468001879878}
+        node: {fileID: 114876790039246732}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -836,8 +836,8 @@ MonoBehaviour:
       _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: answers 0
-        node: {fileID: 114980677117106302}
+      - fieldName: output
+        node: {fileID: 114600835224187900}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -883,8 +883,7 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 1
       _dynamic: 1
-  text: 'Then what''s supposed to happen after I''m gone, Anai? Who''s going to keep
-    everyone safe and healthy? Who''s going to take care of them? Who? '
+  text: ' Who''s going to take care of them? Who? '
   answers:
   - text: No one. They can take care of themselves.
     voiceClip: {fileID: 0}
@@ -2317,7 +2316,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114024468001879878}
+        node: {fileID: 114876790039246732}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -2550,6 +2549,50 @@ MonoBehaviour:
       _connectionType: 0
       _dynamic: 0
   text: That's more like it. Now, I wanted to talk to you about your brother.
+  answers: []
+--- !u!114 &114600835224187900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d4b035e8545a04ca8b7c9c33635bcb, type: 3}
+  m_Name: Chat
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 6168, y: -72}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114600835224187900}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: answers 0
+        node: {fileID: 114980677117106302}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114600835224187900}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114239210219427286}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  text: Then what's supposed to happen after I'm gone, Anai? Who's going to keep everyone
+    safe and healthy?
   answers: []
 --- !u!114 &114601785264167650
 MonoBehaviour:
@@ -2886,7 +2929,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: output
-        node: {fileID: 114016397484019566}
+        node: {fileID: 114748809177335248}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -2932,8 +2975,7 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 1
       _dynamic: 1
-  text: 'Because he could have gotten lost or hurt or killed while you were lost in
-    your dreams and you would have had to live with that for the rest of your life. '
+  text: 'And you would have had to live with that for the rest of your life. '
   answers:
   - text: 'I am not my brother''s keeper. '
     voiceClip: {fileID: 0}
@@ -3112,6 +3154,50 @@ MonoBehaviour:
       _connectionType: 0
       _dynamic: 0
   text: 'Neither do I. That''s what scares me. '
+  answers: []
+--- !u!114 &114748809177335248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d4b035e8545a04ca8b7c9c33635bcb, type: 3}
+  m_Name: Chat
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1240, y: -392}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114748809177335248}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 114016397484019566}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114748809177335248}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114664932943242770}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  text: 'Because he could have gotten lost or hurt or killed while you were lost in
+    your dreams! '
   answers: []
 --- !u!114 &114753968303018318
 MonoBehaviour:
@@ -3332,6 +3418,52 @@ MonoBehaviour:
       _dynamic: 0
   text: 'No, I do not. Stop changing the subject. I''m trying to talk to you about
     Pinon. '
+  answers: []
+--- !u!114 &114876790039246732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d4b035e8545a04ca8b7c9c33635bcb, type: 3}
+  m_Name: Chat
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2424, y: 344}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114876790039246732}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: answers 2
+        node: {fileID: 114519202279674802}
+        reroutePoints: []
+      - fieldName: answers 2
+        node: {fileID: 114222736420519732}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114876790039246732}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114024468001879878}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  text: 'This is not a ''whatever'' kind of topic, Anai! This is important. '
   answers: []
 --- !u!114 &114899741579034984
 MonoBehaviour:
@@ -3780,7 +3912,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114239210219427286}
+        node: {fileID: 114600835224187900}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
