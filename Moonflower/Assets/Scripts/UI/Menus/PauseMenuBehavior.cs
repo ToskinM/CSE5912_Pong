@@ -28,7 +28,8 @@ public class PauseMenuBehavior : MonoBehaviour
         returnMain = new ReturnMenuCommand();
         nag = new NagCommand();
         //Music 
-        StartCoroutine(GetAudioManager());
+        //StartCoroutine(GetAudioManager());
+        audioManager = AudioManager.instance;
         musicSlider.value = GetBackgroundVolume();
         audioSlider.value = GetSoundVolume();
 

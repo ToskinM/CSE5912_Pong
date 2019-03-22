@@ -39,50 +39,57 @@ public class Pickup : MonoBehaviour
     {
         allCollidable = GameObject.FindGameObjectsWithTag("Collectable");
 
-        GameObject nearestObj = allCollidable[0];
-        float nearest = Vector3.Distance(allCollidable[0].transform.position, currentPlayer.transform.position);
-        foreach (GameObject g in allCollidable)
+        if (allCollidable.Length > 0)
         {
-            if (Vector3.Distance(g.transform.position, currentPlayer.transform.position) < nearest)
+            GameObject nearestObj = allCollidable[0];
+            float nearest = Vector3.Distance(allCollidable[0].transform.position, currentPlayer.transform.position);
+            foreach (GameObject g in allCollidable)
             {
-                nearest = Vector3.Distance(g.transform.position, currentPlayer.transform.position);
-                nearestObj = g;
+                if (Vector3.Distance(g.transform.position, currentPlayer.transform.position) < nearest)
+                {
+                    nearest = Vector3.Distance(g.transform.position, currentPlayer.transform.position);
+                    nearestObj = g;
+                }
+                g.GetComponent<InventoryStat>().SetHalo(false);
+
             }
-            g.GetComponent<InventoryStat>().SetHalo(false);
-
+            return nearestObj;
         }
-        return nearestObj;
-
+        return null;
     }
 
     private void DecidePickup()
     {
         GameObject closest = FindClosest();
-        float dist = Vector3.Distance(FindClosest().transform.position, currentPlayer.transform.position);
-        if ( dist <= distanceToPickup && !interaction.NotAllowed)
+        if (closest != null)
         {
-            if (closest != null)
+            float dist = Vector3.Distance(closest.transform.position, currentPlayer.transform.position);
+            if (dist <= distanceToPickup && !interaction.NotAllowed)
             {
-                InventoryStat stat = closest.GetComponent<InventoryStat>();
-                if (!(stat.AnaiObject && !PlayerController.instance.AnaiIsActive()) && !(stat.MimbiObject && PlayerController.instance.AnaiIsActive()))
+                if (closest != null)
                 {
-                    closest.GetComponent<InventoryStat>().SetHalo(true);
-                    interaction.EnableItem(dist);
+                    InventoryStat stat = closest.GetComponent<InventoryStat>();
+                    if (!(stat.AnaiObject && !PlayerController.instance.AnaiIsActive()) && !(stat.MimbiObject && PlayerController.instance.AnaiIsActive()))
+                    {
+                        closest.GetComponent<InventoryStat>().SetHalo(true);
+                        interaction.EnableItem(dist);
+                    }
                 }
+                if (Input.GetButtonDown("Interact"))
+                {
+                    DoPickup(closest);
+                    interaction.DisableItem();
+                }
+
             }
-            if (Input.GetButtonDown("Interact"))
+            else
             {
-                DoPickup(FindClosest());
+                if (closest != null)
+                    closest.GetComponent<InventoryStat>().SetHalo(false);
                 interaction.DisableItem();
             }
-
         }
-        else
-        {
-            if (closest != null)
-                closest.GetComponent<InventoryStat>().SetHalo(false);
-            interaction.DisableItem();
-        }
+        
     }
 
     private void CollectLifeObject(GameObject obj, InventoryStat stat)

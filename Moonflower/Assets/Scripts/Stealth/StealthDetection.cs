@@ -210,17 +210,25 @@ public class StealthDetection : MonoBehaviour
 
             float distance = CalculatePathLength(player.transform.position);
 
-            if (Awareness == AwarenessLevel.Neutral)
+            // If player is breathing down their neck, detect em
+            if (distance <= 2.5f)
             {
-                DetectionWhileNeutral(player, distance);
+                BecomeAlerted(LevelManager.current.currentPlayer);
             }
-            else if (Awareness == AwarenessLevel.Suspicious)
+            else
             {
-                DetectionWhileSuspicious(player, distance);
-            }
-            else if (Awareness == AwarenessLevel.Alerted)
-            {
-                DetectionWhileAlert(player, distance);
+                if (Awareness == AwarenessLevel.Neutral)
+                {
+                    DetectionWhileNeutral(player, distance);
+                }
+                else if (Awareness == AwarenessLevel.Suspicious)
+                {
+                    DetectionWhileSuspicious(player, distance);
+                }
+                else if (Awareness == AwarenessLevel.Alerted)
+                {
+                    DetectionWhileAlert(player, distance);
+                }
             }
         }
     }
