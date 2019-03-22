@@ -136,7 +136,14 @@ public class NaiaController : MonoBehaviour, INPCController
     // Action Wheel Interactions
     public void Talk()
     {
-        StartTalk();
+        if (talkTrig.Complete)
+        {
+            displayFeedback("Naia's busy brooding.");
+        }
+        else
+        {
+            StartTalk();
+        }
     }
     public void Gift(string giftName)
     {

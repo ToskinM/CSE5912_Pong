@@ -86,7 +86,14 @@ public class AmaruController : MonoBehaviour, INPCController
     // Action Wheel Interactions
     public void Talk()
     {
-        StartTalk();
+        if (talkTrig.Complete)
+        {
+            displayFeedback("Amaru is busy working.");
+        }
+        else
+        {
+            StartTalk();
+        }
     }
     public void Gift(string giftName)
     {
@@ -101,16 +108,12 @@ public class AmaruController : MonoBehaviour, INPCController
     }
     public void Distract()
     {
-        displayFeedback("Amaru Thinks Mimbi is cute");
-        npc.Chill();
-        Debug.Log("distracting amaru");
-    }
 
+    }
     public void EndDistract()
     {
-        npc.Wander();
-    }
 
+    }
     public string Inspect()
     {
         return Constants.AMARU_NAME;
@@ -164,7 +167,6 @@ public class AmaruController : MonoBehaviour, INPCController
     {
         GameStateController.OnPaused -= HandlePauseEvent;
     }
-
 
 }
 

@@ -98,8 +98,14 @@ public class SypaveController : MonoBehaviour, INPCController
     // Action Wheel Interactions
     public void Talk()
     {
-        StartTalk();
-        Debug.Log("start talking"); 
+        if (talkTrig.Complete)
+        {
+            displayFeedback("Sypave told you to get inside.");
+        }
+        else
+        {
+            StartTalk();
+        }
     }
     public void Gift(string giftName)
     {
@@ -120,7 +126,6 @@ public class SypaveController : MonoBehaviour, INPCController
     {
 
     }
-
     public string Inspect()
     {
         return Constants.SYPAVE_NAME;
