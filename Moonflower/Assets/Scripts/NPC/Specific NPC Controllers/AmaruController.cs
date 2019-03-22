@@ -41,7 +41,7 @@ public class AmaruController : MonoBehaviour, INPCController
         anai = LevelManager.current.anai;
         agent = GetComponent<NavMeshAgent>();
 
-        npc = new NPCMovementController(gameObject, anai);
+        npc = new NPCMovementController(gameObject, anai,Constants.AMARU_NAME);
         npc.FollowPlayer(bufferDist, tooCloseRad);
         npc.Wander(WalkCenter.transform.position, wanderRad);
         npc.SetDefault(NPCMovementController.MoveState.wander);

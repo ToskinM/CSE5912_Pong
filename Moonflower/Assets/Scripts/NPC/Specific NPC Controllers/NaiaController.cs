@@ -44,7 +44,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
         // Setup Movement
         Vector3 walkOrigin = transform.position;
-        movement = new NPCMovementController(gameObject, anai);
+        movement = new NPCMovementController(gameObject, anai,Constants.NAIA_NAME);
         icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
         talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();

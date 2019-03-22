@@ -82,6 +82,10 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
                 agent.enabled = true;
 
             float distFromTarget = getXZDist(Target.transform.position, self.transform.position);
+            if (agent.speed > baseSpeed && distFromTarget < 5f)
+            {
+                agent.speed /= 1.3f;
+            }
             if (distFromTarget < followDist)
             { 
                 if (!HoldGround && distFromTarget < tooCloseRadius)
@@ -91,11 +95,11 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
                     Vector3 newDest = self.transform.position + targetDirection.normalized * 10;
                     destination = getRandomDest(newDest, 1f);
                     GoHere(destination);
-                    agent.speed = doubleSpeed;
+                    //agent.speed = doubleSpeed;
                 }
                 else
                 {
-                    agent.speed = baseSpeed;
+                    //agent.speed = baseSpeed;
                     agent.angularSpeed = baseAngularSpeed;
                     Action = Actions.Walking; 
                     Chill();
@@ -140,6 +144,12 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
     {
         Action = Actions.Chilling;
         agent.isStopped = true;
+        //agent.speed = baseSpeed; 
+    }
+
+    public void Run()
+    {
+        //agent.speed = doubleSpeed; 
     }
 
     //send NPC to location

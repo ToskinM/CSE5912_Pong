@@ -40,7 +40,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
     {
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
-        movement = new NPCMovementController(gameObject, player);
+        movement = new NPCMovementController(gameObject, player,Constants.MOUSE_NAME);
         //movement.SetEngagementDistances(5, combatController.attackDistance + 0.5f, 1);
 
         combatController = GetComponent<NPCCombatController>();

@@ -56,7 +56,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
         playerAnimate = GetComponent<PlayerAnimatorController>();
         boxCollider = GetComponent<BoxCollider>();
         stats = GetComponent<CharacterStats>();
-        npcMove = new NPCMovementController(gameObject, Mimbi);
+        npcMove = new NPCMovementController(gameObject, Mimbi,"Anai");
         mimbiController = Mimbi.GetComponent<MimbiController>();
 
         //        npcMove.Active = false;

@@ -43,7 +43,7 @@ public class SypaveController : MonoBehaviour, INPCController
 
         // Setup Movement
         Vector3 walkOrigin = transform.position;
-        movement = new NPCMovementController(gameObject, anai);
+        movement = new NPCMovementController(gameObject, anai,Constants.SYPAVE_NAME);
         movement.FollowPlayer(bufferDist, tooCloseRad);
         movement.Pace(transform.position, paceDist);
         movement.SetDefault(NPCMovementController.MoveState.pace);

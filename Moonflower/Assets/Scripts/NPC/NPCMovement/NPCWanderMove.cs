@@ -33,7 +33,8 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
     int lingerLength; //length of pause 
     const int smallPause = 1, largePause = 4; //max and min pause lengths
 
-    float baseSpeed; 
+    float baseSpeed;
+    float doubleSpeed; 
 
     void Start()
     {
@@ -84,7 +85,8 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
         agent = self.GetComponent<NavMeshAgent>();
 
         lingerLength = getRandomPause();
-        baseSpeed = agent.speed;
+        //baseSpeed = agent.speed;
+        //doubleSpeed = baseSpeed * 2; 
     }
 
 
@@ -92,6 +94,8 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
     {
         if (Active)
         {
+
+
             if (AvoidsTarget)
             {
                 float distFromTarget = getXZDist(target.transform.position, self.transform.position);
@@ -102,8 +106,12 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
                 }
             }
 
-            agent.speed = baseSpeed;
+            //agent.speed = baseSpeed;
             float distFromDest = getXZDist(self.transform.position, destination);
+            if (agent.speed > baseSpeed && distFromDest < 5f)
+            {
+                agent.speed /= 1.3f;
+            }
             bool atDest = distFromDest <= bufferDist;
             if (atDest && !agent.isStopped)
             {
@@ -161,6 +169,11 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
         pauseCount = 0;
     }
 
+    public void Run()
+    {
+        //agent.speed = doubleSpeed; 
+    }
+
     public void SetOrigin(Vector3 loc)
     {
         wanderAreaOrigin = loc;
@@ -189,6 +202,7 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
     {
         Action = Actions.Chilling;
         agent.isStopped = true;
+        //agent.speed = baseSpeed;
     }
 
     //send NPC to location
@@ -207,7 +221,7 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
         Vector3 newDest = self.transform.position + targetDirection.normalized * 10;
         destination = getRandomDest(newDest, 1f);
         GoHere(destination);
-        agent.speed *= 2;
+        //agent.speed *= 2;
 
     }
 

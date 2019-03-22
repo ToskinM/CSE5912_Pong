@@ -21,7 +21,8 @@ public class NPCMovementController : MonoBehaviour, IMovement
     bool canFollow;
     bool canWander;
     bool canPace;
-    bool canBeDistracted; 
+    bool canBeDistracted;
+    bool running = false; 
 
     public bool stunned;
     public bool swinging;
@@ -39,6 +40,8 @@ public class NPCMovementController : MonoBehaviour, IMovement
     float baseSpeed;
 
     float avoidsPlayerRadius = 10f;
+    float gettingClose = 5f;
+    string charName;
 
     void Start()
     {
@@ -49,8 +52,9 @@ public class NPCMovementController : MonoBehaviour, IMovement
      *  THIS IS ALL INITIALIZATION METHODS
      */
     //initialize so player CANNOT wander CANNOT engage
-    public NPCMovementController(GameObject selfOb, GameObject playerOb)
+    public NPCMovementController(GameObject selfOb, GameObject playerOb, string charname)
     {
+        charName = charname; 
         Player = playerOb; 
         commonSetup(selfOb);
         canFollow = false;
@@ -240,6 +244,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
     {
         if (Active)
         {
+            //Debug.Log(charName + " speed " + agent.speed + " with base " + baseSpeed);
             if (!agent.enabled)
                 agent.enabled = true;
 
@@ -249,15 +254,19 @@ public class NPCMovementController : MonoBehaviour, IMovement
                 Chill();
             }
 
+            if (agent.speed < baseSpeed)
+                agent.speed = baseSpeed; 
+
             // Dont move if we're stunned or swinging our weapon
             switch (state)
             {
                 case MoveState.wander:
                     if (canWander)
                     {
-                        //Debug.Log("I'm wandering!!");
+                        Debug.Log(charName + " is wandering!!");
                         wander.UpdateMovement();
                         Action = wander.Action;
+
                     }
                     break;
                 case MoveState.pace:
@@ -278,7 +287,8 @@ public class NPCMovementController : MonoBehaviour, IMovement
                     break;
                 case MoveState.wanderfollow:
                     if (canWander && canFollow)
-                    { 
+                    {
+
                         float maxDist = wander.wanderAreaRadius;
                         if (DistanceFrom(target) < maxDist * 1.3f && !gettingBack && !stickingAround)
                         {
@@ -308,6 +318,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
                     }
                     break;
                 case MoveState.chill:
+                    //Chill(); 
                     //Debug.Log("I'm chilling");
                     break;
                 default:
@@ -371,22 +382,51 @@ public class NPCMovementController : MonoBehaviour, IMovement
     public void Chill()
     {
         Action = Actions.Chilling;
+        switch (state)
+        {
+            case MoveState.wander:
+                wander.Chill();
+                break;
+            case MoveState.wanderfollow:
+                wander.Chill();
+                follow.Chill();
+                break;
+            case MoveState.follow:
+                follow.Chill();
+                break;
+        }
         state = MoveState.chill;
         agent.isStopped = true;
         agent.speed = baseSpeed;
+        //Debug.Log(charName+" chill");
     }
 
     public void Reset()
     {
+        //Debug.Log(charName + " reset"); 
         state = defaultState;
         agent.speed = baseSpeed;
         SetHoldGround(false); 
     }
 
-    public void Run()
+    public void Run(float num = 1)
     {
+        //Debug.Log(charName + " Run boi run at " + baseSpeed * 2 * num); 
         follow.Action = Actions.Running;
-        agent.speed = baseSpeed * 2;
+        agent.speed = baseSpeed * 2*num;
+        switch(state)
+        {
+            case MoveState.wander:
+                wander.Run();
+                break;
+            case MoveState.wanderfollow:
+                wander.Run();
+                follow.Run();
+                break;
+            case MoveState.follow:
+                follow.Run();
+                break;
+        }
     }
     
 

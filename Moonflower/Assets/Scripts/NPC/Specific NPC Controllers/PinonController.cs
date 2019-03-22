@@ -16,7 +16,7 @@ public class PinonController : MonoBehaviour, INPCController
     const float engagementRadius = 9f;
     const float tooCloseRad = 3f;
     const float bufferDist = 4f;
-    const float wanderRad = 10f;
+    const float wanderRad = 30f;
 
     public bool canInspect = true;
     public bool canTalk = true;
@@ -53,7 +53,7 @@ public class PinonController : MonoBehaviour, INPCController
 
         NPCController = GetComponent<Animator>();
         Vector3 pos = transform.position; 
-        npc = new NPCMovementController(gameObject, anai);
+        npc = new NPCMovementController(gameObject, anai,Constants.PINON_NAME);
         npc.FollowPlayer(bufferDist, tooCloseRad);
         npc.Wander(WalkCenter.transform.position, wanderRad);
         npc.SetDefault(NPCMovementController.MoveState.chill);
@@ -85,8 +85,9 @@ public class PinonController : MonoBehaviour, INPCController
             }
             else if (talkTrig.Complete && npc.state != NPCMovementController.MoveState.wander)
             {
-                npc.SetDefault(NPCMovementController.MoveState.wander); 
+                npc.SetDefault(NPCMovementController.MoveState.wander);
                 npc.Wander();
+                npc.Run(1.3f);
             }
             else
             { 
@@ -146,7 +147,7 @@ public class PinonController : MonoBehaviour, INPCController
     //end current conversation
     public void EndTalk()
     {
-        npc.Reset();
+        //npc.Reset();
 
         if (talkTrig.DialogueActive())
         {

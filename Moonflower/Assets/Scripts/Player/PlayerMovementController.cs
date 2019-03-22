@@ -310,13 +310,13 @@ public class PlayerMovementController : MonoBehaviour
 
     private void SetAnaiPassiveMovement()
     {
-        AnaiPassiveController = new NPCMovementController(playerController.AnaiObject, playerController.MimbiObject);
+        AnaiPassiveController = new NPCMovementController(playerController.AnaiObject, playerController.MimbiObject,"Anai");
         AnaiPassiveController.FollowPlayer(followDist, tooCloseRadius);
     }
 
     private void SetMimbiPassiveMovement()
     {
-        MimbiPassiveController = new NPCMovementController(playerController.MimbiObject, playerController.AnaiObject);
+        MimbiPassiveController = new NPCMovementController(playerController.MimbiObject, playerController.AnaiObject,"Mimbi");
         MimbiPassiveController.WanderFollowPlayer(wanderRadius);
         MimbiPassiveController.SetDefault(NPCMovementController.MoveState.wanderfollow);
     }
