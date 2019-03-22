@@ -204,9 +204,10 @@ public class GameStateController : MonoBehaviour
         yield return StartCoroutine(SceneController.current.FadeToBlack(3f));
 
         // Display game over menu
-        PauseGame();
-        GameObject gameOverScene = Instantiate((GameObject)Resources.Load("Menu/GameOver Canvas"));
+        //PauseGame();
+        //GameObject gameOverScene = Instantiate((GameObject)Resources.Load("Menu/GameOver Canvas"));
 
+        SceneController.current.FadeAndLoadSceneGameOver(Constants.SCENE_GAMEOVER);
         //SceneController.current.FadeOutToBlack(5f);
     }
 }

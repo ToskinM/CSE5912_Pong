@@ -5,9 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour
 {
+    private void Update()
+    {
+        GameStateController.current.ForceMouseUnlock();
+    }
+
     public void OnContinueButtonClick()
     {
-        SceneController.current.FadeAndLoadScene(SceneManager.GetActiveScene().name);
+        SceneController.current.FadeAndLoadScene(Constants.SCENE_VILLAGE);
     }
     public void OnMainMenuButtonClick()
     {

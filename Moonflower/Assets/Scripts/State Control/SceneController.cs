@@ -62,7 +62,13 @@ public class SceneController : MonoBehaviour
             StartCoroutine(FadeAndSwitchScenesNoLS(sceneName));
         }
     }
-
+    public void FadeAndLoadSceneGameOver(String sceneName)
+    {
+        if (!isFading && !isLoading)
+        {
+            StartCoroutine(FadeAndSwitchScenesGameOver(sceneName));
+        }
+    }
 
     private IEnumerator FadeAndSwitchScenes(string sceneName)
     {
@@ -112,6 +118,31 @@ public class SceneController : MonoBehaviour
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
+    }
+
+    private IEnumerator FadeAndSwitchScenesGameOver(string sceneName)
+    {
+        isLoading = true;
+
+        // Fade to black
+        yield return StartCoroutine(Fade(1f, 5f));
+        BeforeSceneUnload?.Invoke();
+        GameStateController.current?.ForceUnpause();
+
+        // load loading scene
+        yield return SceneManager.LoadSceneAsync(Constants.SCENE_LOADING, LoadSceneMode.Additive);
+
+        // Unload previous scene (without loadscreen)
+        yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        yield return StartCoroutine(LoadSceneAndSetActiveNoLS(sceneName));
+
+        // Unload loading scene
+        yield return SceneManager.UnloadSceneAsync(Constants.SCENE_LOADING);
+        AfterSceneLoad?.Invoke();
+        isLoading = false;
+
+        // Fade to new scene
+        yield return StartCoroutine(Fade(0f, 5f));
     }
 
     public void FadeOutToBlack(float multiplier = 1)
