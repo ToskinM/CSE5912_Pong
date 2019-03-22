@@ -271,7 +271,7 @@ public class LifeFlowerController : MonoBehaviour
         petalOb.SetActive(true); 
         Image fallingPetal = petalOb.GetComponent<Image>();
         fallingPetals.Add(fallingPetal);
-        fallLeft.Add(fallingPetal, petals.IndexOf(petal) <= 1);
+        fallLeft.Add(fallingPetal, petals.IndexOf(petal) > 1);
         //Debug.Log("petal " + petals.IndexOf(petal) + " has died"); 
     }
 
