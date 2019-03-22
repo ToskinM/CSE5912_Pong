@@ -37,7 +37,8 @@ public class DialogueTrigger : MonoBehaviour
 
     DialogueGraph graph;
     DialogueFactory factory;
-    GameObject partner; 
+    GameObject partner;
+    InteractionPopup interaction; 
 
 
     public DialogueTrigger(GameObject person, GameObject p, Sprite iconSprite, string graphName)
@@ -53,6 +54,7 @@ public class DialogueTrigger : MonoBehaviour
         graph.Restart();
 
         icon = iconSprite;
+        interaction = GameObject.Find("HUD").transform.GetChild(7).GetComponent<InteractionPopup>();
         //spriteFile = characterSprite;
 
     }
@@ -176,6 +178,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void StartDialogue()
     {
+        interaction.NotAllowed = true; 
         if (!PlayerController.instance.ActivePlayerCombatControls.InCombat)
         {
             pState = PanelState.rising;
@@ -197,6 +200,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void EndDialogue()
     {
+        interaction.NotAllowed = false; 
         LevelManager.current.player.TalkingPartner = null;
         destroyButtons();
         pState = PanelState.falling;

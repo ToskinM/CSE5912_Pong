@@ -63,8 +63,12 @@ public class Pickup : MonoBehaviour
         {
             if (closest != null)
             {
-                closest.GetComponent<InventoryStat>().SetHalo(true);
-                interaction.EnableItem(dist); 
+                InventoryStat stat = closest.GetComponent<InventoryStat>();
+                if (!(stat.AnaiObject && !PlayerController.instance.AnaiIsActive()) && !(stat.MimbiObject && PlayerController.instance.AnaiIsActive()))
+                {
+                    closest.GetComponent<InventoryStat>().SetHalo(true);
+                    interaction.EnableItem(dist);
+                }
             }
             if (Input.GetButtonDown("Interact"))
             {
@@ -87,8 +91,8 @@ public class Pickup : MonoBehaviour
         int health = obj.GetComponent<InventoryStat>().GetHealth();
 
         bool objectUsedImmediately = false;
-        bool anaiObjectMatch = stat.AnaiObject && (currentPlayer.Equals(PlayerController.instance.AnaiObject));
-        bool mimbiObjectMatch = stat.MimbiObject && (currentPlayer.Equals(PlayerController.instance.MimbiObject));
+        bool anaiObjectMatch = stat.AnaiObject && PlayerController.instance.AnaiIsActive(); //(currentPlayer.Equals(PlayerController.instance.AnaiObject));
+        bool mimbiObjectMatch = stat.MimbiObject && !PlayerController.instance.AnaiIsActive();
 
         if (anaiObjectMatch || mimbiObjectMatch)
         {
