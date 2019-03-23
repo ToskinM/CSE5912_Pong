@@ -238,6 +238,14 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         //isAttacking = true;
         combatTarget = player;
     }
+    public void StartFightWithPlayer()
+    {
+        Active = true;
+        SetWeaponSheathed(false);
+        InCombat = true;
+        //isAttacking = true;
+        combatTarget = PlayerController.instance.AnaiObject;
+    }
 
     private IEnumerator Respawn()
     {

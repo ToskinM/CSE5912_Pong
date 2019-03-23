@@ -28,10 +28,13 @@ public class AmaruController : MonoBehaviour, INPCController
     private GameObject anai;
     NPCMovementController npc;
     NavMeshAgent agent;
-    DialogueTrigger talkTrig;
+    DialogueTrigger currTalk;
+    DialogueTrigger intro;
+    DialogueTrigger advice;
     PlayerController playerController;
     Animator animator;
-    private FeedbackText feedbackText; 
+    private FeedbackText feedbackText;
+    Vector3 centerOfTown; 
 
     // Start is called before the first frame update
     void Start()
@@ -45,12 +48,17 @@ public class AmaruController : MonoBehaviour, INPCController
         npc.FollowPlayer(bufferDist, tooCloseRad);
         npc.Wander(WalkCenter.transform.position, wanderRad);
         npc.SetDefault(NPCMovementController.MoveState.wander);
+        centerOfTown = GameObject.Find("Campfire").transform.position; 
 
         icon = new IconFactory().GetIcon(Constants.AMARU_ICON);
 
-        talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.AMARU_INTRO_DIALOGUE);
+        intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.AMARU_INTRO_DIALOGUE);
+        advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.AMARU_ADVICE_DIALOGUE);
+        advice.SetExitText("Good luck, Anai. I hope you find him.");
+        currTalk = intro; 
         playerController = LevelManager.current.player.GetComponent<PlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
+
 
         actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
     }
@@ -60,11 +68,11 @@ public class AmaruController : MonoBehaviour, INPCController
     {
         if (playerInfo.IsAnai())
         {
-            talkTrig.Update();
+            currTalk.Update();
 
             npc.UpdateMovement();
 
-            if (npc.DistanceFrom(anai) < engagementRadius && !talkTrig.Complete)
+            if (npc.DistanceFrom(anai) < engagementRadius && !currTalk.Complete)
             {
                 //StartTalk();
                 indicateInterest();
@@ -79,14 +87,20 @@ public class AmaruController : MonoBehaviour, INPCController
         {
             npc.UpdateMovement();
         }
-        dialogueActive = talkTrig.DialogueActive();
+        dialogueActive = currTalk.DialogueActive();
 
     }
-
+    public void Afternoon()
+    {
+        currTalk = advice;
+        npc.Wander(centerOfTown,30f);
+        npc.SetDefault(NPCMovementController.MoveState.wander);
+        npc.InfluenceWanderSpeed(1.5f); 
+    }
     // Action Wheel Interactions
     public void Talk()
     {
-        if (talkTrig.Complete)
+        if (currTalk.Complete)
         {
             displayFeedback("Amaru is busy working.");
         }
@@ -123,10 +137,10 @@ public class AmaruController : MonoBehaviour, INPCController
     public void StartTalk()
     {
 
-        if (!talkTrig.DialogueActive())
+        if (!currTalk.DialogueActive())
         {
             //playerController.TalkingPartner = gameObject;
-            talkTrig.StartDialogue();
+            currTalk.StartDialogue();
         }
     }
 
@@ -134,10 +148,10 @@ public class AmaruController : MonoBehaviour, INPCController
     public void EndTalk()
     {
         npc.Reset();
-        if (talkTrig.DialogueActive())
+        if (currTalk.DialogueActive())
         {
             //playerController.TalkingPartner = null;
-            talkTrig.EndDialogue();
+            currTalk.EndDialogue();
         }
     }
 

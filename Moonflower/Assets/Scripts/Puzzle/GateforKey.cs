@@ -22,7 +22,7 @@ public class GateforKey : MonoBehaviour
         if(openTime != 0)
         {
             openTime-= Time.deltaTime;
-            print(openTime);
+//            print(openTime);
             if(openTime <= 0)
             {
                 openTime = 0;

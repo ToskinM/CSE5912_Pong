@@ -231,6 +231,21 @@ public class NPCMovementController : MonoBehaviour, IMovement
         if (canFollow)
             follow.HoldGround = hold; 
     }
+    public void InfluenceWanderSpeed(float mult)
+    {
+        if (canWander)
+            wander.baseSpeed *= mult; 
+    }
+    public void InfluenceFollowSpeed(float mult)
+    {
+        if (canFollow)
+            wander.baseSpeed *= mult;
+    }
+    public void InfluencePaceSpeed(float mult)
+    {
+        if (canPace)
+            wander.baseSpeed *= mult;
+    }
 
     /*
      * 

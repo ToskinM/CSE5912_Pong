@@ -96,15 +96,18 @@ public static class Constants
 
     //Amaru
     public const string AMARU_NAME = "Amaru"; 
-    public const string TEST_DIALOGUE = dialogueFolder + "New Dialogue Graph";
     public const string AMARU_INTRO_DIALOGUE = dialogueFolder + "Amaru Intro Dialogue";
+    public const string AMARU_ADVICE_DIALOGUE = dialogueFolder + "Amaru Advice";
     //Naia
     public const string NAIA_NAME = "Naia";
     public const string NAIA_INTRO_DIALOGUE = dialogueFolder + "Naia Intro";
+    public const string NAIA_ADVICE_DIALOGUE = dialogueFolder + "Naia Advice";
 
     //Sypave
     public const string SYPAVE_NAME = "Sypave";
     public const string SYPAVE_INTRO_DIALOGUE = dialogueFolder + "Sypave Intro";
+    public const string SYPAVE_FRANTIC_DIALOGUE = dialogueFolder + "Sypave Frantic";
+    public const string SYPAVE_ADVICE_DIALOGUE = dialogueFolder + "Sypave Advice";
     //Jeruti
     public const string JERUTI_NAME = "Jeruti";
     //Pinon

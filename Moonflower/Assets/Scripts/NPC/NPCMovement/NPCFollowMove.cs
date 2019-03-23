@@ -26,7 +26,7 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
     public float followDist = 5; //default
     float tooCloseRadius = 2.5f;
 
-    float baseSpeed;
+    public float baseSpeed;
     float doubleSpeed; 
     float baseAngularSpeed; 
 

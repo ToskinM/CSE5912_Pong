@@ -22,14 +22,16 @@ public class NaiaController : MonoBehaviour, INPCController
     public bool canGift = true;
     [HideInInspector] public bool[] actionsAvailable { get; private set; }
 
-    CurrentPlayer playerInfo;
-    private GameObject anai;
     private NPCMovementController movement;
     private NPCCombatController combatController;
     private NavMeshAgent agent;
-    private DialogueTrigger talkTrig;
-    private PlayerController playerController;
-    private FeedbackText feedbackText; 
+    private DialogueTrigger currTalk;
+    private DialogueTrigger intro;
+    private DialogueTrigger advice; 
+    private FeedbackText feedbackText;
+    Vector3 centerOfTown;
+
+    bool induceFight = false; 
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
@@ -37,20 +39,21 @@ public class NaiaController : MonoBehaviour, INPCController
     void Start()
     {
         // Initialize Components
-        playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
-        anai = LevelManager.current.anai;
         agent = GetComponent<NavMeshAgent>();
         combatController = GetComponent<NPCCombatController>();
 
         // Setup Movement
         Vector3 walkOrigin = transform.position;
-        movement = new NPCMovementController(gameObject, anai,Constants.NAIA_NAME);
-        icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
-        talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
-        talkTrig.SetExitText("See you around, I guess."); 
-        feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
+        movement = new NPCMovementController(gameObject, PlayerController.instance.AnaiObject,Constants.NAIA_NAME);
+        centerOfTown = GameObject.Find("Campfire").transform.position;
 
-        playerController = LevelManager.current.player.GetComponent<PlayerController>();
+        icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
+        intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
+        intro.SetExitText("See you around, I guess.");
+        advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_ADVICE_DIALOGUE);
+        advice.SetExitText("You can't keep running away from this.");
+        currTalk = intro; 
+        feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         combatController.npcMovement = movement;
 
@@ -59,14 +62,26 @@ public class NaiaController : MonoBehaviour, INPCController
 
     void Update()
     {
-        float playerDist = movement.DistanceFrom(anai);  //getXZDist(transform.position, Player.transform.position);
+        float playerDist = movement.DistanceFrom(PlayerController.instance.AnaiObject);  //getXZDist(transform.position, Player.transform.position);
+
+        if(induceFight)
+        {
+            Debug.Log("FIGHTFIGHTFIGHT");
+            if(currTalk.Complete)
+            {
+                EndTalk(); 
+            }
+            currState = NaiaEngageType.fight;
+            combatController.StartFightWithPlayer();
+            induceFight = false; 
+        }
 
         switch (currState)
         {
             case NaiaEngageType.chill:
                 //Debug.Log("chilling");
                 combatController.Active = false;
-                if (playerController.AnaiIsActive() && playerController.TalkingPartner == null && playerDist < engagementRadius && !talkTrig.Complete)
+                if (PlayerController.instance.AnaiIsActive() && PlayerController.instance.TalkingPartner == null && playerDist < engagementRadius && !currTalk.Complete)
                 {
                     //StartTalk();
                 }
@@ -86,12 +101,14 @@ public class NaiaController : MonoBehaviour, INPCController
                 Debug.Log("talking");
                 //combatController.Active = false;
 
-                if (playerController.AnaiIsActive())
+                if (PlayerController.instance.AnaiIsActive())
                 {
 
-                    if (talkTrig.Complete)
-                    { 
+                    if (currTalk.Complete)
+                    {
+                        movement.Reset(); 
                         EndTalk();
+                        currState = NaiaEngageType.chill;
                         //talkTrig.EndDialogue();
 
                     }
@@ -106,9 +123,16 @@ public class NaiaController : MonoBehaviour, INPCController
         }
 
         movement.UpdateMovement();
-        talkTrig.Update();
+        currTalk.Update();
     }
 
+    public void Afternoon()
+    {
+        currTalk = advice;
+        movement.Wander(centerOfTown, 30f);
+        movement.SetDefault(NPCMovementController.MoveState.wander);
+        movement.InfluenceWanderSpeed(1.5f);
+    }
 
     public void StartTalk()
     {
@@ -116,10 +140,10 @@ public class NaiaController : MonoBehaviour, INPCController
         currState = NaiaEngageType.talk;
         combatController.Active = false;
 
-        if (!talkTrig.DialogueActive())
+        if (!currTalk.DialogueActive())
         {
             //playerController.TalkingPartner = gameObject;
-            talkTrig.StartDialogue();
+            currTalk.StartDialogue();
         }
     }
     public void EndTalk()
@@ -127,17 +151,17 @@ public class NaiaController : MonoBehaviour, INPCController
         if (currState != NaiaEngageType.fight)
             movement.Reset();
 
-        if (talkTrig.DialogueActive())
+        if (currTalk.DialogueActive())
         {
             //playerController.TalkingPartner = null;
-            talkTrig.EndDialogue();
+            currTalk.EndDialogue();
         }
     }
 
     // Action Wheel Interactions
     public void Talk()
     {
-        if (talkTrig.Complete)
+        if (currTalk.Complete)
         {
             displayFeedback("Naia's busy brooding.");
         }
@@ -174,6 +198,8 @@ public class NaiaController : MonoBehaviour, INPCController
     public void Fight()
     {
         Debug.Log("Yo time to fight");
+        induceFight = true; 
+        Debug.Log("We getting there");
     }
 
     private void displayFeedback(string text)

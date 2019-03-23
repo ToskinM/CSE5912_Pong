@@ -28,7 +28,10 @@ public class SypaveController : MonoBehaviour, INPCController
     private NPCMovementController movement;
     //private NPCCombatController combatController;
     private NavMeshAgent agent;
-    private DialogueTrigger talkTrig;
+    private DialogueTrigger currTalk;
+    private DialogueTrigger intro;
+    private DialogueTrigger frantic;
+    private DialogueTrigger advice; 
     private PlayerController playerController;
     private FeedbackText feedbackText;
 
@@ -49,8 +52,13 @@ public class SypaveController : MonoBehaviour, INPCController
         movement.SetDefault(NPCMovementController.MoveState.pace);
 
         icon = new IconFactory().GetIcon(Constants.SYPAVE_ICON);
-        talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.SYPAVE_INTRO_DIALOGUE);
-        talkTrig.SetExitText("So your 'exploration' is more important than your mother? Fine. Go."); 
+        intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.SYPAVE_INTRO_DIALOGUE);
+        intro.SetExitText("So your 'exploration' is more important than your mother? Fine. Go.");
+        frantic = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.SYPAVE_FRANTIC_DIALOGUE);
+        frantic.SetExitText("You'd better be leaving to search for him!");
+        advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.SYPAVE_ADVICE_DIALOGUE);
+        advice.SetExitText("I can't believe you...");
+        currTalk = intro; 
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         playerController = LevelManager.current.player.GetComponent<PlayerController>();
@@ -65,12 +73,16 @@ public class SypaveController : MonoBehaviour, INPCController
     {
         float playerDist = movement.DistanceFrom(anai);  //getXZDist(transform.position, Player.transform.position);
 
-        if (talkTrig.Complete)
-            movement.Reset(); 
+        if (currTalk.Complete)
+        {
+            movement.Reset();
+            if (currTalk == frantic)
+                currTalk = advice; 
+        }
 
         movement.UpdateMovement();
 
-        talkTrig.Update();
+        currTalk.Update();
     }
 
 
@@ -79,10 +91,10 @@ public class SypaveController : MonoBehaviour, INPCController
 
         movement.FollowPlayer(bufferDist);
 
-        if (!talkTrig.DialogueActive())
+        if (!currTalk.DialogueActive())
         {
             //playerController.TalkingPartner = gameObject;
-            talkTrig.StartDialogue();
+            currTalk.StartDialogue();
         }
         
     }
@@ -91,10 +103,10 @@ public class SypaveController : MonoBehaviour, INPCController
         
         movement.Reset();
 
-        if (talkTrig.DialogueActive())
+        if (currTalk.DialogueActive())
         {
             //playerController.TalkingPartner = null;
-            talkTrig.EndDialogue();
+            currTalk.EndDialogue();
         }
         
     }
@@ -102,7 +114,7 @@ public class SypaveController : MonoBehaviour, INPCController
     // Action Wheel Interactions
     public void Talk()
     {
-        if (talkTrig.Complete)
+        if (currTalk.Complete)
         {
             displayFeedback("Sypave told you to get inside.");
         }
@@ -133,6 +145,11 @@ public class SypaveController : MonoBehaviour, INPCController
     public string Inspect()
     {
         return Constants.SYPAVE_NAME;
+    }
+
+    public void Afternoon()
+    {
+        currTalk = frantic; 
     }
 
     private void displayFeedback(string text)

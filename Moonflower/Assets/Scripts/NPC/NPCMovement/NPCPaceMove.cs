@@ -26,7 +26,7 @@ public class NPCPaceMove : MonoBehaviour, IMovement, INPCMovement
     bool atOrigin = true; 
 
     float bufferDist = 0.1f; 
-    float baseSpeed; 
+    public float baseSpeed; 
 
     void Start()
     {

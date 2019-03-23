@@ -33,7 +33,7 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
     int lingerLength; //length of pause 
     const int smallPause = 1, largePause = 4; //max and min pause lengths
 
-    float baseSpeed;
+    public float baseSpeed;
     float doubleSpeed; 
 
     void Start()
