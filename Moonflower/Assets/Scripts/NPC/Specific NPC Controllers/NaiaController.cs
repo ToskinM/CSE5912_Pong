@@ -9,7 +9,6 @@ using TMPro;
 
 public class NaiaController : MonoBehaviour, INPCController
 {
-    public static NaiaController instance; 
     public GameObject DialoguePanel;
     public Sprite icon { get; set; }
 
@@ -175,7 +174,7 @@ public class NaiaController : MonoBehaviour, INPCController
     }
     public void Distract(GameObject distractedBy)
     {
-        movement.Distracted(distractedBy);
+
     }
 
     public void EndDistract()
@@ -198,39 +197,9 @@ public class NaiaController : MonoBehaviour, INPCController
         combatController.StartFightWithPlayer();
     }
 
-    //If I don't do it this way, it straight up just doesn't so... yeah it sucks
-    public void FightCall()
-    {
-        GameObject.Find("Naia").GetComponent<NaiaController>().Fight();
-    }
-
-    public void IncreasePlayerCharisma(bool pos)
-    {
-        if (pos)
-            GameObject.Find("Player").GetComponent<CharacterStats>().Charisma += playerStatBuff;
-        else
-            GameObject.Find("Player").GetComponent<CharacterStats>().Charisma -= playerStatBuff;
-    
-    }
-
-    public void IncreasePlayerCunning(bool pos)
-    {
-        if (pos)
-            GameObject.Find("Player").GetComponent<CharacterStats>().Cunning += playerStatBuff;
-        else
-            GameObject.Find("Player").GetComponent<CharacterStats>().Cunning -= playerStatBuff;
-
-    }
-
-    public void GiveGiftToPlayer(string giftName)
-    {
-        displayFeedback("Naia gave you a " + giftName.ToLower() + "!");
-        GameObject.Find("Player").GetComponent<PlayerInventory>().AddObj(giftName);
-    }
-
     private void displayFeedback(string text)
     {
-        feedbackText.ShowText(text); 
+        feedbackText.ShowText(text);
     }
 
     // Disable player combat controls when game is paused

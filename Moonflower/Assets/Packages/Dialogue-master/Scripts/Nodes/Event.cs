@@ -9,7 +9,7 @@ namespace Dialogue
     public class Event : DialogueBaseNode
     {
         [Input] public Connection input;
-        //[Output] public Connection output;
+        [Output] public Connection output;
 
         //public SerializableEvent[] trigger; // Could use UnityEvent here, but UnityEvent has a bug that prevents it from serializing correctly on custom EditorWindows. So i implemented my own.
         public UnityEvent[] trigger; 
@@ -20,6 +20,12 @@ namespace Dialogue
             {
                 trigger[i].Invoke();
             }
+            NodePort port = null;
+            port = GetOutputPort("output");
+            if (port == null) return;
+            NodePort connection = port.GetConnection(0);
+            (connection.node as DialogueBaseNode).Trigger();
+
         }
     }
 }

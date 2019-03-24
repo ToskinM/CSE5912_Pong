@@ -34,8 +34,7 @@ public class AmaruController : MonoBehaviour, INPCController
     PlayerController playerController;
     Animator animator;
     private FeedbackText feedbackText;
-    Vector3 centerOfTown;
-    AmaruAnimatorController amaruAnimator;
+    Vector3 centerOfTown; 
 
     // Start is called before the first frame update
     void Start()
@@ -60,9 +59,8 @@ public class AmaruController : MonoBehaviour, INPCController
         playerController = LevelManager.current.player.GetComponent<PlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
-        actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
 
-        amaruAnimator = GetComponent<AmaruAnimatorController>();
+        actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
     }
 
     // Update is called once per frame
@@ -124,17 +122,11 @@ public class AmaruController : MonoBehaviour, INPCController
     }
     public void Distract(GameObject distractedBy)
     {
-        Debug.Log("I am in Amaru Distract");
-        transform.LookAt(distractedBy.transform);
-        //npc.Chill();
-        npc.Distracted(distractedBy);
-        amaruAnimator.StartDistraction();
+
     }
     public void EndDistract()
     {
-        Debug.Log("End distraction");
-        amaruAnimator.EndDistraction();
-        npc.Reset();
+
     }
     public string Inspect()
     {
@@ -144,7 +136,7 @@ public class AmaruController : MonoBehaviour, INPCController
     //start current conversation
     public void StartTalk()
     {
-        amaruAnimator.EngageInDialogue();
+
         if (!currTalk.DialogueActive())
         {
             //playerController.TalkingPartner = gameObject;
@@ -155,7 +147,6 @@ public class AmaruController : MonoBehaviour, INPCController
     //end current conversation
     public void EndTalk()
     {
-        amaruAnimator.EndDiaglogue();
         npc.Reset();
         if (currTalk.DialogueActive())
         {
