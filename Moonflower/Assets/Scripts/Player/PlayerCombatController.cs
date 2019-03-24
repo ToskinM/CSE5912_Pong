@@ -137,7 +137,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     private void CheckAggressorDistance()
     {
-        Debug.Log(currentAggressor);
+        //Debug.Log(currentAggressor);
 
         if (Vector3.Distance(transform.position, currentAggressor.transform.position) > combatLossDistance)
         {

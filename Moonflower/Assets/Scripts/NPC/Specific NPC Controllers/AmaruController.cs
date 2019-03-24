@@ -35,7 +35,7 @@ public class AmaruController : MonoBehaviour, INPCController
     Animator animator;
     private FeedbackText feedbackText;
     Vector3 centerOfTown;
-    NPCDistractMove AmaruDistractionMove;
+    AmaruAnimatorController amaruAnimator;
 
     // Start is called before the first frame update
     void Start()
@@ -62,7 +62,7 @@ public class AmaruController : MonoBehaviour, INPCController
 
         actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
 
-        AmaruDistractionMove = GetComponent<NPCDistractMove>();
+        amaruAnimator = GetComponent<AmaruAnimatorController>();
     }
 
     // Update is called once per frame
@@ -125,13 +125,17 @@ public class AmaruController : MonoBehaviour, INPCController
     public void Distract(GameObject distractedBy)
     {
         Debug.Log("I am in Amaru Distract");
-        //npc.Distracted(distractedBy);
         transform.LookAt(distractedBy.transform);
         npc.Chill();
+
+        //npc.Distracted(distractedBy);
+        amaruAnimator.StartDistraction();
     }
     public void EndDistract()
     {
-        npc.Wander();
+        Debug.Log("End distraction");
+        npc.Reset();
+        amaruAnimator.EndDistraction();
     }
     public string Inspect()
     {

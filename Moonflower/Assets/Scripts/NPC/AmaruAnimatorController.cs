@@ -7,12 +7,25 @@ public class AmaruAnimatorController : MonoBehaviour
     AmaruController amaruController;
     UnityEngine.AI.NavMeshAgent agent;
     Animator animator;
+
+    private const string key_isDistracted = "IsDistracted";
+
+
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         animator = GetComponent<Animator>();
         amaruController = GetComponent<AmaruController>();
+    }
+
+    public void StartDistraction()
+    {
+        animator.SetBool(key_isDistracted, true);
+    }
+    public void EndDistraction()
+    {
+        animator.SetBool(key_isDistracted, false);
     }
 
     // Update is called once per frame
