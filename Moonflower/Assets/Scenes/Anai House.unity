@@ -1291,6 +1291,24 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 157348643}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &157348645 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1485624132, guid: 51c8baa03be78fc46a1c9f85a59c1b6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 157348643}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &157348646 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 43770695, guid: 51c8baa03be78fc46a1c9f85a59c1b6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 157348643}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40dc719ddb0f7048bb2a9ebb520c332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &160835691
 GameObject:
   m_ObjectHideFlags: 0
@@ -3226,7 +3244,7 @@ MonoBehaviour:
   ActionWheelPrefab: {fileID: 3547835716041513290, guid: 6e91748f4112cca43bcd2c0ff8dbef97,
     type: 3}
   GameStateManager: {fileID: 163214459}
-  interactionPopup: {fileID: 673510596}
+  InteractionPopup: {fileID: 0}
 --- !u!1 &480003349
 GameObject:
   m_ObjectHideFlags: 0
@@ -4578,12 +4596,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669196156}
   m_CullTransparentMesh: 0
---- !u!1 &673510596 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7659383054302827923, guid: 6ca520e35275b48448b29f2e51df8e15,
-    type: 3}
-  m_PrefabInstance: {fileID: 1258678900}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &673510597 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7659383054302827922, guid: 6ca520e35275b48448b29f2e51df8e15,
@@ -5309,6 +5321,30 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 851446239}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &851446241 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5147181712570215323, guid: 24bae5f0d34626a459d9f0f207247a1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 851446239}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7816da57fe59251489a2c43e5a3e7048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &851446242 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2479558356945616282, guid: 24bae5f0d34626a459d9f0f207247a1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 851446239}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7816da57fe59251489a2c43e5a3e7048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &868910965
 GameObject:
   m_ObjectHideFlags: 0
@@ -10641,8 +10677,8 @@ MonoBehaviour:
     type: 3}
   mimbiRagdollPrefab: {fileID: 574423205, guid: 4e865ff175b6efa4cba2d4a1a4b8d3ae,
     type: 3}
-  weapon: {fileID: 0}
-  blockPlaceholder: {fileID: 0}
+  weapon: {fileID: 157348646}
+  blockPlaceholder: {fileID: 157348645}
   currentPlayer: {fileID: 0}
 --- !u!114 &1599248369
 MonoBehaviour:
@@ -10658,11 +10694,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combatController: {fileID: 0}
   anaiAttackHurtboxes:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 851446242}
+  - {fileID: 851446241}
   mimbiAttackHurtboxes:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 851446242}
+  - {fileID: 851446241}
   walkParticles: {fileID: 0}
   runParticles: {fileID: 0}
   standingParticles: {fileID: 0}
@@ -12946,6 +12982,7 @@ MonoBehaviour:
   InventoryPanel: {fileID: 893813552}
   InvContentPanel: {fileID: 1466127590}
   Player: {fileID: 0}
+  interaction: {fileID: 0}
   gameController: {fileID: 1819681082}
   Shown: 0
 --- !u!114 &1954491026

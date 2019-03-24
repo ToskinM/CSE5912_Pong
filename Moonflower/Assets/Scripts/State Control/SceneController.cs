@@ -60,6 +60,7 @@ public class SceneController : MonoBehaviour
         if (!isFading && !isLoading)
         {
             StartCoroutine(FadeAndSwitchScenesNoLS(sceneName));
+
         }
     }
     public void FadeAndLoadSceneGameOver(String sceneName)
@@ -93,6 +94,7 @@ public class SceneController : MonoBehaviour
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
+        PlayerController.instance.SpawnPlayerObjects();
     }
 
     private IEnumerator FadeAndSwitchScenesNoLS(string sceneName)
@@ -118,6 +120,7 @@ public class SceneController : MonoBehaviour
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
+        PlayerController.instance.SpawnPlayerObjects();
     }
 
     private IEnumerator FadeAndSwitchScenesGameOver(string sceneName)

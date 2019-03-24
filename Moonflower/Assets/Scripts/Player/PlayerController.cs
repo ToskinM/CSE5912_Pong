@@ -219,4 +219,10 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         GameStateController.current.PlayerDeath();
     }
+
+    public void SpawnPlayerObjects()
+    {
+        GameObject spawner = GameObject.Find("Spawner");
+        spawner.GetComponent<SpawnPoint>().Spawn();
+    }
 }

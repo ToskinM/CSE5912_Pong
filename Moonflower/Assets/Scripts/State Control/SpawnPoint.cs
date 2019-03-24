@@ -8,15 +8,15 @@ public class SpawnPoint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        transform.position = GameObject.Find("Anai House Spawn").transform.position;
     }
 
     public void Spawn()
     {
         if (thisScene.Equals("The Village"))
         {
-            LevelManager.current.anai.transform.position = this.transform.position;
-            LevelManager.current.mimbi.transform.position = this.transform.position + new Vector3(0, 2, 0);
+            PlayerController.instance.AnaiObject.transform.position = this.transform.position;
+            PlayerController.instance.MimbiObject.transform.position = this.transform.position + new Vector3(0, 2, 0);
         }
     }
     // Update is called once per frame

@@ -67,6 +67,8 @@ public class PlayerMovementController : MonoBehaviour
 
     void Update()
     {
+        if (cameraScript == null) cameraScript = LevelManager.current.mainCamera;
+
         // Damping
         body.velocity *= 0.98f;
 
