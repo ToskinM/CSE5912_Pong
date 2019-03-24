@@ -141,7 +141,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
         }
         state = MoveState.pace;
     }
-    public void Distracted(Vector3 origin, GameObject target)
+    public void Distracted(GameObject target)
     {
         if (!canBeDistracted)
         {
@@ -331,6 +331,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
                         agent.isStopped = true;
                         Action = Actions.Chilling;
                     }
+                    Debug.Log("I'm distract chilling");
                     break;
                 case MoveState.chill:
                     //Chill(); 

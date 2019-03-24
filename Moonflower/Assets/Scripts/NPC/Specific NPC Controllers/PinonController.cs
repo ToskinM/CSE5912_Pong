@@ -119,9 +119,9 @@ public class PinonController : MonoBehaviour, INPCController
     {
         displayFeedback("Pinon doesn't want anything from you.");
     }
-    public void Distract()
+    public void Distract(GameObject distractedBy)
     {
-
+        npc.Distracted(distractedBy);
     }
 
     public void EndDistract()
