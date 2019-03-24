@@ -37,6 +37,21 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    public void AddObj(string objName)
+    {
+        if (ItemNames.Contains(objName))
+        {
+            int num = ItemAmountMap[objName] + 1;
+            ItemAmountMap.Remove(objName);
+            ItemAmountMap.Add(objName, num);
+        }
+        else
+        {
+            ItemNames.Add(objName);
+            ItemAmountMap.Add(objName, 1);
+        }
+    }
+
     public void RemoveObj(string name)
     {
         if (ItemNames.Contains(name))

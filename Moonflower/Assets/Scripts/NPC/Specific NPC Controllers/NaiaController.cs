@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI; 
+using UnityEngine.UI;
+using UnityEngine.Events; 
 using TMPro;
 
 
 public class NaiaController : MonoBehaviour, INPCController
 {
-
+    public static NaiaController instance; 
     public GameObject DialoguePanel;
     public Sprite icon { get; set; }
 
@@ -22,6 +23,8 @@ public class NaiaController : MonoBehaviour, INPCController
     public bool canGift = true;
     [HideInInspector] public bool[] actionsAvailable { get; private set; }
 
+    //public UnityEvent Fight; 
+
     private NPCMovementController movement;
     private NPCCombatController combatController;
     private NavMeshAgent agent;
@@ -31,7 +34,7 @@ public class NaiaController : MonoBehaviour, INPCController
     private FeedbackText feedbackText;
     Vector3 centerOfTown;
 
-    bool induceFight = false; 
+    int playerStatBuff = 3; 
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
@@ -63,18 +66,6 @@ public class NaiaController : MonoBehaviour, INPCController
     void Update()
     {
         float playerDist = movement.DistanceFrom(PlayerController.instance.AnaiObject);  //getXZDist(transform.position, Player.transform.position);
-
-        if(induceFight)
-        {
-            Debug.Log("FIGHTFIGHTFIGHT");
-            if(currTalk.Complete)
-            {
-                EndTalk(); 
-            }
-            currState = NaiaEngageType.fight;
-            combatController.StartFightWithPlayer();
-            induceFight = false; 
-        }
 
         switch (currState)
         {
@@ -161,6 +152,7 @@ public class NaiaController : MonoBehaviour, INPCController
     // Action Wheel Interactions
     public void Talk()
     {
+
         if (currTalk.Complete)
         {
             displayFeedback("Naia's busy brooding.");
@@ -195,11 +187,45 @@ public class NaiaController : MonoBehaviour, INPCController
     {
         return Constants.NAIA_NAME;
     }
+
     public void Fight()
     {
-        Debug.Log("Yo time to fight");
-        induceFight = true; 
-        Debug.Log("We getting there");
+        if (currTalk.Complete)
+        {
+            EndTalk();
+        }
+        currState = NaiaEngageType.fight;
+        combatController.StartFightWithPlayer();
+    }
+
+    //If I don't do it this way, it straight up just doesn't so... yeah it sucks
+    public void FightCall()
+    {
+        GameObject.Find("Naia").GetComponent<NaiaController>().Fight();
+    }
+
+    public void IncreasePlayerCharisma(bool pos)
+    {
+        if (pos)
+            GameObject.Find("Player").GetComponent<CharacterStats>().Charisma += playerStatBuff;
+        else
+            GameObject.Find("Player").GetComponent<CharacterStats>().Charisma -= playerStatBuff;
+    
+    }
+
+    public void IncreasePlayerCunning(bool pos)
+    {
+        if (pos)
+            GameObject.Find("Player").GetComponent<CharacterStats>().Cunning += playerStatBuff;
+        else
+            GameObject.Find("Player").GetComponent<CharacterStats>().Cunning -= playerStatBuff;
+
+    }
+
+    public void GiveGiftToPlayer(string giftName)
+    {
+        displayFeedback("Naia gave you a " + giftName.ToLower() + "!");
+        GameObject.Find("Player").GetComponent<PlayerInventory>().AddObj(giftName);
     }
 
     private void displayFeedback(string text)
@@ -222,3 +248,9 @@ public class NaiaController : MonoBehaviour, INPCController
         GameStateController.OnPaused -= HandlePauseEvent;
     }
 }
+
+//[System.Serializable]
+//public class FightEvent : UnityEvent<NaiaController>
+//{
+
+//}

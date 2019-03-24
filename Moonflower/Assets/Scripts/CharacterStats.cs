@@ -89,6 +89,11 @@ public class CharacterStats : MonoBehaviour
             sourceCharacterStats.TrainStrengthHit();
     }
 
+    public void UpdateCharisma(int change)
+    {
+        Charisma += change; 
+    }
+
     public bool CompareCunning(int otherCunning)
     {
         return Cunning >= otherCunning;
