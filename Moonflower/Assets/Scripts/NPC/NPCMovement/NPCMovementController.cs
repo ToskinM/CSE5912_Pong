@@ -155,6 +155,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
         //}
         //distract.SetTarget(target);
         state = MoveState.distractChill;
+        Action = Actions.Chilling;
     }
     public void Wander(Vector3 origin, float wanderDistance)
     {
@@ -327,15 +328,15 @@ public class NPCMovementController : MonoBehaviour, IMovement
                     }
                     break;
                 case MoveState.distractChill:
-                    if(canBeDistracted)
+                    /*if(canBeDistracted)
                     {
                         //distract.UpdateMovement();
                         agent.isStopped = true;
                         Action = Actions.Chilling;
-                    }
+                    }*/
                     agent.isStopped = true;
                     Action = Actions.Chilling;
-                    Debug.Log("I'm distract chilling");
+                    Debug.Log("I'm distract chilling and don't want to move");
                     break;
                 case MoveState.chill:
                     //Chill(); 

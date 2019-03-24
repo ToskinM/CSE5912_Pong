@@ -126,16 +126,15 @@ public class AmaruController : MonoBehaviour, INPCController
     {
         Debug.Log("I am in Amaru Distract");
         transform.LookAt(distractedBy.transform);
-        npc.Chill();
-
-        //npc.Distracted(distractedBy);
+        //npc.Chill();
+        npc.Distracted(distractedBy);
         amaruAnimator.StartDistraction();
     }
     public void EndDistract()
     {
         Debug.Log("End distraction");
-        npc.Reset();
         amaruAnimator.EndDistraction();
+        npc.Reset();
     }
     public string Inspect()
     {
@@ -145,7 +144,7 @@ public class AmaruController : MonoBehaviour, INPCController
     //start current conversation
     public void StartTalk()
     {
-
+        amaruAnimator.EngageInDialogue();
         if (!currTalk.DialogueActive())
         {
             //playerController.TalkingPartner = gameObject;
@@ -156,6 +155,7 @@ public class AmaruController : MonoBehaviour, INPCController
     //end current conversation
     public void EndTalk()
     {
+        amaruAnimator.EndDiaglogue();
         npc.Reset();
         if (currTalk.DialogueActive())
         {
