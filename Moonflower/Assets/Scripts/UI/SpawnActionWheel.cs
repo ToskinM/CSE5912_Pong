@@ -193,7 +193,7 @@ public class SpawnActionWheel : MonoBehaviour
         yield return new WaitForSeconds(time);
         PlayerController.instance.GetComponent<PlayerAnimatorController>().DisableDistraction();
         if (targetController == null)
-            target.GetComponent<INPCController>();
+            targetController = target.GetComponent<INPCController>();
         targetController.EndDistract();
     }
 
