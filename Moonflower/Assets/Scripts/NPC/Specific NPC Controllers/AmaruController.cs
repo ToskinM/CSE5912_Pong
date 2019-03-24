@@ -34,13 +34,14 @@ public class AmaruController : MonoBehaviour, INPCController
     PlayerController playerController;
     Animator animator;
     private FeedbackText feedbackText;
-    Vector3 centerOfTown; 
+    Vector3 centerOfTown;
+    AmaruAnimatorController amaruAnimator;
 
     // Start is called before the first frame update
     void Start()
     {
         //npc = gameObject.AddComponent<NPCMovement>();
-        playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
+        //playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
         anai = LevelManager.current.anai;
         agent = GetComponent<NavMeshAgent>();
 
@@ -61,12 +62,14 @@ public class AmaruController : MonoBehaviour, INPCController
 
 
         actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
+
+        amaruAnimator = GetComponent<AmaruAnimatorController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerInfo.IsAnai())
+        if (PlayerController.instance.GetActiveCharacter() == PlayerController.PlayerCharacter.Anai)
         {
             currTalk.Update();
 
@@ -122,11 +125,13 @@ public class AmaruController : MonoBehaviour, INPCController
     }
     public void Distract(GameObject distractedBy)
     {
-
+        npc.Distracted(distractedBy);
+        amaruAnimator.StartDistraction();
     }
     public void EndDistract()
     {
-
+        amaruAnimator.EndDistraction();
+        npc.Reset();
     }
     public string Inspect()
     {

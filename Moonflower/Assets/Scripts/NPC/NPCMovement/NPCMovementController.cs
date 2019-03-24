@@ -142,7 +142,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
         }
         state = MoveState.pace;
     }
-    public void Distracted(GameObject target)
+    public void Distracted(GameObject targetObject)
     {
         //if (!canBeDistracted)
         //{
@@ -155,7 +155,8 @@ public class NPCMovementController : MonoBehaviour, IMovement
         //}
         //distract.SetTarget(target);
         state = MoveState.distractChill;
-        Action = Actions.Chilling;
+        self.transform.LookAt(targetObject.transform.position);
+        target = targetObject;
     }
     public void Wander(Vector3 origin, float wanderDistance)
     {
@@ -336,7 +337,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
                     }*/
                     agent.isStopped = true;
                     Action = Actions.Chilling;
-                    Debug.Log("I'm distract chilling and don't want to move");
+                    self.transform.LookAt(target.transform.position);
                     break;
                 case MoveState.chill:
                     //Chill(); 
@@ -403,7 +404,6 @@ public class NPCMovementController : MonoBehaviour, IMovement
     public void Chill()
     {
         Action = Actions.Chilling;
-        Debug.Log(state);
         switch (state)
         {
             case MoveState.wander:

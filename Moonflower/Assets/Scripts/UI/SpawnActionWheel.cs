@@ -167,7 +167,7 @@ public class SpawnActionWheel : MonoBehaviour
                 if (PlayerController.instance.GetActiveCharacter() == PlayerController.PlayerCharacter.Mimbi)
                 {
                     targetController.Distract(PlayerController.instance.GetActivePlayerObject());
-                    StartCoroutine("DistractionEnd", distractTime);
+                    StartCoroutine( DistractionEnd(distractTime, targetController));
                     PlayerController.instance.GetComponent<PlayerAnimatorController>().EnableDistraction();
 
                 }
@@ -188,13 +188,11 @@ public class SpawnActionWheel : MonoBehaviour
         }
     }
 
-    IEnumerator DistractionEnd(float time)
+    IEnumerator DistractionEnd(float time, INPCController tController)
     {
         yield return new WaitForSeconds(time);
         PlayerController.instance.GetComponent<PlayerAnimatorController>().DisableDistraction();
-        if (targetController == null)
-            targetController = target.GetComponent<INPCController>();
-        targetController.EndDistract();
+        tController.EndDistract();
     }
 
 

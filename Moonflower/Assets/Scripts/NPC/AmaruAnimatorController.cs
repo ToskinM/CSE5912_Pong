@@ -33,7 +33,6 @@ public class AmaruAnimatorController : MonoBehaviour
     }
     public void EndDistraction()
     {
-        Debug.Log("animationenddistraction");
         animator.SetBool(key_isDistracted, false);
         EnableWalking();
         tempbool = false;
