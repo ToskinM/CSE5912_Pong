@@ -123,12 +123,9 @@ public class LesserNPCController : MonoBehaviour, INPCController
             displayFeedback("They has no use for " + giftName + "...");
         }
     }
-    public void Distract()
+    public void Distract(GameObject distractedBy)
     {
-        if (canDistract)
-        {
-
-        }
+        movement.Distracted(distractedBy);
     }
 
     public void EndDistract()

@@ -854,6 +854,7 @@ GameObject:
   - component: {fileID: 493941886}
   - component: {fileID: 493941887}
   - component: {fileID: 493941888}
+  - component: {fileID: 5984002948528399608}
   m_Layer: 9
   m_Name: Naia
   m_TagString: Untagged
@@ -945,10 +946,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialoguePanel: {fileID: 0}
-  EngageOptPanel: {fileID: 0}
   engagementRadius: 15
   tooCloseRad: 2
   bufferDist: 2.5
+  canInspect: 1
+  canTalk: 1
+  canDistract: 1
+  canGift: 1
 --- !u!195 &493941884
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1027,8 +1031,13 @@ MonoBehaviour:
   weapon: {fileID: 6762178116091552856}
   attackDistance: 2.6
   isAttacking: 0
+  hasRangedAttack: 0
+  projectileNode: {fileID: 0}
+  rangedProjectile: {fileID: 0}
+  rangedAttackCooldown: 3
   attack: 0
   attackTimeout: 0.5
+  timeSinceLastAttack: 0
   npcMovement: {fileID: 0}
   group: {fileID: 0}
 --- !u!114 &493941888
@@ -1055,6 +1064,18 @@ MonoBehaviour:
   visibleTargets: []
   closestTarget: {fileID: 0}
   focusedTarget: {fileID: 0}
+--- !u!114 &5984002948528399608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493941880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5d17db31f8af4e07aaf36186b70007a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &494591686
 GameObject:
   m_ObjectHideFlags: 0
@@ -3671,14 +3692,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1314450633}
     m_Modifications:
-    - target: {fileID: 1541859936064796, guid: 43b1333b81aa2634bb96eaeade0690e1, type: 3}
-      propertyPath: m_Name
-      value: Earrings 01 Gold
-      objectReference: {fileID: 0}
-    - target: {fileID: 1541859936064796, guid: 43b1333b81aa2634bb96eaeade0690e1, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 4686665480414810, guid: 43b1333b81aa2634bb96eaeade0690e1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3723,6 +3736,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1541859936064796, guid: 43b1333b81aa2634bb96eaeade0690e1, type: 3}
+      propertyPath: m_Name
+      value: Earrings 01 Gold
+      objectReference: {fileID: 0}
+    - target: {fileID: 1541859936064796, guid: 43b1333b81aa2634bb96eaeade0690e1, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 23945786921467718, guid: 43b1333b81aa2634bb96eaeade0690e1,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3743,14 +3764,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1314450633}
     m_Modifications:
-    - target: {fileID: 1240056856925528, guid: bc4617e7f7438af4b81e20f18d4526f7, type: 3}
-      propertyPath: m_Name
-      value: Female Hair 01
-      objectReference: {fileID: 0}
-    - target: {fileID: 1240056856925528, guid: bc4617e7f7438af4b81e20f18d4526f7, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 4564447403106798, guid: bc4617e7f7438af4b81e20f18d4526f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3795,6 +3808,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1240056856925528, guid: bc4617e7f7438af4b81e20f18d4526f7, type: 3}
+      propertyPath: m_Name
+      value: Female Hair 01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240056856925528, guid: bc4617e7f7438af4b81e20f18d4526f7, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 23198119760446582, guid: bc4617e7f7438af4b81e20f18d4526f7,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3815,14 +3836,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1314450633}
     m_Modifications:
-    - target: {fileID: 1327685265145348, guid: 5f4702e3bda364e459701a954ca82b64, type: 3}
-      propertyPath: m_Name
-      value: Female Eyes 03 Brown
-      objectReference: {fileID: 0}
-    - target: {fileID: 1327685265145348, guid: 5f4702e3bda364e459701a954ca82b64, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 4170127321430066, guid: 5f4702e3bda364e459701a954ca82b64, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3867,6 +3880,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1327685265145348, guid: 5f4702e3bda364e459701a954ca82b64, type: 3}
+      propertyPath: m_Name
+      value: Female Eyes 03 Brown
+      objectReference: {fileID: 0}
+    - target: {fileID: 1327685265145348, guid: 5f4702e3bda364e459701a954ca82b64, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f4702e3bda364e459701a954ca82b64, type: 3}
 --- !u!4 &4170126775921593 stripped
@@ -3882,14 +3903,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1314450633}
     m_Modifications:
-    - target: {fileID: 1475404422086080, guid: 6a522b4822443074fafd477b3d27666f, type: 3}
-      propertyPath: m_Name
-      value: Headband 01B Gold
-      objectReference: {fileID: 0}
-    - target: {fileID: 1475404422086080, guid: 6a522b4822443074fafd477b3d27666f, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 4287897995702588, guid: 6a522b4822443074fafd477b3d27666f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.000000088478
@@ -3938,6 +3951,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.87295
       objectReference: {fileID: 0}
+    - target: {fileID: 1475404422086080, guid: 6a522b4822443074fafd477b3d27666f, type: 3}
+      propertyPath: m_Name
+      value: Headband 01B Gold
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475404422086080, guid: 6a522b4822443074fafd477b3d27666f, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 23324084916194098, guid: 6a522b4822443074fafd477b3d27666f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3958,14 +3979,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1314450633}
     m_Modifications:
-    - target: {fileID: 1611688922959858, guid: 9db9ff7e820442643b1acb5bf04653d6, type: 3}
-      propertyPath: m_Name
-      value: Female Mouth 03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1611688922959858, guid: 9db9ff7e820442643b1acb5bf04653d6, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 4041096042915762, guid: 9db9ff7e820442643b1acb5bf04653d6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4010,6 +4023,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1611688922959858, guid: 9db9ff7e820442643b1acb5bf04653d6, type: 3}
+      propertyPath: m_Name
+      value: Female Mouth 03
+      objectReference: {fileID: 0}
+    - target: {fileID: 1611688922959858, guid: 9db9ff7e820442643b1acb5bf04653d6, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9db9ff7e820442643b1acb5bf04653d6, type: 3}
 --- !u!4 &4041095138799327 stripped
@@ -4025,16 +4046,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7019736914550313066}
     m_Modifications:
-    - target: {fileID: 7298912431453931981, guid: 3e191d953f9f69b468286e1cae6a7f57,
-        type: 3}
-      propertyPath: m_Name
-      value: Hurtbox
-      objectReference: {fileID: 0}
-    - target: {fileID: 7298912431453931981, guid: 3e191d953f9f69b468286e1cae6a7f57,
-        type: 3}
-      propertyPath: m_Layer
-      value: 13
-      objectReference: {fileID: 0}
     - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: damage
@@ -4046,6 +4057,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6900419879104588741, guid: 2c69415200fd0914682a9abdace5da15,
         type: 3}
+    - target: {fileID: 7298912431453931981, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: m_Name
+      value: Hurtbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 7298912431453931981, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalPosition.x

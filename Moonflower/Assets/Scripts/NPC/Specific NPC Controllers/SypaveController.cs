@@ -134,9 +134,9 @@ public class SypaveController : MonoBehaviour, INPCController
             displayFeedback("Sypave is not interested in the " + giftName.ToLower() + "?");
         }
     }
-    public void Distract()
+    public void Distract(GameObject distractedBy)
     {
-
+        movement.Distracted(distractedBy);
     }
     public void EndDistract()
     {

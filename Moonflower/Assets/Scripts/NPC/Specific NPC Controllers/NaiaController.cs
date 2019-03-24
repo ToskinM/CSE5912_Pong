@@ -173,9 +173,9 @@ public class NaiaController : MonoBehaviour, INPCController
             displayFeedback("Why would Naia want the " + giftName.ToLower() + "?");
         }
     }
-    public void Distract()
+    public void Distract(GameObject distractedBy)
     {
-
+        movement.Distracted(distractedBy);
     }
 
     public void EndDistract()

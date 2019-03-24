@@ -9,7 +9,7 @@ public interface INPCController
 
     void Talk();
     void Gift(string giftName);
-    void Distract();
+    void Distract(GameObject distractedBy);
     void EndDistract();
     string Inspect();
 }

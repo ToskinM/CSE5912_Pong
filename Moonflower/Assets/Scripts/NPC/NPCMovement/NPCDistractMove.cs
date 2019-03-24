@@ -25,6 +25,8 @@ public class NPCDistractMove : MonoBehaviour, IMovement, INPCMovement
     void Start()
     {
         GameStateController.OnPaused += HandlePauseEvent;
+        //agent = self.GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     //initialize so player CANNOT wander CANNOT engage
@@ -85,6 +87,8 @@ public class NPCDistractMove : MonoBehaviour, IMovement, INPCMovement
     public void Chill()
     {
         Action = Actions.Chilling;
+        if (agent == null)
+            Debug.Log("no agent");
         agent.isStopped = true;
     }
 
