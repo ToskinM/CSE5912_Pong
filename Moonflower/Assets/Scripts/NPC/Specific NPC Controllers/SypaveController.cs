@@ -140,7 +140,7 @@ public class SypaveController : MonoBehaviour, INPCController
     }
     public void EndDistract()
     {
-
+        movement.Reset();
     }
     public string Inspect()
     {

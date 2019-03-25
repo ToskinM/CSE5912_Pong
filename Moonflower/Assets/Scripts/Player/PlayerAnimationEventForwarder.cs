@@ -29,4 +29,9 @@ public class AnaiAnimationEventForwarder : MonoBehaviour
     {
         PlayerController.instance.ActivePlayerCombatControls.GoHurt();
     }
+
+    public void EndDistraction()
+    {
+
+    }
 }

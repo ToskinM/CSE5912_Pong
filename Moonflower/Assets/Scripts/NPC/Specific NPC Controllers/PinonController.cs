@@ -126,8 +126,9 @@ public class PinonController : MonoBehaviour, INPCController
 
     public void EndDistract()
     {
-
+        npc.Reset();
     }
+
 
     public string Inspect()
     {

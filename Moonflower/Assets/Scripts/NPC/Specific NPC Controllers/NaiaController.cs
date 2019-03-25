@@ -174,12 +174,12 @@ public class NaiaController : MonoBehaviour, INPCController
     }
     public void Distract(GameObject distractedBy)
     {
-
+        movement.Distracted(distractedBy);
     }
 
     public void EndDistract()
     {
-
+        movement.Reset();
     }
 
     public string Inspect()

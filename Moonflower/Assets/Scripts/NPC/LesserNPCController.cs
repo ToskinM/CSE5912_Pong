@@ -130,8 +130,9 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
     public void EndDistract()
     {
-
+        movement.Reset();
     }
+
     public string Inspect()
     {
         return Constants.MOUSE_NAME; 
