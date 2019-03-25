@@ -35,6 +35,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     private readonly float[] attackMultipliers = new float[] { 0f, 1f };
     public bool isAttacking;
     public bool hasRangedAttack;
+    public bool preferRangedAttack = false;
     public Transform projectileNode;
     public GameObject rangedProjectile;
     public float rangedAttackCooldown = 3f;
@@ -156,23 +157,27 @@ public class NPCCombatController : MonoBehaviour, ICombatController
                     // Get hurtbox information
                     IHurtboxController hurtboxController = other.gameObject.GetComponent<IHurtboxController>();
                     GameObject source = hurtboxController.Source;
-                    int damage = hurtboxController.Damage;
 
-                    if (!IsBlocking)
-                        Stagger();
-
-                    ICombatController sourceCombatController = null;
-                    sourceCombatController = source.GetComponent<NPCCombatController>();
-                    if (sourceCombatController == null)
+                    if (source != gameObject)
                     {
-                        //sourceCombatController = source.GetComponent<PlayerCombatController>();
-                        sourceCombatController = PlayerController.instance.ActivePlayerCombatControls;  // Now uses generic Player object
-                    }
+                        int damage = hurtboxController.Damage;
 
-                    if (source)
-                        Stats.TakeDamage(damage, source.name, hurtboxController.SourceCharacterStats, sourceCombatController, GetContactPoint(other), IsBlocking);
-                    else
-                        Stats.TakeDamage(damage, "Unknown");
+                        if (!IsBlocking)
+                            Stagger();
+
+                        ICombatController sourceCombatController = null;
+                        sourceCombatController = source.GetComponent<NPCCombatController>();
+                        if (sourceCombatController == null)
+                        {
+                            //sourceCombatController = source.GetComponent<PlayerCombatController>();
+                            sourceCombatController = PlayerController.instance.ActivePlayerCombatControls;  // Now uses generic Player object
+                        }
+
+                        if (source)
+                            Stats.TakeDamage(damage, source.name, hurtboxController.SourceCharacterStats, sourceCombatController, GetContactPoint(other), IsBlocking);
+                        else
+                            Stats.TakeDamage(damage, "Unknown");
+                    }
                 }
             }
 
@@ -183,7 +188,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     {
         Vector3 locPos = Vector3.zero;
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, other.transform.position - transform.position, out hit, LayerMask.GetMask("Debug")))
+        if (Physics.Raycast(transform.position, other.transform.position - transform.position, out hit, 100f, LayerMask.GetMask("Hurtbox")))
         {
             //Debug.Log("Point of contact: " + hit.point);
             locPos = hit.point;
@@ -280,16 +285,33 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
     private void ManageCombat()
     {
-        // Attack if we can see the target and they're close enough
-        if (Vector3.Distance(combatTarget.transform.position, transform.position) < attackDistance)
+        if (preferRangedAttack)
         {
-            Attack();
+            // Attack if we can see the target and they're close enough
+            if (Vector3.Distance(combatTarget.transform.position, transform.position) < 2)
+            {
+                Attack();
+            }
+            else if (Vector3.Distance(combatTarget.transform.position, transform.position) < attackDistance)
+            {
+                if (hasRangedAttack && projectileNode && timeSinceLastAttack > rangedAttackCooldown)
+                    AttackProjectile();
+            }
         }
         else
         {
-            if (hasRangedAttack && projectileNode && timeSinceLastAttack > rangedAttackCooldown)
-                AttackProjectile();
+            // Attack if we can see the target and they're close enough
+            if (Vector3.Distance(combatTarget.transform.position, transform.position) < attackDistance)
+            {
+                Attack();
+            }
+            else
+            {
+                if (hasRangedAttack && projectileNode && timeSinceLastAttack > rangedAttackCooldown)
+                    AttackProjectile();
+            }
         }
+
         //if (fieldOfView.IsInFieldOfView(combatTarget.transform) && Vector3.Distance(combatTarget.transform.position, transform.position) < attackDistance)
         //{
         //    Attack();

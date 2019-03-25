@@ -212,6 +212,9 @@ public class LesserNPCController : MonoBehaviour, INPCController
     {
         Transform parent = gameObject.parent;
 
+        if (parent == null)
+            return null;
+
         while (parent != gameObject)
         {
             if (parent.gameObject.layer == LayerMask.NameToLayer(layer) || parent.gameObject.layer == LayerMask.NameToLayer(layer2))

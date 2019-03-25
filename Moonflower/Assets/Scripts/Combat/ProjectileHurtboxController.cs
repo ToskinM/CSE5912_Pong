@@ -17,6 +17,14 @@ public class ProjectileHurtboxController : MonoBehaviour, IHurtboxController
 
     private void OnTriggerEnter(Collider other)
     {
-        projectile.OnHit(other.transform.root.gameObject);
+        //GameObject otherCharacter = LesserNPCController.GetRootmostObjectInLayer(other.transform, "NPC", "Player");
+        GameObject otherCharacter = other.transform.root.gameObject;
+        if (otherCharacter == null || otherCharacter != Source)
+        {
+            //Debug.Log(otherCharacter + "&&" + Source);
+
+            //projectile.OnHit(other.transform.root.gameObject);
+            projectile.OnHit(otherCharacter);
+        }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BroomImpProjectile : MonoBehaviour, IProjectile
+public class BaseProjectileBehavior : MonoBehaviour, IProjectile
 {
     public GameObject explosion;
     public int baseDamage = 2;

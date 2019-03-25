@@ -258,7 +258,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     {
         Vector3 locPos = Vector3.zero;
         RaycastHit hit;
-        if (Physics.Raycast(currentPlayer.transform.position, other.transform.position - currentPlayer.transform.position, out hit, LayerMask.GetMask("Debug")))
+        if (Physics.Raycast(currentPlayer.transform.position, other.transform.position - currentPlayer.transform.position, out hit, 100f, LayerMask.GetMask("Character")))
         {
             //Debug.Log("Point of contact: " + hit.point);
             locPos = hit.point;
