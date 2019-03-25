@@ -43,6 +43,13 @@ public class CharacterStats : MonoBehaviour
         PlayerController.OnCharacterSwitch += SwapPlayerHealth;
     }
 
+    void Update()
+    {
+        if (HUD == null)
+            HUD = GameObject.Find("HUD");
+        display = HUD.GetComponent<PlayerHealthDisplay>();
+    }
+
     // Not sure how combat/interactions are going to be implemented beforehand (script-wise) so just leaving general methods for now
 
     public int DealDamage()

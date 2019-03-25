@@ -1309,6 +1309,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b40dc719ddb0f7048bb2a9ebb520c332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &157348647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157348644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 273ba235947f1684bb2a5777ded877fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &157348648 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1211463791, guid: 51c8baa03be78fc46a1c9f85a59c1b6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 157348643}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7816da57fe59251489a2c43e5a3e7048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &157348649 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 632203327, guid: 51c8baa03be78fc46a1c9f85a59c1b6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 157348643}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7816da57fe59251489a2c43e5a3e7048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &160835691
 GameObject:
   m_ObjectHideFlags: 0
@@ -7666,16 +7702,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game State Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 2811909879628630316, guid: 60936e5ec04f6e44e86539798f462f3b,
-        type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 157348644}
-    - target: {fileID: 2811909879628630316, guid: 60936e5ec04f6e44e86539798f462f3b,
-        type: 3}
-      propertyPath: MainCamera
-      value: 
-      objectReference: {fileID: 1780706142}
     - target: {fileID: 2811909879628630317, guid: 60936e5ec04f6e44e86539798f462f3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7731,6 +7757,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2811909879628630316, guid: 60936e5ec04f6e44e86539798f462f3b,
+        type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 157348644}
+    - target: {fileID: 2811909879628630316, guid: 60936e5ec04f6e44e86539798f462f3b,
+        type: 3}
+      propertyPath: MainCamera
+      value: 
+      objectReference: {fileID: 1780706142}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60936e5ec04f6e44e86539798f462f3b, type: 3}
 --- !u!1 &1236011727
@@ -10640,7 +10676,7 @@ MonoBehaviour:
   Charisma: 5
   Stealth: 5
   strengthExperience: 0
-  HUD: {fileID: 0}
+  HUD: {fileID: 1954491023}
 --- !u!114 &1599248367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10694,8 +10730,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combatController: {fileID: 0}
   anaiAttackHurtboxes:
-  - {fileID: 851446242}
-  - {fileID: 851446241}
+  - {fileID: 157348649}
+  - {fileID: 157348648}
   mimbiAttackHurtboxes:
   - {fileID: 851446242}
   - {fileID: 851446241}

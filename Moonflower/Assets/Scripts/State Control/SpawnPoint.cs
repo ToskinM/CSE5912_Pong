@@ -8,7 +8,6 @@ public class SpawnPoint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = GameObject.Find("Anai House Spawn").transform.position;
     }
 
     public void Spawn()
