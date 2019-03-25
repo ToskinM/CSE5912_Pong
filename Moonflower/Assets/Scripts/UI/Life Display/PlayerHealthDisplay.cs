@@ -8,25 +8,18 @@ public class PlayerHealthDisplay : MonoBehaviour
 {
     public GameObject Flower;
     public GameObject Apple;
-    public GameObject PlayerObject;
-
-    private PlayerController playerController;
 
     private LifeAppleController appleControl;
     private LifeFlowerController flowerControl;
     private CharacterStats playerStats;
 
-    void Awake()
-    {
-        playerController = PlayerObject.GetComponent<PlayerController>();
-    }
 
     // Start is called before the first frame update
     void Start()
     {
         appleControl = new LifeAppleController(Apple);
         flowerControl = new LifeFlowerController(Flower);
-        playerStats = PlayerObject.GetComponent<CharacterStats>();
+        playerStats = PlayerController.instance.gameObject.GetComponent<CharacterStats>();
 
         PlayerController.OnCharacterSwitch += SwitchHealthBar;
     }
@@ -35,7 +28,7 @@ public class PlayerHealthDisplay : MonoBehaviour
     {
         float healthFrac = 1.0f * playerStats.CurrentHealth / playerStats.MaxHealth;
 
-        if (playerController.GetActiveCharacter() == PlayerController.PlayerCharacter.Anai)
+        if (PlayerController.instance.GetActiveCharacter() == PlayerController.PlayerCharacter.Anai)
         {
             flowerControl.UpdateFlower(healthFrac);
         }
@@ -47,7 +40,7 @@ public class PlayerHealthDisplay : MonoBehaviour
 
     public void HitHealth(int current, int max)
     {
-        if (playerController.GetActiveCharacter() == PlayerController.PlayerCharacter.Anai)
+        if (PlayerController.instance.GetActiveCharacter() == PlayerController.PlayerCharacter.Anai)
             flowerControl.Hit();
         else
             appleControl.Hit();
