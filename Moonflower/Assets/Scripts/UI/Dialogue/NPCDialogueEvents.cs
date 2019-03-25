@@ -9,6 +9,13 @@ using TMPro;
 
 public class NPCDialogueEvents : MonoBehaviour
 {
+    public static NPCDialogueEvents instance;
+
+    void Start()
+    {
+        instance = this; 
+    }
+
     const int playerStatBuff = 3;
 
     public void InduceFight(string NPCname)

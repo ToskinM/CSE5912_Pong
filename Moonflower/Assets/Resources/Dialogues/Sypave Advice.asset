@@ -35,6 +35,10 @@ MonoBehaviour:
   - {fileID: 114564673618421840}
   - {fileID: 114337177885111348}
   - {fileID: 114255011536158270}
+  - {fileID: 114901416438619776}
+  - {fileID: 114129730736482670}
+  - {fileID: 114780158262894112}
+  - {fileID: 114238205481210332}
 --- !u!114 &114040718537803560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +137,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114602748899228084}
+        node: {fileID: 114238205481210332}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -158,6 +162,76 @@ MonoBehaviour:
     voiceClip: {fileID: 0}
   - text: I'm tired.
     voiceClip: {fileID: 0}
+--- !u!114 &114129730736482670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8033ebb924d43464ab3c372c8457585f, type: 3}
+  m_Name: Event
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3256, y: 120}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114129730736482670}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: answers 1
+        node: {fileID: 114244471676095854}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114129730736482670}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114331264921077058}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  trigger:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3451469675218526158, guid: 60936e5ec04f6e44e86539798f462f3b,
+          type: 3}
+        m_MethodName: IncreasePlayerCharisma
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 3451469675218526158, guid: 60936e5ec04f6e44e86539798f462f3b,
+          type: 3}
+        m_MethodName: GiveToPlayer
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Feather
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114180742606406412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +359,64 @@ MonoBehaviour:
     here, but I was wrong. I also thought I could trust you to keep him in the premises,
     but I was wrong about that too. '
   answers: []
+--- !u!114 &114238205481210332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8033ebb924d43464ab3c372c8457585f, type: 3}
+  m_Name: Event
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1432, y: -56}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114238205481210332}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: answers 1
+        node: {fileID: 114100962814492806}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114238205481210332}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114602748899228084}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  trigger:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3451469675218526158, guid: 60936e5ec04f6e44e86539798f462f3b,
+          type: 3}
+        m_MethodName: IncreasePlayerCharisma
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114244471676095854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,7 +430,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 2920, y: 88}
+  position: {x: 2824, y: 88}
   ports:
     keys:
     - input
@@ -332,7 +464,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114665638748873334}
+        node: {fileID: 114901416438619776}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -343,7 +475,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114331264921077058}
+        node: {fileID: 114129730736482670}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -381,7 +513,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 2920, y: 632}
+  position: {x: 3256, y: 680}
   ports:
     keys:
     - input
@@ -392,8 +524,8 @@ MonoBehaviour:
       _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: answers 2
-        node: {fileID: 114375742783424232}
+      - fieldName: output
+        node: {fileID: 114780158262894112}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -406,8 +538,8 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 0
       _dynamic: 0
-  text: '*glare* You''re not the one who gets to walk away from this. And besides.
-    This isn''t about me. It''s about Pinon. So continue the search this instant. '
+  text: '*glare* You''re not the one who gets to walk away from this. And besides,
+    this isn''t about me. It''s about Pinon. So continue the search this instant. '
   answers: []
 --- !u!114 &114289679503880738
 MonoBehaviour:
@@ -450,7 +582,7 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 0
       _dynamic: 0
-  text: 'You think that if he''d know... Oh, if he''d know who might be out there... '
+  text: 'You think that if he''d known... who might be out there... '
   answers: []
 --- !u!114 &114331264921077058
 MonoBehaviour:
@@ -465,7 +597,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3512, y: 232}
+  position: {x: 3640, y: 232}
   ports:
     keys:
     - input
@@ -476,8 +608,8 @@ MonoBehaviour:
       _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: answers 1
-        node: {fileID: 114244471676095854}
+      - fieldName: output
+        node: {fileID: 114129730736482670}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -494,7 +626,7 @@ MonoBehaviour:
       _connectionType: 0
       _dynamic: 0
   text: '*smile* Here, have a feather from me. Without it, my headress is incomplete,
-    so you''d better make it back so it is whole again. '
+    so you''d better make it back in one piece. '
   answers: []
 --- !u!114 &114337177885111348
 MonoBehaviour:
@@ -549,7 +681,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1400, y: 120}
+  position: {x: 1384, y: 168}
   ports:
     keys:
     - input
@@ -714,7 +846,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 2426, y: 366}
+  position: {x: 2344, y: 376}
   ports:
     keys:
     - input
@@ -782,7 +914,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114255011536158270}
+        node: {fileID: 114780158262894112}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -1024,7 +1156,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1400, y: -72}
+  position: {x: 1832, y: -72}
   ports:
     keys:
     - input
@@ -1035,8 +1167,8 @@ MonoBehaviour:
       _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: answers 1
-        node: {fileID: 114100962814492806}
+      - fieldName: output
+        node: {fileID: 114238205481210332}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1065,7 +1197,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3512, y: 40}
+  position: {x: 3640, y: -8}
   ports:
     keys:
     - input
@@ -1076,8 +1208,8 @@ MonoBehaviour:
       _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: answers 0
-        node: {fileID: 114244471676095854}
+      - fieldName: output
+        node: {fileID: 114901416438619776}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1175,6 +1307,122 @@ MonoBehaviour:
       _dynamic: 0
   text: 'Good. Now go. '
   answers: []
+--- !u!114 &114780158262894112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8033ebb924d43464ab3c372c8457585f, type: 3}
+  m_Name: Event
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2872, y: 648}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114780158262894112}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: answers 2
+        node: {fileID: 114375742783424232}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114780158262894112}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114255011536158270}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  trigger:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3451469675218526158, guid: 60936e5ec04f6e44e86539798f462f3b,
+          type: 3}
+        m_MethodName: IncreasePlayerCharisma
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &114901416438619776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8033ebb924d43464ab3c372c8457585f, type: 3}
+  m_Name: Event
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3256, y: -104}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114901416438619776}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: answers 0
+        node: {fileID: 114244471676095854}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114901416438619776}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114665638748873334}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  trigger:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3451469675218526158, guid: 60936e5ec04f6e44e86539798f462f3b,
+          type: 3}
+        m_MethodName: GiveToPlayer
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Flute
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114916626689205424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1188,7 +1436,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1389, y: 744}
+  position: {x: 1384, y: 760}
   ports:
     keys:
     - input

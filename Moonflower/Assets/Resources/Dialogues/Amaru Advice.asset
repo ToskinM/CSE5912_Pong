@@ -38,6 +38,10 @@ MonoBehaviour:
   - {fileID: 114459162081715368}
   - {fileID: 114310221561938042}
   - {fileID: 114102524849822442}
+  - {fileID: 114415475108764086}
+  - {fileID: 114628489051073706}
+  - {fileID: 114534831496945304}
+  - {fileID: 114645802916056170}
 --- !u!114 &114000632067242796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,7 +361,7 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 0
       _dynamic: 0
-  text: 'Now I''m even more anxious for him. '
+  text: 'Now I''m even more anxious for Pinon. '
   answers: []
 --- !u!114 &114202243806430596
 MonoBehaviour:
@@ -406,7 +410,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114310898855278382}
+        node: {fileID: 114415475108764086}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -417,7 +421,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114310898855278382}
+        node: {fileID: 114628489051073706}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -428,7 +432,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114310898855278382}
+        node: {fileID: 114534831496945304}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -542,7 +546,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3416, y: 344}
+  position: {x: 3880, y: 344}
   ports:
     keys:
     - input
@@ -553,14 +557,14 @@ MonoBehaviour:
       _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: answers 0
-        node: {fileID: 114202243806430596}
+      - fieldName: output
+        node: {fileID: 114415475108764086}
         reroutePoints: []
-      - fieldName: answers 1
-        node: {fileID: 114202243806430596}
+      - fieldName: output
+        node: {fileID: 114628489051073706}
         reroutePoints: []
-      - fieldName: answers 2
-        node: {fileID: 114202243806430596}
+      - fieldName: output
+        node: {fileID: 114534831496945304}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -659,6 +663,64 @@ MonoBehaviour:
     voiceClip: {fileID: 0}
   - text: 'Maybe just to get out. '
     voiceClip: {fileID: 0}
+--- !u!114 &114415475108764086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8033ebb924d43464ab3c372c8457585f, type: 3}
+  m_Name: Event
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3288, y: 136}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114415475108764086}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: answers 0
+        node: {fileID: 114202243806430596}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114415475108764086}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114310898855278382}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  trigger:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3451469675218526158, guid: 60936e5ec04f6e44e86539798f462f3b,
+          type: 3}
+        m_MethodName: GiveToPlayer
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Honey
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114416068942094620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -824,7 +886,7 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 0
       _dynamic: 0
-  text: 'You never know. The world is a strange and mystrical place. I wouldn''t be
+  text: 'You never know. The world is a strange and mystical place. I wouldn''t be
     so quick to dismiss it. And who knows? They might be friendly. Maybe they just
     want a gift to kick things off. '
   answers: []
@@ -912,6 +974,64 @@ MonoBehaviour:
   text: 'Anai, what if something happens to him? After everything that happened...
     Sypave would break. '
   answers: []
+--- !u!114 &114534831496945304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8033ebb924d43464ab3c372c8457585f, type: 3}
+  m_Name: Event
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3304, y: 552}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114534831496945304}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: answers 2
+        node: {fileID: 114202243806430596}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114534831496945304}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114310898855278382}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  trigger:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3451469675218526158, guid: 60936e5ec04f6e44e86539798f462f3b,
+          type: 3}
+        m_MethodName: GiveToPlayer
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Rope
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114538526968658644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -925,7 +1045,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -136, y: 216}
+  position: {x: -152, y: 216}
   ports:
     keys:
     - input
@@ -1080,8 +1200,125 @@ MonoBehaviour:
       _connectionType: 0
       _dynamic: 0
   text: '*sigh* Tragically, that does not surprise me. But I''m sure the only people
-    around here live here. No one else would dare... They just wouldn''t...'
+    around here live here. No one else would dare... He wouldn''t come near... He
+    just wouldn''t...'
   answers: []
+--- !u!114 &114628489051073706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8033ebb924d43464ab3c372c8457585f, type: 3}
+  m_Name: Event
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3288, y: 344}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114628489051073706}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: answers 1
+        node: {fileID: 114202243806430596}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114628489051073706}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114310898855278382}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  trigger:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3451469675218526158, guid: 60936e5ec04f6e44e86539798f462f3b,
+          type: 3}
+        m_MethodName: GiveToPlayer
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Chipa
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &114645802916056170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8033ebb924d43464ab3c372c8457585f, type: 3}
+  m_Name: Event
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2088, y: -104}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114645802916056170}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: answers 0
+        node: {fileID: 114805978130357440}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114645802916056170}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114862530353482878}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  trigger:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3451469675218526158, guid: 60936e5ec04f6e44e86539798f462f3b,
+          type: 3}
+        m_MethodName: IncreasePlayerCharisma
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114805978130357440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1132,7 +1369,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114862530353482878}
+        node: {fileID: 114645802916056170}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -1180,7 +1417,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 2136, y: -88}
+  position: {x: 2440, y: -88}
   ports:
     keys:
     - input
@@ -1191,8 +1428,8 @@ MonoBehaviour:
       _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: answers 0
-        node: {fileID: 114805978130357440}
+      - fieldName: output
+        node: {fileID: 114645802916056170}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1378,8 +1615,8 @@ MonoBehaviour:
       _connectionType: 0
       _dynamic: 0
   text: 'You should be. Or maybe you shouldn''t. I''ve never met one. Maybe they''re
-    nice. You know what- Yeah, you should opperate under the assumption that they''re
-    nice. Maybe give them a gift if you meet them. '
+    nice. You know what- Yeah, you should assume that they''re nice. Maybe give them
+    a gift if you meet them. '
   answers: []
 --- !u!114 &114983874020240544
 MonoBehaviour:

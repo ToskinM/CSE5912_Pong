@@ -338,6 +338,7 @@ public class DialogueTrigger : MonoBehaviour
         //if we didn't go to a new node on the tree, then we're at end of branch
         if (next.Equals(prev))
         {
+            NPCDialogueEvents.instance.IncreasePlayerCharisma(true);
             //terminate conversation
             EndDialogue();
             complete = true;
