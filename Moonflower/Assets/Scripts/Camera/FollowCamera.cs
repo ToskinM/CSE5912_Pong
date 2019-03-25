@@ -332,7 +332,7 @@ public class FollowCamera : MonoBehaviour
             // place indicator above target
             lockonIndicator.SetActive(true);
             lockonIndicator.transform.parent = lockOnTarget;
-            lockonIndicator.transform.localPosition = new Vector3(0, 1.5f, 0);
+            lockonIndicator.transform.localPosition = new Vector3(0, 2f, 0);
             //lockOnTarget.gameObject.GetComponent<Renderer>().bounds.extents.y + 1;
         }
         else

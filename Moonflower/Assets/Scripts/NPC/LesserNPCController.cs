@@ -207,4 +207,19 @@ public class LesserNPCController : MonoBehaviour, INPCController
     {
         //enabled = !isPaused;
     }
+
+    public static GameObject GetRootmostObjectInLayer(Transform gameObject, string layer, string layer2 = "")
+    {
+        Transform parent = gameObject.parent;
+
+        while (parent != gameObject)
+        {
+            if (parent.gameObject.layer == LayerMask.NameToLayer(layer) || parent.gameObject.layer == LayerMask.NameToLayer(layer2))
+                return parent.gameObject;
+            else
+                parent = parent.parent;
+        }
+
+        return null;
+    }
 }

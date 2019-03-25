@@ -7,10 +7,13 @@ public class HurtboxController : MonoBehaviour, IHurtboxController
     public GameObject Source { get; set; }
     public CharacterStats SourceCharacterStats { get; set; }
     public int Damage { get; set; } = 1;
+    public GameObject source;
 
     private void Awake()
     {
-        Source = gameObject.transform.root.gameObject;
+        //Source = gameObject.transform.root.gameObject;
+        //Source = LesserNPCController.GetRootmostObjectInLayer(gameObject.transform, "NPC", "Player");
+        Source = source;
         SourceCharacterStats = Source.GetComponent<CharacterStats>();
     }
 
