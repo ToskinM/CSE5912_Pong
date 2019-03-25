@@ -29,9 +29,12 @@ public class Pickup : MonoBehaviour
 
         soundEffect = PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>();
         interaction = GameObject.Find("HUD").transform.GetChild(7).GetComponent<InteractionPopup>();
+
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
+        Debug.Log(PlayerController.instance.GetActivePlayerObject());
         currentPlayer = PlayerController.instance.GetActivePlayerObject();
+        Debug.Log("currentPlayer");
         PlayerController.OnCharacterSwitch += SwitchActiveCharacter; 
     }
 
@@ -164,7 +167,6 @@ public class Pickup : MonoBehaviour
     void Update()
     {
         DecidePickup();
-
     }
 
     void SwitchActiveCharacter(PlayerController.PlayerCharacter activeChar)
