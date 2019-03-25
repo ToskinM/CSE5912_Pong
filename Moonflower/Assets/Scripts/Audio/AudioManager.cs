@@ -182,6 +182,8 @@ public class AudioManager : MonoBehaviour
             Sound[] soundList = a.sounds;
             foreach (Sound s in soundList)
             {
+                if (s.source == null)
+                    break;
                 s.source.volume = vol;
                 //avalibleArea.HearableArea(s.source, vol);
             }
