@@ -79,11 +79,19 @@ public class PlayerAnimatorController : MonoBehaviour
 
     public void EnableDistraction()
     {
-        animator.SetBool(key_isDistract, true);
+        if (playerController.AnaiIsActive())
+        {
+            companionAnimator.SetBool(key_isDistract, false);
+        }
+        else
+        {
+            animator.SetBool(key_isDistract, false);
+        }
     }
 
     public void DisableDistraction()
     {
+
         animator.SetBool(key_isDistract, false);
     }
 
