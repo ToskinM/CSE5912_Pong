@@ -252,6 +252,15 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         combatTarget = PlayerController.instance.AnaiObject;
     }
 
+    public void EndFight()
+    {
+        combatTarget = null;
+        InCombat = false;
+        aggression = Aggression.Passive;
+        DeAggro();
+        SetWeaponSheathed(true);
+    }
+
     private IEnumerator Respawn()
     {
         yield return new WaitForSeconds(1f);
