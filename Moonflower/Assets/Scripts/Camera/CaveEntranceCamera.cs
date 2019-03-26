@@ -50,7 +50,7 @@ public class CaveEntranceCamera : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * panSpeed);
 
         // Smoothly keep camera centered
-        inputRotationX *= 0.9f * recenterTimeMultiplier;
-        inputRotationY *= 0.9f * recenterTimeMultiplier;
+        inputRotationX *= 0.96f * recenterTimeMultiplier;
+        inputRotationY *= 0.96f * recenterTimeMultiplier;
     }
 }
