@@ -15,6 +15,8 @@ public class AudioOptions : MonoBehaviour
 
     void Awake()
     {
+        Destroy();
+
         enivronmentSlider.value = PlayerPrefs.GetFloat("volumeEnivronment", 0.75f);
         effectsSlider.value = PlayerPrefs.GetFloat("volumeEffects", 0.75f);
         musicSlider.value = PlayerPrefs.GetFloat("volumeMusic", 0.75f);
