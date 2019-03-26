@@ -26,14 +26,19 @@ public class NaiaController : MonoBehaviour, INPCController
 
     private NPCMovementController movement;
     private NPCCombatController combatController;
+    private CharacterStats naiaStat; 
     private NavMeshAgent agent;
     private DialogueTrigger currTalk;
     private DialogueTrigger intro;
+    private DialogueTrigger postFight; 
     private DialogueTrigger advice; 
     private FeedbackText feedbackText;
     Vector3 centerOfTown;
 
-    int playerStatBuff = 3; 
+    const int playerStatBuff = 3;
+
+    bool trainingFight = false;
+    int goalHealth; 
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
@@ -43,15 +48,20 @@ public class NaiaController : MonoBehaviour, INPCController
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
         combatController = GetComponent<NPCCombatController>();
+        naiaStat = GetComponent<CharacterStats>(); 
 
         // Setup Movement
         Vector3 walkOrigin = transform.position;
         movement = new NPCMovementController(gameObject, PlayerController.instance.AnaiObject,Constants.NAIA_NAME);
+        movement.Wander(transform.position, 2);
+        movement.SetDefault(NPCMovementController.MoveState.wander); 
         centerOfTown = GameObject.Find("Campfire").transform.position;
 
         icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
         intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
         intro.SetExitText("See you around, I guess.");
+        postFight = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_POSTFIGHT_DIALOGUE);
+        postFight.SetExitText("Oh, come on. Is this because I hit too hard? I was trying to pull my punches..."); 
         advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_ADVICE_DIALOGUE);
         advice.SetExitText("You can't keep running away from this.");
         currTalk = intro; 
@@ -65,19 +75,24 @@ public class NaiaController : MonoBehaviour, INPCController
     void Update()
     {
         float playerDist = movement.DistanceFrom(PlayerController.instance.AnaiObject);  //getXZDist(transform.position, Player.transform.position);
+        if (combatController.Active && combatController.InCombat)
+        {
+            currState = NaiaEngageType.fight;
+            combatController.enabled = true;
+        }
 
         switch (currState)
         {
             case NaiaEngageType.chill:
                 //Debug.Log("chilling");
-                combatController.Active = false;
+                combatController.Active = true;
                 if (PlayerController.instance.AnaiIsActive() && PlayerController.instance.TalkingPartner == null && playerDist < engagementRadius && !currTalk.Complete)
                 {
                     //StartTalk();
                 }
                 break;
             case NaiaEngageType.fight:
-                Debug.Log("fighting");
+//                Debug.Log("fighting");
                 combatController.Active = true;
 
                 if (combatController.InCombat)
@@ -85,11 +100,27 @@ public class NaiaController : MonoBehaviour, INPCController
                     movement.Follow(combatController.combatTarget, combatController.attackDistance, 1.5f);
                     movement.SetHoldGround(true);
                 }
+
+                CharacterStats pStats = PlayerController.instance.ActivePlayerStats; 
+                if (trainingFight)
+                    naiaStat.Strength = pStats.Strength+3;
+                else if (naiaStat.Strength < pStats.Strength * 2)
+                    naiaStat.Strength = pStats.Strength * 2;
+
+                if(trainingFight && pStats.CurrentHealth <= goalHealth)
+                {
+                    Debug.Log("Let's talk"); 
+                    trainingFight = false;
+                    combatController.EndFight();  
+                    currTalk = postFight; 
+                    StartTalk(); 
+                }
+
                 break;
 
             case NaiaEngageType.talk:
                 Debug.Log("talking");
-                //combatController.Active = false;
+                combatController.Active = false;
 
                 if (PlayerController.instance.AnaiIsActive())
                 {
@@ -107,10 +138,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
         }
 
-        if (combatController.Active && combatController.InCombat)
-        {
-            currState = NaiaEngageType.fight;
-        }
+
 
         movement.UpdateMovement();
         currTalk.Update();
@@ -195,6 +223,10 @@ public class NaiaController : MonoBehaviour, INPCController
         }
         currState = NaiaEngageType.fight;
         combatController.StartFightWithPlayer();
+        trainingFight = true;
+        CharacterStats pStat = PlayerController.instance.ActivePlayerStats;
+        goalHealth = pStat.CurrentHealth - (int)(pStat.Strength*2.5f);
+        Debug.Log("Goal health is " + goalHealth);  
     }
 
     private void displayFeedback(string text)

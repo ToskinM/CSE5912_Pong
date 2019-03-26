@@ -23,11 +23,16 @@ public class NPCDialogueEvents : MonoBehaviour
         switch (NPCname)
         {
             case "Naia":
-                GameObject.Find("Naia").GetComponent<NaiaController>().Fight();
+                    Invoke("fight", 2); //GameObject.Find("Naia").GetComponent<NaiaController>().Fight();
                 break;
             default:
                 break;
         }
+    }
+
+    private void fight()
+    {
+        GameObject.Find("Naia").GetComponent<NaiaController>().Fight();
     }
 
     public void IncreasePlayerCharisma(bool pos)
@@ -51,7 +56,18 @@ public class NPCDialogueEvents : MonoBehaviour
     public void GiveToPlayer(string giftName)
     {
         displayFeedback("You've been given a " + giftName.ToLower() + "!");
-        PlayerController.instance.gameObject.GetComponent<PlayerInventory>().AddObj(giftName);
+        if(giftName.Equals("Moon Flower"))
+        {
+            bool added = PlayerController.instance.ActivePlayerStats.AddHealth(10);
+            if(!added)
+            {
+                PlayerController.instance.gameObject.GetComponent<PlayerInventory>().AddObj(giftName);
+            }
+        }
+        else
+        {
+            PlayerController.instance.gameObject.GetComponent<PlayerInventory>().AddObj(giftName);
+        }
     }
 
     private void displayFeedback(string text)

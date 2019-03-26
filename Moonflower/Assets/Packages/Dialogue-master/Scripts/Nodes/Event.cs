@@ -23,8 +23,11 @@ namespace Dialogue
             NodePort port = null;
             port = GetOutputPort("output");
             if (port == null) return;
-            NodePort connection = port.GetConnection(0);
-            (connection.node as DialogueBaseNode).Trigger();
+            for (int i = 0; i < port.ConnectionCount; i++)
+            {
+                NodePort connection = port.GetConnection(i);
+                (connection.node as DialogueBaseNode).Trigger();
+            }
 
         }
     }

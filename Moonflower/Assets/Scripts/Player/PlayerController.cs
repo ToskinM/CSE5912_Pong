@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public FieldOfView ActivePlayerInteractionFOV;
     PlayerInventory ActivePlayerInventory;
     public PlayerAnimatorController ActivePlayerAnimator;
+    public CharacterStats ActivePlayerStats; 
 
     GameObject ActivePlayerObject;
 
@@ -43,6 +44,7 @@ public class PlayerController : MonoBehaviour
         ActivePlayerAnimator = GetComponent<PlayerAnimatorController>();
         ActivePlayerCombatControls = GetComponent<PlayerCombatController>();
         ActivePlayerInventory = GetComponent<PlayerInventory>();
+        ActivePlayerStats = GetComponent<CharacterStats>();
 
         // Set up reference in Awake so that other scripts can reference it during Start()
         ActivePlayerObject = AnaiObject;

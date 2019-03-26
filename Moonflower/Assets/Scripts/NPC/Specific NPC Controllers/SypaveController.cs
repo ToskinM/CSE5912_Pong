@@ -76,8 +76,11 @@ public class SypaveController : MonoBehaviour, INPCController
         if (currTalk.Complete)
         {
             movement.Reset();
-            if (currTalk == frantic)
-                currTalk = advice; 
+            //if (currTalk.Equals(frantic))
+            //{
+            //    Debug.Log("??"); 
+            //    currTalk = advice;
+            //}
         }
 
         movement.UpdateMovement();
@@ -149,6 +152,7 @@ public class SypaveController : MonoBehaviour, INPCController
 
     public void Afternoon()
     {
+        Debug.Log("It's afternoon");
         currTalk = frantic; 
     }
 

@@ -9,14 +9,11 @@ public class PauseMenuBehavior : MonoBehaviour
     public GameObject Menu, OptionsMenu;
     public Button main, options, quit, back;
     public ICommand returnMain, nag;
-    public Slider musicSlider;
-    public Slider audioSlider;
 
-    private float originalMusicVol;
-    private float originalAudioVol;
     private SceneController sceneController;    // Reference to the SceneController to actually do the loading and unloading of scenes.
 
     private AudioManager audioManager;
+    public AudioSource MusicAudioSource;
 
     void Start()
     {
@@ -30,8 +27,6 @@ public class PauseMenuBehavior : MonoBehaviour
         //Music 
         //StartCoroutine(GetAudioManager());
         audioManager = AudioManager.instance;
-        musicSlider.value = GetBackgroundVolume();
-        audioSlider.value = GetSoundVolume();
 
     }
 
@@ -73,9 +68,6 @@ public class PauseMenuBehavior : MonoBehaviour
         Menu.SetActive(false);
         OptionsMenu.SetActive(true);
         //FindObjectOfType<AudioManager>().Play("Menu");
-        //slider.value = FindObjectOfType<AudioManager>().GetVolume("Backgroud");
-        originalMusicVol = musicSlider.value;
-        originalAudioVol = audioSlider.value;
     }
 
     public void Win()
@@ -88,39 +80,10 @@ public class PauseMenuBehavior : MonoBehaviour
         //todo to display lose
     }
 
-    public void Slider()
-    {
-        if (Mathf.Abs(musicSlider.value - originalMusicVol) >= 0.01)
-        {
-            ChangeBackgroundVol(musicSlider.value);
-        }
-        if (Mathf.Abs(audioSlider.value - originalMusicVol) >= 0.01)
-        {
-            ChangeAudioVol(audioSlider.value);
-        }
-
-    }
-    public float GetBackgroundVolume()
-    {
-        return audioManager.GetBackgroundVolume();
-    }
-    public float GetSoundVolume()
-    {
-        return audioManager.GetSoundVolume();
-    }
-    public void ChangeBackgroundVol(float vol)
-    {
-        audioManager.ChangeBackgroundVol(vol);
-    }
-    public void ChangeAudioVol(float vol)
-    {
-        audioManager.ChangeSoundVol(vol);
-    }
 
     void Update()
     {
-        //if (OptionsMenu.activeInHierarchy == true)
-        //    Slider();
+
     }
 }
 
