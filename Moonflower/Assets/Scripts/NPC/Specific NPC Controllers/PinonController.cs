@@ -27,7 +27,13 @@ public class PinonController : MonoBehaviour, INPCController
     NPCMovementController npc;
     Animator NPCController;
     NavMeshAgent agent;
-    DialogueTrigger talkTrig;
+
+    enum Convo { first, intro }
+    Convo currConvo = Convo.first; 
+    DialogueTrigger currTalk;
+    DialogueTrigger firstIntro;
+    DialogueTrigger intro; 
+
     PlayerController playerController;
     Animator animator;
     private FeedbackText feedbackText;
@@ -62,8 +68,11 @@ public class PinonController : MonoBehaviour, INPCController
 
 
         icon = new IconFactory().GetIcon(Constants.PINON_ICON);
-        talkTrig = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.PINON_FIRST_INTRO_DIALOGUE);
-        talkTrig.SetExitText("Fine. I didn't want to talk to you either."); 
+        firstIntro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.PINON_FIRST_INTRO_DIALOGUE);
+        firstIntro.SetExitText("Fine. I didn't want to talk to you either.");
+        intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.PINON_INTRO_DIALOGUE);
+        intro.SetExitText("You're going to leave me alone? Finally!");
+        currTalk = firstIntro; 
 
         actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
     }
@@ -73,46 +82,62 @@ public class PinonController : MonoBehaviour, INPCController
     {
         if (currentPlayer.IsAnai())
         {
-            talkTrig.Update();
+            currTalk.Update();
 
             npc.UpdateMovement();
 
-            if (npc.DistanceFrom(anai) < engagementRadius && !talkTrig.Complete)
+            if (npc.DistanceFrom(anai) < engagementRadius && !firstIntro.Complete)
             {
                 StartTalk();
                 //indicateInterest();
                 npc.Follow();
             }
-            else if (talkTrig.Complete && npc.state != NPCMovementController.MoveState.wander)
+            else if (currTalk.Complete && npc.state != NPCMovementController.MoveState.wander)
             {
                 npc.SetDefault(NPCMovementController.MoveState.wander);
                 npc.Wander();
                 npc.Run(1.3f);
-            }
-            else
-            { 
-                //npc.Reset(); 
+                switch(currConvo)
+                {
+                    case Convo.first:
+                        Invoke("switchConvos", 3);
+                        currConvo = Convo.intro; 
+                        break;
+                    case Convo.intro:
+                        break; 
+                }
             }
         }
         else
         {
             npc.UpdateMovement();
         }
-        dialogueActive = talkTrig.DialogueActive();
+        dialogueActive = currTalk.DialogueActive();
         NPCController.SetBool("IsTalking", dialogueActive);
 
+    }
+
+    private void switchConvos()
+    {
+        currTalk = intro; 
+    }
+
+    public void Afternoon()
+    {
+        gameObject.SetActive(false); 
     }
 
     // Action Wheel Interactions
     public void Talk()
     {
-        if (talkTrig.Complete)
+        if (currTalk.Complete)
         {
             displayFeedback("Pinon doesn't want to talk to you.");
         }
         else
         {
             StartTalk();
+            npc.Follow();
         }
     }
     public void Gift(string giftName)
@@ -138,10 +163,10 @@ public class PinonController : MonoBehaviour, INPCController
     //start current conversation
     public void StartTalk()
     {
-        if (!talkTrig.DialogueActive())
+        if (!currTalk.DialogueActive())
         {
             //playerController.TalkingPartner = gameObject;
-            talkTrig.StartDialogue();
+            currTalk.StartDialogue();
         }
     }
 
@@ -150,10 +175,10 @@ public class PinonController : MonoBehaviour, INPCController
     {
         //npc.Reset();
 
-        if (talkTrig.DialogueActive())
+        if (currTalk.DialogueActive())
         {
             //playerController.TalkingPartner = null;
-            talkTrig.EndDialogue();
+            currTalk.EndDialogue();
         }
     }
 

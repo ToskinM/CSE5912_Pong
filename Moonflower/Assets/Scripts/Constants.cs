@@ -114,6 +114,7 @@ public static class Constants
     //Pinon
     public const string PINON_NAME = "Pinon";
     public const string PINON_FIRST_INTRO_DIALOGUE = dialogueFolder + "Pinon FIRST Intro";
+    public const string PINON_INTRO_DIALOGUE = dialogueFolder + "Pinon Intro";
     //Ysapy
     public const string YSAPY_NAME = "Ysapy";
 
