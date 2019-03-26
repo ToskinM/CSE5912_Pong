@@ -178,7 +178,7 @@ public class SceneController : MonoBehaviour
 
         while (!asyncLoad.isDone)
         {
-            progress = Mathf.Lerp(progress + 0.1f, asyncLoad.progress, Time.deltaTime * 3f);
+            progress = Mathf.Lerp(Mathf.Clamp(progress + 0.1f, 0f, 1f), asyncLoad.progress, Time.deltaTime * 3f);
             loadingBar.value = progress;
             progressText.text = (progress * 100).ToString("F0") + "%";
             yield return null;
