@@ -256,6 +256,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     {
         combatTarget = null;
         InCombat = false;
+        aggression = Aggression.Passive;
         DeAggro();
         SetWeaponSheathed(true);
     }
