@@ -45,8 +45,6 @@ public class SpawnActionWheel : MonoBehaviour
         }
 
         currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
-    
-    
     }
 
     void Start()
@@ -124,7 +122,7 @@ public class SpawnActionWheel : MonoBehaviour
         {
             followCamera = LevelManager.current.mainCamera;
         }
-        if ( !otherWindowUp)
+        if (!otherWindowUp)
         {
             float dist = float.MaxValue; 
             if(target)

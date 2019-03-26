@@ -17,7 +17,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     public Aggression aggression;
     public enum Aggression { Passive, Unaggressive, Aggressive, Frenzied };
     private Coroutine deaggroCoroutine = null;
-    [HideInInspector] public GameObject combatTarget = null;
+    public GameObject combatTarget = null;
     private float deaggroTime = 3;
     private List<GameObject> aggressors;
 
@@ -254,11 +254,8 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
     public void EndFight()
     {
-        combatTarget = null;
-        InCombat = false;
         aggression = Aggression.Passive;
         DeAggro();
-        SetWeaponSheathed(true);
     }
 
     private IEnumerator Respawn()
