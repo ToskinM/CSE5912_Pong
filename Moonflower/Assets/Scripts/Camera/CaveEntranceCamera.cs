@@ -16,8 +16,8 @@ public class CaveEntranceCamera : MonoBehaviour
 
     private float cameraPanDistance;
 
-    public float inputRotationX;
-    public float inputRotationY;
+    private float inputRotationX;
+    private float inputRotationY;
 
     void Start()
     {
@@ -34,7 +34,7 @@ public class CaveEntranceCamera : MonoBehaviour
 
     void Update()
     {
-        // Get input adjustment
+        // Get input look adjustment
         inputRotationX = Mathf.Clamp(inputRotationX + Input.GetAxis("Mouse Y"), -yRotationClamp, yRotationClamp);
         inputRotationY = Mathf.Clamp(inputRotationY + Input.GetAxis("Mouse X"), -xRotationClamp, xRotationClamp);
 
