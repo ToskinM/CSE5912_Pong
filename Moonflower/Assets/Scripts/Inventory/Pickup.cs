@@ -32,9 +32,7 @@ public class Pickup : MonoBehaviour
 
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
-        Debug.Log(PlayerController.instance.GetActivePlayerObject());
         currentPlayer = PlayerController.instance.GetActivePlayerObject();
-        Debug.Log("currentPlayer");
         PlayerController.OnCharacterSwitch += SwitchActiveCharacter; 
     }
 

@@ -49,7 +49,9 @@ public class PlayerController : MonoBehaviour
         // Set up reference in Awake so that other scripts can reference it during Start()
         ActivePlayerObject = AnaiObject;
 
+        Debug.Log("HELP");
         ActivePlayerInteractionFOV = ActivePlayerObject.GetComponent<FieldOfView>();
+        Debug.Log("HELP " + ActivePlayerInteractionFOV == null);
         ActivePlayerInteractionFOV.enabled = true;
 
         LevelManager.current.player = this;
@@ -68,8 +70,8 @@ public class PlayerController : MonoBehaviour
     {
         activeCharacter = PlayerCharacter.Anai;
 
-        DontDestroyOnLoad(AnaiObject.transform);
-        DontDestroyOnLoad(MimbiObject.transform);
+        //DontDestroyOnLoad(AnaiObject.transform);
+        //DontDestroyOnLoad(MimbiObject.transform);
     }
 
     void Update()
