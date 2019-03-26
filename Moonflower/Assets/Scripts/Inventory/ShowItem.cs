@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShowItem : MonoBehaviour
 {
     public GameObject skyObj;
+    public SkyColors skyColors;
     public SkyColors.SkyCategory currentTime;
     private GameObject[] allCollidable;
 
@@ -17,7 +18,8 @@ public class ShowItem : MonoBehaviour
     private void CheckDayNightCycletoShowItems()
     {
         //Get Current Time
-        currentTime = FindObjectOfType<SkyColors>().GetDayNight();
+        currentTime = skyColors.GetDayNight();
+
         //Get All items
         foreach (GameObject collidableObj in allCollidable)
         {
@@ -25,8 +27,11 @@ public class ShowItem : MonoBehaviour
             {
                 break;
             }
+
             InventoryStat.DayNightCateogry dayNightCateogry;
+
             dayNightCateogry = collidableObj.GetComponent<InventoryStat>().GetDayNightCategory();
+
             if (dayNightCateogry == InventoryStat.DayNightCateogry.AllDay || currentTime == SkyColors.SkyCategory.Sunset)
             {
                 collidableObj.SetActive(true);
