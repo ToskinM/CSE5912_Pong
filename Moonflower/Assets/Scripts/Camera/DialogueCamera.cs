@@ -111,14 +111,13 @@ public class DialogueCamera : MonoBehaviour
 
     private IEnumerator BeginExit(Transform mainCameraTransform)
     {
-        dialogueTarget = null;
-
-        yield return new WaitForSeconds(0.3f);
-        // release player control (and switching)
-        gameStateController.SetPlayerFrozen(false);
+        
 
         // Transition camera back to our main camera
-        StartCoroutine(TransitionToMainCamera(mainCameraTransform));
+        yield return StartCoroutine(TransitionToMainCamera(mainCameraTransform));
+
+        //yield return new WaitForSeconds(0.8f);
+        
     }
     public void BeginInstantExit()
     {
@@ -133,6 +132,13 @@ public class DialogueCamera : MonoBehaviour
         state = DialogueCameraState.Dormant;
 
         LevelManager.current.mainCamera.SetRendering(true);
+
+        Input.ResetInputAxes();
+        // release player control (and switching)
+
+        dialogueTarget = null;
+        LevelManager.current.player.TalkingPartner = null;
+        gameStateController.SetPlayerFrozen(false);
     }
 
     private IEnumerator TransitionToDialogue(Transform newTarget, Transform startingTransform)

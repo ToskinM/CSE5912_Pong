@@ -9,7 +9,7 @@ public class ObjectPoolController : MonoBehaviour
 
     public Dictionary<string, ObjectPool> pools;
 
-    private const int CAPACITY_DEFAULT = 3;
+    private const int CAPACITY_DEFAULT = 10;
 
     void Awake()
     {
