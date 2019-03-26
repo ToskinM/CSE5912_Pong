@@ -101,6 +101,7 @@ public static class Constants
     //Naia
     public const string NAIA_NAME = "Naia";
     public const string NAIA_INTRO_DIALOGUE = dialogueFolder + "Naia Intro";
+    public const string NAIA_POSTFIGHT_DIALOGUE = dialogueFolder + "Naia Post Fight";
     public const string NAIA_ADVICE_DIALOGUE = dialogueFolder + "Naia Advice";
 
     //Sypave

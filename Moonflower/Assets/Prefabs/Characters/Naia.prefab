@@ -987,11 +987,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1650f9b37ca4d54284136ed5cc15f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Strength: 0
+  Strength: 10
   Attack: 0
   Defense: 0
-  MaxHealth: 10
-  CurrentHealth: 10
+  MaxHealth: 200
+  CurrentHealth: 200
   Cunning: 0
   Charisma: 0
   Stealth: 0
@@ -1023,7 +1023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0906979d9dba25841b61e1f5bc6ae5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aggression: 2
+  aggression: 1
   combatTarget: {fileID: 0}
   ragdollPrefab: {fileID: 0}
   deathEffect: {fileID: 1270126634788680, guid: 54bd8c7da32a6874bbc9f5487750acaf,
@@ -1032,6 +1032,7 @@ MonoBehaviour:
   attackDistance: 2.6
   isAttacking: 0
   hasRangedAttack: 0
+  preferRangedAttack: 0
   projectileNode: {fileID: 0}
   rangedProjectile: {fileID: 0}
   rangedAttackCooldown: 3
@@ -3692,6 +3693,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1314450633}
     m_Modifications:
+    - target: {fileID: 1541859936064796, guid: 43b1333b81aa2634bb96eaeade0690e1, type: 3}
+      propertyPath: m_Name
+      value: Earrings 01 Gold
+      objectReference: {fileID: 0}
+    - target: {fileID: 1541859936064796, guid: 43b1333b81aa2634bb96eaeade0690e1, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 4686665480414810, guid: 43b1333b81aa2634bb96eaeade0690e1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3736,14 +3745,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1541859936064796, guid: 43b1333b81aa2634bb96eaeade0690e1, type: 3}
-      propertyPath: m_Name
-      value: Earrings 01 Gold
-      objectReference: {fileID: 0}
-    - target: {fileID: 1541859936064796, guid: 43b1333b81aa2634bb96eaeade0690e1, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 23945786921467718, guid: 43b1333b81aa2634bb96eaeade0690e1,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3764,6 +3765,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1314450633}
     m_Modifications:
+    - target: {fileID: 1240056856925528, guid: bc4617e7f7438af4b81e20f18d4526f7, type: 3}
+      propertyPath: m_Name
+      value: Female Hair 01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240056856925528, guid: bc4617e7f7438af4b81e20f18d4526f7, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 4564447403106798, guid: bc4617e7f7438af4b81e20f18d4526f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3808,14 +3817,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1240056856925528, guid: bc4617e7f7438af4b81e20f18d4526f7, type: 3}
-      propertyPath: m_Name
-      value: Female Hair 01
-      objectReference: {fileID: 0}
-    - target: {fileID: 1240056856925528, guid: bc4617e7f7438af4b81e20f18d4526f7, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 23198119760446582, guid: bc4617e7f7438af4b81e20f18d4526f7,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3836,6 +3837,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1314450633}
     m_Modifications:
+    - target: {fileID: 1327685265145348, guid: 5f4702e3bda364e459701a954ca82b64, type: 3}
+      propertyPath: m_Name
+      value: Female Eyes 03 Brown
+      objectReference: {fileID: 0}
+    - target: {fileID: 1327685265145348, guid: 5f4702e3bda364e459701a954ca82b64, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 4170127321430066, guid: 5f4702e3bda364e459701a954ca82b64, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3880,14 +3889,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1327685265145348, guid: 5f4702e3bda364e459701a954ca82b64, type: 3}
-      propertyPath: m_Name
-      value: Female Eyes 03 Brown
-      objectReference: {fileID: 0}
-    - target: {fileID: 1327685265145348, guid: 5f4702e3bda364e459701a954ca82b64, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f4702e3bda364e459701a954ca82b64, type: 3}
 --- !u!4 &4170126775921593 stripped
@@ -3903,6 +3904,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1314450633}
     m_Modifications:
+    - target: {fileID: 1475404422086080, guid: 6a522b4822443074fafd477b3d27666f, type: 3}
+      propertyPath: m_Name
+      value: Headband 01B Gold
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475404422086080, guid: 6a522b4822443074fafd477b3d27666f, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 4287897995702588, guid: 6a522b4822443074fafd477b3d27666f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.000000088478
@@ -3951,14 +3960,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.87295
       objectReference: {fileID: 0}
-    - target: {fileID: 1475404422086080, guid: 6a522b4822443074fafd477b3d27666f, type: 3}
-      propertyPath: m_Name
-      value: Headband 01B Gold
-      objectReference: {fileID: 0}
-    - target: {fileID: 1475404422086080, guid: 6a522b4822443074fafd477b3d27666f, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 23324084916194098, guid: 6a522b4822443074fafd477b3d27666f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3979,6 +3980,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1314450633}
     m_Modifications:
+    - target: {fileID: 1611688922959858, guid: 9db9ff7e820442643b1acb5bf04653d6, type: 3}
+      propertyPath: m_Name
+      value: Female Mouth 03
+      objectReference: {fileID: 0}
+    - target: {fileID: 1611688922959858, guid: 9db9ff7e820442643b1acb5bf04653d6, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 4041096042915762, guid: 9db9ff7e820442643b1acb5bf04653d6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4023,14 +4032,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1611688922959858, guid: 9db9ff7e820442643b1acb5bf04653d6, type: 3}
-      propertyPath: m_Name
-      value: Female Mouth 03
-      objectReference: {fileID: 0}
-    - target: {fileID: 1611688922959858, guid: 9db9ff7e820442643b1acb5bf04653d6, type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9db9ff7e820442643b1acb5bf04653d6, type: 3}
 --- !u!4 &4041095138799327 stripped
@@ -4046,6 +4047,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7019736914550313066}
     m_Modifications:
+    - target: {fileID: 7298912431453931981, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: m_Name
+      value: Hurtbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 7298912431453931981, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: damage
@@ -4057,16 +4068,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6900419879104588741, guid: 2c69415200fd0914682a9abdace5da15,
         type: 3}
-    - target: {fileID: 7298912431453931981, guid: 3e191d953f9f69b468286e1cae6a7f57,
-        type: 3}
-      propertyPath: m_Name
-      value: Hurtbox
-      objectReference: {fileID: 0}
-    - target: {fileID: 7298912431453931981, guid: 3e191d953f9f69b468286e1cae6a7f57,
-        type: 3}
-      propertyPath: m_Layer
-      value: 13
-      objectReference: {fileID: 0}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalPosition.x
