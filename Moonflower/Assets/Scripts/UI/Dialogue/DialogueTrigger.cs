@@ -202,7 +202,7 @@ public class DialogueTrigger : MonoBehaviour
     public void EndDialogue()
     {
         interaction.NotAllowed = false; 
-        LevelManager.current.player.TalkingPartner = null;
+        
         destroyButtons();
         pState = PanelState.falling;
 ///        Debug.Log("Start Falling"); 
@@ -243,11 +243,14 @@ public class DialogueTrigger : MonoBehaviour
 
     private void typeEnding()
     {
-        int currDiaIndex = typeIndex / slowDownFrac;
-        if (typeIndex % slowDownFrac == 0 && currDiaIndex < exitText.Length)
-            panelInfo.Text.text += exitText[currDiaIndex];
+        if (!panelInfo.Text.text.Equals(exitText))
+        {
+            int currDiaIndex = typeIndex / slowDownFrac;
+            if (typeIndex % slowDownFrac == 0 && currDiaIndex < exitText.Length)
+                panelInfo.Text.text += exitText[currDiaIndex];
 
-        typeIndex++;
+            typeIndex++;
+        }
     }
 
     private void typeText()

@@ -60,7 +60,8 @@ public class NPCMovementController : MonoBehaviour, IMovement
         commonSetup(selfOb);
         canFollow = false;
         canWander = false;
-        canPace = false; 
+        canPace = false;
+        canBeDistracted = false; 
     }
 
     //called by all constructors
@@ -144,19 +145,18 @@ public class NPCMovementController : MonoBehaviour, IMovement
     }
     public void Distracted(GameObject targetObject)
     {
-        //if (!canBeDistracted)
-        //{
-        //    distract = new NPCDistractMove(self, target);
-        //    canBeDistracted = true;
-        //}
-        //else
-        //{
-        //    distract.SetTarget(target);
-        //}
+        if (!canBeDistracted)
+        {
+            distract = new NPCDistractMove(self, targetObject);
+            canBeDistracted = true;
+        }
+        else
+        {
+            distract.SetTarget(targetObject);
+        }
         //distract.SetTarget(target);
         state = MoveState.distractChill;
-        self.transform.LookAt(targetObject.transform.position);
-        target = targetObject;
+
     }
     public void Wander(Vector3 origin, float wanderDistance)
     {
@@ -280,6 +280,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
             switch (state)
             {
                 case MoveState.wander:
+                   // Debug.Log("wander");
                     if (canWander)
                     {
                         //Debug.Log(charName + " is wandering!!");
@@ -329,15 +330,15 @@ public class NPCMovementController : MonoBehaviour, IMovement
                     }
                     break;
                 case MoveState.distractChill:
-                    /*if(canBeDistracted)
+                    //Debug.Log("distract"); 
+                    if(canBeDistracted)
                     {
-                        //distract.UpdateMovement();
-                        agent.isStopped = true;
+                        distract.UpdateMovement();
                         Action = Actions.Chilling;
-                    }*/
-                    agent.isStopped = true;
-                    Action = Actions.Chilling;
-                    self.transform.LookAt(target.transform.position);
+                    }
+                    //agent.isStopped = true;
+                    //Action = Actions.Chilling;
+                    //self.transform.LookAt(target.transform.position);
                     break;
                 case MoveState.chill:
                     //Chill(); 
