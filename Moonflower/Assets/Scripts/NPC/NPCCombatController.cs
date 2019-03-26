@@ -188,7 +188,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     {
         Vector3 locPos = Vector3.zero;
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, other.transform.position - transform.position, out hit, 100f, LayerMask.GetMask("Hurtbox")))
+        if (Physics.Raycast(transform.position, other.transform.position - transform.position, out hit, 100f, LayerMask.GetMask("Character")))
         {
             //Debug.Log("Point of contact: " + hit.point);
             locPos = hit.point;
@@ -340,7 +340,6 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         proj.Hurtbox.SourceCharacterStats = Stats;
         proj.Hurtbox.Source = this.gameObject;
         proj.TargetTransform = combatTarget.transform;
-
     }
 
     public void AcknowledgeHaveHit(GameObject whoWeHit)
