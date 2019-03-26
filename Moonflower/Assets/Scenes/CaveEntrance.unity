@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.5278384, g: 0.9987698, b: 1.5405405, a: 1}
+  m_IndirectSpecularColor: {r: 0.56276536, g: 1.0418023, b: 1.5367067, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10634,6 +10634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skyObj: {fileID: 0}
+  skyColors: {fileID: 0}
   currentTime: 0
 --- !u!1 &1124118637
 GameObject:
@@ -18099,16 +18100,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game State Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 2811909879628630316, guid: 60936e5ec04f6e44e86539798f462f3b,
-        type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2811909879628630316, guid: 60936e5ec04f6e44e86539798f462f3b,
-        type: 3}
-      propertyPath: MainCamera
-      value: 
-      objectReference: {fileID: 534669902}
     - target: {fileID: 2811909879628630317, guid: 60936e5ec04f6e44e86539798f462f3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -18164,6 +18155,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2811909879628630316, guid: 60936e5ec04f6e44e86539798f462f3b,
+        type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2811909879628630316, guid: 60936e5ec04f6e44e86539798f462f3b,
+        type: 3}
+      propertyPath: MainCamera
+      value: 
+      objectReference: {fileID: 534669902}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60936e5ec04f6e44e86539798f462f3b, type: 3}
 --- !u!1001 &5764500590508974918
@@ -18177,26 +18178,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Audio
-      objectReference: {fileID: 0}
-    - target: {fileID: 5764500590057802086, guid: bfda417d4ca26204690a034476d55350,
-        type: 3}
-      propertyPath: audioBackgrounds.Array.data[0].sounds.Array.data[0].source
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5764500590057802086, guid: bfda417d4ca26204690a034476d55350,
-        type: 3}
-      propertyPath: audioBackgrounds.Array.data[0].sounds.Array.data[1].source
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5764500590057802086, guid: bfda417d4ca26204690a034476d55350,
-        type: 3}
-      propertyPath: soundVol
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 5764500590057802086, guid: bfda417d4ca26204690a034476d55350,
-        type: 3}
-      propertyPath: backgroundVol
-      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 5764500590057802087, guid: bfda417d4ca26204690a034476d55350,
         type: 3}
