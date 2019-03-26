@@ -92,7 +92,7 @@ public class NaiaController : MonoBehaviour, INPCController
                 }
                 break;
             case NaiaEngageType.fight:
-//                Debug.Log("fighting");
+                //Debug.Log("fighting");
                 combatController.Active = true;
 
                 if (combatController.InCombat)
@@ -109,17 +109,17 @@ public class NaiaController : MonoBehaviour, INPCController
 
                 if(trainingFight && pStats.CurrentHealth <= goalHealth)
                 {
-                    Debug.Log("Let's talk"); 
+                    //Debug.Log("Let's talk"); 
                     trainingFight = false;
                     combatController.EndFight();  
                     currTalk = postFight; 
-                    StartTalk(); 
+                    StartTalk(true); 
                 }
 
                 break;
 
             case NaiaEngageType.talk:
-                Debug.Log("talking");
+                //Debug.Log("talking");
                 combatController.Active = false;
 
                 if (PlayerController.instance.AnaiIsActive())
@@ -152,7 +152,7 @@ public class NaiaController : MonoBehaviour, INPCController
         movement.InfluenceWanderSpeed(1.5f);
     }
 
-    public void StartTalk()
+    public void StartTalk(bool disregardCombat = false)
     {
         movement.FollowPlayer(3.5f);
         currState = NaiaEngageType.talk;
@@ -161,7 +161,7 @@ public class NaiaController : MonoBehaviour, INPCController
         if (!currTalk.DialogueActive())
         {
             //playerController.TalkingPartner = gameObject;
-            currTalk.StartDialogue();
+            currTalk.StartDialogue(disregardCombat);
         }
     }
     public void EndTalk()
@@ -225,8 +225,7 @@ public class NaiaController : MonoBehaviour, INPCController
         combatController.StartFightWithPlayer();
         trainingFight = true;
         CharacterStats pStat = PlayerController.instance.ActivePlayerStats;
-        goalHealth = pStat.CurrentHealth - (int)(pStat.Strength*2.5f);
-        Debug.Log("Goal health is " + goalHealth);  
+        goalHealth = pStat.CurrentHealth - (int)(pStat.Strength*4.5f);
     }
 
     private void displayFeedback(string text)

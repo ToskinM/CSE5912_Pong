@@ -177,10 +177,10 @@ public class DialogueTrigger : MonoBehaviour
         }
     }
 
-    public void StartDialogue()
+    public void StartDialogue(bool disregardCombat = false)
     {
         interaction.NotAllowed = true; 
-        if (!PlayerController.instance.ActivePlayerCombatControls.InCombat)
+        if (!PlayerController.instance.ActivePlayerCombatControls.InCombat || disregardCombat)
         {
             pState = PanelState.rising;
             panelInfo.Icon.sprite = icon;  //new IconFactory().GetIcon(spriteFile);
