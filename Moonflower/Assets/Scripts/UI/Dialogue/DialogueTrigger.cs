@@ -38,8 +38,9 @@ public class DialogueTrigger : MonoBehaviour
     DialogueGraph graph;
     DialogueFactory factory;
     GameObject partner;
-    InteractionPopup interaction; 
+    InteractionPopup interaction;
 
+    string gName;
 
     public DialogueTrigger(GameObject person, GameObject p, Sprite iconSprite, string graphName)
     {
@@ -52,6 +53,7 @@ public class DialogueTrigger : MonoBehaviour
         factory = new DialogueFactory();
         graph = factory.GetDialogue(graphName);
         graph.Restart();
+        gName = graphName;
 
         icon = iconSprite;
         interaction = GameObject.Find("HUD").transform.GetChild(7).GetComponent<InteractionPopup>();
@@ -62,26 +64,11 @@ public class DialogueTrigger : MonoBehaviour
     public void Update()
     {
         //disable if panel down and enable is panel is up 
-        if (panelInfo.IsUp)
-        {
-            if (!panel.activeSelf)
-            {
-                panel.SetActive(true);
-            }
-        }
-        else
-        {
-            if (panel.activeSelf)
-            {
-                panel.SetActive(false);
-            }
-        }
-
+     //   Debug.Log(gName + " updating");
         switch (pState)
         {
             case PanelState.rising:
-                if (!panelInfo.IsUp)
-                    panelInfo.IsUp = true;
+                panelInfo.IsUp = true;
                 panel.transform.position += new Vector3(0, 4, 0);
                 if (panel.transform.position.y >= panelInfo.UpPosition.y)
                 {
@@ -91,8 +78,8 @@ public class DialogueTrigger : MonoBehaviour
                 break;
 
             case PanelState.falling:
-                if (!panelInfo.IsUp)
-                    panelInfo.IsUp = true;
+//                Debug.Log("Falling"); 
+                panelInfo.IsUp = true;
                 panel.transform.position -= new Vector3(0, 4, 0);
                 if (panel.transform.position.y <= panelInfo.DownPosition.y)
                 {
@@ -102,8 +89,7 @@ public class DialogueTrigger : MonoBehaviour
                 break;
 
             case PanelState.up:
-                if (!panelInfo.IsUp)
-                    panelInfo.IsUp = true;
+                panelInfo.IsUp = true;
                 //easy exit 
                 if (Input.GetKeyDown(KeyCode.X))
                 {
@@ -174,6 +160,21 @@ public class DialogueTrigger : MonoBehaviour
                 break;
 
         }
+        if (panelInfo.IsUp)
+        {
+            if (!panel.activeSelf)
+            {
+                panel.SetActive(true);
+            }
+        }
+        else
+        {
+            pState = PanelState.down; 
+            if (panel.activeSelf)
+            {
+                panel.SetActive(false);
+            }
+        }
     }
 
     public void StartDialogue()
@@ -204,6 +205,7 @@ public class DialogueTrigger : MonoBehaviour
         LevelManager.current.player.TalkingPartner = null;
         destroyButtons();
         pState = PanelState.falling;
+///        Debug.Log("Start Falling"); 
         engaged = false;
 
         // Exit dialogue camera 
