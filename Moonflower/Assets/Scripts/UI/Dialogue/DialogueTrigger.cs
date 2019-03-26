@@ -202,7 +202,7 @@ public class DialogueTrigger : MonoBehaviour
     public void EndDialogue()
     {
         interaction.NotAllowed = false; 
-        LevelManager.current.player.TalkingPartner = null;
+        
         destroyButtons();
         pState = PanelState.falling;
 ///        Debug.Log("Start Falling"); 

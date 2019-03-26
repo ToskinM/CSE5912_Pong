@@ -223,7 +223,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 228001841}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.978628, y: 6.707949, z: -8.169167}
+  m_LocalPosition: {x: 0, y: 1, z: 18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 241584741}
   - component: {fileID: 241584743}
   - component: {fileID: 241584742}
+  - component: {fileID: 241584744}
   m_Layer: 0
   m_Name: Teju
   m_TagString: Untagged
@@ -290,6 +291,34 @@ MonoBehaviour:
   eyes:
   - {fileID: 994014103}
   - {fileID: 119143633}
+  rangedProjectile: {fileID: 4702858596724240953, guid: 74b2d4efb0bef5f4e96276c60329a4da,
+    type: 3}
+  combatTarget: {fileID: 228001841}
+  isAttacking: 0
+  rangedAttackCooldown: 3
+  timeSinceLastAttack: 0
+--- !u!114 &241584744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241584740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1650f9b37ca4d54284136ed5cc15f8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Strength: 0
+  Attack: 0
+  Defense: 0
+  MaxHealth: 10
+  CurrentHealth: 10
+  Cunning: 0
+  Charisma: 0
+  Stealth: 0
+  strengthExperience: 0
+  HUD: {fileID: 0}
 --- !u!1001 &444093550
 PrefabInstance:
   m_ObjectHideFlags: 0
