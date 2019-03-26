@@ -18,7 +18,6 @@ public class NPCDistractMove : MonoBehaviour, IMovement, INPCMovement
     //bool canWander;
 
     NavMeshAgent agent;
-    Vector3 destination;
 
     float baseSpeed; 
 
@@ -36,7 +35,6 @@ public class NPCDistractMove : MonoBehaviour, IMovement, INPCMovement
         commonSetup(selfOb);
 
         //default
-        destination = new Vector3(0, 0, 0);
 
     }
 
@@ -47,7 +45,6 @@ public class NPCDistractMove : MonoBehaviour, IMovement, INPCMovement
         commonSetup(selfOb);
 
         target = targetOb;
-        self.transform.position = destination;
     }
 
     //called by all constructors
@@ -64,11 +61,9 @@ public class NPCDistractMove : MonoBehaviour, IMovement, INPCMovement
     {
         if (Active)
         {
-            Vector3 relative = target.transform.position - agent.transform.position;
-            float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
-            agent.transform.rotation = Quaternion.Lerp(agent.transform.rotation, Quaternion.Euler(0, angle, 0), Time.deltaTime * 10);
-
-            agent.speed = baseSpeed; 
+            self.transform.LookAt(target.transform.position);
+            agent.speed = baseSpeed;
+            agent.isStopped = true; 
 
         }
     }
