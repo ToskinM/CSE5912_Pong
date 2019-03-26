@@ -92,6 +92,13 @@ public class PlayerMovementController : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
 
+        // If no camera script, don't worry about lockon
+        if (cameraScript == null)
+        {
+            HandleFreeMovement(verticalInput, horizontalInput);
+            return;
+        }
+
         // If we're locked onto a target
         if (cameraScript.lockOnTarget != null && Action != Actions.Running)
         {
