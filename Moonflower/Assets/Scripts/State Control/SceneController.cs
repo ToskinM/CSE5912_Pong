@@ -241,13 +241,13 @@ public class SceneController : MonoBehaviour
 
     private void HideSingletons()
     {
-        PlayerController.instance.gameObject.SetActive(false);
-        UISingleton.instance.gameObject.SetActive(false);
+        if (PlayerController.instance != null) PlayerController.instance.gameObject.SetActive(false);
+        if (UISingleton.instance != null) UISingleton.instance.gameObject.SetActive(false);
     }
 
     private void ShowSingletons()
     {
-        PlayerController.instance.gameObject.SetActive(true);
-        UISingleton.instance.gameObject.SetActive(true);
+        if (PlayerController.instance != null) PlayerController.instance.gameObject.SetActive(true);
+        if (UISingleton.instance != null) UISingleton.instance.gameObject.SetActive(true);
     }
 }
