@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
         // Make this a singleton
         if (instance == null)
         {
+            DontDestroyOnLoad(gameObject);
             instance = this;
         }
         else if (instance != null)
@@ -49,9 +50,7 @@ public class PlayerController : MonoBehaviour
         // Set up reference in Awake so that other scripts can reference it during Start()
         ActivePlayerObject = AnaiObject;
 
-        Debug.Log("HELP");
         ActivePlayerInteractionFOV = ActivePlayerObject.GetComponent<FieldOfView>();
-        Debug.Log("HELP " + ActivePlayerInteractionFOV == null);
         ActivePlayerInteractionFOV.enabled = true;
 
         LevelManager.current.player = this;
@@ -69,9 +68,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         activeCharacter = PlayerCharacter.Anai;
-
-        //DontDestroyOnLoad(AnaiObject.transform);
-        //DontDestroyOnLoad(MimbiObject.transform);
     }
 
     void Update()

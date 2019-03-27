@@ -32,7 +32,11 @@ public class HouseDoor : MonoBehaviour
             spawn = GameObject.Find("Spawner");
             spawn.GetComponent<SpawnPoint>().thisScene = targetScene;
             if (thisScene.Equals("The Village")) {
+                toInteriorScene = true;
                 spawn.transform.position = GameObject.Find(targetScene + " Spawn").transform.position;
+            } else if(thisScene.Contains("House"))
+            {
+                toInteriorScene = false;
             }
             
             //SceneManager.LoadScene(targetScene);
@@ -44,7 +48,8 @@ public class HouseDoor : MonoBehaviour
 
                 }
                 SceneController.current.FadeAndLoadSceneNoLS(targetScene);
-                PlayerController.instance.MimbiObject.SetActive(false);
+                PlayerController.instance.GetCompanionObject().SetActive(false);
+                //PlayerController.instance.MimbiObject.SetActive(false);
             }
             else
             {
@@ -54,6 +59,7 @@ public class HouseDoor : MonoBehaviour
 
                 }
                 SceneController.current.FadeAndLoadScene(targetScene);
+                PlayerController.instance.GetCompanionObject().SetActive(true);
                 //PlayerController.instance.MimbiObject.SetActive(true);
             }
 

@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class PauseMenuBehavior : MonoBehaviour
 {
-    public GameObject Menu, OptionsMenu;
-    public Button main, options, quit, back;
+    public GameObject Menu, OptionsMenu, ControlsMenu;
+    public Button main, options, controls, quit, back1, back2;
     public ICommand returnMain, nag;
 
     private SceneController sceneController;    // Reference to the SceneController to actually do the loading and unloading of scenes.
@@ -20,7 +20,9 @@ public class PauseMenuBehavior : MonoBehaviour
         main.onClick.AddListener(MainMenu);
         quit.onClick.AddListener(QuitGame);
         options.onClick.AddListener(Options);
-        back.onClick.AddListener(GoBack);
+        controls.onClick.AddListener(Controls);
+        back1.onClick.AddListener(GoBack);
+        back2.onClick.AddListener(GoBack);
 
         returnMain = new ReturnMenuCommand();
         nag = new NagCommand();
@@ -59,6 +61,7 @@ public class PauseMenuBehavior : MonoBehaviour
     {
         Menu.SetActive(true);
         OptionsMenu.SetActive(false);
+        ControlsMenu.SetActive(false); 
         //FindObjectOfType<AudioManager>().Play("Menu");
         //FindObjectOfType<AudioManager>().Pause("Collision");
     }
@@ -67,6 +70,15 @@ public class PauseMenuBehavior : MonoBehaviour
     {
         Menu.SetActive(false);
         OptionsMenu.SetActive(true);
+        ControlsMenu.SetActive(false);
+        //FindObjectOfType<AudioManager>().Play("Menu");
+    }
+
+    public void Controls()
+    {
+        Menu.SetActive(false);
+        ControlsMenu.SetActive(true);
+        OptionsMenu.SetActive(false);
         //FindObjectOfType<AudioManager>().Play("Menu");
     }
 

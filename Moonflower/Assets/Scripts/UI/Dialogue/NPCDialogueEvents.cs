@@ -16,7 +16,7 @@ public class NPCDialogueEvents : MonoBehaviour
         instance = this; 
     }
 
-    const int playerStatBuff = 3;
+    const int playerStatBuff = 1;
 
     public void InduceFight(string NPCname)
     {

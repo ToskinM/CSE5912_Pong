@@ -11,8 +11,7 @@ public class AudioSourceManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CurrentPlayer = LevelManager.current.currentPlayer;
-        NPCs = LevelManager.current.npcs;
+        //NPCs = LevelManager.current.npcs;
     }
 
     public AudioSource AddAnaiAudioSource()
@@ -28,6 +27,10 @@ public class AudioSourceManager : MonoBehaviour
     }
     public AudioSource AddCurrentPlayerAudioSource()
     {
+        if (CurrentPlayer == null)
+        {
+            CurrentPlayer = LevelManager.current.currentPlayer;
+        }
         CurrentPlayer = LevelManager.current.currentPlayer;
         return CurrentPlayer.AddComponent<AudioSource>();
     }

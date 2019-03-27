@@ -7,9 +7,6 @@ public class GameStateController : MonoBehaviour
 {
     public static GameStateController current;
 
-    public GameObject Player;
-    public GameObject MainCamera;
-
     public bool Paused;
     public bool DebugModeOn;
     public bool DebugViewOn;
@@ -33,7 +30,7 @@ public class GameStateController : MonoBehaviour
     {
         if (current == null)
         {
-            //DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
             current = this;
         }
         else if (current != null)
@@ -181,7 +178,7 @@ public class GameStateController : MonoBehaviour
 
     private void EnablePlayerMovement(bool enabled)
     {
-        PlayerMovementController playerMovement = Player.GetComponent<PlayerMovementController>();
+        PlayerMovementController playerMovement = PlayerController.instance.gameObject.GetComponent<PlayerMovementController>();
         playerMovement.enabled = true;
     }
 

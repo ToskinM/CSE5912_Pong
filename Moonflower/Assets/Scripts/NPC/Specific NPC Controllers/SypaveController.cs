@@ -38,6 +38,8 @@ public class SypaveController : MonoBehaviour, INPCController
 
     void Start()
     {
+        if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+
         // Initialize Components
         playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
         anai = LevelManager.current.anai;
@@ -58,10 +60,21 @@ public class SypaveController : MonoBehaviour, INPCController
         frantic.SetExitText("You'd better be leaving to search for him!");
         advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.SYPAVE_ADVICE_DIALOGUE);
         advice.SetExitText("I can't believe you...");
-        currTalk = intro; 
+
+        if (DataSavingManager.current.GetNPCDialogue(Constants.SYPAVE_NAME) == null)
+        {
+            currTalk = intro;
+            DataSavingManager.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currTalk);
+        }
+        else
+        {
+            currTalk = DataSavingManager.current.GetNPCDialogue(Constants.SYPAVE_NAME);
+        }
+
+
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
-        playerController = LevelManager.current.player.GetComponent<PlayerController>();
+        playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
 
 //        combatController.npcMovement = movement;
 
@@ -76,16 +89,22 @@ public class SypaveController : MonoBehaviour, INPCController
         if (currTalk.Complete)
         {
             movement.Reset();
-            //if (currTalk.Equals(frantic))
-            //{
-            //    Debug.Log("??"); 
-            //    currTalk = advice;
-            //}
+            if (frantic.Complete)
+            {
+                Debug.Log("??"); 
+                currTalk = advice;
+                DataSavingManager.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currTalk);
+            }
         }
 
         movement.UpdateMovement();
 
         currTalk.Update();
+    }
+
+    public DialogueTrigger GetCurrDialogue()
+    {
+        return currTalk;
     }
 
 
@@ -153,7 +172,8 @@ public class SypaveController : MonoBehaviour, INPCController
     public void Afternoon()
     {
         Debug.Log("It's afternoon");
-        currTalk = frantic; 
+        currTalk = frantic;
+        DataSavingManager.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currTalk);
     }
 
     private void displayFeedback(string text)

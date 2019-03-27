@@ -26,6 +26,7 @@ public class DataSavingManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             current = this;
             GetReferences();
+            npcData = new NPCData(); 
         }
         else if (current != null)
         {
@@ -38,6 +39,19 @@ public class DataSavingManager : MonoBehaviour
         anaiDataFilePath = Application.persistentDataPath + "/AnaiInfo.dat";
         anai = LevelManager.current.anai;
         mimbi = LevelManager.current.mimbi;
+    }
+
+    public void SaveNPCDialogues(string name, DialogueTrigger dia)
+    {
+        npcData.NPCDialogues.Add(name, dia);
+    }
+
+    public DialogueTrigger GetNPCDialogue(string charName)
+    {
+        if (npcData.NPCDialogues.ContainsKey(charName))
+            return npcData.NPCDialogues[charName];
+        else
+            return null;
     }
 
     public void SaveGame()

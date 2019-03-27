@@ -14,8 +14,12 @@ public class SpawnPoint : MonoBehaviour
     {
         if (thisScene.Equals("The Village"))
         {
-            PlayerController.instance.AnaiObject.transform.position = this.transform.position;
-            PlayerController.instance.MimbiObject.transform.position = this.transform.position + new Vector3(0, 2, 0);
+            PlayerController.instance.GetActivePlayerObject().transform.position = this.transform.position;
+            PlayerController.instance.GetCompanionObject().transform.position = this.transform.position + new Vector3(0, 0, 2);
+        } else if(thisScene.Contains("House"))
+        {
+            PlayerController.instance.GetActivePlayerObject().transform.position = new Vector3(2, 2, -67);
+            PlayerController.instance.GetCompanionObject().transform.position = this.transform.position + new Vector3(0, 0, 1);
         }
     }
     // Update is called once per frame

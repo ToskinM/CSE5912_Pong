@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 using TMPro;
 
 public class AmaruController : MonoBehaviour, INPCController
@@ -37,26 +37,45 @@ public class AmaruController : MonoBehaviour, INPCController
     Vector3 centerOfTown;
     AmaruAnimatorController amaruAnimator;
 
+    void Awake()
+    {
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+
         //npc = gameObject.AddComponent<NPCMovement>();
         //playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
         anai = LevelManager.current.anai;
         agent = GetComponent<NavMeshAgent>();
 
+
         npc = new NPCMovementController(gameObject, anai,Constants.AMARU_NAME);
         npc.FollowPlayer(bufferDist, tooCloseRad);
         npc.Wander(WalkCenter.transform.position, wanderRad);
         npc.SetDefault(NPCMovementController.MoveState.wander);
-        centerOfTown = GameObject.Find("Campfire").transform.position; 
+        centerOfTown = GameObject.Find("Campfire").transform.position;
 
         icon = new IconFactory().GetIcon(Constants.AMARU_ICON);
 
         intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.AMARU_INTRO_DIALOGUE);
         advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.AMARU_ADVICE_DIALOGUE);
         advice.SetExitText("Good luck, Anai. I hope you find him.");
-        currTalk = intro; 
+
+        if (DataSavingManager.current.GetNPCDialogue(Constants.AMARU_NAME) == null)
+        {
+            currTalk = intro;
+            DataSavingManager.current.SaveNPCDialogues(Constants.AMARU_NAME, currTalk);
+        }
+        else
+        {
+            currTalk = DataSavingManager.current.GetNPCDialogue(Constants.AMARU_NAME);
+        }
+
+
         playerController = LevelManager.current.player.GetComponent<PlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
@@ -83,7 +102,7 @@ public class AmaruController : MonoBehaviour, INPCController
             }
             else
             {
-                npc.Reset(); 
+                npc.Reset();
             }
         }
         else
@@ -93,12 +112,20 @@ public class AmaruController : MonoBehaviour, INPCController
         dialogueActive = currTalk.DialogueActive();
 
     }
+
+    public DialogueTrigger GetCurrDialogue()
+    {
+        return currTalk;
+    }
+
+
     public void Afternoon()
     {
         currTalk = advice;
+        DataSavingManager.current.SaveNPCDialogues(Constants.AMARU_NAME, currTalk);
         npc.Wander(centerOfTown,30f);
         npc.SetDefault(NPCMovementController.MoveState.wander);
-        npc.InfluenceWanderSpeed(1.5f); 
+        npc.InfluenceWanderSpeed(1.5f);
     }
     // Action Wheel Interactions
     public void Talk()
@@ -188,4 +215,3 @@ public class AmaruController : MonoBehaviour, INPCController
     }
 
 }
-

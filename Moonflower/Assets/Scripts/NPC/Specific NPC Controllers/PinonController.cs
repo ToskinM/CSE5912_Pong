@@ -38,7 +38,10 @@ public class PinonController : MonoBehaviour, INPCController
     Animator animator;
     private FeedbackText feedbackText;
     private GameObject anai;
-    private CurrentPlayer currentPlayer; 
+    private CurrentPlayer currentPlayer;
+
+
+    SkyColors sky; 
 
     void Awake()
     {
@@ -72,9 +75,21 @@ public class PinonController : MonoBehaviour, INPCController
         firstIntro.SetExitText("Fine. I didn't want to talk to you either.");
         intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.PINON_INTRO_DIALOGUE);
         intro.SetExitText("You're going to leave me alone? Finally!");
-        currTalk = firstIntro; 
+
+        if (DataSavingManager.current.GetNPCDialogue(Constants.PINON_NAME) == null)
+        {
+            Debug.Log("add new"); 
+            currTalk = firstIntro;
+            DataSavingManager.current.SaveNPCDialogues(Constants.PINON_NAME, currTalk); 
+        }
+        else
+        {
+            currTalk = DataSavingManager.current.GetNPCDialogue(Constants.PINON_NAME);
+        }
 
         actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
+
+        sky = GameObject.Find("Sky").GetComponent<SkyColors>();
     }
 
     // Update is called once per frame
@@ -115,11 +130,22 @@ public class PinonController : MonoBehaviour, INPCController
         dialogueActive = currTalk.DialogueActive();
         NPCController.SetBool("IsTalking", dialogueActive);
 
+        if(sky.GetTime() > 12)
+        {
+            Afternoon(); 
+        }
+
+    }
+
+    public DialogueTrigger GetCurrDialogue()
+    {
+        return currTalk; 
     }
 
     private void switchConvos()
     {
-        currTalk = intro; 
+        currTalk = intro;
+        DataSavingManager.current.SaveNPCDialogues(Constants.PINON_NAME, currTalk);
     }
 
     public void Afternoon()
