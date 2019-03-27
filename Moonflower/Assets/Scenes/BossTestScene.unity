@@ -288,17 +288,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9690d89200f034f9da6468915696a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combatTarget: {fileID: 228001841}
+  isAttacking: 0
+  cryAttackEnabled: 1
+  tantrumAttackEnabled: 1
+  cryFireProjectile: {fileID: 4702858596724240953, guid: 7a2854175814e8a459b14ce01e5c661e,
+    type: 3}
   eyes:
   - {fileID: 994014103}
   - {fileID: 119143633}
-  rangedProjectile: {fileID: 4702858596724240953, guid: 7a2854175814e8a459b14ce01e5c661e,
-    type: 3}
-  combatTarget: {fileID: 228001841}
-  isAttacking: 0
-  rangedAttackCooldown: 1
-  timeSinceLastAttack: 0
-  cryAttackEnabled: 1
-  tantrumAttackEnabled: 1
   cryAttackCooldown: 0.3
   cryAttackBarrageCount: 3
   cryAttackBarrageDuration: 0.3
@@ -308,8 +306,8 @@ MonoBehaviour:
   tantrumAttackRockFallPrefab: {fileID: 3786126091543251650, guid: b59ba5cc94652c742b91b2bbcbee1b11,
     type: 3}
   tantrumAttackCooldown: 3
-  tantrumAttackRockFallCount: 3
-  tantrumAttackSpawnRate: 0.5
+  tantrumAttackRockCount: 10
+  tantrumAttackSpawnRate: 0.6
   tantrumAttackRadius: 20
   tantrumAttackReady: 0
 --- !u!114 &241584744
