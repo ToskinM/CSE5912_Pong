@@ -8,6 +8,7 @@ public static class Constants
     public const string SCENE_VILLAGE = "The Village";
     public const string SCENE_PERSISTENT = "Persistent";
     public const string SCENE_MAINMENU = "Main Menu Village";
+    public const string SCENE_ANAIHOUSE = "Anai House";
     public const string SCENE_LOADING = "LoadingScene";
     public const string SCENE_GAMESTART = "GameStart";
     public const string SCENE_QUITPOPUP = "Quit Nag Popup";

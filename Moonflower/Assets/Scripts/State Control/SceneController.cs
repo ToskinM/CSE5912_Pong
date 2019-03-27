@@ -75,6 +75,8 @@ public class SceneController : MonoBehaviour
     {
         isLoading = true;
 
+        HideSingletons();
+
         // Fade to black
         yield return StartCoroutine(Fade(1f));
         BeforeSceneUnload?.Invoke();
@@ -94,12 +96,17 @@ public class SceneController : MonoBehaviour
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
+
+        ShowSingletons();
+
         PlayerController.instance.SpawnPlayerObjects();
     }
 
     private IEnumerator FadeAndSwitchScenesNoLS(string sceneName)
     {
         isLoading = true;
+
+        HideSingletons();
 
         // Fade to black
         yield return StartCoroutine(Fade(1f));
@@ -120,12 +127,17 @@ public class SceneController : MonoBehaviour
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
+
+        ShowSingletons();
+
         PlayerController.instance.SpawnPlayerObjects();
     }
 
     private IEnumerator FadeAndSwitchScenesGameOver(string sceneName)
     {
         isLoading = true;
+
+        HideSingletons();
 
         // Fade to black
         yield return StartCoroutine(Fade(1f, 5f));
@@ -225,5 +237,17 @@ public class SceneController : MonoBehaviour
         }
         isFading = false;
         loadscreenCanvasGroup.blocksRaycasts = false;
+    }
+
+    private void HideSingletons()
+    {
+        if (PlayerController.instance != null) PlayerController.instance.gameObject.SetActive(false);
+        if (UISingleton.instance != null) UISingleton.instance.gameObject.SetActive(false);
+    }
+
+    private void ShowSingletons()
+    {
+        if (PlayerController.instance != null) PlayerController.instance.gameObject.SetActive(true);
+        if (UISingleton.instance != null) UISingleton.instance.gameObject.SetActive(true);
     }
 }
