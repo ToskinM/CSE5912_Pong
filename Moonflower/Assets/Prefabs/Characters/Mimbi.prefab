@@ -575,9 +575,7 @@ GameObject:
   - component: {fileID: 8160895279895069013}
   - component: {fileID: 2708881777097228628}
   - component: {fileID: 574423216}
-  - component: {fileID: 5666954772803535541}
-  - component: {fileID: 574423215}
-  - component: {fileID: 8749899868967494419}
+  - component: {fileID: 217352484063143488}
   m_Layer: 14
   m_Name: Mimbi
   m_TagString: Companion
@@ -742,53 +740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e77b88a6371674c88460d8d89883df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5666954772803535541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574423205}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68655665de1db9b41ad317b508226a9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewRadius: 4
-  viewAngle: 80
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 512
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 1
-  npcCombatController: {fileID: 0}
-  visibleTargets: []
-  closestTarget: {fileID: 0}
-  focusedTarget: {fileID: 0}
---- !u!114 &574423215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574423205}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1650f9b37ca4d54284136ed5cc15f8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Strength: 5
-  Attack: 5
-  Defense: 5
-  MaxHealth: 100
-  CurrentHealth: 100
-  Cunning: 5
-  Charisma: 5
-  Stealth: 5
-  strengthExperience: 0
-  HUD: {fileID: 0}
---- !u!114 &8749899868967494419
+--- !u!114 &217352484063143488
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -797,7 +749,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 574423205}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41e77b88a6371674c88460d8d89883df, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c4f55dc078f80a489b156b837b441dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &578102583
@@ -4045,15 +3997,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0adfb40235f91af4d89a0b3f4333f04a, type: 3}
---- !u!4 &4317072920047032 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4317073310611674, guid: 0adfb40235f91af4d89a0b3f4333f04a,
-    type: 3}
-  m_PrefabInstance: {fileID: 687576418}
-  m_PrefabAsset: {fileID: 0}
 --- !u!108 &108661630437483636 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 108661630825099542, guid: 0adfb40235f91af4d89a0b3f4333f04a,
+    type: 3}
+  m_PrefabInstance: {fileID: 687576418}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4317072920047032 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4317073310611674, guid: 0adfb40235f91af4d89a0b3f4333f04a,
     type: 3}
   m_PrefabInstance: {fileID: 687576418}
   m_PrefabAsset: {fileID: 0}
@@ -4161,15 +4113,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0adfb40235f91af4d89a0b3f4333f04a, type: 3}
---- !u!108 &108661630092810436 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 108661630825099542, guid: 0adfb40235f91af4d89a0b3f4333f04a,
-    type: 3}
-  m_PrefabInstance: {fileID: 879684050}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4317072440627464 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4317073310611674, guid: 0adfb40235f91af4d89a0b3f4333f04a,
+    type: 3}
+  m_PrefabInstance: {fileID: 879684050}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &108661630092810436 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 108661630825099542, guid: 0adfb40235f91af4d89a0b3f4333f04a,
     type: 3}
   m_PrefabInstance: {fileID: 879684050}
   m_PrefabAsset: {fileID: 0}
@@ -4282,15 +4234,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0adfb40235f91af4d89a0b3f4333f04a, type: 3}
---- !u!4 &4317072563315452 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4317073310611674, guid: 0adfb40235f91af4d89a0b3f4333f04a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1035917862}
-  m_PrefabAsset: {fileID: 0}
 --- !u!108 &108661630249052976 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 108661630825099542, guid: 0adfb40235f91af4d89a0b3f4333f04a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1035917862}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4317072563315452 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4317073310611674, guid: 0adfb40235f91af4d89a0b3f4333f04a,
     type: 3}
   m_PrefabInstance: {fileID: 1035917862}
   m_PrefabAsset: {fileID: 0}

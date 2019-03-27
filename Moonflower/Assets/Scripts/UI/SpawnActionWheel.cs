@@ -225,6 +225,7 @@ public class SpawnActionWheel : MonoBehaviour
     private void HideWheel()
     {
         //gameStateController.SetMouseLock(true);
+
         activeWheel.gameObject.SetActive(false);
         wheelShowing = false;
         GameStateController.current.UnpauseGame();

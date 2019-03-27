@@ -45,6 +45,8 @@ public class NaiaController : MonoBehaviour, INPCController
 
     void Start()
     {
+        if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
         combatController = GetComponent<NPCCombatController>();

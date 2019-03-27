@@ -44,7 +44,8 @@ public class HouseDoor : MonoBehaviour
 
                 }
                 SceneController.current.FadeAndLoadSceneNoLS(targetScene);
-                PlayerController.instance.MimbiObject.SetActive(false);
+                PlayerController.instance.GetCompanionObject().SetActive(false);
+                //PlayerController.instance.MimbiObject.SetActive(false);
             }
             else
             {
@@ -54,6 +55,7 @@ public class HouseDoor : MonoBehaviour
 
                 }
                 SceneController.current.FadeAndLoadScene(targetScene);
+                PlayerController.instance.GetCompanionObject().SetActive(true);
                 //PlayerController.instance.MimbiObject.SetActive(true);
             }
 
