@@ -37,13 +37,21 @@ public class AmaruController : MonoBehaviour, INPCController
     Vector3 centerOfTown;
     AmaruAnimatorController amaruAnimator;
 
+    void Awake()
+    {
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+
         //npc = gameObject.AddComponent<NPCMovement>();
         //playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
         anai = LevelManager.current.anai;
         agent = GetComponent<NavMeshAgent>();
+
 
         npc = new NPCMovementController(gameObject, anai,Constants.AMARU_NAME);
         npc.FollowPlayer(bufferDist, tooCloseRad);
@@ -57,7 +65,7 @@ public class AmaruController : MonoBehaviour, INPCController
         advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.AMARU_ADVICE_DIALOGUE);
         advice.SetExitText("Good luck, Anai. I hope you find him.");
         currTalk = intro; 
-        playerController = LevelManager.current.player.GetComponent<PlayerController>();
+        playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
 

@@ -575,9 +575,8 @@ GameObject:
   - component: {fileID: 8160895279895069013}
   - component: {fileID: 2708881777097228628}
   - component: {fileID: 574423216}
-  - component: {fileID: 5666954772803535541}
-  - component: {fileID: 574423215}
   - component: {fileID: 8749899868967494419}
+  - component: {fileID: 217352484063143488}
   m_Layer: 14
   m_Name: Mimbi
   m_TagString: Companion
@@ -742,52 +741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e77b88a6371674c88460d8d89883df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5666954772803535541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574423205}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68655665de1db9b41ad317b508226a9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewRadius: 4
-  viewAngle: 80
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 512
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 1
-  npcCombatController: {fileID: 0}
-  visibleTargets: []
-  closestTarget: {fileID: 0}
-  focusedTarget: {fileID: 0}
---- !u!114 &574423215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574423205}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1650f9b37ca4d54284136ed5cc15f8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Strength: 5
-  Attack: 5
-  Defense: 5
-  MaxHealth: 100
-  CurrentHealth: 100
-  Cunning: 5
-  Charisma: 5
-  Stealth: 5
-  strengthExperience: 0
-  HUD: {fileID: 0}
 --- !u!114 &8749899868967494419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,6 +751,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41e77b88a6371674c88460d8d89883df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &217352484063143488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574423205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4f55dc078f80a489b156b837b441dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &578102583

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class UISingleton : MonoBehaviour
 {
+    public static UISingleton instance;
+
     void Awake()
     {
-        // If I exist already, destroy me.  There can only be one.
-        if (FindObjectOfType<UISingleton>() == this)
+        if (instance == null)
         {
             DontDestroyOnLoad(gameObject);
+            instance = this;
         }
         else
         {
