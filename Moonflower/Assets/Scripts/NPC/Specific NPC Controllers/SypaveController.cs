@@ -84,7 +84,6 @@ public class SypaveController : MonoBehaviour, INPCController
 
     void Update()
     {
-        Debug.Log("Dialogue null: " + (DialoguePanel == null).ToString());
         if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
 
         float playerDist = movement.DistanceFrom(anai);  //getXZDist(transform.position, Player.transform.position);
