@@ -107,7 +107,8 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
         for (int i = 0; i < tantrumAttackRockCount; i++)
         {
-            Instantiate(tantrumAttackRockFallPrefab, new Vector3(Random.Range(-tantrumAttackRadius, tantrumAttackRadius), 20, Random.Range(-tantrumAttackRadius, tantrumAttackRadius)), Quaternion.identity);
+            Vector3 position = combatTarget.transform.position + new Vector3(Random.Range(-tantrumAttackRadius, tantrumAttackRadius), 20, Random.Range(-tantrumAttackRadius, tantrumAttackRadius));
+            Instantiate(tantrumAttackRockFallPrefab, position, Quaternion.identity);
 
             yield return new WaitForSeconds(cryAttackFireRate);
         }
