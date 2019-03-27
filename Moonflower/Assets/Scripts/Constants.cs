@@ -33,6 +33,7 @@ public static class Constants
     public const string KURUPI_ICON = characterFolder + "Kurupi";
     public const string MOUSE_ICON = characterFolder + "Mousy Boi";
     public const string MONAI_ICON = characterFolder + "Monai";
+    public const string CATBAT_ICON = characterFolder + "Catbat";
     const string itemFolder = "Icons/Items/";
     public const string MOONFLOWER_ICON = itemFolder + "Moonflower";
     public const string WOLFAPPLE_ICON = itemFolder + "Wolf Apple";
