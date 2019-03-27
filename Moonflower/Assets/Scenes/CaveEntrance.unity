@@ -2632,7 +2632,7 @@ BoxCollider:
   m_GameObject: {fileID: 251583832}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -6921,7 +6921,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetScene: The Village
   toInteriorScene: 0
-  thisScene: Cave Entrance
+  thisScene: CaveEntrance
   BGM: {fileID: 1091253638}
 --- !u!1 &808839498
 GameObject:
@@ -11603,7 +11603,7 @@ BoxCollider:
   m_GameObject: {fileID: 1209288630}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -13545,11 +13545,27 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1433726173}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 20, y: 5.4737606, z: 1.8011527}
   m_Center: {x: -3.328614, y: 2.2368805, z: 1.5994241}
+--- !u!114 &1433726176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433726173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c953399cd6b976845bb3759b11969982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetScene: The Cave
+  toInteriorScene: 0
+  thisScene: CaveEntrance
+  BGM: {fileID: 1091253638}
 --- !u!1 &1433920178
 GameObject:
   m_ObjectHideFlags: 0
