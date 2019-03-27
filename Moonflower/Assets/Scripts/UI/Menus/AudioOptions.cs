@@ -30,6 +30,11 @@ public class AudioOptions : MonoBehaviour
         musicSlider.onValueChanged.AddListener(delegate { MusicChangeCheck(); });
 
         MusicAudioSource = GameObject.Find("Scene BGM").GetComponent<AudioSource>();
+        //don't understand why sometimes it has null reference for audiomanager...
+        if (audioManager==null)
+        {
+            audioManager = GameObject.Find("Audio").GetComponent<AudioManager>();
+        }
     }
 
     private void MusicChangeCheck()
@@ -49,6 +54,8 @@ public class AudioOptions : MonoBehaviour
     }
     public void ChangeBackgroundVol(float vol)
     {
+        if (audioManager == null)
+            Debug.Log("死ね！");
         audioManager.ChangeBackgroundVol(vol);
     }
     public void ChangeAudioVol(float vol)
