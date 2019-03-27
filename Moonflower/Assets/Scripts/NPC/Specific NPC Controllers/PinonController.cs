@@ -38,7 +38,10 @@ public class PinonController : MonoBehaviour, INPCController
     Animator animator;
     private FeedbackText feedbackText;
     private GameObject anai;
-    private CurrentPlayer currentPlayer; 
+    private CurrentPlayer currentPlayer;
+
+
+    SkyColors sky; 
 
     void Awake()
     {
@@ -48,13 +51,11 @@ public class PinonController : MonoBehaviour, INPCController
     // Start is called before the first frame update
     void Start()
     {
-        if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
-
         //playerController = LevelManager.current.currentPlayer.GetComponent<IPlayerController>();
         // Player = LevelManager.current.currentPlayer;
-        playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
+        playerController = LevelManager.current.player.GetComponent<PlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
-        currentPlayer = PlayerController.instance.gameObject.GetComponent<CurrentPlayer>();
+        currentPlayer = LevelManager.current.player.GetComponent<CurrentPlayer>();
         anai = currentPlayer.GetAnai();
 
         agent = GetComponent<NavMeshAgent>();
@@ -87,6 +88,8 @@ public class PinonController : MonoBehaviour, INPCController
         }
 
         actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
+
+        sky = GameObject.Find("Sky").GetComponent<SkyColors>();
     }
 
     // Update is called once per frame
@@ -126,6 +129,11 @@ public class PinonController : MonoBehaviour, INPCController
         }
         dialogueActive = currTalk.DialogueActive();
         NPCController.SetBool("IsTalking", dialogueActive);
+
+        if(sky.GetTime() > 12)
+        {
+            Afternoon(); 
+        }
 
     }
 
