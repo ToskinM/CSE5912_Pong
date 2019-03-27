@@ -64,7 +64,19 @@ public class NaiaController : MonoBehaviour, INPCController
         postFight.SetExitText("Oh, come on. Is this because I hit too hard? I was trying to pull my punches..."); 
         advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_ADVICE_DIALOGUE);
         advice.SetExitText("You can't keep running away from this.");
-        currTalk = intro; 
+
+        if (DataSavingManager.current.GetNPCDialogue(Constants.NAIA_NAME) == null)
+        {
+            currTalk = intro;
+            DataSavingManager.current.SaveNPCDialogues(Constants.NAIA_NAME, currTalk);
+        }
+        else
+        {
+            currTalk = DataSavingManager.current.GetNPCDialogue(Constants.NAIA_NAME);
+        }
+
+
+
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         combatController.npcMovement = movement;
@@ -144,9 +156,16 @@ public class NaiaController : MonoBehaviour, INPCController
         currTalk.Update();
     }
 
+    public DialogueTrigger GetCurrDialogue()
+    {
+        return currTalk;
+    }
+
+
     public void Afternoon()
     {
         currTalk = advice;
+        DataSavingManager.current.SaveNPCDialogues(Constants.NAIA_NAME, currTalk); 
         movement.Wander(centerOfTown, 30f);
         movement.SetDefault(NPCMovementController.MoveState.wander);
         movement.InfluenceWanderSpeed(1.5f);

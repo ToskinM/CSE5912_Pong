@@ -214,23 +214,23 @@ public class SpawnActionWheel : MonoBehaviour
     private void ShowWheel()
     {
         //gameStateController.SetMouseLock(false);
-        gameStateController.PauseGame();
+        GameStateController.current.PauseGame();
         interaction.DisableNPC();
         activeWheel.gameObject.SetActive(true);
         wheelShowing = true;
 
         activeWheel.OnSelectOption += HandleWheelSelection;
-        gameStateController.SetPlayerFrozen(true);
+        GameStateController.current.SetPlayerFrozen(true);
     }
     private void HideWheel()
     {
         //gameStateController.SetMouseLock(true);
         activeWheel.gameObject.SetActive(false);
         wheelShowing = false;
-        gameStateController.UnpauseGame();
+        GameStateController.current.UnpauseGame();
 
         activeWheel.OnSelectOption -= HandleWheelSelection;
-        gameStateController.SetPlayerFrozen(false);
+        GameStateController.current.SetPlayerFrozen(false);
     }
 
     public void HandleLockonEvent(GameObject target)

@@ -56,7 +56,18 @@ public class AmaruController : MonoBehaviour, INPCController
         intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.AMARU_INTRO_DIALOGUE);
         advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.AMARU_ADVICE_DIALOGUE);
         advice.SetExitText("Good luck, Anai. I hope you find him.");
-        currTalk = intro; 
+
+        if (DataSavingManager.current.GetNPCDialogue(Constants.AMARU_NAME) == null)
+        {
+            currTalk = intro;
+            DataSavingManager.current.SaveNPCDialogues(Constants.AMARU_NAME, currTalk);
+        }
+        else
+        {
+            currTalk = DataSavingManager.current.GetNPCDialogue(Constants.AMARU_NAME);
+        }
+
+
         playerController = LevelManager.current.player.GetComponent<PlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
@@ -93,9 +104,17 @@ public class AmaruController : MonoBehaviour, INPCController
         dialogueActive = currTalk.DialogueActive();
 
     }
+
+    public DialogueTrigger GetCurrDialogue()
+    {
+        return currTalk;
+    }
+
+
     public void Afternoon()
     {
         currTalk = advice;
+        DataSavingManager.current.SaveNPCDialogues(Constants.AMARU_NAME, currTalk);
         npc.Wander(centerOfTown,30f);
         npc.SetDefault(NPCMovementController.MoveState.wander);
         npc.InfluenceWanderSpeed(1.5f); 
