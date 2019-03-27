@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class AnaiSingleton : MonoBehaviour
 {
+    public static AnaiSingleton instance;
+
     void Awake()
     {
-        // If I exist already, destroy me.  There can only be one.
-        if (FindObjectOfType<AnaiSingleton>() == this)
+        if (instance == null)
         {
-            DontDestroyOnLoad(gameObject.transform);
+            DontDestroyOnLoad(gameObject);
+            instance = this;
         }
-        else
+        else if (instance != null)
         {
             Destroy(gameObject);
         }
