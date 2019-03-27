@@ -499,7 +499,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Awareness: 1
   awarenessMeter: 0
-  stealthCollider: {fileID: 0}
+  sensitivity: 2
+  stealthCollider: {fileID: 7108542026208812801}
 --- !u!1 &1393706479181474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1401,6 +1402,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3564754072826980804}
   m_PrefabAsset: {fileID: 0}
+--- !u!135 &7108542026208812801 stripped
+SphereCollider:
+  m_CorrespondingSourceObject: {fileID: 6043287259219113669, guid: ffa713d1f8a80094eae7a79a2d05f9f8,
+    type: 3}
+  m_PrefabInstance: {fileID: 3564754072826980804}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5885381826898181787
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1413,11 +1420,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hurtbox
       objectReference: {fileID: 0}
-    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
-        type: 3}
-      propertyPath: source
-      value: 
-      objectReference: {fileID: 1321783480152984}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1488,6 +1490,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.20146956
       objectReference: {fileID: 0}
+    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: source
+      value: 
+      objectReference: {fileID: 1321783480152984}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e191d953f9f69b468286e1cae6a7f57, type: 3}
 --- !u!4 &2895880427669899949 stripped

@@ -12,6 +12,7 @@ public class StealthDetection : MonoBehaviour
     public event AwarenessUpdate OnAwarenessUpdate;
 
     [HideInInspector] public float awarenessMeter;
+    public float sensitivity = 1f;
     public const float awarenessMeterMax = 1000f;
 
     public const float suspiciousThreshold = 500f;
@@ -25,12 +26,13 @@ public class StealthDetection : MonoBehaviour
     private const float timeTillSuspicionDecay = 3f;
     private const float baseDecayRate = 10f;
     private const float decayMultiplierSuspicious = 0.5f;
-    private const float decayMultiplierAlerted = 0.1f;
+    private const float decayMultiplierAlerted = 0.3f;
 
     private NavMeshAgent nav;
     public SphereCollider stealthCollider;
     private Renderer renderer;
     private NPCCombatController npcCombatController;
+    private GameObject indicator;
 
     private float timeSinceLastAction = 0f;
 
@@ -109,6 +111,10 @@ public class StealthDetection : MonoBehaviour
             {
                 BecomeSuspicious();
             }
+            else if (Awareness == AwarenessLevel.Alerted)
+            {
+                BecomeSuspicious();
+            }
         }
         else if (awarenessMeter == 0)
         {
@@ -126,11 +132,12 @@ public class StealthDetection : MonoBehaviour
                 BecomeSuspicious();
             }
         }
+ 
     }
 
     private void RaiseAwarenessMeter(float amount)
     {
-        awarenessMeter += amount; // might add stealth mod here
+        awarenessMeter += amount * sensitivity; // might add stealth mod here
         timeSinceLastAction = 0f;
     }
     private void LowerAwarenessMeter(float amount)
@@ -314,6 +321,7 @@ public class StealthDetection : MonoBehaviour
             renderer.material.color = Color.red;
 
         Awareness = AwarenessLevel.Alerted;
+        SpawnIndicator();
         if (awarenessMeter < alertedThreshold)
             awarenessMeter = alertedThreshold;
         OnAwarenessUpdate?.Invoke(3);
@@ -334,6 +342,7 @@ public class StealthDetection : MonoBehaviour
             renderer.material.color = Color.red;
 
         Awareness = AwarenessLevel.Alerted;
+        SpawnIndicator();
         if (awarenessMeter < alertedThreshold)
             awarenessMeter = alertedThreshold;
 
@@ -351,6 +360,7 @@ public class StealthDetection : MonoBehaviour
             renderer.material.color = Color.yellow;
 
         Awareness = AwarenessLevel.Suspicious;
+        SpawnIndicator();
         if (awarenessMeter < suspiciousThreshold)
             awarenessMeter = suspiciousThreshold;
         OnAwarenessUpdate?.Invoke(2);
@@ -363,6 +373,7 @@ public class StealthDetection : MonoBehaviour
             renderer.material.color = Color.yellow;
 
         Awareness = AwarenessLevel.Suspicious;
+        SpawnIndicator();
 
         if (awarenessMeter < suspiciousThreshold)
             awarenessMeter = suspiciousThreshold;
@@ -376,6 +387,7 @@ public class StealthDetection : MonoBehaviour
             renderer.material.color = Color.green;
 
         Awareness = AwarenessLevel.Neutral;
+        SpawnIndicator();
         awarenessMeter = 0;
         OnAwarenessUpdate?.Invoke(1);
     }
@@ -387,6 +399,7 @@ public class StealthDetection : MonoBehaviour
             renderer.material.color = Color.green;
 
         Awareness = AwarenessLevel.Neutral;
+        SpawnIndicator();
         OnAwarenessUpdate?.Invoke(1);
     }
 
@@ -394,6 +407,37 @@ public class StealthDetection : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         OnAwarenessUpdate?.Invoke(0);
+    }
+
+    private void SpawnIndicator()
+    {
+        if (indicator != null)
+        {
+            Destroy(indicator);
+            indicator = null;
+        }
+
+        switch (Awareness)
+        {
+            case AwarenessLevel.Distracted:
+                indicator = Instantiate((GameObject)Resources.Load("Icons/DistractedIndicator"), transform);
+                indicator.transform.position += new Vector3(0, 2, 0);
+                break;
+            case AwarenessLevel.Neutral:
+                break;
+            case AwarenessLevel.Suspicious:
+                indicator = Instantiate((GameObject)Resources.Load("Icons/SuspiciousIndicator"), transform);
+                indicator.transform.position += new Vector3(0, 2, 0);
+                //Destroy(indicator, 3);
+                break;
+            case AwarenessLevel.Alerted:
+                indicator = Instantiate((GameObject)Resources.Load("Icons/AlertedIndicator"), transform);
+                indicator.transform.position += new Vector3(0, 2, 0);
+                //Destroy(indicator, 3);
+                break;
+            default:
+                break;
+        }
     }
 
     // Disable updates when gaame is paused
