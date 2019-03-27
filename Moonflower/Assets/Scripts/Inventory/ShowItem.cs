@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ShowItem : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class ShowItem : MonoBehaviour
     private List<GameObject> DayOnlyCollidables = new List<GameObject>();
     private List<GameObject> AllDayCollidables = new List<GameObject>();
 
+    private Scene scene;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +22,7 @@ public class ShowItem : MonoBehaviour
         allCollidable = GameObject.FindGameObjectsWithTag("Collectable");
         if (allCollidable!=null)
             DistinguishObject(allCollidable);
+        scene = SceneManager.GetActiveScene();
     }
 
     private void DistinguishObject(GameObject[] allGameObject)
@@ -43,6 +47,7 @@ public class ShowItem : MonoBehaviour
         DayOnlyCollidables = new List<GameObject>();
         AllDayCollidables = new List<GameObject>();
         DistinguishObject(allCollidable);
+        scene = SceneManager.GetActiveScene();
     }
 
     private void ChangeItemActive(List<GameObject> category, bool active )
@@ -61,7 +66,7 @@ public class ShowItem : MonoBehaviour
     {
         //Get Current Time
         currentTime = skyColors.GetDayNight();
-        Debug.Log(skyColors.GetTime() + "" + skyColors.GetDayNight());
+
         //Case Day time
         if (currentTime == SkyColors.SkyCategory.Day)
         {
@@ -85,5 +90,7 @@ public class ShowItem : MonoBehaviour
     void Update()
     {
         CheckDayNightCycletoShowItems();
+        if (SceneManager.GetActiveScene() != scene)
+            RefreshAllItems();
     }
 }
