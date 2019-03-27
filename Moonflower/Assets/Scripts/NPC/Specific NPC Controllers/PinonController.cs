@@ -51,12 +51,14 @@ public class PinonController : MonoBehaviour, INPCController
     // Start is called before the first frame update
     void Start()
     {
+        if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+
         //playerController = LevelManager.current.currentPlayer.GetComponent<IPlayerController>();
         // Player = LevelManager.current.currentPlayer;
         playerController = LevelManager.current.player.GetComponent<PlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
         currentPlayer = LevelManager.current.player.GetComponent<CurrentPlayer>();
-        anai = currentPlayer.GetAnai();
+        anai = PlayerController.instance.AnaiObject;
 
         agent = GetComponent<NavMeshAgent>();
 
