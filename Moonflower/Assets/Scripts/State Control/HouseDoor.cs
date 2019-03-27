@@ -26,7 +26,7 @@ public class HouseDoor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if ((other.Equals(LevelManager.current.anai.GetComponent<Collider>()) && LevelManager.current.player.AnaiIsActive()) || (other.Equals(LevelManager.current.mimbi.GetComponent<Collider>()) && !LevelManager.current.player.AnaiIsActive()))
+        if ((other.Equals(PlayerController.instance.AnaiObject.GetComponent<Collider>()) && PlayerController.instance.AnaiIsActive()) || (other.Equals(PlayerController.instance.MimbiObject.GetComponent<Collider>()) && !PlayerController.instance.AnaiIsActive()))
         {
             player = other.gameObject;
             spawn = GameObject.Find("Spawner");

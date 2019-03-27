@@ -44,23 +44,24 @@ public class SpawnActionWheel : MonoBehaviour
             Destroy(gameObject);
         }
 
-        currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
-    }
-
-    void Start()
-    {
-        activeWheel = ActionWheelPrefab.GetComponent<ActionWheel>(); 
+        activeWheel = ActionWheelPrefab.GetComponent<ActionWheel>();
         gameStateController = GameStateController.current;
         followCamera = LevelManager.current.mainCamera;
 
-        inspect = GameObject.Find("HUD").GetComponent<ShowInspect>(); 
-        inventory = GameObject.Find("HUD").GetComponent<ShowInventory>(); 
+        inspect = GameObject.Find("HUD").GetComponent<ShowInspect>();
+        inventory = GameObject.Find("HUD").GetComponent<ShowInventory>();
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
-        interaction = InteractionPopup.GetComponent<InteractionPopup>(); 
+        interaction = InteractionPopup.GetComponent<InteractionPopup>();
+
+        Debug.Log("屌你老妈哇佬");
+
+        currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
     }
 
     private void OnEnable()
     {
+        Debug.Log("屌你老妈");
+        Debug.Log(currentPlayerInteractionFOV == null);
         currentPlayerInteractionFOV.OnNewClosestTarget += HandleInteractionFOVTargetUpdate;
 
         PlayerController.OnCharacterSwitch += SwitchInteractionFOV;
@@ -71,6 +72,7 @@ public class SpawnActionWheel : MonoBehaviour
         //followCamera.OnLockon += HandleLockonEvent;
         //followCamera.OnLockoff += HandleLockoffEvent;
     }
+
     private void OnDisable()
     {
         currentPlayerInteractionFOV.OnNewClosestTarget -= HandleInteractionFOVTargetUpdate;

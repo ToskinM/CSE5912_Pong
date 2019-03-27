@@ -10,9 +10,7 @@ public class CurrentPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
         CurrentPlayerObj = PlayerAnaiObj;
-
     }
     private void CheckCurrentPlayer()
     {

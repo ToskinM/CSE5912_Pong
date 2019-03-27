@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
         // Make this a singleton
         if (instance == null)
         {
+            DontDestroyOnLoad(gameObject);
             instance = this;
         }
         else if (instance != null)
@@ -67,9 +68,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         activeCharacter = PlayerCharacter.Anai;
-
-        DontDestroyOnLoad(AnaiObject.transform);
-        DontDestroyOnLoad(MimbiObject.transform);
     }
 
     void Update()

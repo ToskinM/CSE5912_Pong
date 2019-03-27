@@ -341,7 +341,6 @@ public class FollowCamera : MonoBehaviour
             lockonIndicator.transform.parent = transform;
             lockonIndicator.SetActive(false);
         }
-
     }
 
     // Disable player movement controls when game is paused

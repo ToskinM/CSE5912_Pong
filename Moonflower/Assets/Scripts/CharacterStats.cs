@@ -36,8 +36,10 @@ public class CharacterStats : MonoBehaviour
         // Data drive specific values for each separate entity
         //if (HUD.GetComponent<PlayerHealthDisplay>())
         if (HUD == null)
+        {
             HUD = LevelManager.current.dummyHUD;
-        display = HUD.GetComponent<PlayerHealthDisplay>();
+            display = HUD.GetComponent<PlayerHealthDisplay>();
+        }
 
         companionHealth = CurrentHealth;
         PlayerController.OnCharacterSwitch += SwapPlayerHealth;
@@ -46,8 +48,10 @@ public class CharacterStats : MonoBehaviour
     void Update()
     {
         if (HUD == null)
+        {
             HUD = GameObject.Find("HUD");
-        display = HUD.GetComponent<PlayerHealthDisplay>();
+            display = HUD.GetComponent<PlayerHealthDisplay>();
+        }
     }
 
     // Not sure how combat/interactions are going to be implemented beforehand (script-wise) so just leaving general methods for now

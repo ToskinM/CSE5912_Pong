@@ -12,8 +12,6 @@ public class MainMenuBehavior : MonoBehaviour
     //public AudioClip MusicClip;
     //public AudioSource MusicSource;
     public ICommand play, nag;
-    public Slider musicSlider;
-    public Slider audioSlider;
 
     public MainMenuCamera mainMenuCamera;
 
@@ -21,8 +19,7 @@ public class MainMenuBehavior : MonoBehaviour
     private const float pseudoDeltaTime = 0.05f;
 
     //private AudioManager audioManager;
-    private float originalMusicVol;
-    private float originalAudioVol;
+   
     private SceneController sceneController;    // Reference to the SceneController to actually do the loading and unloading of scenes.
     AudioManager audioManager;
 
@@ -39,14 +36,6 @@ public class MainMenuBehavior : MonoBehaviour
         back.onClick.AddListener(GoBack);
 
         audioManager = FindObjectOfType<AudioManager>();
-        if (audioManager)
-        {
-            musicSlider.value = audioManager.GetBackgroundVolume();
-            audioSlider.value = audioManager.GetSoundVolume();
-
-            originalMusicVol = musicSlider.value;
-            originalAudioVol = audioSlider.value;
-        }
 
         play = new PlayCommand();
         nag = new NagCommand();
@@ -128,19 +117,6 @@ public class MainMenuBehavior : MonoBehaviour
 
         //Application.Quit(); // this doesn't affect the unity editor, only a built application
     }
-    public void Slider()
-    {
-
-        if (Mathf.Abs(musicSlider.value-originalMusicVol)>=0.01)
-        {
-            if (audioManager)
-            {
-                audioManager.ChangeBackgroundVol(musicSlider.value);
-            }
-
-            //FindObjectOfType<AudioManager>().PlayTest("Background");
-        }
-    }
 
     //private IEnumerator GetAudioManager()
     //{
@@ -155,8 +131,6 @@ public class MainMenuBehavior : MonoBehaviour
 
     void Update()
     {
-        if (OptionsMenu.activeInHierarchy == true)
-            Slider();
     }
 
     private IEnumerator FadeTitle(float finalAlpha, float duration)

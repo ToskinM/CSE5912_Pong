@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.56276536, g: 1.0418023, b: 1.5367067, a: 1}
+  m_IndirectSpecularColor: {r: 0.52781206, g: 0.9987591, b: 1.5405418, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1176,7 +1176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1438201467, guid: 51c8baa03be78fc46a1c9f85a59c1b6c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.69
+      value: 2.44
       objectReference: {fileID: 0}
     - target: {fileID: 1438201467, guid: 51c8baa03be78fc46a1c9f85a59c1b6c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1184,7 +1184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1438201467, guid: 51c8baa03be78fc46a1c9f85a59c1b6c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -88.83
+      value: -94.94
       objectReference: {fileID: 0}
     - target: {fileID: 1438201467, guid: 51c8baa03be78fc46a1c9f85a59c1b6c, type: 3}
       propertyPath: m_LocalRotation.x
@@ -3101,6 +3101,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331854026}
   m_CullTransparentMesh: 0
+--- !u!1 &360068107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 360068108}
+  m_Layer: 0
+  m_Name: CaveCameraStartPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &360068108
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360068107}
+  m_LocalRotation: {x: 0.049722996, y: -0, z: -0, w: 0.998763}
+  m_LocalPosition: {x: 2.47, y: 2.73, z: -99.35}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 77
+  m_LocalEulerAnglesHint: {x: 5.7000003, y: 0, z: 0}
 --- !u!1 &377572808
 GameObject:
   m_ObjectHideFlags: 0
@@ -4624,6 +4654,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profile: {fileID: 11400000, guid: b2ae8a8c57958ca40b0b5d964cf9eead, type: 2}
+--- !u!114 &534669910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d694ee32642ccbe4f9c84b34ff347d3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPoint: {fileID: 360068108}
+  endPoint: {fileID: 2119741173}
+  panSpeed: 2
+  recenterTimeMultiplier: 1
+  yRotationClamp: 15
+  xRotationClamp: 15
+--- !u!114 &534669911 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9223168436455768625, guid: ccceb218af17c33438251bd503f0d6c1,
+    type: 3}
+  m_PrefabInstance: {fileID: 9223168436234152036}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c121f99fa15fa40a8ba63ccb961636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &544160317 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1485624132, guid: 51c8baa03be78fc46a1c9f85a59c1b6c,
@@ -15172,16 +15232,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4709228538219515474, guid: ceb826367ceebf4409a36671169c10de,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4709228538786079097, guid: ceb826367ceebf4409a36671169c10de,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4709228539241129277, guid: ceb826367ceebf4409a36671169c10de,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -15191,6 +15241,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4709228538219515474, guid: ceb826367ceebf4409a36671169c10de,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4709228538786079097, guid: ceb826367ceebf4409a36671169c10de,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ceb826367ceebf4409a36671169c10de, type: 3}
@@ -17622,6 +17682,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104992599}
   m_CullTransparentMesh: 0
+--- !u!1 &2119741172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2119741173}
+  m_Layer: 0
+  m_Name: CaveCameraEndPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2119741173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119741172}
+  m_LocalRotation: {x: -0.021814799, y: 0, z: 0, w: 0.999762}
+  m_LocalPosition: {x: 2.21, y: 2.2, z: -75.11}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 76
+  m_LocalEulerAnglesHint: {x: -2.5, y: 0, z: 0}
 --- !u!1001 &2135820227
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18003,7 +18093,7 @@ PrefabInstance:
         type: 3}
       propertyPath: mainCamera
       value: 
-      objectReference: {fileID: 9223168436234152037}
+      objectReference: {fileID: 534669911}
     - target: {fileID: 913544973061084561, guid: 4d8b04be09e2bea449b382fb2c01488c,
         type: 3}
       propertyPath: dialogueCamera
@@ -18528,17 +18618,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9223168436455768626, guid: ccceb218af17c33438251bd503f0d6c1,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccceb218af17c33438251bd503f0d6c1, type: 3}
---- !u!114 &9223168436234152037 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9223168436455768625, guid: ccceb218af17c33438251bd503f0d6c1,
-    type: 3}
-  m_PrefabInstance: {fileID: 9223168436234152036}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534669902}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52c121f99fa15fa40a8ba63ccb961636, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

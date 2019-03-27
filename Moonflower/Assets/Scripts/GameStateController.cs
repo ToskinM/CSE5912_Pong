@@ -33,7 +33,7 @@ public class GameStateController : MonoBehaviour
     {
         if (current == null)
         {
-            //DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
             current = this;
         }
         else if (current != null)
