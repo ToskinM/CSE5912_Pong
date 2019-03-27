@@ -141,6 +141,7 @@ public class PlayerAnimatorController : MonoBehaviour
     // Called in the PlayerController
     public void UpdateCompanionAnimation(PlayerController.PlayerCharacter activeChar)
     {
+        //Debug.Log(playerMovement.MimbiPassiveController.Action);
         companionAnimator.SetBool(key_isWalk, playerMovement.CompanionMovementController.Action == Actions.Walking);
         companionAnimator.SetBool(key_isRun, playerMovement.CompanionMovementController.Action == Actions.Running);
         companionAnimator.SetBool(key_isJump, playerMovement.CompanionMovementController.Jumping);
