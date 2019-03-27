@@ -25,6 +25,7 @@ public static class Constants
     //icon names
     const string characterFolder = "Icons/Characters/";
     public const string ANAI_ICON = characterFolder + "Anai";
+    public const string MIMBI_ICON = characterFolder + "Mimbi";
     public const string NAIA_ICON = characterFolder + "Naia";
     public const string AMARU_ICON = characterFolder + "Amaru";
     public const string PINON_ICON = characterFolder + "Pinon";
