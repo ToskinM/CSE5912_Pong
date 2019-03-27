@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour
             //AssignToAudioSource(audioBackgrounds, backgroundVol);
 
         //Play Background wind Sound
-        PlayBackground("Environment", "Wind");
+        //PlayBackground("Environment", "Wind");
 
         //Set hearable area
         //avalibleArea = GetComponent<AudioAvalibleArea>();

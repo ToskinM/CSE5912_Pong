@@ -38,6 +38,8 @@ public class SypaveController : MonoBehaviour, INPCController
 
     void Start()
     {
+        if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+
         // Initialize Components
         playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
         anai = LevelManager.current.anai;
@@ -61,7 +63,7 @@ public class SypaveController : MonoBehaviour, INPCController
         currTalk = intro; 
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
-        playerController = LevelManager.current.player.GetComponent<PlayerController>();
+        playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
 
 //        combatController.npcMovement = movement;
 
