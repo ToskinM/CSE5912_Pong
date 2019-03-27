@@ -5,7 +5,7 @@ using static PlayerController;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    public enum Actions { Walking, Running, Chilling, Sneaking };
+    public enum Actions { Walking, Running, Chilling, Sneaking, Distracting };
     public Actions Action;
 
     public bool Jumping { get; set; }
@@ -72,9 +72,9 @@ public class PlayerMovementController : MonoBehaviour
         // Damping
         body.velocity *= 0.98f;
 
-        if (!Stunned && playerController.TalkingPartner == null)
+        if (!Stunned && playerController.TalkingPartner == null) 
             DetectKeyInput(); // Controls active player character movement
-        else
+        else if (Action != Actions.Distracting)
             Action = Actions.Chilling;
     }
 
@@ -130,19 +130,29 @@ public class PlayerMovementController : MonoBehaviour
         Action = Actions.Sneaking;
         MovementSpeed = activeCharacter == PlayerCharacter.Anai ? anaiSneakSpeed : mimbiSneakSpeed;
     }
+    // Set player's movement state and stay Distracting
+    public void SetToDistract(PlayerCharacter activeCharacter)
+    {
+        Action = Actions.Distracting;
+    }
+
+    public void EndDistract(PlayerCharacter character)
+    {
+        SetToWalk(character);
+    }
 
     // If there is movement input, update the movement states
     void SetMovementState()
     {
-        if (Input.GetButton("Run") && Action != Actions.Sneaking)
+        if (Input.GetButton("Run") && Action != Actions.Sneaking && Action!=Actions.Distracting)
         {
             if (Action != Actions.Running) SetToRun(playerController.GetActiveCharacter());
         }
-        else if (Input.GetButton("Crouch") && Action != Actions.Running)
+        else if (Input.GetButton("Crouch") && Action != Actions.Running && Action != Actions.Distracting)
         {
             if (Action != Actions.Sneaking) SetToSneak(playerController.GetActiveCharacter());
         }
-        else
+        else if (Action != Actions.Distracting)
         {
             SetToWalk(playerController.GetActiveCharacter());
         }
@@ -175,7 +185,7 @@ public class PlayerMovementController : MonoBehaviour
 
         SetJump();
 
-        if (Mathf.Approximately(horizontalInput + verticalInput, 0f))
+        if (Mathf.Approximately(horizontalInput + verticalInput, 0f)&& Action != Actions.Distracting)
         {
             if (Action != Actions.Chilling) Action = Actions.Chilling;
         }
@@ -196,7 +206,7 @@ public class PlayerMovementController : MonoBehaviour
             //Debug.Log(angle);
             rotation = Quaternion.AngleAxis(angle, Vector3.up);
         }
-        else
+        else if(Action != Actions.Distracting)
         {
             if (Action != Actions.Chilling) Action = Actions.Chilling;
         }

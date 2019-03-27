@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
 
     private void DetectPlayerSwitchInput()
     {
+        Debug.Log(ActivePlayerMovementControls.Action);
         if (Input.GetButtonDown("Switch") && !ActivePlayerCombatControls.InCombat)
         {
             SwitchActiveCharacter();
@@ -129,6 +130,7 @@ public class PlayerController : MonoBehaviour
         MimbiObject.layer = 14;
 
         // Disable Anai's AI, enable Mimbi's AI
+        //while(ActivePlayerMovementControls.MimbiPassiveController.Action ==Actions.Distracting)
         MimbiObject.GetComponent<NavMeshAgent>().enabled = true;
         AnaiObject.GetComponent<NavMeshAgent>().enabled = false;
 
@@ -225,4 +227,17 @@ public class PlayerController : MonoBehaviour
         GameObject spawner = GameObject.Find("Spawner");
         spawner.GetComponent<SpawnPoint>().Spawn();
     }
+
+    public void StartMimbiDistraction()
+    {
+        ActivePlayerMovementControls.SetToDistract(PlayerCharacter.Mimbi);
+        ActivePlayerAnimator.EnableDistraction();
+    }
+
+    public void EndMimbiDistraction()
+    {
+        ActivePlayerMovementControls.EndDistract(PlayerCharacter.Mimbi);
+        ActivePlayerAnimator.DisableDistraction();
+    }
+
 }
