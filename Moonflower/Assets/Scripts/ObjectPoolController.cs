@@ -9,7 +9,7 @@ public class ObjectPoolController : MonoBehaviour
 
     public Dictionary<string, ObjectPool> pools;
 
-    private const int CAPACITY_DEFAULT = 10;
+    public int createdPoolCapacity = 3;
 
     void Awake()
     {
@@ -37,7 +37,7 @@ public class ObjectPoolController : MonoBehaviour
         }
         else
         {
-            pool = new ObjectPool(gameObject, CAPACITY_DEFAULT);
+            pool = new ObjectPool(gameObject, createdPoolCapacity);
             pools.Add(gameObject.name, pool);
 
             return pool.Checkout(transform);
@@ -55,7 +55,7 @@ public class ObjectPoolController : MonoBehaviour
         }
         else
         {
-            pool = new ObjectPool(gameObject, CAPACITY_DEFAULT);
+            pool = new ObjectPool(gameObject, createdPoolCapacity);
             pools.Add(gameObject.name, pool);
 
             request = pool.CheckoutTemporary(transform, delay);
@@ -78,7 +78,7 @@ public class ObjectPoolController : MonoBehaviour
         }
         else
         {
-            pool = new ObjectPool(gameObject, CAPACITY_DEFAULT);
+            pool = new ObjectPool(gameObject, createdPoolCapacity);
             pools.Add(gameObject.name, pool);
 
             request = pool.CheckoutTemporary(position, delay);
