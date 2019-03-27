@@ -80,7 +80,6 @@ public class PinonController : MonoBehaviour, INPCController
 
         if (DataSavingManager.current.GetNPCDialogue(Constants.PINON_NAME) == null)
         {
-            Debug.Log("add new"); 
             currTalk = firstIntro;
             DataSavingManager.current.SaveNPCDialogues(Constants.PINON_NAME, currTalk); 
         }
@@ -132,6 +131,7 @@ public class PinonController : MonoBehaviour, INPCController
         dialogueActive = currTalk.DialogueActive();
         NPCController.SetBool("IsTalking", dialogueActive);
 
+        Debug.Log(sky.GetTime()); 
         if(sky.GetTime() > 12)
         {
             Afternoon(); 

@@ -43,6 +43,10 @@ public class DataSavingManager : MonoBehaviour
 
     public void SaveNPCDialogues(string name, DialogueTrigger dia)
     {
+        if(npcData.NPCDialogues.ContainsKey(name))
+        {
+            npcData.NPCDialogues.Remove(name); 
+        }
         npcData.NPCDialogues.Add(name, dia);
     }
 
