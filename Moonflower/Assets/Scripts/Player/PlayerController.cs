@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
 
     private void DetectPlayerSwitchInput()
     {
+        //Debug.Log(ActivePlayerMovementControls.Action);
         if (Input.GetButtonDown("Switch") && !ActivePlayerCombatControls.InCombat)
         {
             SwitchActiveCharacter();
@@ -129,12 +130,15 @@ public class PlayerController : MonoBehaviour
         MimbiObject.layer = 14;
 
         // Disable Anai's AI, enable Mimbi's AI
+        //while(ActivePlayerMovementControls.MimbiPassiveController.Action ==Actions.Distracting)
         MimbiObject.GetComponent<NavMeshAgent>().enabled = true;
         AnaiObject.GetComponent<NavMeshAgent>().enabled = false;
 
         // Disable Mimbi 's Collision Listener and enable Anai's
         AnaiObject.GetComponent<PlayerColliderListener>().enabled = true;
         MimbiObject.GetComponent<PlayerColliderListener>().enabled = false;
+
+        ActivePlayerMovementControls.MimbiPassiveController.Action = Actions.Chilling;
     }
 
     private void SwitchToMimbi()
@@ -208,7 +212,18 @@ public class PlayerController : MonoBehaviour
     void UpdateCompanionCharacter()
     {
         if (!GetCompanionObject().activeInHierarchy) return;
-
+        // Temp fix Don't make mimbi move when distracting NPC
+        if(ActivePlayerMovementControls.MimbiPassiveController.Action ==Actions.Distracting)
+        {
+            Debug.Log("STOP!");
+            //ActivePlayerMovementControls.MimbiPassiveController.Action = Actions.Chilling;
+            MimbiObject.GetComponent<NavMeshAgent>().enabled=false;
+        }
+        else if (activeCharacter == PlayerCharacter.Anai)
+        {
+            //ActivePlayerMovementControls.MimbiPassiveController.Action = Actions.Chilling;
+            MimbiObject.GetComponent<NavMeshAgent>().enabled = true;
+        }
         ActivePlayerMovementControls.UpdateCompanionMovement(activeCharacter);
         // ActivePlayerCombatControls.UpdateCompanionCombat(activeCharacter);
         ActivePlayerAnimator.UpdateCompanionAnimation(activeCharacter);
@@ -225,4 +240,19 @@ public class PlayerController : MonoBehaviour
         GameObject spawner = GameObject.Find("Spawner");
         spawner.GetComponent<SpawnPoint>().Spawn();
     }
+
+    public void StartMimbiDistraction()
+    {
+        ActivePlayerMovementControls.SetToDistract(PlayerCharacter.Mimbi);
+        ActivePlayerMovementControls.MimbiPassiveController.Action = Actions.Distracting;
+        ActivePlayerAnimator.EnableDistraction();
+    }
+
+    public void EndMimbiDistraction()
+    {
+        ActivePlayerMovementControls.EndDistract(PlayerCharacter.Mimbi);
+        ActivePlayerMovementControls.MimbiPassiveController.Action = Actions.Chilling;
+        ActivePlayerAnimator.DisableDistraction();
+    }
+
 }

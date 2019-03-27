@@ -31,10 +31,10 @@ public class HouseDoor : MonoBehaviour
             player = other.gameObject;
             spawn = GameObject.Find("Spawner");
             spawn.GetComponent<SpawnPoint>().thisScene = targetScene;
-            if (thisScene.Equals("The Village")) {
-                toInteriorScene = true;
-                spawn.transform.position = GameObject.Find(targetScene + " Spawn").transform.position;
-            } else if(thisScene.Contains("House"))
+            spawn.GetComponent<SpawnPoint>().previousScene = thisScene;
+            if (targetScene.Contains("House")) {
+                toInteriorScene = true;    
+            } else
             {
                 toInteriorScene = false;
             }
