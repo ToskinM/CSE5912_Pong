@@ -27,6 +27,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
     [Header("Cry Attack")]
     public float cryAttackCooldown = 1f;
+    public float cryAttackBarrageCount = 3f;
     public float cryAttackBarrageDuration = 1f;
     public float cryAttackFireRate = 0.1f;
     public float cryAttackAimChaos = 2f;
@@ -36,6 +37,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     [Header("Tantrum Attack")]
     public GameObject tantrumAttackRockFallPrefab;
     public float tantrumAttackCooldown = 1f;
+    public float tantrumAttackRockFallCount = 3f;
     public float tantrumAttackSpawnRate = 0.5f;
     public float tantrumAttackRadius = 5f;
     private Coroutine tantrumAttackCoroutine = null;
@@ -60,17 +62,21 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         UpdateCooldowns();
         timeSinceLastHurt += Time.deltaTime;
 
-        if (!isAttacking)
-        {
+        //if (!isAttacking)
+        //{
             timeSinceLastAttack += Time.deltaTime;
 
             if (cryAttackReady && cryAttackCoroutine == null)
             {
                 cryAttackCoroutine = StartCoroutine(CryAttack());
             }
-        }
-        else
-            attackTimer += Time.deltaTime;
+            if (tantrumAttackReady && tantrumAttackCoroutine == null)
+            {
+                tantrumAttackCoroutine = StartCoroutine(TantrumAttack());
+            }
+        //}
+        //else
+        //    attackTimer += Time.deltaTime;
     }
 
     private void UpdateCooldowns()
@@ -91,14 +97,18 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     {
         isAttacking = true;
 
-        attackTimer = 0f;
-        while (attackTimer < cryAttackBarrageDuration)
+        float attackTimer = 0f;
+        for (int i = 0; i < cryAttackBarrageCount; i++)
         {
-            for (int i = 0; i < eyes.Length; i++)
-                LaunchProjectile(eyes[i], cryAttackAimChaos);
-            
+            for (int j = 0; j < eyes.Length; j++)
+                LaunchProjectile(eyes[j], cryAttackAimChaos);
+
             yield return new WaitForSeconds(cryAttackFireRate);
         }
+        //while (attackTimer < cryAttackBarrageDuration)
+        //{
+
+        //}
 
         timeSinceLastAttack = 0f;
         cryAttackCoroutine = null;
@@ -110,19 +120,23 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     {
         isAttacking = true;
 
-        attackTimer = 0f;
-        while (attackTimer < cryAttackBarrageDuration)
+        Debug.Log("tandtrum");
+        float attackTimer = 0f;
+        for (int i = 0; i < tantrumAttackRockFallCount; i++)
         {
-            for (int i = 0; i < eyes.Length; i++)
-                LaunchProjectile(eyes[i], cryAttackAimChaos);
-            
+            Instantiate(tantrumAttackRockFallPrefab, new Vector3(Random.Range(-tantrumAttackRadius, tantrumAttackRadius), 20, Random.Range(-tantrumAttackRadius, tantrumAttackRadius)), Quaternion.identity);
+
             yield return new WaitForSeconds(cryAttackFireRate);
         }
+        //while (attackTimer < cryAttackBarrageDuration)
+        //{
+
+        //}
 
         timeSinceLastAttack = 0f;
-        cryAttackCoroutine = null;
-        cryAttackReady = false;
-        cooldownTimers[0] = 0f;
+        tantrumAttackCoroutine = null;
+        tantrumAttackReady = false;
+        cooldownTimers[1] = 0f;
         isAttacking = false;
     }
 
