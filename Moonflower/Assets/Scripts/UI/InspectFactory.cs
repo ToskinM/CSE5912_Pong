@@ -14,42 +14,42 @@ public class InspectFactory
 
     public string GetNaia()
     {
-        return "She/Her\nScavenger\nBelieve her bark is as bad as her bite, and she is always ready to fight.";
+        return "She/Her\nScavenger\n\nBelieve her bark is as bad as her bite, and she is always ready to fight.";
     }
 
     public string GetAmaru()
     {
-        return "He/Him\nGrower\nThis boy cannot possibly contain his love for his neighbors, his food, or his grain.";
+        return "He/Him\nGrower\n\nThis boy cannot possibly contain his love for his neighbors, his food, or his grain.";
     }
 
     public string GetPinon()
     {
-        return "He/Him\nChild\nEager to sneak, this little brother gets you in trouble with your mother.";
+        return "He/Him\nChild\n\nEager to sneak, this little brother gets you in trouble with your mother.";
     }
 
     public string GetSypave()
     {
-        return "She/They\nShaman\nHealer and leader to all around, personal attention does not abound.";
+        return "She/They\nShaman\n\nHealer and leader to all around, personal attention does not abound.";
     }
 
     public string GetJeruti()
     {
-        return "She/Her\nCrafter\nHer heart may be bitter with grief, but her hands still long for creative relief.";
+        return "She/Her\nCrafter\n\nHer heart may be bitter with grief, but her hands still long for creative relief.";
     }
 
     public string GetYsapy()
     {
-        return "He/Him\nScavenger\nAlways finding a way to get away, maybe he'll say why he ventures one day.";
+        return "He/Him\nScavenger\n\nAlways finding a way to get away, maybe he'll say why he ventures one day.";
     }
 
     public string GetMouse()
     {
-        return "They/Them\nRambunctious Rodent\nEasily frightened and easily quelled, they'd love a quick nibble before they are felled.";
+        return "They/Them\nRambunctious Rodent\n\nEasily frightened and easily quelled, they'd love a quick nibble before they are felled.";
     }
 
     public string GetCatbat()
     {
-        return "They/Them\nFlying Kitties\nTheir diving and dodging can cause you a fright, but they only seek water bait to bite.";
+        return "They/Them\nFlying Kitties\n\nTheir diving and dodging can cause you a fright, but they only seek water bait to bite.";
     }
 
 

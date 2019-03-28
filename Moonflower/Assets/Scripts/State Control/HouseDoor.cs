@@ -38,12 +38,9 @@ public class HouseDoor : MonoBehaviour
             spawn = GameObject.Find("Spawner");
             spawn.GetComponent<SpawnPoint>().thisScene = targetScene;
             spawn.GetComponent<SpawnPoint>().previousScene = thisScene;
-            if (targetScene.Contains("House")) {
-                toInteriorScene = true;    
-            } else
-            {
-                toInteriorScene = false;
-            }
+
+            toInteriorScene = targetScene.Contains("House");
+            Debug.Log("going inside " + toInteriorScene);
             
             //SceneManager.LoadScene(targetScene);
             if (toInteriorScene)
@@ -70,7 +67,8 @@ public class HouseDoor : MonoBehaviour
                 }
                 SceneController.current.FadeAndLoadScene(targetScene);
                 PlayerController.instance.GetCompanionObject().SetActive(true);
-                GameStateController.current.RestoreTime();
+
+                //GameStateController.current.RestoreTime();
                 //PlayerController.instance.MimbiObject.SetActive(true);
             }
 

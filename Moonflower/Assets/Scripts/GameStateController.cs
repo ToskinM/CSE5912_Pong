@@ -69,7 +69,9 @@ public class GameStateController : MonoBehaviour
         GameObject sky = GameObject.Find("Sky");
         if (sky != null)
         {
+
             time = sky.GetComponent<SkyColors>().GetTime();
+            Debug.Log("save time " + time);
             return true;
         }
         else
@@ -78,18 +80,12 @@ public class GameStateController : MonoBehaviour
         }
     }
 
-    public bool RestoreTime()
+    public bool RestoreTime(SkyColors sky)
     {
-        GameObject sky = GameObject.Find("Sky");
-        if (sky != null)
-        {
-            sky.GetComponent<SkyColors>().SetTime(time);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        //GameObject sky = GameObject.Find("Sky");
+        sky.SetTime(time);
+        Debug.Log("set time " + time);
+        return true;
     }
 
 

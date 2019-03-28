@@ -32,6 +32,8 @@ public class SkyColors : MonoBehaviour
     void Start()
 
     {
+
+
         camera = GameObject.Find("Main Camera").GetComponent<PostProcessControl>();
         lightColor = GameObject.Find("Directional Light").GetComponent<LightColor>();
         thisRend = GetComponent<MeshRenderer>();
@@ -126,6 +128,8 @@ public class SkyColors : MonoBehaviour
         newColor = colors[time];
         newFog = fogHeights[time];
         setDayorNight();
+
+        GameStateController.current.RestoreTime(this);
 
     }
 
