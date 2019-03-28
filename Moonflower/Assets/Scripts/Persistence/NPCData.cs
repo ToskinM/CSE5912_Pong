@@ -7,12 +7,12 @@ using UnityEngine;
 public class NPCData : MonoBehaviour
 {
     public List<int> aliveNPCs;
-    public Dictionary<string, DialogueTrigger> NPCDialogues;
+    //public Dictionary<string, DialogueTrigger> NPCDialogues;
 
     public NPCData()
     {
         LevelManager.current.SaveNPCs(out aliveNPCs);
-        NPCDialogues = new Dictionary<string, DialogueTrigger>(); 
+        //NPCDialogues = new Dictionary<string, DialogueTrigger>(); 
     }
 
     public void Load()

@@ -11,7 +11,8 @@ public class GameStateController : MonoBehaviour
     public bool DebugModeOn;
     public bool DebugViewOn;
     public bool cameraAvailable;
-    public GameObject DialoguePanel; 
+    public GameObject DialoguePanel;
+    public Dictionary<string, DialogueTrigger> NPCDialogues;
 
     private FollowCamera camControl;
 
@@ -32,6 +33,7 @@ public class GameStateController : MonoBehaviour
 
     void Start()
     {
+        NPCDialogues = new Dictionary<string, DialogueTrigger>();
         if (current == null)
         {
             DontDestroyOnLoad(gameObject);
@@ -71,7 +73,7 @@ public class GameStateController : MonoBehaviour
         {
 
             time = sky.GetComponent<SkyColors>().GetTime();
-            Debug.Log("save time " + time);
+//            Debug.Log("save time " + time);
             return true;
         }
         else
@@ -87,6 +89,31 @@ public class GameStateController : MonoBehaviour
         Debug.Log("set time " + time);
         return true;
     }
+
+
+    public void SaveNPCDialogues(string name, DialogueTrigger dia)
+    {
+        if (NPCDialogues.ContainsKey(name))
+        {
+            NPCDialogues.Remove(name);
+        }
+        NPCDialogues.Add(name, dia);
+        Debug.Log("save dialogue for " + name);
+    }
+
+    public DialogueTrigger GetNPCDialogue(string charName)
+    {
+        if (NPCDialogues.ContainsKey(charName))
+        {
+            Debug.Log("get dialogue for " + charName);
+            return NPCDialogues[charName];
+        }
+        else
+        {
+            return null;
+        }
+    }
+
 
 
 

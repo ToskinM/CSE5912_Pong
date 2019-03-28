@@ -41,8 +41,13 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
     private void Awake()
     {
-        icon = iconOb; 
-        charName = new InspectFactory().GetName[icon]; 
+        icon = iconOb;
+        InspectFactory fac = new InspectFactory();
+        if (fac.GetName.ContainsKey(icon))
+            charName = new InspectFactory().GetName[icon];
+        else
+            charName = "";
+
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
         movement = new NPCMovementController(gameObject, player,charName);

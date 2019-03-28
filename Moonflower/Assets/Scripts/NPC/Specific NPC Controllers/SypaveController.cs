@@ -70,27 +70,36 @@ public class SypaveController : MonoBehaviour, INPCController
         advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.SYPAVE_ADVICE_DIALOGUE);
         advice.SetExitText("I can't believe you...");
 
-        if (DataSavingManager.current.GetNPCDialogue(Constants.SYPAVE_NAME) == null)
+        if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.SYPAVE_NAME))
         {
             currConvo = Convo.intro; 
             currTalk = intro;
-            DataSavingManager.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currTalk);
+            GameStateController.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currTalk);
         }
         else
         {
-            currTalk = DataSavingManager.current.GetNPCDialogue(Constants.SYPAVE_NAME);
+            currTalk = GameStateController.current.GetNPCDialogue(Constants.SYPAVE_NAME);
             if (currTalk == intro && sky.GetTime() > 12)
             {
                 currTalk = frantic;
-                DataSavingManager.current.SaveNPCDialogues(Constants.AMARU_NAME, currTalk);
+                GameStateController.current.SaveNPCDialogues(Constants.AMARU_NAME, currTalk);
             }
 
-            if (currTalk == intro)
+            if (currTalk.Equals(intro))
+            {
+                intro = currTalk; 
                 currConvo = Convo.intro;
-            else if (currTalk == frantic)
+            }
+            else if (currTalk.Equals(frantic))
+            {
+                frantic = currTalk; 
                 currConvo = Convo.frantic;
+            }
             else
-                currConvo = Convo.advice; 
+            {
+                advice = currTalk; 
+                currConvo = Convo.advice;
+            }
         }
 
 
@@ -153,7 +162,7 @@ public class SypaveController : MonoBehaviour, INPCController
     private void switchConvos()
     {
         currTalk = advice;
-        DataSavingManager.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currTalk);
+        GameStateController.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currTalk);
     }
 
     public DialogueTrigger GetCurrDialogue()
@@ -227,7 +236,7 @@ public class SypaveController : MonoBehaviour, INPCController
     {
         currConvo = Convo.frantic; 
         currTalk = frantic;
-        DataSavingManager.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currTalk);
+        GameStateController.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currTalk);
         movement.FollowPlayer(bufferDist);
         movement.InfluenceFollowSpeed(1.5f); 
 
