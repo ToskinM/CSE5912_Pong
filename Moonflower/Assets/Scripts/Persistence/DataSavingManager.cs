@@ -12,7 +12,7 @@ public class DataSavingManager : MonoBehaviour
     public AnaiData anaiData = null;
     public MimbiData mimbiData = null;
     public CameraData cameraData = null;
-    public NPCData npcData = null;
+    //public NPCData npcData = null;
 
     public GameObject anai;
     public GameObject mimbi;
@@ -26,7 +26,7 @@ public class DataSavingManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             current = this;
             GetReferences();
-            npcData = new NPCData(); 
+            //npcData = new NPCData(); 
         }
         else if (current != null)
         {
@@ -41,22 +41,22 @@ public class DataSavingManager : MonoBehaviour
         mimbi = LevelManager.current.mimbi;
     }
 
-    public void SaveNPCDialogues(string name, DialogueTrigger dia)
-    {
-        if(npcData.NPCDialogues.ContainsKey(name))
-        {
-            npcData.NPCDialogues.Remove(name); 
-        }
-        npcData.NPCDialogues.Add(name, dia);
-    }
+    //public void SaveNPCDialogues(string name, DialogueTrigger dia)
+    //{
+    //    if(npcData.NPCDialogues.ContainsKey(name))
+    //    {
+    //        npcData.NPCDialogues.Remove(name); 
+    //    }
+    //    npcData.NPCDialogues.Add(name, dia);
+    //}
 
-    public DialogueTrigger GetNPCDialogue(string charName)
-    {
-        if (npcData.NPCDialogues.ContainsKey(charName))
-            return npcData.NPCDialogues[charName];
-        else
-            return null;
-    }
+    //public DialogueTrigger GetNPCDialogue(string charName)
+    //{
+    //    if (npcData.NPCDialogues.ContainsKey(charName))
+    //        return npcData.NPCDialogues[charName];
+    //    else
+    //        return null;
+    //}
 
     public void SaveGame()
     {
@@ -64,7 +64,7 @@ public class DataSavingManager : MonoBehaviour
 
         SavePlayerInfo(binaryFormatter);
         cameraData = new CameraData(LevelManager.current.mainCamera);
-        npcData = new NPCData();
+//        npcData = new NPCData();
     }
     public void LoadGame()
     {

@@ -83,22 +83,27 @@ public class PinonController : MonoBehaviour, INPCController
         intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.PINON_INTRO_DIALOGUE);
         intro.SetExitText("You're going to leave me alone? Finally!");
 
-        if (DataSavingManager.current.GetNPCDialogue(Constants.PINON_NAME) == null)
+        if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.PINON_NAME))
         {
             currConvo = Convo.first; 
             currTalk = firstIntro;
-            DataSavingManager.current.SaveNPCDialogues(Constants.PINON_NAME, currTalk); 
+            GameStateController.current.SaveNPCDialogues(Constants.PINON_NAME, currTalk);
         }
         else
         {
-            currTalk = DataSavingManager.current.GetNPCDialogue(Constants.PINON_NAME);
+            currTalk = GameStateController.current.GetNPCDialogue(Constants.PINON_NAME);
             if(currTalk.Equals(firstIntro))
-            { 
+            {
+                firstIntro = currTalk; 
                 currConvo = Convo.first;
+                if (currTalk.Complete)
+                    currTalk = intro; 
             }
             else
             {
-                currConvo = Convo.intro; 
+                intro = currTalk; 
+                currConvo = Convo.intro;
+                npc.Wander();
             }
         }
 
@@ -161,7 +166,7 @@ public class PinonController : MonoBehaviour, INPCController
     private void switchConvos()
     {
         currTalk = intro;
-        DataSavingManager.current.SaveNPCDialogues(Constants.PINON_NAME, currTalk);
+        GameStateController.current.SaveNPCDialogues(Constants.PINON_NAME, currTalk);
     }
 
     public void Afternoon()
