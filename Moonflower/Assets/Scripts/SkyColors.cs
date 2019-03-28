@@ -163,7 +163,7 @@ public class SkyColors : MonoBehaviour
         //    Debug.Log("Pass " + Passout); 
             if(!GameStateController.current.Passed && time <= Passout && time >= Passout-1)
             {
-                camera.PassOut(); 
+          //      camera.PassOut(); 
             }
             if(!GameStateController.current.Passed && time > Passout)
             {

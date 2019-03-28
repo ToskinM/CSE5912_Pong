@@ -71,18 +71,32 @@ public class NaiaController : MonoBehaviour, INPCController
         advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_ADVICE_DIALOGUE);
         advice.SetExitText("You can't keep running away from this.");
 
-        if (DataSavingManager.current.GetNPCDialogue(Constants.NAIA_NAME) == null)
+        if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.NAIA_NAME))
         {
             currTalk = intro;
-            DataSavingManager.current.SaveNPCDialogues(Constants.NAIA_NAME, currTalk);
+            GameStateController.current.SaveNPCDialogues(Constants.NAIA_NAME, currTalk);
         }
         else
         {
-            currTalk = DataSavingManager.current.GetNPCDialogue(Constants.NAIA_NAME);
+            currTalk = GameStateController.current.GetNPCDialogue(Constants.NAIA_NAME);
             if (currTalk == intro && sky.GetTime() > 12)
             {
                 currTalk = advice;
-                DataSavingManager.current.SaveNPCDialogues(Constants.NAIA_NAME, currTalk);
+                GameStateController.current.SaveNPCDialogues(Constants.NAIA_NAME, currTalk);
+            }
+
+            if(currTalk.Equals(intro))
+            {
+                intro = currTalk; 
+            }
+            else if (currTalk.Equals(postFight))
+            {
+                postFight = currTalk; 
+            }
+            else
+            {
+                advice = currTalk;
+                Afternoon(); 
             }
         }
 
@@ -183,7 +197,7 @@ public class NaiaController : MonoBehaviour, INPCController
     public void Afternoon()
     {
         currTalk = advice;
-        DataSavingManager.current.SaveNPCDialogues(Constants.NAIA_NAME, currTalk); 
+        GameStateController.current.SaveNPCDialogues(Constants.NAIA_NAME, currTalk); 
         movement.Wander(centerOfTown, 30f);
         movement.SetDefault(NPCMovementController.MoveState.wander);
         movement.InfluenceWanderSpeed(1.5f);
