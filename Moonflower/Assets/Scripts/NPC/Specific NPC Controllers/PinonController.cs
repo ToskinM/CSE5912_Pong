@@ -52,7 +52,8 @@ public class PinonController : MonoBehaviour, INPCController
     // Start is called before the first frame update
     void Start()
     {
-        if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+        DialoguePanel = GameStateController.current.DialoguePanel;
+        //if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
         sky = GameObject.Find("Sky").GetComponent<SkyColors>();
 
         if (GameStateController.current.Passed)
@@ -108,7 +109,7 @@ public class PinonController : MonoBehaviour, INPCController
     // Update is called once per frame
     void Update()
     {
-        if (currentPlayer.IsAnai())
+        if (PlayerController.instance.AnaiIsActive())
         {
             currTalk.Update();
 
