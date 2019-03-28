@@ -58,11 +58,25 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        ActivePlayerCombatControls.OnDeath += HandlePlayerDeath;
+        if (ActivePlayerCombatControls != null)
+        {
+            ActivePlayerCombatControls.OnDeath += HandlePlayerDeath;
+        }
+        else
+        {
+            Debug.Log("Active Player Combat Control is NULL");
+        }
     }
     private void OnDisable()
     {
-        ActivePlayerCombatControls.OnDeath -= HandlePlayerDeath;
+        if (ActivePlayerCombatControls != null)
+        {
+            ActivePlayerCombatControls.OnDeath -= HandlePlayerDeath;
+        }
+        else
+        {
+            Debug.Log("Active Player Combat Control is NULL");
+        }
     }
 
     void Start()
@@ -162,6 +176,11 @@ public class PlayerController : MonoBehaviour
         // Disable Anai's Collision Listener and enable Mimbi's
         MimbiObject.GetComponent<PlayerColliderListener>().enabled = true;
         AnaiObject.GetComponent<PlayerColliderListener>().enabled = false;
+    }
+
+    public void PassOut()
+    {
+        //ActivePlayerAnimator
     }
 
     public void SummonMimbi()

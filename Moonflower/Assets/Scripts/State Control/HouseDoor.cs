@@ -12,6 +12,7 @@ public class HouseDoor : MonoBehaviour
     private GameObject spawn;
     public string thisScene;
     public AudioSource BGM;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +29,10 @@ public class HouseDoor : MonoBehaviour
     {
         if ((other.Equals(PlayerController.instance.AnaiObject.GetComponent<Collider>()) && PlayerController.instance.AnaiIsActive()) || (other.Equals(PlayerController.instance.MimbiObject.GetComponent<Collider>()) && !PlayerController.instance.AnaiIsActive()))
         {
+            bool success = GameStateController.current.SaveTime();
+            if (!success)
+                GameStateController.current.RestoreTime(); 
+
             player = other.gameObject;
             spawn = GameObject.Find("Spawner");
             spawn.GetComponent<SpawnPoint>().thisScene = targetScene;

@@ -37,6 +37,9 @@ public class AmaruController : MonoBehaviour, INPCController
     Vector3 centerOfTown;
     AmaruAnimatorController amaruAnimator;
 
+    SkyColors sky;
+    bool beforeNoon = true; 
+
     void Awake()
     {
 
@@ -46,6 +49,8 @@ public class AmaruController : MonoBehaviour, INPCController
     void Start()
     {
         if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+        sky = GameObject.Find("Sky").GetComponent<SkyColors>();
+
 
         //npc = gameObject.AddComponent<NPCMovement>();
         //playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
@@ -73,6 +78,11 @@ public class AmaruController : MonoBehaviour, INPCController
         else
         {
             currTalk = DataSavingManager.current.GetNPCDialogue(Constants.AMARU_NAME);
+            if (currTalk == intro && sky.GetTime() > 12)
+            {
+                currTalk = advice;
+                DataSavingManager.current.SaveNPCDialogues(Constants.AMARU_NAME, currTalk);
+            }
         }
 
 
@@ -111,6 +121,12 @@ public class AmaruController : MonoBehaviour, INPCController
         }
         dialogueActive = currTalk.DialogueActive();
 
+
+        if(sky.GetTime()>sky.Passout && beforeNoon)
+        {
+            Afternoon();
+            beforeNoon = false; 
+        }
     }
 
     public DialogueTrigger GetCurrDialogue()

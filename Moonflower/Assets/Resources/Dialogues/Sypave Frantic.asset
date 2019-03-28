@@ -24,6 +24,7 @@ MonoBehaviour:
   - {fileID: 114126317771191226}
   - {fileID: 114976576156196370}
   - {fileID: 114840988301804460}
+  - {fileID: 114207890923759490}
 --- !u!114 &114126317771191226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,12 +61,62 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114605728019786288}
+        node: {fileID: 114207890923759490}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _dynamic: 0
   text: You don't know that!
+  answers: []
+--- !u!114 &114207890923759490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d4b035e8545a04ca8b7c9c33635bcb, type: 3}
+  m_Name: Chat
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 408, y: -296}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114207890923759490}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 114372935650132586}
+        reroutePoints: []
+      - fieldName: output
+        node: {fileID: 114126317771191226}
+        reroutePoints: []
+      - fieldName: output
+        node: {fileID: 114708073898592846}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114207890923759490}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114605728019786288}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  text: 'What are you doing just standing around? And why didn''t you make sure he
+    was inside for high noon?! '
   answers: []
 --- !u!114 &114322826423767248
 MonoBehaviour:
@@ -185,7 +236,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114605728019786288}
+        node: {fileID: 114207890923759490}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -206,7 +257,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 440, y: -344}
+  position: {x: 824, y: -360}
   ports:
     keys:
     - input
@@ -221,13 +272,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: output
-        node: {fileID: 114708073898592846}
-        reroutePoints: []
-      - fieldName: output
-        node: {fileID: 114372935650132586}
-        reroutePoints: []
-      - fieldName: output
-        node: {fileID: 114126317771191226}
+        node: {fileID: 114207890923759490}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -273,8 +318,7 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 1
       _dynamic: 1
-  text: What are you doing just standing around? And why didn't you make sure he was
-    inside for high noon?! I've told you a hundred times-
+  text: I've told you a hundred times-
   answers:
   - text: I thought he was!
     voiceClip: {fileID: 0}
@@ -356,7 +400,7 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 1
       _dynamic: 1
-  text: 'What do you mean, ''so''? Can you really be that self centered? '
+  text: 'What do you mean, ''so''? Can you really be that self-centered? '
   answers:
   - text: 'He''s done this before. '
     voiceClip: {fileID: 0}
@@ -400,7 +444,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114605728019786288}
+        node: {fileID: 114207890923759490}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -479,7 +523,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 952, y: -520}
+  position: {x: 1256, y: -536}
   ports:
     keys:
     - input
@@ -520,7 +564,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 952, y: -136}
+  position: {x: 1272, y: -136}
   ports:
     keys:
     - input
@@ -601,7 +645,7 @@ MonoBehaviour:
   m_Name: Chat
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 952, y: -328}
+  position: {x: 1256, y: -344}
   ports:
     keys:
     - input

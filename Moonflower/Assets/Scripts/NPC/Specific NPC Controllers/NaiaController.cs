@@ -39,7 +39,8 @@ public class NaiaController : MonoBehaviour, INPCController
 
     bool trainingFight = false;
     int goalHealth;
-    SkyColors sky; 
+    SkyColors sky;
+    bool beforeNoon = true; 
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
@@ -77,10 +78,13 @@ public class NaiaController : MonoBehaviour, INPCController
         else
         {
             currTalk = DataSavingManager.current.GetNPCDialogue(Constants.NAIA_NAME);
+            if (currTalk == intro && sky.GetTime() > 12)
+            {
+                currTalk = advice;
+                DataSavingManager.current.SaveNPCDialogues(Constants.NAIA_NAME, currTalk);
+            }
         }
 
-
-        sky.SetTime(10); 
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         combatController.npcMovement = movement;
@@ -162,9 +166,10 @@ public class NaiaController : MonoBehaviour, INPCController
 
         movement.UpdateMovement();
         currTalk.Update();
-        if (sky.GetTime() > 12)
+        if (sky.GetTime() > sky.Passout && beforeNoon)
         {
             Afternoon();
+            beforeNoon = false; 
         }
     }
 
