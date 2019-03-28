@@ -95,7 +95,8 @@ public class NaiaController : MonoBehaviour, INPCController
             }
             else
             {
-                advice = currTalk; 
+                advice = currTalk;
+                Afternoon(); 
             }
         }
 

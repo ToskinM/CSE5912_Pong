@@ -86,7 +86,7 @@ public class GameStateController : MonoBehaviour
     {
         //GameObject sky = GameObject.Find("Sky");
         sky.SetTime(time);
-        Debug.Log("set time " + time);
+//        Debug.Log("set time " + time);
         return true;
     }
 
@@ -98,14 +98,14 @@ public class GameStateController : MonoBehaviour
             NPCDialogues.Remove(name);
         }
         NPCDialogues.Add(name, dia);
-        Debug.Log("save dialogue for " + name);
+ //       Debug.Log("save dialogue for " + name);
     }
 
     public DialogueTrigger GetNPCDialogue(string charName)
     {
         if (NPCDialogues.ContainsKey(charName))
         {
-            Debug.Log("get dialogue for " + charName);
+ //           Debug.Log("get dialogue for " + charName);
             return NPCDialogues[charName];
         }
         else

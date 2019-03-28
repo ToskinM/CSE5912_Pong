@@ -92,13 +92,16 @@ public class SypaveController : MonoBehaviour, INPCController
             }
             else if (currTalk.Equals(frantic))
             {
-                frantic = currTalk; 
-                currConvo = Convo.frantic;
+                frantic = currTalk;
+                Afternoon(); 
             }
             else
             {
                 advice = currTalk; 
                 currConvo = Convo.advice;
+                movement.Wander(centerOfTown, 30f);
+                movement.SetDefault(NPCMovementController.MoveState.wander);
+                movement.InfluenceWanderSpeed(1.5f);
             }
         }
 

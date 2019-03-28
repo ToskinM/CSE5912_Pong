@@ -91,7 +91,8 @@ public class AmaruController : MonoBehaviour, INPCController
             }
             else
             {
-                advice = currTalk; 
+                advice = currTalk;
+                Afternoon(); 
             }
         }
 

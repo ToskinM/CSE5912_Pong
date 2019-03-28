@@ -102,7 +102,8 @@ public class PinonController : MonoBehaviour, INPCController
             else
             {
                 intro = currTalk; 
-                currConvo = Convo.intro; 
+                currConvo = Convo.intro;
+                npc.Wander();
             }
         }
 
