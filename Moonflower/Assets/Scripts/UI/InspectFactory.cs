@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class InspectFactory
 {
+    public Dictionary<Sprite, string> GetName = new Dictionary<Sprite, string>(); 
+    public InspectFactory()
+    {
+        IconFactory fac = new IconFactory(); 
+        GetName.Add(fac.GetIcon(Constants.MOUSE_ICON), Constants.MOUSE_NAME);
+        GetName.Add(fac.GetIcon(Constants.CATBAT_ICON), Constants.CATBAT_NAME);
+    }
 
     public string GetNaia()
     {
@@ -39,4 +46,11 @@ public class InspectFactory
     {
         return "They/Them\nRambunctious Rodent\nEasily frightened and easily quelled, they'd love a quick nibble before they are felled.";
     }
+
+    public string GetCatbat()
+    {
+        return "They/Them\nFlying Kitties\nTheir diving and dodging can cause you a fright, but they only seek water bait to bite.";
+    }
+
+
 }

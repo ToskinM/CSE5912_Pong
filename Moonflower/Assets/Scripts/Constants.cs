@@ -56,7 +56,8 @@ public static class Constants
     public const string PAINT_ICON = itemFolder + "Paint Pots"; 
     public const string DRUM_ICON = itemFolder + "Drum";
     public const string FEATHER_ICON = itemFolder + "Feather";
-    public const string NECKLACE_ICON = itemFolder + "Necklace";
+    public const string NECKLACE_ICON = itemFolder + "Necklace"; 
+
 
     //life petal names
     const string flowerFolder = "Life Petals/";
@@ -123,4 +124,5 @@ public static class Constants
 
     //other
     public const string MOUSE_NAME = "Mousy Boi";
+    public const string CATBAT_NAME = "Catbat";
 }
