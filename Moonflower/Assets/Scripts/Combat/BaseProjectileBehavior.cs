@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BaseProjectileBehavior : MonoBehaviour, IProjectile
 {
+    public GameObject muzzleFlash;
     public GameObject explosion;
     public int baseDamage = 2;
     public float movementSpeed = 5f;
@@ -20,6 +21,14 @@ public class BaseProjectileBehavior : MonoBehaviour, IProjectile
     void Awake()
     {
         Hurtbox = GetComponentInChildren<IHurtboxController>();
+    }
+
+    private void Start()
+    {
+        if (muzzleFlash)
+        {
+            ObjectPoolController.current.CheckoutTemporary(muzzleFlash, transform.position, 1);
+        }
     }
 
     void Update()
