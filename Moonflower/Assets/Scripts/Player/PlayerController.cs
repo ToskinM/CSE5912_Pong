@@ -183,6 +183,17 @@ public class PlayerController : MonoBehaviour
         //ActivePlayerAnimator
     }
 
+    public void ChillCompanion()
+    {
+        GetCompanionObject().GetComponent<PlayerMovementController>().CompanionMovementController.Chill(); 
+    }
+
+    public void ResetCompanion()
+    {
+        GetCompanionObject().GetComponent<PlayerMovementController>().CompanionMovementController.Reset();
+
+    }
+
     public void SummonMimbi()
     {
         ActivePlayerMovementControls.MimbiPassiveController.RunToPlayer();
