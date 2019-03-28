@@ -7,21 +7,20 @@ public class KeyForGate : MonoBehaviour
     public GameObject target;
     private GateforKey gate;
     public float time = 0;
-    public GameObject player;
+    public string playerName;
+    private GameObject player;
     
     // Start is called before the first frame update
     void Start()
     {
         gate = target.GetComponent<GateforKey>();
+        player = GameObject.Find(playerName);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (player == null)
-        {
-            player = LevelManager.current.currentPlayer;
-        }
+
     }
 
     private void OnTriggerEnter(Collider other)
