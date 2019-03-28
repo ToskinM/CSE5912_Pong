@@ -78,7 +78,8 @@ public class DialogueTrigger : MonoBehaviour
                 break;
 
             case PanelState.falling:
-//                Debug.Log("Falling"); 
+                //                Debug.Log("Falling"); 
+                panelInfo.Text.text = "";
                 panelInfo.IsUp = true;
                 panel.transform.position -= new Vector3(0, 4, 0);
                 if (panel.transform.position.y <= panelInfo.DownPosition.y)

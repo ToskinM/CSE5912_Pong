@@ -20,6 +20,7 @@ public class PostProcessControl : MonoBehaviour
 
     public void PassOut()
     {
+//        Debug.Log("do it"); 
         GetComponent<PostProcessingBehaviour>().profile = passOutProfile;
     }
 }

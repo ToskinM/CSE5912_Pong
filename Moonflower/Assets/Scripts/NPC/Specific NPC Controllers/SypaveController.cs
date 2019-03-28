@@ -28,21 +28,30 @@ public class SypaveController : MonoBehaviour, INPCController
     private NPCMovementController movement;
     //private NPCCombatController combatController;
     private NavMeshAgent agent;
+
+    enum Convo { intro, frantic, advice }
+    Convo currConvo = Convo.intro;
     private DialogueTrigger currTalk;
     private DialogueTrigger intro;
     private DialogueTrigger frantic;
-    private DialogueTrigger advice; 
+    private DialogueTrigger advice;
+
+    Vector3 centerOfTown; 
     private PlayerController playerController;
     private FeedbackText feedbackText;
-
+    SkyColors sky;
+    bool beforeNoon = true; 
 
     void Start()
     {
-        if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+        DialoguePanel = GameStateController.current.DialoguePanel; 
+        //if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+        sky = GameObject.Find("Sky").GetComponent<SkyColors>();
+        centerOfTown = GameObject.Find("Campfire").transform.position;
 
         // Initialize Components
         playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
-        anai = LevelManager.current.anai;
+        anai = PlayerController.instance.AnaiObject; 
         agent = GetComponent<NavMeshAgent>();
        // combatController = GetComponent<NPCCombatController>();
 
@@ -63,12 +72,25 @@ public class SypaveController : MonoBehaviour, INPCController
 
         if (DataSavingManager.current.GetNPCDialogue(Constants.SYPAVE_NAME) == null)
         {
+            currConvo = Convo.intro; 
             currTalk = intro;
             DataSavingManager.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currTalk);
         }
         else
         {
             currTalk = DataSavingManager.current.GetNPCDialogue(Constants.SYPAVE_NAME);
+            if (currTalk == intro && sky.GetTime() > 12)
+            {
+                currTalk = frantic;
+                DataSavingManager.current.SaveNPCDialogues(Constants.AMARU_NAME, currTalk);
+            }
+
+            if (currTalk == intro)
+                currConvo = Convo.intro;
+            else if (currTalk == frantic)
+                currConvo = Convo.frantic;
+            else
+                currConvo = Convo.advice; 
         }
 
 
@@ -89,17 +111,49 @@ public class SypaveController : MonoBehaviour, INPCController
         if (currTalk.Complete)
         {
             movement.Reset();
-            if (frantic.Complete)
-            {
-                Debug.Log("??"); 
-                currTalk = advice;
-                DataSavingManager.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currTalk);
-            }
+
+
+        }
+        switch (currConvo)
+        {
+            case Convo.frantic:
+                if (movement.state != NPCMovementController.MoveState.follow)
+                    movement.Follow();
+
+                if (movement.DistanceFrom(anai) < engagementRadius && !frantic.DialogueActive())
+                {
+                    StartTalk();
+                    //indicateInterest();
+                    movement.Follow();
+                }
+                if (frantic.Complete)
+                {
+                    //Debug.Log("switch convos");
+                    currConvo = Convo.advice;
+                    movement.Wander(centerOfTown, 30f);
+                    movement.SetDefault(NPCMovementController.MoveState.wander);
+                    movement.InfluenceWanderSpeed(1.5f);
+                    Invoke("switchConvos", 3);
+                }
+                break;
+            default:
+                break;
         }
 
         movement.UpdateMovement();
 
         currTalk.Update();
+        if (sky.GetTime() > sky.Passout && beforeNoon)
+        {
+            Afternoon();
+            beforeNoon = false; 
+        }
+    }
+
+    private void switchConvos()
+    {
+        currTalk = advice;
+        DataSavingManager.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currTalk);
     }
 
     public DialogueTrigger GetCurrDialogue()
@@ -153,7 +207,7 @@ public class SypaveController : MonoBehaviour, INPCController
         }
         else
         {
-            displayFeedback("Sypave is not interested in the " + giftName.ToLower() + "?");
+            displayFeedback("Sypave is not interested in the " + giftName.ToLower() + ".");
         }
     }
     public void Distract(GameObject distractedBy)
@@ -171,9 +225,12 @@ public class SypaveController : MonoBehaviour, INPCController
 
     public void Afternoon()
     {
-        Debug.Log("It's afternoon");
+        currConvo = Convo.frantic; 
         currTalk = frantic;
         DataSavingManager.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currTalk);
+        movement.FollowPlayer(bufferDist);
+        movement.InfluenceFollowSpeed(1.5f); 
+
     }
 
     private void displayFeedback(string text)

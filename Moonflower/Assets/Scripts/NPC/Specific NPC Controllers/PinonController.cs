@@ -41,7 +41,8 @@ public class PinonController : MonoBehaviour, INPCController
     private CurrentPlayer currentPlayer;
 
 
-    SkyColors sky; 
+    SkyColors sky;
+    bool beforeNoon = true; 
 
     void Awake()
     {
@@ -51,8 +52,12 @@ public class PinonController : MonoBehaviour, INPCController
     // Start is called before the first frame update
     void Start()
     {
-        if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+        DialoguePanel = GameStateController.current.DialoguePanel;
+        //if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+        sky = GameObject.Find("Sky").GetComponent<SkyColors>();
 
+        if (GameStateController.current.Passed)
+            gameObject.SetActive(false); 
         //playerController = LevelManager.current.currentPlayer.GetComponent<IPlayerController>();
         // Player = LevelManager.current.currentPlayer;
         playerController = LevelManager.current.player.GetComponent<PlayerController>();
@@ -80,24 +85,31 @@ public class PinonController : MonoBehaviour, INPCController
 
         if (DataSavingManager.current.GetNPCDialogue(Constants.PINON_NAME) == null)
         {
-            Debug.Log("add new"); 
+            currConvo = Convo.first; 
             currTalk = firstIntro;
             DataSavingManager.current.SaveNPCDialogues(Constants.PINON_NAME, currTalk); 
         }
         else
         {
             currTalk = DataSavingManager.current.GetNPCDialogue(Constants.PINON_NAME);
+            if(currTalk.Equals(firstIntro))
+            { 
+                currConvo = Convo.first;
+            }
+            else
+            {
+                currConvo = Convo.intro; 
+            }
         }
 
         actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
 
-        sky = GameObject.Find("Sky").GetComponent<SkyColors>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (currentPlayer.IsAnai())
+        if (PlayerController.instance.AnaiIsActive())
         {
             currTalk.Update();
 
@@ -132,9 +144,11 @@ public class PinonController : MonoBehaviour, INPCController
         dialogueActive = currTalk.DialogueActive();
         NPCController.SetBool("IsTalking", dialogueActive);
 
-        if(sky.GetTime() > 12)
+        Debug.Log(sky.GetTime()); 
+        if(sky.GetTime() > sky.Passout && beforeNoon)
         {
-            Afternoon(); 
+            Afternoon();
+            beforeNoon = false; 
         }
 
     }

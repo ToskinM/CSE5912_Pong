@@ -11,6 +11,7 @@ public class GameStateController : MonoBehaviour
     public bool DebugModeOn;
     public bool DebugViewOn;
     public bool cameraAvailable;
+    public GameObject DialoguePanel; 
 
     private FollowCamera camControl;
 
@@ -25,6 +26,9 @@ public class GameStateController : MonoBehaviour
 
     private int menuLayers = 0;
     private int pauseLayers = 0;
+
+    int time;
+    public bool Passed = false;
 
     void Start()
     {
@@ -59,6 +63,36 @@ public class GameStateController : MonoBehaviour
         if (cameraAvailable)
             camControl = LevelManager.current.mainCamera;
     }
+
+    public bool SaveTime()
+    {
+        GameObject sky = GameObject.Find("Sky");
+        if (sky != null)
+        {
+            time = sky.GetComponent<SkyColors>().GetTime();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool RestoreTime()
+    {
+        GameObject sky = GameObject.Find("Sky");
+        if (sky != null)
+        {
+            sky.GetComponent<SkyColors>().SetTime(time);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
 
     public void ToggleDebugMode()
     {

@@ -8,6 +8,7 @@ public static class Constants
     public const string SCENE_VILLAGE = "The Village";
     public const string SCENE_PERSISTENT = "Persistent";
     public const string SCENE_MAINMENU = "Main Menu Village";
+    public const string SCENE_ANAIHOUSE = "Anai House";
     public const string SCENE_LOADING = "LoadingScene";
     public const string SCENE_GAMESTART = "GameStart";
     public const string SCENE_QUITPOPUP = "Quit Nag Popup";
@@ -25,6 +26,7 @@ public static class Constants
     //icon names
     const string characterFolder = "Icons/Characters/";
     public const string ANAI_ICON = characterFolder + "Anai";
+    public const string MIMBI_ICON = characterFolder + "Mimbi";
     public const string NAIA_ICON = characterFolder + "Naia";
     public const string AMARU_ICON = characterFolder + "Amaru";
     public const string PINON_ICON = characterFolder + "Pinon";

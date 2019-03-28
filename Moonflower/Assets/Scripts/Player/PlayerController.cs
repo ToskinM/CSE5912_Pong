@@ -58,11 +58,25 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        ActivePlayerCombatControls.OnDeath += HandlePlayerDeath;
+        if (ActivePlayerCombatControls != null)
+        {
+            ActivePlayerCombatControls.OnDeath += HandlePlayerDeath;
+        }
+        else
+        {
+            Debug.Log("Active Player Combat Control is NULL");
+        }
     }
     private void OnDisable()
     {
-        ActivePlayerCombatControls.OnDeath -= HandlePlayerDeath;
+        if (ActivePlayerCombatControls != null)
+        {
+            ActivePlayerCombatControls.OnDeath -= HandlePlayerDeath;
+        }
+        else
+        {
+            Debug.Log("Active Player Combat Control is NULL");
+        }
     }
 
     void Start()
@@ -83,7 +97,7 @@ public class PlayerController : MonoBehaviour
 
     private void DetectPlayerSwitchInput()
     {
-        Debug.Log(ActivePlayerMovementControls.Action);
+        //Debug.Log(ActivePlayerMovementControls.Action);
         if (Input.GetButtonDown("Switch") && !ActivePlayerCombatControls.InCombat)
         {
             SwitchActiveCharacter();
@@ -137,6 +151,8 @@ public class PlayerController : MonoBehaviour
         // Disable Mimbi 's Collision Listener and enable Anai's
         AnaiObject.GetComponent<PlayerColliderListener>().enabled = true;
         MimbiObject.GetComponent<PlayerColliderListener>().enabled = false;
+
+        ActivePlayerMovementControls.MimbiPassiveController.Action = Actions.Chilling;
     }
 
     private void SwitchToMimbi()
@@ -160,6 +176,11 @@ public class PlayerController : MonoBehaviour
         // Disable Anai's Collision Listener and enable Mimbi's
         MimbiObject.GetComponent<PlayerColliderListener>().enabled = true;
         AnaiObject.GetComponent<PlayerColliderListener>().enabled = false;
+    }
+
+    public void PassOut()
+    {
+        //ActivePlayerAnimator
     }
 
     public void SummonMimbi()
@@ -210,7 +231,18 @@ public class PlayerController : MonoBehaviour
     void UpdateCompanionCharacter()
     {
         if (!GetCompanionObject().activeInHierarchy) return;
-
+        // Temp fix Don't make mimbi move when distracting NPC
+        if(ActivePlayerMovementControls.MimbiPassiveController.Action ==Actions.Distracting)
+        {
+            Debug.Log("STOP!");
+            //ActivePlayerMovementControls.MimbiPassiveController.Action = Actions.Chilling;
+            MimbiObject.GetComponent<NavMeshAgent>().enabled=false;
+        }
+        else if (activeCharacter == PlayerCharacter.Anai)
+        {
+            //ActivePlayerMovementControls.MimbiPassiveController.Action = Actions.Chilling;
+            MimbiObject.GetComponent<NavMeshAgent>().enabled = true;
+        }
         ActivePlayerMovementControls.UpdateCompanionMovement(activeCharacter);
         // ActivePlayerCombatControls.UpdateCompanionCombat(activeCharacter);
         ActivePlayerAnimator.UpdateCompanionAnimation(activeCharacter);
@@ -231,12 +263,14 @@ public class PlayerController : MonoBehaviour
     public void StartMimbiDistraction()
     {
         ActivePlayerMovementControls.SetToDistract(PlayerCharacter.Mimbi);
+        ActivePlayerMovementControls.MimbiPassiveController.Action = Actions.Distracting;
         ActivePlayerAnimator.EnableDistraction();
     }
 
     public void EndMimbiDistraction()
     {
         ActivePlayerMovementControls.EndDistract(PlayerCharacter.Mimbi);
+        ActivePlayerMovementControls.MimbiPassiveController.Action = Actions.Chilling;
         ActivePlayerAnimator.DisableDistraction();
     }
 

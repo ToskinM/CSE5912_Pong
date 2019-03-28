@@ -243,12 +243,12 @@ public class NPCMovementController : MonoBehaviour, IMovement
     public void InfluenceFollowSpeed(float mult)
     {
         if (canFollow)
-            wander.baseSpeed *= mult;
+            follow.baseSpeed *= mult;
     }
     public void InfluencePaceSpeed(float mult)
     {
         if (canPace)
-            wander.baseSpeed *= mult;
+            pace.baseSpeed *= mult;
     }
 
     /*
@@ -280,7 +280,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
             switch (state)
             {
                 case MoveState.wander:
-                   // Debug.Log("wander");
+//                    Debug.Log(charName + " wander");
                     if (canWander)
                     {
                         //Debug.Log(charName + " is wandering!!");
@@ -298,6 +298,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
                     }
                     break;
                 case MoveState.follow:
+//                    Debug.Log(charName + " follow");
                     if (canFollow)
                     {
                         //Debug.Log("I'm following");
@@ -341,6 +342,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
                     //self.transform.LookAt(target.transform.position);
                     break;
                 case MoveState.chill:
+  //                  Debug.Log(charName + " chill");
                     //Chill(); 
                     //Debug.Log("I'm chilling");
                     break;

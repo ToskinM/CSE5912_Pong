@@ -54,7 +54,7 @@ public class MainMenuBehavior : MonoBehaviour
         sceneController = FindObjectOfType<SceneController>();
         if (sceneController != null)
         {
-            sceneController.FadeAndLoadScene(Constants.SCENE_VILLAGE);
+            sceneController.FadeAndLoadScene(Constants.SCENE_ANAIHOUSE);
         }
         else
         {
@@ -65,7 +65,7 @@ public class MainMenuBehavior : MonoBehaviour
     {
         //if no delay sound won't play for "start"
         //play.Execute();
-        SceneController.current.FadeAndLoadScene(Constants.SCENE_VILLAGE);
+        SceneController.current.FadeAndLoadScene(Constants.SCENE_ANAIHOUSE);
     }
 
     public void Win()

@@ -25,9 +25,14 @@ public class SkyColors : MonoBehaviour
     public enum SkyCategory { Day, Sunset,Night }
     public SkyCategory dayNight;
 
+    public int Passout = 14; 
+
+    PostProcessControl camera; 
+
     void Start()
 
     {
+        camera = GameObject.Find("Main Camera").GetComponent<PostProcessControl>();
         lightColor = GameObject.Find("Directional Light").GetComponent<LightColor>();
         thisRend = GetComponent<MeshRenderer>();
         transitionTime = dayCycleSeconds / 24f;
@@ -151,6 +156,17 @@ public class SkyColors : MonoBehaviour
                 newFog = fogHeights[time];
                 setDayorNight();
             }
+        //    Debug.Log("Pass " + Passout); 
+            if(!GameStateController.current.Passed && time <= Passout && time >= Passout-1)
+            {
+                camera.PassOut(); 
+            }
+            if(!GameStateController.current.Passed && time > Passout)
+            {
+//                Debug.Log("passed"); 
+                GameStateController.current.Passed = true;
+            }
+
         }
 
     }

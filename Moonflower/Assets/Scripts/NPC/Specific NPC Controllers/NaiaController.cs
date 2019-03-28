@@ -38,14 +38,18 @@ public class NaiaController : MonoBehaviour, INPCController
     const int playerStatBuff = 3;
 
     bool trainingFight = false;
-    int goalHealth; 
+    int goalHealth;
+    SkyColors sky;
+    bool beforeNoon = true; 
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
 
     void Start()
     {
-        if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+        DialoguePanel = GameStateController.current.DialoguePanel;
+        //if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+        sky = GameObject.Find("Sky").GetComponent<SkyColors>();
 
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
@@ -75,9 +79,12 @@ public class NaiaController : MonoBehaviour, INPCController
         else
         {
             currTalk = DataSavingManager.current.GetNPCDialogue(Constants.NAIA_NAME);
+            if (currTalk == intro && sky.GetTime() > 12)
+            {
+                currTalk = advice;
+                DataSavingManager.current.SaveNPCDialogues(Constants.NAIA_NAME, currTalk);
+            }
         }
-
-
 
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
@@ -138,6 +145,10 @@ public class NaiaController : MonoBehaviour, INPCController
 
                 if (PlayerController.instance.AnaiIsActive())
                 {
+                    if(movement.state != NPCMovementController.MoveState.follow)
+                    {
+                        movement.FollowPlayer(3.5f);
+                    }
 
                     if (currTalk.Complete)
                     {
@@ -156,6 +167,11 @@ public class NaiaController : MonoBehaviour, INPCController
 
         movement.UpdateMovement();
         currTalk.Update();
+        if (sky.GetTime() > sky.Passout && beforeNoon)
+        {
+            Afternoon();
+            beforeNoon = false; 
+        }
     }
 
     public DialogueTrigger GetCurrDialogue()
@@ -188,7 +204,9 @@ public class NaiaController : MonoBehaviour, INPCController
     public void EndTalk()
     {
         if (currState != NaiaEngageType.fight)
+        {
             movement.Reset();
+        }
 
         if (currTalk.DialogueActive())
         {
