@@ -48,6 +48,7 @@ public class HouseDoor : MonoBehaviour
             //SceneManager.LoadScene(targetScene);
             if (toInteriorScene)
             {
+                Debug.Log("go inside"); 
                 GameStateController.current.SaveTime();
 
                 while (BGM.volume > 0.01)
@@ -61,6 +62,7 @@ public class HouseDoor : MonoBehaviour
             }
             else
             {
+                Debug.Log("out we go");
                 while (BGM.volume > 0.01)
                 {
                     BGM.volume -= BGM.volume * Time.deltaTime * 0.01f;

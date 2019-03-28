@@ -16,7 +16,10 @@ public class SpawnPoint : MonoBehaviour
     {
         transform.position = GameObject.Find(previousScene + " Spawn").transform.position;          
         PlayerController.instance.GetActivePlayerObject().transform.position = this.transform.position;
-        PlayerController.instance.GetCompanionObject().GetComponent<NavMeshAgent>().Warp(this.transform.position + new Vector3(0, 0, 2));
+        //PlayerController.instance.GetActivePlayerObject().transform.rotation = this.transform.rotation;
+        //PlayerController.instance.GetActivePlayerObject().transform.Rotate()
+
+        PlayerController.instance.GetCompanionObject().GetComponent<NavMeshAgent>().Warp(this.transform.position + new Vector3(0, 0, -5));
 
     }
     // Update is called once per frame
