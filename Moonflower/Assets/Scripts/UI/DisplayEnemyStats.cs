@@ -19,7 +19,7 @@ public class DisplayEnemyStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        valueTexts[0].text = "Sus: " + stealthDetection.awarenessMeter.ToString();
+        valueTexts[0].text = "Sus: " + stealthDetection?.awarenessMeter.ToString();
         valueTexts[1].text = "Hp: " + health.CurrentHealth.ToString();
     }
 }

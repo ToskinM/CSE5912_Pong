@@ -6,7 +6,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 {
     public CharacterStats Stats { get; set; }
     public bool IsBlocking { get; set; }
-    public bool InCombat { get; set; }
+    public bool InCombat { get; set; } = true;
     public bool IsDead { get; set; }
     public bool HasWeaponOut { get; set; }
 
@@ -16,6 +16,16 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     private float timeSinceLastAttack;
     private float timeSinceLastHurt;
     private float hurtDelay = 0.2f;
+    public GameObject deathEffect;
+    public Weapon weapon;
+
+    public Aggression aggression;
+    public enum Aggression { Passive, Unaggressive, Aggressive, Frenzied };
+    private Coroutine deaggroCoroutine = null;
+    private float deaggroTime = 3;
+
+    private FieldOfView fieldOfView;
+    private TejuAnimationController animationController;
 
     [Header("Enable/Disable Attacks")]
     public bool cryAttackEnabled;
@@ -24,9 +34,9 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     [Header("Cry Attack")]
     public GameObject cryFireProjectile;
     public Transform[] eyes = new Transform[2];
-    public float cryAttackCooldown = 1f;
+    public float cryAttackCooldown = 0.3f;
     public float cryAttackBarrageCount = 3f;
-    public float cryAttackBarrageDuration = 1f;
+    public float cryAttackBarrageDuration = 0.3f;
     public float cryAttackFireRate = 0.1f;
     public float cryAttackAimChaos = 2f;
     private Coroutine cryAttackCoroutine = null;
@@ -34,20 +44,28 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
     [Header("Tantrum Attack")]
     public GameObject tantrumAttackRockFallPrefab;
-    public float tantrumAttackCooldown = 3f;
-    public float tantrumAttackRockCount = 10f;
-    public float tantrumAttackSpawnRate = 0.6f;
-    public float tantrumAttackRadius = 20f;
+    public float tantrumAttackCooldown = 5f;
+    public float tantrumAttackRockCount = 5f;
+    public float tantrumAttackSpawnRate = 0.8f;
+    public float tantrumAttackRadius = 15f;
     private Coroutine tantrumAttackCoroutine = null;
     public bool tantrumAttackReady;
 
     private float[] cooldowns;
     private float[] cooldownTimers;
 
+    public delegate void AggroUpdate(bool aggroed, GameObject aggroTarget);
+    public event AggroUpdate OnAggroUpdated;
+
+    public delegate void DeathUpdate(ICombatController npc);
+    public event DeathUpdate OnDeath;
+
     void Start()
     {
         Stats = gameObject.GetComponent<CharacterStats>();
-        //combatTarget = PlayerController.instance.GetActivePlayerObject();
+        fieldOfView = GetComponent<FieldOfView>();
+        animationController = GetComponent<TejuAnimationController>();
+        //player = PlayerController.instance.GetActivePlayerObject();
 
         cooldowns = new float[] { cryAttackCooldown, tantrumAttackCooldown }; // place new cooldowns here
         cooldownTimers = new float[cooldowns.Length];
@@ -59,14 +77,35 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         timeSinceLastHurt += Time.deltaTime;
         timeSinceLastAttack += Time.deltaTime;
 
-        if (cryAttackReady && cryAttackCoroutine == null)
+        // Ensure weapon state is correct based on aggro
+        if (InCombat && !HasWeaponOut)
+            SetWeaponSheathed(false);
+        else if (!InCombat && HasWeaponOut)
+            SetWeaponSheathed(true);
+
+        //if (npcMovement != null)
+        //{
+        //    npcMovement.swinging = isAttacking;
+        //}
+
+        //npcMovement.Update();
+
+        CheckAggression();
+
+        // If we're in combat..
+        if (InCombat)
         {
-            cryAttackCoroutine = StartCoroutine(CryAttack());
+            if (cryAttackReady && cryAttackCoroutine == null)
+            {
+                cryAttackCoroutine = StartCoroutine(CryAttack());
+            }
+            if (tantrumAttackReady && tantrumAttackCoroutine == null)
+            {
+                tantrumAttackCoroutine = StartCoroutine(TantrumAttack());
+            }
         }
-        if (tantrumAttackReady && tantrumAttackCoroutine == null)
-        {
-            tantrumAttackCoroutine = StartCoroutine(TantrumAttack());
-        }
+
+        CheckDeath();
     }
 
     private void UpdateCooldowns()
@@ -85,6 +124,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
     private IEnumerator CryAttack()
     {
+        animationController.TriggerAttack();
         isAttacking = true;
 
         for (int i = 0; i < cryAttackBarrageCount; i++)
@@ -103,6 +143,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     }
     private IEnumerator TantrumAttack()
     {
+        animationController.TriggerAttack();
         isAttacking = true;
 
         for (int i = 0; i < tantrumAttackRockCount; i++)
@@ -138,5 +179,175 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     public void Stagger()
     {
         throw new System.NotImplementedException();
+    }
+
+    private void CheckAggression()
+    {
+        if (InCombat)
+        {
+            // Deaggro if we have no combatTarget
+            if (!combatTarget || !combatTarget.activeInHierarchy)
+            {
+                DeAggro();
+
+                // Stop Deaggro timer
+                if (deaggroCoroutine != null)
+                {
+                    StopCoroutine(deaggroCoroutine);
+                    deaggroCoroutine = null;
+                }
+                return;
+            }
+
+            // Cancel Deaggro timer if we can see target
+            if (fieldOfView.IsInFieldOfView(combatTarget.transform))
+            {
+                if (deaggroCoroutine != null)
+                {
+                    StopCoroutine(deaggroCoroutine);
+                    deaggroCoroutine = null;
+                }
+            }
+            // Deaggro if we cant find target in time
+            else if (deaggroCoroutine == null)
+                DeAggro();
+                //deaggroCoroutine = StartCoroutine(DeaggroTimeout());
+        }
+
+        // Search for a target OR closer target
+        Transform possibleTarget = fieldOfView?.closestTarget;
+        if (possibleTarget != null)
+        {
+            if (aggression == Aggression.Aggressive)
+            {
+                if (possibleTarget.tag == "Player" && combatTarget != possibleTarget)
+                {
+                    Aggro(possibleTarget.gameObject, false);
+                }
+            }
+            else if (aggression == Aggression.Frenzied)
+            {
+                Aggro(possibleTarget.gameObject, false);
+            }
+        }
+    }
+    public void Aggro(GameObject aggroTarget, bool forceAggression)
+    {
+        if (aggression > Aggression.Passive || forceAggression)
+        {
+            // Dont constantly aggro
+            if (aggroTarget != combatTarget)
+            {
+                fieldOfView.SetCombatMode(true);
+
+                if (!InCombat)
+                    InCombat = true;
+
+                combatTarget = aggroTarget;
+                //Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
+
+                // Broadcast that we've aggroed
+                OnAggroUpdated?.Invoke(true, aggroTarget);
+            }
+        }
+    }
+
+    public void Subdue()
+    {
+        DeAggro();
+        if (aggression != Aggression.Passive)
+            aggression--;
+    }
+
+    private void DeAggro()
+    {
+        fieldOfView.SetCombatMode(false);
+
+        if (InCombat)
+            InCombat = false;
+
+        combatTarget = null;
+        //Debug.Log(gameObject.name + " stopped combat");
+
+        // Broadcast that we've lost aggro
+        OnAggroUpdated?.Invoke(false, combatTarget);
+    }
+
+    // Start deaggro timer
+    private IEnumerator DeaggroTimeout()
+    {
+        yield return new WaitForSeconds(deaggroTime);
+        DeAggro();
+    }
+
+    // Check if we should be dead
+    private void CheckDeath()
+    {
+        if (!IsDead && Stats.CurrentHealth <= 0)
+        {
+            IsDead = true;
+            StartCoroutine(Die());
+        }
+    }
+
+    // Kills this Character
+    public void Kill()
+    {
+        Stats.TakeDamage(Stats.CurrentHealth, "Kill Command");
+    }
+
+    // Death cleanup and Sequence
+    private IEnumerator Die()
+    {
+        //Debug.Log(gameObject.name + " has died");
+        OnDeath?.Invoke(this);
+
+        // Tell the tracker we have died
+        LevelManager.current.RegisterNPCDeath(gameObject);
+
+        // Stop combat
+        DeAggro();
+
+        // Play and wait for death animation to finish
+        animationController.SetIsDead(true);
+        yield return new WaitForSeconds(1f);
+
+
+        // Poof us away
+        ObjectPoolController.current.CheckoutTemporary(deathEffect, transform, 1);
+
+        gameObject.SetActive(false);
+
+        //Destroy(gameObject, 0.5f);
+    }
+
+    // Sheathe/Unsheathe weapon
+    private void SetWeaponSheathed(bool sheathed)
+    {
+        if (sheathed)
+            Sheathe();
+        else
+            Unsheathe();
+    }
+    private void Sheathe()
+    {
+        if (HasWeaponOut)
+        {
+            weapon?.gameObject.SetActive(false);
+            HasWeaponOut = false;
+        }
+    }
+    private void Unsheathe()
+    {
+        if (!HasWeaponOut)
+        {
+            weapon?.gameObject.SetActive(true);
+            HasWeaponOut = true;
+        }
+    }
+
+    public int GetAttackDamage()
+    {
+        return (int)((weapon.baseDamage * (1 + (Stats.Strength * 0.25))));
     }
 }
