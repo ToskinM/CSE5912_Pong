@@ -48,7 +48,8 @@ public class AmaruController : MonoBehaviour, INPCController
     // Start is called before the first frame update
     void Start()
     {
-        if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+        DialoguePanel = GameStateController.current.DialoguePanel;
+        //if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
         sky = GameObject.Find("Sky").GetComponent<SkyColors>();
 
 

@@ -29,9 +29,10 @@ public class HouseDoor : MonoBehaviour
     {
         if ((other.Equals(PlayerController.instance.AnaiObject.GetComponent<Collider>()) && PlayerController.instance.AnaiIsActive()) || (other.Equals(PlayerController.instance.MimbiObject.GetComponent<Collider>()) && !PlayerController.instance.AnaiIsActive()))
         {
-            bool success = GameStateController.current.SaveTime();
-            if (!success)
-                GameStateController.current.RestoreTime(); 
+            //Debug.Log("try to save time " + GameStateController.current.SaveTime() + "");
+            //bool success = GameStateController.current.SaveTime();
+            //if (!success)
+                //GameStateController.current.RestoreTime(); 
 
             player = other.gameObject;
             spawn = GameObject.Find("Spawner");
@@ -47,6 +48,8 @@ public class HouseDoor : MonoBehaviour
             //SceneManager.LoadScene(targetScene);
             if (toInteriorScene)
             {
+                GameStateController.current.SaveTime();
+
                 while (BGM.volume > 0.01)
                 {
                     BGM.volume -= BGM.volume * Time.deltaTime * 0.01f;
@@ -65,6 +68,7 @@ public class HouseDoor : MonoBehaviour
                 }
                 SceneController.current.FadeAndLoadScene(targetScene);
                 PlayerController.instance.GetCompanionObject().SetActive(true);
+                GameStateController.current.RestoreTime();
                 //PlayerController.instance.MimbiObject.SetActive(true);
             }
 

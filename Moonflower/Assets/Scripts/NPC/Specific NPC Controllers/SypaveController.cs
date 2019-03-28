@@ -44,7 +44,8 @@ public class SypaveController : MonoBehaviour, INPCController
 
     void Start()
     {
-        if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
+        DialoguePanel = GameStateController.current.DialoguePanel; 
+        //if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
         sky = GameObject.Find("Sky").GetComponent<SkyColors>();
         centerOfTown = GameObject.Find("Campfire").transform.position;
 

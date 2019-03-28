@@ -11,6 +11,7 @@ public class GameStateController : MonoBehaviour
     public bool DebugModeOn;
     public bool DebugViewOn;
     public bool cameraAvailable;
+    public GameObject DialoguePanel; 
 
     private FollowCamera camControl;
 
