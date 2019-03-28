@@ -155,13 +155,19 @@ public class SpawnActionWheel : MonoBehaviour
         switch (selection)
         {
             case 0:
+
                 string targetName = targetController.Inspect();
                 inspect.Show(targetName);
                 otherWindowUp = true;
                 break;
             case 1:
-                targetController.Talk();
-                followCamera.LockOff();
+                if (PlayerController.instance.GetActiveCharacter() != PlayerController.PlayerCharacter.Mimbi)
+                {
+                    targetController.Talk();
+                    followCamera.LockOff();
+                }
+                else
+                    feedback.ShowText("Sorry " + targetController.Inspect() + " don't understand Mimbi" );
                 break;
             case 2:
                 if (PlayerController.instance.GetActiveCharacter() == PlayerController.PlayerCharacter.Mimbi)
@@ -169,8 +175,11 @@ public class SpawnActionWheel : MonoBehaviour
                     targetController.Distract(PlayerController.instance.GetActivePlayerObject());
                     StartCoroutine( DistractionEnd(distractTime, targetController));
                     PlayerController.instance.GetComponent<PlayerController>().StartMimbiDistraction();
-                    //PlayerController.instance.GetComponent<PlayerAnimatorController>().EnableDistraction();
                     interaction.NotAllowed = true;
+                }
+                else
+                {
+                    feedback.ShowText("Seems like nothing happen");
                 }
                 break;
             case 3:
@@ -223,6 +232,7 @@ public class SpawnActionWheel : MonoBehaviour
 
         activeWheel.OnSelectOption += HandleWheelSelection;
         GameStateController.current.SetPlayerFrozen(true);
+        feedback.KillText();
     }
     private void HideWheel()
     {
