@@ -78,6 +78,10 @@ public class ShowInspect : MonoBehaviour
                 icon.sprite = iconFactory.GetIcon(Constants.MOUSE_ICON);
                 descrip.text = descripFactory.GetMouse();
                 break;
+            case Constants.CATBAT_NAME:
+                icon.sprite = iconFactory.GetIcon(Constants.CATBAT_ICON);
+                descrip.text = descripFactory.GetCatbat();
+                break;
             default:
                 break;
         }

@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using TMPro;
 
 public class LesserNPCController : MonoBehaviour, INPCController
 {
     private GameObject player;
     public GameObject dialoguePanel;
-    public Sprite icon { get; set; }
+    public Sprite iconOb; 
+    public Sprite icon { get; set; } 
 
     public bool canSeePlayer = false;
 
@@ -35,19 +37,22 @@ public class LesserNPCController : MonoBehaviour, INPCController
     private FeedbackText feedback;
 
     private Vector3 startPosition;
+    string charName; 
 
     private void Awake()
     {
+        icon = iconOb; 
+        charName = new InspectFactory().GetName[icon]; 
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
-        movement = new NPCMovementController(gameObject, player,Constants.MOUSE_NAME);
+        movement = new NPCMovementController(gameObject, player,charName);
         //movement.SetEngagementDistances(5, combatController.attackDistance + 0.5f, 1);
 
         combatController = GetComponent<NPCCombatController>();
         stealthDetection = GetComponent<StealthDetection>();
 
         playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
-        icon = new IconFactory().GetIcon(Constants.MOUSE_ICON);
+        //icon = new IconFactory().GetIcon(Constants.MOUSE_ICON);
     }
 
     void Start()
@@ -135,7 +140,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
     public string Inspect()
     {
-        return Constants.MOUSE_NAME; 
+        return charName; 
     }
 
     private void StartEngagement()
