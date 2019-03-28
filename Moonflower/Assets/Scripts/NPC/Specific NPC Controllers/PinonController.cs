@@ -96,6 +96,8 @@ public class PinonController : MonoBehaviour, INPCController
             {
                 firstIntro = currTalk; 
                 currConvo = Convo.first;
+                if (currTalk.Complete)
+                    currTalk = intro; 
             }
             else
             {
