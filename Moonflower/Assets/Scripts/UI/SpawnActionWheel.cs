@@ -165,6 +165,7 @@ public class SpawnActionWheel : MonoBehaviour
                     targetController.Talk();
                     followCamera.LockOff();
                 }
+                else
                 feedback.ShowText("Sorry "+targetController.Inspect() + "  can't understand Mimbi.");
                 break;
             case 2:
