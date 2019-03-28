@@ -28,6 +28,8 @@ public class LevelManager : MonoBehaviour
     public Dictionary<int, NPCTransformInfo> npcsD = new Dictionary<int, NPCTransformInfo>(); // NPCs add themselves to this list
 
     private const int NPC_LIMIT = 50;
+    //int time;
+    //public bool Passed = false; 
 
     //public List<GameObject> deadNPCs = new List<GameObject>(); 
 
@@ -94,6 +96,34 @@ public class LevelManager : MonoBehaviour
         if (!deadNPCs.Contains(index))
             deadNPCs.Add(index);
     }
+
+    //public bool SaveTime()
+    //{
+    //    GameObject sky = GameObject.Find("Sky"); 
+    //    if(sky != null)
+    //    {
+    //        time = sky.GetComponent<SkyColors>().GetTime();
+    //        return true; 
+    //    }
+    //    else
+    //    {
+    //        return false; 
+    //    }
+    //}
+
+    //public bool RestoreTime()
+    //{
+    //    GameObject sky = GameObject.Find("Sky");
+    //    if (sky != null)
+    //    {
+    //        sky.GetComponent<SkyColors>().SetTime(time);
+    //        return true;
+    //    }
+    //    else
+    //    {
+    //        return false;
+    //    }
+    //}
 
     public void SaveNPCs(out List<int> NPCs)
     {

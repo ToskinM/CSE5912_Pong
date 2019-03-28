@@ -26,6 +26,9 @@ public class GameStateController : MonoBehaviour
     private int menuLayers = 0;
     private int pauseLayers = 0;
 
+    int time;
+    public bool Passed = false;
+
     void Start()
     {
         if (current == null)
@@ -59,6 +62,36 @@ public class GameStateController : MonoBehaviour
         if (cameraAvailable)
             camControl = LevelManager.current.mainCamera;
     }
+
+    public bool SaveTime()
+    {
+        GameObject sky = GameObject.Find("Sky");
+        if (sky != null)
+        {
+            time = sky.GetComponent<SkyColors>().GetTime();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool RestoreTime()
+    {
+        GameObject sky = GameObject.Find("Sky");
+        if (sky != null)
+        {
+            sky.GetComponent<SkyColors>().SetTime(time);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
 
     public void ToggleDebugMode()
     {

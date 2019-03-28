@@ -85,7 +85,7 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
         agent = self.GetComponent<NavMeshAgent>();
 
         lingerLength = getRandomPause();
-        //baseSpeed = agent.speed;
+        baseSpeed = agent.speed;
         //doubleSpeed = baseSpeed * 2; 
     }
 
