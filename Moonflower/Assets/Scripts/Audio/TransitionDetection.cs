@@ -23,13 +23,13 @@ public class TransitionDetection : MonoBehaviour
             switch (PostTransitionTrack)
             {
                 case CaveSoundtracks.Main:
-                    transitionHandler.CrossFadeToMain();
+                    //transitionHandler.CrossFadeToMain();
                     break;
                 case CaveSoundtracks.Bass:
-                    transitionHandler.CrossFadeToBass();
+                    //transitionHandler.CrossFadeToBass();
                     break;
                 case CaveSoundtracks.Action:
-                    transitionHandler.CrossFadeToAction();
+                    //transitionHandler.CrossFadeToAction();
                     break;
             }
         }
