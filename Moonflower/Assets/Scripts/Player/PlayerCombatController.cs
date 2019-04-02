@@ -22,7 +22,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
 
     [HideInInspector] public bool isAttacking;
     [HideInInspector] public float attackTimeout = 0.5f;
-    private readonly float combatTimeout = 3f;
+    private readonly float combatTimeout = 5f;
     private readonly float combatLossDistance = 3f;
     private GameObject currentAggressor;
 
