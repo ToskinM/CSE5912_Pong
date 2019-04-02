@@ -130,14 +130,19 @@ public class SkyColors : MonoBehaviour
         setDayorNight();
 
         GameStateController.current.RestoreTime(this);
+        if (time == Passout)
+            time++; 
 
     }
 
     void Update()
 
     {
+        stop = PlayerController.instance.TalkingPartner != null || GameStateController.current.Paused;
+        
         if (!stop)
         {
+            Debug.Log("time keeps going..."); 
             if (transitionRate < 1)
             {
                 thisRend.material.SetColor("_TintColor", Color.Lerp(thisRend.material.GetColor("_TintColor"), newColor, Time.deltaTime * transitionRate));
@@ -161,15 +166,15 @@ public class SkyColors : MonoBehaviour
                 setDayorNight();
             }
         //    Debug.Log("Pass " + Passout); 
-            if(!GameStateController.current.Passed && time <= Passout && time >= Passout-1)
-            {
-          //      camera.PassOut(); 
-            }
-            if(!GameStateController.current.Passed && time > Passout)
-            {
-//                Debug.Log("passed"); 
-                GameStateController.current.Passed = true;
-            }
+//            if(!GameStateController.current.Passed && time <= Passout && time >= Passout-1)
+//            {
+//          //      camera.PassOut(); 
+//            }
+//            if(!GameStateController.current.Passed && time > Passout)
+//            {
+////                Debug.Log("passed"); 
+            //    GameStateController.current.Passed = true;
+            //}
 
         }
 

@@ -112,6 +112,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Revive()
+    {
+
+        ActivePlayerAnimator.Reset();
+        enabled = true;
+        SwitchToAnai();
+
+    }
+
     private void SwitchActiveCharacter()
     {
         if (ActivePlayerObject == AnaiObject)
@@ -180,7 +189,7 @@ public class PlayerController : MonoBehaviour
 
     public void PassOut()
     {
-        //ActivePlayerAnimator
+        ActivePlayerAnimator.TriggerDeath(); 
     }
 
     public void ChillCompanion()

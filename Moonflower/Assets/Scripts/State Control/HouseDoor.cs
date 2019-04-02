@@ -29,10 +29,7 @@ public class HouseDoor : MonoBehaviour
     {
         if ((other.Equals(PlayerController.instance.AnaiObject.GetComponent<Collider>()) && PlayerController.instance.AnaiIsActive()) || (other.Equals(PlayerController.instance.MimbiObject.GetComponent<Collider>()) && !PlayerController.instance.AnaiIsActive()))
         {
-            //Debug.Log("try to save time " + GameStateController.current.SaveTime() + "");
-            //bool success = GameStateController.current.SaveTime();
-            //if (!success)
-                //GameStateController.current.RestoreTime(); 
+            //Debug.Log("try to save time " + GameStateController.current.SaveTime() + "")
 
             player = other.gameObject;
             spawn = GameObject.Find("Spawner");
@@ -66,12 +63,17 @@ public class HouseDoor : MonoBehaviour
 
                 }
                 SceneController.current.FadeAndLoadScene(targetScene);
+                //Invoke("activateMimbi", 5); 
                 PlayerController.instance.GetCompanionObject().SetActive(true);
 
-                //GameStateController.current.RestoreTime();
                 //PlayerController.instance.MimbiObject.SetActive(true);
             }
 
         }
+    }
+
+    private void activateMimbi()
+    {
+        PlayerController.instance.GetCompanionObject().SetActive(true);
     }
 }

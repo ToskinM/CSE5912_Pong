@@ -28,7 +28,7 @@ public class GameStateController : MonoBehaviour
     private int menuLayers = 0;
     private int pauseLayers = 0;
 
-    int time;
+    int time = 8;
     public bool Passed = false;
 
     void Start()
@@ -197,6 +197,7 @@ public class GameStateController : MonoBehaviour
             //OnPaused?.Invoke(Paused);
             SetMouseLock(false);
             Time.timeScale = 0;
+
         }
     }
     public void UnpauseGame()
