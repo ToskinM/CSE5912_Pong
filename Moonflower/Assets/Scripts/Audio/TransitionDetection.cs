@@ -8,12 +8,12 @@ public class TransitionDetection : MonoBehaviour
     public CaveSoundtracks PostTransitionTrack;
 
     public GameObject SceneBGM;
-    SoundtrackTransition transitionHandler;
+    CaveMusicCrossfade transitionHandler;
 
     // Start is called before the first frame update
     void Start()
     {
-        transitionHandler = SceneBGM.GetComponent<SoundtrackTransition>();
+        transitionHandler = SceneBGM.GetComponent<CaveMusicCrossfade>();
     }
 
     void OnTriggerEnter(Collider other)

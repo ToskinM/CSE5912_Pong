@@ -56,6 +56,12 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     public delegate void DeathUpdate();
     public event DeathUpdate OnDeath;
 
+    public delegate void EngageCombat();
+    public static event EngageCombat EngageInCombat;
+
+    public delegate void DisengageCombat();
+    public static event DisengageCombat DisengageFromCombat;
+
     void Awake()
     {
         Stats = GetComponent<CharacterStats>();
@@ -201,6 +207,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         //Debug.Log(gameObject.name + " hit " + whoWeHit.name);
         currentAggressor = whoWeHit;
         InCombat = true;
+        EngageInCombat?.Invoke();
 
         // cancel combat loss because we just attacked an npc
         if (stopCombatCoroutine != null)
@@ -233,6 +240,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         OnHit?.Invoke(other.gameObject);
         currentAggressor = other.gameObject;
         InCombat = true;
+        EngageInCombat?.Invoke();
 
         // cancel combat loss because we got hit
         if (stopCombatCoroutine != null)
@@ -275,6 +283,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
         currentAggressor = null;
         InCombat = false;
         inCombat = false;
+        DisengageFromCombat?.Invoke();
     }
 
     public void Stagger()
