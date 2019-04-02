@@ -30,6 +30,9 @@ public class CharacterStats : MonoBehaviour
     // Only applicable to player object
     private int companionHealth;
 
+    public delegate void DamageCharacter();
+    public event DamageCharacter OnCharacterDamage; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +74,8 @@ public class CharacterStats : MonoBehaviour
 
     public void TakeDamage(int damage, string sourceName)
     {
+        OnCharacterDamage?.Invoke();
+
         RemoveHealth(DefenceCalculation(damage));
         if (display != null)
             display.HitHealth(CurrentHealth, MaxHealth); 
@@ -80,6 +85,8 @@ public class CharacterStats : MonoBehaviour
     {
         if (!blocked)
         {
+            OnCharacterDamage?.Invoke();
+
             RemoveHealth(DefenceCalculation(damage));
 
             if (display != null)
