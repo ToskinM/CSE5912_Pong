@@ -9,8 +9,8 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     public bool InCombat { get; set; } = true;
     public bool IsDead { get; set; }
     public bool HasWeaponOut { get; set; }
+    [HideInInspector] public GameObject CombatTarget { get; set; } = null;
 
-    public GameObject combatTarget = null;
     public bool isAttacking;
 
     private float timeSinceLastAttack;
@@ -148,7 +148,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
         for (int i = 0; i < tantrumAttackRockCount; i++)
         {
-            Vector3 position = combatTarget.transform.position + new Vector3(Random.Range(-tantrumAttackRadius, tantrumAttackRadius), 20, Random.Range(-tantrumAttackRadius, tantrumAttackRadius));
+            Vector3 position = CombatTarget.transform.position + new Vector3(Random.Range(-tantrumAttackRadius, tantrumAttackRadius), 20, Random.Range(-tantrumAttackRadius, tantrumAttackRadius));
             Instantiate(tantrumAttackRockFallPrefab, position, Quaternion.identity);
 
             yield return new WaitForSeconds(cryAttackFireRate);
@@ -163,12 +163,12 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
     public void LaunchProjectile(Transform projectileNode, float aimChaos)
     {
-        GameObject projectile = Instantiate(cryFireProjectile, projectileNode.position, Quaternion.LookRotation(combatTarget.transform.position - transform.position));
-        projectile.transform.LookAt(combatTarget.transform.position + new Vector3(Random.Range(-aimChaos, aimChaos), Random.Range(-aimChaos, aimChaos), Random.Range(-aimChaos, aimChaos)));
+        GameObject projectile = Instantiate(cryFireProjectile, projectileNode.position, Quaternion.LookRotation(CombatTarget.transform.position - transform.position));
+        projectile.transform.LookAt(CombatTarget.transform.position + new Vector3(Random.Range(-aimChaos, aimChaos), Random.Range(-aimChaos, aimChaos), Random.Range(-aimChaos, aimChaos)));
         IProjectile proj = projectile.GetComponent<IProjectile>();
         proj.Hurtbox.SourceCharacterStats = Stats;
         proj.Hurtbox.Source = this.gameObject;
-        proj.TargetTransform = combatTarget.transform;
+        proj.TargetTransform = CombatTarget.transform;
     }
 
     public void AcknowledgeHaveHit(GameObject whoWeHit)
@@ -186,7 +186,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         if (InCombat)
         {
             // Deaggro if we have no combatTarget
-            if (!combatTarget || !combatTarget.activeInHierarchy)
+            if (!CombatTarget || !CombatTarget.activeInHierarchy)
             {
                 DeAggro();
 
@@ -200,7 +200,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
             }
 
             // Cancel Deaggro timer if we can see target
-            if (fieldOfView.IsInFieldOfView(combatTarget.transform))
+            if (fieldOfView.IsInFieldOfView(CombatTarget.transform))
             {
                 if (deaggroCoroutine != null)
                 {
@@ -220,7 +220,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         {
             if (aggression == Aggression.Aggressive)
             {
-                if (possibleTarget.tag == "Player" && combatTarget != possibleTarget)
+                if (possibleTarget.tag == "Player" && CombatTarget != possibleTarget)
                 {
                     Aggro(possibleTarget.gameObject, false);
                 }
@@ -236,14 +236,14 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         if (aggression > Aggression.Passive || forceAggression)
         {
             // Dont constantly aggro
-            if (aggroTarget != combatTarget)
+            if (aggroTarget != CombatTarget)
             {
                 fieldOfView.SetCombatMode(true);
 
                 if (!InCombat)
                     InCombat = true;
 
-                combatTarget = aggroTarget;
+                CombatTarget = aggroTarget;
                 //Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
 
                 // Broadcast that we've aggroed
@@ -266,11 +266,11 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         if (InCombat)
             InCombat = false;
 
-        combatTarget = null;
+        CombatTarget = null;
         //Debug.Log(gameObject.name + " stopped combat");
 
         // Broadcast that we've lost aggro
-        OnAggroUpdated?.Invoke(false, combatTarget);
+        OnAggroUpdated?.Invoke(false, CombatTarget);
     }
 
     // Start deaggro timer

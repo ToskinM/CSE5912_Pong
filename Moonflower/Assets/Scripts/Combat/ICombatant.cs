@@ -9,6 +9,7 @@ public interface ICombatController
     bool InCombat { get; }
     bool IsDead { get; }
     bool HasWeaponOut { get; }
+    GameObject CombatTarget { get; }
 
     void Stagger();
     void AcknowledgeHaveHit(GameObject whoWeHit);

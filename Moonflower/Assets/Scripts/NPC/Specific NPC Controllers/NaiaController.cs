@@ -132,7 +132,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
                 if (combatController.InCombat)
                 {
-                    movement.Follow(combatController.combatTarget, combatController.attackDistance, 1.5f);
+                    movement.Follow(combatController.CombatTarget, combatController.attackDistance, 1.5f);
                     movement.SetHoldGround(true);
                 }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NPCCombatController : MonoBehaviour, ICombatController
+public class OrbyCombatController : MonoBehaviour, ICombatController
 {
     // Interface Members
     [HideInInspector] public CharacterStats Stats { get; private set; }
@@ -14,6 +14,9 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     [HideInInspector] public bool Active { get; set; } = true;
     [HideInInspector] public GameObject CombatTarget { get; set; } = null;
 
+    [Header("Orby Specific")]
+    public bool doesKamikaze;
+
     [Header("Aggression")]
     public Aggression aggression;
     public enum Aggression { Passive, Unaggressive, Aggressive, Frenzied };
@@ -22,7 +25,6 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     private List<GameObject> aggressors;
 
     [Header("Death Effects")]
-    public GameObject ragdollPrefab;
     public GameObject deathEffect;
 
     private GameObject frenzyEffect;
@@ -54,7 +56,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     public delegate void AggroUpdate(bool aggroed, GameObject aggroTarget);
     public event AggroUpdate OnAggroUpdated;
 
-    public delegate void DeathUpdate(NPCCombatController npc);
+    public delegate void DeathUpdate(OrbyCombatController npc);
     public event DeathUpdate OnDeath;
 
 
@@ -139,7 +141,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     {
         //Debug.Log(other.gameObject.name);
         if (Active)
-            {
+        {
             // Get Tag
             string tag = other.tag;
 
@@ -230,7 +232,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             {
                 npcMovement.stunned = false;
                 //if (Random.Range(0, 100) > 0)
-                    //StartCoroutine(Backstep());
+                //StartCoroutine(Backstep());
             }
         }
     }
@@ -346,6 +348,11 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         proj.Hurtbox.SourceCharacterStats = Stats;
         proj.Hurtbox.Source = this.gameObject;
         proj.TargetTransform = CombatTarget.transform;
+
+        if (doesKamikaze)
+        {
+            Die();
+        }
     }
 
     public void AcknowledgeHaveHit(GameObject whoWeHit)
@@ -503,7 +510,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         if (!IsDead && Stats.CurrentHealth <= 0)
         {
             IsDead = true;
-            StartCoroutine(Die());
+            Die();
         }
     }
 
@@ -514,7 +521,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     }
 
     // Death cleanup and Sequence
-    private IEnumerator Die()
+    private void Die()
     {
         //Debug.Log(gameObject.name + " has died");
         OnDeath?.Invoke(this);
@@ -527,19 +534,9 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
         // Play and wait for death animation to finish
         npcAnimationController.SetIsDead(true);
-        yield return new WaitForSeconds(1f);
 
-        if (ragdollPrefab != null)
-        {
-            // Spawn ragdoll and have it match our pose
-            GameObject ragdoll = Instantiate(ragdollPrefab, transform.position, transform.rotation);
-            ragdoll.GetComponent<Ragdoll>().MatchPose(gameObject.GetComponentsInChildren<Transform>());
-        }
-        else
-        {
-            // Poof us away
-            ObjectPoolController.current.CheckoutTemporary(deathEffect, transform, 1);
-        }
+        // Poof us away
+        ObjectPoolController.current.CheckoutTemporary(deathEffect, transform, 1);
 
         gameObject.SetActive(false);
 

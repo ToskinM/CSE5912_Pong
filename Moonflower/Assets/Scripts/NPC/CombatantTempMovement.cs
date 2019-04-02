@@ -10,7 +10,7 @@ public class CombatantTempMovement : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;
     private NavMeshAgent agent;
-    private NPCCombatController npcCombatController;
+    private ICombatController npcCombatController;
     private Vector3 startPosition;
 
     const float bufferRadius = 2.5f;
@@ -21,7 +21,7 @@ public class CombatantTempMovement : MonoBehaviour
     {
         startPosition = transform.position;
         agent = GetComponent<NavMeshAgent>();
-        npcCombatController = GetComponent<NPCCombatController>();
+        npcCombatController = GetComponent<ICombatController>();
     }
     void KeyInput()
     {
@@ -29,7 +29,7 @@ public class CombatantTempMovement : MonoBehaviour
     }
     void Update()
     {
-        target = npcCombatController.combatTarget;
+        target = npcCombatController.CombatTarget;
         if (target)
         {
             float distFromPlayer = Vector3.Distance(target.transform.position, transform.position);

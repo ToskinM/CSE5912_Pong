@@ -13,6 +13,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     public bool inCombat;
     [HideInInspector] public bool IsDead { get; private set; } = false;
     [HideInInspector] public bool HasWeaponOut { get; private set; } = false;
+    [HideInInspector] public GameObject CombatTarget { get; set; } = null;
 
     public PlayerAnimatorController animator { get; private set; }
     public PlayerMovementController playerMovement;
