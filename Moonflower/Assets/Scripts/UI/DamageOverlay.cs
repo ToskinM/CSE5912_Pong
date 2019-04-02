@@ -14,23 +14,28 @@ public class DamageOverlay : MonoBehaviour
         PlayerController.instance.ActivePlayerStats.OnCharacterDamage += FlashOverlay;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Period))
-        {
-            FlashOverlay();
-        }
-    }
-
-    void FlashOverlay()
+    void FlashOverlay(int damage)
     {
         overlayScreen.canvasRenderer.SetAlpha(1);
-
         Color screenColor = overlayScreen.color;
-        screenColor.a = 0.75f;
+
+        float alphaVal;
+
+        if (damage < 10)
+        {
+            alphaVal = 0.25f;
+        }
+        else if (damage < 25)
+        {
+            alphaVal = 0.5f;
+        }
+        else
+        {
+            alphaVal = 0.75f;
+        }
+
+        screenColor.a = alphaVal;
         overlayScreen.color = screenColor;
-        //overlayScreen.CrossFadeAlpha(0.75f, 0.1f, false);
         overlayScreen.CrossFadeAlpha(0f, 1f, false);
     }
 }
