@@ -31,11 +31,13 @@ public class Passout : MonoBehaviour
         }
 
         Debug.Log("Comment out below if you want to turn off passout");
-        //if(!GameStateController.current.Passed && sky.GetTime() == sky.Passout)
-        //{
-        //    PlayerController.instance.PassOut();
-        //    Invoke("spawnInHouse", 5); 
-        //}
+        if(!GameStateController.current.Passed && sky.GetTime() == sky.Passout)
+        {
+
+            PlayerController.instance.PassOut();
+            Invoke("spawnInHouse", 5);
+            GameStateController.current.SaveTime(); 
+        }
 
         if (!GameStateController.current.Passed && sky.GetTime() > sky.Passout)
         {
