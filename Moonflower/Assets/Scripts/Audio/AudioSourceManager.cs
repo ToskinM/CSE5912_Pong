@@ -16,13 +16,13 @@ public class AudioSourceManager : MonoBehaviour
 
     public AudioSource AddAnaiAudioSource()
     {
-        Anai = LevelManager.current.anai.gameObject;
+        Anai = PlayerController.instance.AnaiObject;
         AudioSource audioSource = Anai.AddComponent<AudioSource>();
         return audioSource;
     }
     public AudioSource AddMimbiAudioSource()
     {
-        Mimbi = LevelManager.current.mimbi.gameObject;
+        Mimbi = PlayerController.instance.MimbiObject;
         return Mimbi.AddComponent<AudioSource>();
     }
     public AudioSource AddCurrentPlayerAudioSource()

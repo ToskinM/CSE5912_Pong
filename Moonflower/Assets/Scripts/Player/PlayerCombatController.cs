@@ -85,7 +85,7 @@ public class PlayerCombatController : MonoBehaviour
         playerSoundEffect = GameObject.Find("Anai").GetComponent<PlayerSoundEffect>();
 
         //currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
-        currentPlayer = LevelManager.current.currentPlayer;
+        currentPlayer = PlayerController.instance.GetActivePlayerObject();
 
     }
 

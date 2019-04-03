@@ -33,7 +33,7 @@ public class GameOverScreen : MonoBehaviour
 
     public void OnContinueButtonClick()
     {
-        SceneController.current.FadeAndLoadScene(Constants.SCENE_VILLAGE);
+        SceneController.current.FadeAndLoadScene(Constants.SCENE_ANAIHOUSE);
     }
     public void OnMainMenuButtonClick()
     {

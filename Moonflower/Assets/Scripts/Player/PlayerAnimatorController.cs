@@ -102,6 +102,11 @@ public class PlayerAnimatorController : MonoBehaviour
         //animator.SetTrigger(key_isDead);
     }
 
+    public void Reset()
+    {
+        animator.SetBool(key_isDead, false);
+    }
+
     public void EnableHurtbox(int index)
     {
         if (playerController.GetActiveCharacter() == PlayerController.PlayerCharacter.Anai)

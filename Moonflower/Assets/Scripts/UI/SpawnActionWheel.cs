@@ -53,15 +53,15 @@ public class SpawnActionWheel : MonoBehaviour
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
         interaction = InteractionPopup.GetComponent<InteractionPopup>();
 
-        Debug.Log("屌你老妈哇佬");
+//        Debug.Log("屌你老妈哇佬");
 
         currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
     }
 
     private void OnEnable()
     {
-        Debug.Log("屌你老妈");
-        Debug.Log(currentPlayerInteractionFOV == null);
+        //Debug.Log("屌你老妈");
+//        Debug.Log(currentPlayerInteractionFOV == null);
         currentPlayerInteractionFOV.OnNewClosestTarget += HandleInteractionFOVTargetUpdate;
 
         PlayerController.OnCharacterSwitch += SwitchInteractionFOV;
@@ -75,7 +75,10 @@ public class SpawnActionWheel : MonoBehaviour
 
     private void OnDisable()
     {
-        currentPlayerInteractionFOV.OnNewClosestTarget -= HandleInteractionFOVTargetUpdate;
+        if(currentPlayerInteractionFOV == null)
+            Debug.Log("NULL for current Player FOV");
+        else
+            currentPlayerInteractionFOV.OnNewClosestTarget -= HandleInteractionFOVTargetUpdate;
 
         PlayerController.OnCharacterSwitch -= SwitchInteractionFOV;
         GameStateController.OnFreezePlayer -= HandleFreezeEvent;

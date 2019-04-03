@@ -39,9 +39,13 @@ public class DialogueCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        if (state != DialogueCameraState.Transitioning)
+        if (state != DialogueCameraState.Transitioning && transform != null)
         {
             transform.position = dialoguePosition.position;
+        }
+        else if (transform == null)
+        {
+            Debug.Log("DIALOGUE CAMERA transform is NULL");
         }
 
         if (dialogueTarget)
