@@ -46,6 +46,7 @@ public class PauseMenuBehavior : MonoBehaviour
         //returnMain.Execute();
         //GameStateController.current.ForceUnpause();
         SceneManager.UnloadSceneAsync(Constants.SCENE_PAUSEMENU);
+        SceneController.current.DestroySingletons();
         SceneController.current.FadeAndLoadSceneNoLS(Constants.SCENE_MAINMENU);
         //FindObjectOfType<AudioManager>().Play("Menu");
     }

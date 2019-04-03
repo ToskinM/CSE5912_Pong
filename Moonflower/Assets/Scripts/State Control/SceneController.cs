@@ -137,8 +137,6 @@ public class SceneController : MonoBehaviour
     {
         isLoading = true;
 
-        HideSingletons();
-
         // Fade to black
         yield return StartCoroutine(Fade(1f, 5f));
         BeforeSceneUnload?.Invoke();
@@ -149,12 +147,14 @@ public class SceneController : MonoBehaviour
 
         // Unload previous scene (without loadscreen)
         yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        DestroySingletons();
         yield return StartCoroutine(LoadSceneAndSetActiveNoLS(sceneName));
 
         // Unload loading scene
         yield return SceneManager.UnloadSceneAsync(Constants.SCENE_LOADING);
         AfterSceneLoad?.Invoke();
         isLoading = false;
+
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f, 5f));
@@ -249,5 +249,16 @@ public class SceneController : MonoBehaviour
     {
         if (PlayerController.instance != null) PlayerController.instance.gameObject.SetActive(true);
         if (UISingleton.instance != null) UISingleton.instance.transform.GetChild(1).gameObject.SetActive(true);
+    }
+
+    public void DestroySingletons()
+    {
+        Destroy(PlayerController.instance.GetActivePlayerObject());
+        Destroy(PlayerController.instance.GetCompanionObject());
+        Destroy(PlayerController.instance.gameObject);
+        Destroy(SpawnPoint.current.gameObject);
+        Destroy(UISingleton.instance.gameObject);
+        Destroy(GameStateController.current.gameObject);
+        Destroy(AudioManager.instance.gameObject);
     }
 }
