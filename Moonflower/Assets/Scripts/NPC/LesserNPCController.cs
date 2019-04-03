@@ -53,7 +53,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
         movement = new NPCMovementController(gameObject, player,charName);
         //movement.SetEngagementDistances(5, combatController.attackDistance + 0.5f, 1);
 
-        combatController = GetComponent<NPCCombatController>();
+        combatController = GetComponent<ICombatController>();
         stealthDetection = GetComponent<StealthDetection>();
 
         playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
@@ -150,8 +150,6 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
     private void StartEngagement()
     {
-        //engaging = true;
-
         if (talkTrig != null)
             if (!talkTrig.DialogueActive())
                 talkTrig.StartDialogue();
@@ -166,23 +164,19 @@ public class LesserNPCController : MonoBehaviour, INPCController
     {
         if (aggroed)
         {
-            Debug.Log(gameObject.name +": aggroed");
+            //Debug.Log(gameObject.name +": aggroed");
             movement.Follow(aggroTarget, combatController.AttackDistance, 0.5f);
             movement.SetHoldGround(true);
-            //movement.player = combatController.combatTarget;
-            //movement.Attacking = true;
 
             if (stealthDetection && stealthDetection.enabled == true)
             {
                 stealthDetection.BecomeAlerted(aggroTarget);
                 stealthDetection.enabled = false;
             }
-                
         }
         else
         {
             movement.Reset();
-            //movement.Attacking = false;
 
             if (stealthDetection)
                 stealthDetection.enabled = true;
