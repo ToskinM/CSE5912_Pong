@@ -10,6 +10,7 @@ public class SypaveController : MonoBehaviour, INPCController
 {
 
     public GameObject DialoguePanel;
+    public GameObject SpawnPoint; 
     public Sprite icon { get; set; }
 
     public float engagementRadius = 5f;
@@ -97,6 +98,7 @@ public class SypaveController : MonoBehaviour, INPCController
                 frantic = currTalk;
                 Afternoon();
                 currConvo = Convo.frantic;
+                gameObject.transform.position = SpawnPoint.transform.position;
             }
             else
             {

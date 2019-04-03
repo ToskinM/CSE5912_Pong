@@ -10,6 +10,7 @@ public class PinonController : MonoBehaviour, INPCController
     //public GameObject Player;
     public GameObject WalkCenter;
     public GameObject DialoguePanel;
+    public GameObject SpawnPoint; 
     public Sprite icon { get; set; }
     public bool dialogueActive = false;
 
@@ -89,6 +90,7 @@ public class PinonController : MonoBehaviour, INPCController
             currConvo = Convo.first; 
             currTalk = firstIntro;
             GameStateController.current.SaveNPCDialogues(Constants.PINON_NAME, currConvo.ToString(), currTalk);
+            gameObject.transform.position = SpawnPoint.transform.position;
         }
         else
         {
@@ -100,7 +102,8 @@ public class PinonController : MonoBehaviour, INPCController
                 firstIntro = currTalk; 
                 currConvo = Convo.first;
                 if (currTalk.Complete)
-                    currTalk = intro; 
+                    currTalk = intro;
+                gameObject.transform.position = SpawnPoint.transform.position;
             }
             else
             {
@@ -112,6 +115,8 @@ public class PinonController : MonoBehaviour, INPCController
         }
 
         actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
+
+
 
     }
 
