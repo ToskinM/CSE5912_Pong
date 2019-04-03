@@ -22,7 +22,7 @@ public class DialoguePanelInfo : MonoBehaviour
         TemplateButton = transform.GetChild(2).GetComponent<Button>();
 
         UpPosition = gameObject.transform.position;
-        DownPosition = new Vector3(UpPosition.x, UpPosition.y - Icon.rectTransform.rect.height, UpPosition.z);
+        DownPosition = new Vector3(UpPosition.x, UpPosition.y - Icon.rectTransform.rect.height*2, UpPosition.z);
         transform.position = DownPosition;
     }
 
