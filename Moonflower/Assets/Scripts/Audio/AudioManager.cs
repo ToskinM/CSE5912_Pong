@@ -41,6 +41,8 @@ public class AudioManager : MonoBehaviour
 
         //Get AudioSource
         StartCoroutine(GetAudioSourceManager());
+
+        SceneBGM = GameObject.Find("Scene BGM");
     }
 
     private IEnumerator GetAudioSourceManager()
