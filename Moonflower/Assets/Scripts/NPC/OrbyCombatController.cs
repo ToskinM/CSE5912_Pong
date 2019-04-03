@@ -13,13 +13,16 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
     [HideInInspector] public bool HasWeaponOut { get; private set; } = false;
     [HideInInspector] public bool Active { get; set; } = true;
     [HideInInspector] public GameObject CombatTarget { get; set; } = null;
+    [HideInInspector] public NPCCombatController.Aggression AggressionLevel { get { return aggression; } }
+    [HideInInspector] public NPCMovementController Movement { get { return npcMovement; } set { npcMovement = value; } }
+    [HideInInspector] public float AttackDistance { get { return attackDistance; } }
+    [HideInInspector] public NPCGroup Group { get; set; }
 
     [Header("Orby Specific")]
     public bool doesKamikaze;
 
     [Header("Aggression")]
-    public Aggression aggression;
-    public enum Aggression { Passive, Unaggressive, Aggressive, Frenzied };
+    public NPCCombatController.Aggression aggression;
     private Coroutine deaggroCoroutine = null;
     private float deaggroTime = 3;
     private List<GameObject> aggressors;
@@ -51,14 +54,9 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
     private NPCAnimationController npcAnimationController;
     [HideInInspector] public NPCMovementController npcMovement;
     private AudioManager audioManager;
-    [HideInInspector] public NPCGroup group;
 
-    public delegate void AggroUpdate(bool aggroed, GameObject aggroTarget);
-    public event AggroUpdate OnAggroUpdated;
-
-    public delegate void DeathUpdate(OrbyCombatController npc);
-    public event DeathUpdate OnDeath;
-
+    public event NPCCombatController.AggroUpdate OnAggroUpdated;
+    public event NPCCombatController.DeathUpdate OnDeath;
 
     private void Awake()
     {
@@ -77,7 +75,7 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
 
         weapon?.gameObject.SetActive(HasWeaponOut);
 
-        if (aggression == Aggression.Frenzied)
+        if (aggression == NPCCombatController.Aggression.Frenzied)
             Frenzy();
 
         StartCoroutine(GetAudioManager());
@@ -172,13 +170,19 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
                         if (sourceCombatController == null)
                         {
                             //sourceCombatController = source.GetComponent<PlayerCombatController>();
-                            sourceCombatController = PlayerController.instance.ActivePlayerCombatControls;  // Now uses generic Player object
+                            //sourceCombatController = PlayerController.instance.ActivePlayerCombatControls;  // Now uses generic Player object
+                            if (source)
+                                Stats.TakeDamage(damage, source.name, hurtboxController.SourceCharacterStats, PlayerController.instance.ActivePlayerCombatControls, GetContactPoint(other), IsBlocking);
+                            else
+                                Stats.TakeDamage(damage, "Unknown");
                         }
-
-                        if (source)
-                            Stats.TakeDamage(damage, source.name, hurtboxController.SourceCharacterStats, sourceCombatController, GetContactPoint(other), IsBlocking);
                         else
-                            Stats.TakeDamage(damage, "Unknown");
+                        {
+                            if (source)
+                                Stats.TakeDamage(damage, source.name, hurtboxController.SourceCharacterStats, sourceCombatController, GetContactPoint(other), IsBlocking);
+                            else
+                                Stats.TakeDamage(damage, "Unknown");
+                        }
                     }
                 }
             }
@@ -201,10 +205,10 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
 
     private bool HitAllowedByGroupBehavior(GameObject aggressor)
     {
-        if (group && group.IsInGroup(aggressor))
+        if (Group && Group.IsInGroup(aggressor))
         {
             // If we are grouped with the aggressor, only allow the hit if the group allows inter-aggression
-            if (group.cantHurtEachother)
+            if (Group.cantHurtEachother)
                 return false;
             else
                 return true;
@@ -256,7 +260,7 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
 
     public void EndFight()
     {
-        aggression = Aggression.Passive;
+        aggression = NPCCombatController.Aggression.Passive;
         DeAggro();
     }
 
@@ -417,14 +421,14 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
         Transform possibleTarget = fieldOfView?.closestTarget;
         if (possibleTarget != null)
         {
-            if (aggression == Aggression.Aggressive)
+            if (aggression == NPCCombatController.Aggression.Aggressive)
             {
                 if (possibleTarget.tag == "Player" && CombatTarget != possibleTarget)
                 {
                     Aggro(possibleTarget.gameObject, false);
                 }
             }
-            else if (aggression == Aggression.Frenzied)
+            else if (aggression == NPCCombatController.Aggression.Frenzied)
             {
                 Aggro(possibleTarget.gameObject, false);
             }
@@ -432,7 +436,7 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
     }
     public void Aggro(GameObject aggroTarget, bool forceAggression)
     {
-        if (aggression > Aggression.Passive || forceAggression)
+        if (aggression > NPCCombatController.Aggression.Passive || forceAggression)
         {
             // Dont constantly aggro
             if (aggroTarget != CombatTarget)
@@ -465,7 +469,7 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
     public void Subdue()
     {
         DeAggro();
-        if (aggression != Aggression.Passive)
+        if (aggression != NPCCombatController.Aggression.Passive)
             aggression--;
     }
 
@@ -490,7 +494,7 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
     // Set aggression to Frenzied
     private void Frenzy()
     {
-        aggression = Aggression.Frenzied;
+        aggression = NPCCombatController.Aggression.Frenzied;
         fieldOfView.targetMask |= 1 << LayerMask.NameToLayer("NPC");
 
         frenzyEffect = Instantiate((GameObject)Resources.Load("Effects/EnragedEffect"), transform);
@@ -524,7 +528,7 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
     private void Die()
     {
         //Debug.Log(gameObject.name + " has died");
-        OnDeath?.Invoke(this);
+        //OnDeath?.Invoke(this);
 
         // Tell the tracker we have died
         LevelManager.current.RegisterNPCDeath(gameObject);

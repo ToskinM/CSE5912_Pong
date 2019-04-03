@@ -10,6 +10,10 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     public bool IsDead { get; set; }
     public bool HasWeaponOut { get; set; }
     [HideInInspector] public GameObject CombatTarget { get; set; } = null;
+    [HideInInspector] public NPCCombatController.Aggression AggressionLevel { get { return aggression; } }
+    [HideInInspector] public NPCMovementController Movement { get { return null; } set {  } }
+    [HideInInspector] public float AttackDistance { get { return 0; } }
+    [HideInInspector] public NPCGroup Group { get; set; }
 
     public bool isAttacking;
 
@@ -19,8 +23,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     public GameObject deathEffect;
     public Weapon weapon;
 
-    public Aggression aggression;
-    public enum Aggression { Passive, Unaggressive, Aggressive, Frenzied };
+    public NPCCombatController.Aggression aggression;
     private Coroutine deaggroCoroutine = null;
     private float deaggroTime = 3;
 
@@ -54,11 +57,9 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     private float[] cooldowns;
     private float[] cooldownTimers;
 
-    public delegate void AggroUpdate(bool aggroed, GameObject aggroTarget);
-    public event AggroUpdate OnAggroUpdated;
+    public event NPCCombatController.AggroUpdate OnAggroUpdated;
 
-    public delegate void DeathUpdate(ICombatController npc);
-    public event DeathUpdate OnDeath;
+    public event NPCCombatController.DeathUpdate OnDeath;
 
     void Start()
     {
@@ -218,14 +219,14 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         Transform possibleTarget = fieldOfView?.closestTarget;
         if (possibleTarget != null)
         {
-            if (aggression == Aggression.Aggressive)
+            if (aggression == NPCCombatController.Aggression.Aggressive)
             {
                 if (possibleTarget.tag == "Player" && CombatTarget != possibleTarget)
                 {
                     Aggro(possibleTarget.gameObject, false);
                 }
             }
-            else if (aggression == Aggression.Frenzied)
+            else if (aggression == NPCCombatController.Aggression.Frenzied)
             {
                 Aggro(possibleTarget.gameObject, false);
             }
@@ -233,7 +234,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     }
     public void Aggro(GameObject aggroTarget, bool forceAggression)
     {
-        if (aggression > Aggression.Passive || forceAggression)
+        if (aggression > NPCCombatController.Aggression.Passive || forceAggression)
         {
             // Dont constantly aggro
             if (aggroTarget != CombatTarget)
@@ -255,7 +256,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     public void Subdue()
     {
         DeAggro();
-        if (aggression != Aggression.Passive)
+        if (aggression != NPCCombatController.Aggression.Passive)
             aggression--;
     }
 
@@ -300,7 +301,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     private IEnumerator Die()
     {
         //Debug.Log(gameObject.name + " has died");
-        OnDeath?.Invoke(this);
+        //OnDeath?.Invoke(this);
 
         // Tell the tracker we have died
         LevelManager.current.RegisterNPCDeath(gameObject);

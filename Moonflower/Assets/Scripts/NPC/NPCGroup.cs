@@ -19,7 +19,7 @@ public class NPCGroup : MonoBehaviour
         // Subscribe to events
         foreach (LesserNPCController npc in NPCs)
         {
-            npc.combatController.group = this;
+            npc.combatController.Group = this;
             npc.combatController.OnAggroUpdated += HandleAggroEvent;
             npc.combatController.OnDeath += HandleDeathEvent;
         }
@@ -53,13 +53,13 @@ public class NPCGroup : MonoBehaviour
     }
     
     // Remove killed npcs from the group
-    void HandleDeathEvent(NPCCombatController npcCombatController)
+    void HandleDeathEvent(ICombatController npcCombatController)
     {
         LesserNPCController npcToRemove = null;
 
         // Find and remove the npc whose combatcontroller signaled they died
         foreach (LesserNPCController npc in NPCs)
-            if (npc.combatController = npcCombatController)
+            if (npc.combatController == npcCombatController)
             {
                 npcToRemove = npc;
                 break;

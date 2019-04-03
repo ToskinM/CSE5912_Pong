@@ -13,6 +13,10 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     [HideInInspector] public bool HasWeaponOut { get; private set; } = false;
     [HideInInspector] public bool Active { get; set; } = true;
     [HideInInspector] public GameObject CombatTarget { get; set; } = null;
+    [HideInInspector] public NPCCombatController.Aggression AggressionLevel { get { return aggression; } }
+    [HideInInspector] public NPCMovementController Movement { get { return npcMovement; } set { npcMovement = value; } }
+    [HideInInspector] public float AttackDistance { get { return attackDistance; } }
+    [HideInInspector] public NPCGroup Group { get; set; }
 
     [Header("Aggression")]
     public Aggression aggression;
@@ -49,12 +53,11 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     private NPCAnimationController npcAnimationController;
     [HideInInspector] public NPCMovementController npcMovement;
     private AudioManager audioManager;
-    [HideInInspector] public NPCGroup group;
 
     public delegate void AggroUpdate(bool aggroed, GameObject aggroTarget);
     public event AggroUpdate OnAggroUpdated;
 
-    public delegate void DeathUpdate(NPCCombatController npc);
+    public delegate void DeathUpdate(ICombatController npc);
     public event DeathUpdate OnDeath;
 
 
@@ -170,13 +173,19 @@ public class NPCCombatController : MonoBehaviour, ICombatController
                         if (sourceCombatController == null)
                         {
                             //sourceCombatController = source.GetComponent<PlayerCombatController>();
-                            sourceCombatController = PlayerController.instance.ActivePlayerCombatControls;  // Now uses generic Player object
+                            //sourceCombatController = PlayerController.instance.ActivePlayerCombatControls;  // Now uses generic Player object
+                            if (source)
+                                Stats.TakeDamage(damage, source.name, hurtboxController.SourceCharacterStats, PlayerController.instance.ActivePlayerCombatControls, GetContactPoint(other), IsBlocking);
+                            else
+                                Stats.TakeDamage(damage, "Unknown");
                         }
-
-                        if (source)
-                            Stats.TakeDamage(damage, source.name, hurtboxController.SourceCharacterStats, sourceCombatController, GetContactPoint(other), IsBlocking);
                         else
-                            Stats.TakeDamage(damage, "Unknown");
+                        {
+                            if (source)
+                                Stats.TakeDamage(damage, source.name, hurtboxController.SourceCharacterStats, sourceCombatController, GetContactPoint(other), IsBlocking);
+                            else
+                                Stats.TakeDamage(damage, "Unknown");
+                        }
                     }
                 }
             }
@@ -199,10 +208,10 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
     private bool HitAllowedByGroupBehavior(GameObject aggressor)
     {
-        if (group && group.IsInGroup(aggressor))
+        if (Group && Group.IsInGroup(aggressor))
         {
             // If we are grouped with the aggressor, only allow the hit if the group allows inter-aggression
-            if (group.cantHurtEachother)
+            if (Group.cantHurtEachother)
                 return false;
             else
                 return true;

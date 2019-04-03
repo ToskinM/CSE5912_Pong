@@ -28,7 +28,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
     //private bool engaging = false;
     private NPCMovementController movement;
-    public NPCCombatController combatController;
+    public ICombatController combatController;
     public StealthDetection stealthDetection;
 
     private NavMeshAgent agent;
@@ -68,7 +68,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
         //float walkRad = WalkArea.GetComponent<Renderer>().bounds.size.x;
         Vector3 walkOrigin = transform.position;
 
-        combatController.npcMovement = movement;
+        combatController.Movement = movement;
 
         //talkTrig = new AmaruDialogueTrigger(DialoguePanel, Constants.AMARU_ICON);
 
@@ -80,38 +80,38 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
     void Update()
     {
-        if (talkTrig != null)
-        {
-            //if (playerController.Playing)
-            //{
-                //talkTrig.Update();
+        //if (talkTrig != null)
+        //{
+        //    if (playerController.Playing)
+        //    {
+        //        talkTrig.Update();
 
-                //if (!talkTrig.Complete)
-                //{
-                //    StartEngagement();
-                //}
-                //else if (!movement.Wandering)
-                //{
-                //    movement.ResumeWandering();
-                //    if (talkTrig.DialogueActive())
-                //    {
-                //        talkTrig.EndDialogue();
-                //    }
-                //}
-            }
+        //        if (!talkTrig.Complete)
+        //        {
+        //            StartEngagement();
+        //        }
+        //        else if (!movement.Wandering)
+        //        {
+        //            movement.ResumeWandering();
+        //            if (talkTrig.DialogueActive())
+        //            {
+        //                talkTrig.EndDialogue();
+        //            }
+        //        }
+        //    }
         //}
         //else
-        {
-            //if (combatController.inCombat)
-            //{
-            //    movement.player = combatController.combatTarget;
-            //    movement.Attacking = true;
-            //}
-            //else
-            //{
-            //    movement.Attacking = false;
-            //}
-        }
+        //{
+        //    if (combatController.inCombat)
+        //    {
+        //        movement.player = combatController.combatTarget;
+        //        movement.Attacking = true;
+        //    }
+        //    else
+        //    {
+        //        movement.Attacking = false;
+        //    }
+        //}
 
         movement.UpdateMovement();
     }
@@ -166,7 +166,8 @@ public class LesserNPCController : MonoBehaviour, INPCController
     {
         if (aggroed)
         {
-            movement.Follow(aggroTarget, combatController.attackDistance, 0.5f);
+            Debug.Log(gameObject.name +": aggroed");
+            movement.Follow(aggroTarget, combatController.AttackDistance, 0.5f);
             movement.SetHoldGround(true);
             //movement.player = combatController.combatTarget;
             //movement.Attacking = true;
@@ -196,7 +197,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
         GameStateController.OnPaused += HandlePauseEvent;
 
         // Subscribe to recieve OnAggroUpdated event
-        if (combatController)
+        if (combatController != null)
             combatController.OnAggroUpdated += HandleOnAggroUpdated;
         if (stealthDetection)
             stealthDetection.OnAwarenessUpdate += HandleOnAwarenessUpdated;
@@ -206,7 +207,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
         GameStateController.OnPaused -= HandlePauseEvent;
 
         // Unsubscribe from recieving OnAggroUpdated event
-        if (combatController)
+        if (combatController != null)
             combatController.OnAggroUpdated -= HandleOnAggroUpdated;
         if (stealthDetection)
             stealthDetection.OnAwarenessUpdate -= HandleOnAwarenessUpdated;

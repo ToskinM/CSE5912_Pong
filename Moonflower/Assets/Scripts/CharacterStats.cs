@@ -105,7 +105,38 @@ public class CharacterStats : MonoBehaviour
                 ObjectPoolController.current.CheckoutTemporary((GameObject)Resources.Load("Effects/HitEffect_Blocked"), hitPoint, 1);
         }
 
-        combatController.AcknowledgeHaveHit(gameObject);
+        if (combatController != null)
+            combatController.AcknowledgeHaveHit(gameObject);
+
+        if (CurrentHealth <= 0)
+            sourceCharacterStats.TrainStrengthKill();
+        else
+            sourceCharacterStats.TrainStrengthHit();
+    }
+    public void TakeDamage(int damage, string sourceName, CharacterStats sourceCharacterStats, PlayerCombatController combatController, Vector3 hitPoint, bool blocked)
+    {
+        if (!blocked)
+        {
+            int postCalcDamage = DefenceCalculation(damage);
+            RemoveHealth(postCalcDamage);
+
+            OnCharacterDamage?.Invoke(postCalcDamage);
+
+            if (display != null)
+                display.HitHealth(CurrentHealth, MaxHealth);
+            //Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
+
+            if (hitPoint != Vector3.zero)
+                ObjectPoolController.current.CheckoutTemporary((GameObject)Resources.Load("Effects/HitEffect_Damage"), hitPoint, 1);
+        }
+        else
+        {
+            if (hitPoint != Vector3.zero)
+                ObjectPoolController.current.CheckoutTemporary((GameObject)Resources.Load("Effects/HitEffect_Blocked"), hitPoint, 1);
+        }
+
+        if (combatController != null)
+            combatController.AcknowledgeHaveHit(gameObject);
 
         if (CurrentHealth <= 0)
             sourceCharacterStats.TrainStrengthKill();

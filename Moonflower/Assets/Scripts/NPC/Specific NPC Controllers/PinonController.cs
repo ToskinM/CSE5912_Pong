@@ -149,7 +149,7 @@ public class PinonController : MonoBehaviour, INPCController
         dialogueActive = currTalk.DialogueActive();
         NPCController.SetBool("IsTalking", dialogueActive);
 
-        Debug.Log(sky.GetTime()); 
+        //Debug.Log(sky.GetTime()); 
         if(sky.GetTime() > sky.Passout && beforeNoon)
         {
             Afternoon();

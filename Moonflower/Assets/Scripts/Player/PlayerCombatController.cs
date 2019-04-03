@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCombatController : MonoBehaviour, ICombatController
+public class PlayerCombatController : MonoBehaviour
 {
     public bool active = true;
 
@@ -14,6 +14,7 @@ public class PlayerCombatController : MonoBehaviour, ICombatController
     [HideInInspector] public bool IsDead { get; private set; } = false;
     [HideInInspector] public bool HasWeaponOut { get; private set; } = false;
     [HideInInspector] public GameObject CombatTarget { get; set; } = null;
+    [HideInInspector] public NPCCombatController.Aggression AggressionLevel { get { return 0; } }
 
     public PlayerAnimatorController animator { get; private set; }
     public PlayerMovementController playerMovement;
