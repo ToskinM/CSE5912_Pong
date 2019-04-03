@@ -8,14 +8,14 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
-    //private AudioList AllSound ;
-    //public Sound[] sounds;
-    //public Sound[] backgrounds;
     public Audio[] audioSounds;
     public Audio[] audioBackgrounds;
 
     public float soundVol;
     public float backgroundVol;
+    public float bgmVol;
+
+    public GameObject SceneBGM;
 
     //private AudioAvalibleArea avalibleArea;
     private AudioSourceManager audioSources;
@@ -37,18 +37,10 @@ public class AudioManager : MonoBehaviour
         //Assign vol
         backgroundVol = PlayerPrefs.GetFloat("volumeMusic", 0.75f);
         soundVol = PlayerPrefs.GetFloat("volumeEffects", 0.75f);
+        bgmVol = PlayerPrefs.GetFloat("volumeMusic", 0.75f);
 
         //Get AudioSource
         StartCoroutine(GetAudioSourceManager());
-        //Assign music clip to audio source
-            //AssignToAudioSource(audioSounds, soundVol);
-            //AssignToAudioSource(audioBackgrounds, backgroundVol);
-
-        //Play Background wind Sound
-        //PlayBackground("Environment", "Wind");
-
-        //Set hearable area
-        //avalibleArea = GetComponent<AudioAvalibleArea>();
     }
 
     private IEnumerator GetAudioSourceManager()
@@ -174,6 +166,12 @@ public class AudioManager : MonoBehaviour
         UpdateVol(audioBackgrounds, backgroundVol);
     }
 
+    public void ChangeBGMVol(float vol)
+    {
+        bgmVol = vol;
+        UpdateBGMVol(SceneBGM, vol);
+    }
+
     //Update Changed Volume
     public void UpdateVol(Audio[] category, float vol)
     {
@@ -189,6 +187,16 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
+
+    public void UpdateBGMVol(GameObject BGMObject, float vol)
+    {
+        AudioSource[] BGMs = BGMObject.GetComponents<AudioSource>();
+        foreach (AudioSource a in BGMs)
+        {
+            a.volume = vol;
+        }
+    }
+
     //Get Volume
     public float GetBackgroundVolume()
     {
@@ -270,6 +278,11 @@ public class AudioManager : MonoBehaviour
             ReAddAudioSource(a, s);
             BGMAddSourceOtherComponent(s);
         }
+    }
+
+    public void DayNightVolumeChange()
+    {
+
     }
 
     void Update()

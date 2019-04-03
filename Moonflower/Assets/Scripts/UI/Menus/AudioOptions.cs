@@ -11,7 +11,6 @@ public class AudioOptions : MonoBehaviour
     public Slider musicSlider;
 
     private AudioManager audioManager;
-    public AudioSource MusicAudioSource;
 
     void Awake()
     {
@@ -29,7 +28,6 @@ public class AudioOptions : MonoBehaviour
         effectsSlider.onValueChanged.AddListener(delegate { EffectsChangeCheck(); });
         musicSlider.onValueChanged.AddListener(delegate { MusicChangeCheck(); });
 
-        MusicAudioSource = GameObject.Find("Scene BGM").GetComponent<AudioSource>();
         //don't understand why sometimes it has null reference for audiomanager...
         if (audioManager==null)
         {
@@ -64,7 +62,7 @@ public class AudioOptions : MonoBehaviour
     }
     public void ChangeBGMVol(float vol)
     {
-        MusicAudioSource.volume = vol;
+        audioManager.ChangeBGMVol(vol);
     }
 
 
