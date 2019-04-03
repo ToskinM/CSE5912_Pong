@@ -13,6 +13,7 @@ public class GameStateController : MonoBehaviour
     public bool cameraAvailable;
     public GameObject DialoguePanel;
     public Dictionary<string, DialogueTrigger> NPCDialogues;
+    public Dictionary<string, string> NPCDialogueLabels;
 
     private FollowCamera camControl;
 
@@ -34,6 +35,7 @@ public class GameStateController : MonoBehaviour
     void Start()
     {
         NPCDialogues = new Dictionary<string, DialogueTrigger>();
+        NPCDialogueLabels = new Dictionary<string, string>(); 
         if (current == null)
         {
             DontDestroyOnLoad(gameObject);
@@ -91,14 +93,19 @@ public class GameStateController : MonoBehaviour
     }
 
 
-    public void SaveNPCDialogues(string name, DialogueTrigger dia)
+    public void SaveNPCDialogues(string name, string label, DialogueTrigger dia)
     {
         if (NPCDialogues.ContainsKey(name))
         {
             NPCDialogues.Remove(name);
         }
         NPCDialogues.Add(name, dia);
- //       Debug.Log("save dialogue for " + name);
+        if (NPCDialogueLabels.ContainsKey(name))
+        {
+            NPCDialogueLabels.Remove(name);
+        }
+       
+        NPCDialogueLabels.Add(name, label); 
     }
 
     public DialogueTrigger GetNPCDialogue(string charName)
@@ -114,7 +121,18 @@ public class GameStateController : MonoBehaviour
         }
     }
 
-
+    public string GetNPCDiaLabel(string charName)
+    {
+        if (NPCDialogues.ContainsKey(charName))
+        {
+            //           Debug.Log("get dialogue for " + charName);
+            return NPCDialogueLabels[charName];
+        }
+        else
+        {
+            return "";
+        }
+    }
 
 
     public void ToggleDebugMode()

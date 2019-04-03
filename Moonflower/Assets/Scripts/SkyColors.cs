@@ -142,7 +142,7 @@ public class SkyColors : MonoBehaviour
         
         if (!stop)
         {
-            Debug.Log("time keeps going..."); 
+//            Debug.Log("time keeps going..."); 
             if (transitionRate < 1)
             {
                 thisRend.material.SetColor("_TintColor", Color.Lerp(thisRend.material.GetColor("_TintColor"), newColor, Time.deltaTime * transitionRate));

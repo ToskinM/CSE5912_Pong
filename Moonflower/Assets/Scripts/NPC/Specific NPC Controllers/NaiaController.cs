@@ -44,6 +44,8 @@ public class NaiaController : MonoBehaviour, INPCController
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
+    enum Convo { intro, postFight, advice }
+    Convo currConvo; 
 
     void Start()
     {
@@ -74,22 +76,25 @@ public class NaiaController : MonoBehaviour, INPCController
         if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.NAIA_NAME))
         {
             currTalk = intro;
-            GameStateController.current.SaveNPCDialogues(Constants.NAIA_NAME, currTalk);
+            currConvo = Convo.intro; 
+            GameStateController.current.SaveNPCDialogues(Constants.NAIA_NAME, currConvo.ToString(), currTalk);
         }
         else
         {
             currTalk = GameStateController.current.GetNPCDialogue(Constants.NAIA_NAME);
+            string convo = GameStateController.current.GetNPCDiaLabel(Constants.PINON_NAME);
             if (currTalk == intro && sky.GetTime() > 12)
             {
                 currTalk = advice;
-                GameStateController.current.SaveNPCDialogues(Constants.NAIA_NAME, currTalk);
+                currConvo = Convo.advice; 
+                GameStateController.current.SaveNPCDialogues(Constants.NAIA_NAME, currConvo.ToString(), currTalk);
             }
 
-            if(currTalk.Equals(intro))
+            if(convo.Equals(Convo.intro.ToString()))
             {
                 intro = currTalk; 
             }
-            else if (currTalk.Equals(postFight))
+            else if (convo.Equals(Convo.postFight.ToString()))
             {
                 postFight = currTalk; 
             }
@@ -147,7 +152,8 @@ public class NaiaController : MonoBehaviour, INPCController
                     //Debug.Log("Let's talk"); 
                     trainingFight = false;
                     combatController.EndFight();  
-                    currTalk = postFight; 
+                    currTalk = postFight;
+                    currConvo = Convo.postFight; 
                     StartTalk(true); 
                 }
 
@@ -197,7 +203,8 @@ public class NaiaController : MonoBehaviour, INPCController
     public void Afternoon()
     {
         currTalk = advice;
-        GameStateController.current.SaveNPCDialogues(Constants.NAIA_NAME, currTalk); 
+        currConvo = Convo.advice; 
+        GameStateController.current.SaveNPCDialogues(Constants.NAIA_NAME, currConvo.ToString(), currTalk); 
         movement.Wander(centerOfTown, 30f);
         movement.SetDefault(NPCMovementController.MoveState.wander);
         movement.InfluenceWanderSpeed(1.5f);

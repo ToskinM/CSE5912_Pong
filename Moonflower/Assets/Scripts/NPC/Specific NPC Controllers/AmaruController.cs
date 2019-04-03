@@ -37,6 +37,9 @@ public class AmaruController : MonoBehaviour, INPCController
     Vector3 centerOfTown;
     AmaruAnimatorController amaruAnimator;
 
+    enum Convo { intro, advice }
+    Convo currConvo; 
+
     SkyColors sky;
     bool beforeNoon = true; 
 
@@ -74,18 +77,21 @@ public class AmaruController : MonoBehaviour, INPCController
         if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.AMARU_NAME))
         {
             currTalk = intro;
-            GameStateController.current.SaveNPCDialogues(Constants.AMARU_NAME, currTalk);
+            currConvo = Convo.intro; 
+            GameStateController.current.SaveNPCDialogues(Constants.AMARU_NAME, currConvo.ToString(), currTalk);
         }
         else
         {
             currTalk = GameStateController.current.GetNPCDialogue(Constants.AMARU_NAME);
+            string convo = GameStateController.current.GetNPCDiaLabel(Constants.PINON_NAME);
             if (currTalk == intro && sky.GetTime() > 12)
             {
                 currTalk = advice;
-                GameStateController.current.SaveNPCDialogues(Constants.AMARU_NAME, currTalk);
+                currConvo = Convo.advice; 
+                GameStateController.current.SaveNPCDialogues(Constants.AMARU_NAME, currConvo.ToString(), currTalk);
             }
 
-            if(currTalk.Equals(advice))
+            if(convo.Equals(Convo.intro.ToString()))
             {
                 intro = currTalk; 
             }
@@ -149,7 +155,8 @@ public class AmaruController : MonoBehaviour, INPCController
     public void Afternoon()
     {
         currTalk = advice;
-        GameStateController.current.SaveNPCDialogues(Constants.AMARU_NAME, currTalk);
+        currConvo = Convo.advice; 
+        GameStateController.current.SaveNPCDialogues(Constants.AMARU_NAME, currConvo.ToString(), currTalk);
         npc.Wander(centerOfTown,30f);
         npc.SetDefault(NPCMovementController.MoveState.wander);
         npc.InfluenceWanderSpeed(1.5f);

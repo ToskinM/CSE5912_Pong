@@ -85,15 +85,18 @@ public class PinonController : MonoBehaviour, INPCController
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.PINON_NAME))
         {
+           // Debug.Log("default");
             currConvo = Convo.first; 
             currTalk = firstIntro;
-            GameStateController.current.SaveNPCDialogues(Constants.PINON_NAME, currTalk);
+            GameStateController.current.SaveNPCDialogues(Constants.PINON_NAME, currConvo.ToString(), currTalk);
         }
         else
         {
             currTalk = GameStateController.current.GetNPCDialogue(Constants.PINON_NAME);
-            if(currTalk.Equals(firstIntro))
+            string convo = GameStateController.current.GetNPCDiaLabel(Constants.PINON_NAME);
+            if (convo.Equals(Convo.first.ToString()))
             {
+                //Debug.Log("first"); 
                 firstIntro = currTalk; 
                 currConvo = Convo.first;
                 if (currTalk.Complete)
@@ -101,6 +104,7 @@ public class PinonController : MonoBehaviour, INPCController
             }
             else
             {
+               // Debug.Log("intro"); 
                 intro = currTalk; 
                 currConvo = Convo.intro;
                 npc.Wander();
@@ -120,7 +124,7 @@ public class PinonController : MonoBehaviour, INPCController
 
             npc.UpdateMovement();
 
-            if (npc.DistanceFrom(anai) < engagementRadius && !firstIntro.Complete)
+            if (npc.DistanceFrom(anai) < engagementRadius && currConvo == Convo.first && !firstIntro.Complete)
             {
                 StartTalk();
                 //indicateInterest();
@@ -135,7 +139,8 @@ public class PinonController : MonoBehaviour, INPCController
                 {
                     case Convo.first:
                         Invoke("switchConvos", 3);
-                        currConvo = Convo.intro; 
+                        currConvo = Convo.intro;
+                        GameStateController.current.SaveNPCDialogues(Constants.PINON_NAME, currConvo.ToString(), intro);
                         break;
                     case Convo.intro:
                         break; 
@@ -166,7 +171,8 @@ public class PinonController : MonoBehaviour, INPCController
     private void switchConvos()
     {
         currTalk = intro;
-        GameStateController.current.SaveNPCDialogues(Constants.PINON_NAME, currTalk);
+        currConvo = Convo.intro; 
+        GameStateController.current.SaveNPCDialogues(Constants.PINON_NAME, currConvo.ToString(), currTalk);
     }
 
     public void Afternoon()

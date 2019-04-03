@@ -43,6 +43,10 @@ public class DialogueCamera : MonoBehaviour
         {
             transform.position = dialoguePosition.position;
         }
+        else if (transform == null)
+        {
+            Debug.Log("DIALOGUE CAMERA transform is NULL");
+        }
 
         if (dialogueTarget)
         {
