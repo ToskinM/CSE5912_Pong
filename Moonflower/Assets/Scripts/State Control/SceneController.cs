@@ -75,25 +75,24 @@ public class SceneController : MonoBehaviour
     {
         isLoading = true;
 
-        HideSingletons();
-
         // Fade to black
         yield return StartCoroutine(Fade(1f));
         BeforeSceneUnload?.Invoke();
         GameStateController.current?.ForceUnpause();
+        HideSingletons();
 
         // load loading scene
         yield return SceneManager.LoadSceneAsync(Constants.SCENE_LOADING, LoadSceneMode.Additive);
 
         // Unload previous scene
         yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        ShowSingletons();
         yield return StartCoroutine(LoadSceneAndSetActive(sceneName));
 
         // Unload loading scene
         yield return SceneManager.UnloadSceneAsync(Constants.SCENE_LOADING);
         AfterSceneLoad?.Invoke();
         isLoading = false;
+        ShowSingletons();
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
@@ -105,25 +104,25 @@ public class SceneController : MonoBehaviour
     {
         isLoading = true;
 
-        HideSingletons();
-
         // Fade to black
         yield return StartCoroutine(Fade(1f));
         BeforeSceneUnload?.Invoke();
         GameStateController.current?.ForceUnpause();
+        HideSingletons();
 
         // load loading scene
         yield return SceneManager.LoadSceneAsync(Constants.SCENE_LOADING, LoadSceneMode.Additive);
 
         // Unload previous scene (without loadscreen)
         yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        ShowSingletons();
         yield return StartCoroutine(LoadSceneAndSetActiveNoLS(sceneName));
 
         // Unload loading scene
         yield return SceneManager.UnloadSceneAsync(Constants.SCENE_LOADING);
+
         AfterSceneLoad?.Invoke();
         isLoading = false;
+        ShowSingletons();
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
@@ -241,13 +240,13 @@ public class SceneController : MonoBehaviour
     private void HideSingletons()
     {
         if (PlayerController.instance != null) PlayerController.instance.gameObject.SetActive(false);
-        if (UISingleton.instance != null) UISingleton.instance.transform.GetChild(1).gameObject.SetActive(false);
+        if (UISingleton.instance != null) UISingleton.instance.GetComponent<CanvasGroup>().alpha = 0;
     }
 
     private void ShowSingletons()
     {
         if (PlayerController.instance != null) PlayerController.instance.gameObject.SetActive(true);
-        if (UISingleton.instance != null) UISingleton.instance.transform.GetChild(1).gameObject.SetActive(true);
+        if (UISingleton.instance != null) UISingleton.instance.GetComponent<CanvasGroup>().alpha = 1;
     }
 
     public void DestroySingletons()
