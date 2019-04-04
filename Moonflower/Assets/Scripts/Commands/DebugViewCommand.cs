@@ -9,12 +9,12 @@ public class DebugViewCommand : ICommand
 
     public DebugViewCommand()
     {
-        camera = Camera.main;
+        //camera = LevelManager.current.mainCamera.gameObject.GetComponent<Camera>();
     }
 
     public void Execute()
     {
-        camera.cullingMask ^= 1 << LayerMask.NameToLayer("Debug");
+        LevelManager.current.mainCamera.gameObject.GetComponent<Camera>().cullingMask ^= 1 << LayerMask.NameToLayer("Debug");
 
         GameStateController.current.ToggleDebugView();
     }
