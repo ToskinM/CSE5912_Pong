@@ -10,6 +10,8 @@ public class InspectFactory
         IconFactory fac = new IconFactory(); 
         GetName.Add(fac.GetIcon(Constants.MOUSE_ICON), Constants.MOUSE_NAME);
         GetName.Add(fac.GetIcon(Constants.CATBAT_ICON), Constants.CATBAT_NAME);
+        GetName.Add(fac.GetIcon(Constants.ORBY_ICON), Constants.ORBY_NAME);
+        GetName.Add(fac.GetIcon(Constants.ORBYJR_ICON), Constants.ORBYJR_NAME);
     }
 
     public string GetNaia()
@@ -49,8 +51,16 @@ public class InspectFactory
 
     public string GetCatbat()
     {
-        return "They/Them\nFlying Kitties\n\nTheir diving and dodging can cause you a fright, but they only seek water bait to bite.";
+        return "They/Them\nFlying Kitty\n\nTheir diving and dodging can cause you a fright, but they only seek water bait to bite.";
     }
 
+    public string GetOrby()
+    {
+        return "They/Them\nFireball\n\nDefinitely volatile, they might be unstable. Be cautious and aware they portend a fable.";
+    }
 
+    public string GetOrbyJr()
+    {
+        return "They/Them\nBaby Fireball\n\nThey tend to be curious and love to befriend, though parents flare out these buds don't offend.";
+    }
 }

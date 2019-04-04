@@ -31,11 +31,13 @@ public static class Constants
     public const string AMARU_ICON = characterFolder + "Amaru";
     public const string PINON_ICON = characterFolder + "Pinon";
     public const string SYPAVE_ICON = characterFolder + "Sypave";
-    public const string TEGU_ICON = characterFolder + "Tegu.PNG";
+    public const string TEGU_ICON = characterFolder + "Tegu";
     public const string KURUPI_ICON = characterFolder + "Kurupi";
     public const string MOUSE_ICON = characterFolder + "Mousy Boi";
     public const string MONAI_ICON = characterFolder + "Monai";
     public const string CATBAT_ICON = characterFolder + "Catbat";
+    public const string ORBY_ICON = characterFolder + "Orby";
+    public const string ORBYJR_ICON = characterFolder + "Orby Jr.";
     const string itemFolder = "Icons/Items/";
     public const string MOONFLOWER_ICON = itemFolder + "Moonflower";
     public const string WOLFAPPLE_ICON = itemFolder + "Wolf Apple";
@@ -125,4 +127,6 @@ public static class Constants
     //other
     public const string MOUSE_NAME = "Mousy Boi";
     public const string CATBAT_NAME = "Catbat";
+    public const string ORBY_NAME = "Orby";
+    public const string ORBYJR_NAME = "Orby Jr.";
 }
