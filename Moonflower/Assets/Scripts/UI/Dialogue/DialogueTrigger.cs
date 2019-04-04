@@ -187,6 +187,7 @@ public class DialogueTrigger : MonoBehaviour
             panelInfo.Icon.sprite = icon;  //new IconFactory().GetIcon(spriteFile);
             tState = TextState.typing;
             PlayerController.instance.TalkingPartner = partner;
+            PlayerController.instance.DisableSwitching();
 
             // Start dialogue camera this this npc 
             LevelManager.current.RequestDialogueCamera(partner);
