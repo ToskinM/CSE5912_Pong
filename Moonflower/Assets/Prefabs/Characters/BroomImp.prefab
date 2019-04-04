@@ -4872,6 +4872,7 @@ GameObject:
   - component: {fileID: 8024427478099932754}
   - component: {fileID: 6860128979211502255}
   - component: {fileID: 696863445}
+  - component: {fileID: 8016698663570294643}
   m_Layer: 9
   m_Name: BroomImp
   m_TagString: Untagged
@@ -4957,6 +4958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Awareness: 1
   awarenessMeter: 0
+  sensitivity: 1
   stealthCollider: {fileID: 6788945299382489538}
 --- !u!114 &1427906388
 MonoBehaviour:
@@ -4971,23 +4973,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aggression: 2
-  combatTarget: {fileID: 0}
   ragdollPrefab: {fileID: 0}
   deathEffect: {fileID: 1270126634788680, guid: efa467f120f58fe43931dd8e35c2d187,
     type: 3}
   weapon: {fileID: 3885030565320690851}
   attackDistance: 4
-  isAttacking: 0
   hasRangedAttack: 1
+  preferRangedAttack: 0
   projectileNode: {fileID: 7000680022089723248}
   rangedProjectile: {fileID: 4702858596724240953, guid: 90a34aa6aeaff4b47962b8d347ecfa9c,
     type: 3}
   rangedAttackCooldown: 3
   attack: 0
   attackTimeout: 20
-  timeSinceLastAttack: 0
   npcMovement: {fileID: 0}
-  group: {fileID: 0}
 --- !u!114 &1427906390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5015,6 +5014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialoguePanel: {fileID: 0}
+  iconOb: {fileID: 0}
   canSeePlayer: 0
   canInspect: 1
   canTalk: 1
@@ -5024,7 +5024,6 @@ MonoBehaviour:
   engagementRadius: 15
   tooCloseRad: 4
   bufferDist: 6
-  combatController: {fileID: 1427906388}
   stealthDetection: {fileID: 8825927015045090924}
 --- !u!114 &8676567740809986726
 MonoBehaviour:
@@ -5093,6 +5092,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c80657823b006334e9407f0fad1d2c99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8016698663570294643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427906385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5d17db31f8af4e07aaf36186b70007a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1743697524
