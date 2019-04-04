@@ -4,16 +4,28 @@ using UnityEngine;
 
 public class GateforKey : MonoBehaviour
 {
+    public AudioClip OpenSound;
+    public AudioClip CloseSound;
+
     private bool opened = false;
     private float openTime = 0;
     private Vector3 targetUpPos;
     private Vector3 originalPos;
+
+    private AudioSource audioSource;
     
     // Start is called before the first frame update
     void Start()
     {
         targetUpPos = transform.position + new Vector3(0, 4, 0);
         originalPos = transform.position;
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false;
+        }
     }
 
     // Update is called once per frame
@@ -46,6 +58,7 @@ public class GateforKey : MonoBehaviour
         if (!opened)
         {
             opened = true;
+            PlayOpenSound();
         }
     }
 
@@ -54,6 +67,7 @@ public class GateforKey : MonoBehaviour
         if (opened)
         {
             opened = false;
+            PlayCloseSound();
         }
     }
     public void TimedOpenUp(float time)
@@ -62,6 +76,7 @@ public class GateforKey : MonoBehaviour
         {
             openTime = time;
             opened = true;
+            PlayOpenSound();
         }
     }
 
@@ -69,5 +84,18 @@ public class GateforKey : MonoBehaviour
     {
         print(originalPos);
         opened = false;
+        PlayCloseSound();
+    }
+
+    void PlayOpenSound()
+    {
+        audioSource.clip = OpenSound;
+        audioSource.Play();
+    }
+
+    void PlayCloseSound()
+    {
+        audioSource.clip = CloseSound;
+        audioSource.Play();
     }
 }
