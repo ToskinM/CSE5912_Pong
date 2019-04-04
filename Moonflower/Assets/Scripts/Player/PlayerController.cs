@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public enum PlayerCharacter { Anai, Mimbi };
     private PlayerCharacter activeCharacter;
 
+
     public GameObject TalkingPartner;
     public GameObject AnaiObject;
     public GameObject MimbiObject;
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
     GameObject ActivePlayerObject;
 
     private bool isDead = false;
+    private bool canSwitchCharacters = true;
 
     public delegate void SwitchCharacter(PlayerCharacter activeChar);
     public static event SwitchCharacter OnCharacterSwitch;
@@ -98,7 +100,7 @@ public class PlayerController : MonoBehaviour
     private void DetectPlayerSwitchInput()
     {
         //Debug.Log(ActivePlayerMovementControls.Action);
-        if (Input.GetButtonDown("Switch") && !ActivePlayerCombatControls.InCombat)
+        if (Input.GetButtonDown("Switch"))
         {
             SwitchActiveCharacter();
         }
@@ -124,6 +126,8 @@ public class PlayerController : MonoBehaviour
 
     private void SwitchActiveCharacter()
     {
+        if (!canSwitchCharacters || !GetCompanionObject().activeInHierarchy) return;
+
         if (ActivePlayerObject == AnaiObject)
         {
             SwitchToMimbi();
@@ -293,6 +297,16 @@ public class PlayerController : MonoBehaviour
         ActivePlayerMovementControls.EndDistract(PlayerCharacter.Mimbi);
         ActivePlayerMovementControls.MimbiPassiveController.Action = Actions.Chilling;
         ActivePlayerAnimator.DisableDistraction();
+    }
+
+    public void EnableSwitching()
+    {
+        canSwitchCharacters = true;
+    }
+
+    public void DisableSwitching()
+    {
+        canSwitchCharacters = false;
     }
 
 }

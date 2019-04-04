@@ -208,6 +208,7 @@ public class PlayerCombatController : MonoBehaviour
         //Debug.Log(gameObject.name + " hit " + whoWeHit.name);
         currentAggressor = whoWeHit;
         InCombat = true;
+        PlayerController.instance.DisableSwitching();
         EngageInCombat?.Invoke();
 
         // cancel combat loss because we just attacked an npc
@@ -241,6 +242,7 @@ public class PlayerCombatController : MonoBehaviour
         OnHit?.Invoke(other.gameObject);
         currentAggressor = other.gameObject;
         InCombat = true;
+        PlayerController.instance.DisableSwitching();
         EngageInCombat?.Invoke();
 
         // cancel combat loss because we got hit
@@ -284,6 +286,7 @@ public class PlayerCombatController : MonoBehaviour
         currentAggressor = null;
         InCombat = false;
         inCombat = false;
+        PlayerController.instance.EnableSwitching();
         DisengageFromCombat?.Invoke();
     }
 
