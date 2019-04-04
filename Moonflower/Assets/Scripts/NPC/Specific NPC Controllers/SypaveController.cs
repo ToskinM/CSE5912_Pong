@@ -85,6 +85,7 @@ public class SypaveController : MonoBehaviour, INPCController
             if (currTalk == intro && sky.GetTime() > 12)
             {
                 currTalk = frantic;
+                convo = Convo.frantic.ToString();
                 GameStateController.current.SaveNPCDialogues(Constants.AMARU_NAME, currConvo.ToString(), currTalk);
             }
 
