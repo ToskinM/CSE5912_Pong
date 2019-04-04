@@ -19,6 +19,7 @@ public class EnvWeaponImpactSound : MonoBehaviour
         if (other.tag == "PlayerHurtbox")
         {
             audioSource.clip = ImpactSoundsList[Random.Range(0, ImpactSoundsList.Length - 1)];
+            audioSource.volume = 0.25f;
             audioSource.Play();
         }
     }
