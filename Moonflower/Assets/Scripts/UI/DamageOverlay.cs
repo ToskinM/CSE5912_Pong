@@ -36,6 +36,6 @@ public class DamageOverlay : MonoBehaviour
 
         screenColor.a = alphaVal;
         overlayScreen.color = screenColor;
-        overlayScreen.CrossFadeAlpha(0f, 1f, false);
+        overlayScreen.CrossFadeAlpha(0f, 1f, true);
     }
 }
