@@ -19,7 +19,7 @@ public class EnvWeaponImpactSound : MonoBehaviour
             audioSource.playOnAwake = false;
         }
 
-        audioSource.volume = AudioManager.instance.soundVol * 0.25f;
+        audioSource.volume = 0.25f;
         AudioManager.OnSFXVolChange += OnVolumeChange;
     }
 

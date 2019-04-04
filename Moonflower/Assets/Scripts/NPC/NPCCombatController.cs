@@ -434,7 +434,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     }
     public void Aggro(GameObject aggroTarget, bool forceAggression)
     {
-        if (aggression > Aggression.Passive || forceAggression)
+        if ((aggression > Aggression.Passive || forceAggression) && aggroTarget != PlayerController.instance.GetCompanionObject())
         {
             // Dont constantly aggro
             if (aggroTarget != CombatTarget)
