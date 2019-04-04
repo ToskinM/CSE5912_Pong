@@ -82,6 +82,14 @@ public class ShowInspect : MonoBehaviour
                 icon.sprite = iconFactory.GetIcon(Constants.CATBAT_ICON);
                 descrip.text = descripFactory.GetCatbat();
                 break;
+            case Constants.ORBY_NAME:
+                icon.sprite = iconFactory.GetIcon(Constants.ORBY_ICON);
+                descrip.text = descripFactory.GetOrby();
+                break;
+            case Constants.ORBYJR_NAME:
+                icon.sprite = iconFactory.GetIcon(Constants.ORBYJR_ICON);
+                descrip.text = descripFactory.GetOrbyJr();
+                break;
             default:
                 break;
         }
