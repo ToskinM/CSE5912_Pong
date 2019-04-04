@@ -20,6 +20,9 @@ public class AudioManager : MonoBehaviour
     //private AudioAvalibleArea avalibleArea;
     private AudioSourceManager audioSources;
 
+    public delegate void SFXVolumeChange(float volume);
+    public static event SFXVolumeChange OnSFXVolChange;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -161,6 +164,7 @@ public class AudioManager : MonoBehaviour
     {
         soundVol = vol;
         UpdateVol(audioSounds, soundVol);
+        OnSFXVolChange?.Invoke(soundVol);
     }
     public void ChangeBackgroundVol(float vol)
     {

@@ -135,7 +135,6 @@ MonoBehaviour:
   engagementRadius: 15
   tooCloseRad: 1
   bufferDist: 2
-  combatController: {fileID: 0}
   stealthDetection: {fileID: 5400280279056658566}
 --- !u!114 &8720847372223630837
 MonoBehaviour:
@@ -301,7 +300,6 @@ MonoBehaviour:
   attack: 0
   attackTimeout: 20
   npcMovement: {fileID: 0}
-  group: {fileID: 0}
 --- !u!1 &3456320708491541844
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,7 +403,7 @@ GameObject:
   - component: {fileID: 4178031002576312500}
   - component: {fileID: 9023367059504765852}
   - component: {fileID: 9036383508784708314}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: RightEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -496,7 +494,7 @@ GameObject:
   - component: {fileID: 2283302062150007991}
   - component: {fileID: 4459384316752081526}
   - component: {fileID: 6443274522109407170}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: RightEye (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -675,11 +673,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3349507090968155939}
     m_Modifications:
-    - target: {fileID: 3809772509919810245, guid: ffa713d1f8a80094eae7a79a2d05f9f8,
-        type: 3}
-      propertyPath: m_Name
-      value: StealthCollider
-      objectReference: {fileID: 0}
     - target: {fileID: 827048800865540963, guid: ffa713d1f8a80094eae7a79a2d05f9f8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -735,6 +728,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3809772509919810245, guid: ffa713d1f8a80094eae7a79a2d05f9f8,
+        type: 3}
+      propertyPath: m_Name
+      value: StealthCollider
+      objectReference: {fileID: 0}
     - target: {fileID: 8366929458558490017, guid: ffa713d1f8a80094eae7a79a2d05f9f8,
         type: 3}
       propertyPath: stealthDetection
@@ -765,6 +763,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: OrbyEffects
+      objectReference: {fileID: 0}
+    - target: {fileID: 7129171142363826039, guid: 963d3e789411dc34d85a5562a7ba322f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7129171142363537755, guid: 963d3e789411dc34d85a5562a7ba322f,
         type: 3}
