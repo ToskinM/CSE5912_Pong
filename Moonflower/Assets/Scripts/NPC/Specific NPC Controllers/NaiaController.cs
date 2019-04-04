@@ -86,7 +86,7 @@ public class NaiaController : MonoBehaviour, INPCController
             if (currTalk == intro && sky.GetTime() > 12)
             {
                 currTalk = advice;
-                currConvo = Convo.advice; 
+                convo = Convo.advice.ToString(); 
                 GameStateController.current.SaveNPCDialogues(Constants.NAIA_NAME, currConvo.ToString(), currTalk);
             }
 

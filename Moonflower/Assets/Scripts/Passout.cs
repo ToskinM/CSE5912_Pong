@@ -14,6 +14,8 @@ public class Passout : MonoBehaviour
 
     void Start()
     {
+        Passed = GameStateController.current.Passed; 
+
         if(sky.GetTime() > sky.Passout)
         {
             Passed = true; 
