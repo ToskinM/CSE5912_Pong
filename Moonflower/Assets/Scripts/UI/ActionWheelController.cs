@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnActionWheel : MonoBehaviour
+public class ActionWheelController : MonoBehaviour
 {
-    public static SpawnActionWheel current;
+    public static ActionWheelController current;
 
     public GameObject ActionWheelPrefab;
     public GameObject GameStateManager;
     public GameObject InteractionPopup;
-    private InteractionPopup interaction; 
+    private InteractionPopup interaction;
     private GameStateController gameStateController;
     private FollowCamera followCamera;
     private FieldOfView currentPlayerInteractionFOV;
 
     private ActionWheel activeWheel;
-    private ShowInspect inspect; 
-    private ShowInventory inventory; 
+    private ShowInspect inspect;
+    private ShowInventory inventory;
 
     private GameObject target;
     private INPCController targetController;
 
-    private FeedbackText feedback; 
+    private FeedbackText feedback;
 
     private bool wheelAvailable = true;
     private bool wheelShowing = false;
@@ -29,7 +29,7 @@ public class SpawnActionWheel : MonoBehaviour
 
     private int distractTime = 5;
 
-    bool otherWindowUp = false; 
+    bool otherWindowUp = false;
 
     private float activationRange = 5f;
 
@@ -53,7 +53,7 @@ public class SpawnActionWheel : MonoBehaviour
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
         interaction = InteractionPopup.GetComponent<InteractionPopup>();
 
-//        Debug.Log("屌你老妈哇佬");
+        //        Debug.Log("屌你老妈哇佬");
 
         currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
     }
@@ -61,7 +61,7 @@ public class SpawnActionWheel : MonoBehaviour
     private void OnEnable()
     {
         //Debug.Log("屌你老妈");
-//        Debug.Log(currentPlayerInteractionFOV == null);
+        //        Debug.Log(currentPlayerInteractionFOV == null);
         currentPlayerInteractionFOV.OnNewClosestTarget += HandleInteractionFOVTargetUpdate;
 
         PlayerController.OnCharacterSwitch += SwitchInteractionFOV;
@@ -75,7 +75,7 @@ public class SpawnActionWheel : MonoBehaviour
 
     private void OnDisable()
     {
-        if(currentPlayerInteractionFOV == null)
+        if (currentPlayerInteractionFOV == null)
             Debug.Log("NULL for current Player FOV");
         else
             currentPlayerInteractionFOV.OnNewClosestTarget -= HandleInteractionFOVTargetUpdate;
@@ -121,7 +121,7 @@ public class SpawnActionWheel : MonoBehaviour
     void Update()
     {
         currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
-        otherWindowUp = otherWindowUp || PlayerController.instance.TalkingPartner != null; 
+        otherWindowUp = otherWindowUp || PlayerController.instance.TalkingPartner != null;
 
         if (followCamera != LevelManager.current.mainCamera)
         {
@@ -129,25 +129,41 @@ public class SpawnActionWheel : MonoBehaviour
         }
         if (!otherWindowUp)
         {
-            float dist = float.MaxValue; 
-            if(target)
+            float dist = float.MaxValue;
+            if (target)
                 dist = Vector3.Distance(target.transform.position, LevelManager.current.currentPlayer.transform.position);
             if (target && dist <= activationRange)
             {
                 if (!wheelShowing)
                     interaction.EnableNPC(dist);
-                DetectInteraction();
+
+                if (GetIfInteractable(targetController.actionsAvailable))
+                {
+                    DetectInteraction();
+                }
             }
             else
             {
-                interaction.DisableNPC(); 
+                interaction.DisableNPC();
             }
         }
         else
         {
             interaction.DisableNPC();
-            otherWindowUp = inspect.Shown || inventory.Shown; 
+            otherWindowUp = inspect.Shown || inventory.Shown;
         }
+    }
+
+    private bool GetIfInteractable(bool[] actionsAvailable)
+    {
+        for (int i = 0; i < actionsAvailable.Length; i++)
+        {
+            if (actionsAvailable[i])
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void HandleWheelSelection(int selection)
@@ -169,13 +185,13 @@ public class SpawnActionWheel : MonoBehaviour
                     followCamera.LockOff();
                 }
                 else
-                feedback.ShowText("Sorry "+targetController.Inspect() + "  can't understand Mimbi.");
+                    feedback.ShowText("Sorry " + targetController.Inspect() + "  can't understand Mimbi.");
                 break;
             case 2:
                 if (PlayerController.instance.GetActiveCharacter() == PlayerController.PlayerCharacter.Mimbi)
                 {
                     targetController.Distract(PlayerController.instance.GetActivePlayerObject());
-                    StartCoroutine( DistractionEnd(distractTime, targetController));
+                    StartCoroutine(DistractionEnd(distractTime, targetController));
                     PlayerController.instance.GetComponent<PlayerController>().StartMimbiDistraction();
                     //PlayerController.instance.GetComponent<PlayerAnimatorController>().EnableDistraction();
                     interaction.NotAllowed = true;
@@ -185,10 +201,10 @@ public class SpawnActionWheel : MonoBehaviour
                 if (inventory.HasInv())
                 {
                     inventory.ShowGiftInventory(targetController);
-                    otherWindowUp = true; 
+                    otherWindowUp = true;
                 }
                 else
-                    feedback.ShowText("You have nothing to give."); 
+                    feedback.ShowText("You have nothing to give.");
 
                 //targetController.Gift("none");
                 break;
@@ -210,7 +226,7 @@ public class SpawnActionWheel : MonoBehaviour
 
     public void DetectInteraction()
     {
-        if (Input.GetButtonDown("Interact") )
+        if (Input.GetButtonDown("Interact"))
         {
             ShowWheel();
         }

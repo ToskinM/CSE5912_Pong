@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 7058359971952123603}
   - component: {fileID: 4880025917388247058}
   - component: {fileID: 2823937104150728102}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: RightEye (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 5161378954689755856}
   - component: {fileID: 243985305687489016}
   - component: {fileID: 233080191576676542}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: RightEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,7 +377,6 @@ MonoBehaviour:
   engagementRadius: 15
   tooCloseRad: 1
   bufferDist: 2
-  combatController: {fileID: 0}
   stealthDetection: {fileID: 3794873754776818402}
 --- !u!114 &530601931590938513
 MonoBehaviour:
@@ -530,13 +529,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doesKamikaze: 0
   aggression: 2
-  combatTarget: {fileID: 0}
-  ragdollPrefab: {fileID: 0}
   deathEffect: {fileID: 1756509070997670, guid: 3d5962e9f23ec1f4b93816f62471bbc2,
     type: 3}
   weapon: {fileID: 0}
   attackDistance: 10
-  isAttacking: 0
   hasRangedAttack: 1
   preferRangedAttack: 1
   projectileNode: {fileID: 5773787068099946887}
@@ -545,9 +541,7 @@ MonoBehaviour:
   rangedAttackCooldown: 2
   attack: 0
   attackTimeout: 20
-  timeSinceLastAttack: 0
   npcMovement: {fileID: 0}
-  group: {fileID: 0}
 --- !u!1 &5779646917567062599
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,6 +678,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: OrbyEffects
       objectReference: {fileID: 0}
+    - target: {fileID: 7129171142363826039, guid: 963d3e789411dc34d85a5562a7ba322f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 7129171142363537755, guid: 963d3e789411dc34d85a5562a7ba322f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -774,11 +773,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5773730361223411015}
     m_Modifications:
-    - target: {fileID: 3809772509919810245, guid: ffa713d1f8a80094eae7a79a2d05f9f8,
-        type: 3}
-      propertyPath: m_Name
-      value: StealthCollider
-      objectReference: {fileID: 0}
     - target: {fileID: 827048800865540963, guid: ffa713d1f8a80094eae7a79a2d05f9f8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -833,6 +827,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809772509919810245, guid: ffa713d1f8a80094eae7a79a2d05f9f8,
+        type: 3}
+      propertyPath: m_Name
+      value: StealthCollider
       objectReference: {fileID: 0}
     - target: {fileID: 8366929458558490017, guid: ffa713d1f8a80094eae7a79a2d05f9f8,
         type: 3}

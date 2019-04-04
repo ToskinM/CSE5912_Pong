@@ -31,7 +31,7 @@ public class StealthDetection : MonoBehaviour
     private NavMeshAgent nav;
     public SphereCollider stealthCollider;
     private Renderer renderer;
-    private NPCCombatController npcCombatController;
+    private ICombatController npcCombatController;
     private GameObject indicator;
 
     private float timeSinceLastAction = 0f;
@@ -41,7 +41,7 @@ public class StealthDetection : MonoBehaviour
         //stealthCollider = GetComponent<SphereCollider>();
         nav = GetComponent<NavMeshAgent>();
         renderer = GetComponent<Renderer>();
-        npcCombatController = GetComponent<NPCCombatController>();
+        npcCombatController = GetComponent<ICombatController>();
     }
 
     void Start()
@@ -189,7 +189,7 @@ public class StealthDetection : MonoBehaviour
     void DetectionWhileAlert(GameObject player, float distance)
     {
         PlayerMovementController.Actions playerAction = PlayerController.instance.ActivePlayerMovementControls.Action;
-        if ((int)npcCombatController.aggression > 1 && !npcCombatController.InCombat)
+        if ((int)npcCombatController.AggressionLevel > 1 && !npcCombatController.InCombat)
         {
             if (playerAction == PlayerMovementController.Actions.Walking || playerAction == PlayerMovementController.Actions.Running)
             {
@@ -326,7 +326,7 @@ public class StealthDetection : MonoBehaviour
             awarenessMeter = alertedThreshold;
         OnAwarenessUpdate?.Invoke(3);
 
-        if ((int)npcCombatController.aggression > 1)
+        if ((int)npcCombatController.AggressionLevel > 1)
         {
             Vector3 detectedPosition = player.transform.position + new Vector3(Random.Range(-2, 2), 0f, Random.Range(-2, 2));
             nav.destination = detectedPosition;
@@ -348,7 +348,7 @@ public class StealthDetection : MonoBehaviour
 
         OnAwarenessUpdate?.Invoke(3);
 
-        if ((int)npcCombatController.aggression > 1)
+        if ((int)npcCombatController.AggressionLevel > 1)
         {
             nav.destination = detectedPosition;
         }
