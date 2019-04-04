@@ -87,6 +87,7 @@ public class SceneController : MonoBehaviour
 
         // Unload previous scene
         yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        ShowSingletons();
         yield return StartCoroutine(LoadSceneAndSetActive(sceneName));
 
         // Unload loading scene
@@ -96,8 +97,6 @@ public class SceneController : MonoBehaviour
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
-
-        ShowSingletons();
 
         PlayerController.instance.SpawnPlayerObjects();
     }
@@ -118,6 +117,7 @@ public class SceneController : MonoBehaviour
 
         // Unload previous scene (without loadscreen)
         yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        ShowSingletons();
         yield return StartCoroutine(LoadSceneAndSetActiveNoLS(sceneName));
 
         // Unload loading scene
@@ -127,8 +127,6 @@ public class SceneController : MonoBehaviour
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
-
-        ShowSingletons();
 
         PlayerController.instance.SpawnPlayerObjects();
     }
@@ -224,6 +222,7 @@ public class SceneController : MonoBehaviour
         isFading = false;
         faderCanvasGroup.blocksRaycasts = false;
     }
+
     private IEnumerator FadeLoadingBackground(float finalAlpha)
     {
         isFading = true;
