@@ -28,7 +28,7 @@ public class Pickup : MonoBehaviour
         playerInventory = GetComponent<PlayerInventory>();
 
         soundEffect = PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>();
-        interaction = GameObject.Find("HUD").transform.GetChild(7).GetComponent<InteractionPopup>();
+        interaction = GameObject.Find("HUD").transform.GetChild(9).GetComponent<InteractionPopup>();
 
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
