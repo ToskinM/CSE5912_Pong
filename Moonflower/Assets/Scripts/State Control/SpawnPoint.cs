@@ -26,7 +26,7 @@ public class SpawnPoint : MonoBehaviour
     public void Spawn()
     {
         //if (thisScene == null) thisScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        if (previousScene == "") transform.position = GameObject.Find(previousScene + " Spawn").transform.position;          
+        if (previousScene != "") transform.position = GameObject.Find(previousScene + " Spawn").transform.position;          
         PlayerController.instance.GetActivePlayerObject().transform.position = this.transform.position;
         //PlayerController.instance.GetActivePlayerObject().transform.rotation = this.transform.rotation;
         //PlayerController.instance.GetActivePlayerObject().transform.Rotate()

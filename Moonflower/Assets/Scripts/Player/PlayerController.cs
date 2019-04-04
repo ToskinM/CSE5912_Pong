@@ -116,6 +116,7 @@ public class PlayerController : MonoBehaviour
     {
 
         ActivePlayerAnimator.Reset();
+        ActivePlayerMovementControls.Stunned = false;
         enabled = true;
         SwitchToAnai();
 
