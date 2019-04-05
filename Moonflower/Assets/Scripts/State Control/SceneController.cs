@@ -93,7 +93,7 @@ public class SceneController : MonoBehaviour
         AfterSceneLoad?.Invoke();
         isLoading = false;
         ShowSingletons();
-        PlayerController.instance.SpawnPlayerObjects();
+        if (sceneName != Constants.SCENE_MAINMENU) PlayerController.instance.SpawnPlayerObjects();
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
@@ -122,7 +122,7 @@ public class SceneController : MonoBehaviour
         AfterSceneLoad?.Invoke();
         isLoading = false;
         ShowSingletons();
-        PlayerController.instance.SpawnPlayerObjects();
+        if (sceneName != Constants.SCENE_MAINMENU) PlayerController.instance.SpawnPlayerObjects();
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
