@@ -12,7 +12,7 @@ public class ActionWheelController : MonoBehaviour
     private InteractionPopup interaction;
     private GameStateController gameStateController;
     private FollowCamera followCamera;
-    private FieldOfView currentPlayerInteractionFOV;
+    //private FieldOfView currentPlayerInteractionFOV;
 
     private ActionWheel activeWheel;
     private ShowInspect inspect;
@@ -55,14 +55,14 @@ public class ActionWheelController : MonoBehaviour
 
         //        Debug.Log("屌你老妈哇佬");
 
-        currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
+        //currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
     }
 
     private void OnEnable()
     {
         //Debug.Log("屌你老妈");
         //        Debug.Log(currentPlayerInteractionFOV == null);
-        currentPlayerInteractionFOV.OnNewClosestTarget += HandleInteractionFOVTargetUpdate;
+        PlayerController.instance.ActivePlayerInteractionFOV.OnNewClosestTarget += HandleInteractionFOVTargetUpdate;
 
         PlayerController.OnCharacterSwitch += SwitchInteractionFOV;
 
@@ -75,7 +75,7 @@ public class ActionWheelController : MonoBehaviour
 
     private void OnDisable()
     {
-        currentPlayerInteractionFOV.OnNewClosestTarget -= HandleInteractionFOVTargetUpdate;
+        PlayerController.instance.ActivePlayerInteractionFOV.OnNewClosestTarget -= HandleInteractionFOVTargetUpdate;
 
         PlayerController.OnCharacterSwitch -= SwitchInteractionFOV;
         GameStateController.OnFreezePlayer -= HandleFreezeEvent;
@@ -86,9 +86,8 @@ public class ActionWheelController : MonoBehaviour
 
     private void SwitchInteractionFOV(PlayerController.PlayerCharacter activeChar)
     {
-        currentPlayerInteractionFOV.OnNewClosestTarget -= HandleInteractionFOVTargetUpdate;
-        currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
-        currentPlayerInteractionFOV.OnNewClosestTarget += HandleInteractionFOVTargetUpdate;
+        PlayerController.instance.ActivePlayerInteractionFOV.OnNewClosestTarget -= HandleInteractionFOVTargetUpdate;
+        PlayerController.instance.ActivePlayerInteractionFOV.OnNewClosestTarget += HandleInteractionFOVTargetUpdate;
     }
     private void HandleInteractionFOVTargetUpdate(GameObject closestNPC)
     {
@@ -117,7 +116,6 @@ public class ActionWheelController : MonoBehaviour
 
     void Update()
     {
-        currentPlayerInteractionFOV = PlayerController.instance.ActivePlayerInteractionFOV;
         otherWindowUp = otherWindowUp || PlayerController.instance.TalkingPartner != null;
 
         if (followCamera != LevelManager.current.mainCamera)

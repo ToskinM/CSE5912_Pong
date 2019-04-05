@@ -52,7 +52,8 @@ public class HouseDoor : MonoBehaviour
 
                 }
                 SceneController.current.FadeAndLoadSceneNoLS(targetScene);
-                DisableCompanionObject();
+                SceneManager.sceneLoaded += DisableCompanionObject;
+                //DisableCompanionObject();
             }
             else
             {
@@ -67,18 +68,19 @@ public class HouseDoor : MonoBehaviour
 
                 }
                 SceneController.current.FadeAndLoadScene(targetScene);
-                EnableCompanionObject();
+                SceneManager.sceneLoaded += EnableCompanionObject; 
+                //EnableCompanionObject();
             }
 
         }
     }
 
-    private void EnableCompanionObject()
+    private void EnableCompanionObject(Scene scene, LoadSceneMode mode)
     {
         PlayerController.instance.GetCompanionObject().SetActive(true);
     }
 
-    private void DisableCompanionObject()
+    private void DisableCompanionObject(Scene scene, LoadSceneMode mode)
     {
         PlayerController.instance.GetCompanionObject().SetActive(false);
     }

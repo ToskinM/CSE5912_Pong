@@ -82,14 +82,14 @@ public class SypaveController : MonoBehaviour, INPCController
         else
         {
             currTalk = GameStateController.current.GetNPCDialogue(Constants.SYPAVE_NAME);
-            string convo = GameStateController.current.GetNPCDiaLabel(Constants.PINON_NAME);
+            string convo = GameStateController.current.GetNPCDiaLabel(Constants.SYPAVE_NAME);
 
             if (currTalk == intro && GameStateController.current.Passed)
             {
 //                Debug.Log("sypave forced pass");
                 currTalk = frantic;
                 convo = Convo.frantic.ToString();
-                GameStateController.current.SaveNPCDialogues(Constants.AMARU_NAME, currConvo.ToString(), currTalk);
+                GameStateController.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currConvo.ToString(), currTalk);
             }
 
             if (convo.Equals(Convo.intro.ToString()))
@@ -102,21 +102,24 @@ public class SypaveController : MonoBehaviour, INPCController
                 frantic = currTalk;
                 Afternoon();
                 currConvo = Convo.frantic;
-                string prev = GameObject.Find("Spawner").GetComponent<SpawnPoint>().previousScene; 
-                switch(prev)
+                string prev = GameObject.Find("Spawner").GetComponent<SpawnPoint>().previousScene;
+                if (!frantic.Complete)
                 {
-                    case Constants.SCENE_ANAIHOUSE:
-                        agent.Warp(AnaiSpawnPoint.transform.position);
-                        break;
-                    case Constants.SCENE_NAIAHOUSE:
-                        agent.Warp(NaiaSpawnPoint.transform.position);
-                        break;
-                    case Constants.SCENE_AMARUHOUSE:
-                        agent.Warp(AmaruSpawnPoint.transform.position);
-                        break;
-                    default:
-                        agent.Warp(AnaiSpawnPoint.transform.position);
-                        break;
+                    switch (prev)
+                    {
+                        case Constants.SCENE_ANAIHOUSE:
+                            agent.Warp(AnaiSpawnPoint.transform.position);
+                            break;
+                        case Constants.SCENE_NAIAHOUSE:
+                            agent.Warp(NaiaSpawnPoint.transform.position);
+                            break;
+                        case Constants.SCENE_AMARUHOUSE:
+                            agent.Warp(AmaruSpawnPoint.transform.position);
+                            break;
+                        default:
+                            agent.Warp(AnaiSpawnPoint.transform.position);
+                            break;
+                    }
                 }
 
                 //gameObject.transform.position = SpawnPoint.transform.position;
@@ -172,7 +175,7 @@ public class SypaveController : MonoBehaviour, INPCController
                     movement.SetDefault(NPCMovementController.MoveState.wander);
                     movement.InfluenceWanderSpeed(1.5f);
                     Invoke("switchConvos", 3);
-                    GameStateController.current.SaveNPCDialogues(Constants.PINON_NAME, currConvo.ToString(), advice);
+                    GameStateController.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currConvo.ToString(), advice);
                 }
                 break;
             default:
@@ -193,7 +196,7 @@ public class SypaveController : MonoBehaviour, INPCController
     {
         currTalk = advice;
         currConvo = Convo.advice; 
-        GameStateController.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currConvo.ToString(), currTalk);
+        //GameStateController.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currConvo.ToString(), currTalk);
     }
 
     public DialogueTrigger GetCurrDialogue()

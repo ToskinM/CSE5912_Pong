@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; 
 
 public class Passout : MonoBehaviour
 {
@@ -72,10 +73,28 @@ public class Passout : MonoBehaviour
         }
         SceneController.current.FadeAndLoadSceneNoLS(Constants.SCENE_ANAIHOUSE);
         //PlayerController.instance.GetCompanionObject().SetActive(false);
-        PlayerController.instance.MimbiObject.SetActive(false);
-        PlayerController.instance.AnaiObject.SetActive(true);
-        PlayerController.instance.Revive(); 
+        SceneManager.sceneLoaded += DisableCompanionObject;
+        //PlayerController.instance.MimbiObject.SetActive(false);
+        SceneManager.sceneLoaded += ResetPlayer;
 
+
+    }
+
+    private void ResetPlayer(Scene scene, LoadSceneMode mode)
+    {
+        PlayerController.instance.AnaiObject.SetActive(true);
+        PlayerController.instance.Revive();
+    }
+
+
+    private void EnableCompanionObject(Scene scene, LoadSceneMode mode)
+    {
+        PlayerController.instance.GetCompanionObject().SetActive(true);
+    }
+
+    private void DisableCompanionObject(Scene scene, LoadSceneMode mode)
+    {
+        PlayerController.instance.GetCompanionObject().SetActive(false);
     }
 
 }

@@ -83,7 +83,7 @@ public class AmaruController : MonoBehaviour, INPCController
         else
         {
             currTalk = GameStateController.current.GetNPCDialogue(Constants.AMARU_NAME);
-            string convo = GameStateController.current.GetNPCDiaLabel(Constants.PINON_NAME);
+            string convo = GameStateController.current.GetNPCDiaLabel(Constants.AMARU_NAME);
             if (currTalk == intro && GameStateController.current.Passed)
             {
 //                Debug.Log("amaru passed"); 
