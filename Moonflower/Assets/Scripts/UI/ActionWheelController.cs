@@ -51,6 +51,8 @@ public class ActionWheelController : MonoBehaviour
         inspect = GameObject.Find("HUD").GetComponent<ShowInspect>();
         inventory = GameObject.Find("HUD").GetComponent<ShowInventory>();
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
+        if (InteractionPopup == null)
+            InteractionPopup = GameObject.Find("Interaction Popup"); 
         interaction = InteractionPopup.GetComponent<InteractionPopup>();
 
         //        Debug.Log("屌你老妈哇佬");

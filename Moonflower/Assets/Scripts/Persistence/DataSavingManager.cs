@@ -37,8 +37,8 @@ public class DataSavingManager : MonoBehaviour
     private void GetReferences()
     {
         anaiDataFilePath = Application.persistentDataPath + "/AnaiInfo.dat";
-        anai = LevelManager.current.anai;
-        mimbi = LevelManager.current.mimbi;
+        anai = PlayerController.instance.AnaiObject;
+        mimbi = PlayerController.instance.MimbiObject;
     }
 
     //public void SaveNPCDialogues(string name, DialogueTrigger dia)
@@ -102,8 +102,8 @@ public class DataSavingManager : MonoBehaviour
         //    anai.transform.SetPositionAndRotation(anaiData.transform.position, anaiData.transform.rotation);
         //}
 
-        anaiData?.Load(LevelManager.current.anai);
-        mimbiData?.Load(LevelManager.current.mimbi);
+        anaiData?.Load(PlayerController.instance.AnaiObject);
+        mimbiData?.Load(PlayerController.instance.MimbiObject);
 
     }
 

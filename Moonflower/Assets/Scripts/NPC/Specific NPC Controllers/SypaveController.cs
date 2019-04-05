@@ -190,6 +190,7 @@ public class SypaveController : MonoBehaviour, INPCController
         currTalk.Update();
         if (sky.GetTime() > sky.Passout && beforeNoon)
         {
+            Debug.Log("??"); 
             Afternoon();
             beforeNoon = false; 
         }

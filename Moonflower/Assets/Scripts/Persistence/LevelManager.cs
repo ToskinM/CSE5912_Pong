@@ -16,8 +16,8 @@ public class LevelManager : MonoBehaviour
     public new DialogueCamera dialogueCamera; // Reference created in Camera script
 
     [Header("Player   (These should be set in the editor!)")]
-    public GameObject anai; 
-    public GameObject mimbi; 
+    //public GameObject anai; 
+    //public GameObject mimbi; 
     public GameObject currentPlayer;
 
     public PlayerController player; // Reference created in Anai controller
@@ -48,11 +48,11 @@ public class LevelManager : MonoBehaviour
         if (gameStateController == null) gameStateController = GameObject.Find("Game State Manager").GetComponent<GameStateController>();
         if (audioController == null) audioController = GameObject.Find("Audio").GetComponent<AudioManager>();
         if (dummyHUD == null) dummyHUD = GameObject.Find("Dummy HUD");
-        if (player == null) player = GameObject.Find("Player").GetComponent<PlayerController>(); 
+        if (player == null) player = GameObject.Find("Player").GetComponent<PlayerController>();
 
-        anai = player.AnaiObject;
-        mimbi = player.MimbiObject;
-        currentPlayer = player.GetActivePlayerObject();
+        //anai = PlayerController.instance.AnaiObject;
+        //mimbi = player.MimbiObject;
+        currentPlayer = PlayerController.instance.GetActivePlayerObject();
         //player = PlayerController.instance.GetComponent<PlayerController>();
 
 

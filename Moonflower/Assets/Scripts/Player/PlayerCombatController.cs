@@ -295,7 +295,7 @@ public class PlayerCombatController : MonoBehaviour
     public void Stagger()
     {
         animator.TriggerHit();
-        if (LevelManager.current.currentPlayer == LevelManager.current.mimbi)
+        if (!PlayerController.instance.AnaiIsActive())
             playerSoundEffect.MimbiGetHitSFX();
         SetStunned(1);
 

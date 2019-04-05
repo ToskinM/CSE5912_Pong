@@ -49,7 +49,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
         spawnPoint = GameObject.Find("Spawner").GetComponent<SpawnPoint>();
         spawnPoint.Spawn();
         icon = new IconFactory().GetIcon(Constants.ANAI_ICON);
-        Mimbi = LevelManager.current.mimbi.gameObject;
+        Mimbi = PlayerController.instance.MimbiObject;
         agent = GetComponent<NavMeshAgent>();
         playMove = GetComponent<PlayerMovement>();
         playCombat = GetComponent<PlayerCombatController>();
@@ -67,7 +67,7 @@ public class AnaiController : MonoBehaviour, IPlayerController
 
         //playerAnimate.playerMovement = playMove;
 
-        LevelManager.current.anai = this.gameObject;
+        PlayerController.instance.AnaiObject = this.gameObject;
 
         playerSoundEffect = GetComponent<PlayerSoundEffect>();
     }
