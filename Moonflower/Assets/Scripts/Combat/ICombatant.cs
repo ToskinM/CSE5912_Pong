@@ -15,6 +15,7 @@ public interface ICombatController
     NPCMovementController Movement { get; set; }
     float AttackDistance { get; }
     NPCGroup Group { get; set; }
+    GameObject GameObject { get; }
 
     event AggroUpdate OnAggroUpdated;
     event DeathUpdate OnDeath;

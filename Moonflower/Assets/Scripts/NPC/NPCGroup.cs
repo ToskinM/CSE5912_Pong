@@ -25,6 +25,14 @@ public class NPCGroup : MonoBehaviour
         }
     }
 
+    public void Add(LesserNPCController npc)
+    {
+        NPCs.Add(npc);
+        npc.combatController.Group = this;
+        npc.combatController.OnAggroUpdated += HandleAggroEvent;
+        npc.combatController.OnDeath += HandleDeathEvent;
+    }
+
     public bool IsInGroup(GameObject npc)
     {
         foreach (LesserNPCController member in NPCs)

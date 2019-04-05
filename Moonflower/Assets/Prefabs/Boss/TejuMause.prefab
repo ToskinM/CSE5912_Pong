@@ -727,8 +727,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2336846503756489956}
-  m_LocalRotation: {x: -0.1189176, y: 0.69703543, z: 0.122747935, w: 0.6963714}
-  m_LocalPosition: {x: 0.0007130479, y: 0.022140007, z: 0.25608674}
+  m_LocalRotation: {x: -0.118917644, y: 0.6970355, z: 0.1227479, w: 0.6963715}
+  m_LocalPosition: {x: 0.0007124798, y: 0.022139471, z: 0.2560867}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6629869901166189751}
@@ -1217,7 +1217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68655665de1db9b41ad317b508226a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 100
+  viewRadius: 15
   viewAngle: 125
   targetMask:
     serializedVersion: 2
@@ -1241,7 +1241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9690d89200f034f9da6468915696a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatTarget: {fileID: 0}
   isAttacking: 0
   deathEffect: {fileID: 0}
   weapon: {fileID: 726180399}
@@ -1253,7 +1252,7 @@ MonoBehaviour:
   eyes:
   - {fileID: 994014103}
   - {fileID: 119143633}
-  cryAttackCooldown: 1
+  cryAttackCooldown: 3
   cryAttackBarrageCount: 3
   cryAttackBarrageDuration: 1
   cryAttackFireRate: 0.1
@@ -1262,9 +1261,9 @@ MonoBehaviour:
   tantrumAttackRockFallPrefab: {fileID: 4702858596724240953, guid: f809f642ff4c6634eafeee373303fab3,
     type: 3}
   tantrumAttackCooldown: 3
-  tantrumAttackRockCount: 10
+  tantrumAttackRockCount: 4
   tantrumAttackSpawnRate: 0.6
-  tantrumAttackRadius: 20
+  tantrumAttackRadius: 0.2
   tantrumAttackReady: 0
 --- !u!1 &3114213687379188592
 GameObject:
@@ -2516,7 +2515,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6563677097143732338}
-  m_LocalRotation: {x: -0.70710677, y: -0, z: -0, w: 0.70710677}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3103,32 +3102,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4956137140989086, guid: ec1e394da5579324a87919a57524f2e7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4956137140989086, guid: ec1e394da5579324a87919a57524f2e7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4956137140989086, guid: ec1e394da5579324a87919a57524f2e7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 198313398016534188, guid: ec1e394da5579324a87919a57524f2e7,
+    - target: {fileID: 198029979571598720, guid: ec1e394da5579324a87919a57524f2e7,
         type: 3}
-      propertyPath: SubModule.subEmitters.Array.data[0].emitter
-      value: 
-      objectReference: {fileID: 1633283485730959144}
+      propertyPath: LightsModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec1e394da5579324a87919a57524f2e7, type: 3}
 --- !u!4 &1475599572473278702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4956137140989086, guid: ec1e394da5579324a87919a57524f2e7,
-    type: 3}
-  m_PrefabInstance: {fileID: 1471545039162432624}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &1633283485730959144 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 198559464339714904, guid: ec1e394da5579324a87919a57524f2e7,
     type: 3}
   m_PrefabInstance: {fileID: 1471545039162432624}
   m_PrefabAsset: {fileID: 0}
