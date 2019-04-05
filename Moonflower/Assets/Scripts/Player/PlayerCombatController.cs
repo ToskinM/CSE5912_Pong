@@ -190,7 +190,7 @@ public class PlayerCombatController : MonoBehaviour
 
     private void Attack()
     {
-        if (PlayerController.instance.TalkingPartner != null) return; 
+        if (PlayerController.instance.TalkingPartner != null || GameStateController.current.Paused) return; 
 
         if (!HasWeaponOut)
             SetWeaponSheathed(false); // take out weapon if its not already out

@@ -103,7 +103,7 @@ public class ShowInspect : MonoBehaviour
         descrip.text = "...";
         InspectPanel.SetActive(false);
         GameStateController.current.UnpauseGame();
-        Shown = false; 
+        Shown = false;
     }
 
 

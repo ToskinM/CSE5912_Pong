@@ -74,7 +74,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
         body.velocity *= 0.98f;
         
         //isAnai = GameObject.Find("Player").GetComponent<CurrentPlayer>().IsAnai();
-        isAnai = gameObject == LevelManager.current.currentPlayer;
+        isAnai = PlayerController.instance.AnaiIsActive();
     }
 
     void SetMovementState()
@@ -116,6 +116,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
 
     public void Jump()
     {
+
         Jumping = false;
         if (Action != Actions.Running && onGround)
             body.AddForce(new Vector3(0f, 30f, 0f), ForceMode.Impulse);
@@ -136,7 +137,7 @@ public class PlayerMovement : MonoBehaviour, IMovement
             //Action = Actions.Chilling;
             Jumping = true;
 
-            if (Action != Actions.Running && LevelManager.current.currentPlayer.name == "Anai")
+            if (Action != Actions.Running && PlayerController.instance.AnaiIsActive())
             {
 
                     Debug.Log("true");

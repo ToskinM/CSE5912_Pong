@@ -50,11 +50,14 @@ public class ShowInventory : MonoBehaviour
     {
         if(!isGift && Input.GetKeyDown(KeyCode.I))
         {
-            ToggleInv(); 
+            if (!Shown && !GameStateController.current.Paused && PlayerController.instance.TalkingPartner == null)
+                ToggleInv();
+            else if(Shown)
+                HideInvList(); 
             //toggleEnabled = false;
 
         }
-        if(isGift && Input.GetKeyDown(KeyCode.X))
+        if(Shown && Input.GetKeyDown(KeyCode.X))
         {
             HideInvList(); 
         }
@@ -241,6 +244,7 @@ public class ShowInventory : MonoBehaviour
         DestroyItemIcons();
         InventoryPanel.SetActive(false);
         GameStateController.current.UnpauseGame();
+        GameStateController.current.SetMouseLock(true);
         //inventoryText.gameObject.SetActive(false);
         isGift = false;
         Shown = false;
