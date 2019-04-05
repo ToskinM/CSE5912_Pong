@@ -72,6 +72,7 @@ public class SypaveController : MonoBehaviour, INPCController
         frantic.SetExitText("You'd better be leaving to search for him!");
         advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.SYPAVE_ADVICE_DIALOGUE);
         advice.SetExitText("I can't believe you...");
+        beforeNoon = true; 
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.SYPAVE_NAME))
         {
@@ -100,6 +101,7 @@ public class SypaveController : MonoBehaviour, INPCController
             else if (convo.Equals(Convo.frantic.ToString()))
             {
                 frantic = currTalk;
+                beforeNoon = false; 
                 Afternoon();
                 currConvo = Convo.frantic;
                 string prev = GameObject.Find("Spawner").GetComponent<SpawnPoint>().previousScene;
@@ -126,6 +128,7 @@ public class SypaveController : MonoBehaviour, INPCController
             }
             else
             {
+                beforeNoon = false; 
                 advice = currTalk; 
                 currConvo = Convo.advice;
                 movement.Wander(centerOfTown, 30f);
