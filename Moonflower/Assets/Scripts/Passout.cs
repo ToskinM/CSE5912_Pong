@@ -14,6 +14,8 @@ public class Passout : MonoBehaviour
 
     PostProcessControl cameraPost;
 
+    HouseDoor houseSpawn; 
+
     public bool Passed = false;
 
     void Start()
@@ -33,6 +35,9 @@ public class Passout : MonoBehaviour
 
         cameraPost = cam.GetComponent<PostProcessControl>();
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
+
+
+        
     }
 
     void Update()
@@ -69,9 +74,11 @@ public class Passout : MonoBehaviour
 
     private void spawnInHouse()
     {
+        //houseSpawn
         GameObject spawn = GameObject.Find("Spawner");
         spawn.GetComponent<SpawnPoint>().thisScene = Constants.SCENE_ANAIHOUSE;
         spawn.GetComponent<SpawnPoint>().previousScene = Constants.SCENE_VILLAGE;
+        PlayerController.instance.DisableSwitching();
 
         GameStateController.current.SaveTime();
 

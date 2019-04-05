@@ -71,7 +71,7 @@ public class LevelManager : MonoBehaviour
     {
         gameStateController.SetMouseLock(false);
         if (dialogueCamera != null)
-            dialogueCamera.Enter(dialoguePartner.transform, mainCamera.transform);
+            dialogueCamera.Enter(PlayerController.instance.TalkingPartner.transform/*dialoguePartner.transform*/, mainCamera.transform);
         else
             Debug.Log("NULL reference to dialogue camera"); 
         mainCamera.SetRendering(false);

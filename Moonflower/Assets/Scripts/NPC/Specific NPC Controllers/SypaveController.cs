@@ -76,6 +76,7 @@ public class SypaveController : MonoBehaviour, INPCController
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.SYPAVE_NAME))
         {
+            //Debug.Log("default start at");
             currConvo = Convo.intro; 
             currTalk = intro;
             GameStateController.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currConvo.ToString(), currTalk);
@@ -85,9 +86,9 @@ public class SypaveController : MonoBehaviour, INPCController
             currTalk = GameStateController.current.GetNPCDialogue(Constants.SYPAVE_NAME);
             string convo = GameStateController.current.GetNPCDiaLabel(Constants.SYPAVE_NAME);
 
-            if (currTalk == intro && GameStateController.current.Passed)
+            if (convo.Equals(Convo.intro.ToString()) && GameStateController.current.Passed)
             {
-//                Debug.Log("sypave forced pass");
+                //Debug.Log("skipped pass");
                 currTalk = frantic;
                 convo = Convo.frantic.ToString();
                 GameStateController.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currConvo.ToString(), currTalk);
@@ -95,11 +96,13 @@ public class SypaveController : MonoBehaviour, INPCController
 
             if (convo.Equals(Convo.intro.ToString()))
             {
+                //Debug.Log("intro time");
                 intro = currTalk; 
                 currConvo = Convo.intro;
             }
             else if (convo.Equals(Convo.frantic.ToString()))
             {
+                //Debug.Log("frantic time");
                 frantic = currTalk;
                 beforeNoon = false; 
                 Afternoon();
@@ -128,6 +131,7 @@ public class SypaveController : MonoBehaviour, INPCController
             }
             else
             {
+                //Debug.Log("advice time");
                 beforeNoon = false; 
                 advice = currTalk; 
                 currConvo = Convo.advice;
@@ -190,7 +194,7 @@ public class SypaveController : MonoBehaviour, INPCController
         currTalk.Update();
         if (sky.GetTime() > sky.Passout && beforeNoon)
         {
-            Debug.Log("??"); 
+//            Debug.Log("it's turned afternoon"); 
             Afternoon();
             beforeNoon = false; 
         }
