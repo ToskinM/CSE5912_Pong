@@ -82,8 +82,9 @@ public class SypaveController : MonoBehaviour, INPCController
             currTalk = GameStateController.current.GetNPCDialogue(Constants.SYPAVE_NAME);
             string convo = GameStateController.current.GetNPCDiaLabel(Constants.PINON_NAME);
 
-            if (currTalk == intro && sky.GetTime() > 12)
+            if (currTalk == intro && GameStateController.current.Passed)
             {
+//                Debug.Log("sypave forced pass");
                 currTalk = frantic;
                 convo = Convo.frantic.ToString();
                 GameStateController.current.SaveNPCDialogues(Constants.AMARU_NAME, currConvo.ToString(), currTalk);
@@ -99,7 +100,8 @@ public class SypaveController : MonoBehaviour, INPCController
                 frantic = currTalk;
                 Afternoon();
                 currConvo = Convo.frantic;
-                gameObject.transform.position = SpawnPoint.transform.position;
+                agent.Warp(SpawnPoint.transform.position);
+                //gameObject.transform.position = SpawnPoint.transform.position;
             }
             else
             {

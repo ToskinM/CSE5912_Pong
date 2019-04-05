@@ -58,7 +58,11 @@ public class PinonController : MonoBehaviour, INPCController
         sky = GameObject.Find("Sky").GetComponent<SkyColors>();
 
         if (GameStateController.current.Passed)
-            gameObject.SetActive(false); 
+        {
+//            Debug.Log("pinon passed"); 
+            gameObject.SetActive(false);
+        }
+
         //playerController = LevelManager.current.currentPlayer.GetComponent<IPlayerController>();
         // Player = LevelManager.current.currentPlayer;
         playerController = LevelManager.current.player.GetComponent<PlayerController>();
@@ -90,7 +94,9 @@ public class PinonController : MonoBehaviour, INPCController
             currConvo = Convo.first; 
             currTalk = firstIntro;
             GameStateController.current.SaveNPCDialogues(Constants.PINON_NAME, currConvo.ToString(), currTalk);
-            gameObject.transform.position = SpawnPoint.transform.position;
+
+            agent.Warp(SpawnPoint.transform.position);
+            //gameObject.transform.position = SpawnPoint.transform.position;
         }
         else
         {

@@ -42,6 +42,7 @@ public class HouseDoor : MonoBehaviour
             //SceneManager.LoadScene(targetScene);
             if (toInteriorScene)
             {
+                PlayerController.instance.DisableSwitching(); 
 //                Debug.Log("go inside"); 
                 GameStateController.current.SaveTime();
 
@@ -55,7 +56,11 @@ public class HouseDoor : MonoBehaviour
             }
             else
             {
-    //            Debug.Log("out we go");
+                if(targetScene.Equals(Constants.SCENE_VILLAGE))
+                    PlayerController.instance.DisableSwitching();
+                else
+                    PlayerController.instance.EnableSwitching();
+                //            Debug.Log("out we go");
                 while (BGM.volume > 0.01)
                 {
                     BGM.volume -= BGM.volume * Time.deltaTime * 0.01f;

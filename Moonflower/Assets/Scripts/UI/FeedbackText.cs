@@ -89,5 +89,9 @@ public class FeedbackText : MonoBehaviour
         state = State.fadingOut;
     }
 
+    public bool IsRepeat(string t)
+    {
+        return text.text.Equals(t); 
+    }
 
 }

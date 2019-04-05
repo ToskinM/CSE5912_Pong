@@ -83,8 +83,9 @@ public class NaiaController : MonoBehaviour, INPCController
         {
             currTalk = GameStateController.current.GetNPCDialogue(Constants.NAIA_NAME);
             string convo = GameStateController.current.GetNPCDiaLabel(Constants.PINON_NAME);
-            if (currTalk == intro && sky.GetTime() > 12)
+            if (currTalk == intro && GameStateController.current.Passed)
             {
+//                Debug.Log("naia passed"); 
                 currTalk = advice;
                 convo = Convo.advice.ToString(); 
                 GameStateController.current.SaveNPCDialogues(Constants.NAIA_NAME, currConvo.ToString(), currTalk);

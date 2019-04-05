@@ -187,7 +187,7 @@ public class DialogueTrigger : MonoBehaviour
             panelInfo.Icon.sprite = icon;  //new IconFactory().GetIcon(spriteFile);
             tState = TextState.typing;
             PlayerController.instance.TalkingPartner = partner;
-            PlayerController.instance.DisableSwitching();
+            //PlayerController.instance.DisableSwitching();
 
             // Start dialogue camera this this npc 
             LevelManager.current.RequestDialogueCamera(partner);
@@ -206,8 +206,7 @@ public class DialogueTrigger : MonoBehaviour
         interaction.NotAllowed = false; 
         
         destroyButtons();
-        pState = PanelState.falling;
-///        Debug.Log("Start Falling"); 
+        pState = PanelState.falling; 
         engaged = false;
 
         // Exit dialogue camera 

@@ -8,6 +8,8 @@ public class Passout : MonoBehaviour
     public GameObject cam;  
     public AudioSource BGM;
 
+    private FeedbackText feedback; 
+
     PostProcessControl cameraPost;
 
     public bool Passed = false;
@@ -21,7 +23,8 @@ public class Passout : MonoBehaviour
             Passed = true; 
         }
 
-        cameraPost = cam.GetComponent<PostProcessControl>(); 
+        cameraPost = cam.GetComponent<PostProcessControl>();
+        feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
     }
 
     void Update()
@@ -29,16 +32,22 @@ public class Passout : MonoBehaviour
         //    Debug.Log("Pass " + Passout); 
         if (!GameStateController.current.Passed && sky.GetTime() <= sky.Passout && sky.GetTime() >= sky.Passout - 1)
         {
-            cameraPost.PassOut(); 
+            cameraPost.PassOut();
+            string hot = "It's getting hot...";
+            if (!feedback.IsRepeat(hot))
+                 feedback.ShowText(hot); 
         }
 
         Debug.Log("Comment out below if you want to turn off passout");
         if(!GameStateController.current.Passed && sky.GetTime() == sky.Passout)
         {
-
             PlayerController.instance.PassOut();
+            string tooHot = "You got heat-stroke.";
+            if (!feedback.IsRepeat(tooHot))
+                feedback.ShowText(tooHot);
             Invoke("spawnInHouse", 5);
-            GameStateController.current.SaveTime(); 
+            GameStateController.current.SaveTime();
+            GameStateController.current.Passed = true;
         }
 
         if (!GameStateController.current.Passed && sky.GetTime() > sky.Passout)

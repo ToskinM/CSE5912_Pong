@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     GameObject ActivePlayerObject;
 
     private bool isDead = false;
-    private bool canSwitchCharacters = true;
+    private bool canSwitchCharacters = false;
 
     public delegate void SwitchCharacter(PlayerCharacter activeChar);
     public static event SwitchCharacter OnCharacterSwitch;
@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
 
     private void SwitchActiveCharacter()
     {
-        if (!canSwitchCharacters || !GetCompanionObject().activeInHierarchy) return;
+        if (!canSwitchCharacters || !GetCompanionObject().activeInHierarchy || TalkingPartner != null) return;
 
         if (ActivePlayerObject == AnaiObject)
         {
@@ -301,11 +301,13 @@ public class PlayerController : MonoBehaviour
 
     public void EnableSwitching()
     {
+//        Debug.Log("can switch!");
         canSwitchCharacters = true;
     }
 
     public void DisableSwitching()
     {
+//        Debug.Log("Anai only bitch"); 
         canSwitchCharacters = false;
     }
 
