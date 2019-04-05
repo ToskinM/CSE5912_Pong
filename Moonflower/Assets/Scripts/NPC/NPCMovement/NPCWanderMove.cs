@@ -23,12 +23,14 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
 
     public Vector3 wanderAreaOrigin;
     public float wanderAreaRadius = 5f; //default
-    float avoidsTargetRadius = 10f;
+    float avoidsTargetRadius = 5f;
+    const float avoidsPlayerRadius = 3f;
     float lastDist = 0f;
     int giveUpCount = 0;
-    int giveUpMax = 30; 
+    const int giveUpMax = 20;
+    const float giveupDist = .2f; 
 
-    const float bufferDist = .2f; //max dist from destination point before going somewhere else
+    const float bufferDist = .4f; //max dist from destination point before going somewhere else
     int pauseCount = 0; //keeps track of how long NPC has been chilling at destination
     int lingerLength; //length of pause 
     const int smallPause = 1, largePause = 4; //max and min pause lengths
@@ -105,6 +107,13 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
                 }
             }
 
+            float distFromPlayer = getXZDist(PlayerController.instance.GetActivePlayerObject().transform.position, self.transform.position);
+            if (!agent.isStopped && distFromPlayer < avoidsPlayerRadius)
+            {
+                agent.isStopped = false;
+                backupFromPlayer();
+            }
+
             //agent.speed = baseSpeed;
             float distFromDest = getXZDist(self.transform.position, destination);
             if (agent.speed > baseSpeed && distFromDest < 5f)
@@ -136,20 +145,21 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
             }
             else
             {
-                if(Mathf.Abs(distFromDest - lastDist) <= bufferDist)
+                if(Mathf.Abs(distFromDest - lastDist) <= giveupDist)
                 {
                     giveUpCount++; 
                     if(giveUpCount > giveUpMax)
                     {
-                        Debug.Log("give up"); 
+                        Debug.Log("give up");
+                        agent.Warp(self.transform.position - new Vector3(.2f, 0, .2f));
                         destination = getRandomDest();
                         GoHere(destination);
                         giveUpCount = 0; 
                     }
-                    else
-                    {
-                        giveUpCount = 0; 
-                    }
+                }
+                else
+                {
+                    giveUpCount = 0;
                 }
 
                 GoHere(destination);
@@ -224,6 +234,17 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
 
     }
 
+    private void backupFromPlayer()
+    {
+
+        Vector3 targetDirection = self.transform.position - PlayerController.instance.GetActivePlayerObject().transform.position;
+        Vector3 newDest = self.transform.position + targetDirection.normalized * avoidsPlayerRadius;
+        destination = getRandomDest(newDest, 1f);
+        GoHere(destination);
+        //agent.speed *= 2;
+
+    }
+
     // always gets a reachable point on the navmesh
     private Vector3 getRandomDest()
     {
@@ -242,7 +263,7 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
         int bailCount = 20;
 
         float x, z;
-        NavMeshHit hit;
+        NavMeshHit hit = new NavMeshHit();
         bool viablePosition = true, viablePath = true, notTooClose = true;
         do
         {
