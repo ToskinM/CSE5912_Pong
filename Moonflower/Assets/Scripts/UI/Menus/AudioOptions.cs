@@ -15,6 +15,8 @@ public class AudioOptions : MonoBehaviour
     void Awake()
     {
         Destroy();
+        //Debug.Log("awake" + enivronmentSlider.value);
+        Debug.Log("i was called");
 
         enivronmentSlider.value = PlayerPrefs.GetFloat("volumeEnivronment", 0.75f);
         effectsSlider.value = PlayerPrefs.GetFloat("volumeEffects", 0.75f);
@@ -25,10 +27,11 @@ public class AudioOptions : MonoBehaviour
 
     void Start()
     {
+        Destroy();
+        Debug.Log("start"+enivronmentSlider.value);
         enivronmentSlider.onValueChanged.AddListener(delegate { EnivronmentChangeCheck(); });
         effectsSlider.onValueChanged.AddListener(delegate { EffectsChangeCheck(); });
-        musicSlider.onValueChanged.AddListener(delegate { MusicChangeCheck(); });
-
+        musicSlider.onValueChanged.AddListener(delegate { BGMChangeCheck(); });
 
 
         //don't understand why sometimes it has null reference for audiomanager...
@@ -38,36 +41,21 @@ public class AudioOptions : MonoBehaviour
         }
     }
 
-    private void MusicChangeCheck()
+    private void BGMChangeCheck()
     {
         PlayerPrefs.SetFloat("volumeMusic", musicSlider.value);
-        ChangeBGMVol(musicSlider.value);
+        audioManager.ChangeBGMVol(musicSlider.value);
     }
     private void EnivronmentChangeCheck()
     {
         PlayerPrefs.SetFloat("volumeEnivronment", enivronmentSlider.value);
-        ChangeBackgroundVol(enivronmentSlider.value);
+        audioManager.ChangeBackgroundVol(enivronmentSlider.value);
     }
     private void EffectsChangeCheck()
     {
         PlayerPrefs.SetFloat("volumeEffects", effectsSlider.value);
-        ChangeAudioVol(effectsSlider.value);
+        audioManager.ChangeSoundVol(effectsSlider.value);
     }
-    public void ChangeBackgroundVol(float vol)
-    {
-        if (audioManager == null)
-            Debug.Log("死ね！");
-        audioManager.ChangeBackgroundVol(vol);
-    }
-    public void ChangeAudioVol(float vol)
-    {
-        audioManager.ChangeSoundVol(vol);
-    }
-    public void ChangeBGMVol(float vol)
-    {
-        audioManager.ChangeBGMVol(vol);
-    }
-
 
     void Destroy()
     {
