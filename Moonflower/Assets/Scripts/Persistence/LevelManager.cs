@@ -48,7 +48,7 @@ public class LevelManager : MonoBehaviour
         if (gameStateController == null) gameStateController = GameObject.Find("Game State Manager").GetComponent<GameStateController>();
         if (audioController == null) audioController = GameObject.Find("Audio").GetComponent<AudioManager>();
         if (dummyHUD == null) dummyHUD = GameObject.Find("Dummy HUD");
-        if (player == null) player = GameObject.Find("Player").GetComponent<PlayerController>();
+        if (player == null) player = PlayerController.instance.GetComponent<PlayerController>();
 
         //anai = PlayerController.instance.AnaiObject;
         //mimbi = player.MimbiObject;

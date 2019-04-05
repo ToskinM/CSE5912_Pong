@@ -239,12 +239,14 @@ public class SceneController : MonoBehaviour
     {
         if (PlayerController.instance != null) PlayerController.instance.gameObject.SetActive(false);
         if (UISingleton.instance != null) UISingleton.instance.GetComponent<CanvasGroup>().alpha = 0;
+        Debug.Log("Hide");
     }
 
     private void ShowSingletons()
     {
         if (PlayerController.instance != null) PlayerController.instance.gameObject.SetActive(true);
         if (UISingleton.instance != null) UISingleton.instance.GetComponent<CanvasGroup>().alpha = 1;
+        Debug.Log("Show");
     }
 
     public void DestroySingletons()

@@ -55,8 +55,6 @@ public class PlayerController : MonoBehaviour
 
         ActivePlayerInteractionFOV = ActivePlayerObject.GetComponent<FieldOfView>();
         ActivePlayerInteractionFOV.enabled = true;
-
-        LevelManager.current.player = this;
     }
 
     private void OnEnable()

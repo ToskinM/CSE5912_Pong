@@ -40,7 +40,7 @@ public class CharacterStats : MonoBehaviour
         //if (HUD.GetComponent<PlayerHealthDisplay>())
         if (HUD == null)
         {
-            HUD = LevelManager.current.dummyHUD;
+            HUD = GameObject.Find("HUD");
             display = HUD.GetComponent<PlayerHealthDisplay>();
         }
 
