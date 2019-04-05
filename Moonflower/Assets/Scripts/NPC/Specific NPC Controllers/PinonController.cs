@@ -38,8 +38,8 @@ public class PinonController : MonoBehaviour, INPCController
     PlayerController playerController;
     Animator animator;
     private FeedbackText feedbackText;
-    private GameObject anai;
-    private CurrentPlayer currentPlayer;
+    //private GameObject anai;
+    //private CurrentPlayer currentPlayer;
 
 
     SkyColors sky;
@@ -67,14 +67,14 @@ public class PinonController : MonoBehaviour, INPCController
         // Player = LevelManager.current.currentPlayer;
         playerController = LevelManager.current.player.GetComponent<PlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
-        currentPlayer = LevelManager.current.player.GetComponent<CurrentPlayer>();
-        anai = PlayerController.instance.AnaiObject;
+        //currentPlayer = LevelManager.current.player.GetComponent<CurrentPlayer>();
+        //anai = PlayerController.instance.AnaiObject;
 
         agent = GetComponent<NavMeshAgent>();
 
         NPCController = GetComponent<Animator>();
         Vector3 pos = transform.position; 
-        npc = new NPCMovementController(gameObject, anai,Constants.PINON_NAME);
+        npc = new NPCMovementController(gameObject, Constants.PINON_NAME);
         npc.FollowPlayer(bufferDist, tooCloseRad);
         npc.Wander(WalkCenter.transform.position, wanderRad);
         npc.SetDefault(NPCMovementController.MoveState.chill);
@@ -135,7 +135,7 @@ public class PinonController : MonoBehaviour, INPCController
 
             npc.UpdateMovement();
 
-            if (npc.DistanceFrom(anai) < engagementRadius && currConvo == Convo.first && !firstIntro.Complete)
+            if (npc.DistanceFrom(PlayerController.instance.AnaiObject) < engagementRadius && currConvo == Convo.first && !firstIntro.Complete)
             {
                 StartTalk();
                 //indicateInterest();

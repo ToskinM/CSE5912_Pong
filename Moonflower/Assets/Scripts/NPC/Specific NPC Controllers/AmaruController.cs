@@ -25,7 +25,7 @@ public class AmaruController : MonoBehaviour, INPCController
     [HideInInspector] public bool[] actionsAvailable { get; private set; }
 
     CurrentPlayer playerInfo;
-    private GameObject anai;
+    //private GameObject anai;
     NPCMovementController npc;
     NavMeshAgent agent;
     DialogueTrigger currTalk;
@@ -58,11 +58,11 @@ public class AmaruController : MonoBehaviour, INPCController
 
         //npc = gameObject.AddComponent<NPCMovement>();
         //playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
-        anai = LevelManager.current.anai;
+        //anai = LevelManager.current.anai;
         agent = GetComponent<NavMeshAgent>();
 
 
-        npc = new NPCMovementController(gameObject, anai,Constants.AMARU_NAME);
+        npc = new NPCMovementController(gameObject, Constants.AMARU_NAME);
         npc.FollowPlayer(bufferDist, tooCloseRad);
         npc.Wander(WalkCenter.transform.position, wanderRad);
         npc.SetDefault(NPCMovementController.MoveState.wander);
@@ -116,13 +116,13 @@ public class AmaruController : MonoBehaviour, INPCController
     // Update is called once per frame
     void Update()
     {
-        if (PlayerController.instance.GetActiveCharacter() == PlayerController.PlayerCharacter.Anai)
+        if (PlayerController.instance.AnaiIsActive())
         {
             currTalk.Update();
 
             npc.UpdateMovement();
 
-            if (npc.DistanceFrom(anai) < engagementRadius && !currTalk.Complete)
+            if (npc.DistanceFrom(PlayerController.instance.AnaiObject) < engagementRadius && !currTalk.Complete)
             {
                 //StartTalk();
                 indicateInterest();

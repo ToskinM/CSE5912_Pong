@@ -60,7 +60,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
         // Setup Movement
         Vector3 walkOrigin = transform.position;
-        movement = new NPCMovementController(gameObject, PlayerController.instance.AnaiObject,Constants.NAIA_NAME);
+        movement = new NPCMovementController(gameObject, Constants.NAIA_NAME);
         movement.Wander(transform.position, 2);
         movement.SetDefault(NPCMovementController.MoveState.wander); 
         centerOfTown = GameObject.Find("Campfire").transform.position;

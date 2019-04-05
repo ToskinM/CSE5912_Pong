@@ -7,7 +7,7 @@ using TMPro;
 
 public class LesserNPCController : MonoBehaviour, INPCController
 {
-    private GameObject player;
+    //private GameObject player;
     public GameObject dialoguePanel;
     public Sprite iconOb; 
     public Sprite icon { get; set; } 
@@ -50,7 +50,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
-        movement = new NPCMovementController(gameObject, player,charName);
+        movement = new NPCMovementController(gameObject,charName);
         //movement.SetEngagementDistances(5, combatController.attackDistance + 0.5f, 1);
 
         combatController = GetComponent<ICombatController>();

@@ -27,7 +27,7 @@ public class SypaveController : MonoBehaviour, INPCController
     [HideInInspector] public bool[] actionsAvailable { get; private set; }
 
     CurrentPlayer playerInfo;
-    private GameObject anai;
+    //private GameObject anai;
     private NPCMovementController movement;
     //private NPCCombatController combatController;
     private NavMeshAgent agent;
@@ -40,7 +40,7 @@ public class SypaveController : MonoBehaviour, INPCController
     private DialogueTrigger advice;
 
     Vector3 centerOfTown; 
-    private PlayerController playerController;
+    //private PlayerController playerController;
     private FeedbackText feedbackText;
     SkyColors sky;
     bool beforeNoon = true; 
@@ -54,13 +54,13 @@ public class SypaveController : MonoBehaviour, INPCController
 
         // Initialize Components
         playerInfo = GameObject.Find("Player").GetComponent<CurrentPlayer>();
-        anai = PlayerController.instance.AnaiObject; 
+        //anai = PlayerController.instance.AnaiObject; 
         agent = GetComponent<NavMeshAgent>();
        // combatController = GetComponent<NPCCombatController>();
 
         // Setup Movement
         Vector3 walkOrigin = transform.position;
-        movement = new NPCMovementController(gameObject, anai,Constants.SYPAVE_NAME);
+        movement = new NPCMovementController(gameObject, Constants.SYPAVE_NAME);
         movement.FollowPlayer(bufferDist, tooCloseRad);
         movement.Pace(transform.position, paceDist);
         movement.SetDefault(NPCMovementController.MoveState.pace);
@@ -137,7 +137,7 @@ public class SypaveController : MonoBehaviour, INPCController
 
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
-        playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
+        //playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
 
 //        combatController.npcMovement = movement;
 
@@ -147,7 +147,7 @@ public class SypaveController : MonoBehaviour, INPCController
 
     void Update()
     {
-        float playerDist = movement.DistanceFrom(anai);  //getXZDist(transform.position, Player.transform.position);
+        float playerDist = movement.DistanceFrom(PlayerController.instance.AnaiObject);  //getXZDist(transform.position, Player.transform.position);
 
         if (currTalk.Complete)
         {
@@ -161,7 +161,7 @@ public class SypaveController : MonoBehaviour, INPCController
                 if (movement.state != NPCMovementController.MoveState.follow)
                     movement.Follow();
 
-                if (movement.DistanceFrom(anai) < engagementRadius && !frantic.DialogueActive() && PlayerController.instance.TalkingPartner == null)
+                if (movement.DistanceFrom(PlayerController.instance.AnaiObject) < engagementRadius && !frantic.DialogueActive() && PlayerController.instance.TalkingPartner == null)
                 {
                     StartTalk();
                     //indicateInterest();

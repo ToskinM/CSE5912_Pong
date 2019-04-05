@@ -40,7 +40,7 @@ public class MimbiController : MonoBehaviour, IPlayerController
         playCombat = GetComponent<PlayerCombatController>();
         playerAnimate = GetComponent<PlayerAnimatorController>();
         boxCollider = GetComponent<BoxCollider>();
-        npcMove = new NPCMovementController(gameObject, Anai,"Mimbi");
+        npcMove = new NPCMovementController(gameObject,"Mimbi");
         npcMove.WanderFollowPlayer(wanderRadius);
         npcMove.SetDefault(NPCMovementController.MoveState.wanderfollow);
 

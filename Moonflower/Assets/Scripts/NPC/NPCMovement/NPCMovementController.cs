@@ -27,7 +27,9 @@ public class NPCMovementController : MonoBehaviour, IMovement
     public bool stunned;
     public bool swinging;
 
-    public GameObject Player;
+    //public GameObject Player;
+
+
     GameObject self;
     GameObject target; 
     private bool stickingAround = false;
@@ -53,10 +55,10 @@ public class NPCMovementController : MonoBehaviour, IMovement
      *  THIS IS ALL INITIALIZATION METHODS
      */
     //initialize so player CANNOT wander CANNOT engage
-    public NPCMovementController(GameObject selfOb, GameObject playerOb, string charname)
+    public NPCMovementController(GameObject selfOb, string charname)
     {
         charName = charname; 
-        Player = playerOb; 
+        //Player = playerOb; 
         commonSetup(selfOb);
         canFollow = false;
         canWander = false;
@@ -105,12 +107,12 @@ public class NPCMovementController : MonoBehaviour, IMovement
     {
         if (!canFollow)
         {
-            follow = new NPCFollowMove(self, Player, followDist);
+            follow = new NPCFollowMove(self, PlayerController.instance.GetActivePlayerObject(), followDist);
             canFollow = true;
         }
         else
         {
-            follow.Target = Player;
+            follow.Target = PlayerController.instance.GetActivePlayerObject();
             follow.SetFollowingDist(followDist);
         }
         state = MoveState.follow;
@@ -119,12 +121,12 @@ public class NPCMovementController : MonoBehaviour, IMovement
     {
         if (!canFollow)
         {
-            follow = new NPCFollowMove(self, Player, followDist, tooClose);
+            follow = new NPCFollowMove(self, PlayerController.instance.GetActivePlayerObject(), followDist, tooClose);
             canFollow = true;
         }
         else
         {
-            follow.Target = Player;
+            follow.Target = PlayerController.instance.GetActivePlayerObject();
             follow.SetFollowArea(followDist,tooClose);
         }
         state = MoveState.follow;
@@ -199,7 +201,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
     }
     public void WanderFollowPlayer(float maxDistAway)
     {
-        target = Player;
+        target = PlayerController.instance.GetActivePlayerObject();
         if (!canWander)
         {
             wander = new NPCWanderMove(self, target.transform.position, maxDistAway);
@@ -460,7 +462,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
     {
         Action = Actions.Running;
         agent.speed = baseSpeed * 2;
-        follow.Target = Player; 
+        follow.Target = PlayerController.instance.GetActivePlayerObject(); 
 
         stickingAround = true;
         if(state != MoveState.wanderfollow)

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class TejuController : MonoBehaviour, INPCController
 {
-    private GameObject player;
+    //private GameObject player;
     public GameObject dialoguePanel;
     public Sprite icon { get; set; }
 
@@ -33,7 +33,7 @@ public class TejuController : MonoBehaviour, INPCController
     {
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
-        movement = new NPCMovementController(gameObject, player, Constants.MOUSE_NAME);
+        movement = new NPCMovementController(gameObject, Constants.MOUSE_NAME);
 
         combatController = GetComponent<TejuCombatController>();
 
