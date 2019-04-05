@@ -12,6 +12,7 @@ public class AudioSourceManager : MonoBehaviour
     void Start()
     {
         //NPCs = LevelManager.current.npcs;
+        //CurrentPlayer = PlayerController.instance.GetActivePlayerObject();
     }
 
     public AudioSource AddAnaiAudioSource()
@@ -27,11 +28,7 @@ public class AudioSourceManager : MonoBehaviour
     }
     public AudioSource AddCurrentPlayerAudioSource()
     {
-        if (CurrentPlayer == null)
-        {
-            CurrentPlayer = LevelManager.current.currentPlayer;
-        }
-        CurrentPlayer = LevelManager.current.currentPlayer;
+        CurrentPlayer = PlayerController.instance.GetActivePlayerObject();
         return CurrentPlayer.AddComponent<AudioSource>();
     }
 

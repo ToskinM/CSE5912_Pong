@@ -70,6 +70,7 @@ public class PlayerSoundEffect : MonoBehaviour
     }
     public void PlayerPickupSFX()
     {
+        Debug.Log("PLAY ME!!!!");
         audioManager.Play("Player", "PlayerPickup");
     }
 

@@ -14,9 +14,9 @@ public class AudioOptions : MonoBehaviour
 
     void Awake()
     {
-        Destroy();
+        //Destroy();
         //Debug.Log("awake" + enivronmentSlider.value);
-        Debug.Log("i was called");
+        //Debug.Log("i was called");
 
         enivronmentSlider.value = PlayerPrefs.GetFloat("volumeEnivronment", 0.75f);
         effectsSlider.value = PlayerPrefs.GetFloat("volumeEffects", 0.75f);
@@ -27,7 +27,7 @@ public class AudioOptions : MonoBehaviour
 
     void Start()
     {
-        Destroy();
+        //Destroy();
         Debug.Log("start"+enivronmentSlider.value);
         enivronmentSlider.onValueChanged.AddListener(delegate { EnivronmentChangeCheck(); });
         effectsSlider.onValueChanged.AddListener(delegate { EffectsChangeCheck(); });

@@ -28,6 +28,11 @@ public class EnvironmentAudio : MonoBehaviour
             audioSource.playOnAwake = false;
         }
     }
+
+    private void OnDestroy()
+    {
+        AudioManager.OnBGMVolChange -= OnVolumeChange;
+    }
     // Update is called once per frame
     void Update()
     {

@@ -91,6 +91,13 @@ public class NPCSoundEffect : MonoBehaviour
         audioManager.Play(DecideWhichNPC(), "Snoring");
     }
 
+    public void NPCGetKillSFX()
+    {
+        if (gameObject.GetComponent<AudioSource>() == null)
+            audioManager.ReAddAllAudioSource(gameObject, DecideWhichNPC());
+        audioManager.Play(DecideWhichNPC(), "GetKill");
+    }
+
     public string DecideWhichNPC()
     {
         if (gameObject.name.Contains("Mouse"))
