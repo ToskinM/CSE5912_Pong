@@ -72,14 +72,8 @@ public class PlayerController : MonoBehaviour
     }
     private void OnDisable()
     {
-        if (ActivePlayerCombatControls != null)
-        {
+        if(ActivePlayerCombatControls != null )
             ActivePlayerCombatControls.OnDeath -= HandlePlayerDeath;
-        }
-        else
-        {
-            Debug.Log("Active Player Combat Control is NULL");
-        }
     }
 
     void Start()
