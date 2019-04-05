@@ -21,14 +21,17 @@ public class AudioManager : MonoBehaviour
     private AudioSourceManager audioSources;
 
     public delegate void SFXVolumeChange(float volume);
+    public delegate void BackgroundVolumeChange(float volume);
+
     public static event SFXVolumeChange OnSFXVolChange;
+    public static event BackgroundVolumeChange OnBackgroundVolChange;
 
     // Start is called before the first frame update
     void Start()
     {
         if (instance == null)
         {
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
             instance = this;
         }
         else
@@ -96,7 +99,31 @@ public class AudioManager : MonoBehaviour
             ReAddAudioSource(a, s);
         }
     }
-   
+
+    public void Stop(string category, string name)
+    {
+
+        Audio a = Array.Find(audioSounds, sound => sound.categoryName.Contains(category));
+        Sound s = Array.Find(a.sounds, sound => sound.name == name);
+        if (s != null & s.source != null)
+        {
+            s.source.Stop();
+            //Debug.Log("I am Playing "+name+ s.source.clip);
+        }
+        //Add back audio source
+        if (s.source == null)
+        {
+            AddAllAudioSource(category);
+            if (a.categoryName == "BGM")
+            {
+                BMGAddAllAudioSource(category);
+            }
+        }
+    }
+
+
+
+
     //Foot Step
     public void PlaySneakFootStep(string category,string name)
     {
@@ -170,6 +197,7 @@ public class AudioManager : MonoBehaviour
     {
         backgroundVol = vol;
         UpdateVol(audioBackgrounds, backgroundVol);
+        OnBackgroundVolChange.Invoke(backgroundVol);
     }
 
     public void ChangeBGMVol(float vol)
@@ -253,6 +281,7 @@ public class AudioManager : MonoBehaviour
         s.source.pitch = s.pitch;
         s.source.loop = s.loop;
         s.source.spatialBlend = 1;
+        s.source.maxDistance = 10;
     }
     public void BGMAddSourceOtherComponent(Sound s)
     {
@@ -286,10 +315,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void DayNightVolumeChange()
-    {
-
-    }
 
     void Update()
     {

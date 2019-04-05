@@ -20,6 +20,7 @@ public class AudioOptions : MonoBehaviour
         effectsSlider.value = PlayerPrefs.GetFloat("volumeEffects", 0.75f);
         musicSlider.value = PlayerPrefs.GetFloat("volumeMusic", 0.75f);
         audioManager = AudioManager.instance;
+
     }
 
     void Start()
@@ -27,6 +28,8 @@ public class AudioOptions : MonoBehaviour
         enivronmentSlider.onValueChanged.AddListener(delegate { EnivronmentChangeCheck(); });
         effectsSlider.onValueChanged.AddListener(delegate { EffectsChangeCheck(); });
         musicSlider.onValueChanged.AddListener(delegate { MusicChangeCheck(); });
+
+
 
         //don't understand why sometimes it has null reference for audiomanager...
         if (audioManager==null)
