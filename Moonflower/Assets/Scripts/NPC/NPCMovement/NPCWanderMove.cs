@@ -92,10 +92,9 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
 
     public void UpdateMovement()
     {
+
         if (Active)
         {
-
-
             if (AvoidsTarget)
             {
                 float distFromTarget = getXZDist(target.transform.position, self.transform.position);
@@ -234,6 +233,11 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
     // always gets a reachable point on the navmesh around origin 
     private Vector3 getRandomDest(Vector3 origin, float radius)
     {
+        if (!agent.isActiveAndEnabled)
+        {
+            return self.transform.position; 
+        }
+
         int count = 0;
         int bailCount = 20;
 

@@ -259,7 +259,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!GetCompanionObject().activeInHierarchy) return;
         // Temp fix Don't make mimbi move when distracting NPC
-        if(ActivePlayerMovementControls.MimbiPassiveController.Action ==Actions.Distracting)
+        if(ActivePlayerMovementControls.MimbiPassiveController.Action == Actions.Distracting)
         {
             Debug.Log("STOP!");
             //ActivePlayerMovementControls.MimbiPassiveController.Action = Actions.Chilling;
@@ -270,7 +270,8 @@ public class PlayerController : MonoBehaviour
             //ActivePlayerMovementControls.MimbiPassiveController.Action = Actions.Chilling;
             MimbiObject.GetComponent<NavMeshAgent>().enabled = true;
         }
-        ActivePlayerMovementControls.UpdateCompanionMovement(activeCharacter);
+        if(GetCompanionObject().activeSelf)
+            ActivePlayerMovementControls.UpdateCompanionMovement(activeCharacter);
         // ActivePlayerCombatControls.UpdateCompanionCombat(activeCharacter);
         ActivePlayerAnimator.UpdateCompanionAnimation(activeCharacter);
     }

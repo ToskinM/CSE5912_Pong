@@ -261,6 +261,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
 
     public void UpdateMovement()
     {
+        if (!self.activeSelf || !agent.isActiveAndEnabled) return; 
         if (Active)
         {
             //Debug.Log(charName + " speed " + agent.speed + " with base " + baseSpeed);
