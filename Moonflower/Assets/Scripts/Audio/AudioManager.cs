@@ -15,23 +15,25 @@ public class AudioManager : MonoBehaviour
     public float backgroundVol;
     public float bgmVol;
 
-    public GameObject SceneBGM;
+    //public GameObject SceneBGM;
 
     //private AudioAvalibleArea avalibleArea;
     private AudioSourceManager audioSources;
 
     public delegate void SFXVolumeChange(float volume);
     public delegate void BackgroundVolumeChange(float volume);
+    public delegate void BGMVolumeChange(float volume);
 
     public static event SFXVolumeChange OnSFXVolChange;
     public static event BackgroundVolumeChange OnBackgroundVolChange;
+    public static event BGMVolumeChange OnBGMVolChange;
 
     // Start is called before the first frame update
     void Start()
     {
         if (instance == null)
         {
-            //DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
             instance = this;
         }
         else
@@ -48,7 +50,7 @@ public class AudioManager : MonoBehaviour
         //Get AudioSource
         StartCoroutine(GetAudioSourceManager());
 
-        SceneBGM = GameObject.Find("Scene BGM");
+        //SceneBGM = GameObject.Find("Scene BGM");
     }
 
     private IEnumerator GetAudioSourceManager()
@@ -59,9 +61,6 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
     }
-
-
-   
 
     //Play
     public void Play(string category,string name)
@@ -203,7 +202,8 @@ public class AudioManager : MonoBehaviour
     public void ChangeBGMVol(float vol)
     {
         bgmVol = vol;
-        UpdateBGMVol(SceneBGM, vol);
+        //UpdateBGMVol(SceneBGM, vol);
+        OnBGMVolChange.Invoke(bgmVol);
     }
 
     //Update Changed Volume
@@ -222,14 +222,14 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void UpdateBGMVol(GameObject BGMObject, float vol)
-    {
-        AudioSource[] BGMs = BGMObject.GetComponents<AudioSource>();
-        foreach (AudioSource a in BGMs)
-        {
-            a.volume = vol;
-        }
-    }
+    //public void UpdateBGMVol(GameObject BGMObject, float vol)
+    //{
+    //    AudioSource[] BGMs = BGMObject.GetComponents<AudioSource>();
+    //    foreach (AudioSource a in BGMs)
+    //    {
+    //        a.volume = vol;
+    //    }
+    //}
 
     //Get Volume
     public float GetBackgroundVolume()
@@ -318,7 +318,7 @@ public class AudioManager : MonoBehaviour
 
     void Update()
     {
-        backgroundVol = PlayerPrefs.GetFloat("volumeMusic", 0.75f);
-        soundVol = PlayerPrefs.GetFloat("volumeEffects", 0.75f);
+        //backgroundVol = PlayerPrefs.GetFloat("volumeMusic", 0.75f);
+        //soundVol = PlayerPrefs.GetFloat("volumeEffects", 0.75f);
     }
 }
