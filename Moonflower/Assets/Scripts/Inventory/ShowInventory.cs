@@ -30,9 +30,9 @@ public class ShowInventory : MonoBehaviour
     private float yOffset;
     private int numCols = 4;
     private bool inEnglish = false; 
-    private bool toggleEnabled = false;
-    private int toggleMax = 30;
-    private int toggleCount = 0; 
+    //private bool toggleEnabled = false;
+    //private int toggleMax = 30;
+    //private int toggleCount = 0; 
 
 
     void Awake()
@@ -51,7 +51,7 @@ public class ShowInventory : MonoBehaviour
         if(!isGift && Input.GetKeyDown(KeyCode.I))
         {
             ToggleInv(); 
-            toggleEnabled = false;
+            //toggleEnabled = false;
 
         }
         if(isGift && Input.GetKeyDown(KeyCode.X))
@@ -100,6 +100,17 @@ public class ShowInventory : MonoBehaviour
         receiverController.Gift(objName);
         receiverController = null;
         playerInventory.RemoveObj(objName); 
+    }
+
+    private void healPlayer(string objName)
+    {
+        bool added = PlayerController.instance.ActivePlayerStats.AddStandardHealth();
+        if (added)
+        {
+            playerInventory.RemoveObj(objName);
+            ItemUpdate(); 
+        }
+        
     }
 
     private void ToggleInv()
@@ -165,6 +176,8 @@ public class ShowInventory : MonoBehaviour
                     //set up or deactivate button accordingly
                     if (buttonActive)
                         invButton.onClick.AddListener(delegate { giftToNPC(item); });
+                    else if(!PlayerController.instance.ActivePlayerStats.AtMaxHealth() && (item.Equals(Constants.MOONFLOWER_NAME) && PlayerController.instance.AnaiIsActive()) || (item.Equals(Constants.WOLFAPPLE_NAME) && !PlayerController.instance.AnaiIsActive()))
+                        invButton.onClick.AddListener(delegate { healPlayer(item); });
                     else
                         invButton.gameObject.SetActive(false);
 

@@ -61,6 +61,11 @@ public class CharacterStats : MonoBehaviour
     }
 
     // Not sure how combat/interactions are going to be implemented beforehand (script-wise) so just leaving general methods for now
+    public bool AtMaxHealth()
+    {
+        return CurrentHealth == MaxHealth; 
+    }
+
 
     public int DealDamage()
     {
@@ -83,6 +88,7 @@ public class CharacterStats : MonoBehaviour
             display.HitHealth(CurrentHealth, MaxHealth); 
         //Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
     }
+
     public void TakeDamage(int damage, string sourceName, CharacterStats sourceCharacterStats, ICombatController combatController, Vector3 hitPoint, bool blocked)
     {
         if (!blocked)
@@ -113,6 +119,7 @@ public class CharacterStats : MonoBehaviour
         else
             sourceCharacterStats.TrainStrengthHit();
     }
+
     public void TakeDamage(int damage, string sourceName, CharacterStats sourceCharacterStats, PlayerCombatController combatController, Vector3 hitPoint, bool blocked)
     {
         if (!blocked)
@@ -178,6 +185,24 @@ public class CharacterStats : MonoBehaviour
 
         return heals; 
     }
+
+    public bool AddStandardHealth() //returns true if health was actually added
+    {
+        int amount = 10; 
+        bool heals = CurrentHealth != MaxHealth;
+        if (heals)
+        {
+            int initialHealth = CurrentHealth;
+            CurrentHealth = CurrentHealth + amount;
+            if (CurrentHealth >= MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
+        }
+
+        return heals;
+    }
+
 
     public void TrainStrengthHit()
     {

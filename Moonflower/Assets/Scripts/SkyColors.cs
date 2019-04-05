@@ -27,14 +27,9 @@ public class SkyColors : MonoBehaviour
 
     public int Passout = 14; 
 
-    PostProcessControl camera; 
-
     void Start()
 
     {
-
-
-        camera = GameObject.Find("Main Camera").GetComponent<PostProcessControl>();
         lightColor = GameObject.Find("Directional Light").GetComponent<LightColor>();
         thisRend = GetComponent<MeshRenderer>();
         transitionTime = dayCycleSeconds / 24f;
@@ -130,8 +125,11 @@ public class SkyColors : MonoBehaviour
         setDayorNight();
 
         GameStateController.current.RestoreTime(this);
-        if (time == Passout)
-            time++; 
+        if (time == Passout || time == Passout - 1)
+        {
+            GameStateController.current.Passed = true; 
+            time = Passout + 1;
+        }
 
     }
 

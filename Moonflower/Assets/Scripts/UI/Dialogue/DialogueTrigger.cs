@@ -56,7 +56,7 @@ public class DialogueTrigger : MonoBehaviour
         gName = graphName;
 
         icon = iconSprite;
-        interaction = GameObject.Find("HUD").transform.GetChild(9).GetComponent<InteractionPopup>();
+        interaction = GameObject.Find("Interaction Popup").GetComponent<InteractionPopup>();
         //spriteFile = characterSprite;
 
     }

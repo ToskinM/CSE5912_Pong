@@ -28,7 +28,7 @@ public class Pickup : MonoBehaviour
         playerInventory = GetComponent<PlayerInventory>();
 
         soundEffect = PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>();
-        interaction = GameObject.Find("HUD").transform.GetChild(9).GetComponent<InteractionPopup>();
+        interaction = GameObject.Find("Interaction Popup").GetComponent<InteractionPopup>();
 
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
@@ -70,7 +70,7 @@ public class Pickup : MonoBehaviour
                 if (closest != null)
                 {
                     InventoryStat stat = closest.GetComponent<InventoryStat>();
-                    if (!(stat.AnaiObject && !PlayerController.instance.AnaiIsActive()) && !(stat.MimbiObject && PlayerController.instance.AnaiIsActive()))
+                    //if (!(stat.AnaiObject && !PlayerController.instance.AnaiIsActive()) && !(stat.MimbiObject && PlayerController.instance.AnaiIsActive()))
                     {
                         closest.GetComponent<InventoryStat>().SetHalo(true);
                         interaction.EnableItem(dist);
@@ -99,10 +99,10 @@ public class Pickup : MonoBehaviour
         int health = obj.GetComponent<InventoryStat>().GetHealth();
 
         bool objectUsedImmediately = false;
-        bool anaiObjectMatch = stat.AnaiObject && PlayerController.instance.AnaiIsActive(); //(currentPlayer.Equals(PlayerController.instance.AnaiObject));
-        bool mimbiObjectMatch = stat.MimbiObject && !PlayerController.instance.AnaiIsActive();
+        //bool anaiObjectMatch = stat.AnaiObject && PlayerController.instance.AnaiIsActive(); //(currentPlayer.Equals(PlayerController.instance.AnaiObject));
+        //bool mimbiObjectMatch = stat.MimbiObject && !PlayerController.instance.AnaiIsActive();
 
-        if (anaiObjectMatch || mimbiObjectMatch)
+        //if (anaiObjectMatch || mimbiObjectMatch)
         {
             //Add text update
             //inventoryAdd.gameObject.SetActive(true);

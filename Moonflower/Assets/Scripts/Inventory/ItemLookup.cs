@@ -99,9 +99,22 @@ public class ItemLookup
         }
     }
 
+    public bool IsDecorative(string name)
+    {
+        switch (name)
+        {
+            case NECKLACE_NAME:
+            case PAINT_NAME:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
     public bool IsLifeObject(string name)
     {
-        return name.Equals(WOLFAPPLE_NAME) || name.Equals(MOONFLOWER_NAME); 
+        return name.Equals(Constants.WOLFAPPLE_NAME) || name.Equals(Constants.MOONFLOWER_NAME); 
     }
 
     public GameObject GetObject(string name)

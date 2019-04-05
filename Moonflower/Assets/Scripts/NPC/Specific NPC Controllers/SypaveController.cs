@@ -10,7 +10,9 @@ public class SypaveController : MonoBehaviour, INPCController
 {
 
     public GameObject DialoguePanel;
-    public GameObject SpawnPoint; 
+    public GameObject AnaiSpawnPoint;
+    public GameObject NaiaSpawnPoint;
+    public GameObject AmaruSpawnPoint;
     public Sprite icon { get; set; }
 
     public float engagementRadius = 5f;
@@ -100,7 +102,23 @@ public class SypaveController : MonoBehaviour, INPCController
                 frantic = currTalk;
                 Afternoon();
                 currConvo = Convo.frantic;
-                agent.Warp(SpawnPoint.transform.position);
+                string prev = GameObject.Find("Spawner").GetComponent<SpawnPoint>().previousScene; 
+                switch(prev)
+                {
+                    case Constants.SCENE_ANAIHOUSE:
+                        agent.Warp(AnaiSpawnPoint.transform.position);
+                        break;
+                    case Constants.SCENE_NAIAHOUSE:
+                        agent.Warp(NaiaSpawnPoint.transform.position);
+                        break;
+                    case Constants.SCENE_AMARUHOUSE:
+                        agent.Warp(AmaruSpawnPoint.transform.position);
+                        break;
+                    default:
+                        agent.Warp(AnaiSpawnPoint.transform.position);
+                        break;
+                }
+
                 //gameObject.transform.position = SpawnPoint.transform.position;
             }
             else
