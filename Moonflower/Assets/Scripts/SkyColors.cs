@@ -136,8 +136,11 @@ public class SkyColors : MonoBehaviour
     void Update()
 
     {
-        stop = PlayerController.instance.TalkingPartner != null || GameStateController.current.Paused;
-        
+        if (PlayerController.instance != null && GameStateController.current != null)
+        {
+            stop = PlayerController.instance.TalkingPartner != null || GameStateController.current.Paused;
+        }
+
         if (!stop)
         {
 //            Debug.Log("time keeps going..."); 
