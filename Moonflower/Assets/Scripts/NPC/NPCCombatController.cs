@@ -17,6 +17,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     [HideInInspector] public NPCMovementController Movement { get { return npcMovement; } set { npcMovement = value; } }
     [HideInInspector] public float AttackDistance { get { return attackDistance; } }
     [HideInInspector] public NPCGroup Group { get; set; }
+    [HideInInspector] public GameObject GameObject { get { return gameObject; } }
 
     [Header("Aggression")]
     public Aggression aggression;

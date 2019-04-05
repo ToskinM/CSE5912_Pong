@@ -17,6 +17,7 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
     [HideInInspector] public NPCMovementController Movement { get { return npcMovement; } set { npcMovement = value; } }
     [HideInInspector] public float AttackDistance { get { return attackDistance; } }
     [HideInInspector] public NPCGroup Group { get; set; }
+    [HideInInspector] public GameObject GameObject { get { return gameObject; } }
 
     [Header("Orby Specific")]
     public bool doesKamikaze;
@@ -528,7 +529,7 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
     private void Die()
     {
         //Debug.Log(gameObject.name + " has died");
-        //OnDeath?.Invoke(this);
+        OnDeath?.Invoke(this);
 
         // Tell the tracker we have died
         LevelManager.current.RegisterNPCDeath(gameObject);

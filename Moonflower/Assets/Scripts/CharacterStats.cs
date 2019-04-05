@@ -85,8 +85,8 @@ public class CharacterStats : MonoBehaviour
         OnCharacterDamage?.Invoke(postCalcDamage);
 
         if (display != null)
-            display.HitHealth(CurrentHealth, MaxHealth); 
-        //Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
+            display.HitHealth(CurrentHealth, MaxHealth);
+        Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
     }
 
     public void TakeDamage(int damage, string sourceName, CharacterStats sourceCharacterStats, ICombatController combatController, Vector3 hitPoint, bool blocked)
@@ -100,7 +100,7 @@ public class CharacterStats : MonoBehaviour
 
             if (display != null)
                 display.HitHealth(CurrentHealth, MaxHealth);
-            //Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
+            Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
 
             if (hitPoint != Vector3.zero)
                 ObjectPoolController.current.CheckoutTemporary((GameObject)Resources.Load("Effects/HitEffect_Damage"), hitPoint, 1);
@@ -131,7 +131,7 @@ public class CharacterStats : MonoBehaviour
 
             if (display != null)
                 display.HitHealth(CurrentHealth, MaxHealth);
-            //Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
+            Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
 
             if (hitPoint != Vector3.zero)
                 ObjectPoolController.current.CheckoutTemporary((GameObject)Resources.Load("Effects/HitEffect_Damage"), hitPoint, 1);

@@ -14,6 +14,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     [HideInInspector] public NPCMovementController Movement { get { return null; } set {  } }
     [HideInInspector] public float AttackDistance { get { return 0; } }
     [HideInInspector] public NPCGroup Group { get; set; }
+    [HideInInspector] public GameObject GameObject { get { return gameObject; } }
 
     public bool isAttacking;
 
