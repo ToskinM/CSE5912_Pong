@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterSoundCollider : MonoBehaviour
+public class EnvPlayerCollideSound : MonoBehaviour
 {
-    public AudioClip[] SplashSoundsList;
+    public AudioClip[] SoundList;
 
     AudioSource audioSource;
 
@@ -24,7 +24,7 @@ public class WaterSoundCollider : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            audioSource.clip = SplashSoundsList[Random.Range(0, SplashSoundsList.Length - 1)];
+            audioSource.clip = SoundList[Random.Range(0, SoundList.Length - 1)];
             audioSource.Play();
         }
     }
