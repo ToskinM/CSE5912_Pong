@@ -8,6 +8,7 @@ public class Passout : MonoBehaviour
     public SkyColors sky;
     public GameObject cam;  
     public AudioSource BGM;
+    public GameObject cave;  
 
     private FeedbackText feedback; 
 
@@ -21,7 +22,13 @@ public class Passout : MonoBehaviour
 
         if(sky.GetTime() > sky.Passout)
         {
-            Passed = true; 
+            Passed = true;
+            GameStateController.current.Passed = true; 
+        }
+
+        if(!Passed)
+        {
+            cave.GetComponent<HouseDoor>().enabled = false; 
         }
 
         cameraPost = cam.GetComponent<PostProcessControl>();
@@ -49,12 +56,14 @@ public class Passout : MonoBehaviour
             Invoke("spawnInHouse", 5);
             GameStateController.current.SaveTime();
             GameStateController.current.Passed = true;
+            //cave.GetComponent<HouseDoor>().enabled = true;
         }
 
         if (!GameStateController.current.Passed && sky.GetTime() > sky.Passout)
         {
             //                Debug.Log("passed"); 
             GameStateController.current.Passed = true;
+            //cave.GetComponent<HouseDoor>().enabled = true;
         }
     }
 

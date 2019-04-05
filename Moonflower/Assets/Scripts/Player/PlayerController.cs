@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
     public void Revive()
     {
-
+        ActivePlayerCombatControls.SetWeaponSheathed(true); 
         ActivePlayerAnimator.Reset();
         ActivePlayerMovementControls.Stunned = false;
         enabled = true;
