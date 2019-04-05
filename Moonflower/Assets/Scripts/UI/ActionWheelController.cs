@@ -75,10 +75,7 @@ public class ActionWheelController : MonoBehaviour
 
     private void OnDisable()
     {
-        if (currentPlayerInteractionFOV == null)
-            Debug.Log("NULL for current Player FOV");
-        else
-            currentPlayerInteractionFOV.OnNewClosestTarget -= HandleInteractionFOVTargetUpdate;
+        currentPlayerInteractionFOV.OnNewClosestTarget -= HandleInteractionFOVTargetUpdate;
 
         PlayerController.OnCharacterSwitch -= SwitchInteractionFOV;
         GameStateController.OnFreezePlayer -= HandleFreezeEvent;

@@ -10,7 +10,7 @@ public class Pickup : MonoBehaviour
     public int distanceToPickup = 5;
 
     public CharacterStats Stats { get; private set; }
-    private GameObject currentPlayer;
+    //private GameObject currentPlayer;
 
     private CharacterStats playerStats;
     private PlayerInventory playerInventory;
@@ -28,11 +28,11 @@ public class Pickup : MonoBehaviour
         playerInventory = GetComponent<PlayerInventory>();
 
         soundEffect = PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>();
-        interaction = GameObject.Find("Interaction Popup").GetComponent<InteractionPopup>();
+        interaction = GameObject.Find("HUD").GetComponent<ShowInspect>().interaction;
 
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
-        currentPlayer = PlayerController.instance.GetActivePlayerObject();
+        //currentPlayer = PlayerController.instance.GetActivePlayerObject();
         PlayerController.OnCharacterSwitch += SwitchActiveCharacter; 
     }
 
@@ -43,12 +43,12 @@ public class Pickup : MonoBehaviour
         if (allCollidable.Length > 0)
         {
             GameObject nearestObj = allCollidable[0];
-            float nearest = Vector3.Distance(allCollidable[0].transform.position, currentPlayer.transform.position);
+            float nearest = Vector3.Distance(allCollidable[0].transform.position, PlayerController.instance.GetActivePlayerObject().transform.position);
             foreach (GameObject g in allCollidable)
             {
-                if (Vector3.Distance(g.transform.position, currentPlayer.transform.position) < nearest)
+                if (Vector3.Distance(g.transform.position, PlayerController.instance.GetActivePlayerObject().transform.position) < nearest)
                 {
-                    nearest = Vector3.Distance(g.transform.position, currentPlayer.transform.position);
+                    nearest = Vector3.Distance(g.transform.position, PlayerController.instance.GetActivePlayerObject().transform.position);
                     nearestObj = g;
                 }
                 g.GetComponent<InventoryStat>().SetHalo(false);
@@ -64,7 +64,7 @@ public class Pickup : MonoBehaviour
         GameObject closest = FindClosest();
         if (closest != null)
         {
-            float dist = Vector3.Distance(closest.transform.position, currentPlayer.transform.position);
+            float dist = Vector3.Distance(closest.transform.position, PlayerController.instance.GetActivePlayerObject().transform.position);
             if (dist <= distanceToPickup && !interaction.NotAllowed)
             {
                 if (closest != null)
@@ -169,6 +169,6 @@ public class Pickup : MonoBehaviour
 
     void SwitchActiveCharacter(PlayerController.PlayerCharacter activeChar)
     {
-        currentPlayer = PlayerController.instance.GetActivePlayerObject();
+        //currentPlayer = PlayerController.instance.GetActivePlayerObject();
     }
 }
