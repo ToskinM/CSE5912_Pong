@@ -140,7 +140,7 @@ public class SypaveController : MonoBehaviour, INPCController
                 if (movement.state != NPCMovementController.MoveState.follow)
                     movement.Follow();
 
-                if (movement.DistanceFrom(anai) < engagementRadius && !frantic.DialogueActive())
+                if (movement.DistanceFrom(anai) < engagementRadius && !frantic.DialogueActive() && PlayerController.instance.TalkingPartner == null)
                 {
                     StartTalk();
                     //indicateInterest();

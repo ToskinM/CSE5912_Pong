@@ -125,12 +125,12 @@ public class LesserNPCController : MonoBehaviour, INPCController
     {
         if (new ItemLookup().IsFood(giftName))
         {
-            displayFeedback("They loves the " + giftName + "!");
+            displayFeedback("They love the " + giftName + "!");
             combatController.Subdue(); 
         }
         else
         {
-            displayFeedback("They has no use for " + giftName + "...");
+            displayFeedback("They have no use for " + giftName + "...");
         }
     }
     public void Distract(GameObject distractedBy)
