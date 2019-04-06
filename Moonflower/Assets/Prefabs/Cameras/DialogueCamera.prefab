@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8638817210823638486}
   - component: {fileID: 8638817210823638487}
   - component: {fileID: 8638817210823638484}
+  - component: {fileID: 8045386847625300391}
   m_Layer: 14
   m_Name: DialogueCamera
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8638817210823638482}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -73,7 +74,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.4
-  far clip plane: 1000
+  far clip plane: 750
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -141,3 +142,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53bf4be83c4174504b904e958637cced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8045386847625300391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8638817210823638482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: aeae1453c58c22043b143faeaaf3e9db, type: 2}
