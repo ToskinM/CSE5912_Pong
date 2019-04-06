@@ -34,6 +34,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     [Header("Enable/Disable Attacks")]
     public bool cryAttackEnabled;
     public bool tantrumAttackEnabled;
+    public bool areaCryEnabled;
 
     [Header("Cry Attack")]
     public GameObject cryFireProjectile;
@@ -55,6 +56,16 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     private Coroutine tantrumAttackCoroutine = null;
     public bool tantrumAttackReady;
 
+    [Header("Area Cry")]
+    public GameObject areaCryProjectile;
+    public float areaCryCooldown = 0.3f;
+    public float areaCryBarrageCount = 3f;
+    public float areaCryBarrageDuration = 0.3f;
+    public float areaCryFireRate = 0.1f;
+    public float areaCryChaos = 0.5f;
+    private Coroutine areaCryCoroutine = null;
+    public bool areaCryReady;
+
     private float[] cooldowns;
     private float[] cooldownTimers;
 
@@ -69,7 +80,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         animationController = GetComponent<TejuAnimationController>();
         //player = PlayerController.instance.GetActivePlayerObject();
 
-        cooldowns = new float[] { cryAttackCooldown, tantrumAttackCooldown }; // place new cooldowns here
+        cooldowns = new float[] { cryAttackCooldown, tantrumAttackCooldown, areaCryCooldown }; // place new cooldowns here
         cooldownTimers = new float[cooldowns.Length];
     }
 
@@ -105,6 +116,10 @@ public class TejuCombatController : MonoBehaviour, ICombatController
             {
                 tantrumAttackCoroutine = StartCoroutine(TantrumAttack());
             }
+            if (areaCryReady && areaCryCoroutine == null)
+            {
+                areaCryCoroutine = StartCoroutine(AreaCryAttack());
+            }
         }
 
         CheckDeath();
@@ -122,6 +137,9 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
         if (tantrumAttackEnabled && !tantrumAttackReady && cooldownTimers[1] >= cooldowns[1])
             tantrumAttackReady = true;
+
+        if (areaCryEnabled && !areaCryReady && cooldownTimers[2] >= cooldowns[2])
+            areaCryReady = true;
     }
 
     private IEnumerator CryAttack()
@@ -162,11 +180,39 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         cooldownTimers[1] = 0f;
         isAttacking = false;
     }
+    private IEnumerator AreaCryAttack()
+    {
+        animationController.TriggerAttack();
+        isAttacking = true;
+
+        for (int i = 0; i < areaCryBarrageCount; i++)
+        {
+            for (int j = 0; j < eyes.Length; j++)
+                LaunchAreaCryProjectile(eyes[j], areaCryChaos);
+
+            yield return new WaitForSeconds(areaCryFireRate);
+        }
+
+        timeSinceLastAttack = 0f;
+        areaCryCoroutine = null;
+        areaCryReady = false;
+        cooldownTimers[2] = 0f;
+        isAttacking = false;
+    }
 
     public void LaunchProjectile(Transform projectileNode, float aimChaos)
     {
         GameObject projectile = Instantiate(cryFireProjectile, projectileNode.position, Quaternion.LookRotation(CombatTarget.transform.position - transform.position));
         projectile.transform.LookAt(CombatTarget.transform.position + new Vector3(Random.Range(-aimChaos, aimChaos), Random.Range(-aimChaos, aimChaos), Random.Range(-aimChaos, aimChaos)));
+        IProjectile proj = projectile.GetComponent<IProjectile>();
+        proj.Hurtbox.SourceCharacterStats = Stats;
+        proj.Hurtbox.Source = this.gameObject;
+        proj.TargetTransform = CombatTarget.transform;
+    }
+    public void LaunchAreaCryProjectile(Transform projectileNode, float radius)
+    {
+        GameObject projectile = Instantiate(areaCryProjectile, projectileNode.position, Quaternion.LookRotation(Vector3.up + new Vector3(Random.Range(-areaCryChaos, areaCryChaos), 0f, Random.Range(-areaCryChaos, areaCryChaos))));
+        //projectile.transform.LookAt(CombatTarget.transform.position + new Vector3(Random.Range(-aimChaos, aimChaos), Random.Range(-aimChaos, aimChaos), Random.Range(-aimChaos, aimChaos)));
         IProjectile proj = projectile.GetComponent<IProjectile>();
         proj.Hurtbox.SourceCharacterStats = Stats;
         proj.Hurtbox.Source = this.gameObject;

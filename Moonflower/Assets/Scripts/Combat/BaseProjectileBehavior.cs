@@ -9,6 +9,7 @@ public class BaseProjectileBehavior : MonoBehaviour, IProjectile
     public int baseDamage = 2;
     public float movementSpeed = 5f;
     public float lifetime = 3f;
+    public float gravityStrength = 0.5f;
     private float timePassed;
     public bool affectedByGravity = false;
 
@@ -51,14 +52,14 @@ public class BaseProjectileBehavior : MonoBehaviour, IProjectile
             transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, rotationDelta);
 
             if (affectedByGravity)
-                velocity = transform.forward * movementSpeed + Physics.gravity;
+                velocity = (transform.forward * movementSpeed) + (Vector3.down * gravityStrength);
             else
                 velocity = transform.forward * movementSpeed;
         }
         else
         {
             if (affectedByGravity)
-                velocity = transform.forward * movementSpeed + Physics.gravity;
+                velocity = (transform.forward * movementSpeed) + (Vector3.down * gravityStrength);
             else
                 velocity = transform.forward * movementSpeed;
         }
