@@ -56,6 +56,11 @@ public class ShowItem : MonoBehaviour
         {
             foreach (GameObject itemObj in category)
             {
+                if (itemObj == null)
+                {
+                    category.Remove(itemObj);
+                    break;
+                }
                 if (itemObj.activeInHierarchy !=active)
                     itemObj.SetActive(active);
             }

@@ -560,7 +560,7 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
     }
     void OnDestroy()
     {
-        GetComponent<NPCSoundEffect>().NPCGetKillSFX();
+        //GetComponent<NPCSoundEffect>().NPCGetKillSFX();
     }
 
 }
