@@ -84,6 +84,7 @@ public class SypaveController : MonoBehaviour, INPCController
         else
         {
             currTalk = GameStateController.current.GetNPCDialogue(Constants.SYPAVE_NAME);
+            currTalk.SetSelf(gameObject); 
             string convo = GameStateController.current.GetNPCDiaLabel(Constants.SYPAVE_NAME);
 
             if (convo.Equals(Convo.intro.ToString()) && GameStateController.current.Passed)

@@ -101,6 +101,7 @@ public class PinonController : MonoBehaviour, INPCController
         else
         {
             currTalk = GameStateController.current.GetNPCDialogue(Constants.PINON_NAME);
+            currTalk.SetSelf(gameObject);
             string convo = GameStateController.current.GetNPCDiaLabel(Constants.PINON_NAME);
             if (convo.Equals(Convo.first.ToString()))
             {

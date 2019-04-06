@@ -69,6 +69,8 @@ public class LevelManager : MonoBehaviour
 
     public void RequestDialogueCamera(GameObject dialoguePartner)
     {
+        PlayerController.instance.TalkingPartner = dialoguePartner;
+        PlayerController.instance.DisableSwitching();
         gameStateController.SetMouseLock(false);
         if (dialogueCamera != null)
             dialogueCamera.Enter(PlayerController.instance.TalkingPartner.transform/*dialoguePartner.transform*/, mainCamera.transform);

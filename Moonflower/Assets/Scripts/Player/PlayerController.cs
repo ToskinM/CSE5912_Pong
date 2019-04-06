@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isDead = false;
     private bool canSwitchCharacters = false;
+    private bool oldSwitch = false; 
 
     public delegate void SwitchCharacter(PlayerCharacter activeChar);
     public static event SwitchCharacter OnCharacterSwitch;
@@ -55,6 +56,7 @@ public class PlayerController : MonoBehaviour
 
         ActivePlayerInteractionFOV = ActivePlayerObject.GetComponent<FieldOfView>();
         ActivePlayerInteractionFOV.enabled = true;
+
     }
 
     private void OnEnable()
@@ -296,14 +298,22 @@ public class PlayerController : MonoBehaviour
 
     public void EnableSwitching()
     {
-//        Debug.Log("can switch!");
+        //        Debug.Log("can switch!");
+        oldSwitch = canSwitchCharacters;
         canSwitchCharacters = true;
     }
 
     public void DisableSwitching()
     {
-//        Debug.Log("Anai only bitch"); 
+        //        Debug.Log("Anai only bitch"); 
+        oldSwitch = canSwitchCharacters; 
         canSwitchCharacters = false;
+
+    }
+
+    public void RestoreSwitching()
+    {
+        canSwitchCharacters = oldSwitch; 
     }
 
 }

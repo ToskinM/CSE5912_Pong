@@ -124,6 +124,7 @@ public class SkyColors : MonoBehaviour
         newFog = fogHeights[time];
         setDayorNight();
 
+
         GameStateController.current.RestoreTime(this);
         if (time == Passout || time == Passout - 1)
         {

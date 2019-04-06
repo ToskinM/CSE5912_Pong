@@ -142,6 +142,7 @@ public class DialogueCamera : MonoBehaviour
 
         dialogueTarget = null;
         PlayerController.instance.TalkingPartner = null;
+        PlayerController.instance.RestoreSwitching();
         //PlayerController.instance.EnableSwitching();
         gameStateController.SetPlayerFrozen(false);
     }

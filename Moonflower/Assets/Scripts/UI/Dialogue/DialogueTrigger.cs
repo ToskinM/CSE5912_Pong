@@ -186,7 +186,8 @@ public class DialogueTrigger : MonoBehaviour
             pState = PanelState.rising;
             panelInfo.Icon.sprite = icon;  //new IconFactory().GetIcon(spriteFile);
             tState = TextState.typing;
-            PlayerController.instance.TalkingPartner = partner;
+//            Debug.Log("parter null: " + (partner == null)); 
+            //PlayerController.instance.TalkingPartner = partner;
             //PlayerController.instance.DisableSwitching();
 
             // Start dialogue camera this this npc 
@@ -223,6 +224,11 @@ public class DialogueTrigger : MonoBehaviour
     public void SetExitText(string s)
     {
         exitText = s;
+    }
+
+    public void SetSelf(GameObject ob)
+    {
+        partner = ob; 
     }
 
     private void endConvo()
