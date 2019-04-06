@@ -15,6 +15,7 @@ public class TejuAnimationController : MonoBehaviour
     private const string key_IsHit = "IsHit";
     private const string key_IsStunned = "IsStunned";
     private const string key_IsDead = "IsDead";
+    private const string key_IsSleeping = "IsSleeping";
 
     private Animator animator;
     private NavMeshAgent agent;
@@ -76,6 +77,11 @@ public class TejuAnimationController : MonoBehaviour
                 animator.SetBool(key_IsWalk, false);
             }
         }
+    }
+
+    public void SetSleeping(bool sleeping)
+    {
+        animator.SetBool(key_IsSleeping, sleeping);
     }
 
     public void SetWalk(bool walking)

@@ -11,8 +11,11 @@ public class TejuCrystalScript : MonoBehaviour
 
     private bool shattered;
 
-    private float hurtdelay = 0.2f;
+    private readonly float hurtdelay = 0.2f;
     private float timeSinceLastHurt;
+
+    public delegate void ShatterUpdate();
+    public event ShatterUpdate OnShatter;
 
     void Start()
     {
@@ -51,6 +54,7 @@ public class TejuCrystalScript : MonoBehaviour
 
     private void Shatter()
     {
+        OnShatter?.Invoke();
         Instantiate(shatterEffect, shatterEffectNode.position, shatterEffectNode.rotation);
         gameObject.SetActive(false);
         Destroy(gameObject, 1);

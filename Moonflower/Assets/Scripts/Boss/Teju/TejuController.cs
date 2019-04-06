@@ -19,6 +19,7 @@ public class TejuController : MonoBehaviour, INPCController
 
     private NPCMovementController movement;
     public TejuCombatController combatController;
+    public TejuAnimationController animationtController;
 
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
@@ -36,6 +37,7 @@ public class TejuController : MonoBehaviour, INPCController
         movement = new NPCMovementController(gameObject, Constants.MOUSE_NAME);
 
         combatController = GetComponent<TejuCombatController>();
+        animationtController = GetComponent<TejuAnimationController>();
 
         //playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
 
@@ -53,6 +55,8 @@ public class TejuController : MonoBehaviour, INPCController
         //feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
+
+        animationtController.SetSleeping(true);
     }
 
     void Update()
@@ -109,9 +113,11 @@ public class TejuController : MonoBehaviour, INPCController
         {
             //movement.Follow(aggroTarget, combatController.attackDistance, 0.5f);
             movement.SetHoldGround(true);
+            animationtController.SetSleeping(false);
         }
         else
         {
+            animationtController.SetSleeping(true);
             movement.Reset();
         }
     }

@@ -31,6 +31,8 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     private FieldOfView fieldOfView;
     private TejuAnimationController animationController;
 
+    private bool subdued;
+
     [Header("Enable/Disable Attacks")]
     public bool cryAttackEnabled;
     public bool tantrumAttackEnabled;
@@ -69,6 +71,9 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     private float[] cooldowns;
     private float[] cooldownTimers;
 
+    [Header("Crystals")]
+    public TejuCrystalScript[] crystals;
+
     public event NPCCombatController.AggroUpdate OnAggroUpdated;
 
     public event NPCCombatController.DeathUpdate OnDeath;
@@ -82,47 +87,79 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
         cooldowns = new float[] { cryAttackCooldown, tantrumAttackCooldown, areaCryCooldown }; // place new cooldowns here
         cooldownTimers = new float[cooldowns.Length];
+
+
     }
 
     void Update()
     {
-        UpdateCooldowns();
-        timeSinceLastHurt += Time.deltaTime;
-        timeSinceLastAttack += Time.deltaTime;
-
-        // Ensure weapon state is correct based on aggro
-        if (InCombat && !HasWeaponOut)
-            SetWeaponSheathed(false);
-        else if (!InCombat && HasWeaponOut)
-            SetWeaponSheathed(true);
-
-        //if (npcMovement != null)
-        //{
-        //    npcMovement.swinging = isAttacking;
-        //}
-
-        //npcMovement.Update();
-
-        CheckAggression();
-
-        // If we're in combat..
-        if (InCombat)
+        if (!subdued)
         {
-            if (cryAttackReady && cryAttackCoroutine == null)
-            {
-                cryAttackCoroutine = StartCoroutine(CryAttack());
-            }
-            if (tantrumAttackReady && tantrumAttackCoroutine == null)
-            {
-                tantrumAttackCoroutine = StartCoroutine(TantrumAttack());
-            }
-            if (areaCryReady && areaCryCoroutine == null)
-            {
-                areaCryCoroutine = StartCoroutine(AreaCryAttack());
-            }
-        }
+            UpdateCooldowns();
+            timeSinceLastHurt += Time.deltaTime;
+            timeSinceLastAttack += Time.deltaTime;
 
-        CheckDeath();
+            // Ensure weapon state is correct based on aggro
+            if (InCombat && !HasWeaponOut)
+                SetWeaponSheathed(false);
+            else if (!InCombat && HasWeaponOut)
+                SetWeaponSheathed(true);
+
+            //if (npcMovement != null)
+            //{
+            //    npcMovement.swinging = isAttacking;
+            //}
+
+            //npcMovement.Update();
+
+            CheckAggression();
+
+            // If we're in combat..
+            if (InCombat)
+            {
+                if (cryAttackReady && cryAttackCoroutine == null)
+                {
+                    cryAttackCoroutine = StartCoroutine(CryAttack());
+                }
+                if (tantrumAttackReady && tantrumAttackCoroutine == null)
+                {
+                    tantrumAttackCoroutine = StartCoroutine(TantrumAttack());
+                }
+                if (areaCryReady && areaCryCoroutine == null)
+                {
+                    areaCryCoroutine = StartCoroutine(AreaCryAttack());
+                }
+            }
+
+            CheckDeath();
+        }
+    }
+
+    private void OnEnable()
+    {
+        foreach (TejuCrystalScript crystal in crystals)
+        {
+            crystal.OnShatter += HandleCrystalShatter;
+        }
+    }
+    private void OnDisable()
+    {
+        foreach (TejuCrystalScript crystal in crystals)
+        {
+            crystal.OnShatter -= HandleCrystalShatter;
+        }
+    }
+
+    private void HandleCrystalShatter()
+    {
+        StartCoroutine(CrystalShatterCoroutine());
+    }
+
+    private IEnumerator CrystalShatterCoroutine()
+    {
+        yield return new WaitForSeconds(2f);
+        animationController.TriggerHit();
+        Stats.TakeDamage(1, "Crystal Orb");
     }
 
     private void UpdateCooldowns()
@@ -351,20 +388,23 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         //OnDeath?.Invoke(this);
 
         // Tell the tracker we have died
-        LevelManager.current.RegisterNPCDeath(gameObject);
+        //LevelManager.current.RegisterNPCDeath(gameObject);
 
         // Stop combat
         DeAggro();
 
+        subdued = true;
+        Debug.Log("Teju has been Subdued");
+
         // Play and wait for death animation to finish
-        animationController.SetIsDead(true);
+        animationController.SetSleeping(true);
         yield return new WaitForSeconds(1f);
 
 
         // Poof us away
-        ObjectPoolController.current.CheckoutTemporary(deathEffect, transform, 1);
+        //ObjectPoolController.current.CheckoutTemporary(deathEffect, transform, 1);
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
 
         //Destroy(gameObject, 0.5f);
     }
