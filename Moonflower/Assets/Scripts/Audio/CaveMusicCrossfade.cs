@@ -87,4 +87,10 @@ public class CaveMusicCrossfade : MonoBehaviour
 
         yield break;
     }
+
+    void OnDestroy()
+    {
+        PlayerCombatController.EngageInCombat -= FadeInActionTheme;
+        PlayerCombatController.DisengageFromCombat -= FadeOutActionTheme;
+    }
 }
