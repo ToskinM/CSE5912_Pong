@@ -103,28 +103,30 @@ public static class Constants
      * Dialogue Names
      */
     const string dialogueFolder = "Dialogues/";
+    const string intro = "Intro Level/";
+    const string cave = "Cave Level/"; 
 
     //Amaru
     public const string AMARU_NAME = "Amaru"; 
-    public const string AMARU_INTRO_DIALOGUE = dialogueFolder + "Amaru Intro Dialogue";
-    public const string AMARU_ADVICE_DIALOGUE = dialogueFolder + "Amaru Advice";
+    public const string AMARU_INTRO_DIALOGUE = dialogueFolder + intro + "Amaru Intro Dialogue";
+    public const string AMARU_ADVICE_DIALOGUE = dialogueFolder + intro + "Amaru Advice";
     //Naia
     public const string NAIA_NAME = "Naia";
-    public const string NAIA_INTRO_DIALOGUE = dialogueFolder + "Naia Intro";
-    public const string NAIA_POSTFIGHT_DIALOGUE = dialogueFolder + "Naia Post Fight";
-    public const string NAIA_ADVICE_DIALOGUE = dialogueFolder + "Naia Advice";
+    public const string NAIA_INTRO_DIALOGUE = dialogueFolder + intro + "Naia Intro";
+    public const string NAIA_POSTFIGHT_DIALOGUE = dialogueFolder + intro + "Naia Post Fight";
+    public const string NAIA_ADVICE_DIALOGUE = dialogueFolder + intro + "Naia Advice";
 
     //Sypave
     public const string SYPAVE_NAME = "Sypave";
-    public const string SYPAVE_INTRO_DIALOGUE = dialogueFolder + "Sypave Intro";
-    public const string SYPAVE_FRANTIC_DIALOGUE = dialogueFolder + "Sypave Frantic";
-    public const string SYPAVE_ADVICE_DIALOGUE = dialogueFolder + "Sypave Advice";
+    public const string SYPAVE_INTRO_DIALOGUE = dialogueFolder + intro + "Sypave Intro";
+    public const string SYPAVE_FRANTIC_DIALOGUE = dialogueFolder + intro + "Sypave Frantic";
+    public const string SYPAVE_ADVICE_DIALOGUE = dialogueFolder + intro + "Sypave Advice";
     //Jeruti
     public const string JERUTI_NAME = "Jeruti";
     //Pinon
     public const string PINON_NAME = "Pinon";
-    public const string PINON_FIRST_INTRO_DIALOGUE = dialogueFolder + "Pinon FIRST Intro";
-    public const string PINON_INTRO_DIALOGUE = dialogueFolder + "Pinon Intro";
+    public const string PINON_FIRST_INTRO_DIALOGUE = dialogueFolder + intro + "Pinon FIRST Intro";
+    public const string PINON_INTRO_DIALOGUE = dialogueFolder + intro + "Pinon Intro";
     //Ysapy
     public const string YSAPY_NAME = "Ysapy";
 
