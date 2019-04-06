@@ -5,7 +5,11 @@ using UnityEngine;
 public class TejuCrystalScript : MonoBehaviour
 {
     public GameObject hitEffect;
+    public GameObject shatterEffect;
+    public Transform shatterEffectNode;
     public int health = 5;
+
+    private bool shattered;
 
     private float hurtdelay = 0.2f;
     private float timeSinceLastHurt;
@@ -18,6 +22,12 @@ public class TejuCrystalScript : MonoBehaviour
     void Update()
     {
         timeSinceLastHurt += Time.deltaTime;
+
+        if (!shattered && health <= 0)
+        {
+            shattered = true;
+            Shatter();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,5 +47,12 @@ public class TejuCrystalScript : MonoBehaviour
                 Debug.Log(gameObject.name + " took <color=red>" + hurtboxController.Damage + "</color> damage");
             }
         }
+    }
+
+    private void Shatter()
+    {
+        Instantiate(shatterEffect, shatterEffectNode.position, shatterEffectNode.rotation);
+        gameObject.SetActive(false);
+        Destroy(gameObject, 1);
     }
 }
