@@ -30,6 +30,9 @@ public class TejuController : MonoBehaviour, INPCController
 
     public string inspectText;
 
+    public SoulCrystal soulCrystal;
+    public GameObject soulCrystalBarrier;
+
     private void Awake()
     {
         // Initialize Components
@@ -125,6 +128,8 @@ public class TejuController : MonoBehaviour, INPCController
     private void HandleOnSubdue()
     {
         Debug.Log("Teju has been Subdued");
+        soulCrystal.blocked = false;
+        soulCrystalBarrier.SetActive(false);
     }
 
     private void OnEnable()

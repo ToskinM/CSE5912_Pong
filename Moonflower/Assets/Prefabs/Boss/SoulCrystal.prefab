@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8112892866236446788}
   - component: {fileID: 8175891049716222562}
   - component: {fileID: 8175891049716222493}
-  - component: {fileID: 8175891049716222496}
+  - component: {fileID: 6942821651557764038}
   m_Layer: 0
   m_Name: SoulCrystal
   m_TagString: Untagged
@@ -57,6 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f95044d18bf6e5479a95d6a4aabfbfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blocked: 1
 --- !u!136 &8175891049716222562
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -87,151 +88,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!95 &8175891049716222496
-Animator:
-  serializedVersion: 3
+--- !u!136 &6942821651557764038
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8175891049716222495}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 31f49584c2a20ff42a6d438638290b15, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1593397545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8175891049833879998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094db5730b8288540bbaf7d262808347, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Expanding: 1
-  SineOffset: 1
---- !u!114 &1817108935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8175891049974571782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094db5730b8288540bbaf7d262808347, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Expanding: 1
-  SineOffset: 3
---- !u!114 &2003083584036484480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8175891050031000019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094db5730b8288540bbaf7d262808347, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Expanding: 0
-  SineOffset: 0
---- !u!114 &1247356170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8175891050049210686}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094db5730b8288540bbaf7d262808347, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Expanding: 0
-  SineOffset: 0
---- !u!114 &1406503488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8175891050518966355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094db5730b8288540bbaf7d262808347, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Expanding: 1
-  SineOffset: 0
---- !u!114 &207384547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8175891050784072676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094db5730b8288540bbaf7d262808347, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Expanding: 1
-  SineOffset: 6
---- !u!114 &1452124392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8175891051300955307}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094db5730b8288540bbaf7d262808347, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Expanding: 1
-  SineOffset: 5
---- !u!114 &1857904814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8175891051397972691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094db5730b8288540bbaf7d262808347, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Expanding: 1
-  SineOffset: 2
---- !u!114 &956887306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8175891051551744058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094db5730b8288540bbaf7d262808347, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Expanding: 1
-  SineOffset: 4
+  m_Radius: 0.8
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &7466560590790131767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -239,11 +109,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891049716222492}
     m_Modifications:
-    - target: {fileID: 8006987359670897761, guid: f5dbc2aade5215947862bb712b81ca07,
-        type: 3}
-      propertyPath: m_Name
-      value: SoulCrystalLight
-      objectReference: {fileID: 0}
     - target: {fileID: 8000901554707455759, guid: f5dbc2aade5215947862bb712b81ca07,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -299,6 +164,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8006987359670897761, guid: f5dbc2aade5215947862bb712b81ca07,
+        type: 3}
+      propertyPath: m_Name
+      value: SoulCrystalLight
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5dbc2aade5215947862bb712b81ca07, type: 3}
 --- !u!4 &618792907495661368 stripped
@@ -314,10 +184,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891049716222492}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -374,14 +240,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.07
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (3)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
---- !u!1 &8175891049833879998 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
-    type: 3}
-  m_PrefabInstance: {fileID: 8175891049833914142}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8175891049833776542 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
@@ -395,10 +259,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891049716222492}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -455,17 +315,15 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.07
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (5)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
 --- !u!4 &8175891049974087462 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
-    type: 3}
-  m_PrefabInstance: {fileID: 8175891049974474150}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8175891049974571782 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
     type: 3}
   m_PrefabInstance: {fileID: 8175891049974474150}
   m_PrefabAsset: {fileID: 0}
@@ -476,10 +334,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891049716222492}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -536,17 +390,15 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
 --- !u!4 &8175891050030904819 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
-    type: 3}
-  m_PrefabInstance: {fileID: 8175891050031034227}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8175891050031000019 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
     type: 3}
   m_PrefabInstance: {fileID: 8175891050031034227}
   m_PrefabAsset: {fileID: 0}
@@ -557,10 +409,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891049716222492}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -617,14 +465,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (1)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
---- !u!1 &8175891050049210686 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
-    type: 3}
-  m_PrefabInstance: {fileID: 8175891050049245086}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8175891050049377566 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
@@ -638,10 +484,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891049716222492}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -698,17 +540,15 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.07
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (2)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
 --- !u!4 &8175891050519194739 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
-    type: 3}
-  m_PrefabInstance: {fileID: 8175891050519066355}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8175891050518966355 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
     type: 3}
   m_PrefabInstance: {fileID: 8175891050519066355}
   m_PrefabAsset: {fileID: 0}
@@ -719,10 +559,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891049716222492}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (8)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -779,14 +615,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.07
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (8)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
---- !u!1 &8175891050784072676 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
-    type: 3}
-  m_PrefabInstance: {fileID: 8175891050783974724}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8175891050783588292 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
@@ -860,10 +694,6 @@ PrefabInstance:
       propertyPath: ShapeModule.m_Scale.z
       value: 0.3
       objectReference: {fileID: 0}
-    - target: {fileID: 19811434, guid: 8ad4a14a56c91dc4986756b2b8adc5ce, type: 3}
-      propertyPath: ShapeModule.radiusThickness
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ad4a14a56c91dc4986756b2b8adc5ce, type: 3}
 --- !u!4 &8175891051220273091 stripped
@@ -879,10 +709,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891049716222492}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (7)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -939,14 +765,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.07
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (7)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
---- !u!1 &8175891051300955307 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
-    type: 3}
-  m_PrefabInstance: {fileID: 8175891051300987403}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8175891051300599947 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
@@ -960,10 +784,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891049716222492}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1020,17 +840,15 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.07
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (4)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
 --- !u!4 &8175891051397553907 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
-    type: 3}
-  m_PrefabInstance: {fileID: 8175891051397940339}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8175891051397972691 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
     type: 3}
   m_PrefabInstance: {fileID: 8175891051397940339}
   m_PrefabAsset: {fileID: 0}
@@ -1041,10 +859,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891049716222492}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (6)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1101,14 +915,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.07
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (6)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
---- !u!1 &8175891051551744058 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
-    type: 3}
-  m_PrefabInstance: {fileID: 8175891051551712922}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8175891051552111642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3,
