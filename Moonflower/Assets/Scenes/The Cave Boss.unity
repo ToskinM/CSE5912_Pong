@@ -5742,7 +5742,7 @@ PrefabInstance:
     - target: {fileID: 8482015672337150744, guid: 15524dfae3b90684cb4a379de338fbd1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 50
+      value: 46.56
       objectReference: {fileID: 0}
     - target: {fileID: 8482015672337150744, guid: 15524dfae3b90684cb4a379de338fbd1,
         type: 3}
@@ -5819,6 +5819,10 @@ PrefabInstance:
     - target: {fileID: 58996339, guid: 15524dfae3b90684cb4a379de338fbd1, type: 3}
       propertyPath: aggression
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 58996331, guid: 15524dfae3b90684cb4a379de338fbd1, type: 3}
+      propertyPath: canDistract
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15524dfae3b90684cb4a379de338fbd1, type: 3}
@@ -9792,8 +9796,8 @@ Transform:
   m_Father: {fileID: 960686493}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &1491736064
-CapsuleCollider:
+--- !u!64 &1491736064
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -9802,10 +9806,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1491736065
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15151,17 +15155,17 @@ PrefabInstance:
     - target: {fileID: 8175891049716222492, guid: 3fd4016f9f3c7de4c820f9bfd34c62a8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 104.98916
+      value: 98.592
       objectReference: {fileID: 0}
     - target: {fileID: 8175891049716222492, guid: 3fd4016f9f3c7de4c820f9bfd34c62a8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.175
+      value: 6.29
       objectReference: {fileID: 0}
     - target: {fileID: 8175891049716222492, guid: 3fd4016f9f3c7de4c820f9bfd34c62a8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24.443249
+      value: 54.342
       objectReference: {fileID: 0}
     - target: {fileID: 8175891049716222492, guid: 3fd4016f9f3c7de4c820f9bfd34c62a8,
         type: 3}
