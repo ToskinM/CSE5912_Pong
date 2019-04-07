@@ -68,13 +68,7 @@ public class AudioManager : MonoBehaviour
 
         Audio a = Array.Find(audioSounds, sound => sound.categoryName.Contains(category));
         Sound s = Array.Find(a.sounds, sound => sound.name == name);
-        if (s != null & s.source != null)
-        {
-            if (s.source.mute == true)
-                s.source.mute = false;
-            s.source.Play();
-            //Debug.Log("I am Playing "+name+ s.source.clip);
-        }
+
         //Add back audio source
         if (s.source == null)
         {
@@ -83,6 +77,13 @@ public class AudioManager : MonoBehaviour
             {
                 BMGAddAllAudioSource(category);
             }
+        }
+        if (s != null & s.source != null)
+        {
+            if (s.source.mute == true)
+                s.source.mute = false;
+            s.source.Play();
+            //Debug.Log("I am Playing " + name + s.source.clip);
         }
     }
     public void PlayBackground(string category, string name)

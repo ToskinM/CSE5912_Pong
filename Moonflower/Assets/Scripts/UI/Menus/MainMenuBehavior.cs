@@ -17,6 +17,7 @@ public class MainMenuBehavior : MonoBehaviour
 
     private bool fading = false;
     private const float pseudoDeltaTime = 0.05f;
+    private readonly string MenuSFX = "Menu";
 
     //private AudioManager audioManager;
    
@@ -50,7 +51,7 @@ public class MainMenuBehavior : MonoBehaviour
     }
     public void StartGame()
     {
-        //FindObjectOfType<AudioManager>().Play("Menu");
+        audioManager.Play(MenuSFX, "Click");
         sceneController = FindObjectOfType<SceneController>();
         if (sceneController != null)
         {
@@ -80,7 +81,7 @@ public class MainMenuBehavior : MonoBehaviour
 
     public void GoBack()
     {
-        //FindObjectOfType<AudioManager>().Play("Menu");
+        audioManager.Play(MenuSFX, "Click");
         //Title.SetActive(true);
         //MainMenu.SetActive(true);
         //OptionsMenu.SetActive(false);
@@ -93,7 +94,7 @@ public class MainMenuBehavior : MonoBehaviour
 
     public void Options()
     {
-        //FindObjectOfType<AudioManager>().Play("Menu");
+        audioManager.Play(MenuSFX, "Click");
         //Title.SetActive(false);
         //MainMenu.SetActive(false);
         //OptionsMenu.SetActive(true);
@@ -107,7 +108,7 @@ public class MainMenuBehavior : MonoBehaviour
 
     public void QuitGame()
     {
-        //FindObjectOfType<AudioManager>().Play("Menu");
+        audioManager.Play(MenuSFX, "Quit");
         nag.Execute();
 
         if (mainMenuCamera)
@@ -140,7 +141,7 @@ public class MainMenuBehavior : MonoBehaviour
         float fadeSpeed = Mathf.Abs(Title.alpha - finalAlpha) / duration;
         while (!Mathf.Approximately(Title.alpha, finalAlpha))
         {
-            Debug.Log("k");
+            //Debug.Log("k");
             Title.alpha = Mathf.MoveTowards(Title.alpha, finalAlpha, fadeSpeed * pseudoDeltaTime);
             yield return null;
         }
