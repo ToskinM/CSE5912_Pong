@@ -91,6 +91,11 @@ public class NPCSoundEffect : MonoBehaviour
         audioManager.Play(DecideWhichNPC(), "Snoring");
     }
 
+    public void NPCStop(string clipName)
+    {
+        audioManager.Stop(DecideWhichNPC(), clipName);
+    }
+
     public void NPCGetKillSFX()
     {
         if (gameObject.GetComponent<AudioSource>() == null)

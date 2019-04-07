@@ -70,6 +70,8 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(a.sounds, sound => sound.name == name);
         if (s != null & s.source != null)
         {
+            if (s.source.mute == true)
+                s.source.mute = false;
             s.source.Play();
             //Debug.Log("I am Playing "+name+ s.source.clip);
         }
@@ -107,7 +109,8 @@ public class AudioManager : MonoBehaviour
         if (s != null & s.source != null)
         {
             s.source.Stop();
-            //Debug.Log("I am Playing "+name+ s.source.clip);
+            s.source.mute = true;
+            //Debug.Log("I am disabling "+name+ s.source.clip);
         }
         //Add back audio source
         if (s.source == null)

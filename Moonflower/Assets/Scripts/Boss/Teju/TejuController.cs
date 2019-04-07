@@ -114,6 +114,7 @@ public class TejuController : MonoBehaviour, INPCController
             //movement.Follow(aggroTarget, combatController.attackDistance, 0.5f);
             movement.SetHoldGround(true);
             animationtController.SetSleeping(false);
+            GetComponent<NPCSoundEffect>().NPCStop("Snoring");
         }
         else
         {
