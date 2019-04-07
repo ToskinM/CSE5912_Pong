@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MoonFlower : MonoBehaviour
 {
@@ -17,7 +18,8 @@ public class MoonFlower : MonoBehaviour
     }
     private void OnDestroy()
     {
-        gameObject.GetComponentInParent<MoonFlowerRegenerate>().ReAddObj(gameObject.transform.position, gameObject.transform.rotation);
+        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+            gameObject.GetComponentInParent<MoonFlowerRegenerate>().ReAddObj(gameObject.transform.position, gameObject.transform.rotation);
     }
 
 }

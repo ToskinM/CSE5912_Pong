@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WolfApple : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class WolfApple : MonoBehaviour
     }
     private void OnDestroy()
     {
-        gameObject.GetComponentInParent<MoonFlowerRegenerate>().ReAddWolfApple(gameObject.transform.position, gameObject.transform.rotation);
+        if (SceneManager.GetActiveScene().name==Constants.SCENE_VILLAGE)
+            gameObject.GetComponentInParent<MoonFlowerRegenerate>().ReAddWolfApple(gameObject.transform.position, gameObject.transform.rotation);
     }
 }

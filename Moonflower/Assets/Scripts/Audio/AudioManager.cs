@@ -324,14 +324,5 @@ public class AudioManager : MonoBehaviour
         //backgroundVol = PlayerPrefs.GetFloat("volumeMusic", 0.75f);
         //soundVol = PlayerPrefs.GetFloat("volumeEffects", 0.75f);
     }
-    private void OnDestroy()
-    {
-        AudioSource[] sources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
-        for (int index = 0; index < sources.Length; ++index)
-        {
-            sources[index].mute = true;
-        }
-
-    }
 
 }
