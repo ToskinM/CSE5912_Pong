@@ -27,6 +27,8 @@ public class PlayerMovementController : MonoBehaviour
     float followDist = 8f;
     float wanderRadius = 15f;
 
+    private Quaternion cameraForwardAngle;
+
     private readonly float gravityConstant = 88.3f;
 
     private readonly float anaiWalkSpeed = 6f;
@@ -76,6 +78,11 @@ public class PlayerMovementController : MonoBehaviour
             DetectKeyInput(); // Controls active player character movement
         else if (Action != Actions.Distracting)
             Action = Actions.Chilling;
+
+        cameraForwardAngle = Quaternion.RotateTowards(cameraForwardAngle, cameraScript.transform.rotation, Time.deltaTime * 150);
+
+        Debug.Log(cameraForwardAngle.eulerAngles + "   " + cameraScript.transform.rotation.eulerAngles);
+        //cameraForwardAngle = Mathf.LerpAngle(cameraForwardAngle, cameraScript.transform.rotation.eulerAngles.y, );
     }
 
     // Sets the active object depending on the active character so that this script knows which object to update
@@ -202,7 +209,8 @@ public class PlayerMovementController : MonoBehaviour
 
             // Dertermine angle we should face from input angle
             float angle = Mathf.Atan2(horizontalInput, verticalInput) * (180 / Mathf.PI);
-            angle += cameraScript.transform.rotation.eulerAngles.y;
+            angle += cameraForwardAngle.eulerAngles.y;
+            //angle += cameraScript.transform.rotation.eulerAngles.y;
             //Debug.Log(angle);
             rotation = Quaternion.AngleAxis(angle, Vector3.up);
         }
