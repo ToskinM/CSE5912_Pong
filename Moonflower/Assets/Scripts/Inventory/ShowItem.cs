@@ -70,8 +70,11 @@ public class ShowItem : MonoBehaviour
     private void CheckDayNightCycletoShowItems()
     {
         //Get Current Time
-        currentTime = skyColors.GetDayNight();
-
+        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+            currentTime = skyColors.GetDayNight();
+        else
+            currentTime = SkyColors.SkyCategory.Sunset;
+        
         //Case Day time
         if (currentTime == SkyColors.SkyCategory.Day)
         {
