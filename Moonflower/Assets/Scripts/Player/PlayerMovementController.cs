@@ -81,7 +81,7 @@ public class PlayerMovementController : MonoBehaviour
 
         cameraForwardAngle = Quaternion.RotateTowards(cameraForwardAngle, cameraScript.transform.rotation, Time.deltaTime * 150);
 
-        Debug.Log(cameraForwardAngle.eulerAngles + "   " + cameraScript.transform.rotation.eulerAngles);
+        //Debug.Log(cameraForwardAngle.eulerAngles + "   " + cameraScript.transform.rotation.eulerAngles);
         //cameraForwardAngle = Mathf.LerpAngle(cameraForwardAngle, cameraScript.transform.rotation.eulerAngles.y, );
     }
 

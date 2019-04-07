@@ -140,6 +140,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         foreach (TejuCrystalScript crystal in crystals)
         {
             crystal.OnShatter += HandleCrystalShatter;
+            crystal.OnHit += Aggro;
         }
     }
     private void OnDisable()
@@ -147,6 +148,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         foreach (TejuCrystalScript crystal in crystals)
         {
             crystal.OnShatter -= HandleCrystalShatter;
+            crystal.OnHit -= Aggro;
         }
     }
 

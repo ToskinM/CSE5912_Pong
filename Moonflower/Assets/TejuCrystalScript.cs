@@ -17,6 +17,9 @@ public class TejuCrystalScript : MonoBehaviour
     public delegate void ShatterUpdate();
     public event ShatterUpdate OnShatter;
 
+    public delegate void AttackedUpdate(GameObject aggressor, bool forceAggression);
+    public event AttackedUpdate OnHit;
+
     void Start()
     {
         
@@ -39,6 +42,8 @@ public class TejuCrystalScript : MonoBehaviour
         {
             if (timeSinceLastHurt >= hurtdelay)
             {
+                
+
                 timeSinceLastHurt = 0f;
 
                 ObjectPoolController.current.CheckoutTemporary(hitEffect, transform, 1);
@@ -48,6 +53,8 @@ public class TejuCrystalScript : MonoBehaviour
                 health -= hurtboxController.Damage;
 
                 Debug.Log(gameObject.name + " took <color=red>" + hurtboxController.Damage + "</color> damage");
+
+                OnHit?.Invoke(source, false);
             }
         }
     }
