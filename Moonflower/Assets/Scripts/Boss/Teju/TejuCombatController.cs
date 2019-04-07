@@ -78,6 +78,9 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     public event NPCCombatController.AggroUpdate OnAggroUpdated;
     public event NPCCombatController.DeathUpdate OnDeath;
 
+    public delegate void SubdueUpdate();
+    public event SubdueUpdate OnSubdue;
+
     private int attacksOnCrystals;
 
     void Start()
@@ -347,9 +350,13 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
     public void Subdue()
     {
+        subdued = true;
+
         DeAggro();
         if (aggression != NPCCombatController.Aggression.Passive)
             aggression--;
+
+        OnSubdue?.Invoke();
     }
 
     private void DeAggro()
@@ -399,10 +406,8 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         //LevelManager.current.RegisterNPCDeath(gameObject);
 
         // Stop combat
-        DeAggro();
+        Subdue();
 
-        subdued = true;
-        Debug.Log("Teju has been Subdued");
 
         // Play and wait for death animation to finish
         animationController.SetSleeping(true);

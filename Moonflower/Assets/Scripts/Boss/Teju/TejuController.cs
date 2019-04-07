@@ -122,20 +122,27 @@ public class TejuController : MonoBehaviour, INPCController
             movement.Reset();
         }
     }
-    private void HandleOnAwarenessUpdated(int newAwareness)
+    private void HandleOnSubdue()
     {
+        Debug.Log("Teju has been Subdued");
     }
 
     private void OnEnable()
     {
         // Subscribe to recieve OnAggroUpdated event
         if (combatController)
+        {
             combatController.OnAggroUpdated += HandleOnAggroUpdated;
+            combatController.OnSubdue += HandleOnSubdue;
+        }
     }
     private void OnDisable()
     {
         // Unsubscribe from recieving OnAggroUpdated event
         if (combatController)
+        {
             combatController.OnAggroUpdated -= HandleOnAggroUpdated;
+            combatController.OnSubdue -= HandleOnSubdue;
+        }
     }
 }
