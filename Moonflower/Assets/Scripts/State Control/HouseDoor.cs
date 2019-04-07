@@ -16,7 +16,7 @@ public class HouseDoor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        BGM = GameObject.Find("Scene BGM").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
