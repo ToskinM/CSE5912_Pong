@@ -31,7 +31,7 @@ public class EnvironmentAudio : MonoBehaviour
 
     private void OnDestroy()
     {
-        AudioManager.OnBGMVolChange -= OnVolumeChange;
+        AudioManager.OnBackgroundVolChange -= OnVolumeChange;
     }
     // Update is called once per frame
     void Update()

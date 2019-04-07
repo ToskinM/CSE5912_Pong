@@ -28,7 +28,7 @@ public class AudioOptions : MonoBehaviour
     void Start()
     {
         //Destroy();
-        Debug.Log("start"+enivronmentSlider.value);
+        //Debug.Log("start"+enivronmentSlider.value);
         enivronmentSlider.onValueChanged.AddListener(delegate { EnivronmentChangeCheck(); });
         effectsSlider.onValueChanged.AddListener(delegate { EffectsChangeCheck(); });
         musicSlider.onValueChanged.AddListener(delegate { BGMChangeCheck(); });
