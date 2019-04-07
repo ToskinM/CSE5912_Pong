@@ -230,8 +230,9 @@ public class PinonController : MonoBehaviour, INPCController
     {
         if (!currTalk.DialogueActive())
         {
+            bool instantDialogueCam = currConvo == Convo.first ? true : false;
             //playerController.TalkingPartner = gameObject;
-            currTalk.StartDialogue();
+            currTalk.StartDialogue(false, instantDialogueCam);
         }
     }
 

@@ -221,8 +221,9 @@ public class SypaveController : MonoBehaviour, INPCController
 
         if (!currTalk.DialogueActive())
         {
+            bool instantDialogueCam = currConvo == Convo.frantic ? true : false;
             //playerController.TalkingPartner = gameObject;
-            currTalk.StartDialogue();
+            currTalk.StartDialogue(false, instantDialogueCam);
         }
         
     }

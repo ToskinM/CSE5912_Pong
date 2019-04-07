@@ -178,7 +178,7 @@ public class DialogueTrigger : MonoBehaviour
         }
     }
 
-    public void StartDialogue(bool disregardCombat = false)
+    public void StartDialogue(bool disregardCombat = false, bool instantCam = false)
     {
         interaction.NotAllowed = true; 
         if (!PlayerController.instance.ActivePlayerCombatControls.InCombat || disregardCombat)
@@ -191,7 +191,7 @@ public class DialogueTrigger : MonoBehaviour
             //PlayerController.instance.DisableSwitching();
 
             // Start dialogue camera this this npc 
-            LevelManager.current.RequestDialogueCamera(partner);
+            LevelManager.current.RequestDialogueCamera(partner, instantCam);
 
             PlayerController.instance.ActivePlayerCombatControls.OnHit += CombatCancelDialogue;
         }

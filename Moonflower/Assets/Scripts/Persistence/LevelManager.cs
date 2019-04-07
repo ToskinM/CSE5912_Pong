@@ -67,15 +67,22 @@ public class LevelManager : MonoBehaviour
         //DataSavingManager.current.npcData?.Load();
     }
 
-    public void RequestDialogueCamera(GameObject dialoguePartner)
+    public void RequestDialogueCamera(GameObject dialoguePartner, bool instantCam)
     {
         PlayerController.instance.TalkingPartner = dialoguePartner;
         PlayerController.instance.DisableSwitching();
         gameStateController.SetMouseLock(false);
         if (dialogueCamera != null)
-            dialogueCamera.Enter(PlayerController.instance.TalkingPartner.transform/*dialoguePartner.transform*/, mainCamera.transform);
+        {
+            if (instantCam)
+                dialogueCamera.InstantEnter(PlayerController.instance.TalkingPartner.transform);
+            else
+                dialogueCamera.Enter(PlayerController.instance.TalkingPartner.transform/*dialoguePartner.transform*/, mainCamera.transform);
+        }
         else
-            Debug.Log("NULL reference to dialogue camera"); 
+        {
+            Debug.Log("NULL reference to dialogue camera");
+        }
         mainCamera.SetRendering(false);
     }
     public void ReturnDialogueCamera()
