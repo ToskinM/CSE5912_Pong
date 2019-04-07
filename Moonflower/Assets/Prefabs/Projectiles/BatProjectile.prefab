@@ -11,7 +11,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4702858597535279609
 MonoBehaviour:
@@ -73,10 +73,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c41601876685095429d2c12085f13806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  muzzleFlash: {fileID: 0}
   explosion: {fileID: 1756509070997670, guid: e1e7162c99c7fdb4680cbb0b8b04aeb8, type: 3}
   baseDamage: 1
   movementSpeed: 12
   lifetime: 3
+  gravityStrength: 0.5
   affectedByGravity: 0
   seeksTarget: 0
   seekStrength: 0
@@ -148,11 +150,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4702858596724240947}
     m_Modifications:
-    - target: {fileID: 7298912431453931981, guid: 3e191d953f9f69b468286e1cae6a7f57,
-        type: 3}
-      propertyPath: m_Name
-      value: Hurtbox
-      objectReference: {fileID: 0}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -208,6 +205,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7298912431453931981, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: m_Name
+      value: Hurtbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495194971926033122, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
     m_RemovedComponents:
     - {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57, type: 3}
     - {fileID: 4727384469266215699, guid: 3e191d953f9f69b468286e1cae6a7f57, type: 3}

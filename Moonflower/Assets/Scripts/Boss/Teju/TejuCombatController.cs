@@ -73,10 +73,12 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
     [Header("Crystals")]
     public TejuCrystalScript[] crystals;
+    public int attacksOnTolerance = 3;
 
     public event NPCCombatController.AggroUpdate OnAggroUpdated;
-
     public event NPCCombatController.DeathUpdate OnDeath;
+
+    private int attacksOnCrystals;
 
     void Start()
     {
@@ -320,21 +322,25 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     }
     public void Aggro(GameObject aggroTarget, bool forceAggression)
     {
-        if (aggression > NPCCombatController.Aggression.Passive || forceAggression)
+        attacksOnCrystals++;
+        if (attacksOnCrystals >= attacksOnTolerance)
         {
-            // Dont constantly aggro
-            if (aggroTarget != CombatTarget)
+            if (aggression > NPCCombatController.Aggression.Passive || forceAggression)
             {
-                fieldOfView.SetCombatMode(true);
+                // Dont constantly aggro
+                if (aggroTarget != CombatTarget)
+                {
+                    fieldOfView.SetCombatMode(true);
 
-                if (!InCombat)
-                    InCombat = true;
+                    if (!InCombat)
+                        InCombat = true;
 
-                CombatTarget = aggroTarget;
-                Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
+                    CombatTarget = aggroTarget;
+                    Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
 
-                // Broadcast that we've aggroed
-                OnAggroUpdated?.Invoke(true, aggroTarget);
+                    // Broadcast that we've aggroed
+                    OnAggroUpdated?.Invoke(true, aggroTarget);
+                }
             }
         }
     }

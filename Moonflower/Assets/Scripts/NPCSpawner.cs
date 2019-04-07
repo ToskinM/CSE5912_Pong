@@ -58,7 +58,7 @@ public class NPCSpawner : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        GameObject spawn = Instantiate(npcsToSpawn[Random.Range(0, npcsToSpawn.Length)], transform.position + new Vector3(Random.Range(-2, 2), 0f, Random.Range(-2, 2)), transform.rotation, gameObject.transform);
+        GameObject spawn = Instantiate(npcsToSpawn[Random.Range(0, npcsToSpawn.Length)], transform.position + new Vector3(Random.Range(-2, 2), 0f, Random.Range(-2, 2)), transform.rotation);
         LesserNPCController spawnController = spawn.GetComponent<LesserNPCController>();
         spawns.Add(spawn);
         spawnController.combatController.OnDeath += HandleDeathEvent;
