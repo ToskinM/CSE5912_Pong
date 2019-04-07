@@ -93,8 +93,6 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
     void Update()
     {
-        Debug.Log(InCombat);
-        Debug.Log(CombatTarget);
         if (!subdued)
         {
             UpdateCooldowns();
