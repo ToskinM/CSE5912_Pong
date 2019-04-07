@@ -6,7 +6,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 {
     public CharacterStats Stats { get; set; }
     public bool IsBlocking { get; set; }
-    public bool InCombat { get; set; } = true;
+    public bool InCombat { get; set; } = false;
     public bool IsDead { get; set; }
     public bool HasWeaponOut { get; set; }
     [HideInInspector] public GameObject CombatTarget { get; set; } = null;
@@ -93,6 +93,8 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
     void Update()
     {
+        Debug.Log(InCombat);
+        Debug.Log(CombatTarget);
         if (!subdued)
         {
             UpdateCooldowns();
@@ -112,7 +114,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
             //npcMovement.Update();
 
-            CheckAggression();
+            //CheckAggression();
 
             // If we're in combat..
             if (InCombat)
@@ -161,7 +163,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     {
         yield return new WaitForSeconds(2f);
         animationController.TriggerHit();
-        Stats.TakeDamage(1, "Crystal Orb");
+        Stats.TakeDamage(250, "Crystal Orb");
     }
 
     private void UpdateCooldowns()
@@ -331,7 +333,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
                     InCombat = true;
 
                 CombatTarget = aggroTarget;
-                //Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
+                Debug.Log(gameObject.name + " started combat with " + aggroTarget.name);
 
                 // Broadcast that we've aggroed
                 OnAggroUpdated?.Invoke(true, aggroTarget);
