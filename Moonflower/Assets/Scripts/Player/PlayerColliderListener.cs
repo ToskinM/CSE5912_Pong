@@ -21,7 +21,7 @@ public class PlayerColliderListener : MonoBehaviour
     {
         if (!enabled) return; // Don't do anything if this game object is not the active player object
 
-        if (collision.collider.Equals(terrain) || transform.InverseTransformDirection(collision.transform.position).y < 0)
+        if (Vector3.Dot(collision.contacts[0].normal, Vector3.up) > 0.5)
         {
             CollideWithTerrain?.Invoke();
         }
