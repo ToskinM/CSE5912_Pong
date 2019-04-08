@@ -61,7 +61,14 @@ public class NPCSoundEffect : MonoBehaviour
     public void NPCIdleSFX()
     {
         if (gameObject.GetComponent<AudioSource>() == null)
-            audioManager.ReAddAllAudioSource(gameObject, DecideWhichNPC());
+        {
+            Debug.Log(gameObject.name);
+            if (audioManager != null)
+                audioManager.ReAddAllAudioSource(gameObject, DecideWhichNPC());
+            else
+                StartCoroutine(GetAudioManager());
+        }
+            
         audioManager.Play(DecideWhichNPC(), "Idle");
     }
     public void NPCStopIdleSFX()
