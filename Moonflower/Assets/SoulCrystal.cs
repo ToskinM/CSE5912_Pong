@@ -6,6 +6,7 @@ public class SoulCrystal : MonoBehaviour
 {
     public bool blocked = true;
 
+    private bool triggered;
     private float rotateSpeed = 0.3f;
 
     void Start()
@@ -20,8 +21,9 @@ public class SoulCrystal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!blocked && other.gameObject == PlayerController.instance.AnaiObject)
+        if (!blocked && !triggered && other.gameObject == PlayerController.instance.AnaiObject)
         {
+            triggered = true;
             TriggerMemory();
         }
     }
