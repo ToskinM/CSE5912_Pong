@@ -43,6 +43,7 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
         INPCController mainController = GetComponent<INPCController>();
         movement = mainController.movement;// new NPCMovementController(gameObject, Constants.AMARU_NAME);
         movement.FollowPlayer(bufferDist, tooCloseRad);
+        movement.SetDefault(NPCMovementController.MoveState.chill);
 
         icon = mainController.icon;
 
