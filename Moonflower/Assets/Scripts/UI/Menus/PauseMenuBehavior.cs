@@ -14,6 +14,7 @@ public class PauseMenuBehavior : MonoBehaviour
 
     private AudioManager audioManager;
     public AudioSource MusicAudioSource;
+    private readonly string MenuSFX = "Menu";
 
     void Start()
     {
@@ -43,19 +44,18 @@ public class PauseMenuBehavior : MonoBehaviour
 
     public void MainMenu()
     {
+        audioManager.Play(MenuSFX, "Click");
         //returnMain.Execute();
         //GameStateController.current.ForceUnpause();
         SceneManager.UnloadSceneAsync(Constants.SCENE_PAUSEMENU);
         SceneController.current.FadeAndLoadSceneNoLS(Constants.SCENE_MAINMENU);
         SceneController.current.DestroySingletons();
-
-        //FindObjectOfType<AudioManager>().Play("Menu");
     }
 
     public void QuitGame()
     {
         nag.Execute();
-        //FindObjectOfType<AudioManager>().Play("Menu");
+        audioManager.Play(MenuSFX, "Quit");
         Application.Quit(); // this doesn't affect the unity editor, only a built application
     }
 
@@ -63,9 +63,8 @@ public class PauseMenuBehavior : MonoBehaviour
     {
         Menu.SetActive(true);
         OptionsMenu.SetActive(false);
-        ControlsMenu.SetActive(false); 
-        //FindObjectOfType<AudioManager>().Play("Menu");
-        //FindObjectOfType<AudioManager>().Pause("Collision");
+        ControlsMenu.SetActive(false);
+        audioManager.Play(MenuSFX, "Click");
     }
 
     public void Options()
@@ -73,7 +72,7 @@ public class PauseMenuBehavior : MonoBehaviour
         Menu.SetActive(false);
         OptionsMenu.SetActive(true);
         ControlsMenu.SetActive(false);
-        //FindObjectOfType<AudioManager>().Play("Menu");
+        audioManager.Play(MenuSFX, "Click");
     }
 
     public void Controls()
@@ -81,7 +80,7 @@ public class PauseMenuBehavior : MonoBehaviour
         Menu.SetActive(false);
         ControlsMenu.SetActive(true);
         OptionsMenu.SetActive(false);
-        //FindObjectOfType<AudioManager>().Play("Menu");
+        audioManager.Play(MenuSFX, "Click");
     }
 
     public void Win()

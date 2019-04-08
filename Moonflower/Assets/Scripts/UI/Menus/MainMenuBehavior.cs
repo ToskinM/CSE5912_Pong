@@ -22,7 +22,7 @@ public class MainMenuBehavior : MonoBehaviour
     //private AudioManager audioManager;
    
     private SceneController sceneController;    // Reference to the SceneController to actually do the loading and unloading of scenes.
-    AudioManager audioManager;
+    private AudioManager audioManager;
 
     void Awake()
     {

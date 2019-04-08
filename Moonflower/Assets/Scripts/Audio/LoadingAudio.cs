@@ -20,4 +20,12 @@ public class LoadingAudio : MonoBehaviour
             sources[index].mute = true;
         }
     }
+    private void OnDestroy()
+    {
+        AudioSource[] sources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+        for (int index = 0; index < sources.Length; ++index)
+        {
+            sources[index].mute = false;
+        }
+    }
 }

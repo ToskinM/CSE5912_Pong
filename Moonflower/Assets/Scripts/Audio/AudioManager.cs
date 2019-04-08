@@ -80,8 +80,7 @@ public class AudioManager : MonoBehaviour
         }
         if (s != null & s.source != null)
         {
-            if (s.source.mute == true)
-                s.source.mute = false;
+            s.source.mute = false;
             s.source.Play();
             //Debug.Log("I am Playing " + name + s.source.clip);
         }

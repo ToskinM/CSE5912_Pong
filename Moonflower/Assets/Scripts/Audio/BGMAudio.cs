@@ -14,7 +14,7 @@ public class BGMAudio : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-
+        audioSource.mute = false;
         AssignAudioManager();
 
         audioSource.volume = PlayerPrefs.GetFloat("volumeMusic");
