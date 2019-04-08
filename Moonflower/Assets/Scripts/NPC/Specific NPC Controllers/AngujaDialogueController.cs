@@ -51,7 +51,6 @@ public class AngujaDialogueController : MonoBehaviour, IDialogueController
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(charName))
         {
-            Debug.Log("default"); 
             currTalk = talk;
             currConvo = Convo.talk; 
             GameStateController.current.SaveNPCDialogues(charName, currConvo.ToString(), currTalk);

@@ -51,7 +51,7 @@ public class NPCAnimationController : MonoBehaviour
         //    animator.SetBool(key_IsJump, movement.Jumping);
         //}
 
-        if (agent)
+        if (agent != null && agent.isActiveAndEnabled)
         {
             if (agent.isStopped)
             {

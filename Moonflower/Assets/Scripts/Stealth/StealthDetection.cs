@@ -101,7 +101,7 @@ public class StealthDetection : MonoBehaviour
             // When alert threshold crossed, become alerted if not already
             if (Awareness == AwarenessLevel.Suspicious || Awareness == AwarenessLevel.Neutral)
             {
-                BecomeAlerted(LevelManager.current.currentPlayer);
+                BecomeAlerted(PlayerController.instance.GetActivePlayerObject());
             }
         }
         else if (awarenessMeter >= suspiciousThreshold)

@@ -40,7 +40,7 @@ public class DialogueTrigger : MonoBehaviour
     GameObject partner;
     InteractionPopup interaction;
 
-    string gName;
+    //string gName;
 
     public DialogueTrigger(GameObject person, GameObject p, Sprite iconSprite, string graphName)
     {
@@ -53,10 +53,10 @@ public class DialogueTrigger : MonoBehaviour
         factory = new DialogueFactory();
         graph = factory.GetDialogue(graphName);
         graph.Restart();
-        gName = graphName;
+        //gName = graphName;
 
         icon = iconSprite;
-        interaction = GameObject.Find("Interaction Popup").GetComponent<InteractionPopup>();
+        interaction = GameObject.Find("HUD").GetComponent<ComponentLookup>().InteractionPopup;
         //spriteFile = characterSprite;
 
     }

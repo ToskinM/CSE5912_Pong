@@ -39,7 +39,8 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
     private Vector3 startPosition;
     string charName;
-    string descrip; 
+    string descrip;
+    string pronoun; 
 
     private void Awake()
     {
@@ -49,7 +50,15 @@ public class LesserNPCController : MonoBehaviour, INPCController
             charName = fac.GetName[icon];
         else
             charName = "";
+
         descrip = fac.Get(charName);
+        if(CharacterName != "")
+        {
+            string temp = fac.Get(CharacterName);
+            if (temp != "")
+                descrip = temp;
+        }
+        pronoun = descrip.Substring(0, descrip.IndexOf('/'));
 
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
@@ -129,12 +138,42 @@ public class LesserNPCController : MonoBehaviour, INPCController
     {
         if (new ItemLookup().IsFood(giftName))
         {
-            displayFeedback("They love the " + giftName + "!");
+            string start = "";
+            if (CharacterName != "")
+                start = CharacterName + " loves";
+            else
+            {
+                start = pronoun; 
+                if (pronoun == "They")
+                {
+                    start += " love";
+                }
+                else
+                {
+                    start += " loves";
+                }
+            }
+            displayFeedback( start + " the " + giftName + "!");
             combatController.Subdue(); 
         }
         else
         {
-            displayFeedback("They have no use for " + giftName + "...");
+            string start = "";
+            if (CharacterName != "")
+                start = CharacterName + " has";
+            else
+            {
+                start = pronoun;
+                if (pronoun == "They")
+                {
+                    start += " have";
+                }
+                else
+                {
+                    start += " has";
+                }
+            }
+            displayFeedback(start+" no use for " + giftName + "...");
         }
     }
     public void Distract(GameObject distractedBy)
