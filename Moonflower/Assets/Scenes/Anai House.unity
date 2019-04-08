@@ -5667,10 +5667,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 574423216, guid: 24bae5f0d34626a459d9f0f207247a1a, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8267561, guid: 24bae5f0d34626a459d9f0f207247a1a, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -7608,16 +7604,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1867509858}
     m_Modifications:
-    - target: {fileID: 3547835716041513290, guid: 6e91748f4112cca43bcd2c0ff8dbef97,
-        type: 3}
-      propertyPath: m_Name
-      value: Action Wheel
-      objectReference: {fileID: 0}
-    - target: {fileID: 3547835716041513290, guid: 6e91748f4112cca43bcd2c0ff8dbef97,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7915387964042401423, guid: 6e91748f4112cca43bcd2c0ff8dbef97,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7722,6 +7708,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547835716041513290, guid: 6e91748f4112cca43bcd2c0ff8dbef97,
+        type: 3}
+      propertyPath: m_Name
+      value: Action Wheel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547835716041513290, guid: 6e91748f4112cca43bcd2c0ff8dbef97,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e91748f4112cca43bcd2c0ff8dbef97, type: 3}
@@ -10936,8 +10932,10 @@ MonoBehaviour:
   ActivePlayerMovementControls: {fileID: 0}
   ActivePlayerCombatControls: {fileID: 0}
   ActivePlayerInteractionFOV: {fileID: 0}
+  ActivePlayerInventory: {fileID: 0}
   ActivePlayerAnimator: {fileID: 0}
   ActivePlayerStats: {fileID: 0}
+  canSwitchCharacters: 0
 --- !u!114 &1599248372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13406,7 +13404,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InventoryPanel: {fileID: 147678070}
   InvContentPanel: {fileID: 96846282}
-  Player: {fileID: 1599248364}
   interaction: {fileID: 2081217245}
   gameController: {fileID: 1819681082}
   Shown: 0
