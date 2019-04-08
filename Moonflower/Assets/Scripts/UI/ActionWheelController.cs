@@ -99,6 +99,7 @@ public class ActionWheelController : MonoBehaviour
             INPCController targetNPC = target.GetComponent<INPCController>();
             if (targetNPC != null)
             {
+                Debug.Log("valid npc!");
                 targetController = targetNPC;
 
                 activeWheel.Initialize(targetNPC.icon, targetNPC.actionsAvailable);
@@ -106,12 +107,14 @@ public class ActionWheelController : MonoBehaviour
             }
             else
             {
+                Debug.Log("no controller :(");
                 target = null;
                 targetController = null;
             }
         }
         else
         {
+            Debug.Log("no target :((");
             targetController = null;
         }
     }
@@ -180,7 +183,7 @@ public class ActionWheelController : MonoBehaviour
                     string thename = targetName.Substring(0, star);
                     string descrip = targetName.Substring(star+1);
                     if(descrip.IndexOf('*') == -1)
-                        inspect.Show(thename,descrip);
+                        inspect.Show(thename, descrip);
                     else
                     {
                         star = descrip.IndexOf('*');
@@ -195,6 +198,7 @@ public class ActionWheelController : MonoBehaviour
             case 1:
                 if (PlayerController.instance.GetActiveCharacter() != PlayerController.PlayerCharacter.Mimbi)
                 {
+                    Debug.Log("Selected"); 
                     targetController.Talk();
                     followCamera.LockOff();
                 }

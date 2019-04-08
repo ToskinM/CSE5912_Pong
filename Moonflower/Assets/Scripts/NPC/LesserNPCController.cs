@@ -58,7 +58,10 @@ public class LesserNPCController : MonoBehaviour, INPCController
             if (temp != "")
                 descrip = temp;
         }
-        pronoun = descrip.Substring(0, descrip.IndexOf('/'));
+        if (descrip != "")
+            pronoun = descrip.Substring(0, descrip.IndexOf('/'));
+        else
+            pronoun = "";
 
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
@@ -131,6 +134,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
     // Action Wheel Interactions
     public void Talk()
     {
+        Debug.Log("To controller"); 
         if (dialogue != null)
             dialogue.Talk();
     }

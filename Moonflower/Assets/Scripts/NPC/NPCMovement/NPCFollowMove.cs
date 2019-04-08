@@ -142,7 +142,7 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
     //stop NPC movement
     public void Chill()
     {
-        if (!agent.isActiveAndEnabled) return; 
+       // if (!agent.isActiveAndEnabled) return; 
 
         Action = Actions.Chilling;
         if(agent.isActiveAndEnabled)
@@ -158,7 +158,7 @@ public class NPCFollowMove : MonoBehaviour, IMovement, INPCMovement
     //send NPC to location
     public void GoHere(Vector3 loc)
     {
-        if (!agent.isActiveAndEnabled) return;
+        //if (!agent.isActiveAndEnabled) return;
 
         if (Action != Actions.Running)
             Action = Actions.Walking;

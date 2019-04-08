@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class InteractionPopup : MonoBehaviour
 {
+    public static InteractionPopup instance; 
     public TextMeshProUGUI text;
     public float currDist;
     public bool NotAllowed = false; 
@@ -15,6 +16,7 @@ public class InteractionPopup : MonoBehaviour
 
     private void Start()
     {
+        instance = this; 
         if (gameObject.activeInHierarchy)
         {
             gameObject.SetActive(false);

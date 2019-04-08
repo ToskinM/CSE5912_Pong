@@ -56,7 +56,7 @@ public class DialogueTrigger : MonoBehaviour
         //gName = graphName;
 
         icon = iconSprite;
-        interaction = GameObject.Find("HUD").GetComponent<ComponentLookup>().InteractionPopup;
+        interaction = InteractionPopup.instance; //GameObject.Find("HUD").GetComponent<ComponentLookup>().InteractionPopup;
         //spriteFile = characterSprite;
 
     }
@@ -180,9 +180,11 @@ public class DialogueTrigger : MonoBehaviour
 
     public void StartDialogue(bool disregardCombat = false, bool instantCam = false)
     {
+        Debug.Log("To trigger"); 
         interaction.NotAllowed = true; 
         if (!PlayerController.instance.ActivePlayerCombatControls.InCombat || disregardCombat)
         {
+            Debug.Log("Inside"); 
             pState = PanelState.rising;
             panelInfo.Icon.sprite = icon;  //new IconFactory().GetIcon(spriteFile);
             tState = TextState.typing;
@@ -194,6 +196,11 @@ public class DialogueTrigger : MonoBehaviour
             LevelManager.current.RequestDialogueCamera(partner, instantCam);
 
             PlayerController.instance.ActivePlayerCombatControls.OnHit += CombatCancelDialogue;
+        }
+        else if (PlayerController.instance.ActivePlayerCombatControls.InCombat)
+        {
+            Debug.Log("Can't talk. In combat");
+
         }
     }
 
