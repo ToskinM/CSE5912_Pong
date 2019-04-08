@@ -95,6 +95,30 @@ public class ShowInspect : MonoBehaviour
         }
     }
 
+    public void Show(string name, string description)
+    {
+        interaction.NotAllowed = true;
+        InspectPanel.SetActive(true);
+        GameStateController.current.PauseGame();
+        Shown = true;
+        charName.text = name;
+        icon.sprite = iconFactory.GetIconFromName(name);
+        descrip.text = description;
+       
+    }
+
+    public void Show(string name, string creatureType, string description)
+    {
+        interaction.NotAllowed = true;
+        InspectPanel.SetActive(true);
+        GameStateController.current.PauseGame();
+        Shown = true;
+        charName.text = name;
+        icon.sprite = iconFactory.GetIconFromName(creatureType);
+        descrip.text = description;
+
+    }
+
     public void Hide()
     {
         interaction.NotAllowed = false; 

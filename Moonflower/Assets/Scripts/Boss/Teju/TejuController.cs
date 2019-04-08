@@ -17,7 +17,7 @@ public class TejuController : MonoBehaviour, INPCController
     public bool canGift = true;
     [HideInInspector] public bool[] actionsAvailable { get; private set; }
 
-    private NPCMovementController movement;
+    public NPCMovementController movement { get; set; }
     public TejuCombatController combatController;
     public TejuAnimationController animationtController;
 

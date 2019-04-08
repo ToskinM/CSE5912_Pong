@@ -6,6 +6,7 @@ public interface INPCController
 {
     Sprite icon { get; set; }
     bool[] actionsAvailable { get; }
+    NPCMovementController movement { get; } 
 
     void Talk();
     void Gift(string giftName);

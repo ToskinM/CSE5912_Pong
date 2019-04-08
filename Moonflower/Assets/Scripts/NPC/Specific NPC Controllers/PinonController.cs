@@ -25,7 +25,7 @@ public class PinonController : MonoBehaviour, INPCController
     public bool canGift = true;
     [HideInInspector] public bool[] actionsAvailable { get; private set; }
 
-    NPCMovementController npc;
+    public NPCMovementController movement { get; set; }
     Animator NPCController;
     NavMeshAgent agent;
 
@@ -74,12 +74,12 @@ public class PinonController : MonoBehaviour, INPCController
 
         NPCController = GetComponent<Animator>();
         Vector3 pos = transform.position; 
-        npc = new NPCMovementController(gameObject, Constants.PINON_NAME);
-        npc.FollowPlayer(bufferDist, tooCloseRad);
-        npc.Wander(WalkCenter.transform.position, wanderRad);
-        npc.SetDefault(NPCMovementController.MoveState.chill);
-        npc.Reset();
-        npc.SetLoc(pos);
+        movement = new NPCMovementController(gameObject, Constants.PINON_NAME);
+        movement.FollowPlayer(bufferDist, tooCloseRad);
+        movement.Wander(WalkCenter.transform.position, wanderRad);
+        movement.SetDefault(NPCMovementController.MoveState.chill);
+        movement.Reset();
+        movement.SetLoc(pos);
 
 
         icon = new IconFactory().GetIcon(Constants.PINON_ICON);
@@ -117,7 +117,7 @@ public class PinonController : MonoBehaviour, INPCController
                // Debug.Log("intro"); 
                 intro = currTalk; 
                 currConvo = Convo.intro;
-                npc.Wander();
+                movement.Wander();
             }
         }
 
@@ -134,19 +134,19 @@ public class PinonController : MonoBehaviour, INPCController
         {
             currTalk.Update();
 
-            npc.UpdateMovement();
+            movement.UpdateMovement();
 
-            if (npc.DistanceFrom(PlayerController.instance.AnaiObject) < engagementRadius && currConvo == Convo.first && !firstIntro.Complete)
+            if (movement.DistanceFrom(PlayerController.instance.AnaiObject) < engagementRadius && currConvo == Convo.first && !firstIntro.Complete)
             {
                 StartTalk();
                 //indicateInterest();
-                npc.Follow();
+                movement.Follow();
             }
-            else if (currTalk.Complete && npc.state != NPCMovementController.MoveState.wander)
+            else if (currTalk.Complete && movement.state != NPCMovementController.MoveState.wander)
             {
-                npc.SetDefault(NPCMovementController.MoveState.wander);
-                npc.Wander();
-                npc.Run(1.3f);
+                movement.SetDefault(NPCMovementController.MoveState.wander);
+                movement.Wander();
+                movement.Run(1.3f);
                 switch(currConvo)
                 {
                     case Convo.first:
@@ -161,7 +161,7 @@ public class PinonController : MonoBehaviour, INPCController
         }
         else
         {
-            npc.UpdateMovement();
+            movement.UpdateMovement();
         }
         dialogueActive = currTalk.DialogueActive();
         NPCController.SetBool("IsTalking", dialogueActive);
@@ -202,7 +202,7 @@ public class PinonController : MonoBehaviour, INPCController
         else
         {
             StartTalk();
-            npc.Follow();
+            movement.Follow();
         }
     }
     public void Gift(string giftName)
@@ -211,12 +211,12 @@ public class PinonController : MonoBehaviour, INPCController
     }
     public void Distract(GameObject distractedBy)
     {
-        npc.Distracted(distractedBy);
+        movement.Distracted(distractedBy);
     }
 
     public void EndDistract()
     {
-        npc.Reset();
+        movement.Reset();
     }
 
 

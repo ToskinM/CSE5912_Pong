@@ -172,7 +172,24 @@ public class ActionWheelController : MonoBehaviour
         {
             case 0:
                 string targetName = targetController.Inspect();
-                inspect.Show(targetName);
+                if(targetName.IndexOf('*') == -1)
+                    inspect.Show(targetName);
+                else
+                {
+                    int star = targetName.IndexOf('*');
+                    string thename = targetName.Substring(0, star);
+                    string descrip = targetName.Substring(star+1);
+                    if(descrip.IndexOf('*') == -1)
+                        inspect.Show(thename,descrip);
+                    else
+                    {
+                        star = descrip.IndexOf('*');
+                        string type = descrip.Substring(0, star);
+                        descrip = descrip.Substring(star + 1);
+                        inspect.Show(thename, type, descrip);
+
+                    }
+                }
                 otherWindowUp = true;
                 break;
             case 1:

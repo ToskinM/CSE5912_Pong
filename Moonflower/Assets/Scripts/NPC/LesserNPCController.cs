@@ -10,7 +10,8 @@ public class LesserNPCController : MonoBehaviour, INPCController
     //private GameObject player;
     public GameObject dialoguePanel;
     public Sprite iconOb; 
-    public Sprite icon { get; set; } 
+    public Sprite icon { get; set; }
+    public string CharacterName;
 
     public bool canSeePlayer = false;
 
@@ -27,36 +28,38 @@ public class LesserNPCController : MonoBehaviour, INPCController
     public float bufferDist = 5f;
 
     //private bool engaging = false;
-    private NPCMovementController movement;
+   public NPCMovementController movement { get; set; }
     public ICombatController combatController;
     public StealthDetection stealthDetection;
+    IDialogueController dialogue; 
 
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
-    private PlayerController playerController;
     private FeedbackText feedback;
 
     private Vector3 startPosition;
-    string charName; 
+    string charName;
+    string descrip; 
 
     private void Awake()
     {
         icon = iconOb;
         InspectFactory fac = new InspectFactory();
         if (fac.GetName.ContainsKey(icon))
-            charName = new InspectFactory().GetName[icon];
+            charName = fac.GetName[icon];
         else
             charName = "";
+        descrip = fac.Get(charName);
 
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
         movement = new NPCMovementController(gameObject,charName);
+        dialogue = GetComponent<IDialogueController>();
         //movement.SetEngagementDistances(5, combatController.attackDistance + 0.5f, 1);
 
         combatController = GetComponent<ICombatController>();
         stealthDetection = GetComponent<StealthDetection>();
 
-        playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
         //icon = new IconFactory().GetIcon(Constants.MOUSE_ICON);
     }
 
@@ -119,7 +122,8 @@ public class LesserNPCController : MonoBehaviour, INPCController
     // Action Wheel Interactions
     public void Talk()
     {
-
+        if (dialogue != null)
+            dialogue.Talk();
     }
     public void Gift(string giftName)
     {
@@ -145,7 +149,10 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
     public string Inspect()
     {
-        return charName; 
+        if (CharacterName == "")
+            return charName + "*" + descrip;
+        else
+            return CharacterName + "*" + charName + "*" + descrip;
     }
 
     private void StartEngagement()

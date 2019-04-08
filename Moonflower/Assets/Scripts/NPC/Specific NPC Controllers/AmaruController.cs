@@ -26,7 +26,7 @@ public class AmaruController : MonoBehaviour, INPCController
 
     CurrentPlayer playerInfo;
     //private GameObject anai;
-    NPCMovementController npc;
+    public NPCMovementController movement { get; set; }
     NavMeshAgent agent;
     DialogueTrigger currTalk;
     DialogueTrigger intro;
@@ -62,10 +62,10 @@ public class AmaruController : MonoBehaviour, INPCController
         agent = GetComponent<NavMeshAgent>();
 
 
-        npc = new NPCMovementController(gameObject, Constants.AMARU_NAME);
-        npc.FollowPlayer(bufferDist, tooCloseRad);
-        npc.Wander(WalkCenter.transform.position, wanderRad);
-        npc.SetDefault(NPCMovementController.MoveState.wander);
+        movement = new NPCMovementController(gameObject, Constants.AMARU_NAME);
+        movement.FollowPlayer(bufferDist, tooCloseRad);
+        movement.Wander(WalkCenter.transform.position, wanderRad);
+        movement.SetDefault(NPCMovementController.MoveState.wander);
         centerOfTown = GameObject.Find("Campfire").transform.position;
 
         icon = new IconFactory().GetIcon(Constants.AMARU_ICON);
@@ -121,22 +121,22 @@ public class AmaruController : MonoBehaviour, INPCController
         {
             currTalk.Update();
 
-            npc.UpdateMovement();
+            movement.UpdateMovement();
 
-            if (npc.DistanceFrom(PlayerController.instance.AnaiObject) < engagementRadius && !currTalk.Complete)
+            if (movement.DistanceFrom(PlayerController.instance.AnaiObject) < engagementRadius && !currTalk.Complete)
             {
                 //StartTalk();
                 indicateInterest();
-                npc.Follow();
+                movement.Follow();
             }
             else
             {
-                npc.Reset();
+                movement.Reset();
             }
         }
         else
         {
-            npc.UpdateMovement();
+            movement.UpdateMovement();
         }
         dialogueActive = currTalk.DialogueActive();
 
@@ -159,9 +159,9 @@ public class AmaruController : MonoBehaviour, INPCController
         currTalk = advice;
         currConvo = Convo.advice; 
         GameStateController.current.SaveNPCDialogues(Constants.AMARU_NAME, currConvo.ToString(), currTalk);
-        npc.Wander(centerOfTown,30f);
-        npc.SetDefault(NPCMovementController.MoveState.wander);
-        npc.InfluenceWanderSpeed(1.5f);
+        movement.Wander(centerOfTown,30f);
+        movement.SetDefault(NPCMovementController.MoveState.wander);
+        movement.InfluenceWanderSpeed(1.5f);
     }
     // Action Wheel Interactions
     public void Talk()
@@ -188,13 +188,13 @@ public class AmaruController : MonoBehaviour, INPCController
     }
     public void Distract(GameObject distractedBy)
     {
-        npc.Distracted(distractedBy);
+        movement.Distracted(distractedBy);
         amaruAnimator.StartDistraction();
     }
     public void EndDistract()
     {
         amaruAnimator.EndDistraction();
-        npc.Reset();
+        movement.Reset();
     }
     public string Inspect()
     {
@@ -215,7 +215,7 @@ public class AmaruController : MonoBehaviour, INPCController
     //end current conversation
     public void EndTalk()
     {
-        npc.Reset();
+        movement.Reset();
         if (currTalk.DialogueActive())
         {
             //playerController.TalkingPartner = null;
