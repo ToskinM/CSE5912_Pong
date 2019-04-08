@@ -9,7 +9,7 @@ public class ShowInventory : MonoBehaviour
     //public TextMeshProUGUI inventoryText;
     public GameObject InventoryPanel;
     public GameObject InvContentPanel; 
-    public GameObject Player;
+    //public GameObject Player;
     public InteractionPopup interaction;
 
     //public Button InvoButton; 
@@ -41,7 +41,7 @@ public class ShowInventory : MonoBehaviour
         yOffset = Screen.height / 2.5f;
         InvItemTemplate = InvContentPanel.transform.GetChild(0).gameObject; 
         Shown = false;
-        playerInventory = Player.GetComponent<PlayerInventory>();
+        playerInventory = PlayerController.instance.ActivePlayerInventory;//.GetComponent<PlayerInventory>();
         gameController = GameStateController.current;
         //InvoButton.onClick.AddListener(showInv);
    }

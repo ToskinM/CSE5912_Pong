@@ -150,7 +150,7 @@ public class NPCWanderMove : MonoBehaviour, IMovement, INPCMovement
                     giveUpCount++; 
                     if(giveUpCount > giveUpMax)
                     {
-                        Debug.Log("give up");
+//                        Debug.Log("give up");
                         agent.Warp(self.transform.position - new Vector3(.2f, 0, .2f));
                         destination = getRandomDest();
                         GoHere(destination);
