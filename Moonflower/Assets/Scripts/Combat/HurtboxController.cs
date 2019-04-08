@@ -14,7 +14,7 @@ public class HurtboxController : MonoBehaviour, IHurtboxController
         //Source = gameObject.transform.root.gameObject;
         //Source = LesserNPCController.GetRootmostObjectInLayer(gameObject.transform, "NPC", "Player");
         Source = source;
-        SourceCharacterStats = Source.GetComponent<CharacterStats>();
+        SourceCharacterStats = (Source.tag == "Player") ? PlayerController.instance.ActivePlayerStats : Source.GetComponent<CharacterStats>();
     }
 
     void Start()
