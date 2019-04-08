@@ -172,7 +172,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
             wander.SetArea(origin, wanderDistance); 
         }
         state = MoveState.wander;
-        Debug.Log(charName + " set wander"); 
+//        Debug.Log(charName + " set wander"); 
     }
     public void WanderFollow(GameObject followTarget, float maxDistAway)
     {
@@ -287,7 +287,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
 //                    Debug.Log(charName + " wander");
                     if (canWander)
                     {
-                        Debug.Log(charName + " is wandering!!");
+//                        Debug.Log(charName + " is wandering!!");
                         wander.UpdateMovement();
                         Action = wander.Action;
 
