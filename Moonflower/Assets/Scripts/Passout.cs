@@ -30,7 +30,7 @@ public class Passout : MonoBehaviour
         if (!Passed)
         {
             cave.SetActive(false); 
-            Debug.Log("no cave"); 
+          //  Debug.Log("no cave"); 
         }
 
         cameraPost = cam.GetComponent<PostProcessControl>();
@@ -71,7 +71,7 @@ public class Passout : MonoBehaviour
 
         if(Passed)
         {
-            Debug.Log("cave good to go!");
+//            Debug.Log("cave good to go!");
             cave.SetActive(true);
         }
     }
