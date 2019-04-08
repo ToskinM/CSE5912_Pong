@@ -134,7 +134,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
     // Action Wheel Interactions
     public void Talk()
     {
-        Debug.Log("To controller"); 
+//        Debug.Log("To controller"); 
         if (dialogue != null)
             dialogue.Talk();
     }

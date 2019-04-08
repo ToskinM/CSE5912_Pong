@@ -86,7 +86,7 @@ public class AngujaDialogueController : MonoBehaviour, IDialogueController
     // Action Wheel Interactions
     public void Talk()
     {
-        Debug.Log("to dialogue controller"); 
+//        Debug.Log("to dialogue controller"); 
         if (currTalk.Complete)
         {
             displayFeedback("Anguja is obsessing over a mild confrontation.");

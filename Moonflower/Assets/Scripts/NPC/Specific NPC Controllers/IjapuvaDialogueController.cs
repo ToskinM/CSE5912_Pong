@@ -86,7 +86,7 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
     // Action Wheel Interactions
     public void Talk()
     {
-        Debug.Log("start talking");
+//        Debug.Log("start talking");
         if (currTalk.Complete)
         {
             displayFeedback("Ijapuva is grinning at the fire.");

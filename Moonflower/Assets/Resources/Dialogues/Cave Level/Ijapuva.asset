@@ -37,6 +37,7 @@ MonoBehaviour:
   - {fileID: 114669894223323694}
   - {fileID: 114094105690320792}
   - {fileID: 114511717470543212}
+  - {fileID: 114796695024264584}
 --- !u!114 &114021998614194832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,7 +326,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: output
-        node: {fileID: 114844555766393044}
+        node: {fileID: 114796695024264584}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -341,11 +342,9 @@ MonoBehaviour:
       _direction: 1
       _connectionType: 0
       _dynamic: 0
-  text: "They brought him to their precious fire, throwing him on the coals to cook,
-    but flames cannot hurt a god. \xD1ande Ru Paven arose unharmed with a coal in
-    his hand, and the giants were so shocked and afraid that they ran. Pleased with
-    his ruse, \xD1ande Ru Paven gave the burning coal to the humans, sharing the giants'
-    secret. "
+  text: "\xD1ande Ru Paven arose unharmed with a coal in his hand, and the giants
+    were so shocked and afraid that they ran. Pleased with his ruse, \xD1ande Ru Paven
+    gave the burning coal to the humans, sharing the giants' secret. "
   answers: []
 --- !u!114 &114330751073794990
 MonoBehaviour:
@@ -1217,6 +1216,51 @@ MonoBehaviour:
     voiceClip: {fileID: 0}
   - text: 'We have fires too. '
     voiceClip: {fileID: 0}
+--- !u!114 &114796695024264584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d4b035e8545a04ca8b7c9c33635bcb, type: 3}
+  m_Name: Chat
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2002, y: -711}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114796695024264584}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 114844555766393044}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114796695024264584}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: input
+        node: {fileID: 114300641144465008}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  text: "Excited to have such an easy meal, the giants snatched up the \xD1ande Ru
+    Paven. They brought him to their precious fire, throwing him on the coals to cook,
+    but flames cannot hurt a god. "
+  answers: []
 --- !u!114 &114810400245114050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1297,15 +1341,14 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: input
-        node: {fileID: 114300641144465008}
+        node: {fileID: 114796695024264584}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _dynamic: 0
   text: "The god \xD1ande Ru Paven saw his human children living in fear and took
     pity on them. He decided to steal the secret of fire from the giants. So, he disguised
-    himself as a human and offered himself up to the giants. The giants were excited
-    to have such an easy meal and quickly snatching up \xD1ande Ru Paven. "
+    himself as a human and offered himself up to the giants. "
   answers: []
 --- !u!114 &114845933009467074
 MonoBehaviour:

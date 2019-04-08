@@ -198,7 +198,7 @@ public class ActionWheelController : MonoBehaviour
             case 1:
                 if (PlayerController.instance.GetActiveCharacter() != PlayerController.PlayerCharacter.Mimbi)
                 {
-                    Debug.Log("Selected"); 
+//                    Debug.Log("Selected"); 
                     targetController.Talk();
                     followCamera.LockOff();
                 }
