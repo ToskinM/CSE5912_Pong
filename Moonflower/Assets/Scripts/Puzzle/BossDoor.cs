@@ -20,7 +20,6 @@ public class BossDoor : MonoBehaviour
         if(numKeys == 0)
         {
             Unlock();
-            print("GIMME");
         }
     }
 
