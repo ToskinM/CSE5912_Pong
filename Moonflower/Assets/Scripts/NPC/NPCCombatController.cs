@@ -176,14 +176,22 @@ public class NPCCombatController : MonoBehaviour, ICombatController
                             //sourceCombatController = source.GetComponent<PlayerCombatController>();
                             //sourceCombatController = PlayerController.instance.ActivePlayerCombatControls;  // Now uses generic Player object
                             if (source)
+                            {
                                 Stats.TakeDamage(damage, source.name, hurtboxController.SourceCharacterStats, PlayerController.instance.ActivePlayerCombatControls, GetContactPoint(other), IsBlocking);
+                                GameObject hitEffect = Instantiate((GameObject)Resources.Load("Effects/HitEffect_Spark"), gameObject.transform.position, Quaternion.identity);
+                                Destroy(hitEffect, hitEffect.GetComponent<ParticleSystem>().main.duration);
+                            }
                             else
                                 Stats.TakeDamage(damage, "Unknown");
                         }
                         else
                         {
                             if (source)
+                            {
                                 Stats.TakeDamage(damage, source.name, hurtboxController.SourceCharacterStats, sourceCombatController, GetContactPoint(other), IsBlocking);
+                                GameObject hitEffect = Instantiate((GameObject)Resources.Load("Effects/HitEffect_Spark"), gameObject.transform.position, Quaternion.identity);
+                                Destroy(hitEffect, hitEffect.GetComponent<ParticleSystem>().main.duration);
+                            }
                             else
                                 Stats.TakeDamage(damage, "Unknown");
                         }
