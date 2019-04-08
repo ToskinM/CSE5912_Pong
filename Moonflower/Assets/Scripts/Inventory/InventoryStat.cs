@@ -22,10 +22,13 @@ public class InventoryStat : MonoBehaviour
 
     public Behaviour halo;
 
+    public SceneController sceneController;
+
     SkyColors.SkyCategory currentTime;
 
     void Start()
     {
+        sceneController = GameObject.Find("SceneController").GetComponent<SceneController>();
         SkyColors skyColors = FindObjectOfType<SkyColors>();
         if (skyColors)
             currentTime = skyColors.GetDayNight();
