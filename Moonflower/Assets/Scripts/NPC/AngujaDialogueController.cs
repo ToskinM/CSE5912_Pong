@@ -24,7 +24,9 @@ public class AngujaDialogueController : MonoBehaviour, IDialogueController
     private FeedbackText feedbackText;
 
     enum Convo { talk }
-    Convo currConvo; 
+    Convo currConvo;
+
+    string charName; 
 
     void Awake()
     {
@@ -36,6 +38,7 @@ public class AngujaDialogueController : MonoBehaviour, IDialogueController
     {
         DialoguePanel = GameStateController.current.DialoguePanel;
         agent = GetComponent<NavMeshAgent>();
+        charName = Constants.ANGUJA_NAME;
 
         INPCController mainController = GetComponent<INPCController>();
         movement = mainController.movement;// new NPCMovementController(gameObject, Constants.AMARU_NAME);
@@ -46,15 +49,16 @@ public class AngujaDialogueController : MonoBehaviour, IDialogueController
         talk = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.ANGUJA_DIALOGUE);
         talk.SetExitText("Okay, um, nice meeting you, I guess?");
 
-        if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.AMARU_NAME))
+        if (!GameStateController.current.NPCDialogues.ContainsKey(charName))
         {
+            Debug.Log("default"); 
             currTalk = talk;
             currConvo = Convo.talk; 
-            GameStateController.current.SaveNPCDialogues(Constants.AMARU_NAME, currConvo.ToString(), currTalk);
+            GameStateController.current.SaveNPCDialogues(charName, currConvo.ToString(), currTalk);
         }
         else
         {
-            currTalk = GameStateController.current.GetNPCDialogue(Constants.AMARU_NAME);
+            currTalk = GameStateController.current.GetNPCDialogue(charName);
             currTalk.SetSelf(gameObject);
             currConvo = Convo.talk;
             talk = currTalk;
