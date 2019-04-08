@@ -352,6 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1c7728fb7784c4885a8c6c6a378b63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sleeping: 0
   attackHurtboxes:
   - {fileID: 0}
 --- !u!114 &2909325361918233902
@@ -368,6 +369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialoguePanel: {fileID: 0}
   iconOb: {fileID: 21300000, guid: 1b1a0a29873bd4f2caa6c3d30d2a4a88, type: 3}
+  CharacterName: 
   canSeePlayer: 0
   canInspect: 1
   canTalk: 0
@@ -412,8 +414,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68655665de1db9b41ad317b508226a9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 10
-  viewAngle: 90
+  viewRadius: 15
+  viewAngle: 120
   targetMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -500,7 +502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Awareness: 1
   awarenessMeter: 0
-  sensitivity: 2
+  sensitivity: 3
   stealthCollider: {fileID: 1800466038788844840}
 --- !u!135 &8058332106434724849
 SphereCollider:
@@ -873,6 +875,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8812073870590175353}
     m_Modifications:
+    - target: {fileID: 3809772509919810245, guid: ffa713d1f8a80094eae7a79a2d05f9f8,
+        type: 3}
+      propertyPath: m_Name
+      value: StealthCollider
+      objectReference: {fileID: 0}
     - target: {fileID: 827048800865540963, guid: ffa713d1f8a80094eae7a79a2d05f9f8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -927,11 +934,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3809772509919810245, guid: ffa713d1f8a80094eae7a79a2d05f9f8,
-        type: 3}
-      propertyPath: m_Name
-      value: StealthCollider
       objectReference: {fileID: 0}
     - target: {fileID: 8366929458558490017, guid: ffa713d1f8a80094eae7a79a2d05f9f8,
         type: 3}
