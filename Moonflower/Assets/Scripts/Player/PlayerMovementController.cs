@@ -248,7 +248,7 @@ public class PlayerMovementController : MonoBehaviour
     // Handle player jump movements
     void SetJump()
     {
-        if (Input.GetButtonDown("Jump") && onGround)
+        if (Input.GetButtonDown("Jump") && onGround && !GameStateController.current.Paused)
         {
             Jumping = true;
             onGround = false;

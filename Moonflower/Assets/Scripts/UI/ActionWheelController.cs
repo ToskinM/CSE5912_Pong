@@ -94,15 +94,15 @@ public class ActionWheelController : MonoBehaviour
     }
     private void HandleInteractionFOVTargetUpdate(GameObject closestNPC)
     {
-        Debug.Log("handle target"); 
+        //Debug.Log("handle target"); 
         target = closestNPC;
         if (target != null)
         {
-            Debug.Log("Got a target!"); 
+            //Debug.Log("Got a target!"); 
             INPCController targetNPC = target.GetComponent<INPCController>();
             if (targetNPC != null)
             {
-                Debug.Log("Target has controller!"); 
+                //Debug.Log("Target has controller!"); 
                 //Debug.Log("valid npc!");
                 targetController = targetNPC;
 
@@ -111,7 +111,7 @@ public class ActionWheelController : MonoBehaviour
             }
             else
             {
-                Debug.Log("No controller :("); 
+                //Debug.Log("No controller :("); 
                 //Debug.Log("no controller :(");
                 target = null;
                 targetController = null;
@@ -119,7 +119,7 @@ public class ActionWheelController : MonoBehaviour
         }
         else
         {
-            Debug.Log("No target :((");
+            //Debug.Log("No target :((");
             targetController = null;
         }
     }
@@ -140,7 +140,10 @@ public class ActionWheelController : MonoBehaviour
             if (target && dist <= activationRange)
             {
                 if (!wheelShowing)
+                {
                     interaction.EnableNPC(dist);
+                    PlayerController.instance.SaveSheathState(); 
+                }
 
                 if (GetIfInteractable(targetController.actionsAvailable))
                 {
@@ -173,7 +176,7 @@ public class ActionWheelController : MonoBehaviour
 
     private void HandleWheelSelection(int selection)
     {
-        HideWheel();
+
         //Debug.Log(selection);
 
         switch (selection)
@@ -233,7 +236,9 @@ public class ActionWheelController : MonoBehaviour
                 break;
             default:
                 break;
+
         }
+        HideWheel();
     }
 
     IEnumerator DistractionEnd(float time, INPCController tController)
@@ -282,6 +287,7 @@ public class ActionWheelController : MonoBehaviour
 
         activeWheel.OnSelectOption -= HandleWheelSelection;
         GameStateController.current.SetPlayerFrozen(false);
+        PlayerController.instance.RestoreSheathState(); 
     }
 
     public void HandleLockonEvent(GameObject target)

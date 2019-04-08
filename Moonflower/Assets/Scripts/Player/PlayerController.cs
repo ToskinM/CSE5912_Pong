@@ -109,6 +109,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void SaveSheathState()
+    {
+        ActivePlayerCombatControls.SaveSheath(); 
+    }
+    public void RestoreSheathState()
+    {
+        ActivePlayerCombatControls.RestoreSheath(); 
+    }
+
     public void Revive()
     {
         ActivePlayerCombatControls.SetWeaponSheathed(true); 
