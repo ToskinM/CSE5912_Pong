@@ -99,7 +99,7 @@ public class ActionWheelController : MonoBehaviour
             INPCController targetNPC = target.GetComponent<INPCController>();
             if (targetNPC != null)
             {
-                Debug.Log("valid npc!");
+                //Debug.Log("valid npc!");
                 targetController = targetNPC;
 
                 activeWheel.Initialize(targetNPC.icon, targetNPC.actionsAvailable);
@@ -107,14 +107,14 @@ public class ActionWheelController : MonoBehaviour
             }
             else
             {
-                Debug.Log("no controller :(");
+                //Debug.Log("no controller :(");
                 target = null;
                 targetController = null;
             }
         }
         else
         {
-            Debug.Log("no target :((");
+            //Debug.Log("no target :((");
             targetController = null;
         }
     }

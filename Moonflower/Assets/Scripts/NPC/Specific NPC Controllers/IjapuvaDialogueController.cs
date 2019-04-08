@@ -44,6 +44,7 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
         movement = mainController.movement;// new NPCMovementController(gameObject, Constants.AMARU_NAME);
         movement.FollowPlayer(bufferDist, tooCloseRad);
         movement.SetDefault(NPCMovementController.MoveState.chill);
+        movement.Chill();
 
         icon = mainController.icon;
 
@@ -76,6 +77,10 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
             currTalk.Update();
         }
         DialogueActive = currTalk.DialogueActive();
+        if(currTalk.Complete)
+        {
+            movement.Chill(); 
+        }
 
     }
 
@@ -101,7 +106,7 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
     //start current conversation
     public void StartTalk()
     {
-
+        movement.Follow();
         if (!currTalk.DialogueActive())
         {
             //playerController.TalkingPartner = gameObject;

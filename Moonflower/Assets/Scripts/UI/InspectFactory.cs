@@ -61,6 +61,10 @@ public class InspectFactory
                 return "He/Him\nScavenger\n\nAlways finding a way to get away, maybe he'll say why he ventures one day.";
             case Constants.MOUSE_NAME:
                 return pronouns + "\nRambunctious Rodent\n\nEasily frightened and easily quelled, they'd love a quick nibble before they are felled.";
+            case Constants.ANGUJA_NAME:
+                return "They/Them\nRambunctious Rodent\n\nEars are large and ready to hear, they would never be insincere.";
+            case Constants.IJAPUVA_NAME:
+                return "He/Him\nRambunctious Rodent\n\nTelling tales much taller than he, be warned of what he claims to see.";
             case Constants.CATBAT_NAME:
                 return pronouns + "\nFlying Kitty\n\nTheir diving and dodging can cause you a fright, but they only seek water bait to bite.";
             case Constants.ORBY_NAME:
