@@ -71,6 +71,8 @@ public class InspectFactory
                 return pronouns + "\nFireball\n\nDefinitely volatile, they might be unstable. Be cautious and aware they portend a fable.";
             case Constants.ORBYJR_NAME:
                 return pronouns + "\nBaby Fireball\n\nThey tend to be curious and love to befriend, though parents flare out these buds don't offend.";
+            case Constants.TEJU_NAME:
+                return "He/Him\nMonster God\n\nWhen left unchecked, the fires rain while yearning for sweet and receiving distain.";
             default:
                 return "";
 

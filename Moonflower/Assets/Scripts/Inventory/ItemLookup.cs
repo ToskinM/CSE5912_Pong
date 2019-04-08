@@ -46,6 +46,19 @@ public class ItemLookup
         }
     }
 
+    public bool IsSweet(string name)
+    {
+        switch (name)
+        {
+            case HONEY_NAME:
+            case PINEAPPLE_NAME:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
     public bool IsInstrument(string name)
     {
         switch (name)

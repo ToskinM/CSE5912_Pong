@@ -166,11 +166,11 @@ public class SceneController : MonoBehaviour
             WentScene.Add(SceneManager.GetActiveScene().name);
         else
         {
-            Debug.Log("I went here before");
+//            Debug.Log("I went here before");
         }
         for (int i = 0; i < WentScene.Count;i++)
         {
-            Debug.Log(WentScene[i].ToString());
+//            Debug.Log(WentScene[i].ToString());
         }
     }
 

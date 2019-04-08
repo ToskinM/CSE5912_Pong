@@ -141,6 +141,9 @@ public static class Constants
     public const string ORBY_NAME = "Orby";
     public const string ORBYJR_NAME = "Orby Jr.";
 
+    //monsters
+    public const string TEJU_NAME = "Teju Jagua"; 
+
     //heal objects
     public const string MOONFLOWER_NAME = "Moon Flower";
     public const string WOLFAPPLE_NAME = "Wolf Apple"; 

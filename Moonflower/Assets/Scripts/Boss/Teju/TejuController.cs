@@ -37,14 +37,14 @@ public class TejuController : MonoBehaviour, INPCController
     {
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
-        movement = new NPCMovementController(gameObject, Constants.MOUSE_NAME);
+        movement = new NPCMovementController(gameObject, Constants.TEJU_NAME);
 
         combatController = GetComponent<TejuCombatController>();
         animationtController = GetComponent<TejuAnimationController>();
 
         //playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
 
-        icon = new IconFactory().GetIcon(Constants.MOUSE_ICON);
+        icon = new IconFactory().GetIcon(Constants.TEGU_ICON);
     }
 
     void Start()
@@ -73,14 +73,14 @@ public class TejuController : MonoBehaviour, INPCController
     }
     public void Gift(string giftName)
     {
-        if (new ItemLookup().IsFood(giftName))
+        if(new ItemLookup().IsSweet(giftName))
         {
-            displayFeedback("They loves the " + giftName + "!");
+            displayFeedback("Teju loves "+ giftName+" and has stopped crying!");
             combatController.Subdue();
         }
         else
         {
-            displayFeedback("They have no use for " + giftName + "...");
+            displayFeedback("Teju is too sad for the " + giftName + ".");
         }
     }
     public void Distract(GameObject distractedBy)
@@ -95,7 +95,7 @@ public class TejuController : MonoBehaviour, INPCController
 
     public string Inspect()
     {
-        return Constants.MOUSE_NAME;
+        return Constants.TEJU_NAME;
     }
 
     private void StartEngagement()
