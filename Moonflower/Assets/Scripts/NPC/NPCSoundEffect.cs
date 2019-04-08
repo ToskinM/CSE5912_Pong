@@ -62,7 +62,7 @@ public class NPCSoundEffect : MonoBehaviour
     {
         if (gameObject.GetComponent<AudioSource>() == null)
         {
-            Debug.Log(gameObject.name);
+//            Debug.Log(gameObject.name);
             if (audioManager != null)
                 audioManager.ReAddAllAudioSource(gameObject, DecideWhichNPC());
             else

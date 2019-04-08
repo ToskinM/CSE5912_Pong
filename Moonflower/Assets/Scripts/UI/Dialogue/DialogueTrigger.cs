@@ -38,7 +38,7 @@ public class DialogueTrigger : MonoBehaviour
     DialogueGraph graph;
     DialogueFactory factory;
     GameObject partner;
-    //InteractionPopup interaction;
+    InteractionPopup interaction;
 
     //string gName;
 
@@ -56,7 +56,7 @@ public class DialogueTrigger : MonoBehaviour
         //gName = graphName;
 
         icon = iconSprite;
-        //interaction = InteractionPopup.instance; //GameObject.Find("HUD").GetComponent<ComponentLookup>().InteractionPopup;
+        interaction = GameObject.Find("HUD").GetComponent<ComponentLookup>().InteractionPopup;
         //spriteFile = characterSprite;
 
     }
@@ -181,7 +181,7 @@ public class DialogueTrigger : MonoBehaviour
     public void StartDialogue(bool disregardCombat = false, bool instantCam = false)
     {
 //        Debug.Log("To trigger");
-        InteractionPopup.instance.NotAllowed = true; 
+        interaction.NotAllowed = true; 
         if (!PlayerController.instance.ActivePlayerCombatControls.InCombat || disregardCombat)
         {
 //            Debug.Log("Inside"); 
@@ -211,7 +211,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void EndDialogue()
     {
-        InteractionPopup.instance.NotAllowed = false; 
+        interaction.NotAllowed = false; 
         
         destroyButtons();
         pState = PanelState.falling; 
