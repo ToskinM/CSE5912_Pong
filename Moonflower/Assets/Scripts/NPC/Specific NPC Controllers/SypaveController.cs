@@ -65,7 +65,9 @@ public class SypaveController : MonoBehaviour, INPCController
         movement.FollowPlayer(bufferDist, tooCloseRad);
         movement.Wander(centerOfTown, 40f);
         movement.SetDefault(NPCMovementController.MoveState.pace);
-        movement.Reset(); 
+        //gameObject.transform.position = walkOrigin; 
+        movement.Reset();
+        agent.Warp(walkOrigin);
 
         icon = new IconFactory().GetIcon(Constants.SYPAVE_ICON);
         intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.SYPAVE_INTRO_DIALOGUE);
@@ -248,7 +250,19 @@ public class SypaveController : MonoBehaviour, INPCController
     {
         if (currTalk.Complete)
         {
-            displayFeedback("Sypave told you to get inside.");
+            switch(currConvo)
+            {
+                case Convo.intro:
+                    displayFeedback("Sypave told you to get inside.");
+                    break;
+                case Convo.frantic:
+                    displayFeedback("Sypave told you to search.");
+                    break; 
+                case Convo.advice:
+                    displayFeedback("Sypave told you to go out and find Pinon.");
+                    break;
+            }
+
         }
         else
         {

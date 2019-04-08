@@ -50,6 +50,15 @@ public class FieldOfView : MonoBehaviour
         StartCoroutine("FindTargetsWithDelay", 0.2f);
     }
 
+    public void Reset()
+    {
+        startingViewAngle = viewAngle;
+        closestTarget = null;
+        focusedTarget = null;
+        StartCoroutine("FindTargetsWithDelay", 0.2f);
+
+    }
+
     private void OnEnable()
     {
         GameStateController.OnDebugViewToggle += HandleDebugViewToggle;

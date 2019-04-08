@@ -168,7 +168,16 @@ public class AmaruController : MonoBehaviour, INPCController
     {
         if (currTalk.Complete)
         {
-            displayFeedback("Amaru is busy working.");
+
+            switch (currConvo)
+            {
+                case Convo.intro:
+                    displayFeedback("Amaru is busy working.");
+                    break;
+                case Convo.advice:
+                    displayFeedback("Amaru's looking diligently for your brother.");
+                    break;
+            }
         }
         else
         {

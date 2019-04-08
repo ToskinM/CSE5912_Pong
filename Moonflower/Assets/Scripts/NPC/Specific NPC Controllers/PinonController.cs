@@ -198,6 +198,7 @@ public class PinonController : MonoBehaviour, INPCController
         if (currTalk.Complete)
         {
             displayFeedback("Pinon doesn't want to talk to you.");
+
         }
         else
         {

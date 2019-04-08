@@ -71,7 +71,7 @@ public class LevelManager : MonoBehaviour
     {
         PlayerController.instance.TalkingPartner = dialoguePartner;
         PlayerController.instance.DisableSwitching();
-        gameStateController.SetMouseLock(false);
+        GameStateController.current.SetMouseLock(false);
         if (dialogueCamera != null)
         {
             if (instantCam)

@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
         ActivePlayerInteractionFOV = ActivePlayerObject.GetComponent<FieldOfView>();
         ActivePlayerInteractionFOV.enabled = true;
 
+
     }
 
     private void OnEnable()
@@ -122,10 +123,12 @@ public class PlayerController : MonoBehaviour
     {
         enabled = true;
         SwitchToAnai();
+        ActivePlayerInteractionFOV = ActivePlayerObject.GetComponent<FieldOfView>();
         ActivePlayerInteractionFOV.enabled = true;
+        ActivePlayerInteractionFOV.Reset();
         ActivePlayerCombatControls.Reset();
         ActivePlayerAnimator.Reset();
-        ActivePlayerMovementControls.Stunned = false;
+        ActivePlayerMovementControls.Reset();
 
     }
 

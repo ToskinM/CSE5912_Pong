@@ -85,6 +85,13 @@ public class PlayerMovementController : MonoBehaviour
         //cameraForwardAngle = Mathf.LerpAngle(cameraForwardAngle, cameraScript.transform.rotation.eulerAngles.y, );
     }
 
+
+    public void Reset()
+    {
+        SetInitialPlayer();
+        //SetInitialCompanion();
+        SetInitialPlayerState();
+    }
     // Sets the active object depending on the active character so that this script knows which object to update
     void SetActivePlayer(PlayerCharacter activeChar)
     {

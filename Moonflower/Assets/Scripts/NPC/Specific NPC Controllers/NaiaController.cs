@@ -244,7 +244,16 @@ public class NaiaController : MonoBehaviour, INPCController
 
         if (currTalk.Complete)
         {
-            displayFeedback("Naia's busy brooding.");
+            switch (currConvo)
+            {
+                case Convo.intro:
+                    displayFeedback("Naia's busy brooding.");
+                    break;
+                case Convo.advice:
+                    displayFeedback("Naia's staying here to search and protect the village.");
+                    break;
+            }
+
         }
         else
         {
