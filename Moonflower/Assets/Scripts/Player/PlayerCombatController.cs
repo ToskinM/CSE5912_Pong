@@ -21,6 +21,8 @@ public class PlayerCombatController : MonoBehaviour
 
     private Coroutine stopCombatCoroutine = null;
 
+    private bool oldWeaponOut = false; 
+
     [HideInInspector] public bool isAttacking;
     [HideInInspector] public float attackTimeout = 0.5f;
     private readonly float combatTimeout = 5f;
@@ -171,6 +173,17 @@ public class PlayerCombatController : MonoBehaviour
             weapon.gameObject.SetActive(!sheathe);
 
         HasWeaponOut = !sheathe;
+    }
+
+    public void SaveSheath()
+    {
+        oldWeaponOut = HasWeaponOut; 
+    }
+    public void RestoreSheath()
+    {
+        HasWeaponOut = oldWeaponOut;
+        weapon.gameObject.SetActive(HasWeaponOut);
+
     }
 
     // Block

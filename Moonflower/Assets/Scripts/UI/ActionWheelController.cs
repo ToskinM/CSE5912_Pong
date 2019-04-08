@@ -140,7 +140,10 @@ public class ActionWheelController : MonoBehaviour
             if (target && dist <= activationRange)
             {
                 if (!wheelShowing)
+                {
                     interaction.EnableNPC(dist);
+                    PlayerController.instance.SaveSheathState(); 
+                }
 
                 if (GetIfInteractable(targetController.actionsAvailable))
                 {
@@ -173,7 +176,7 @@ public class ActionWheelController : MonoBehaviour
 
     private void HandleWheelSelection(int selection)
     {
-        HideWheel();
+
         //Debug.Log(selection);
 
         switch (selection)
@@ -233,7 +236,9 @@ public class ActionWheelController : MonoBehaviour
                 break;
             default:
                 break;
+
         }
+        HideWheel();
     }
 
     IEnumerator DistractionEnd(float time, INPCController tController)
@@ -282,6 +287,7 @@ public class ActionWheelController : MonoBehaviour
 
         activeWheel.OnSelectOption -= HandleWheelSelection;
         GameStateController.current.SetPlayerFrozen(false);
+        PlayerController.instance.RestoreSheathState(); 
     }
 
     public void HandleLockonEvent(GameObject target)

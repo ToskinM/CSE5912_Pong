@@ -38,6 +38,7 @@ public class ActionWheel : MonoBehaviour
     private void OnButtonClick(int buttonIndex)
     {
         OnSelectOption?.Invoke(buttonIndex);
+        PlayerController.instance.RestoreSheathState();
     }
 
     public void Initialize(Sprite iconSprite, bool[] actionsAvailable)
