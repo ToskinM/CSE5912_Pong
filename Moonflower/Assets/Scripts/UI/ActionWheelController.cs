@@ -94,15 +94,15 @@ public class ActionWheelController : MonoBehaviour
     }
     private void HandleInteractionFOVTargetUpdate(GameObject closestNPC)
     {
-        Debug.Log("handle target"); 
+        //Debug.Log("handle target"); 
         target = closestNPC;
         if (target != null)
         {
-            Debug.Log("Got a target!"); 
+            //Debug.Log("Got a target!"); 
             INPCController targetNPC = target.GetComponent<INPCController>();
             if (targetNPC != null)
             {
-                Debug.Log("Target has controller!"); 
+                //Debug.Log("Target has controller!"); 
                 //Debug.Log("valid npc!");
                 targetController = targetNPC;
 
@@ -111,7 +111,7 @@ public class ActionWheelController : MonoBehaviour
             }
             else
             {
-                Debug.Log("No controller :("); 
+                //Debug.Log("No controller :("); 
                 //Debug.Log("no controller :(");
                 target = null;
                 targetController = null;
@@ -119,7 +119,7 @@ public class ActionWheelController : MonoBehaviour
         }
         else
         {
-            Debug.Log("No target :((");
+            //Debug.Log("No target :((");
             targetController = null;
         }
     }
