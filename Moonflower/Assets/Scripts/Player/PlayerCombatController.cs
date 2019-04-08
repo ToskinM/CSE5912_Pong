@@ -102,6 +102,8 @@ public class PlayerCombatController : MonoBehaviour
         GameStateController.OnFreezePlayer -= HandleFreezeEvent;
     }
 
+
+
     void Update()
     {
         if (active)
@@ -143,6 +145,14 @@ public class PlayerCombatController : MonoBehaviour
                 CheckDeath();
             }
         }
+    }
+
+    public void Reset()
+    {
+        inCombat = false;
+        SetWeaponSheathed(true); 
+        CombatTarget = null;
+
     }
 
     private void CheckAggressorDistance()

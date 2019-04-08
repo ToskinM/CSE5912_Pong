@@ -61,9 +61,11 @@ public class SypaveController : MonoBehaviour, INPCController
         // Setup Movement
         Vector3 walkOrigin = transform.position;
         movement = new NPCMovementController(gameObject, Constants.SYPAVE_NAME);
-        movement.FollowPlayer(bufferDist, tooCloseRad);
         movement.Pace(transform.position, paceDist);
+        movement.FollowPlayer(bufferDist, tooCloseRad);
+        movement.Wander(centerOfTown, 40f);
         movement.SetDefault(NPCMovementController.MoveState.pace);
+        movement.Reset(); 
 
         icon = new IconFactory().GetIcon(Constants.SYPAVE_ICON);
         intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.SYPAVE_INTRO_DIALOGUE);
@@ -179,9 +181,7 @@ public class SypaveController : MonoBehaviour, INPCController
                 {
                     //Debug.Log("switch convos");
                     currConvo = Convo.advice;
-                    movement.Wander(centerOfTown, 30f);
-                    movement.SetDefault(NPCMovementController.MoveState.wander);
-                    movement.InfluenceWanderSpeed(1.5f);
+
                     Invoke("switchConvos", 3);
                     GameStateController.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currConvo.ToString(), advice);
                 }
@@ -204,7 +204,10 @@ public class SypaveController : MonoBehaviour, INPCController
     private void switchConvos()
     {
         currTalk = advice;
-        currConvo = Convo.advice; 
+        currConvo = Convo.advice;
+        movement.SetDefault(NPCMovementController.MoveState.wander);
+        movement.Reset(); 
+        movement.InfluenceWanderSpeed(1.5f); 
         //GameStateController.current.SaveNPCDialogues(Constants.SYPAVE_NAME, currConvo.ToString(), currTalk);
     }
 

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SpawnerController : MonoBehaviour
 {
-    public 
     public NPCSpawner[] spawners;
 
     void Start()
