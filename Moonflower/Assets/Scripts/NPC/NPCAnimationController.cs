@@ -15,12 +15,13 @@ public class NPCAnimationController : MonoBehaviour
     private const string key_IsHit = "IsHit";
     private const string key_IsStunned = "IsStunned";
     private const string key_IsDead = "IsDead";
+    private const string key_IsSleeping = "IsSleeping";
 
     private Animator animator;
     private NavMeshAgent agent;
     private NPCCombatController combatController;
     private LesserNPCController controller;
-
+    public bool sleeping = false;
     public HurtboxController[] attackHurtboxes;
 
     void Awake()
@@ -50,13 +51,21 @@ public class NPCAnimationController : MonoBehaviour
         //    animator.SetBool(key_IsRun, movement.Action == Actions.Running);
         //    animator.SetBool(key_IsJump, movement.Jumping);
         //}
-
+        if (sleeping)
+        {
+            animator.SetBool(key_IsSleeping, true);
+        }
+        else
+        {
+            animator.SetBool(key_IsSleeping, false);
+        }
         if (agent != null )//&& agent.isActiveAndEnabled)
         {
             if (agent.isStopped)
             {
                 animator.SetBool(key_IsRun, false);
                 animator.SetBool(key_IsWalk, false);
+
                 return;
             }
 
@@ -102,10 +111,16 @@ public class NPCAnimationController : MonoBehaviour
     public void TriggerHit()
     {
         animator.SetTrigger(key_IsHit);
+        sleeping = false;
     }
     public void SetIsDead(bool isDead)
     {
         animator.SetBool(key_IsDead, isDead);
+    }
+
+    public void SetIsSleeping(bool isSleeping)
+    {
+        animator.SetBool(key_IsSleeping, isSleeping);
     }
 
     public void EnableHurtbox(int index)
