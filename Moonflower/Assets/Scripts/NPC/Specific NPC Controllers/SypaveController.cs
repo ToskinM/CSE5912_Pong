@@ -28,7 +28,7 @@ public class SypaveController : MonoBehaviour, INPCController
 
     CurrentPlayer playerInfo;
     //private GameObject anai;
-    private NPCMovementController movement;
+    public NPCMovementController movement { get; set; }
     //private NPCCombatController combatController;
     private NavMeshAgent agent;
 

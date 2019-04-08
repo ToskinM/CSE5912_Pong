@@ -132,6 +132,9 @@ public static class Constants
 
     //other
     public const string MOUSE_NAME = "Mousy Boi";
+    public const string ANGUJA_NAME = "Anguja"; 
+    public const string ANGUJA_DIALOGUE = dialogueFolder + cave + "Anguja";
+
     public const string CATBAT_NAME = "Catbat";
     public const string ORBY_NAME = "Orby";
     public const string ORBYJR_NAME = "Orby Jr.";

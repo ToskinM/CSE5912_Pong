@@ -24,7 +24,7 @@ public class NaiaController : MonoBehaviour, INPCController
 
     //public UnityEvent Fight; 
 
-    private NPCMovementController movement;
+    public NPCMovementController movement { get; set; }
     private NPCCombatController combatController;
     private CharacterStats naiaStat; 
     private NavMeshAgent agent;
