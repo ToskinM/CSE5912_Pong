@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 // Unity Tutorial Script
 public class SceneController : MonoBehaviour
@@ -25,6 +26,8 @@ public class SceneController : MonoBehaviour
     public CanvasGroup loadscreenCanvasGroup;
     public Slider loadingBar;
     public TextMeshProUGUI progressText;
+
+    public List<string> WentScene;
 
     private void Start()
     {
@@ -73,6 +76,7 @@ public class SceneController : MonoBehaviour
 
     private IEnumerator FadeAndSwitchScenes(string sceneName)
     {
+        WentedScene();
         isLoading = true;
 
         // Fade to black
@@ -101,6 +105,7 @@ public class SceneController : MonoBehaviour
 
     private IEnumerator FadeAndSwitchScenesNoLS(string sceneName)
     {
+        WentedScene();
         isLoading = true;
 
         // Fade to black
@@ -154,6 +159,21 @@ public class SceneController : MonoBehaviour
         // Fade to new scene
         yield return StartCoroutine(Fade(0f, 5f));
     }
+
+    public void WentedScene()
+    {
+        if (!WentScene.Contains(SceneManager.GetActiveScene().name))
+            WentScene.Add(SceneManager.GetActiveScene().name);
+        else
+        {
+            Debug.Log("I went here before");
+        }
+        for (int i = 0; i < WentScene.Count;i++)
+        {
+            Debug.Log(WentScene[i].ToString());
+        }
+    }
+
 
     public void FadeOutToBlack(float multiplier = 1)
     {
