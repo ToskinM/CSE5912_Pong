@@ -61,6 +61,7 @@ public class TejuCrystalScript : MonoBehaviour
 
     private void Shatter()
     {
+        GetComponentInChildren<TejuCrystal>().FireFree();
         OnShatter?.Invoke();
         Instantiate(shatterEffect, shatterEffectNode.position, shatterEffectNode.rotation);
         gameObject.SetActive(false);
