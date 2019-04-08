@@ -48,12 +48,13 @@ public class ActionWheelController : MonoBehaviour
         gameStateController = GameStateController.current;
         followCamera = LevelManager.current.mainCamera;
 
-        inspect = GameObject.Find("HUD").GetComponent<ShowInspect>();
-        inventory = GameObject.Find("HUD").GetComponent<ShowInventory>();
+        GameObject hud = GameObject.Find("HUD");
+        inspect = hud.GetComponent<ShowInspect>();
+        inventory = hud.GetComponent<ShowInventory>();
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
         if (InteractionPopup == null)
-            InteractionPopup = GameObject.Find("Interaction Popup"); 
-        interaction = InteractionPopup.GetComponent<InteractionPopup>();
+            InteractionPopup = GameObject.Find("Interaction Popup");
+        interaction = hud.GetComponent<ComponentLookup>().InteractionPopup;// InteractionPopup.GetComponent<InteractionPopup>();
 
         //        Debug.Log("屌你老妈哇佬");
 
@@ -93,12 +94,15 @@ public class ActionWheelController : MonoBehaviour
     }
     private void HandleInteractionFOVTargetUpdate(GameObject closestNPC)
     {
+  //      Debug.Log("handle target"); 
         target = closestNPC;
         if (target != null)
         {
+  //          Debug.Log("Got a target!"); 
             INPCController targetNPC = target.GetComponent<INPCController>();
             if (targetNPC != null)
             {
+ //               Debug.Log("Target has controller!"); 
                 //Debug.Log("valid npc!");
                 targetController = targetNPC;
 
@@ -107,6 +111,7 @@ public class ActionWheelController : MonoBehaviour
             }
             else
             {
+ //               Debug.Log("No controller :("); 
                 //Debug.Log("no controller :(");
                 target = null;
                 targetController = null;
@@ -114,7 +119,7 @@ public class ActionWheelController : MonoBehaviour
         }
         else
         {
-            //Debug.Log("no target :((");
+//            Debug.Log("No target :((");
             targetController = null;
         }
     }
