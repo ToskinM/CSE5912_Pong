@@ -30,6 +30,7 @@ public class SoulCrystal : MonoBehaviour
 
     private void TriggerMemory()
     {
+        // Start memory sequence here?
         Debug.Log("TRIGGERED");
     }
 }
