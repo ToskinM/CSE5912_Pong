@@ -32,6 +32,7 @@ public class TejuController : MonoBehaviour, INPCController
 
     public SoulCrystal soulCrystal;
     public GameObject soulCrystalBarrier;
+    public SpawnerController spawnerController;
 
     private void Awake()
     {
@@ -49,6 +50,7 @@ public class TejuController : MonoBehaviour, INPCController
 
     void Start()
     {
+        spawnerController.DeactivateAll();
         startPosition = transform.position;
 
         // Setup Movement
@@ -118,11 +120,13 @@ public class TejuController : MonoBehaviour, INPCController
             movement.SetHoldGround(true);
             animationtController.SetSleeping(false);
             GetComponent<NPCSoundEffect>().NPCStop("Snoring");
+            spawnerController.ActivateAll();
         }
         else
         {
             animationtController.SetSleeping(true);
             movement.Reset();
+            spawnerController.DeactivateAll();
         }
     }
     private void HandleOnSubdue()
