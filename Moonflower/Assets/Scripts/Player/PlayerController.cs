@@ -120,11 +120,12 @@ public class PlayerController : MonoBehaviour
 
     public void Revive()
     {
-        ActivePlayerCombatControls.Reset(); 
-        ActivePlayerAnimator.Reset();
-        ActivePlayerMovementControls.Stunned = false;
         enabled = true;
         SwitchToAnai();
+        ActivePlayerInteractionFOV.enabled = true;
+        ActivePlayerCombatControls.Reset();
+        ActivePlayerAnimator.Reset();
+        ActivePlayerMovementControls.Stunned = false;
 
     }
 
