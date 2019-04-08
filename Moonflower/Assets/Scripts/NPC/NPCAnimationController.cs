@@ -51,14 +51,18 @@ public class NPCAnimationController : MonoBehaviour
         //    animator.SetBool(key_IsRun, movement.Action == Actions.Running);
         //    animator.SetBool(key_IsJump, movement.Jumping);
         //}
-        if (sleeping)
+        if(this.gameObject.name.Equals("BigMouse"))
         {
-            animator.SetBool(key_IsSleeping, true);
+            if (sleeping)
+            {
+                animator.SetBool(key_IsSleeping, true);
+            }
+            else
+            {
+                animator.SetBool(key_IsSleeping, false);
+            }
         }
-        else
-        {
-            animator.SetBool(key_IsSleeping, false);
-        }
+
         if (agent != null )//&& agent.isActiveAndEnabled)
         {
             if (agent.isStopped)
