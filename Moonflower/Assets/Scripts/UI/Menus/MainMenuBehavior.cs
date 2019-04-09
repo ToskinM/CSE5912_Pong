@@ -8,7 +8,7 @@ public class MainMenuBehavior : MonoBehaviour
 {
     public GameObject MainMenu, OptionsMenu;
     public CanvasGroup Title;
-    public Button start, options, quit, back;
+    public Button start, options, quit, credits, back;
     //public AudioClip MusicClip;
     //public AudioSource MusicSource;
     public ICommand play, nag;
@@ -34,6 +34,7 @@ public class MainMenuBehavior : MonoBehaviour
         start.onClick.AddListener(StartGame);
         options.onClick.AddListener(Options);
         quit.onClick.AddListener(QuitGame);
+        credits.onClick.AddListener(Credits);
         back.onClick.AddListener(GoBack);
 
         audioManager = FindObjectOfType<AudioManager>();
@@ -117,6 +118,13 @@ public class MainMenuBehavior : MonoBehaviour
         }
 
         //Application.Quit(); // this doesn't affect the unity editor, only a built application
+    }
+
+    public void Credits()
+    {
+        audioManager.Play(MenuSFX, "Click");
+
+        SceneController.current.FadeAndLoadSceneNoLS(Constants.SCENE_CREDITS);
     }
 
     //private IEnumerator GetAudioManager()
