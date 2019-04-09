@@ -9,7 +9,7 @@ public class TejuSoundEffect : MonoBehaviour, IAudio
     // Start is called before the first frame update
     void Start()
     {
-        
+        SetupAudioSource();
     }
     public void SetupAudioSource()
     {
