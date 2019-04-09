@@ -30,7 +30,7 @@ public class PlayerSoundEffect : MonoBehaviour
     {
         string Walk1;
         string Walk2;
-        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE || SceneManager.GetActiveScene().name == Constants.SCENE_CAVEENTRANCE)
         {
             Walk1 = "AnaiWalking(1)";
             Walk2 = "AnaiWalking(2)";
@@ -56,7 +56,7 @@ public class PlayerSoundEffect : MonoBehaviour
     {
         string Walk1;
         string Walk2;
-        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE || SceneManager.GetActiveScene().name == Constants.SCENE_CAVEENTRANCE)
         {
             Walk1 = "AnaiWalking(1)";
             Walk2 = "AnaiWalking(2)";
@@ -92,15 +92,15 @@ public class PlayerSoundEffect : MonoBehaviour
     {
         string Walk1;
         string Walk2;
-        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE || SceneManager.GetActiveScene().name == Constants.SCENE_CAVEENTRANCE)
         {
-            Walk1 = "AnaiWalking(1)";
-            Walk2 = "AnaiWalking(2)";
+            Walk1 = "AnaiRun(1)";
+            Walk2 = "AnaiRun(2)";
         }
         else
         {
-            Walk1 = "AnaiWalking(3)";
-            Walk2 = "AnaiWalking(4)";
+            Walk1 = "AnaiRun(3)";
+            Walk2 = "AnaiRun(4)";
         }
         for (int i = 0; i < 2; i++)
         {
