@@ -8,6 +8,11 @@ public class CreditsSequence : MonoBehaviour
 
     private float time;
 
+    private void Start()
+    {
+        GameStateController.current.ForceMouseUnlock();
+    }
+
     void Update()
     {
         time += Time.deltaTime;
