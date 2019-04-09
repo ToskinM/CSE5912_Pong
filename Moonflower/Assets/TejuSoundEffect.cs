@@ -29,8 +29,13 @@ public class TejuSoundEffect : MonoBehaviour, IAudio
     }
     public void Earthquake()
     {
-        Debug.Log("I am in earthquake");
         audioSource.clip = TejuSFX[0];
+        audioSource.Play();
+    }
+
+    public void Fire()
+    {
+        audioSource.clip = TejuSFX[1];
         audioSource.Play();
     }
 

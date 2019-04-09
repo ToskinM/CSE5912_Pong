@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TejuCryAudio : MonoBehaviour, IAudio
 {
-    public AudioClip TejuCrySounds;
+    public AudioClip[] TejuCrySounds;
 
     private AudioSource audioSource;
     // Start is called before the first frame update
@@ -14,7 +14,7 @@ public class TejuCryAudio : MonoBehaviour, IAudio
 
         SetupAudioSource();
 
-        audioSource.clip = TejuCrySounds;
+        audioSource.clip = TejuCrySounds[Random.Range(0, TejuCrySounds.Length - 1)];
         audioSource.Play();
     }
 
