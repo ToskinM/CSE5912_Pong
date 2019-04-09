@@ -51,6 +51,14 @@ public class NPCSoundEffect : MonoBehaviour
             audioManager.ReAddAllAudioSource(gameObject, DecideWhichNPC());
         audioManager.Play(DecideWhichNPC(), "Attack");
     }
+
+    public void NPCRangeAttack()
+    {
+        if (gameObject.GetComponent<AudioSource>() == null)
+            audioManager.ReAddAllAudioSource(gameObject, DecideWhichNPC());
+        audioManager.Play(DecideWhichNPC(), "RangeAttack");
+    }
+
     public void NPCGetHit()
     {
         if (gameObject.GetComponent<AudioSource>() == null)
@@ -108,6 +116,13 @@ public class NPCSoundEffect : MonoBehaviour
         if (gameObject.GetComponent<AudioSource>() == null)
             audioManager.ReAddAllAudioSource(gameObject, DecideWhichNPC());
         audioManager.Play(DecideWhichNPC(), "GetKill");
+    }
+
+    public void NPCPlay(string clip)
+    {
+        if (gameObject.GetComponent<AudioSource>() == null)
+            audioManager.ReAddAllAudioSource(gameObject, DecideWhichNPC());
+        audioManager.Play(DecideWhichNPC(), clip);
     }
 
     public string DecideWhichNPC()
