@@ -95,7 +95,7 @@ public class TuvichaDialogueController : MonoBehaviour, IDialogueController
 //        Debug.Log("start talking");
         if (currTalk.Complete)
         {
-            displayFeedback("Tuvicha looks like they're going to fall back asleep.");
+            displayFeedback("Tuvicha looks like ze's going to fall back asleep.");
         }
         else
         {
