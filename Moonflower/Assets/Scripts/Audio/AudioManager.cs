@@ -82,7 +82,7 @@ public class AudioManager : MonoBehaviour
         {
             s.source.mute = false;
             s.source.Play();
-            Debug.Log("I am Playing " + name + s.source.clip);
+            //Debug.Log("I am Playing " + name + s.source.clip);
         }
     }
     public void PlayBackground(string category, string name)
