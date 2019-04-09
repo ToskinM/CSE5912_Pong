@@ -17,6 +17,7 @@ public class FogChanger : MonoBehaviour
         normalColor = new Color(.42f, .82f, .79f);
         lavaColor = new Color(.34f, .15f, .45f);
         shadowColor = new Color(.03f, .03f, .03f);
+        RenderSettings.ambientIntensity = 0.8f;
     }
 
     // Update is called once per frame
@@ -37,6 +38,7 @@ public class FogChanger : MonoBehaviour
                 else
                 {
                     RenderSettings.fogColor = shadowColor;
+                    RenderSettings.ambientIntensity = 0.3f;
                 }
                 isNormal = false;
             }
@@ -45,6 +47,8 @@ public class FogChanger : MonoBehaviour
 
                 RenderSettings.fogColor = normalColor;
                 isNormal = true;
+                RenderSettings.ambientIntensity = 0.8f;
+
 
             }
         }
