@@ -430,6 +430,11 @@ public class NPCMovementController : MonoBehaviour, IMovement
         //Debug.Log(charName+" chill");
     }
 
+    public void GoToLoc(GameObject loc)
+    {
+        Follow(loc, 0.2f); 
+    }
+
     public void Reset()
     {
         //Debug.Log(charName + " reset"); 

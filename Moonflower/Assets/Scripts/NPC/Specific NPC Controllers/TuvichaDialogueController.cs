@@ -11,6 +11,7 @@ public class TuvichaDialogueController : MonoBehaviour, IDialogueController
     private GameObject DialoguePanel;
     private Sprite icon { get; set; }
     public bool DialogueActive { get; set; } = false;
+    public GameObject Location; 
 
     const float tooCloseRad = 3f;
     const float bufferDist = 4f;
@@ -82,6 +83,11 @@ public class TuvichaDialogueController : MonoBehaviour, IDialogueController
             movement.Chill(); 
         }
 
+    }
+
+    public void Move()
+    {
+        movement.GoToLoc(Location); 
     }
 
     public DialogueTrigger GetCurrDialogue()

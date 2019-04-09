@@ -30,6 +30,11 @@ public class NPCDialogueEvents : MonoBehaviour
         }
     }
 
+    public void MoveMouse()
+    {
+        GameObject.Find("Big Mouse").GetComponent<TuvichaDialogueController>().Move();
+    }
+
     private void fight()
     {
         GameObject.Find("Naia").GetComponent<NaiaController>().Fight();
@@ -56,7 +61,7 @@ public class NPCDialogueEvents : MonoBehaviour
     public void GiveToPlayer(string giftName)
     {
         displayFeedback("You've been given a " + giftName.ToLower() + "!");
-        if(giftName.Equals("Moon Flower"))
+        if(giftName.Equals(Constants.MOONFLOWER_NAME))
         {
             bool added = PlayerController.instance.ActivePlayerStats.AddHealth(10);
             if(!added)
