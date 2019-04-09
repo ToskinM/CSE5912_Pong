@@ -111,6 +111,16 @@ public class CharacterStats : MonoBehaviour
                 ObjectPoolController.current.CheckoutTemporary((GameObject)Resources.Load("Effects/HitEffect_Blocked"), hitPoint, 1);
         }
 
+        if (sourceName == "Lava" && PlayerController.instance.AnaiIsActive())
+        {
+            Debug.Log("I did it ");
+            PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>().AnaiIntoLava();
+            //GameObject.Find("Audio").GetComponent<AudioManager>().Play("Anai", "");
+        }
+        else if (PlayerController.instance.AnaiIsActive())
+        {
+            PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>().AnaiPunchSFX();
+        }
         if (combatController != null)
             combatController.AcknowledgeHaveHit(gameObject);
 

@@ -19,7 +19,6 @@ public class FogChanger : MonoBehaviour
         lavaColor = new Color(.47f, .32f, .56f);
         shadowColor = new Color(.03f, .03f, .03f);
         RenderSettings.ambientIntensity = 0.8f;
-        light.SetActive(false);
     }
 
     // Update is called once per frame
@@ -42,7 +41,6 @@ public class FogChanger : MonoBehaviour
                 {
                     RenderSettings.fogColor = shadowColor;
                     RenderSettings.ambientIntensity = 0.3f;
-                    light.SetActive(true);
                 }
                 isNormal = false;
             }
@@ -52,7 +50,6 @@ public class FogChanger : MonoBehaviour
                 RenderSettings.fogColor = normalColor;
                 isNormal = true;
                 RenderSettings.ambientIntensity = 0.8f;
-                light.SetActive(false);
 
 
             }
