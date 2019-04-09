@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class TransitionDetection : MonoBehaviour
 {
-    public enum CaveSoundtracks { Main, Bass, Action };
-    public CaveSoundtracks PostTransitionTrack;
-
     public GameObject SceneBGM;
     CaveMusicCrossfade transitionHandler;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (SceneBGM == null) SceneBGM = GameObject.Find("Scene BGM");
         transitionHandler = SceneBGM.GetComponent<CaveMusicCrossfade>();
     }
 
@@ -20,18 +18,7 @@ public class TransitionDetection : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            switch (PostTransitionTrack)
-            {
-                case CaveSoundtracks.Main:
-                    //transitionHandler.CrossFadeToMain();
-                    break;
-                case CaveSoundtracks.Bass:
-                    //transitionHandler.CrossFadeToBass();
-                    break;
-                case CaveSoundtracks.Action:
-                    //transitionHandler.CrossFadeToAction();
-                    break;
-            }
+            transitionHandler.TriggerCaveRoomTransition();
         }
     }
 }

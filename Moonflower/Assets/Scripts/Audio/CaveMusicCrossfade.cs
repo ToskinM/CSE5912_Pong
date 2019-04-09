@@ -11,6 +11,10 @@ public class CaveMusicCrossfade : MonoBehaviour
 
     AudioSource currentTrack;
 
+    public bool MainEnabled;
+    public bool BassEnabled;
+    public bool ActionEnabled;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,14 +48,46 @@ public class CaveMusicCrossfade : MonoBehaviour
         currentTrack = action;
     }*/
 
+    public void TriggerCaveRoomTransition()
+    {
+        if (MainEnabled && !BassEnabled)
+        {
+            CrossfadeMainToBass();
+        }
+        else if (BassEnabled && !MainEnabled)
+        {
+            CrossfadeBassToMain();
+        }
+    }
+
+    void CrossfadeMainToBass()
+    {
+        float fadeSpeed = 0.2f;
+        StartCoroutine(FadeOut(main, 0, fadeSpeed));
+        StartCoroutine(FadeIn(bass, 1, fadeSpeed));
+        MainEnabled = false;
+        BassEnabled = true;
+    }
+
+    void CrossfadeBassToMain()
+    {
+        float fadeSpeed = 0.2f;
+        StartCoroutine(FadeOut(bass, 0, fadeSpeed));
+        StartCoroutine(FadeIn(main, 1, fadeSpeed));
+        BassEnabled = false;
+        MainEnabled = true;
+    }
+
     void FadeInActionTheme()
     {
         StartCoroutine(FadeIn(action, 1, 0.2f));
+        ActionEnabled = true;
     }
 
     void FadeOutActionTheme()
     {
         StartCoroutine(FadeOut(action, 0, 0.2f));
+        ActionEnabled = false;
     }
 
     IEnumerator FadeIn(AudioSource songToFadeIn, float maxVolume, float fadeSpeed)
