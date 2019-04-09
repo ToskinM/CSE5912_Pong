@@ -133,6 +133,6 @@ public class InspectFactory
 
     public string GetTeju()
     {
-        return "He/Him\nMonster God\n\nWhen left unchecked, the fires rain while yearning for sweet and receiving distain."";
+        return "He/Him\nMonster God\n\nWhen left unchecked, the fires rain while yearning for sweet and receiving distain.";
     }
 }

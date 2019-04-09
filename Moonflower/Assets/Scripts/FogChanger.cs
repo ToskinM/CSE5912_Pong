@@ -14,7 +14,7 @@ public class FogChanger : MonoBehaviour
     public GameObject light;
     void Start()
     {
-        player = GameObject.Find("Player").GetComponent<CurrentPlayer>();
+        
         normalColor = new Color(.42f, .82f, .79f);
         lavaColor = new Color(.47f, .32f, .56f);
         shadowColor = new Color(.03f, .03f, .03f);
@@ -29,6 +29,7 @@ public class FogChanger : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
+        player = GameObject.Find("Player").GetComponent<CurrentPlayer>();
         if (collider.gameObject.name == player.CurrentPlayerObj.name)
         {
             if (isNormal)
