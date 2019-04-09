@@ -16,7 +16,7 @@ public class FogChanger : MonoBehaviour
     {
         player = GameObject.Find("Player").GetComponent<CurrentPlayer>();
         normalColor = new Color(.42f, .82f, .79f);
-        lavaColor = new Color(.34f, .15f, .45f);
+        lavaColor = new Color(.47f, .32f, .56f);
         shadowColor = new Color(.03f, .03f, .03f);
         RenderSettings.ambientIntensity = 0.8f;
         light.SetActive(false);
