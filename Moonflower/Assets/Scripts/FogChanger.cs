@@ -10,39 +10,43 @@ public class FogChanger : MonoBehaviour
     Color normalColor;
     Color lavaColor;
     Color shadowColor;
+    CurrentPlayer player;
     void Start()
     {
-        normalColor = new Color(.4f, .4f, .8f);
-        lavaColor = new Color(.75f, .3f, .03f);
+        player = GameObject.Find("Player").GetComponent<CurrentPlayer>();
+        normalColor = new Color(.42f, .82f, .79f);
+        lavaColor = new Color(.34f, .15f, .45f);
         shadowColor = new Color(.03f, .03f, .03f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        print(isNormal);
     }
 
-    void OnTriggerStay()
+    void OnTriggerEnter(Collider collider)
     {
-        if (isNormal)
+        if (collider.gameObject.name == player.CurrentPlayerObj.name)
         {
-            if (lavaTrigger)
+            if (isNormal)
             {
-                RenderSettings.fogColor = lavaColor;
+                if (lavaTrigger)
+                {
+                    RenderSettings.fogColor = lavaColor;
+                }
+                else
+                {
+                    RenderSettings.fogColor = shadowColor;
+                }
+                isNormal = false;
             }
             else
             {
-                RenderSettings.fogColor = shadowColor;
+
+                RenderSettings.fogColor = normalColor;
+                isNormal = true;
+
             }
-            isNormal = false;
-        }
-        else
-        {
-
-            RenderSettings.fogColor = normalColor;
-            isNormal = true;
-
         }
     }
 }
