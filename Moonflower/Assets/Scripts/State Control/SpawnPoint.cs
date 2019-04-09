@@ -32,10 +32,6 @@ public class SpawnPoint : MonoBehaviour
         //PlayerController.instance.GetActivePlayerObject().transform.Rotate()
 
         PlayerController.instance.GetCompanionObject().GetComponent<NavMeshAgent>().Warp(this.transform.position + new Vector3(0, 0, -5));
-        if (thisScene == "The Cave")
-        {
-            PlayerController.instance.ChillCompanion();
-        }
     }
 
     public void ResetScenes()
