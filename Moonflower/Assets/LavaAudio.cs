@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnvWeaponImpactSound : MonoBehaviour, IAudio
+public class LavaAudio : MonoBehaviour, IAudio
 {
-    public AudioClip[] ImpactSoundsList;
+    public AudioClip TejuCrySounds;
 
-    AudioSource audioSource;
-
+    private AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
         SetupAudioSource();
-
-        audioSource.volume = 0.25f;
     }
 
     public void SetupAudioSource()
@@ -27,18 +24,13 @@ public class EnvWeaponImpactSound : MonoBehaviour, IAudio
         }
         AudioManager.OnSFXVolChange += OnVolumeChange;
     }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "PlayerHurtbox")
-        {
-            audioSource.clip = ImpactSoundsList[Random.Range(0, ImpactSoundsList.Length - 1)];
-            audioSource.Play();
-        }
-    }
-
     public void OnVolumeChange(float volume)
     {
-        audioSource.volume = volume * 0.25f;
+        audioSource.volume = volume;
+    }
+
+    private void OnDestroy()
+    {
+        AudioManager.OnSFXVolChange -= OnVolumeChange;
     }
 }
