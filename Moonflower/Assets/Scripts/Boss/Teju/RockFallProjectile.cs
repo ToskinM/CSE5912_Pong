@@ -14,6 +14,9 @@ public class RockFallProjectile : MonoBehaviour, IProjectile
     public IHurtboxController Hurtbox { get; set; }
     public Transform TargetTransform { get; set; }
 
+    public AudioClip[] RockSoundsList;
+    public AudioSource audioSource;
+
     void Awake()
     {
         Hurtbox = GetComponentInChildren<IHurtboxController>();
@@ -24,6 +27,23 @@ public class RockFallProjectile : MonoBehaviour, IProjectile
     {
         transform.localScale = new Vector3(Random.Range(0.3f, 1) * transform.localScale.x, Random.Range(0.3f, 1) * transform.localScale.y, Random.Range(0.3f, 1) * transform.localScale.z);
         rigidbody.AddTorque(new Vector3(Random.Range(-5,5), Random.Range(-5, 5), Random.Range(-5, 5)), ForceMode.Impulse);
+
+        SetupAudioSource();
+        audioSource.clip = RockSoundsList[Random.Range(0, RockSoundsList.Length - 1)];
+        audioSource.volume = PlayerPrefs.GetFloat("volumeEffects")*0.25f;
+        audioSource.Play();
+    }
+
+    public void SetupAudioSource()
+    {
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false;
+        }
+        AudioManager.OnSFXVolChange += OnVolumeChange;
     }
 
     void Update()
@@ -44,5 +64,15 @@ public class RockFallProjectile : MonoBehaviour, IProjectile
 
         gameObject.SetActive(false);
         Destroy(gameObject, 1f);
+    }
+
+    public void OnVolumeChange(float volume)
+    {
+        audioSource.volume = volume;
+    }
+
+    void OnDestroy()
+    {
+        AudioManager.OnSFXVolChange -= OnVolumeChange;
     }
 }
