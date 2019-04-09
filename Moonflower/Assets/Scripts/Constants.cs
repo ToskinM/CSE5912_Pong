@@ -18,8 +18,6 @@ public static class Constants
     public const string SCENE_GAMEOVER = "Game Over";
     public const string SCENE_CAVEENTRANCE = "CaveEntrance";
     public const string SCENE_CAVE = "The Cave";
-    public const string SCENE_CAVEBOSS = "The Cave Boss";
-    public const string SCENE_CREDITS = "Credits";
 
     // SaveData Keys
     public const string SAVE_BALL_POSITION = "BallPosition";
@@ -136,9 +134,11 @@ public static class Constants
     //other
     public const string MOUSE_NAME = "Mousy Boi";
     public const string ANGUJA_NAME = "Anguja";
-    public const string IJAPUVA_NAME = "Ijapuva";
     public const string ANGUJA_DIALOGUE = dialogueFolder + cave + "Anguja";
+    public const string IJAPUVA_NAME = "Ijapuva";
     public const string IJAPUVA_DIALOGUE = dialogueFolder + cave + "Ijapuva";
+    public const string TUVICHA_NAME = "Tuvicha";
+    public const string TUVICHA_DIALOGUE = dialogueFolder + cave + "Tuvicha";
 
     public const string CATBAT_NAME = "Catbat";
     public const string ORBY_NAME = "Orby";
