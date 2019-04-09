@@ -39,6 +39,8 @@ public class KeyForGate : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (player == null) player = GameObject.Find(playerName);
+
         if (other.Equals(player.GetComponent<BoxCollider>()))
         {
             audioSource.clip = activateSound;
