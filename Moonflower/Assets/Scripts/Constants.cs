@@ -37,7 +37,7 @@ public static class Constants
     public const string AMARU_ICON = characterFolder + "Amaru";
     public const string PINON_ICON = characterFolder + "Pinon";
     public const string SYPAVE_ICON = characterFolder + "Sypave";
-    public const string TEGU_ICON = characterFolder + "Tegu";
+    public const string TEJU_ICON = characterFolder + "Teju";
     public const string KURUPI_ICON = characterFolder + "Kurupi";
     public const string MOUSE_ICON = characterFolder + "Mousy Boi";
     public const string MONAI_ICON = characterFolder + "Monai";

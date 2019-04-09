@@ -45,7 +45,7 @@ public class TejuController : MonoBehaviour, INPCController
 
         //playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
 
-        icon = new IconFactory().GetIcon(Constants.TEGU_ICON);
+        icon = new IconFactory().GetIcon(Constants.TEJU_ICON);
     }
 
     void Start()
