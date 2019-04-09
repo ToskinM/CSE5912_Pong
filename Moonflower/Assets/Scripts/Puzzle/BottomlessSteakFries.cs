@@ -20,6 +20,6 @@ public class BottomlessSteakFries : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         player = other.gameObject;
-        player.transform.position = new Vector3(230, 20, 265);
+        player.transform.position = new Vector3(230, 22, 265);
     }
 }
