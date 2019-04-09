@@ -6528,7 +6528,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20306a8c5530eb4e804fc72b2fac471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PostTransitionTrack: 1
   SceneBGM: {fileID: 1233828134}
 --- !u!65 &603669253
 BoxCollider:
@@ -9128,16 +9127,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8682764000259939748, guid: 15524dfae3b90684cb4a379de338fbd1,
-        type: 3}
-      propertyPath: TejuSFX.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: 216537df7aaf25640a3a84cdd809b597, type: 3}
     - target: {fileID: 3026846017009257447, guid: 15524dfae3b90684cb4a379de338fbd1,
         type: 3}
       propertyPath: m_Name
       value: Teju
       objectReference: {fileID: 0}
+    - target: {fileID: 8682764000259939748, guid: 15524dfae3b90684cb4a379de338fbd1,
+        type: 3}
+      propertyPath: TejuSFX.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 216537df7aaf25640a3a84cdd809b597, type: 3}
     - target: {fileID: 8482015672337150744, guid: 15524dfae3b90684cb4a379de338fbd1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10423,6 +10422,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5764500590057802086, guid: bfda417d4ca26204690a034476d55350,
+        type: 3}
+      propertyPath: audioSounds.Array.data[1].sounds.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 510b929a32aa643e2ac6ce934745d183, type: 3}
+    - target: {fileID: 5764500590057802086, guid: bfda417d4ca26204690a034476d55350,
+        type: 3}
+      propertyPath: audioSounds.Array.data[1].sounds.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 61c113af7115942fe8bd3707885b4305, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfda417d4ca26204690a034476d55350, type: 3}
 --- !u!114 &962719632 stripped
@@ -12672,7 +12681,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d20306a8c5530eb4e804fc72b2fac471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PostTransitionTrack: 2
   SceneBGM: {fileID: 1233828134}
 --- !u!65 &1140112276
 BoxCollider:
@@ -13844,6 +13852,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f99a4b6a66079b64aa6fd95e09b12e87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainEnabled: 0
+  BassEnabled: 0
+  ActionEnabled: 0
 --- !u!114 &1233828140
 MonoBehaviour:
   m_ObjectHideFlags: 0

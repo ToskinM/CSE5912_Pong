@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerSoundEffect : MonoBehaviour
 {
@@ -27,24 +28,49 @@ public class PlayerSoundEffect : MonoBehaviour
     }
     public void AnaiWalkingSFX()
     {
-        audioManager.ResumeNormal(anai,"AnaiWalking(1)");
-        audioManager.ResumeNormal(anai, "AnaiWalking(2)");
+        string Walk1;
+        string Walk2;
+        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+        {
+            Walk1 = "AnaiWalking(1)";
+            Walk2 = "AnaiWalking(2)";
+        }
+        else
+        {
+            Walk1 = "AnaiWalking(3)";
+            Walk2 = "AnaiWalking(4)";
+        }
+
+        audioManager.ResumeNormal(anai,Walk1);
+        audioManager.ResumeNormal(anai, Walk2);
         for (int i = 0; i < 2; i++)
         {
             if (i == 0)
-                audioManager.Play(anai, "AnaiWalking(1)");
+                audioManager.Play(anai, Walk1);
             else
-                audioManager.Play(anai, "AnaiWalking(2)");
+                audioManager.Play(anai, Walk2);
         }
 
     }
     public void AnaiSneakingSFX()
     {
+        string Walk1;
+        string Walk2;
+        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+        {
+            Walk1 = "AnaiWalking(1)";
+            Walk2 = "AnaiWalking(2)";
+        }
+        else
+        {
+            Walk1 = "AnaiWalking(3)";
+            Walk2 = "AnaiWalking(4)";
+        }
         int x = Random.Range(1, 3);
         if (x == 1)
-            audioManager.PlaySneakFootStep(anai, "AnaiWalking(1)");
+            audioManager.PlaySneakFootStep(anai, Walk1);
         else
-            audioManager.PlaySneakFootStep(anai, "AnaiWalking(2)");
+            audioManager.PlaySneakFootStep(anai, Walk2);
     }
 
     public void AnaiIntoLava()
@@ -64,12 +90,24 @@ public class PlayerSoundEffect : MonoBehaviour
 
     public void AnaiRunSFX()
     {
+        string Walk1;
+        string Walk2;
+        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+        {
+            Walk1 = "AnaiWalking(1)";
+            Walk2 = "AnaiWalking(2)";
+        }
+        else
+        {
+            Walk1 = "AnaiWalking(3)";
+            Walk2 = "AnaiWalking(4)";
+        }
         for (int i = 0; i < 2; i++)
         {
             if (i == 0)
-                audioManager.Play(anai, "AnaiRun(1)");
+                audioManager.Play(anai, Walk1);
             else
-                audioManager.Play(anai, "AnaiRun(2)");
+                audioManager.Play(anai, Walk2);
         }
 
     }
