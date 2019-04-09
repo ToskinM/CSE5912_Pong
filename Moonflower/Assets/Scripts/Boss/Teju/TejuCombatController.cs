@@ -189,6 +189,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
     private IEnumerator CryAttack()
     {
+        Debug.Log("i am in Cry attack");
         TejuSoundEffect.NPCRangeAttack();
         animationController.TriggerAttack();
         isAttacking = true;
@@ -209,8 +210,9 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     }
     private IEnumerator TantrumAttack()
     {
+        Debug.Log("i am in tantrum attack");
         animationController.TriggerAttack();
-        TejuSoundEffect.NPCPlay("Rock");
+        GetComponentInChildren<TejuSoundEffect>().Earthquake();
         isAttacking = true;
 
         for (int i = 0; i < tantrumAttackRockCount; i++)
@@ -230,6 +232,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     private IEnumerator AreaCryAttack()
     {
         animationController.TriggerAttack();
+
         isAttacking = true;
 
         for (int i = 0; i < areaCryBarrageCount; i++)

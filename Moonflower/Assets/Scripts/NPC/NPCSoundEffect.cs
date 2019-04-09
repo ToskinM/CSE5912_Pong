@@ -125,6 +125,13 @@ public class NPCSoundEffect : MonoBehaviour
         audioManager.Play(DecideWhichNPC(), clip);
     }
 
+    public void Play(string category, string clip)
+    {
+        if (gameObject.GetComponent<AudioSource>() == null)
+            audioManager.ReAddAllAudioSource(gameObject, DecideWhichNPC());
+        audioManager.Play(category, clip);
+    }
+
     public string DecideWhichNPC()
     {
         if (gameObject.name.Contains("Teju"))
