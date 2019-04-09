@@ -19,10 +19,6 @@ public class CaveMusicCrossfade : MonoBehaviour
         bass = caveSoundtracks[1];
         action = caveSoundtracks[2];
 
-        main.volume = 1;
-        bass.volume = 0;
-        action.volume = 0;
-
         currentTrack = main;
 
         PlayerCombatController.EngageInCombat += FadeInActionTheme;
