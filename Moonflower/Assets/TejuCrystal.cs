@@ -28,11 +28,15 @@ public class TejuCrystal : MonoBehaviour
     {
         audioSource.clip = TejuCrystalSoundsList[Random.Range(0, TejuCrystalSoundsList.Length - 1)];
         audioSource.Play();
-        Debug.Log("I am Playing");
+        //Debug.Log("I am Playing");
     }
 
     void OnVolumeChange(float volume)
     {
         audioSource.volume = volume;
+    }
+    private void OnDestroy()
+    {
+        AudioManager.OnSFXVolChange -= OnVolumeChange;
     }
 }

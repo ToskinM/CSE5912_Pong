@@ -30,6 +30,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
     private FieldOfView fieldOfView;
     private TejuAnimationController animationController;
+    private NPCSoundEffect TejuSoundEffect;
 
     private bool subdued;
 
@@ -93,7 +94,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         cooldowns = new float[] { cryAttackCooldown, tantrumAttackCooldown, areaCryCooldown }; // place new cooldowns here
         cooldownTimers = new float[cooldowns.Length];
 
-
+        TejuSoundEffect = GetComponent<NPCSoundEffect>();
     }
 
     void Update()
@@ -188,6 +189,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
     private IEnumerator CryAttack()
     {
+        TejuSoundEffect.NPCRangeAttack();
         animationController.TriggerAttack();
         isAttacking = true;
 
@@ -208,6 +210,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     private IEnumerator TantrumAttack()
     {
         animationController.TriggerAttack();
+        TejuSoundEffect.NPCPlay("Rock");
         isAttacking = true;
 
         for (int i = 0; i < tantrumAttackRockCount; i++)

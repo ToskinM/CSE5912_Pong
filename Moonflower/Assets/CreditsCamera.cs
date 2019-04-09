@@ -9,8 +9,18 @@ public class CreditsCamera : MonoBehaviour
     public float yRotationClamp = 5; // degrees
     public float xRotationClamp = 5; // degrees
 
+    public GameObject clickProjectile;
+    public Transform projectileNode;
+
     private float inputRotationX;
     private float inputRotationY;
+
+    private Camera camera;
+
+    private void Start()
+    {
+        camera = GetComponent<Camera>();
+    }
 
     void Update()
     {
@@ -27,5 +37,23 @@ public class CreditsCamera : MonoBehaviour
         // Smoothly keep camera centered
         inputRotationX *= 0.96f * recenterTimeMultiplier;
         inputRotationY *= 0.96f * recenterTimeMultiplier;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                Vector3 hitPoint = hit.point;
+
+                LaunchProjectile(hitPoint);
+            }
+        }
+    }
+
+    public void LaunchProjectile(Vector3 target)
+    {
+        GameObject projectile = Instantiate(clickProjectile, projectileNode.position, Quaternion.LookRotation(target - transform.position));
+        projectile.transform.LookAt(target);
     }
 }
