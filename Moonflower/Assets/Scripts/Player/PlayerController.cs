@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     public enum PlayerCharacter { Anai, Mimbi };
     private PlayerCharacter activeCharacter;
 
-
     public GameObject TalkingPartner;
     public GameObject AnaiObject;
     public GameObject MimbiObject;
@@ -26,7 +25,7 @@ public class PlayerController : MonoBehaviour
     GameObject ActivePlayerObject;
 
     private bool isDead = false;
-    private bool canSwitchCharacters = false;
+    public bool canSwitchCharacters = false;
     private bool oldSwitch = false; 
 
     public delegate void SwitchCharacter(PlayerCharacter activeChar);
@@ -88,9 +87,18 @@ public class PlayerController : MonoBehaviour
         {
             DetectPlayerSwitchInput();
             DetectSummonCompanionInput();
+            DetectHealthRestoreInput();
         }
 
         UpdateCompanionCharacter();
+    }
+
+    private void DetectHealthRestoreInput()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            ActivePlayerStats.CurrentHealth = 100;
+        }
     }
 
     private void DetectPlayerSwitchInput()
