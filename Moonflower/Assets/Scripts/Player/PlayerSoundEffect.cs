@@ -47,6 +47,11 @@ public class PlayerSoundEffect : MonoBehaviour
             audioManager.PlaySneakFootStep(anai, "AnaiWalking(2)");
     }
 
+    public void AnaiIntoLava()
+    {
+        audioManager.Play(anai, "IntoLava");
+    }
+
     public void AnaiPunchSFX()
     {
         audioManager.Play(anai, "AnaiPunch");

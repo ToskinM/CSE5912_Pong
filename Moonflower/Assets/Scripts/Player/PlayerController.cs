@@ -88,6 +88,7 @@ public class PlayerController : MonoBehaviour
             DetectPlayerSwitchInput();
             DetectSummonCompanionInput();
             DetectHealthRestoreInput();
+            DetectGiveHoneyInput();
         }
 
         UpdateCompanionCharacter();
@@ -98,6 +99,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             ActivePlayerStats.CurrentHealth = 100;
+        }
+    }
+
+    private void DetectGiveHoneyInput()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            ActivePlayerInventory.AddObj(Constants.HONEY_NAME);
         }
     }
 
