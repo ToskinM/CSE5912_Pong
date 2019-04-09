@@ -30,6 +30,7 @@ public class PlayerCombatController : MonoBehaviour
     private GameObject currentAggressor;
 
     public bool canAttack = true;
+    public bool isInvulnerable = false;
     //public bool isBlocking;
 
     public GameObject anaiRagdollPrefab;
@@ -42,7 +43,7 @@ public class PlayerCombatController : MonoBehaviour
 
     private float timeSinceLastHurt;
     private float timeSinceLastAttack;
-    private readonly float hurtDelay = 0.5f;
+    private readonly float hurtDelay = 1.5f;
     private readonly float[] attackMultipliers = new float[] { 1, 1.5f };
 
     private const float attackDelay = 0.35f;
@@ -111,9 +112,18 @@ public class PlayerCombatController : MonoBehaviour
             if (currentAggressor)
                 CheckAggressorDistance();
 
-            if (canAttack)
+            if (inCombat)
             {
                 timeSinceLastHurt += Time.deltaTime;
+
+                if (timeSinceLastHurt > hurtDelay)
+                {
+                    isInvulnerable = false;
+                }
+            }
+
+            if (canAttack)
+            {
                 timeSinceLastAttack += Time.deltaTime;
                 if (timeSinceLastAttack > attackTimeout)
                 {
@@ -264,6 +274,8 @@ public class PlayerCombatController : MonoBehaviour
 
     void HandleHurtboxCollision(Collider other)
     {
+        if (isInvulnerable) return;
+
         OnHit?.Invoke(other.gameObject);
         currentAggressor = other.gameObject;
         InCombat = true;
@@ -282,6 +294,7 @@ public class PlayerCombatController : MonoBehaviour
         GameObject source = hurtboxController.Source;
         int damage = hurtboxController.Damage;
         timeSinceLastHurt = 0f;
+        isInvulnerable = true;
 
         if (!IsBlocking)
             Stagger();
