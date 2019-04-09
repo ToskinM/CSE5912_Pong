@@ -127,7 +127,7 @@ public class SceneController : MonoBehaviour
         AfterSceneLoad?.Invoke();
         isLoading = false;
         ShowSingletons();
-        if (sceneName != Constants.SCENE_MAINMENU) PlayerController.instance.SpawnPlayerObjects();
+        if (PlayerController.instance != null && sceneName != Constants.SCENE_MAINMENU) PlayerController.instance.SpawnPlayerObjects();
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
