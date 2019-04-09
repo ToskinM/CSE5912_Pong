@@ -152,4 +152,23 @@ public static class Constants
     //heal objects
     public const string MOONFLOWER_NAME = "Moon Flower";
     public const string WOLFAPPLE_NAME = "Wolf Apple";
+    public const string HONEY_NAME = "Honey";
+    public const string ROPE_NAME = "Rope";
+    public const string JAR_NAME = "Jar";
+    public const string PUMPKIN_NAME = "Pumpkin";
+    public const string CHIPA_NAME = "Chipa";
+    public const string FLUTE_NAME = "Flute";
+    public const string PINEAPPLE_NAME = "Pineapple";
+    public const string SWEETPOTATO_NAME = "Sweet potato";
+    public const string PEANUT_NAME = "Peanut";
+    public const string FISH_NAME = "Fish";
+    public const string PAINT_NAME = "Paint";
+    public const string STAFF_NAME = "Staff";
+    public const string CORN_NAME = "Corn";
+    public const string BOW_NAME = "Bow";
+    public const string ARROW_NAME = "Arrow";
+    public const string FEATHER_NAME = "Feather";
+    public const string DRUM_NAME = "Drum";
+    public const string NECKLACE_NAME = "Necklace";
+    public const string MUSHROOM_NAME = "Mushrooms";
 }
