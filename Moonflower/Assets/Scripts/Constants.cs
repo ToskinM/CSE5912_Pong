@@ -14,7 +14,7 @@ public static class Constants
     public const string SCENE_LOADING = "LoadingScene";
     public const string SCENE_GAMESTART = "GameStart";
     public const string SCENE_QUITPOPUP = "Quit Nag Popup";
-    public const string SCENE_PAUSEMENU = "Pause Menu"; 
+    public const string SCENE_PAUSEMENU = "Pause Menu";
     public const string SCENE_GAMEOVER = "Game Over";
     public const string SCENE_CAVEENTRANCE = "CaveEntrance";
     public const string SCENE_CAVE = "The Cave";
@@ -59,7 +59,7 @@ public static class Constants
     public const string CORN_ICON = itemFolder + "Corn";
     public const string STAFF_ICON = itemFolder + "Jewel Staff";
     public const string SWEETPOTATO_ICON = itemFolder + "Sweet Potato";
-    public const string PAINT_ICON = itemFolder + "Paint Pots"; 
+    public const string PAINT_ICON = itemFolder + "Paint Pots";
     public const string DRUM_ICON = itemFolder + "Drum";
     public const string FEATHER_ICON = itemFolder + "Feather";
     public const string NECKLACE_ICON = itemFolder + "Necklace";
@@ -105,10 +105,10 @@ public static class Constants
      */
     const string dialogueFolder = "Dialogues/";
     const string intro = "Intro Level/";
-    const string cave = "Cave Level/"; 
+    const string cave = "Cave Level/";
 
     //Amaru
-    public const string AMARU_NAME = "Amaru"; 
+    public const string AMARU_NAME = "Amaru";
     public const string AMARU_INTRO_DIALOGUE = dialogueFolder + intro + "Amaru Intro Dialogue";
     public const string AMARU_ADVICE_DIALOGUE = dialogueFolder + intro + "Amaru Advice";
     //Naia
@@ -145,9 +145,9 @@ public static class Constants
     public const string ORBYJR_NAME = "Orby Jr.";
 
     //monsters
-    public const string TEJU_NAME = "Teju Jagua"; 
+    public const string TEJU_NAME = "Teju Jagua";
 
     //heal objects
     public const string MOONFLOWER_NAME = "Moon Flower";
-    public const string WOLFAPPLE_NAME = "Wolf Apple"; 
+    public const string WOLFAPPLE_NAME = "Wolf Apple";
 }
