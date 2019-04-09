@@ -206,7 +206,8 @@ public class AudioManager : MonoBehaviour
     {
         bgmVol = vol;
         //UpdateBGMVol(SceneBGM, vol);
-        OnBGMVolChange.Invoke(bgmVol);
+        //if (OnBGMVolChange!=null)
+            OnBGMVolChange.Invoke(bgmVol);
     }
 
     //Update Changed Volume

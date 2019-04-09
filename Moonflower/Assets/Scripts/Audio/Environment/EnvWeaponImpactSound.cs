@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnvWeaponImpactSound : MonoBehaviour
+public class EnvWeaponImpactSound : MonoBehaviour, IAudio
 {
     public AudioClip[] ImpactSoundsList;
 
@@ -11,6 +11,13 @@ public class EnvWeaponImpactSound : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SetupAudioSource();
+
+        audioSource.volume = 0.25f;
+    }
+
+    public void SetupAudioSource()
+    {
         audioSource = GetComponent<AudioSource>();
 
         if (audioSource == null)
@@ -18,8 +25,6 @@ public class EnvWeaponImpactSound : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
         }
-
-        audioSource.volume = 0.25f;
         AudioManager.OnSFXVolChange += OnVolumeChange;
     }
 
@@ -32,7 +37,7 @@ public class EnvWeaponImpactSound : MonoBehaviour
         }
     }
 
-    void OnVolumeChange(float volume)
+    public void OnVolumeChange(float volume)
     {
         audioSource.volume = volume * 0.25f;
     }
