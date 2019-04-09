@@ -57,7 +57,7 @@ public class TejuController : MonoBehaviour, INPCController
         Vector3 walkOrigin = transform.position;
 
         LevelManager.current.RegisterNPC(gameObject);
-        //feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
+        feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         actionsAvailable = new bool[] { canInspect, canTalk, canDistract, canGift };
 
