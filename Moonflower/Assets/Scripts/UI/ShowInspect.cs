@@ -90,6 +90,10 @@ public class ShowInspect : MonoBehaviour
                 icon.sprite = iconFactory.GetIcon(Constants.ORBYJR_ICON);
                 descrip.text = descripFactory.GetOrbyJr();
                 break;
+            case Constants.TEJU_NAME:
+                icon.sprite = iconFactory.GetIcon(Constants.TEJU_ICON);
+                descrip.text = descripFactory.GetTeju();
+                break;
             default:
                 break;
         }

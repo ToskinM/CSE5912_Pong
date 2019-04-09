@@ -130,4 +130,9 @@ public class InspectFactory
     {
         return pronouns + "\nBaby Fireball\n\nThey tend to be curious and love to befriend, though parents flare out these buds don't offend.";
     }
+
+    public string GetTeju()
+    {
+        return "He/Him\nMonster God\n\nWhen left unchecked, the fires rain while yearning for sweet and receiving distain."";
+    }
 }
