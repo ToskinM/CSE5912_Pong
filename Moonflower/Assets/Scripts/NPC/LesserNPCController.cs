@@ -21,6 +21,10 @@ public class LesserNPCController : MonoBehaviour, INPCController
     public bool canGift = true;
     [HideInInspector] public bool[] actionsAvailable { get; private set; }
 
+    public GameObject WanderOrigin;
+    public float WanderRange;
+    public float FollowRange; 
+
     public string inspectText;
 
     public float engagementRadius = 15f;
@@ -67,6 +71,12 @@ public class LesserNPCController : MonoBehaviour, INPCController
         // Initialize Components
         agent = GetComponent<NavMeshAgent>();
         movement = new NPCMovementController(gameObject,charName);
+        if (WanderOrigin != null)
+        {
+            movement.Wander(WanderOrigin.transform.position, WanderRange);
+            movement.SetDefault(NPCMovementController.MoveState.wander); 
+        }
+
         dialogue = GetComponent<IDialogueController>();
         animationControl = GetComponent<NPCAnimationController>(); 
         //movement.SetEngagementDistances(5, combatController.attackDistance + 0.5f, 1);
@@ -131,6 +141,16 @@ public class LesserNPCController : MonoBehaviour, INPCController
         //}
 
         movement.UpdateMovement();
+        if(WanderOrigin != null)
+        {
+            float distFromOrigin = movement.DistanceFrom(WanderOrigin);
+
+            if (distFromOrigin >= FollowRange && !movement.IsDefault)
+            {
+                movement.Reset(); 
+            }
+        }
+
     }
 
     // Action Wheel Interactions

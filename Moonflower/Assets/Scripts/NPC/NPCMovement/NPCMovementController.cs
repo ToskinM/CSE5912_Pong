@@ -196,12 +196,12 @@ public class NPCMovementController : MonoBehaviour, IMovement
          
         if(!canWander)
         {
-            wander = new NPCWanderMove(self, target.transform.position, maxDistAway);
+            wander = new NPCWanderMove(self, followTarget.transform.position, maxDistAway);
             canWander = true;
         }
         else
         {
-            wander.SetArea(target.transform.position, maxDistAway);
+            wander.SetArea(followTarget.transform.position, maxDistAway);
         }
 
         if(!canFollow)
