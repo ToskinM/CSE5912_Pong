@@ -8,7 +8,6 @@ using TMPro;
 public class TuvichaDialogueController : MonoBehaviour, IDialogueController
 {
     //public GameObject Player;
-    private GameObject DialoguePanel;
     private Sprite icon { get; set; }
     public bool DialogueActive { get; set; } = false;
     public GameObject Location; 
@@ -38,7 +37,6 @@ public class TuvichaDialogueController : MonoBehaviour, IDialogueController
     // Start is called before the first frame update
     void Start()
     {
-        DialoguePanel = GameStateController.current.DialoguePanel;
         agent = GetComponent<NavMeshAgent>();
         animate = GetComponent<NPCAnimationController>(); 
         charName = Constants.TUVICHA_NAME;
@@ -51,7 +49,7 @@ public class TuvichaDialogueController : MonoBehaviour, IDialogueController
 
         icon = mainController.icon;
 
-        talk = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.TUVICHA_DIALOGUE);
+        talk = new DialogueTrigger(gameObject, icon, Constants.TUVICHA_DIALOGUE);
         talk.SetExitText("You don't need to worry about me. I'll get out of your way.");
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(charName))

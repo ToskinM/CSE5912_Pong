@@ -9,7 +9,6 @@ using TMPro;
 
 public class NaiaController : MonoBehaviour, INPCController
 {
-    public GameObject DialoguePanel;
     public Sprite icon { get; set; }
 
     public float engagementRadius = 5f;
@@ -49,7 +48,6 @@ public class NaiaController : MonoBehaviour, INPCController
 
     void Start()
     {
-        DialoguePanel = GameStateController.current.DialoguePanel;
         //if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
         sky = GameObject.Find("Sky").GetComponent<SkyColors>();
 
@@ -66,11 +64,11 @@ public class NaiaController : MonoBehaviour, INPCController
         centerOfTown = GameObject.Find("Campfire").transform.position;
 
         icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
-        intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_INTRO_DIALOGUE);
+        intro = new DialogueTrigger(gameObject, icon, Constants.NAIA_INTRO_DIALOGUE);
         intro.SetExitText("See you around, I guess.");
-        postFight = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_POSTFIGHT_DIALOGUE);
+        postFight = new DialogueTrigger(gameObject, icon, Constants.NAIA_POSTFIGHT_DIALOGUE);
         postFight.SetExitText("Oh, come on. Is this because I hit too hard? I was trying to pull my punches..."); 
-        advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.NAIA_ADVICE_DIALOGUE);
+        advice = new DialogueTrigger(gameObject, icon, Constants.NAIA_ADVICE_DIALOGUE);
         advice.SetExitText("You can't keep running away from this.");
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.NAIA_NAME))

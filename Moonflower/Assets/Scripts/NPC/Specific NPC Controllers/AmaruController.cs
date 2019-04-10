@@ -9,7 +9,6 @@ public class AmaruController : MonoBehaviour, INPCController
 {
     //public GameObject Player;
     public GameObject WalkCenter;
-    public GameObject DialoguePanel;
     public Sprite icon { get; set; }
     public bool dialogueActive = false;
 
@@ -51,7 +50,6 @@ public class AmaruController : MonoBehaviour, INPCController
     // Start is called before the first frame update
     void Start()
     {
-        DialoguePanel = GameStateController.current.DialoguePanel;
         //if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
         sky = GameObject.Find("Sky").GetComponent<SkyColors>();
 
@@ -70,8 +68,8 @@ public class AmaruController : MonoBehaviour, INPCController
 
         icon = new IconFactory().GetIcon(Constants.AMARU_ICON);
 
-        intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.AMARU_INTRO_DIALOGUE);
-        advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.AMARU_ADVICE_DIALOGUE);
+        intro = new DialogueTrigger(gameObject, icon, Constants.AMARU_INTRO_DIALOGUE);
+        advice = new DialogueTrigger(gameObject, icon, Constants.AMARU_ADVICE_DIALOGUE);
         advice.SetExitText("Good luck, Anai. I hope you find him.");
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.AMARU_NAME))

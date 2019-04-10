@@ -8,7 +8,6 @@ using TMPro;
 public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
 {
     //public GameObject Player;
-    private GameObject DialoguePanel;
     private Sprite icon { get; set; }
     public bool DialogueActive { get; set; } = false;
 
@@ -36,7 +35,6 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
     // Start is called before the first frame update
     void Start()
     {
-        DialoguePanel = GameStateController.current.DialoguePanel;
         agent = GetComponent<NavMeshAgent>();
         charName = Constants.IJAPUVA_NAME;
 
@@ -48,7 +46,7 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
 
         icon = mainController.icon;
 
-        talk = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.IJAPUVA_DIALOGUE);
+        talk = new DialogueTrigger(gameObject, icon, Constants.IJAPUVA_DIALOGUE);
         talk.SetExitText("Too busy for stories, eh? Pity. Kids these days will never know...");
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(charName))

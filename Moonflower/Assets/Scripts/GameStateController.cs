@@ -11,7 +11,6 @@ public class GameStateController : MonoBehaviour
     public bool DebugModeOn;
     public bool DebugViewOn;
     public bool cameraAvailable;
-    public GameObject DialoguePanel;
     public Dictionary<string, DialogueTrigger> NPCDialogues;
     public Dictionary<string, string> NPCDialogueLabels;
 

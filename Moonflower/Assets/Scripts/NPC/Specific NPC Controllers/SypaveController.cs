@@ -9,7 +9,6 @@ using TMPro;
 public class SypaveController : MonoBehaviour, INPCController
 {
 
-    public GameObject DialoguePanel;
     public GameObject AnaiSpawnPoint;
     public GameObject NaiaSpawnPoint;
     public GameObject AmaruSpawnPoint;
@@ -47,7 +46,6 @@ public class SypaveController : MonoBehaviour, INPCController
 
     void Start()
     {
-        DialoguePanel = GameStateController.current.DialoguePanel; 
         //if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
         sky = GameObject.Find("Sky").GetComponent<SkyColors>();
         centerOfTown = GameObject.Find("Campfire").transform.position;
@@ -70,11 +68,11 @@ public class SypaveController : MonoBehaviour, INPCController
         agent.Warp(walkOrigin);
 
         icon = new IconFactory().GetIcon(Constants.SYPAVE_ICON);
-        intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.SYPAVE_INTRO_DIALOGUE);
+        intro = new DialogueTrigger(gameObject, icon, Constants.SYPAVE_INTRO_DIALOGUE);
         intro.SetExitText("So your 'exploration' is more important than your mother? Fine. Go.");
-        frantic = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.SYPAVE_FRANTIC_DIALOGUE);
+        frantic = new DialogueTrigger(gameObject, icon, Constants.SYPAVE_FRANTIC_DIALOGUE);
         frantic.SetExitText("You'd better be leaving to search for him!");
-        advice = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.SYPAVE_ADVICE_DIALOGUE);
+        advice = new DialogueTrigger(gameObject, icon, Constants.SYPAVE_ADVICE_DIALOGUE);
         advice.SetExitText("I can't believe you...");
         beforeNoon = true; 
 

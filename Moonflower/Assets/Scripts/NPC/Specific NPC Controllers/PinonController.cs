@@ -9,7 +9,6 @@ public class PinonController : MonoBehaviour, INPCController
 {
     //public GameObject Player;
     public GameObject WalkCenter;
-    public GameObject DialoguePanel;
     public GameObject SpawnPoint; 
     public Sprite icon { get; set; }
     public bool dialogueActive = false;
@@ -53,7 +52,6 @@ public class PinonController : MonoBehaviour, INPCController
     // Start is called before the first frame update
     void Start()
     {
-        DialoguePanel = GameStateController.current.DialoguePanel;
         //if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
         sky = GameObject.Find("Sky").GetComponent<SkyColors>();
 
@@ -83,9 +81,9 @@ public class PinonController : MonoBehaviour, INPCController
 
 
         icon = new IconFactory().GetIcon(Constants.PINON_ICON);
-        firstIntro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.PINON_FIRST_INTRO_DIALOGUE);
+        firstIntro = new DialogueTrigger(gameObject, icon, Constants.PINON_FIRST_INTRO_DIALOGUE);
         firstIntro.SetExitText("Fine. I didn't want to talk to you either.");
-        intro = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.PINON_INTRO_DIALOGUE);
+        intro = new DialogueTrigger(gameObject, icon, Constants.PINON_INTRO_DIALOGUE);
         intro.SetExitText("You're going to leave me alone? Finally!");
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.PINON_NAME))

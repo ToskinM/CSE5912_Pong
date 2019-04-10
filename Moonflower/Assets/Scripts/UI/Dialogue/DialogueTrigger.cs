@@ -12,7 +12,6 @@ public class DialogueTrigger : MonoBehaviour
     public bool engaged = false;
 
     GameObject panel;
-    RectTransform panelTransform;
     DialoguePanelInfo panelInfo;
 
     List<Button> buttons;
@@ -34,6 +33,7 @@ public class DialogueTrigger : MonoBehaviour
     int pauseCount = 0;
     int pauseMax = 10;
     string punctuation = ".!?";
+    float panelMoveInc; 
 
     DialogueGraph graph;
     DialogueFactory factory;
@@ -42,12 +42,12 @@ public class DialogueTrigger : MonoBehaviour
 
     //string gName;
 
-    public DialogueTrigger(GameObject person, GameObject p, Sprite iconSprite, string graphName)
+    public DialogueTrigger(GameObject person, Sprite iconSprite, string graphName)
     {
         partner = person; 
-        panel = p;
-        panelTransform = panel.GetComponent<RectTransform>();
-        panelInfo = panel.GetComponent<DialoguePanelInfo>();
+        GameObject hud = GameObject.Find("HUD");
+        panelInfo = hud.GetComponent<DialoguePanelInfo>();
+        panel = panelInfo.panel; 
         buttons = new List<Button>();
 
         factory = new DialogueFactory();
@@ -56,7 +56,8 @@ public class DialogueTrigger : MonoBehaviour
         //gName = graphName;
 
         icon = iconSprite;
-        interaction = GameObject.Find("HUD").GetComponent<ComponentLookup>().InteractionPopup;
+        interaction = hud.GetComponent<ComponentLookup>().InteractionPopup;
+        panelMoveInc = Screen.height / 90f; 
         //spriteFile = characterSprite;
 
     }
@@ -69,7 +70,7 @@ public class DialogueTrigger : MonoBehaviour
         {
             case PanelState.rising:
                 panelInfo.IsUp = true;
-                panel.transform.position += new Vector3(0, 4, 0);
+                panel.transform.position += new Vector3(0, panelMoveInc, 0);
                 if (panel.transform.position.y >= panelInfo.UpPosition.y)
                 {
                     panel.transform.position = panelInfo.UpPosition;
@@ -81,7 +82,7 @@ public class DialogueTrigger : MonoBehaviour
                 //                Debug.Log("Falling"); 
                 panelInfo.Text.text = "";
                 panelInfo.IsUp = true;
-                panel.transform.position -= new Vector3(0, 4, 0);
+                panel.transform.position -= new Vector3(0, panelMoveInc, 0);
                 if (panel.transform.position.y <= panelInfo.DownPosition.y)
                 {
                     pState = PanelState.down;

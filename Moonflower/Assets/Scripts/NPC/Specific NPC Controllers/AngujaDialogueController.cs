@@ -8,7 +8,6 @@ using TMPro;
 public class AngujaDialogueController : MonoBehaviour, IDialogueController
 {
     //public GameObject Player;
-    private GameObject DialoguePanel;
     private Sprite icon { get; set; }
     public bool DialogueActive { get; set; } = false;
 
@@ -36,7 +35,6 @@ public class AngujaDialogueController : MonoBehaviour, IDialogueController
     // Start is called before the first frame update
     void Start()
     {
-        DialoguePanel = GameStateController.current.DialoguePanel;
         agent = GetComponent<NavMeshAgent>();
         charName = Constants.ANGUJA_NAME;
 
@@ -48,7 +46,7 @@ public class AngujaDialogueController : MonoBehaviour, IDialogueController
 
         icon = mainController.icon;
 
-        talk = new DialogueTrigger(gameObject, DialoguePanel, icon, Constants.ANGUJA_DIALOGUE);
+        talk = new DialogueTrigger(gameObject, icon, Constants.ANGUJA_DIALOGUE);
         talk.SetExitText("Okay, um, nice meeting you, I guess?");
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(charName))
