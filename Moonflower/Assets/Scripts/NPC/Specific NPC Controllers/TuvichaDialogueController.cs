@@ -19,6 +19,7 @@ public class TuvichaDialogueController : MonoBehaviour, IDialogueController
     CurrentPlayer playerInfo;
     //private GameObject anai;
     NPCMovementController movement;
+    NPCAnimationController animate; 
     NavMeshAgent agent;
     DialogueTrigger currTalk;
     DialogueTrigger talk; 
@@ -39,6 +40,7 @@ public class TuvichaDialogueController : MonoBehaviour, IDialogueController
     {
         DialoguePanel = GameStateController.current.DialoguePanel;
         agent = GetComponent<NavMeshAgent>();
+        animate = GetComponent<NPCAnimationController>(); 
         charName = Constants.TUVICHA_NAME;
 
         INPCController mainController = GetComponent<INPCController>();
@@ -78,16 +80,18 @@ public class TuvichaDialogueController : MonoBehaviour, IDialogueController
             currTalk.Update();
         }
         DialogueActive = currTalk.DialogueActive();
-        if(currTalk.Complete)
+        if (currTalk.Complete && movement.state == NPCMovementController.MoveState.chill)
         {
-            movement.Chill(); 
-        }
+//            Debug.Log("Go back to sleep"); 
+            animate.sleeping = true;
+         }
 
     }
 
     public void Move()
     {
-        movement.GoToLoc(Location); 
+     //   Debug.Log("Move"); 
+        movement.Go(Location.transform.position); 
     }
 
     public DialogueTrigger GetCurrDialogue()
@@ -101,7 +105,7 @@ public class TuvichaDialogueController : MonoBehaviour, IDialogueController
 //        Debug.Log("start talking");
         if (currTalk.Complete)
         {
-            displayFeedback("Tuvicha looks like ze's going to fall back asleep.");
+            displayFeedback("Tuvicha looks like she's going to fall back asleep.");
         }
         else
         {

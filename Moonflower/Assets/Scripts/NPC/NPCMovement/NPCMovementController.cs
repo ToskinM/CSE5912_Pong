@@ -9,7 +9,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
     public bool Jumping { get; set; }
     public bool Active = true; 
 
-    public enum MoveState { follow, wander, wanderfollow, pace, chill, distractChill }
+    public enum MoveState { follow, wander, wanderfollow, pace, chill, distractChill, go }
     public MoveState state = MoveState.chill;
     MoveState defaultState = MoveState.chill; 
     public bool IsDefault { get { return state == defaultState; } }
@@ -17,11 +17,13 @@ public class NPCMovementController : MonoBehaviour, IMovement
     NPCWanderMove wander;
     NPCFollowMove follow;
     NPCPaceMove pace;
-    NPCDistractMove distract; 
+    NPCDistractMove distract;
+    NPCGoMove go; 
     bool canFollow;
     bool canWander;
     bool canPace;
     bool canBeDistracted;
+    bool canGo; 
     bool running = false; 
 
     public bool stunned;
@@ -63,6 +65,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
         canFollow = false;
         canWander = false;
         canPace = false;
+        canGo = false; 
         canBeDistracted = false; 
     }
 
@@ -144,6 +147,20 @@ public class NPCMovementController : MonoBehaviour, IMovement
             pace.SetPath(origin, distance);
         }
         state = MoveState.pace;
+    }
+    public void Go(Vector3 origin)
+    {
+        if (!canGo)
+        {
+            go = new NPCGoMove(self, origin);
+            canGo = true;
+        }
+        else
+        {
+            go.SetLoc(origin);
+        }
+        state = MoveState.go;
+        //        Debug.Log(charName + " set wander"); 
     }
     public void Distracted(GameObject targetObject)
     {
@@ -301,6 +318,18 @@ public class NPCMovementController : MonoBehaviour, IMovement
                         Action = follow.Action;
                     }
                     break;
+                case MoveState.go:
+                    if (canGo)
+                    {
+                        //Debug.Log("I'm wandering!!");
+                        go.UpdateMovement();
+                        Action = follow.Action;
+                        if(go.There)
+                        {
+                            state = MoveState.chill; 
+                        }
+                    }
+                    break;
                 case MoveState.follow:
 //                    Debug.Log(charName + " follow");
                     if (canFollow)
@@ -432,7 +461,7 @@ public class NPCMovementController : MonoBehaviour, IMovement
 
     public void GoToLoc(GameObject loc)
     {
-        Follow(loc, 0.2f); 
+        Go(loc.transform.position);  
     }
 
     public void Reset()

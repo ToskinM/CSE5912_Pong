@@ -48,55 +48,57 @@ public class ShowInspect : MonoBehaviour
         GameStateController.current.PauseGame();
         Shown = true;
         charName.text = name;
-        switch (name)
-        {
-            case Constants.AMARU_NAME:
-                icon.sprite = iconFactory.GetIcon(Constants.AMARU_ICON);
-                descrip.text = descripFactory.GetAmaru(); 
-                break;
-            case Constants.NAIA_NAME:
-                icon.sprite = iconFactory.GetIcon(Constants.NAIA_ICON);
-                descrip.text = descripFactory.GetNaia();
-                break;
-            case Constants.PINON_NAME:
-                icon.sprite = iconFactory.GetIcon(Constants.PINON_ICON);
-                descrip.text = descripFactory.GetPinon();
-                break;
-            case Constants.SYPAVE_NAME:
-                icon.sprite = iconFactory.GetIcon(Constants.SYPAVE_ICON);
-                descrip.text = descripFactory.GetSypave();
-                break;
-            case Constants.JERUTI_NAME:
-                //icon.sprite = iconFactory.GetIcon(Constants.JERUTI_ICON);
-                descrip.text = descripFactory.GetJeruti();
-                break;
-            case Constants.YSAPY_NAME:
-                //icon.sprite = iconFactory.GetIcon(Constants.YSAPY_ICON);
-                descrip.text = descripFactory.GetYsapy();
-                break;
-            case Constants.MOUSE_NAME:
-                icon.sprite = iconFactory.GetIcon(Constants.MOUSE_ICON);
-                descrip.text = descripFactory.GetMouse();
-                break;
-            case Constants.CATBAT_NAME:
-                icon.sprite = iconFactory.GetIcon(Constants.CATBAT_ICON);
-                descrip.text = descripFactory.GetCatbat();
-                break;
-            case Constants.ORBY_NAME:
-                icon.sprite = iconFactory.GetIcon(Constants.ORBY_ICON);
-                descrip.text = descripFactory.GetOrby();
-                break;
-            case Constants.ORBYJR_NAME:
-                icon.sprite = iconFactory.GetIcon(Constants.ORBYJR_ICON);
-                descrip.text = descripFactory.GetOrbyJr();
-                break;
-            case Constants.TEJU_NAME:
-                icon.sprite = iconFactory.GetIcon(Constants.TEJU_ICON);
-                descrip.text = descripFactory.GetTeju();
-                break;
-            default:
-                break;
-        }
+        icon.sprite = iconFactory.GetIconFromName(name);
+        descrip.text = descripFactory.Get(name);
+        //switch (name)
+        //{
+        //    case Constants.AMARU_NAME:
+        //        icon.sprite = iconFactory.GetIcon(Constants.AMARU_ICON);
+        //        descrip.text = descripFactory.GetAmaru(); 
+        //        break;
+        //    case Constants.NAIA_NAME:
+        //        icon.sprite = iconFactory.GetIcon(Constants.NAIA_ICON);
+        //        descrip.text = descripFactory.GetNaia();
+        //        break;
+        //    case Constants.PINON_NAME:
+        //        icon.sprite = iconFactory.GetIcon(Constants.PINON_ICON);
+        //        descrip.text = descripFactory.GetPinon();
+        //        break;
+        //    case Constants.SYPAVE_NAME:
+        //        icon.sprite = iconFactory.GetIcon(Constants.SYPAVE_ICON);
+        //        descrip.text = descripFactory.GetSypave();
+        //        break;
+        //    case Constants.JERUTI_NAME:
+        //        //icon.sprite = iconFactory.GetIcon(Constants.JERUTI_ICON);
+        //        descrip.text = descripFactory.GetJeruti();
+        //        break;
+        //    case Constants.YSAPY_NAME:
+        //        //icon.sprite = iconFactory.GetIcon(Constants.YSAPY_ICON);
+        //        descrip.text = descripFactory.GetYsapy();
+        //        break;
+        //    case Constants.MOUSE_NAME:
+        //        icon.sprite = iconFactory.GetIcon(Constants.MOUSE_ICON);
+        //        descrip.text = descripFactory.GetMouse();
+        //        break;
+        //    case Constants.CATBAT_NAME:
+        //        icon.sprite = iconFactory.GetIcon(Constants.CATBAT_ICON);
+        //        descrip.text = descripFactory.GetCatbat();
+        //        break;
+        //    case Constants.ORBY_NAME:
+        //        icon.sprite = iconFactory.GetIcon(Constants.ORBY_ICON);
+        //        descrip.text = descripFactory.GetOrby();
+        //        break;
+        //    case Constants.ORBYJR_NAME:
+        //        icon.sprite = iconFactory.GetIcon(Constants.ORBYJR_ICON);
+        //        descrip.text = descripFactory.GetOrbyJr();
+        //        break;
+        //    case Constants.TEJU_NAME:
+        //        icon.sprite = iconFactory.GetIcon(Constants.TEJU_ICON);
+        //        descrip.text = descripFactory.GetTeju();
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 
     public void Show(string name, string description)

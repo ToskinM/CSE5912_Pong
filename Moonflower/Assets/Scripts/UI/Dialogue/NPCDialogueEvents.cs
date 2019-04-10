@@ -32,7 +32,7 @@ public class NPCDialogueEvents : MonoBehaviour
 
     public void MoveMouse()
     {
-        GameObject.Find("Big Mouse").GetComponent<TuvichaDialogueController>().Move();
+        GameObject.Find("BigMouse").GetComponent<TuvichaDialogueController>().Move();
     }
 
     private void fight()

@@ -31,7 +31,8 @@ public class LesserNPCController : MonoBehaviour, INPCController
    public NPCMovementController movement { get; set; }
     public ICombatController combatController;
     public StealthDetection stealthDetection;
-    IDialogueController dialogue; 
+    IDialogueController dialogue;
+    NPCAnimationController animationControl; 
 
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
@@ -67,6 +68,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
         agent = GetComponent<NavMeshAgent>();
         movement = new NPCMovementController(gameObject,charName);
         dialogue = GetComponent<IDialogueController>();
+        animationControl = GetComponent<NPCAnimationController>(); 
         //movement.SetEngagementDistances(5, combatController.attackDistance + 0.5f, 1);
 
         combatController = GetComponent<ICombatController>();
@@ -134,9 +136,14 @@ public class LesserNPCController : MonoBehaviour, INPCController
     // Action Wheel Interactions
     public void Talk()
     {
-//        Debug.Log("To controller"); 
+        //        Debug.Log("To controller"); 
         if (dialogue != null)
+        {
+            animationControl.sleeping = false; 
             dialogue.Talk();
+        }
+
+
     }
     public void Gift(string giftName)
     {

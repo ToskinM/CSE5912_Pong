@@ -74,7 +74,7 @@ public class InspectFactory
             case Constants.TEJU_NAME:
                 return "He/Him\nMonster God\n\nWhen left unchecked, the fires rain while yearning for sweet and receiving distain.";
             case Constants.TUVICHA_NAME:
-                return "Ze/Zir\nRambunctious Rodent\n\nLarge and loud this one does slumber, but ze does not mean to encumber."; 
+                return "She/Her\nRambunctious Rodent\n\nLarge and loud this one does slumber, but she does not mean to encumber."; 
             default:
                 return "";
 

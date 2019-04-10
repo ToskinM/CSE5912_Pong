@@ -15,7 +15,7 @@ public class HazardHurtboxController : MonoBehaviour, IHurtboxController
     {
         Source = source;
         SourceCharacterStats = Source.GetComponent<CharacterStats>();
-        Debug.Log("hi");
+//        Debug.Log("hi");
     }
 
     void Start()

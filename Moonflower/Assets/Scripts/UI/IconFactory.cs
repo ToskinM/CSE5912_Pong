@@ -34,6 +34,8 @@ public class IconFactory
                 return Resources.Load<Sprite>(Constants.ORBY_ICON);
             case Constants.ORBYJR_NAME:
                 return Resources.Load<Sprite>(Constants.ORBYJR_ICON);
+            case Constants.TEJU_NAME:
+                return Resources.Load<Sprite>(Constants.TEJU_ICON);
             default:
                 return null;
         }
