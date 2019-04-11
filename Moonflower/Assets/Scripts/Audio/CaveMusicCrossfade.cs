@@ -11,22 +11,29 @@ public class CaveMusicCrossfade : MonoBehaviour
 
     AudioSource currentTrack;
 
+
     public bool MainEnabled;
     public bool BassEnabled;
     public bool ActionEnabled;
 
+    private float maxVol;
+
     // Start is called before the first frame update
     void Start()
     {
+        maxVol = PlayerPrefs.GetFloat("volumeMusic");
         caveSoundtracks = GetComponents<AudioSource>();
         main = caveSoundtracks[0];
         bass = caveSoundtracks[1];
         action = caveSoundtracks[2];
 
         currentTrack = main;
+        currentTrack.volume = PlayerPrefs.GetFloat("volumeMusic");
 
         PlayerCombatController.EngageInCombat += FadeInActionTheme;
         PlayerCombatController.DisengageFromCombat += FadeOutActionTheme;
+        AudioManager.OnBGMVolChange += OnVolumeChange;
+
     }
 
     /*
@@ -64,7 +71,7 @@ public class CaveMusicCrossfade : MonoBehaviour
     {
         float fadeSpeed = 0.2f;
         StartCoroutine(FadeOut(main, 0, fadeSpeed));
-        StartCoroutine(FadeIn(bass, 1, fadeSpeed));
+        StartCoroutine(FadeIn(bass, maxVol, fadeSpeed));
         MainEnabled = false;
         BassEnabled = true;
     }
@@ -73,14 +80,14 @@ public class CaveMusicCrossfade : MonoBehaviour
     {
         float fadeSpeed = 0.2f;
         StartCoroutine(FadeOut(bass, 0, fadeSpeed));
-        StartCoroutine(FadeIn(main, 1, fadeSpeed));
+        StartCoroutine(FadeIn(main, maxVol, fadeSpeed));
         BassEnabled = false;
         MainEnabled = true;
     }
 
     void FadeInActionTheme()
     {
-        StartCoroutine(FadeIn(action, 1, 0.2f));
+        StartCoroutine(FadeIn(action, maxVol, 0.2f));
         ActionEnabled = true;
     }
 
@@ -115,14 +122,39 @@ public class CaveMusicCrossfade : MonoBehaviour
     IEnumerator CrossFade(AudioSource songToFadeOut, AudioSource songToFadeIn, float fadeSpeed)
     {
         StartCoroutine(FadeOut(songToFadeOut, 0, fadeSpeed));
-        StartCoroutine(FadeIn(songToFadeIn, 1, fadeSpeed));
+        StartCoroutine(FadeIn(songToFadeIn, maxVol, fadeSpeed));
 
         yield break;
     }
 
+    public void OnVolumeChange(float volume)
+    {
+        AssignAudioManager();
+        if (MainEnabled && !BassEnabled)
+        {
+            main.volume = volume;
+        }
+        else if (BassEnabled && !MainEnabled)
+        {
+            bass.volume = volume;
+        }
+        if (ActionEnabled)
+            action.volume = volume;
+
+        maxVol = PlayerPrefs.GetFloat("volumeMusic");
+    }
+    void AssignAudioManager()
+    {
+        if (currentTrack == null)
+        {
+            currentTrack = gameObject.AddComponent<AudioSource>();
+            currentTrack.playOnAwake = false;
+        }
+    }
     void OnDestroy()
     {
         PlayerCombatController.EngageInCombat -= FadeInActionTheme;
         PlayerCombatController.DisengageFromCombat -= FadeOutActionTheme;
+        AudioManager.OnBGMVolChange += OnVolumeChange;
     }
 }
