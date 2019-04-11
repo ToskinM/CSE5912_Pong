@@ -41,14 +41,14 @@ public class PlayerSoundEffect : MonoBehaviour
             Walk2 = "AnaiWalking(4)";
         }
 
-        audioManager.ResumeNormal(anai,Walk1);
-        audioManager.ResumeNormal(anai, Walk2);
+        //audioManager.ResumeNormal(anai,Walk1);
+        //audioManager.ResumeNormal(anai, Walk2);
         for (int i = 0; i < 2; i++)
         {
             if (i == 0)
-                audioManager.Play(anai, Walk1);
+                audioManager.PlayFootStep(anai, Walk1);
             else
-                audioManager.Play(anai, Walk2);
+                audioManager.PlayFootStep(anai, Walk2);
         }
 
     }
@@ -105,9 +105,9 @@ public class PlayerSoundEffect : MonoBehaviour
         for (int i = 0; i < 2; i++)
         {
             if (i == 0)
-                audioManager.Play(anai, Walk1);
+                audioManager.PlayFootStep(anai, Walk1);
             else
-                audioManager.Play(anai, Walk2);
+                audioManager.PlayFootStep(anai, Walk2);
         }
 
     }

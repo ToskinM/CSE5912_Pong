@@ -127,21 +127,42 @@ public class AudioManager : MonoBehaviour
 
 
     //Foot Step
-    public void PlaySneakFootStep(string category,string name)
+    public void PlayFootStep(string category, string name)
     {
         Audio a = Array.Find(audioSounds, sound => sound.categoryName.Contains(category));
         Sound s = Array.Find(a.sounds, sound => sound.name == name);
-        ChangeFootStep(s.source);
-        if (s != null & s.source != null)
-        {
-            s.source.Play();
-        }
-        //Add back audio source
         if (s.source == null)
         {
             ReAddAudioSource(a, s);
             AddSourceOtherComponent(s);
         }
+
+        ChangeFootStep(s.source, 0.3f);
+        if (s != null & s.source != null)
+        {
+            s.source.Play();
+        }
+        //Add back audio source
+
+    }
+
+    public void PlaySneakFootStep(string category,string name)
+    {
+        Audio a = Array.Find(audioSounds, sound => sound.categoryName.Contains(category));
+        Sound s = Array.Find(a.sounds, sound => sound.name == name);
+        if (s.source == null)
+        {
+            ReAddAudioSource(a, s);
+            AddSourceOtherComponent(s);
+        }
+
+        ChangeFootStep(s.source, 0.1f);
+        if (s != null & s.source != null)
+        {
+            s.source.Play();
+        }
+        //Add back audio source
+
     }
 
 
@@ -175,10 +196,10 @@ public class AudioManager : MonoBehaviour
     //}
 
     //Sneaking Change Volume
-    public void ChangeFootStep(AudioSource s)
+    public void ChangeFootStep(AudioSource s, float vol)
     {
         //Sound s = Array.Find(sounds, sound => sound.name == name);
-        s.volume = soundVol * 0.3f;
+        s.volume = soundVol * vol;
     }
     public void ResumeNormal(string category ,string name)
     {
