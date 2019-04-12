@@ -145,6 +145,7 @@ public static class Constants
     public const string CATBAT_NAME = "Catbat";
     public const string ORBY_NAME = "Orby";
     public const string ORBYJR_NAME = "Orby Jr.";
+    public const string ORBYJR_DIALOGUE = dialogueFolder + cave + "Orby Jr";
 
     //monsters
     public const string TEJU_NAME = "Teju Jagua";
