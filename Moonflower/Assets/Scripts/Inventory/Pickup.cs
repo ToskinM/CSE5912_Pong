@@ -10,13 +10,14 @@ public class Pickup : MonoBehaviour
     public int distanceToPickup = 5;
 
     public CharacterStats Stats { get; private set; }
-    //private GameObject currentPlayer;
 
     private CharacterStats playerStats;
     private PlayerInventory playerInventory;
     private PlayerSoundEffect soundEffect;
     private InteractionPopup interaction;
     private FeedbackText feedback;
+
+    public VillageItem villageItem;
 
     //public TextMeshProUGUI inventoryAdd;
 
@@ -32,8 +33,9 @@ public class Pickup : MonoBehaviour
 
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
-        //currentPlayer = PlayerController.instance.GetActivePlayerObject();
-        PlayerController.OnCharacterSwitch += SwitchActiveCharacter; 
+        PlayerController.OnCharacterSwitch += SwitchActiveCharacter;
+
+        villageItem = GameObject.Find("Item").GetComponent<VillageItem>();
     }
 
     private GameObject FindClosest()
@@ -115,6 +117,9 @@ public class Pickup : MonoBehaviour
             //Add to inventory
             if (!objectUsedImmediately)
                 playerInventory.AddObj(obj.gameObject);
+
+            villageItem.RemoveTest(obj.gameObject, obj.gameObject.transform.position, obj.gameObject.transform.localRotation, gameObject.transform.localScale);
+
             //Destroy Gameobject after collect
             Destroy(obj.gameObject);
             //Play Pickup audio clip;

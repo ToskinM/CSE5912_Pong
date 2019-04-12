@@ -22,20 +22,27 @@ public class InventoryStat : MonoBehaviour
 
     public Behaviour halo;
 
-    public SceneController sceneController;
+    //public SceneController sceneController;
 
     SkyColors.SkyCategory currentTime;
+    public VillageItem villageItem;
 
     void Start()
     {
-        sceneController = GameObject.Find("SceneController").GetComponent<SceneController>();
+        //sceneController = GameObject.Find("SceneController").GetComponent<SceneController>();
         SkyColors skyColors = FindObjectOfType<SkyColors>();
-        if (skyColors)
-            currentTime = skyColors.GetDayNight();
         if (currentTime == null)
         {
             currentTime = SkyColors.SkyCategory.Sunset;
         }
+        if (skyColors)
+            currentTime = skyColors.GetDayNight();
+
+        //villageItem = GameObject.Find("Item").GetComponent<VillageItem>();
+        //villageItem.AddTest(gameObject, transform.position, transform.localRotation, transform.localScale);
+        //Destroy(gameObject);
+
+
     }
     public void SetHalo(bool decide)
     {
@@ -55,4 +62,5 @@ public class InventoryStat : MonoBehaviour
     void Update()
     {
     }
+
 }
