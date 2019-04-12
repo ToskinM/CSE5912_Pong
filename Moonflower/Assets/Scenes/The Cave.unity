@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.255
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18726468, g: 0.19157696, b: 0.17912021, a: 0.255}
+  m_IndirectSpecularColor: {r: 0.18726489, g: 0.19157714, b: 0.1791203, a: 0.255}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -61859,9 +61859,9 @@ GameObject:
   - component: {fileID: 1614054690}
   - component: {fileID: 1614054693}
   - component: {fileID: 1614054692}
-  - component: {fileID: 1614054691}
   - component: {fileID: 1614054695}
   - component: {fileID: 1614054694}
+  - component: {fileID: 1614054691}
   m_Layer: 0
   m_Name: water (4)
   m_TagString: Untagged
@@ -61883,8 +61883,8 @@ Transform:
   m_Father: {fileID: 117365585}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 36.499, z: -0.286}
---- !u!64 &1614054691
-MeshCollider:
+--- !u!65 &1614054691
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -61893,10 +61893,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  serializedVersion: 2
+  m_Size: {x: 10.000002, y: 0.000000009313226, z: 10}
+  m_Center: {x: -0.0000009536743, y: -0.0000009536743, z: -0.0000038146973}
 --- !u!23 &1614054692
 MeshRenderer:
   m_ObjectHideFlags: 0
