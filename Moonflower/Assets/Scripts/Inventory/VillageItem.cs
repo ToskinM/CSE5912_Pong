@@ -73,7 +73,7 @@ public class VillageItem : MonoBehaviour
         {
 
         }
-        else
+        else 
         {
             VillageTest.Remove(new CollidableData(obj, position, rotation, scale));
         }

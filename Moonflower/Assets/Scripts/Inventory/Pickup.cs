@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Pickup : MonoBehaviour
 {
@@ -34,8 +35,8 @@ public class Pickup : MonoBehaviour
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         PlayerController.OnCharacterSwitch += SwitchActiveCharacter;
-
-        villageItem = GameObject.Find("Item").GetComponent<VillageItem>();
+        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+            villageItem = GameObject.Find("Item").GetComponent<VillageItem>();
     }
 
     private GameObject FindClosest()
@@ -117,8 +118,15 @@ public class Pickup : MonoBehaviour
             //Add to inventory
             if (!objectUsedImmediately)
                 playerInventory.AddObj(obj.gameObject);
+            if (obj.name.Contains("WolfApple") || obj.name.Contains("Moonflower"))
+            {
+                //do nothing
+            }
+            else if(SceneManager.GetActiveScene().name==Constants.SCENE_VILLAGE)
+            {
+                villageItem.RemoveTest(obj.gameObject, obj.gameObject.transform.position, obj.gameObject.transform.localRotation, gameObject.transform.localScale);
 
-            villageItem.RemoveTest(obj.gameObject, obj.gameObject.transform.position, obj.gameObject.transform.localRotation, gameObject.transform.localScale);
+            }
 
             //Destroy Gameobject after collect
             Destroy(obj.gameObject);
