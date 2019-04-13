@@ -69,7 +69,15 @@ public class VillageItem : MonoBehaviour
 
     public void RemoveTest(GameObject obj, Vector3 position, Quaternion rotation, Vector3 scale)
     {
-        VillageTest.Remove(new CollidableData(obj, position, rotation, scale));
+        if (obj.name.Contains("WolfApple") || obj.name.Contains("Moonflower"))
+        {
+
+        }
+        else
+        {
+            VillageTest.Remove(new CollidableData(obj, position, rotation, scale));
+        }
+            
     }
 
     public void GetPrefab()

@@ -18,8 +18,8 @@ public class MoonFlower : MonoBehaviour
     }
     private void OnDestroy()
     {
-        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
-            gameObject.GetComponentInParent<MoonFlowerRegenerate>().ReAddObj(gameObject.transform.position, gameObject.transform.rotation);
+        //if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+            //gameObject.GetComponentInParent<MoonFlowerRegenerate>().ReAddObj(gameObject.transform.position, gameObject.transform.rotation);
     }
 
 }
