@@ -61,11 +61,10 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
     [Header("Area Cry")]
     public GameObject areaCryProjectile;
-    public float areaCryCooldown = 0.3f;
-    public float areaCryBarrageCount = 3f;
-    public float areaCryBarrageDuration = 0.3f;
+    public float areaCryCooldown = 4f;
+    public float areaCryBarrageCount = 35f;
     public float areaCryFireRate = 0.1f;
-    public float areaCryChaos = 0.5f;
+    public float areaCryChaos = 5f;
     private Coroutine areaCryCoroutine = null;
     public bool areaCryReady;
 
@@ -260,12 +259,12 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     }
     public void LaunchAreaCryProjectile(Transform projectileNode, float radius)
     {
-        GameObject projectile = Instantiate(areaCryProjectile, projectileNode.position, Quaternion.LookRotation(Vector3.up + new Vector3(Random.Range(-areaCryChaos, areaCryChaos), 0f, Random.Range(-areaCryChaos, areaCryChaos))));
-        //projectile.transform.LookAt(CombatTarget.transform.position + new Vector3(Random.Range(-aimChaos, aimChaos), Random.Range(-aimChaos, aimChaos), Random.Range(-aimChaos, aimChaos)));
+        GameObject projectile = Instantiate(areaCryProjectile, projectileNode.position, Quaternion.LookRotation(transform.position + new Vector3(Random.Range(-areaCryChaos, areaCryChaos), 0f, Random.Range(-areaCryChaos, areaCryChaos))));
+        projectile.transform.LookAt(transform.position + new Vector3(Random.Range(-areaCryChaos, areaCryChaos), Random.Range(-areaCryChaos, areaCryChaos), Random.Range(-areaCryChaos, areaCryChaos)));
         IProjectile proj = projectile.GetComponent<IProjectile>();
         proj.Hurtbox.SourceCharacterStats = Stats;
         proj.Hurtbox.Source = this.gameObject;
-        proj.TargetTransform = CombatTarget.transform;
+        proj.TargetTransform = transform;
     }
 
     public void AcknowledgeHaveHit(GameObject whoWeHit)
@@ -391,7 +390,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         if (!IsDead && Stats.CurrentHealth <= 0)
         {
             IsDead = true;
-            StartCoroutine(Die());
+            Die();
         }
     }
 
@@ -402,29 +401,12 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     }
 
     // Death cleanup and Sequence
-    private IEnumerator Die()
+    private void Die()
     {
-        //Debug.Log(gameObject.name + " has died");
-        //OnDeath?.Invoke(this);
-
-        // Tell the tracker we have died
-        //LevelManager.current.RegisterNPCDeath(gameObject);
-
-        // Stop combat
         Subdue();
-
 
         // Play and wait for death animation to finish
         animationController.SetSleeping(true);
-        yield return new WaitForSeconds(1f);
-
-
-        // Poof us away
-        //ObjectPoolController.current.CheckoutTemporary(deathEffect, transform, 1);
-
-        //gameObject.SetActive(false);
-
-        //Destroy(gameObject, 0.5f);
     }
 
     // Sheathe/Unsheathe weapon
