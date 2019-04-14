@@ -40,6 +40,10 @@ public class DialogueTrigger : MonoBehaviour
     GameObject partner;
     InteractionPopup interaction;
 
+    private static readonly Random random = new Random();
+    private static List<int> offsets = new List<int>();
+    private static List<int> order = new List<int>(); 
+
     //string gName;
 
     public DialogueTrigger(GameObject person, Sprite iconSprite, string graphName)
@@ -57,8 +61,13 @@ public class DialogueTrigger : MonoBehaviour
 
         icon = iconSprite;
         interaction = hud.GetComponent<ComponentLookup>().InteractionPopup;
-        panelMoveInc = Screen.height / 90f; 
+        panelMoveInc = Screen.height / 90f;
         //spriteFile = characterSprite;
+
+        int offset = Screen.height / 21;
+        offsets.Add(0);
+        offsets.Add(offset);
+        offsets.Add(offset*2);
 
     }
 
@@ -139,7 +148,7 @@ public class DialogueTrigger : MonoBehaviour
                             //display all the dialogue text
                             panelInfo.Text.text = graph.current.text;
                             typeIndex = 0;
-                            tState = TextState.options;
+                            SwitchToOptions();
                             break;
                         case TextState.options:
                             //display all the available options
@@ -280,7 +289,7 @@ public class DialogueTrigger : MonoBehaviour
                 if (currDiaIndex >= dialogue.Length)
                 {
                     if (hasOptions())
-                        tState = TextState.options;
+                        SwitchToOptions(); 
                     else
                         tState = TextState.done;
                 }
@@ -300,7 +309,7 @@ public class DialogueTrigger : MonoBehaviour
                     {
                         resetCounts();
                         if (hasOptions())
-                            tState = TextState.options;
+                            SwitchToOptions();
                         else
                             tState = TextState.done;
                     }
@@ -313,6 +322,64 @@ public class DialogueTrigger : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void SwitchToOptions()
+    {
+        tState = TextState.options;
+        order.Clear();
+
+        int index = Random.Range(0, 3);
+        switch(index)
+        {
+            case 0:
+                order.Add(offsets[index]);
+                index = Random.Range(0, 2);
+                switch (index)
+                {
+                    case 0:
+                        order.Add(offsets[1]);
+                        order.Add(offsets[2]);
+                        break;
+                    case 1:
+                        order.Add(offsets[2]);
+                        order.Add(offsets[1]);
+                        break;
+                }
+                break;
+            case 1:
+                order.Add(offsets[index]);
+                index = Random.Range(0, 2);
+                switch (index)
+                {
+                    case 0:
+                        order.Add(offsets[0]);
+                        order.Add(offsets[2]);
+                        break;
+                    case 1:
+                        order.Add(offsets[2]);
+                        order.Add(offsets[0]);
+                        break;
+                }
+                break;
+            case 2:
+                order.Add(offsets[index]);
+                index = Random.Range(0, 2);
+                switch (index)
+                {
+                    case 0:
+                        order.Add(offsets[1]);
+                        order.Add(offsets[0]);
+                        break;
+                    case 1:
+                        order.Add(offsets[0]);
+                        order.Add(offsets[1]);
+                        break;
+                }
+                break; 
+        }
+
+       // Debug.Log("Order is: " + order[0] + " " + order[1] + " " + order[2]); 
     }
 
     private bool hasOptions()
@@ -373,14 +440,28 @@ public class DialogueTrigger : MonoBehaviour
         {
             if (buttons.Count != numOptions)
             {
+                //int currOffset = 0;
                 int currOffset = 0;
+                if (order.Count > 0)
+                {
+                    currOffset = order[0];
+                }
+
                 int offset = Screen.height / 21;
                 for (int i = 0; i < numOptions; i++)
                 {
                     Button b = Instantiate(template, template.transform.position, template.transform.rotation);
                     b.transform.SetParent(panel.transform, false);
                     b.transform.position = new Vector3(template.transform.position.x, template.transform.position.y - currOffset);
-                    currOffset += offset;
+                    //currOffset += offset;
+                    if (order.Count > i+1)
+                    {
+                        currOffset = order[i+1];
+                    }
+                    else
+                    {
+                        currOffset += offset;
+                    }
 
                     buttons.Add(b);
                 }
@@ -429,14 +510,28 @@ public class DialogueTrigger : MonoBehaviour
         int numOptions = graph.current.answers.Count;
         if (numOptions > 0)
         {
+            HashSet<int> hashset = new HashSet<int>();
+
             int currOffset = 0;
+            if (order.Count > 0)
+            {
+                currOffset = order[0];
+            }
             int offset = Screen.height / 21;
             for (int i = 0; i < numOptions; i++)
             {
                 Button b = Instantiate(template, template.transform.position, template.transform.rotation);
                 b.transform.SetParent(panel.transform, false);
                 b.transform.position = new Vector3(template.transform.position.x, template.transform.position.y - currOffset);
-                currOffset += offset;
+                //currOffset += offset;
+                if (order.Count > i+1)
+                {
+                    currOffset = order[i + 1];
+                }
+                else
+                {
+                    currOffset += offset;
+                }
 
                 buttons.Add(b);
             }
