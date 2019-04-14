@@ -12,6 +12,7 @@ public class GameOverScreen : MonoBehaviour
     public TextMeshProUGUI AnaiGameOverText;
     private void Start()
     {
+        canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 0f;
         StartCoroutine(Fade(1f));
         if (PlayerController.instance.GetActiveCharacter() == PlayerController.PlayerCharacter.Mimbi)
@@ -42,7 +43,6 @@ public class GameOverScreen : MonoBehaviour
 
     private IEnumerator Fade(float finalAlpha, float fadeDuration = 4f)
     {
-        canvasGroup.blocksRaycasts = true;
         float fadeSpeed = Mathf.Abs(canvasGroup.alpha - finalAlpha) / fadeDuration;
         while (!Mathf.Approximately(canvasGroup.alpha, finalAlpha))
         {
@@ -50,6 +50,5 @@ public class GameOverScreen : MonoBehaviour
                 fadeSpeed * Time.deltaTime);
             yield return null;
         }
-        canvasGroup.blocksRaycasts = false;
     }
 }
