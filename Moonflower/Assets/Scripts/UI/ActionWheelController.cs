@@ -7,7 +7,6 @@ public class ActionWheelController : MonoBehaviour
     public static ActionWheelController current;
 
     public GameObject ActionWheelPrefab;
-    public GameObject GameStateManager;
     public GameObject InteractionPopup;
     private InteractionPopup interaction;
     private GameStateController gameStateController;

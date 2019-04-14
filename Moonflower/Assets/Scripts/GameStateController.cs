@@ -31,10 +31,10 @@ public class GameStateController : MonoBehaviour
     int time = 8;
     public bool Passed = false;
 
-    void Start()
+    void Awake()
     {
         NPCDialogues = new Dictionary<string, DialogueTrigger>();
-        NPCDialogueLabels = new Dictionary<string, string>(); 
+        NPCDialogueLabels = new Dictionary<string, string>();
         if (current == null)
         {
             DontDestroyOnLoad(gameObject);
@@ -48,6 +48,10 @@ public class GameStateController : MonoBehaviour
         Paused = false;
         DebugModeOn = false;
 
+    }
+
+    private void Start()
+    {
         // Lock Mouse on game start
         if (SceneManager.GetActiveScene().name != Constants.SCENE_MAINMENU)
         {

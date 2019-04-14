@@ -185,7 +185,8 @@ public class DialogueTrigger : MonoBehaviour
         interaction.NotAllowed = true; 
         if (!PlayerController.instance.ActivePlayerCombatControls.InCombat || disregardCombat)
         {
-//            Debug.Log("Inside"); 
+            //            Debug.Log("Inside");
+            panel.SetActive(true); 
             pState = PanelState.rising;
             panelInfo.Icon.sprite = icon;  //new IconFactory().GetIcon(spriteFile);
             tState = TextState.typing;
@@ -211,7 +212,7 @@ public class DialogueTrigger : MonoBehaviour
     public void EndDialogue()
     {
         interaction.NotAllowed = false; 
-        
+
         destroyButtons();
         pState = PanelState.falling; 
         engaged = false;

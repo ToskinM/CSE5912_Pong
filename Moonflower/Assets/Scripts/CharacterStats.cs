@@ -15,7 +15,6 @@ public class CharacterStats : MonoBehaviour
     public int CurrentHealth;
 
     // Non-combat related stats
-    public int Cunning;
     public int Charisma;
     public int Stealth;
 
@@ -164,11 +163,6 @@ public class CharacterStats : MonoBehaviour
     public void UpdateCharisma(int change)
     {
         Charisma += change; 
-    }
-
-    public bool CompareCunning(int otherCunning)
-    {
-        return Cunning >= otherCunning;
     }
 
     public bool CompareCharisma(int otherCharisma)

@@ -22,7 +22,6 @@ public class TejuController : MonoBehaviour, INPCController
     public TejuAnimationController animationtController;
 
     private NavMeshAgent agent;
-    private DialogueTrigger talkTrig;
     private PlayerController playerController;
     private FeedbackText feedback;
 
@@ -33,6 +32,13 @@ public class TejuController : MonoBehaviour, INPCController
     public SoulCrystal soulCrystal;
     public GameObject soulCrystalBarrier;
     public SpawnerController spawnerController;
+
+    private DialogueTrigger talk;
+    private DialogueTrigger currTalk;
+    enum Convo { talk }
+    Convo currConvo;
+
+    bool subdued = false; 
 
     private void Awake()
     {
@@ -46,6 +52,29 @@ public class TejuController : MonoBehaviour, INPCController
         //playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
 
         icon = new IconFactory().GetIcon(Constants.TEJU_ICON);
+        talk = new DialogueTrigger(gameObject, icon, Constants.TEJU_DIALOGUE);
+        talk.SetExitText("I'm not even worth a full conversation...");
+
+        if (GameStateController.current == null)
+            Debug.Log("No game controller");
+        else if (GameStateController.current.NPCDialogues == null)
+            Debug.Log("No NPC Dialogues"); 
+
+        if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.TEJU_NAME))
+        {
+            currTalk = talk;
+            currConvo = Convo.talk; 
+            GameStateController.current.SaveNPCDialogues(Constants.TEJU_NAME, currConvo.ToString(), currTalk);
+        }
+        else
+        {
+            currTalk = GameStateController.current.GetNPCDialogue(Constants.TEJU_NAME);
+            currTalk.SetSelf(gameObject);
+            talk = currTalk;
+            currConvo = Convo.talk; 
+            GameStateController.current.SaveNPCDialogues(Constants.TEJU_NAME, currConvo.ToString(), currTalk);
+
+        }
     }
 
     void Start()
@@ -71,14 +100,24 @@ public class TejuController : MonoBehaviour, INPCController
 
     public void Talk()
     {
-
+        if (currTalk.Complete)
+        {
+            if(subdued)
+                displayFeedback("Teju invited you to touch his crystal.");
+            else
+                displayFeedback("Teju is still devastated.");
+        }
+        else
+        {
+            StartEngagement();
+        }
     }
     public void Gift(string giftName)
     {
-        if(new ItemLookup().IsSweet(giftName))
+        if(giftName.Equals(Constants.HONEY_NAME))
         {
-            displayFeedback("Teju loves "+ giftName+" and has stopped crying!");
-            combatController.Subdue();
+            displayFeedback("Teju loves the "+ giftName+" and has stopped crying!");
+            Subdue();
         }
         else
         {
@@ -100,11 +139,21 @@ public class TejuController : MonoBehaviour, INPCController
         return Constants.TEJU_NAME;
     }
 
+    public void Subdue()
+    {
+        combatController.Subdue();
+        subdued = true; 
+    }
+
+    public void FailConvo()
+    {
+
+    }
+
     private void StartEngagement()
     {
-        if (talkTrig != null)
-            if (!talkTrig.DialogueActive())
-                talkTrig.StartDialogue();
+        if (!currTalk.DialogueActive())
+            currTalk.StartDialogue();
     }
 
     private void displayFeedback(string text)

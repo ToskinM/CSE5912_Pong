@@ -16,7 +16,6 @@ public class ShowInventory : MonoBehaviour
 
     List<GameObject> items = new List<GameObject>();
     List<string> names = new List<string>(); 
-    public GameStateController gameController;
     GameObject InvItemTemplate;
     ItemLookup lookup = new ItemLookup(); 
     private PlayerInventory playerInventory;
@@ -42,7 +41,6 @@ public class ShowInventory : MonoBehaviour
         InvItemTemplate = InvContentPanel.transform.GetChild(0).gameObject; 
         Shown = false;
         playerInventory = PlayerController.instance.ActivePlayerInventory;//.GetComponent<PlayerInventory>();
-        gameController = GameStateController.current;
         //InvoButton.onClick.AddListener(showInv);
    }
 

@@ -23,11 +23,23 @@ public class NPCDialogueEvents : MonoBehaviour
         switch (NPCname)
         {
             case "Naia":
-                    Invoke("fight", 2); //GameObject.Find("Naia").GetComponent<NaiaController>().Fight();
+                    Invoke("fight", 2);
                 break;
             default:
                 break;
         }
+    }
+
+    public void TejuFail()
+    {
+        GameObject.Find("Teju").GetComponent<TejuController>().FailConvo();
+        IncreasePlayerCharisma(false); 
+    }
+
+    public void TejuSuccess()
+    {
+        GameObject.Find("Teju").GetComponent<TejuController>().Subdue();
+        IncreasePlayerCharisma(true);
     }
 
     public bool WasMorePeaceful()
@@ -52,15 +64,6 @@ public class NPCDialogueEvents : MonoBehaviour
         else
             PlayerController.instance.gameObject.GetComponent<CharacterStats>().Charisma -= playerStatBuff;
     
-    }
-
-    public void IncreasePlayerCunning(bool pos)
-    {
-        if (pos)
-            PlayerController.instance.gameObject.GetComponent<CharacterStats>().Cunning += playerStatBuff;
-        else
-            PlayerController.instance.gameObject.GetComponent<CharacterStats>().Cunning -= playerStatBuff;
-
     }
 
     public void GiveToPlayer(string giftName)

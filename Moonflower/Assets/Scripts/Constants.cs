@@ -149,6 +149,7 @@ public static class Constants
 
     //monsters
     public const string TEJU_NAME = "Teju Jagua";
+    public const string TEJU_DIALOGUE = dialogueFolder + cave + "Teju";
 
     //heal objects
     public const string MOONFLOWER_NAME = "Moon Flower";
