@@ -31,7 +31,17 @@ public class PlayerColliderListener : MonoBehaviour
     {
         if (!enabled) return;
 
-        if (other.tag == "Hurtbox")
+        if (other.tag == "Hurtbox" || other.tag == "EnvironmentHurtbox")
+        {
+            OnHurtboxHit?.Invoke(other);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (!enabled) return;
+
+        if (other.tag == "EnvironmentHurtbox")
         {
             OnHurtboxHit?.Invoke(other);
         }
