@@ -26,8 +26,8 @@ public class FollowCamera : MonoBehaviour
     private bool lockedOn;
 
     private Quaternion rotation = Quaternion.identity;
-    public float yRotation;
-    public float xRotation;
+    [HideInInspector] public float yRotation;
+    [HideInInspector] public float xRotation;
     private Vector3 offset;
 
     private readonly float freeRoamMoveSpeed = 0.4f;
@@ -35,7 +35,7 @@ public class FollowCamera : MonoBehaviour
     private readonly float yRotationMin = -15f;
     private readonly float followDistanceMax = 2f;
     private readonly float followDistanceMin = 0.5f;
-    private readonly float collisionOffsetMultiplier = 0.5f;
+    public float collisionOffsetMultiplier = -0.8f;
 
     public delegate void LockonUpdate(GameObject target);
     public event LockonUpdate OnLockon;
