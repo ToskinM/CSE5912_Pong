@@ -55,11 +55,6 @@ public class TejuController : MonoBehaviour, INPCController
         talk = new DialogueTrigger(gameObject, icon, Constants.TEJU_DIALOGUE);
         talk.SetExitText("I'm not even worth a full conversation...");
 
-        if (GameStateController.current == null)
-            Debug.Log("No game controller");
-        else if (GameStateController.current.NPCDialogues == null)
-            Debug.Log("No NPC Dialogues"); 
-
         if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.TEJU_NAME))
         {
             currTalk = talk;
@@ -96,6 +91,7 @@ public class TejuController : MonoBehaviour, INPCController
     void Update()
     {
         movement.UpdateMovement();
+        currTalk.Update(); 
     }
 
     public void Talk()
@@ -141,6 +137,9 @@ public class TejuController : MonoBehaviour, INPCController
 
     public void Subdue()
     {
+        if (!feedback.IsDisplaying())
+            displayFeedback("Teju has stopped crying!");
+
         combatController.Subdue();
         subdued = true; 
     }

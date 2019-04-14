@@ -112,7 +112,7 @@ public class CharacterStats : MonoBehaviour
 
         if (sourceName == "Lava" && PlayerController.instance.AnaiIsActive())
         {
-            Debug.Log("I did it ");
+        //    Debug.Log("I did it ");
             PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>().AnaiIntoLava();
             //GameObject.Find("Audio").GetComponent<AudioManager>().Play("Anai", "");
         }

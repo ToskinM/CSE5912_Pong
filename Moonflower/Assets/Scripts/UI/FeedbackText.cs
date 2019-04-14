@@ -94,4 +94,9 @@ public class FeedbackText : MonoBehaviour
         return text.text.Equals(t); 
     }
 
+    public bool IsDisplaying()
+    {
+        return state != State.gone;
+    }
+
 }

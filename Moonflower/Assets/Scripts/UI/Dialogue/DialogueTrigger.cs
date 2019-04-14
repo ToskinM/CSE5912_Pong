@@ -65,7 +65,6 @@ public class DialogueTrigger : MonoBehaviour
     public void Update()
     {
         //disable if panel down and enable is panel is up 
-     //   Debug.Log(gName + " updating");
         switch (pState)
         {
             case PanelState.rising:
@@ -185,8 +184,6 @@ public class DialogueTrigger : MonoBehaviour
         interaction.NotAllowed = true; 
         if (!PlayerController.instance.ActivePlayerCombatControls.InCombat || disregardCombat)
         {
-            //            Debug.Log("Inside");
-            panel.SetActive(true); 
             pState = PanelState.rising;
             panelInfo.Icon.sprite = icon;  //new IconFactory().GetIcon(spriteFile);
             tState = TextState.typing;
