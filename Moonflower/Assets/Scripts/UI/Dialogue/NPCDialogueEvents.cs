@@ -30,6 +30,11 @@ public class NPCDialogueEvents : MonoBehaviour
         }
     }
 
+    public bool WasMorePeaceful()
+    {
+        return PlayerController.instance.ActivePlayerStats.Charisma > PlayerController.instance.ActivePlayerStats.Strength;
+    }
+
     public void MoveMouse()
     {
         GameObject.Find("BigMouse").GetComponent<TuvichaDialogueController>().Move();
