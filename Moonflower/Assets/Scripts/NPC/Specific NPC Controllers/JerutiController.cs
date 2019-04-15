@@ -32,7 +32,6 @@ public class JerutiController : MonoBehaviour, INPCController
     DialogueTrigger introRepeat;
     DialogueTrigger advice;
     DialogueTrigger adviceRepeat;
-    PlayerController playerController;
     Animator animator;
     private FeedbackText feedbackText;
     AmaruAnimatorController amaruAnimator;
@@ -119,7 +118,6 @@ public class JerutiController : MonoBehaviour, INPCController
         }
 
 
-        playerController = LevelManager.current.player.GetComponent<PlayerController>();
         feedbackText = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
 
@@ -143,7 +141,9 @@ public class JerutiController : MonoBehaviour, INPCController
                     if(intro.Complete && !intro.panelInfo.IsUp)
                     {
                         currTalk = introRepeat;
-                        currConvo = Convo.repIntro; 
+                        currConvo = Convo.repIntro;
+                        GameStateController.current.SaveNPCDialogues(Constants.JERUTI_NAME, currConvo.ToString(), currTalk);
+
                     }
                     break;
                 case Convo.repIntro:
@@ -157,6 +157,8 @@ public class JerutiController : MonoBehaviour, INPCController
                     {
                         currTalk = introRepeat;
                         currConvo = Convo.repIntro;
+                        GameStateController.current.SaveNPCDialogues(Constants.JERUTI_NAME, currConvo.ToString(), currTalk);
+
                     }
                     break;
                 case Convo.repAdvice:
