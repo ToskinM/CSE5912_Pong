@@ -33,9 +33,10 @@ public class TejuController : MonoBehaviour, INPCController
     public GameObject soulCrystalBarrier;
     public SpawnerController spawnerController;
 
-    private DialogueTrigger talk;
+    private DialogueTrigger start;
+    private DialogueTrigger rep;
     private DialogueTrigger currTalk;
-    enum Convo { talk }
+    enum Convo { start, rep }
     Convo currConvo;
 
     bool subdued = false; 
@@ -52,21 +53,33 @@ public class TejuController : MonoBehaviour, INPCController
         //playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
 
         icon = new IconFactory().GetIcon(Constants.TEJU_ICON);
-        talk = new DialogueTrigger(gameObject, icon, Constants.TEJU_DIALOGUE);
-        talk.SetExitText("I'm not even worth a full conversation...");
+        start = new DialogueTrigger(gameObject, icon, Constants.TEJU_START_DIALOGUE);
+        start.SetExitText("I'm not even worth a full conversation...");
+        rep = new DialogueTrigger(gameObject, icon, Constants.TEJU_REP_DIALOGUE);
+        rep.SetExitText("I'm not even worth a full conversation...");
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.TEJU_NAME))
         {
-            currTalk = talk;
-            currConvo = Convo.talk; 
+            currTalk = start;
+            currConvo = Convo.start; 
             GameStateController.current.SaveNPCDialogues(Constants.TEJU_NAME, currConvo.ToString(), currTalk);
         }
         else
         {
             currTalk = GameStateController.current.GetNPCDialogue(Constants.TEJU_NAME);
             currTalk.SetSelf(gameObject);
-            talk = currTalk;
-            currConvo = Convo.talk; 
+            string convo = GameStateController.current.GetNPCDiaLabel(Constants.TEJU_NAME);
+            if (convo.Equals(Convo.start.ToString()))
+            {
+                currConvo = Convo.start;
+                start = currTalk; 
+            }
+            else
+            {
+                currConvo = Convo.rep;
+                rep = currTalk;
+            }
+
             GameStateController.current.SaveNPCDialogues(Constants.TEJU_NAME, currConvo.ToString(), currTalk);
 
         }
@@ -92,6 +105,14 @@ public class TejuController : MonoBehaviour, INPCController
     {
         movement.UpdateMovement();
         currTalk.Update(); 
+        if(currConvo == Convo.start && start.Complete && !start.panelInfo.IsUp)
+        {
+            currConvo = Convo.rep;
+            currTalk = rep;
+            GameStateController.current.SaveNPCDialogues(Constants.TEJU_NAME, currConvo.ToString(), currTalk);
+
+        }
+
     }
 
     public void Talk()
@@ -146,7 +167,8 @@ public class TejuController : MonoBehaviour, INPCController
 
     public void FailConvo()
     {
-        Invoke("ResetConvo", 2f); 
+        if(currConvo == Convo.rep)
+            Invoke("ResetConvo", 2f); 
     }
 
     private void ResetConvo()

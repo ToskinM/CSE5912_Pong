@@ -11,9 +11,9 @@ public class ShowInspect : MonoBehaviour
     public InteractionPopup interaction; 
     //public Button InvoButton; 
 
-    private TextMeshProUGUI charName;
-    private TextMeshProUGUI descrip;
-    private Image icon;
+    public TextMeshProUGUI charName;
+    public TextMeshProUGUI descrip;
+    public Image icon;
 
     public bool Shown = false;
     private bool buttonActive = false;
@@ -23,9 +23,9 @@ public class ShowInspect : MonoBehaviour
 
     void Awake()
     {
-        charName = InspectPanel.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-        descrip = InspectPanel.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
-        icon = InspectPanel.transform.GetChild(0).gameObject.GetComponent<Image>();
+        //charName = InspectPanel.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+        //descrip = InspectPanel.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>();
+        //icon = InspectPanel.transform.GetChild(0).gameObject.GetComponent<Image>();
         descripFactory = new InspectFactory();
         iconFactory = new IconFactory(); 
 
