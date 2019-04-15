@@ -417,7 +417,7 @@ public class StealthDetection : MonoBehaviour
             Destroy(indicator);
             indicator = null;
         }
-
+        
         switch (Awareness)
         {
             case AwarenessLevel.Distracted:

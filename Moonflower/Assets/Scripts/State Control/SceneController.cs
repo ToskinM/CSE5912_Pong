@@ -14,6 +14,8 @@ public class SceneController : MonoBehaviour
     public event Action BeforeSceneUnload;
     public event Action AfterSceneLoad;
 
+    public string sceneDiedAt;
+
     [Header("Fade To/From Black")]
     public CanvasGroup faderCanvasGroup;
     public float fadeDuration = 1f;
@@ -136,6 +138,7 @@ public class SceneController : MonoBehaviour
     private IEnumerator FadeAndSwitchScenesGameOver(string sceneName)
     {
         isLoading = true;
+        sceneDiedAt = SceneManager.GetActiveScene().name;
 
         // Fade to black
         yield return StartCoroutine(Fade(1f, 5f));

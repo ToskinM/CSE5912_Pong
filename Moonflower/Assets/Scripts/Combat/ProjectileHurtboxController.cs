@@ -6,9 +6,10 @@ public class ProjectileHurtboxController : MonoBehaviour, IHurtboxController
 {
     public GameObject Source { get; set; }
     public CharacterStats SourceCharacterStats { get; set; }
-    public int Damage { get; set; } = 1;
+    public int Damage { get { return damage; } set { damage = value; } }
 
     private IProjectile projectile;
+    public int damage = 1;
 
     private void Awake()
     {

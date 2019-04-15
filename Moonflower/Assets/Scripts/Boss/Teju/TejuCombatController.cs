@@ -174,6 +174,22 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         {
             tantrumAttackEnabled = true;
         }
+        else if (crystalsDestroyed == 2)
+        {
+            cryAttackBarrageCount = 30f;
+            cryAttackAimChaos = 3f;
+
+            tantrumAttackRockCount = 20;
+            tantrumAttackRadius = 20;
+        }
+        else if (crystalsDestroyed == 3)
+        {
+            cryAttackBarrageCount = 100f;
+            cryAttackAimChaos = 5f;
+
+            tantrumAttackRockCount = 20;
+            tantrumAttackRadius = 30;
+        }
     }
 
     private void UpdateCooldowns()
