@@ -279,4 +279,37 @@ public class SceneController : MonoBehaviour
         Destroy(GameStateController.current.gameObject);
         Destroy(AudioManager.instance.gameObject);
     }
+
+    public IEnumerator BlinkIn(float speed)
+    {
+        isFading = true;
+        faderCanvasGroup.blocksRaycasts = true;
+
+        // Fade to black
+        float fadeSpeed = Mathf.Abs(faderCanvasGroup.alpha - 1) / (speed);
+        while (!Mathf.Approximately(faderCanvasGroup.alpha, 1))
+        {
+            faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, 1, fadeSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        isFading = false;
+        faderCanvasGroup.blocksRaycasts = false;
+    }
+    public IEnumerator BlinkOut(float speed)
+    {
+        isFading = true;
+        faderCanvasGroup.blocksRaycasts = true;
+
+        // Fade from black
+        float fadeSpeed = Mathf.Abs(faderCanvasGroup.alpha - 0) / (speed);
+        while (!Mathf.Approximately(faderCanvasGroup.alpha, 0))
+        {
+            faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, 0, fadeSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        isFading = false;
+        faderCanvasGroup.blocksRaycasts = false;
+    }
 }

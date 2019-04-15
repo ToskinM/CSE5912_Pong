@@ -5,22 +5,23 @@ using UnityEngine.PostProcessing;
 
 public class PostProcessControl : MonoBehaviour
 {
-    // Start is called before the first frame update
     public PostProcessingProfile passOutProfile;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    public Coroutine passOutCoroutine;
 
     public void PassOut()
     {
-//        Debug.Log("do it"); 
+        //Debug.Log("do it");
+        //GetComponent<PostProcessingBehaviour>().profile = passOutProfile;
+
+        if (passOutCoroutine == null)
+        {
+            passOutCoroutine = StartCoroutine(PassOutSequence());
+        }
+    }
+    private IEnumerator PassOutSequence()
+    {
+        yield return StartCoroutine(SceneController.current.BlinkIn(0.3f));
         GetComponent<PostProcessingBehaviour>().profile = passOutProfile;
+        yield return StartCoroutine(SceneController.current.BlinkOut(0.3f));
     }
 }
