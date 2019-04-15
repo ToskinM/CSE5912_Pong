@@ -118,13 +118,15 @@ public class Pickup : MonoBehaviour
             //Add to inventory
             if (!objectUsedImmediately)
                 playerInventory.AddObj(obj.gameObject);
-            if (obj.name.Contains("WolfApple") || obj.name.Contains("Moonflower"))
+            if (obj.name.Contains("WolfApple") && SceneManager.GetActiveScene().name == Constants.SCENE_ANAIHOUSE)
             {
                 //do nothing
             }
+            else if (obj.name.Contains("WolfApple") || obj.name.Contains("Moonflower"))
+            {}
             else if(SceneManager.GetActiveScene().name==Constants.SCENE_VILLAGE)
             {
-                villageItem.RemoveTest(obj.gameObject, obj.gameObject.transform.position, obj.gameObject.transform.localRotation, gameObject.transform.localScale);
+                villageItem.RemoveVillageItem(obj.name,obj.gameObject, obj.gameObject.transform.position, obj.gameObject.transform.localRotation, gameObject.transform.localScale);
 
             }
 
@@ -153,6 +155,19 @@ public class Pickup : MonoBehaviour
                 string objName = obj.GetComponent<InventoryStat>().Name;
                 feedback.ShowText("You have found a " + objName.ToLower());
 
+                if (obj.name.Contains("WolfApple") && SceneManager.GetActiveScene().name == Constants.SCENE_ANAIHOUSE)
+                {
+                    //do nothing
+                }
+                else if (obj.name.Contains("WolfApple") || obj.name.Contains("Moonflower"))
+                { }
+                else if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+                {
+                    if (villageItem == null && SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+                        villageItem = GameObject.Find("Item").GetComponent<VillageItem>();
+                    villageItem.RemoveVillageItem(obj.name,obj.gameObject, obj.gameObject.transform.position, obj.gameObject.transform.localRotation, gameObject.transform.localScale);
+
+                }
                 //Add to inventory
                 playerInventory.AddObj(obj.gameObject);
                 //Destroy Gameobject after collect

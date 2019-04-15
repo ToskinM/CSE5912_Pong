@@ -11,8 +11,9 @@ public class CollidableData
     public Vector3 scale;
 
 
-    public CollidableData(GameObject GameObj, Vector3 ObjPosition, Quaternion ObjRotation, Vector3 ObjScale)
+    public CollidableData(string ObjName,GameObject GameObj, Vector3 ObjPosition, Quaternion ObjRotation, Vector3 ObjScale)
     {
+        name = ObjName;
         obj = GameObj;
         position = ObjPosition;
         rotation = ObjRotation;
