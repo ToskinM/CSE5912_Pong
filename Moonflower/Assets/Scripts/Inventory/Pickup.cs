@@ -18,7 +18,9 @@ public class Pickup : MonoBehaviour
     private InteractionPopup interaction;
     private FeedbackText feedback;
 
-    public VillageItem villageItem;
+    public IItems sceneItem;
+    public IItems DummyItem;
+
 
     //public TextMeshProUGUI inventoryAdd;
 
@@ -35,8 +37,6 @@ public class Pickup : MonoBehaviour
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
 
         PlayerController.OnCharacterSwitch += SwitchActiveCharacter;
-        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
-            villageItem = GameObject.Find("Item").GetComponent<VillageItem>();
     }
 
     private GameObject FindClosest()
@@ -124,10 +124,10 @@ public class Pickup : MonoBehaviour
             }
             else if (obj.name.Contains("WolfApple") || obj.name.Contains("Moonflower"))
             {}
-            else if(SceneManager.GetActiveScene().name==Constants.SCENE_VILLAGE)
+            else if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE || SceneManager.GetActiveScene().name == Constants.SCENE_NAIAHOUSE)
             {
-                villageItem.RemoveVillageItem(obj.name,obj.gameObject, obj.gameObject.transform.position, obj.gameObject.transform.localRotation, gameObject.transform.localScale);
-
+                FindScene();
+                sceneItem.RemoveItem(obj.name, obj.gameObject);
             }
 
             //Destroy Gameobject after collect
@@ -161,12 +161,10 @@ public class Pickup : MonoBehaviour
                 }
                 else if (obj.name.Contains("WolfApple") || obj.name.Contains("Moonflower"))
                 { }
-                else if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+                else if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE || SceneManager.GetActiveScene().name == Constants.SCENE_NAIAHOUSE)
                 {
-                    if (villageItem == null && SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
-                        villageItem = GameObject.Find("Item").GetComponent<VillageItem>();
-                    villageItem.RemoveVillageItem(obj.name,obj.gameObject, obj.gameObject.transform.position, obj.gameObject.transform.localRotation, gameObject.transform.localScale);
-
+                    FindScene();
+                    sceneItem.RemoveItem(obj.name,obj.gameObject);
                 }
                 //Add to inventory
                 playerInventory.AddObj(obj.gameObject);
@@ -178,6 +176,16 @@ public class Pickup : MonoBehaviour
 
         }
     }
+    public void FindScene()
+    {
+        if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
+            sceneItem = GameObject.Find("VillageItem").GetComponent<VillageItem>();
+        else if (SceneManager.GetActiveScene().name == Constants.SCENE_NAIAHOUSE)
+            sceneItem =  GameObject.Find("NaiaHouseItems").GetComponent<NaiaHouseItem>();
+
+
+    }
+
     void DelayMethod()
     {
         //inventoryAdd.gameObject.SetActive(false);

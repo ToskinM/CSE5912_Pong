@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VillageItem : MonoBehaviour
+public class VillageItem : MonoBehaviour, IItems
 {
     public static VillageItem instance;
     public GameObject pumpkin;
@@ -20,9 +20,7 @@ public class VillageItem : MonoBehaviour
     public GameObject djembe;
     public GameObject necklace;
     public List<CollidableData> VillageCollidable;
-    public List<CollidableData> AnaiHouseCollidable;
-
-
+    //public List<CollidableData> AnaiHouseCollidable;
     SceneController scene;
 
 
@@ -40,15 +38,15 @@ public class VillageItem : MonoBehaviour
             return;
         }
         VillageCollidable = new List<CollidableData>();
-        AnaiHouseCollidable = new List<CollidableData>();
+        //AnaiHouseCollidable = new List<CollidableData>();
         scene = GameObject.Find("SceneController").GetComponent<SceneController>();
         if (!scene.WentScene.Contains(Constants.SCENE_VILLAGE))
         {
-            VillageItemPosition();
+            ItemPosition();
         }
-        AddItemInVillage();
+        AddItem();
     }
-    public void VillageItemPosition()
+    public void ItemPosition()
     {
         VillageCollidable.Add(new CollidableData("pumpkin(1)", pumpkin, new Vector3(298.23f, 107.9f, -71.6f), Quaternion.Euler(Vector3.zero), new Vector3(1,1,1)));
         VillageCollidable.Add(new CollidableData("pumpkin(2)", pumpkin, new Vector3(296.8f, 107.9f, -69.85f), Quaternion.Euler(Vector3.zero), new Vector3(1, 1, 1)));
@@ -69,14 +67,8 @@ public class VillageItem : MonoBehaviour
         VillageCollidable.Add(new CollidableData("necklace", necklace, new Vector3(333.82f, 109.12f, 7.52f), Quaternion.Euler(0, 0, 0), new Vector3(1f, 1f, 1f)));
         VillageCollidable.Add(new CollidableData("corn(2)", corn, new Vector3(289.06f, 107.9f, -63.37f), Quaternion.Euler(0, 0, 0), new Vector3(0.8f, 0.8f, 0.8f)));
     }
-    public void AnaiHouseItemPosition()
-    {
 
-    }
-
-   
-
-    public void RemoveVillageItem(string ObjName,GameObject obj, Vector3 position, Quaternion rotation, Vector3 scale)
+    public void RemoveItem(string ObjName,GameObject obj)
     {
         if (obj.name.Contains("WolfApple") || obj.name.Contains("Moonflower"))
         {
@@ -95,8 +87,8 @@ public class VillageItem : MonoBehaviour
     {
         if (list == VillageCollidable)
             VillageCollidable.Remove(new CollidableData(name,obj, position, rotation, scale));
-        else if (list == AnaiHouseCollidable)
-            AnaiHouseCollidable.Remove(new CollidableData(name,obj, position, rotation, scale));
+        //else if (list == AnaiHouseCollidable)
+            //AnaiHouseCollidable.Remove(new CollidableData(name,obj, position, rotation, scale));
 
     }
 
@@ -105,9 +97,9 @@ public class VillageItem : MonoBehaviour
         
     }
 
-    public void AddItemInVillage()
+    public void AddItem()
     {
-        Debug.Log(VillageCollidable.Count);
+        //Debug.Log(VillageCollidable.Count);
         foreach (CollidableData collidable in VillageCollidable)
         {
             GameObject newObj = Instantiate(collidable.obj);
