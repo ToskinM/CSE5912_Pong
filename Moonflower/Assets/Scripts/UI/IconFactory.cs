@@ -23,7 +23,7 @@ public class IconFactory
             case Constants.SYPAVE_NAME:
                 return Resources.Load<Sprite>(Constants.SYPAVE_ICON);
             case Constants.JERUTI_NAME:
-                return Resources.Load<Sprite>(Constants.JERUTI_NAME);
+                return Resources.Load<Sprite>(Constants.JERUTI_ICON);
             //case Constants.YSAPY_NAME:
             //return Resources.Load<Sprite>(Constants.YSAPY_ICON);
             case Constants.MOUSE_NAME:

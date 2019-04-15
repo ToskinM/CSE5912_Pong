@@ -12,7 +12,7 @@ public class DialogueTrigger : MonoBehaviour
     public bool engaged = false;
 
     GameObject panel;
-    DialoguePanelInfo panelInfo;
+    public DialoguePanelInfo panelInfo;
 
     List<Button> buttons;
     Sprite icon;
@@ -208,6 +208,13 @@ public class DialogueTrigger : MonoBehaviour
             Debug.Log("Can't talk. In combat");
 
         }
+    }
+
+    public void Reset()
+    {
+        complete = false;
+        engaged = false; 
+        graph.Restart();
     }
 
     private void CombatCancelDialogue(GameObject aggressor)

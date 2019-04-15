@@ -146,7 +146,12 @@ public class TejuController : MonoBehaviour, INPCController
 
     public void FailConvo()
     {
+        Invoke("ResetConvo", 2f); 
+    }
 
+    private void ResetConvo()
+    {
+        currTalk.Reset();
     }
 
     private void StartEngagement()

@@ -37,6 +37,7 @@ public static class Constants
     public const string AMARU_ICON = characterFolder + "Amaru";
     public const string PINON_ICON = characterFolder + "Pinon";
     public const string SYPAVE_ICON = characterFolder + "Sypave";
+    public const string JERUTI_ICON = characterFolder + "Jeruti";
     public const string TEJU_ICON = characterFolder + "Teju";
     public const string KURUPI_ICON = characterFolder + "Kurupi";
     public const string MOUSE_ICON = characterFolder + "Mousy Boi";
@@ -126,6 +127,10 @@ public static class Constants
     public const string SYPAVE_ADVICE_DIALOGUE = dialogueFolder + intro + "Sypave Advice";
     //Jeruti
     public const string JERUTI_NAME = "Jeruti";
+    public const string JERUTI_INTRO_DIALOGUE = dialogueFolder + intro + "Jeruti Intro";
+    public const string JERUTI_REPINTRO_DIALOGUE = dialogueFolder + intro + "Jeruti Intro Repeat";
+    public const string JERUTI_ADVICE_DIALOGUE = dialogueFolder + intro + "Jeruti Advice";
+    public const string JERUTI_REPADVICE_DIALOGUE = dialogueFolder + intro + "Jeruti Advice Repeat";
     //Pinon
     public const string PINON_NAME = "Pinon";
     public const string PINON_FIRST_INTRO_DIALOGUE = dialogueFolder + intro + "Pinon FIRST Intro";
