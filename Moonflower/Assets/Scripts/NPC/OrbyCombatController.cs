@@ -347,8 +347,13 @@ public class OrbyCombatController : MonoBehaviour, ICombatController
     }
     public void LaunchProjectile()
     {
-        GameObject projectile = Instantiate(rangedProjectile, projectileNode.position, Quaternion.LookRotation(CombatTarget.transform.position - transform.position));
-        projectile.transform.LookAt(CombatTarget.transform.position);
+        //GameObject projectile = Instantiate(rangedProjectile, projectileNode.position, Quaternion.LookRotation(CombatTarget.transform.position - transform.position));
+        GameObject projectile = Instantiate(rangedProjectile, projectileNode.position, transform.rotation);
+
+        if (CombatTarget != null)
+        {
+            projectile.transform.LookAt(CombatTarget.transform.position);
+        }
         IProjectile proj = projectile.GetComponent<IProjectile>();
         proj.Hurtbox.SourceCharacterStats = Stats;
         proj.Hurtbox.Source = this.gameObject;

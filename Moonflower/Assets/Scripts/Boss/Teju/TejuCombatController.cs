@@ -82,6 +82,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     public event SubdueUpdate OnSubdue;
 
     private int attacksOnCrystals;
+    private int crystalsDestroyed;
 
     void Start()
     {
@@ -167,6 +168,12 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         yield return new WaitForSeconds(2f);
         animationController.TriggerHit();
         Stats.TakeDamage(250, "Crystal Orb");
+        crystalsDestroyed++;
+
+        if (crystalsDestroyed == 1)
+        {
+            tantrumAttackEnabled = true;
+        }
     }
 
     private void UpdateCooldowns()
