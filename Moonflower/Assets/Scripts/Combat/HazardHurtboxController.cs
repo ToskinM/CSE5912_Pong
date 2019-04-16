@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HazardHurtboxController : MonoBehaviour, IHurtboxController
 {
-    [HideInInspector] public GameObject Source { get { return gameObject; } set { source = value; } }
+    [HideInInspector] public GameObject Source { get { return null; } set { source = value; } }
     [HideInInspector] public int Damage { get { return damage; } set { damage = value; } }
     [HideInInspector] public CharacterStats SourceCharacterStats { get; set; }
 
@@ -13,8 +13,8 @@ public class HazardHurtboxController : MonoBehaviour, IHurtboxController
 
     private void Awake()
     {
-        Source = source;
-        SourceCharacterStats = Source.GetComponent<CharacterStats>();
+        //Source = source;
+        //SourceCharacterStats = Source.GetComponent<CharacterStats>();
 //        Debug.Log("hi");
     }
 

@@ -10,6 +10,9 @@ public class GameOverScreen : MonoBehaviour
     public CanvasGroup canvasGroup;
     public TextMeshProUGUI MimbiGameOverText;
     public TextMeshProUGUI AnaiGameOverText;
+
+    private bool optionSelected;
+
     private void Start()
     {
         canvasGroup.blocksRaycasts = true;
@@ -29,15 +32,20 @@ public class GameOverScreen : MonoBehaviour
 
     private void Update()
     {
-        GameStateController.current.ForceMouseUnlock();
+        if (!optionSelected)
+            GameStateController.current.ForceMouseUnlock();
     }
 
     public void OnContinueButtonClick()
     {
+        optionSelected = true;
+        GameStateController.current.SetMouseLock(true);
         SceneController.current.FadeAndLoadScene(SceneController.current.sceneDiedAt);
     }
     public void OnMainMenuButtonClick()
     {
+        optionSelected = true;
+        GameStateController.current.SetMouseLock(true);
         SceneController.current.FadeAndLoadSceneNoLS(Constants.SCENE_MAINMENU);
     }
 

@@ -43,7 +43,7 @@ public class PlayerCombatController : MonoBehaviour
 
     private float timeSinceLastHurt;
     private float timeSinceLastAttack;
-    private readonly float hurtDelay = 1.5f;
+    private readonly float hurtDelay = 1.0f;
     private readonly float[] attackMultipliers = new float[] { 1, 1.5f };
 
     private const float attackDelay = 0.35f;
