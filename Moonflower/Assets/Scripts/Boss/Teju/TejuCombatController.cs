@@ -250,7 +250,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
         cooldownTimers[1] = 0f;
         isAttacking = false;
     }
-    private IEnumerator AreaCryAttack()
+    public IEnumerator AreaCryAttack()
     {
         animationController.TriggerAttack();
 

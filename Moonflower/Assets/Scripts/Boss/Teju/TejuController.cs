@@ -120,7 +120,7 @@ public class TejuController : MonoBehaviour, INPCController
         if (currTalk.Complete)
         {
             if(subdued)
-                displayFeedback("Teju invited you to touch his crystal.");
+                displayFeedback("Teju invited you to touch the soul crystal.");
             else
                 displayFeedback("Teju is still devastated.");
         }
@@ -167,6 +167,7 @@ public class TejuController : MonoBehaviour, INPCController
 
     public void FailConvo()
     {
+        StartCoroutine(combatController.AreaCryAttack()); 
         if(currConvo == Convo.rep)
             Invoke("ResetConvo", 2f); 
     }
