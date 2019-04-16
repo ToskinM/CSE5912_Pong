@@ -31,7 +31,7 @@ public class HouseDoor : MonoBehaviour
         {
             //Debug.Log("try to save time " + GameStateController.current.SaveTime() + "")
 
-            //player = other.gameObject;
+            player = other.gameObject;
             spawn = GameObject.Find("Spawner");
             spawn.GetComponent<SpawnPoint>().thisScene = targetScene;
             spawn.GetComponent<SpawnPoint>().previousScene = thisScene;
@@ -57,10 +57,7 @@ public class HouseDoor : MonoBehaviour
             }
             else
             {
-                if(targetScene.Equals(Constants.SCENE_VILLAGE))
-                    PlayerController.instance.DisableSwitching();
-                else
-                    PlayerController.instance.EnableSwitching();
+
                 //            Debug.Log("out we go");
                 while (BGM.volume > 0.01)
                 {
@@ -68,9 +65,23 @@ public class HouseDoor : MonoBehaviour
 
                 }
                 SceneController.current.FadeAndLoadScene(targetScene);
-                SceneManager.sceneLoaded += EnableCompanionObject; 
+                SceneManager.sceneLoaded += EnableCompanionObject;
                 //EnableCompanionObject();
+                if (PlayerController.instance.GetActivePlayerObject() != player)
+                {
+                    Debug.Log("Force switch"); 
+                    PlayerController.instance.SwitchActiveCharacter();
+                }
+
+                if (targetScene.Equals(Constants.SCENE_VILLAGE))
+                    PlayerController.instance.DisableSwitching();
+                else
+                {
+                    Debug.Log("Switching fine");
+                    PlayerController.instance.EnableSwitching();
+                }
             }
+
 
         }
     }

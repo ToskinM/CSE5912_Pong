@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void SwitchActiveCharacter()
+   public void SwitchActiveCharacter()
     {
         if (!canSwitchCharacters || !GetCompanionObject().activeInHierarchy || TalkingPartner != null) return;
 
