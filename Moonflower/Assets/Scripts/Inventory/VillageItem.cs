@@ -27,7 +27,6 @@ public class VillageItem : MonoBehaviour, IItems
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("bello");
         if (instance == null)
         {
             DontDestroyOnLoad(gameObject);

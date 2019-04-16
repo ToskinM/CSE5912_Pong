@@ -183,7 +183,7 @@ public class Pickup : MonoBehaviour
         else if (SceneManager.GetActiveScene().name == Constants.SCENE_NAIAHOUSE)
             sceneItem =  GameObject.Find("NaiaHouseItems").GetComponent<NaiaHouseItem>();
         else if (SceneManager.GetActiveScene().name == Constants.SCENE_AMARUHOUSE)
-            sceneItem = GameObject.Find("AmaruHouseItems").GetComponent<AmaruHouseItem>();
+            sceneItem = GameObject.Find("AmaruHouseItem").GetComponent<AmaruHouseItem>();
 
 
     }
