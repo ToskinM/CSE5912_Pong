@@ -4212,7 +4212,6 @@ GameObject:
   - component: {fileID: 749439061}
   - component: {fileID: 749439060}
   - component: {fileID: 749439059}
-  - component: {fileID: 749439058}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -4220,18 +4219,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &749439058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 749439057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6764d3b42d7e94bcc9a2843234a514bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &749439059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4244,8 +4231,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a07a443e2edc7ec43ab70cf9e7a710f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisScene: The Village
-  previousScene: 
+  thisScene: The Cave Boss
+  previousScene: The Cave
 --- !u!65 &749439060
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9807,11 +9794,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4727384468087894796, guid: 24bae5f0d34626a459d9f0f207247a1a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7829758095722406504, guid: 24bae5f0d34626a459d9f0f207247a1a,
         type: 3}
       propertyPath: m_RootOrder
@@ -9870,6 +9852,11 @@ PrefabInstance:
       propertyPath: weapon
       value: 
       objectReference: {fileID: 1537807909}
+    - target: {fileID: 4727384468087894796, guid: 24bae5f0d34626a459d9f0f207247a1a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 574423210, guid: 24bae5f0d34626a459d9f0f207247a1a, type: 3}
     - {fileID: 574423213, guid: 24bae5f0d34626a459d9f0f207247a1a, type: 3}

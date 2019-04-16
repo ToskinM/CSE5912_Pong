@@ -9,16 +9,19 @@ public class SpawnPoint : MonoBehaviour
 
     public string thisScene;
     public string previousScene;
-    // Start is called before the first frame update
+
     void Start()
     {
         if (current == null)
         {
+            Debug.Log(gameObject.GetInstanceID() + " is new singleton");
             DontDestroyOnLoad(gameObject);
             current = this;
         }
-        else if (current != null)
+        else if (current != this)
         {
+            Debug.Log(current.GetInstanceID() + " is current singleton, deleting " + current.GetInstanceID());
+
             Destroy(gameObject);
         }
     }

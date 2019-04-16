@@ -39,7 +39,7 @@ public class SceneController : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             current = this;
         }
-        else if (current != null)
+        else if (current != this)
         {
             Destroy(gameObject);
         }
