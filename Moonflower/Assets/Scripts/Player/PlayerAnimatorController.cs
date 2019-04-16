@@ -27,7 +27,6 @@ public class PlayerAnimatorController : MonoBehaviour
     public GameObject runParticles;
     public GameObject standingParticles;
 
-    // Start is called before the first frame update
     void Start()
     {
         playerController = GetComponent<PlayerController>();
@@ -48,7 +47,6 @@ public class PlayerAnimatorController : MonoBehaviour
         GameStateController.OnPaused -= HandlePauseEvent;
     }
 
-    // Update is called once per frame
     void Update()
     {
         animator.SetBool(key_isBlock, combatController.IsBlocking);

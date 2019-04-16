@@ -18,6 +18,7 @@ public static class Constants
     public const string SCENE_GAMEOVER = "Game Over";
     public const string SCENE_CAVEENTRANCE = "CaveEntrance";
     public const string SCENE_CAVE = "The Cave";
+    public const string SCENE_CAVEBOSS = "The Cave Boss";
     public const string SCENE_CREDITS = "Credits";
     public const string SCENE_SKYRIM = "Skyrim";
 

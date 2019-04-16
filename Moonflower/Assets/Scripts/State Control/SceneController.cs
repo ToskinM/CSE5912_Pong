@@ -101,6 +101,11 @@ public class SceneController : MonoBehaviour
         ShowSingletons();
         if (sceneName != Constants.SCENE_MAINMENU) PlayerController.instance.SpawnPlayerObjects();
 
+        if (sceneName == Constants.SCENE_CAVE || sceneName == Constants.SCENE_CAVEBOSS)
+        {
+            PlayerController.instance.EnableSwitching();
+        }
+
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
     }
@@ -130,6 +135,11 @@ public class SceneController : MonoBehaviour
         isLoading = false;
         ShowSingletons();
         if (PlayerController.instance != null && sceneName != Constants.SCENE_MAINMENU) PlayerController.instance.SpawnPlayerObjects();
+
+        if (sceneName == Constants.SCENE_CAVE || sceneName == Constants.SCENE_CAVEBOSS)
+        {
+            PlayerController.instance.EnableSwitching();
+        }
 
         // Fade to new scene
         yield return StartCoroutine(Fade(0f));
