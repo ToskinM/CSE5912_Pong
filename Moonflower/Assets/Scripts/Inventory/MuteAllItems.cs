@@ -13,7 +13,7 @@ public class MuteAllItems : MonoBehaviour
     void Start()
     {
         villageItem = GameObject.Find("VillageItem");
-        amaruHouseItem = GameObject.Find("AmaruHouseItems");
+        amaruHouseItem = GameObject.Find("AmaruHouseItem");
         naiaHouseItem = GameObject.Find("NaiaHouseItems");
 
         //villageItem.SetActive(false);

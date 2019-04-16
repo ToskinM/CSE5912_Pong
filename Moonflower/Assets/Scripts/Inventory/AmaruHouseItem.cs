@@ -25,7 +25,7 @@ public class AmaruHouseItem : MonoBehaviour, IItems
         }
         AmaruHouseCollidable = new List<CollidableData>();
         scene = GameObject.Find("SceneController").GetComponent<SceneController>();
-        if (!scene.WentScene.Contains(Constants.SCENE_NAIAHOUSE))
+        if (!scene.WentScene.Contains(Constants.SCENE_AMARUHOUSE))
         {
             ItemPosition();
         }
