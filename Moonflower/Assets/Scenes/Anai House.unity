@@ -2333,37 +2333,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8145140613505230929, guid: ef128fd896af0ac40971b0637fde6a15,
-        type: 3}
-      propertyPath: GameStateManager
-      value: 
-      objectReference: {fileID: 163214459}
     - target: {fileID: 8145140613549664087, guid: ef128fd896af0ac40971b0637fde6a15,
         type: 3}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8145140613549664087, guid: ef128fd896af0ac40971b0637fde6a15,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8145140613526385537, guid: ef128fd896af0ac40971b0637fde6a15,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8145140613526385537, guid: ef128fd896af0ac40971b0637fde6a15,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8145140614513986855, guid: ef128fd896af0ac40971b0637fde6a15,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8145140614513986855, guid: ef128fd896af0ac40971b0637fde6a15,
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
@@ -2373,6 +2348,31 @@ PrefabInstance:
       propertyPath: gameController
       value: 
       objectReference: {fileID: 1819681082}
+    - target: {fileID: 8145140613505230929, guid: ef128fd896af0ac40971b0637fde6a15,
+        type: 3}
+      propertyPath: GameStateManager
+      value: 
+      objectReference: {fileID: 163214459}
+    - target: {fileID: 8145140613526385537, guid: ef128fd896af0ac40971b0637fde6a15,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145140613526385537, guid: ef128fd896af0ac40971b0637fde6a15,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145140614513986855, guid: ef128fd896af0ac40971b0637fde6a15,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145140614513986855, guid: ef128fd896af0ac40971b0637fde6a15,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef128fd896af0ac40971b0637fde6a15, type: 3}
 --- !u!1001 &365369082
@@ -3315,6 +3315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UpPosition: {x: 0, y: 0, z: 0}
   DownPosition: {x: 0, y: 0, z: 0}
+  panel: {fileID: 0}
   Icon: {fileID: 428432966}
   Text: {fileID: 1447780513}
   TemplateButton: {fileID: 10249039}
@@ -5878,6 +5879,10 @@ PrefabInstance:
       propertyPath: source
       value: 
       objectReference: {fileID: 12437143}
+    - target: {fileID: 8267560, guid: 24bae5f0d34626a459d9f0f207247a1a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3828993016326926693, guid: 24bae5f0d34626a459d9f0f207247a1a,
         type: 3}
       propertyPath: m_RootOrder
@@ -9555,7 +9560,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionWheelPrefab: {fileID: 1221859566}
-  GameStateManager: {fileID: 163214459}
   InteractionPopup: {fileID: 2081217244}
 --- !u!114 &1426439026
 MonoBehaviour:
@@ -10994,7 +10998,6 @@ MonoBehaviour:
   Defense: 5
   MaxHealth: 100
   CurrentHealth: 100
-  Cunning: 5
   Charisma: 5
   Stealth: 5
   strengthExperience: 0
@@ -11031,6 +11034,7 @@ MonoBehaviour:
   isAttacking: 0
   attackTimeout: 0.5
   canAttack: 1
+  isInvulnerable: 0
   anaiRagdollPrefab: {fileID: 1438201454, guid: a027ac0d62ba08b4b893fa689b37b8cc,
     type: 3}
   mimbiRagdollPrefab: {fileID: 574423205, guid: 4e865ff175b6efa4cba2d4a1a4b8d3ae,
@@ -11100,6 +11104,7 @@ MonoBehaviour:
   ActivePlayerInventory: {fileID: 0}
   ActivePlayerAnimator: {fileID: 0}
   ActivePlayerStats: {fileID: 0}
+  canSwitchCharacters: 0
 --- !u!114 &1599248372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12372,7 +12377,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1752530621
 Transform:
   m_ObjectHideFlags: 0
@@ -13362,7 +13367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1857240145
 Transform:
   m_ObjectHideFlags: 0
@@ -13553,6 +13558,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InspectPanel: {fileID: 738776332}
   interaction: {fileID: 2081217245}
+  charName: {fileID: 0}
+  descrip: {fileID: 0}
+  icon: {fileID: 0}
   Shown: 0
 --- !u!114 &1867509860
 MonoBehaviour:
@@ -13569,7 +13577,6 @@ MonoBehaviour:
   InventoryPanel: {fileID: 147678070}
   InvContentPanel: {fileID: 96846282}
   interaction: {fileID: 2081217245}
-  gameController: {fileID: 1819681082}
   Shown: 0
 --- !u!114 &1867509861
 MonoBehaviour:

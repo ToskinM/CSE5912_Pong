@@ -6,7 +6,7 @@ public class UtilityCommands : MonoBehaviour
 {
     GameStateController gameStateController;
 
-    ICommand screencapCmd, videocapCmd, pauseCmd, DebugViewCmd, QuickSaveCmd, QuickLoadCmd;
+    ICommand screencapCmd, videocapCmd, pauseCmd, DebugViewCmd, QuickSaveCmd, QuickLoadCmd, PlayerKillCmd;
 
     void Start()
     {
@@ -17,6 +17,7 @@ public class UtilityCommands : MonoBehaviour
         DebugViewCmd = new DebugViewCommand();
         QuickSaveCmd = new QuickSaveCommand();
         QuickLoadCmd = new QuickLoadCommand();
+        PlayerKillCmd = new KillPlayerCommand();
     }
 
     void Update()
@@ -40,6 +41,10 @@ public class UtilityCommands : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             DebugViewCmd.Execute();
+        }
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            PlayerKillCmd.Execute();
         }
         //if (Input.GetKeyDown(KeyCode.F5))
         //{

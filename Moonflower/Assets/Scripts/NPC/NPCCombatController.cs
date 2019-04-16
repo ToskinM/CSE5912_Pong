@@ -528,7 +528,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
     // Kills this Character
     public void Kill()
     {
-        Stats.TakeDamage(Stats.CurrentHealth, "Kill Command");
+        Stats.TakeDamage(10000, "Kill Command");
     }
 
     // Death cleanup and Sequence
