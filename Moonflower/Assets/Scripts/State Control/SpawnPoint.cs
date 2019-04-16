@@ -14,13 +14,13 @@ public class SpawnPoint : MonoBehaviour
     {
         if (current == null)
         {
-            Debug.Log(gameObject.GetInstanceID() + " is new singleton");
+            //Debug.Log(gameObject.GetInstanceID() + " is new singleton");
             DontDestroyOnLoad(gameObject);
             current = this;
         }
         else if (current != this)
         {
-            Debug.Log(current.GetInstanceID() + " is current singleton, deleting " + current.GetInstanceID());
+            //Debug.Log(current.GetInstanceID() + " is current singleton, deleting " + current.GetInstanceID());
 
             Destroy(gameObject);
         }
