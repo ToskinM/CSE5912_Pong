@@ -124,7 +124,7 @@ public class Pickup : MonoBehaviour
             }
             else if (obj.name.Contains("WolfApple") || obj.name.Contains("Moonflower"))
             {}
-            else if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE || SceneManager.GetActiveScene().name == Constants.SCENE_NAIAHOUSE)
+            else if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE || SceneManager.GetActiveScene().name == Constants.SCENE_NAIAHOUSE || SceneManager.GetActiveScene().name == Constants.SCENE_AMARUHOUSE)
             {
                 FindScene();
                 sceneItem.RemoveItem(obj.name, obj.gameObject);
@@ -161,7 +161,7 @@ public class Pickup : MonoBehaviour
                 }
                 else if (obj.name.Contains("WolfApple") || obj.name.Contains("Moonflower"))
                 { }
-                else if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE || SceneManager.GetActiveScene().name == Constants.SCENE_NAIAHOUSE)
+                else if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE || SceneManager.GetActiveScene().name == Constants.SCENE_NAIAHOUSE || SceneManager.GetActiveScene().name == Constants.SCENE_AMARUHOUSE)
                 {
                     FindScene();
                     sceneItem.RemoveItem(obj.name,obj.gameObject);
@@ -182,6 +182,8 @@ public class Pickup : MonoBehaviour
             sceneItem = GameObject.Find("VillageItem").GetComponent<VillageItem>();
         else if (SceneManager.GetActiveScene().name == Constants.SCENE_NAIAHOUSE)
             sceneItem =  GameObject.Find("NaiaHouseItems").GetComponent<NaiaHouseItem>();
+        else if (SceneManager.GetActiveScene().name == Constants.SCENE_AMARUHOUSE)
+            sceneItem = GameObject.Find("AmaruHouseItems").GetComponent<AmaruHouseItem>();
 
 
     }

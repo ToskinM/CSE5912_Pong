@@ -27,6 +27,7 @@ public class VillageItem : MonoBehaviour, IItems
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("bello");
         if (instance == null)
         {
             DontDestroyOnLoad(gameObject);
@@ -46,6 +47,7 @@ public class VillageItem : MonoBehaviour, IItems
         }
         AddItem();
     }
+
     public void ItemPosition()
     {
         VillageCollidable.Add(new CollidableData("pumpkin(1)", pumpkin, new Vector3(298.23f, 107.9f, -71.6f), Quaternion.Euler(Vector3.zero), new Vector3(1,1,1)));
