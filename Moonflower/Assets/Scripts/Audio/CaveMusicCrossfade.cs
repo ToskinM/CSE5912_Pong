@@ -151,5 +151,6 @@ public class CaveMusicCrossfade : MonoBehaviour
         PlayerCombatController.EngageInCombat -= FadeInActionTheme;
         PlayerCombatController.DisengageFromCombat -= FadeOutActionTheme;
         AudioManager.OnBGMVolChange -= OnVolumeChange;
+        GameStateController.OnPaused -= StoreVolumesOnPause;
     }
 }
