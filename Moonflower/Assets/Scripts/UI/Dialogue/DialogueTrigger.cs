@@ -42,7 +42,9 @@ public class DialogueTrigger : MonoBehaviour
 
     private static readonly Random random = new Random();
     private static List<int> offsets = new List<int>();
-    private static List<int> order = new List<int>(); 
+    private List<int> order = new List<int>();
+
+    private Dictionary<int, Button> buttonIndex = new Dictionary<int, Button>(); 
 
     //string gName;
 
@@ -335,58 +337,66 @@ public class DialogueTrigger : MonoBehaviour
     {
         tState = TextState.options;
         order.Clear();
-
-        int index = Random.Range(0, 3);
-        switch(index)
+        if (graph.current.answers.Count > 2)
         {
-            case 0:
-                order.Add(offsets[index]);
-                index = Random.Range(0, 2);
-                switch (index)
-                {
-                    case 0:
-                        order.Add(offsets[1]);
-                        order.Add(offsets[2]);
-                        break;
-                    case 1:
-                        order.Add(offsets[2]);
-                        order.Add(offsets[1]);
-                        break;
-                }
-                break;
-            case 1:
-                order.Add(offsets[index]);
-                index = Random.Range(0, 2);
-                switch (index)
-                {
-                    case 0:
-                        order.Add(offsets[0]);
-                        order.Add(offsets[2]);
-                        break;
-                    case 1:
-                        order.Add(offsets[2]);
-                        order.Add(offsets[0]);
-                        break;
-                }
-                break;
-            case 2:
-                order.Add(offsets[index]);
-                index = Random.Range(0, 2);
-                switch (index)
-                {
-                    case 0:
-                        order.Add(offsets[1]);
-                        order.Add(offsets[0]);
-                        break;
-                    case 1:
-                        order.Add(offsets[0]);
-                        order.Add(offsets[1]);
-                        break;
-                }
-                break; 
+            int index = Random.Range(0, 3);
+            switch (index)
+            {
+                case 0:
+                    order.Add(offsets[index]);
+                    index = Random.Range(0, 2);
+                    switch (index)
+                    {
+                        case 0:
+                            order.Add(offsets[1]);
+                            order.Add(offsets[2]);
+                            break;
+                        case 1:
+                            order.Add(offsets[2]);
+                            order.Add(offsets[1]);
+                            break;
+                    }
+                    break;
+                case 1:
+                    order.Add(offsets[index]);
+                    index = Random.Range(0, 2);
+                    switch (index)
+                    {
+                        case 0:
+                            order.Add(offsets[0]);
+                            order.Add(offsets[2]);
+                            break;
+                        case 1:
+                            order.Add(offsets[2]);
+                            order.Add(offsets[0]);
+                            break;
+                    }
+                    break;
+                case 2:
+                    order.Add(offsets[index]);
+                    index = Random.Range(0, 2);
+                    switch (index)
+                    {
+                        case 0:
+                            order.Add(offsets[1]);
+                            order.Add(offsets[0]);
+                            break;
+                        case 1:
+                            order.Add(offsets[0]);
+                            order.Add(offsets[1]);
+                            break;
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            order.Add(offsets[0]);
+            order.Add(offsets[1]); 
         }
 
-       // Debug.Log("Order is: " + order[0] + " " + order[1] + " " + order[2]); 
+       // if(order.Count == 3)
+//            Debug.Log("Order is: " + order[0] + " " + order[1] + " " + order[2]); 
     }
 
     private bool hasOptions()
@@ -447,12 +457,7 @@ public class DialogueTrigger : MonoBehaviour
         {
             if (buttons.Count != numOptions)
             {
-                //int currOffset = 0;
                 int currOffset = 0;
-                if (order.Count > 0)
-                {
-                    currOffset = order[0];
-                }
 
                 int offset = Screen.height / 21;
                 for (int i = 0; i < numOptions; i++)
@@ -460,22 +465,34 @@ public class DialogueTrigger : MonoBehaviour
                     Button b = Instantiate(template, template.transform.position, template.transform.rotation);
                     b.transform.SetParent(panel.transform, false);
                     b.transform.position = new Vector3(template.transform.position.x, template.transform.position.y - currOffset);
-                    //currOffset += offset;
-                    if (order.Count > i+1)
-                    {
-                        currOffset = order[i+1];
-                    }
-                    else
-                    {
-                        currOffset += offset;
-                    }
-
+                    currOffset += offset;
                     buttons.Add(b);
+
+
                 }
                 for (int i = 0; i < numOptions; i++)
                 {
                     Chat.Answer answer = graph.current.answers[i];
-                    Button currButton = buttons[i];//.Dequeue();
+                    Button currButton; 
+
+                    if (order[i] == offsets[0])
+                    {
+                        //Debug.Log("index = " + 0);
+                        currButton = buttons[0];
+                    }
+                    else if (order[i] == offsets[1])
+                    {
+                        //Debug.Log("index = " + 1);
+                        currButton = buttons[1];
+                    }
+                    else
+                    {
+                        //Debug.Log("index = " + 2);
+                        currButton = buttons[2];
+                    }
+
+
+                    //Button currButton = buttons[i];//.Dequeue();
                     currButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = answer.text; //op;
                     currButton.onClick.AddListener(delegate { gotoNext(graph.current.answers.IndexOf(answer)); });
                     Color c = currButton.targetGraphic.color;
@@ -533,12 +550,7 @@ public class DialogueTrigger : MonoBehaviour
                 //currOffset += offset;
 
                 buttons.Add(b);
-                //if (currOffset == offset*2)
-                //    buttons[0] = b; 
-                //else if(currOffset == offset)
-                //    buttons[1] = b;
-                //else
-                    //buttons[2] = b;
+
 
                 if (order.Count > i+1)
                 {
