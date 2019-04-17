@@ -45,6 +45,7 @@ public class PlayerAnimatorController : MonoBehaviour
     private void OnDisable()
     {
         GameStateController.OnPaused -= HandlePauseEvent;
+        PlayerController.OnCharacterSwitch -= SetActiveCharacter;
     }
 
     void Update()

@@ -62,9 +62,18 @@ public class PlayerMovementController : MonoBehaviour
         SetInitialPlayer();
         SetInitialCompanion();
         SetInitialPlayerState();
+    }
 
+    void OnEnable()
+    {
         PlayerColliderListener.CollideWithTerrain += HandleTerrainCollision;
         PlayerController.OnCharacterSwitch += SetActivePlayer;
+    }
+
+    void OnDisable()
+    {
+        PlayerColliderListener.CollideWithTerrain -= HandleTerrainCollision;
+        PlayerController.OnCharacterSwitch -= SetActivePlayer;
     }
 
     void Update()

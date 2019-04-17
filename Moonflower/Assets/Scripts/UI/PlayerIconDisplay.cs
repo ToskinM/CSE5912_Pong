@@ -32,7 +32,16 @@ public class PlayerIconDisplay : MonoBehaviour
             CompanionIcon.GetComponent<Image>().sprite = AnaiIcon;
         }
 
+    }
+
+    void OnEnable()
+    {
         PlayerController.OnCharacterSwitch += SwapPortraits;
+    }
+
+    void OnDisable()
+    {
+        PlayerController.OnCharacterSwitch -= SwapPortraits;
     }
 
     void SwapPortraits(PlayerController.PlayerCharacter activeChar)

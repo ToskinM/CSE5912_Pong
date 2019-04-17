@@ -13,7 +13,7 @@ public class UISingleton : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             instance = this;
         }
-        else
+        else if (instance != this)
         {
             Destroy(gameObject);
         }

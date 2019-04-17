@@ -44,7 +44,16 @@ public class CharacterStats : MonoBehaviour
         }
 
         companionHealth = CurrentHealth;
+    }
+
+    void OnEnable()
+    {
         PlayerController.OnCharacterSwitch += SwapPlayerHealth;
+    }
+
+    void OnDisable()
+    {
+        PlayerController.OnCharacterSwitch -= SwapPlayerHealth;
     }
 
     void Update()

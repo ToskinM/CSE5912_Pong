@@ -82,9 +82,6 @@ public class PlayerCombatController : MonoBehaviour
         }
         blockPlaceholder.SetActive(IsBlocking);
 
-        PlayerController.OnCharacterSwitch += SwitchActiveCharacter;
-        PlayerColliderListener.OnHurtboxHit += HandleHurtboxCollision;
-
         playerSoundEffect = GameObject.Find("Anai").GetComponent<PlayerSoundEffect>();
 
         //currentPlayer = GameObject.Find("Player").GetComponent<CurrentPlayer>().GetCurrentPlayer();
@@ -96,11 +93,15 @@ public class PlayerCombatController : MonoBehaviour
     {
         GameStateController.OnPaused += HandlePauseEvent;
         GameStateController.OnFreezePlayer += HandleFreezeEvent;
+        PlayerController.OnCharacterSwitch += SwitchActiveCharacter;
+        PlayerColliderListener.OnHurtboxHit += HandleHurtboxCollision;
     }
     private void OnDisable()
     {
         GameStateController.OnPaused -= HandlePauseEvent;
         GameStateController.OnFreezePlayer -= HandleFreezeEvent;
+        PlayerController.OnCharacterSwitch -= SwitchActiveCharacter;
+        PlayerColliderListener.OnHurtboxHit -= HandleHurtboxCollision;
     }
 
 

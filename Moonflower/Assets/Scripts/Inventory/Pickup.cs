@@ -35,8 +35,16 @@ public class Pickup : MonoBehaviour
         interaction = GameObject.Find("HUD").GetComponent<ShowInspect>().interaction;
 
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
+    }
 
+    void OnEnable()
+    {
         PlayerController.OnCharacterSwitch += SwitchActiveCharacter;
+    }
+
+    void OnDisable()
+    {
+        PlayerController.OnCharacterSwitch -= SwitchActiveCharacter;
     }
 
     private GameObject FindClosest()

@@ -20,8 +20,16 @@ public class PlayerHealthDisplay : MonoBehaviour
         appleControl = new LifeAppleController(Apple);
         flowerControl = new LifeFlowerController(Flower);
         playerStats = PlayerController.instance.gameObject.GetComponent<CharacterStats>();
+    }
 
+    void OnEnable()
+    {
         PlayerController.OnCharacterSwitch += SwitchHealthBar;
+    }
+
+    void OnDisable()
+    {
+        PlayerController.OnCharacterSwitch -= SwitchHealthBar;
     }
 
     void Update()

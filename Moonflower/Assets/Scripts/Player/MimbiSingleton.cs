@@ -16,7 +16,7 @@ public class MimbiSingleton : MonoBehaviour
             // MIMBI IS A HIGH MAINTENANCE DOGE
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == Constants.SCENE_ANAIHOUSE) gameObject.SetActive(false);
         }
-        else if (instance != null)
+        else if (instance != this)
         {
             Destroy(gameObject);
         }
