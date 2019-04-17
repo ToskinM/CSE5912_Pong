@@ -86,6 +86,12 @@ public class HouseDoor : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= EnableCompanionObject;
+        SceneManager.sceneLoaded -= DisableCompanionObject;
+    }
+
     private void EnableCompanionObject(Scene scene, LoadSceneMode mode)
     {
         PlayerController.instance.GetCompanionObject().SetActive(true);
