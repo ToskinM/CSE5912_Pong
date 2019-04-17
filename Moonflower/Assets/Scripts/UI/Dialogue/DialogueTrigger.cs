@@ -61,7 +61,7 @@ public class DialogueTrigger : MonoBehaviour
 
         icon = iconSprite;
         interaction = hud.GetComponent<ComponentLookup>().InteractionPopup;
-        panelMoveInc = Screen.height / 90f;
+        panelMoveInc = Screen.height / 75f;
         //spriteFile = characterSprite;
 
         int offset = Screen.height / 21;
@@ -531,6 +531,15 @@ public class DialogueTrigger : MonoBehaviour
                 b.transform.SetParent(panel.transform, false);
                 b.transform.position = new Vector3(template.transform.position.x, template.transform.position.y - currOffset);
                 //currOffset += offset;
+
+                buttons.Add(b);
+                //if (currOffset == offset*2)
+                //    buttons[0] = b; 
+                //else if(currOffset == offset)
+                //    buttons[1] = b;
+                //else
+                    //buttons[2] = b;
+
                 if (order.Count > i+1)
                 {
                     currOffset = order[i + 1];
@@ -540,7 +549,7 @@ public class DialogueTrigger : MonoBehaviour
                     currOffset += offset;
                 }
 
-                buttons.Add(b);
+
             }
             for (int i = 0; i < numOptions; i++)
             {

@@ -42,6 +42,11 @@ public class Passout : MonoBehaviour
 
     void Update()
     {
+        if(!Passed && Input.GetKeyDown(KeyCode.P))
+        {
+            sky.SetTime(sky.Passout-1);
+        }
+
         //    Debug.Log("Pass " + Passout); 
         if (!GameStateController.current.Passed && sky.GetTime() <= sky.Passout && sky.GetTime() >= sky.Passout - 1)
         {

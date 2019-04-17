@@ -41,6 +41,7 @@ MonoBehaviour:
   - {fileID: 114678955879714488}
   - {fileID: 114861799158190856}
   - {fileID: 114575572336655562}
+  - {fileID: 114567456600951326}
 --- !u!114 &114066921387043434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,6 +657,49 @@ MonoBehaviour:
     Her name was Kerana. Tau was smitten with Kerana and longed to be with her, so
     he transformed himself into a handsome young man and started to woo her. '
   answers: []
+--- !u!114 &114567456600951326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d4b035e8545a04ca8b7c9c33635bcb, type: 3}
+  m_Name: Chat
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 440, y: 312}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 114567456600951326}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 114770574007964460}
+        reroutePoints: []
+      - fieldName: output
+        node: {fileID: 114900030406892180}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 114567456600951326}
+      _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _dynamic: 0
+  text: 'Don''t come back unless you''re asking for a story. '
+  answers: []
 --- !u!114 &114575572336655562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -909,7 +953,10 @@ MonoBehaviour:
       _node: {fileID: 114770574007964460}
       _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: input
+        node: {fileID: 114567456600951326}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _dynamic: 0
@@ -1207,12 +1254,14 @@ MonoBehaviour:
       _node: {fileID: 114900030406892180}
       _typeQualifiedName: Dialogue.DialogueBaseNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: input
+        node: {fileID: 114567456600951326}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _dynamic: 0
-  text: 'What''s there to say? Your father killed him. And I don''t want to talk about
-    it. '
+  text: 'What''s there to say? He was killed. And I don''t want to talk about it. '
   answers: []
 --- !u!114 &114911045780680442
 MonoBehaviour:
