@@ -76,6 +76,8 @@ public class VillageItem : MonoBehaviour, IItems
         VillageCollidable.Add(new CollidableData("MoonFlower(3)", moonflower, new Vector3(321.5826f, 109.462f, -48.58804f), Quaternion.Euler(58.123f, 3.28f, 42.756f), new Vector3(0.00206214f, 0.002023454f, 0.002061689f)));
         VillageCollidable.Add(new CollidableData("MoonFlower(4)", moonflower, new Vector3(322.8831f, 109.4775f, -49.6236f), Quaternion.Euler(27.569f, -16.354f, 21.965f), new Vector3(0.002058406f, 0.002052124f, 0.002036752f)));
         VillageCollidable.Add(new CollidableData("MoonFlower(5)", moonflower, new Vector3(320.2758f, 109.1944f, -46.70151f), Quaternion.Euler(43.358f, 43.52f, 93.03101f), new Vector3(0.00206394f, 0.002013957f, 0.002069385f)));
+        VillageCollidable.Add(new CollidableData("MoonFlower(5)", moonflower, new Vector3(320.5474f, 109.6181f, -46.69814f), Quaternion.Euler(43.358f, 43.52f, 93.03101f), new Vector3(0.00206394f, 0.002013957f, 0.002069385f)));
+
     }
 
     public void RemoveItem(string ObjName,GameObject obj)
