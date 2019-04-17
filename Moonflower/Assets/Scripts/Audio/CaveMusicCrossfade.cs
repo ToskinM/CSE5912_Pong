@@ -18,6 +18,10 @@ public class CaveMusicCrossfade : MonoBehaviour
 
     private float maxVol;
 
+    private float mainVolOnPause;
+    private float bassVolOnPause;
+    private float actionVolOnPause;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,30 +34,16 @@ public class CaveMusicCrossfade : MonoBehaviour
         currentTrack = main;
         currentTrack.volume = PlayerPrefs.GetFloat("volumeMusic");
 
+        actionVolOnPause = action.volume;
+        bassVolOnPause = bass.volume;
+        mainVolOnPause = main.volume;
+
         PlayerCombatController.EngageInCombat += FadeInActionTheme;
         PlayerCombatController.DisengageFromCombat += FadeOutActionTheme;
         AudioManager.OnBGMVolChange += OnVolumeChange;
+        GameStateController.OnPaused += StoreVolumesOnPause;
 
     }
-
-    /*
-    public void CrossFadeToMain()
-    {
-        StartCoroutine(CrossFade(currentTrack, main, 0.2f));
-        currentTrack = main;
-    }
-
-    public void CrossFadeToBass()
-    {
-        StartCoroutine(CrossFade(currentTrack, bass, 0.2f));
-        currentTrack = bass;
-    }
-
-    public void CrossFadeToAction()
-    {
-        StartCoroutine(CrossFade(currentTrack, action, 0.2f));
-        currentTrack = action;
-    }*/
 
     public void TriggerCaveRoomTransition()
     {
@@ -130,19 +120,23 @@ public class CaveMusicCrossfade : MonoBehaviour
     public void OnVolumeChange(float volume)
     {
         AssignAudioManager();
-        if (MainEnabled && !BassEnabled)
-        {
-            main.volume = volume;
-        }
-        else if (BassEnabled && !MainEnabled)
-        {
-            bass.volume = volume;
-        }
-        if (ActionEnabled)
-            action.volume = volume;
 
-        maxVol = PlayerPrefs.GetFloat("volumeMusic");
+        main.volume = mainVolOnPause / maxVol * volume;
+        bass.volume = bassVolOnPause / maxVol * volume;
+        action.volume = actionVolOnPause / maxVol * volume;
     }
+
+    void StoreVolumesOnPause(bool paused)
+    {
+        if (paused)
+        {
+            mainVolOnPause = main.volume;
+            bassVolOnPause = bass.volume;
+            actionVolOnPause = action.volume;
+            maxVol = PlayerPrefs.GetFloat("volumeMusic");
+        }
+    }
+
     void AssignAudioManager()
     {
         if (currentTrack == null)
@@ -151,10 +145,11 @@ public class CaveMusicCrossfade : MonoBehaviour
             currentTrack.playOnAwake = false;
         }
     }
+
     void OnDestroy()
     {
         PlayerCombatController.EngageInCombat -= FadeInActionTheme;
         PlayerCombatController.DisengageFromCombat -= FadeOutActionTheme;
-        AudioManager.OnBGMVolChange += OnVolumeChange;
+        AudioManager.OnBGMVolChange -= OnVolumeChange;
     }
 }

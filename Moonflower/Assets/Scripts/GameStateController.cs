@@ -68,7 +68,9 @@ public class GameStateController : MonoBehaviour
     void Update()
     {
         if (cameraAvailable)
+        {
             camControl = LevelManager.current.mainCamera;
+        }
     }
 
     public bool SaveTime()
@@ -147,7 +149,7 @@ public class GameStateController : MonoBehaviour
         {
             camControl = LevelManager.current.mainCamera;
             camControl.SetFreeRoam(DebugModeOn);
-            EnablePlayerMovement(!DebugModeOn);
+            SetPlayerMovement(!DebugModeOn);
         }
     }
 
@@ -213,8 +215,11 @@ public class GameStateController : MonoBehaviour
         if (pauseLayers > 0)
         {
             Paused = true;
+            OnPaused?.Invoke(Paused);
             if (camControl)
+            {
                 camControl.Frozen = true;
+            }
             //OnPaused?.Invoke(Paused);
             SetMouseLock(false);
             Time.timeScale = 0;
@@ -228,7 +233,9 @@ public class GameStateController : MonoBehaviour
         {
             Paused = false;
             if (camControl)
+            {
                 camControl.Frozen = false;
+            }
             //OnPaused?.Invoke(Paused);
             SetMouseLock(true);
             Time.timeScale = 1;
@@ -255,10 +262,10 @@ public class GameStateController : MonoBehaviour
         camControl.Frozen = false;
     }
 
-    private void EnablePlayerMovement(bool enabled)
+    private void SetPlayerMovement(bool enabled)
     {
         PlayerMovementController playerMovement = PlayerController.instance.gameObject.GetComponent<PlayerMovementController>();
-        playerMovement.enabled = true;
+        playerMovement.enabled = enabled;
     }
 
     public void SetPlayerFrozen(bool frozen)
