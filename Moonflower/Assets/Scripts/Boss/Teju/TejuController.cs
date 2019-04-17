@@ -134,6 +134,7 @@ public class TejuController : MonoBehaviour, INPCController
         if(giftName.Equals(Constants.HONEY_NAME))
         {
             displayFeedback("Teju loves the "+ giftName+" and has stopped crying!");
+            GameStateController.current.dialogueEvents.IncreasePlayerCharisma(true);
             Subdue();
         }
         else

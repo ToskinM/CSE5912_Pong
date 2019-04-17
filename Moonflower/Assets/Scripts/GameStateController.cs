@@ -13,6 +13,7 @@ public class GameStateController : MonoBehaviour
     public bool cameraAvailable;
     public Dictionary<string, DialogueTrigger> NPCDialogues;
     public Dictionary<string, string> NPCDialogueLabels;
+    public NPCDialogueEvents dialogueEvents; 
 
     private FollowCamera camControl;
 
@@ -35,6 +36,7 @@ public class GameStateController : MonoBehaviour
     {
         NPCDialogues = new Dictionary<string, DialogueTrigger>();
         NPCDialogueLabels = new Dictionary<string, string>();
+        dialogueEvents = GetComponent<NPCDialogueEvents>(); 
         if (current == null)
         {
             DontDestroyOnLoad(gameObject);

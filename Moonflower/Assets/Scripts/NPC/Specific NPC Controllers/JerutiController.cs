@@ -223,6 +223,7 @@ public class JerutiController : MonoBehaviour, INPCController
         if(new ItemLookup().IsMaterial(giftName))
         {
             displayFeedback("Jeruti appreciates the " + giftName.ToLower() + ".");
+            GameStateController.current.dialogueEvents.IncreasePlayerCharisma(true);
         }
         else
         {

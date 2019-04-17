@@ -187,6 +187,7 @@ public class AmaruController : MonoBehaviour, INPCController
         if(new ItemLookup().IsContainer(giftName))
         {
             displayFeedback("Amaru loves the " + giftName.ToLower() + "!");
+            GameStateController.current.dialogueEvents.IncreasePlayerCharisma(true);
         }
         else
         {

@@ -263,6 +263,7 @@ public class NaiaController : MonoBehaviour, INPCController
         if (new ItemLookup().IsWeapon(giftName))
         {
             displayFeedback("Naia likes the " + giftName.ToLower() + ".");
+            GameStateController.current.dialogueEvents.IncreasePlayerCharisma(true);
         }
         else
         {

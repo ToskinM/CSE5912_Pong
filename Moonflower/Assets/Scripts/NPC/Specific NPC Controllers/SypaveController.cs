@@ -272,6 +272,7 @@ public class SypaveController : MonoBehaviour, INPCController
         if (new ItemLookup().IsInstrument(giftName))
         {
             displayFeedback("Sypave likes the " + giftName.ToLower() + ".");
+            GameStateController.current.dialogueEvents.IncreasePlayerCharisma(true); 
         }
         else
         {
