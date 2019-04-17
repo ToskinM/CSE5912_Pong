@@ -126,12 +126,11 @@ public class Pickup : MonoBehaviour
             //Add to inventory
             if (!objectUsedImmediately)
                 playerInventory.AddObj(obj.gameObject);
-            if (obj.name.Contains("WolfApple") && SceneManager.GetActiveScene().name == Constants.SCENE_ANAIHOUSE)
+            if (SceneManager.GetActiveScene().name == Constants.SCENE_ANAIHOUSE)
             {
-                //do nothing
+                FindScene();
+                sceneItem.RemoveItem(obj.name, obj.gameObject);
             }
-            else if (obj.name.Contains("WolfApple") || obj.name.Contains("Moonflower"))
-            {}
             else if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE || SceneManager.GetActiveScene().name == Constants.SCENE_NAIAHOUSE || SceneManager.GetActiveScene().name == Constants.SCENE_AMARUHOUSE)
             {
                 FindScene();
@@ -163,12 +162,11 @@ public class Pickup : MonoBehaviour
                 string objName = obj.GetComponent<InventoryStat>().Name;
                 feedback.ShowText("You have found a " + objName.ToLower());
 
-                if (obj.name.Contains("WolfApple") && SceneManager.GetActiveScene().name == Constants.SCENE_ANAIHOUSE)
+                if (SceneManager.GetActiveScene().name == Constants.SCENE_ANAIHOUSE)
                 {
-                    //do nothing
+                    FindScene();
+                    sceneItem.RemoveItem(obj.name, obj.gameObject);
                 }
-                else if (obj.name.Contains("WolfApple") || obj.name.Contains("Moonflower"))
-                { }
                 else if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE || SceneManager.GetActiveScene().name == Constants.SCENE_NAIAHOUSE || SceneManager.GetActiveScene().name == Constants.SCENE_AMARUHOUSE)
                 {
                     FindScene();
@@ -189,9 +187,11 @@ public class Pickup : MonoBehaviour
         if (SceneManager.GetActiveScene().name == Constants.SCENE_VILLAGE)
             sceneItem = GameObject.Find("VillageItem").GetComponent<VillageItem>();
         else if (SceneManager.GetActiveScene().name == Constants.SCENE_NAIAHOUSE)
-            sceneItem =  GameObject.Find("NaiaHouseItems").GetComponent<NaiaHouseItem>();
+            sceneItem = GameObject.Find("NaiaHouseItems").GetComponent<NaiaHouseItem>();
         else if (SceneManager.GetActiveScene().name == Constants.SCENE_AMARUHOUSE)
             sceneItem = GameObject.Find("AmaruHouseItem").GetComponent<AmaruHouseItem>();
+        else if (SceneManager.GetActiveScene().name == Constants.SCENE_ANAIHOUSE)
+            sceneItem = GameObject.Find("AnaiHouseItems").GetComponent<AnaiHouseItem>();
 
 
     }

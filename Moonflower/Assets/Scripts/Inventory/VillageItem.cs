@@ -19,6 +19,8 @@ public class VillageItem : MonoBehaviour, IItems
     public GameObject feather;
     public GameObject djembe;
     public GameObject necklace;
+    public GameObject apple;
+    public GameObject moonflower;
     public List<CollidableData> VillageCollidable;
     //public List<CollidableData> AnaiHouseCollidable;
     SceneController scene;
@@ -67,21 +69,22 @@ public class VillageItem : MonoBehaviour, IItems
         VillageCollidable.Add(new CollidableData("djembe", djembe, new Vector3(308.85f, 107.96f, -12.87f), Quaternion.Euler(0, 0, 0), new Vector3(0.005f, 0.005f, 0.005f)));
         VillageCollidable.Add(new CollidableData("necklace", necklace, new Vector3(333.82f, 109.12f, 7.52f), Quaternion.Euler(0, 0, 0), new Vector3(1f, 1f, 1f)));
         VillageCollidable.Add(new CollidableData("corn(2)", corn, new Vector3(289.06f, 107.9f, -63.37f), Quaternion.Euler(0, 0, 0), new Vector3(0.8f, 0.8f, 0.8f)));
+        VillageCollidable.Add(new CollidableData("WolfApple(1)", apple, new Vector3(317.3731f, 107.998f, -32.36111f), Quaternion.Euler(0, 90, 0), new Vector3(5f, 5f, 5f)));
+        VillageCollidable.Add(new CollidableData("WolfApple(2)", apple, new Vector3(331.3874f, 108.348f, 11.63889f), Quaternion.Euler(0, 0, 0), new Vector3(5f, 5f, 5f)));
+        VillageCollidable.Add(new CollidableData("MoonFlower(1)", moonflower, new Vector3(324.2096f, 109.1266f, -47.09322f), Quaternion.Euler(15.723f, -56.789f, -41.044f), new Vector3(0.002069252f, 0.002060364f, 0.002017667f)));
+        VillageCollidable.Add(new CollidableData("MoonFlower(2)", moonflower, new Vector3(320.8814f, 108.6644f, -45.22709f), Quaternion.Euler(67.079f, -121.376f, -97.244f), new Vector3(0.002061143f, 0.002022629f, 0.002063513f)));
+        VillageCollidable.Add(new CollidableData("MoonFlower(3)", moonflower, new Vector3(321.5826f, 109.462f, -48.58804f), Quaternion.Euler(58.123f, 3.28f, 42.756f), new Vector3(0.00206214f, 0.002023454f, 0.002061689f)));
+        VillageCollidable.Add(new CollidableData("MoonFlower(4)", moonflower, new Vector3(322.8831f, 109.4775f, -49.6236f), Quaternion.Euler(27.569f, -16.354f, 21.965f), new Vector3(0.002058406f, 0.002052124f, 0.002036752f)));
+        VillageCollidable.Add(new CollidableData("MoonFlower(5)", moonflower, new Vector3(320.2758f, 109.1944f, -46.70151f), Quaternion.Euler(43.358f, 43.52f, 93.03101f), new Vector3(0.00206394f, 0.002013957f, 0.002069385f)));
+        VillageCollidable.Add(new CollidableData("MoonFlower(5)", moonflower, new Vector3(320.5474f, 109.6181f, -46.69814f), Quaternion.Euler(43.358f, 43.52f, 93.03101f), new Vector3(0.00206394f, 0.002013957f, 0.002069385f)));
+
     }
 
     public void RemoveItem(string ObjName,GameObject obj)
     {
-        if (obj.name.Contains("WolfApple") || obj.name.Contains("Moonflower"))
-        {
-
-        }
-        else 
-        {
-            CollidableData collidableInList =  VillageCollidable.Find(c => c.name == ObjName);
-            //Debug.Log(VillageCollidable.Contains(collidableInList));
-            VillageCollidable.Remove(collidableInList);
-        }
-            
+        CollidableData collidableInList = VillageCollidable.Find(c => c.name == ObjName);
+        //Debug.Log(VillageCollidable.Contains(collidableInList));
+        VillageCollidable.Remove(collidableInList);
     }
 
     public void RemoveItem(List<CollidableData> list, string name,GameObject obj, Vector3 position, Quaternion rotation, Vector3 scale)
