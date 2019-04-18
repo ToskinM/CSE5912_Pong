@@ -6,6 +6,7 @@ public class BossDoor : MonoBehaviour
 {
     private int numKeys;
     GameObject bossEntrance;
+    public bool Open = false; 
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +21,7 @@ public class BossDoor : MonoBehaviour
         if(numKeys == 0)
         {
             Unlock();
+            Open = true; 
         }
     }
 
