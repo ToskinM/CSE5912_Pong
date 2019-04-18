@@ -212,15 +212,13 @@ public class SceneController : MonoBehaviour
         loadscreen.SetActive(true);
         yield return StartCoroutine(FadeLoadingBackground(1f));
         loadingBar.value = 0f;
-        float progress = 0f;
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
         while (!asyncLoad.isDone)
         {
-            progress = Mathf.Lerp(Mathf.Clamp(progress + 0.1f, 0f, 1f), asyncLoad.progress, Time.deltaTime * 3f);
-            loadingBar.value = progress;
-            progressText.text = (progress * 100).ToString("F0") + "%";
+            loadingBar.value = asyncLoad.progress;
+            progressText.text = (asyncLoad.progress * 100).ToString("F0") + "%";
             yield return null;
         }
         StartCoroutine(FadeLoadingBackground(0f));
