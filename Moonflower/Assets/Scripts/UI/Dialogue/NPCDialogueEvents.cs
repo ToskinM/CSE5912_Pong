@@ -47,6 +47,11 @@ public class NPCDialogueEvents : MonoBehaviour
         return PlayerController.instance.ActivePlayerStats.Charisma > PlayerController.instance.ActivePlayerStats.Strength;
     }
 
+    public bool IsNotArmed()
+    {
+        return !PlayerController.instance.ActivePlayerCombatControls.HasWeaponOut;
+    }
+
     public void MoveMouse()
     {
         GameObject.Find("BigMouse").GetComponent<TuvichaDialogueController>().Move();
