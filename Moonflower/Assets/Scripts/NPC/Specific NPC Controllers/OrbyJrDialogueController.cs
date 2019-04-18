@@ -38,10 +38,11 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
         agent = GetComponent<NavMeshAgent>();
         charName = Constants.ORBYJR_NAME;
 
-        INPCController mainController = GetComponent<INPCController>();
+        LesserNPCController mainController = GetComponent<LesserNPCController>();
         movement = mainController.movement;// new NPCMovementController(gameObject, Constants.AMARU_NAME);
         movement.FollowPlayer(bufferDist, tooCloseRad);
-        movement.SetDefault(NPCMovementController.MoveState.chill);
+        movement.Pace(mainController.WanderOrigin.transform.position, mainController.WanderRange); 
+        movement.SetDefault(NPCMovementController.MoveState.pace);
         movement.Reset();
 
         icon = mainController.icon;
@@ -76,7 +77,9 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
         }
         DialogueActive = currTalk.DialogueActive();
         if (currTalk.Complete)
-            movement.Chill(); 
+        {
+            movement.Reset();
+        }
     }
 
     public DialogueTrigger GetCurrDialogue()
@@ -96,6 +99,7 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
         {
             StartTalk();
         }
+        movement.Follow(); 
     }
 
     //start current conversation

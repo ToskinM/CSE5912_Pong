@@ -47,8 +47,11 @@ public class LesserNPCController : MonoBehaviour, INPCController
     string descrip;
     string pronoun; 
 
+    private Vector3 defaultVector = new Vector3(0,0,0); 
+
     private void Awake()
     {
+        defaultVector = gameObject.transform.position;
         icon = iconOb;
         InspectFactory fac = new InspectFactory();
         if (fac.GetName.ContainsKey(icon))
@@ -215,6 +218,29 @@ public class LesserNPCController : MonoBehaviour, INPCController
     public void EndDistract()
     {
         movement.Reset();
+    }
+
+    public void ChangeDefaultMovement(NPCMovementController.MoveState state, Vector3 origin, float dist = 0)
+    {
+        switch(state)
+        {
+            case NPCMovementController.MoveState.chill:
+                movement.SetDefault(NPCMovementController.MoveState.chill);
+                break;
+            case NPCMovementController.MoveState.wander:
+                movement.Wander(origin, dist); 
+                movement.SetDefault(NPCMovementController.MoveState.wander);
+                break;
+            case NPCMovementController.MoveState.follow:
+                movement.FollowPlayer(dist);
+                movement.SetDefault(NPCMovementController.MoveState.follow);
+                break;
+            case NPCMovementController.MoveState.pace:
+                Debug.Log("set to pace");
+                movement.Pace(origin, dist);
+                movement.SetDefault(NPCMovementController.MoveState.pace);
+                break;
+        }
     }
 
     public string Inspect()
