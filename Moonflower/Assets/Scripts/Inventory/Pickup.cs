@@ -156,7 +156,9 @@ public class Pickup : MonoBehaviour
                 //Remove the text update
                 Invoke("DelayMethod", 2f);
                 string objName = obj.GetComponent<InventoryStat>().Name;
-                feedback.ShowText("You have found a " + objName.ToLower());
+                string textToShow = "You have found a " + objName.ToLower() + ".";
+                if (!feedback.IsRepeat(textToShow))
+                    feedback.ShowText(textToShow);
 
                 if (SceneManager.GetActiveScene().name == Constants.SCENE_ANAIHOUSE)
                 {
