@@ -101,9 +101,6 @@ public static class Constants
     public const string DEAD_APPLE = appleFolder + "Dead Apple";
 
 
-    //inventory names
-    public const string MOONFLOWER_PICKUP = "Moon Flower";
-
     /*
      * Dialogue Names
      */
@@ -147,6 +144,7 @@ public static class Constants
     public const string IJAPUVA_DIALOGUE = dialogueFolder + cave + "Ijapuva";
     public const string TUVICHA_NAME = "Tuvicha";
     public const string TUVICHA_DIALOGUE = dialogueFolder + cave + "Tuvicha";
+    public const string EKIRIRI_NAME = "Ekiriri"; 
 
     public const string CATBAT_NAME = "Catbat";
     public const string ORBY_NAME = "Orby";
@@ -159,7 +157,7 @@ public static class Constants
     public const string TEJU_REP_DIALOGUE = dialogueFolder + cave + "Teju Repeat";
 
     //heal objects
-    public const string MOONFLOWER_NAME = "Moon Flower";
+    public const string MOONFLOWER_NAME = "Moonflower";
     public const string WOLFAPPLE_NAME = "Wolf Apple";
     public const string HONEY_NAME = "Honey";
     public const string ROPE_NAME = "Rope";
@@ -179,5 +177,5 @@ public static class Constants
     public const string FEATHER_NAME = "Feather";
     public const string DRUM_NAME = "Drum";
     public const string NECKLACE_NAME = "Necklace";
-    public const string MUSHROOM_NAME = "Mushrooms";
+    public const string MUSHROOM_NAME = "Mushroom";
 }
