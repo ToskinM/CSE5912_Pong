@@ -334,14 +334,21 @@ public class ActionWheelController : MonoBehaviour
         outlined = true;
         foreach (Renderer renderer in npc.GetComponentsInChildren<Renderer>())
         {
-            renderer.gameObject.AddComponent<Outline>();
+            Debug.Log(renderer.gameObject.layer);
+            if (renderer.gameObject.layer != 13)
+            {
+                renderer.gameObject.AddComponent<Outline>();
+            }
         }
     }
     private void RemoveOutlineToNPC(GameObject npc)
     {
         foreach (Renderer renderer in npc.GetComponentsInChildren<Renderer>())
         {
-            Destroy(renderer.gameObject.GetComponent<Outline>());
+            if (renderer.gameObject.layer != 13)
+            {
+                Destroy(renderer.gameObject.GetComponent<Outline>());
+            }
         }
         outlined = false;
     }
