@@ -23,6 +23,7 @@
 */
 
 using UnityEngine;
+using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -42,6 +43,8 @@ namespace cakeslice
         [HideInInspector]
         public Material[] originalMaterials;
 
+        private Coroutine autoDisableCoroutine;
+
         private void Awake()
         {
             Renderer = GetComponent<Renderer>();
@@ -57,11 +60,28 @@ namespace cakeslice
             {
                 effect.AddOutline(this);
             }
+
+            if (autoDisableCoroutine == null)
+            {
+                autoDisableCoroutine = StartCoroutine(AutoDisableCountdown());
+            }
+        }
+
+        private IEnumerator AutoDisableCountdown()
+        {
+            yield return new WaitForSeconds(5);
+            enabled = false;
         }
 
         void OnDisable()
         {
-			IEnumerable<OutlineEffect> effects = Camera.allCameras.AsEnumerable()
+            if (autoDisableCoroutine != null)
+            {
+                StopCoroutine(AutoDisableCountdown());
+                autoDisableCoroutine = null;
+            }
+
+            IEnumerable<OutlineEffect> effects = Camera.allCameras.AsEnumerable()
 				.Select(c => c.GetComponent<OutlineEffect>())
 				.Where(e => e != null);
 
