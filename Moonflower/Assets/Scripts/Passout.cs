@@ -8,7 +8,7 @@ public class Passout : MonoBehaviour
     public SkyColors sky;
     public GameObject cam;  
     public AudioSource BGM;
-    public GameObject cave;  
+    //public GameObject cave;  
 
     private FeedbackText feedback; 
 
@@ -27,11 +27,11 @@ public class Passout : MonoBehaviour
             Passed = true;
             GameStateController.current.Passed = true;
         }
-        if (!Passed)
-        {
-            cave.SetActive(false); 
-          //  Debug.Log("no cave"); 
-        }
+        //if (!Passed)
+        //{
+        //    cave.SetActive(false); 
+        //  //  Debug.Log("no cave"); 
+        //}
 
         cameraPost = cam.GetComponent<PostProcessControl>();
         feedback = GameObject.Find("FeedbackText").GetComponent<FeedbackText>();
@@ -74,11 +74,11 @@ public class Passout : MonoBehaviour
             GameStateController.current.Passed = true;
         }
 
-        if(Passed)
-        {
-//            Debug.Log("cave good to go!");
-            cave.SetActive(true);
-        }
+//        if(Passed)
+//        {
+////            Debug.Log("cave good to go!");
+        //    cave.SetActive(true);
+        //}
     }
 
     private void spawnInHouse()
