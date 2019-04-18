@@ -11,7 +11,7 @@ public class TejuCrystalOrb : MonoBehaviour
 
     void Start()
     {
-        tejuTransform = GameObject.Find("Teju").transform;
+        tejuTransform = GameObject.Find("NewTeju").transform;
         ObjectPoolController.current.CheckoutTemporary(spawnDestroyEffect, transform, 1);
     }
 

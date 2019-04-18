@@ -211,9 +211,9 @@ public class TejuCombatController : MonoBehaviour, ICombatController
 
     private IEnumerator CryAttack()
     {
-        //TejuSoundEffect.NPCRangeAttack();
+        TejuSoundEffect.NPCRangeAttack();
         animationController.TriggerAttack();
-        GetComponentInChildren<TejuSoundEffect>().Fire();
+        //GetComponentInChildren<TejuSoundEffect>().Fire();
         isAttacking = true;
 
         for (int i = 0; i < cryAttackBarrageCount; i++)
