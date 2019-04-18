@@ -84,7 +84,7 @@ public class Pickup : MonoBehaviour
                     //if (!(stat.AnaiObject && !PlayerController.instance.AnaiIsActive()) && !(stat.MimbiObject && PlayerController.instance.AnaiIsActive()))
                     {
                         closest.GetComponent<InventoryStat>().SetHalo(true);
-                        interaction.EnableItem(dist);
+                        interaction.EnableItem(dist, stat.Name);
                     }
                 }
                 if (Input.GetButtonDown("Interact"))

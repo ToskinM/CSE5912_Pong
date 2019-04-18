@@ -30,20 +30,25 @@ public class PickupArea : MonoBehaviour
         if (other.gameObject.tag == "Collectable")
         {
             inventoryAdd.gameObject.SetActive(true);
+
             Invoke("DelayMethod", 2f);
             //Get closest items
             GameObject obj = FindClosest();
             //Get items's health
-            int health = obj.GetComponent<InventoryStat>().GetHealth();
 
-            if (obj.GetComponent<InventoryStat>().AnaiObject)
+            InventoryStat objectInventroyStat = obj.GetComponent<InventoryStat>();
+
+
+            int health = objectInventroyStat.GetHealth();
+
+            if (objectInventroyStat.AnaiObject)
             {
-                textUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Anai");
+                textUpdate(objectInventroyStat.Name + " is collected, " + health + " [health] were add to Anai");
                 playerStat.AddHealth(health);
             }
-            else if (obj.GetComponent<InventoryStat>().MimbiObject)
+            else if (objectInventroyStat.MimbiObject)
             {
-                textUpdate(obj.GetComponent<InventoryStat>().Name + " is collected, " + health + " [health] were add to Mimbi");
+                textUpdate(objectInventroyStat.Name + " is collected, " + health + " [health] were add to Mimbi");
             }
             //Add to inventory
             playerInventory.AddObj(obj.gameObject);

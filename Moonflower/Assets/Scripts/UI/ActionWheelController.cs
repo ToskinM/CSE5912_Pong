@@ -95,10 +95,8 @@ public class ActionWheelController : MonoBehaviour
     }
     private void HandleInteractionFOVTargetUpdate(GameObject closestNPC)
     {
-        Debug.Log("handle target"); 
+        //Debug.Log("handle target"); 
         
-        //if (!outlined)
-        //    ApplyOutlineToNPC(closestNPC);
         if (closestNPC != null)
         {
             //Debug.Log("Got a target!"); 
@@ -116,10 +114,8 @@ public class ActionWheelController : MonoBehaviour
             else
             {
                 //Debug.Log("No controller :("); 
-                //Debug.Log("no controller :(");
                 if (outlined)
                     RemoveOutlineToNPC(target);
-                Debug.Log("sjgfsjdgfskjh");
                 target = null;
                 targetController = null;
             }
@@ -128,11 +124,9 @@ public class ActionWheelController : MonoBehaviour
         {
             if (outlined)
                 RemoveOutlineToNPC(target);
-            Debug.Log("sjgfsjdgfskjh");
             target = null;
             targetController = null;
             //Debug.Log("No target :((");
-            //targetController = null;
         }
     }
 
