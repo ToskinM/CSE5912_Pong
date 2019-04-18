@@ -12,8 +12,6 @@ public class Pickup : MonoBehaviour
 
     public CharacterStats Stats { get; private set; }
 
-    private CharacterStats playerStats;
-    private PlayerInventory playerInventory;
     private PlayerSoundEffect soundEffect;
     private InteractionPopup interaction;
     private FeedbackText feedback;
@@ -28,8 +26,6 @@ public class Pickup : MonoBehaviour
     {
         //StartCoroutine(GetAudioManager());
         //inventoryManager = FindObjectOfType<InventoryManager>();
-        playerStats = GetComponent<CharacterStats>();
-        playerInventory = GetComponent<PlayerInventory>();
 
         soundEffect = PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>();
         interaction = GameObject.Find("HUD").GetComponent<ShowInspect>().interaction;
@@ -121,11 +117,11 @@ public class Pickup : MonoBehaviour
             Invoke("DelayMethod", 2f);
             string objName = obj.GetComponent<InventoryStat>().Name;
             feedback.ShowText("You have found a " + objName.ToLower());
-            objectUsedImmediately = playerStats.AddHealth(health);
+            objectUsedImmediately = PlayerController.instance.ActivePlayerStats.AddHealth(health);
 
             //Add to inventory
             if (!objectUsedImmediately)
-                playerInventory.AddObj(obj.gameObject);
+                PlayerController.instance.ActivePlayerInventory.AddObj(obj.gameObject);
             if (SceneManager.GetActiveScene().name == Constants.SCENE_ANAIHOUSE)
             {
                 FindScene();
@@ -173,7 +169,10 @@ public class Pickup : MonoBehaviour
                     sceneItem.RemoveItem(obj.name,obj.gameObject);
                 }
                 //Add to inventory
-                playerInventory.AddObj(obj.gameObject);
+                if(obj.gameObject != null)
+                    PlayerController.instance.ActivePlayerInventory.AddObj(obj.gameObject);
+                //else
+                    //PlayerController.instance.ActivePlayerInventory.AddObj(objName);
                 //Destroy Gameobject after collect
                 Destroy(obj.gameObject);
                 //Play Pickup audio clip;
