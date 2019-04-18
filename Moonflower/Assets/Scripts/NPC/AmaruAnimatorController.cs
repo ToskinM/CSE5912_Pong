@@ -86,20 +86,21 @@ public class AmaruAnimatorController : MonoBehaviour
             animator.SetBool("Waiting", false);
             animator.SetBool("Talking", false);
         }
-        //else
-        //{
-        //    if (amaruController.dialogueActive)
-        //    {
-        //        animator.SetBool("Talking", true);
-        //        animator.SetBool("Waiting", false);
-        //        animator.SetBool(key_isWalking, false);
-        //    }
-        //    else
-        //    {
-        //        animator.SetBool("Talking", false);
-        //        animator.SetBool("Waiting", true);
-        //        animator.SetBool(key_isWalking, false);
-        //    }
-        //}
+       else
+        {
+            if (amaruController.dialogueActive)
+            {
+                animator.SetBool("Talking", true);
+                animator.SetBool("Waiting", false);
+                animator.SetBool(key_isWalking, false);
+            }
+            else
+            {
+                animator.SetBool("Talking", false);
+                animator.SetBool("Waiting", true);
+                animator.SetBool(key_isWalking, false);
+            }
+        }
+        
     }
 }
