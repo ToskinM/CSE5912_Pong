@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using cakeslice;
 
 public class ActionWheelController : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class ActionWheelController : MonoBehaviour
     private bool wheelAvailable = true;
     private bool wheelShowing = false;
     private bool inRange = false;
+    private bool outlined = false;
 
     private int distractTime = 5;
 
@@ -93,16 +95,19 @@ public class ActionWheelController : MonoBehaviour
     }
     private void HandleInteractionFOVTargetUpdate(GameObject closestNPC)
     {
-        //Debug.Log("handle target"); 
-        target = closestNPC;
-        if (target != null)
+        Debug.Log("handle target"); 
+        
+        //if (!outlined)
+        //    ApplyOutlineToNPC(closestNPC);
+        if (closestNPC != null)
         {
             //Debug.Log("Got a target!"); 
-            INPCController targetNPC = target.GetComponent<INPCController>();
+            INPCController targetNPC = closestNPC.GetComponent<INPCController>();
             if (targetNPC != null)
             {
                 //Debug.Log("Target has controller!"); 
                 //Debug.Log("valid npc!");
+                target = closestNPC;
                 targetController = targetNPC;
 
                 activeWheel.Initialize(targetNPC.icon, targetNPC.actionsAvailable);
@@ -112,14 +117,22 @@ public class ActionWheelController : MonoBehaviour
             {
                 //Debug.Log("No controller :("); 
                 //Debug.Log("no controller :(");
+                if (outlined)
+                    RemoveOutlineToNPC(target);
+                Debug.Log("sjgfsjdgfskjh");
                 target = null;
                 targetController = null;
             }
         }
         else
         {
-            //Debug.Log("No target :((");
+            if (outlined)
+                RemoveOutlineToNPC(target);
+            Debug.Log("sjgfsjdgfskjh");
+            target = null;
             targetController = null;
+            //Debug.Log("No target :((");
+            //targetController = null;
         }
     }
 
@@ -140,6 +153,9 @@ public class ActionWheelController : MonoBehaviour
             {
                 if (!wheelShowing)
                 {
+
+                    if (!outlined)
+                        ApplyOutlineToNPC(target);
                     interaction.EnableNPC(dist);
                     PlayerController.instance.SaveSheathState(); 
                 }
@@ -317,5 +333,22 @@ public class ActionWheelController : MonoBehaviour
     public void HandleFreezeEvent(bool frozen)
     {
         wheelAvailable = !frozen;
+    }
+
+    private void ApplyOutlineToNPC(GameObject npc)
+    {
+        outlined = true;
+        foreach (Renderer renderer in npc.GetComponentsInChildren<Renderer>())
+        {
+            renderer.gameObject.AddComponent<Outline>();
+        }
+    }
+    private void RemoveOutlineToNPC(GameObject npc)
+    {
+        foreach (Renderer renderer in npc.GetComponentsInChildren<Renderer>())
+        {
+            Destroy(renderer.gameObject.GetComponent<Outline>());
+        }
+        outlined = false;
     }
 }
