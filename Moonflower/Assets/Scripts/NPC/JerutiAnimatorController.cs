@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AmaruAnimatorController : MonoBehaviour
+public class JerutiAnimatorController : MonoBehaviour
 {
-    AmaruController amaruController;
+    JerutiController jerutiController;
     UnityEngine.AI.NavMeshAgent agent;
     Animator animator;
 
@@ -20,7 +20,7 @@ public class AmaruAnimatorController : MonoBehaviour
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         animator = GetComponent<Animator>();
-        amaruController = GetComponent<AmaruController>();
+        jerutiController = GetComponent<JerutiController>();
     }
 
     public void StartDistraction()
@@ -80,15 +80,15 @@ public class AmaruAnimatorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (agent.velocity.magnitude > 0 && tempbool==false)
+        if (agent.velocity.magnitude > 0 && tempbool == false)
         {
             animator.SetBool(key_isWalking, true);
             animator.SetBool("Waiting", false);
             animator.SetBool("Talking", false);
         }
-       else
+        else
         {
-            if (amaruController.dialogueActive)
+            if (jerutiController.dialogueActive)
             {
                 animator.SetBool("Talking", true);
                 animator.SetBool("Waiting", false);
@@ -101,6 +101,6 @@ public class AmaruAnimatorController : MonoBehaviour
                 animator.SetBool(key_isWalking, false);
             }
         }
-        
+
     }
 }
