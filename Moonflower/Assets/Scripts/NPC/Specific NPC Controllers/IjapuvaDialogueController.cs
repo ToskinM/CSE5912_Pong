@@ -10,6 +10,8 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
     //public GameObject Player;
     private Sprite icon { get; set; }
     public bool DialogueActive { get; set; } = false;
+    public bool Peeved { get; set; } = false;
+    public GameObject Fire; 
 
     const float tooCloseRad = 3f;
     const float bufferDist = 4f;
@@ -22,10 +24,13 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
     DialogueTrigger talk; 
     private FeedbackText feedbackText;
 
+    Vector3 startLoc; 
+
     enum Convo { talk }
     Convo currConvo;
 
-    string charName; 
+    string charName;
+
 
     void Awake()
     {
@@ -35,6 +40,7 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
     // Start is called before the first frame update
     void Start()
     {
+        startLoc = gameObject.transform.position; 
         agent = GetComponent<NavMeshAgent>();
         charName = Constants.IJAPUVA_NAME;
 
@@ -75,9 +81,16 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
             currTalk.Update();
         }
         DialogueActive = currTalk.DialogueActive();
-        if(currTalk.Complete)
+        if(currTalk.Complete && movement.state == NPCMovementController.MoveState.follow)
         {
-            movement.Chill(); 
+            movement.GoToLoc(startLoc); 
+        }
+        if (currTalk.Complete)
+        {
+            Vector3 relative = Fire.transform.position - agent.transform.position;
+            float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+            agent.transform.rotation = Quaternion.Lerp(agent.transform.rotation, Quaternion.Euler(0, angle, 0), Time.deltaTime * 10);
+
         }
 
     }
@@ -93,7 +106,10 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
 //        Debug.Log("start talking");
         if (currTalk.Complete)
         {
-            displayFeedback("Ijapuva is grinning at the fire.");
+            if(Peeved)
+                displayFeedback("You have irritated Ijapuva.");
+            else
+                displayFeedback("Ijapuva is grinning at the fire.");
         }
         else
         {
@@ -121,6 +137,11 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
             //playerController.TalkingPartner = null;
             currTalk.EndDialogue();
         }
+    }
+
+    public void Peeve()
+    {
+        Peeved = true; 
     }
 
     private void displayFeedback(string text)

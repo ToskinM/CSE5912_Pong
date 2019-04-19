@@ -463,6 +463,10 @@ public class NPCMovementController : MonoBehaviour, IMovement
     {
         Go(loc.transform.position);  
     }
+    public void GoToLoc(Vector3 loc)
+    {
+        Go(loc);
+    }
 
     public void Reset()
     {

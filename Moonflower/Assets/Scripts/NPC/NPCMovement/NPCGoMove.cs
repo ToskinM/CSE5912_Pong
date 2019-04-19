@@ -20,7 +20,7 @@ public class NPCGoMove : MonoBehaviour, IMovement, INPCMovement
     NavMeshAgent agent;
     Vector3 destination;
 
-    float bufferDist = 0.1f; 
+    float bufferDist = 0.4f; 
     public float baseSpeed; 
 
     void Start()
@@ -60,7 +60,7 @@ public class NPCGoMove : MonoBehaviour, IMovement, INPCMovement
 
     public void UpdateMovement()
     {
-        if (Active)
+        if (Active && !There)
         {
             agent.speed = baseSpeed; 
 
@@ -70,7 +70,10 @@ public class NPCGoMove : MonoBehaviour, IMovement, INPCMovement
                 Chill();
                 There = true;
             }
-            GoHere(destination);
+            else
+            {
+                GoHere(destination);
+            }
         }
     }
 
