@@ -11,7 +11,7 @@ public class FallingBridge : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        targetDownPos = transform.position - new Vector3(0, 4, 0);
+        targetDownPos = transform.position - new Vector3(0, 35, 0);
     }
 
     // Update is called once per frame
@@ -19,12 +19,13 @@ public class FallingBridge : MonoBehaviour
     {
         if (fall && transform.position != targetDownPos)
         {
-            transform.position = Vector3.Lerp(transform.position, targetDownPos, Time.deltaTime * 5);
+            transform.position = Vector3.Lerp(transform.position, targetDownPos, Time.deltaTime * 0.2f);
         }
         
     }
-    void OnTriggerEnter(Collider collider)
+    void OnTriggerStay(Collider collider)
     {
+        print("hello");
         player = GameObject.Find("Player").GetComponent<CurrentPlayer>();
         if (collider.gameObject.name == player.CurrentPlayerObj.name && !fall)
         {

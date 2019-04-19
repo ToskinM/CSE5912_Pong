@@ -81,8 +81,12 @@ public class AudioManager : MonoBehaviour
         if (s != null & s.source != null)
         {
             s.source.mute = false;
-            s.source.Play();
-            //Debug.Log("I am Playing " + name + s.source.clip);
+            if (s.source.gameObject.name != "BigMouse" && name == "Snoring")
+            {//don't play snoring
+            }
+            else
+                s.source.Play();
+            //Debug.Log("I am Playing " + name + s.source.clip + s.source.gameObject.name);
         }
     }
     public void PlayBackground(string category, string name)

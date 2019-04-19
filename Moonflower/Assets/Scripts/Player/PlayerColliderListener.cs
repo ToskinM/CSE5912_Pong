@@ -33,6 +33,7 @@ public class PlayerColliderListener : MonoBehaviour
 
         if (other.tag == "Hurtbox" || other.tag == "EnvironmentHurtbox")
         {
+            Debug.Log("enter hit");
             OnHurtboxHit?.Invoke(other);
         }
     }
@@ -43,6 +44,7 @@ public class PlayerColliderListener : MonoBehaviour
 
         if (other.tag == "EnvironmentHurtbox")
         {
+            Debug.Log("stay hit");
             OnHurtboxHit?.Invoke(other);
         }
     }
