@@ -58,7 +58,7 @@ public class Pickup : MonoBehaviour
                     nearest = Vector3.Distance(g.transform.position, PlayerController.instance.GetActivePlayerObject().transform.position);
                     nearestObj = g;
                 }
-                g.GetComponent<InventoryStat>().SetHalo(false);
+                //g.GetComponent<InventoryStat>().SetHalo(false);
 
             }
             return nearestObj;
