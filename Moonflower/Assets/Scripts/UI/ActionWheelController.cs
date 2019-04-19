@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using cakeslice;
+using UnityEngine.SceneManagement;
 
 public class ActionWheelController : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class ActionWheelController : MonoBehaviour
 
     bool otherWindowUp = false;
 
-    private float activationRange = 5f;
+    private float activationRange = 10f;
 
     private void Awake()
     {
@@ -43,6 +44,11 @@ public class ActionWheelController : MonoBehaviour
         else if (current != null)
         {
             Destroy(gameObject);
+        }
+
+        if (SceneManager.GetActiveScene().name == "The Cave Boss")
+        {
+            activationRange = 8f;
         }
 
         activeWheel = ActionWheelPrefab.GetComponent<ActionWheel>();

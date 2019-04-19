@@ -167,7 +167,8 @@ public class FieldOfView : MonoBehaviour
             if (closest != closestTarget)
             {
                 closestTarget = closest;
-                OnNewClosestTarget?.Invoke(closestTarget.gameObject);
+                //OnNewClosestTarget?.Invoke(closestTarget.gameObject);
+                OnNewClosestTarget?.Invoke(LesserNPCController.GetRootmostObjectInLayer(closestTarget, "NPC"));
             }
         }
         else
