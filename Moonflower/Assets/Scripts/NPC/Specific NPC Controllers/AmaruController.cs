@@ -9,6 +9,7 @@ public class AmaruController : MonoBehaviour, INPCController
 {
     //public GameObject Player;
     public GameObject WalkCenter;
+    public GameObject InsidePoint; 
     public Sprite icon { get; set; }
     public bool dialogueActive = false;
 
@@ -40,7 +41,8 @@ public class AmaruController : MonoBehaviour, INPCController
     Convo currConvo; 
 
     SkyColors sky;
-    bool beforeNoon = true; 
+    bool beforeNoon = true;
+    bool goingInside = false; 
 
     void Awake()
     {
@@ -69,6 +71,7 @@ public class AmaruController : MonoBehaviour, INPCController
         icon = new IconFactory().GetIcon(Constants.AMARU_ICON);
 
         intro = new DialogueTrigger(gameObject, icon, Constants.AMARU_INTRO_DIALOGUE);
+        intro.SetSky(sky);
         advice = new DialogueTrigger(gameObject, icon, Constants.AMARU_ADVICE_DIALOGUE);
         advice.SetExitText("Good luck, Anai. I hope you find him.");
 
@@ -144,6 +147,20 @@ public class AmaruController : MonoBehaviour, INPCController
             Afternoon();
             beforeNoon = false; 
         }
+
+        if (beforeNoon && goingInside)
+        {
+            if (movement.state == NPCMovementController.MoveState.chill)
+                gameObject.SetActive(false);
+            if (movement.state != NPCMovementController.MoveState.go)
+                GoInside();
+        }
+    }
+
+    public void GoInside()
+    {
+        movement.GoToLoc(InsidePoint);
+        goingInside = true;
     }
 
     public DialogueTrigger GetCurrDialogue()

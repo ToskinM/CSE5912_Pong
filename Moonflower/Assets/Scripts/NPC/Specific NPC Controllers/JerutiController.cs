@@ -7,8 +7,7 @@ using TMPro;
 
 public class JerutiController : MonoBehaviour, INPCController
 {
-    //public GameObject Player;
-    public GameObject WalkCenter;
+    public GameObject InsidePoint; 
     public Sprite icon { get; set; }
     public bool dialogueActive = false;
 
@@ -41,7 +40,8 @@ public class JerutiController : MonoBehaviour, INPCController
     Convo currConvo; 
 
     SkyColors sky;
-    bool beforeNoon = true; 
+    bool beforeNoon = true;
+    bool goingInside = false; 
 
     void Awake()
     {
@@ -70,12 +70,14 @@ public class JerutiController : MonoBehaviour, INPCController
 
         intro = new DialogueTrigger(gameObject, icon, Constants.JERUTI_INTRO_DIALOGUE);
         intro.SetExitText("Come back when you're ready to commit to a story.");
+        intro.SetSky(sky); 
         introRepeat = new DialogueTrigger(gameObject, icon, Constants.JERUTI_REPINTRO_DIALOGUE);
         introRepeat.SetExitText("Come back when you're ready to commit to a story.");
+        introRepeat.SetSky(sky);
         advice = new DialogueTrigger(gameObject, icon, Constants.JERUTI_ADVICE_DIALOGUE);
-        intro.SetExitText("You'd better go help your brother.");
+        advice.SetExitText("You'd better go help your brother.");
         adviceRepeat = new DialogueTrigger(gameObject, icon, Constants.JERUTI_REPADVICE_DIALOGUE);
-        intro.SetExitText("You'd better go help your brother.");
+        adviceRepeat.SetExitText("You'd better go help your brother.");
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.JERUTI_NAME))
         {
@@ -186,6 +188,22 @@ public class JerutiController : MonoBehaviour, INPCController
             Afternoon();
             beforeNoon = false; 
         }
+
+        if(beforeNoon && goingInside)
+        {
+            if(movement.state == NPCMovementController.MoveState.chill)
+                gameObject.SetActive(false);
+            if (movement.state != NPCMovementController.MoveState.go)
+                GoInside(); 
+        }
+
+
+    }
+
+    public void GoInside()
+    {
+        movement.GoToLoc(InsidePoint);
+        goingInside = true; 
     }
 
     public DialogueTrigger GetCurrDialogue()

@@ -85,6 +85,7 @@ public class PinonController : MonoBehaviour, INPCController
         firstIntro.SetExitText("Fine. I didn't want to talk to you either.");
         intro = new DialogueTrigger(gameObject, icon, Constants.PINON_INTRO_DIALOGUE);
         intro.SetExitText("You're going to leave me alone? Finally!");
+        intro.SetSky(sky);
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.PINON_NAME))
         {

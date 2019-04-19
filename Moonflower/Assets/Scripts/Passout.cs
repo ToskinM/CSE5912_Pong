@@ -9,6 +9,11 @@ public class Passout : MonoBehaviour
     public GameObject cam;  
     public AudioSource BGM;
     //public GameObject cave;  
+    public JerutiController Jeruti;
+    public SypaveController Sypave;
+    public AmaruController Amaru;
+    public NaiaController Naia; 
+        
 
     private FeedbackText feedback; 
 
@@ -17,6 +22,7 @@ public class Passout : MonoBehaviour
     HouseDoor houseSpawn; 
 
     public bool Passed = false;
+    private bool sendInside = false; 
 
     void Start()
     {
@@ -53,10 +59,18 @@ public class Passout : MonoBehaviour
             cameraPost.PassOut();
             string hot = "It's getting hot...";
             if (!feedback.IsRepeat(hot))
-                 feedback.ShowText(hot); 
+                 feedback.ShowText(hot);
+
+            if (!sendInside)
+            {
+                Jeruti.GoInside();
+                Naia.GoInside();
+                Amaru.GoInside();
+                Sypave.GoInside();
+                sendInside = true; 
+            }
         }
 
-        Debug.Log("Comment out below if you want to turn off passout");
         if(!GameStateController.current.Passed && sky.GetTime() == sky.Passout)
         {
             PlayerController.instance.PassOut();

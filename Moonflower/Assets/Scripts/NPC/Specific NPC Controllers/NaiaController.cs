@@ -10,6 +10,7 @@ using TMPro;
 public class NaiaController : MonoBehaviour, INPCController
 {
     public Sprite icon { get; set; }
+    public GameObject InsidePoint;
 
     public float engagementRadius = 5f;
     public float tooCloseRad = 4f;
@@ -39,12 +40,15 @@ public class NaiaController : MonoBehaviour, INPCController
     bool trainingFight = false;
     int goalHealth;
     SkyColors sky;
-    bool beforeNoon = true; 
+    bool beforeNoon = true;
+    bool goingInside = false; 
 
     private enum NaiaEngageType { talk, fight, chill }
     private NaiaEngageType currState = NaiaEngageType.chill;
     enum Convo { intro, postFight, advice }
     Convo currConvo; 
+
+
 
     void Start()
     {
@@ -66,6 +70,7 @@ public class NaiaController : MonoBehaviour, INPCController
         icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
         intro = new DialogueTrigger(gameObject, icon, Constants.NAIA_INTRO_DIALOGUE);
         intro.SetExitText("See you around, I guess.");
+        intro.SetSky(sky);
         postFight = new DialogueTrigger(gameObject, icon, Constants.NAIA_POSTFIGHT_DIALOGUE);
         postFight.SetExitText("Oh, come on. Is this because I hit too hard? I was trying to pull my punches..."); 
         advice = new DialogueTrigger(gameObject, icon, Constants.NAIA_ADVICE_DIALOGUE);
@@ -192,6 +197,20 @@ public class NaiaController : MonoBehaviour, INPCController
             Afternoon();
             beforeNoon = false; 
         }
+
+        if (beforeNoon && goingInside)
+        {
+            if (movement.state == NPCMovementController.MoveState.chill)
+                gameObject.SetActive(false);
+            if (movement.state != NPCMovementController.MoveState.go)
+                GoInside();
+        }
+    }
+
+    public void GoInside()
+    {
+        movement.GoToLoc(InsidePoint);
+        goingInside = true;
     }
 
     public DialogueTrigger GetCurrDialogue()

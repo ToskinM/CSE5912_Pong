@@ -12,6 +12,7 @@ public class SypaveController : MonoBehaviour, INPCController
     public GameObject AnaiSpawnPoint;
     public GameObject NaiaSpawnPoint;
     public GameObject AmaruSpawnPoint;
+    public GameObject InsidePoint;
     public Sprite icon { get; set; }
 
     public float engagementRadius = 5f;
@@ -42,7 +43,8 @@ public class SypaveController : MonoBehaviour, INPCController
     //private PlayerController playerController;
     private FeedbackText feedbackText;
     SkyColors sky;
-    bool beforeNoon = true; 
+    bool beforeNoon = true;
+    bool goingInside = false; 
 
     void Start()
     {
@@ -70,6 +72,7 @@ public class SypaveController : MonoBehaviour, INPCController
         icon = new IconFactory().GetIcon(Constants.SYPAVE_ICON);
         intro = new DialogueTrigger(gameObject, icon, Constants.SYPAVE_INTRO_DIALOGUE);
         intro.SetExitText("So your 'exploration' is more important than your mother? Fine. Go.");
+        intro.SetSky(sky);
         frantic = new DialogueTrigger(gameObject, icon, Constants.SYPAVE_FRANTIC_DIALOGUE);
         frantic.SetExitText("You'd better be leaving to search for him!");
         advice = new DialogueTrigger(gameObject, icon, Constants.SYPAVE_ADVICE_DIALOGUE);
@@ -199,7 +202,22 @@ public class SypaveController : MonoBehaviour, INPCController
             Afternoon();
             beforeNoon = false; 
         }
+
+        if (beforeNoon && goingInside)
+        {
+            if (movement.state == NPCMovementController.MoveState.chill)
+                gameObject.SetActive(false);
+            if (movement.state != NPCMovementController.MoveState.go)
+                GoInside();
+        }
     }
+
+    public void GoInside()
+    {
+        movement.GoToLoc(InsidePoint);
+        goingInside = true;
+    }
+
 
     private void switchConvos()
     {

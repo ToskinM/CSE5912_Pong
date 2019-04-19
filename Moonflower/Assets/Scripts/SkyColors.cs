@@ -139,12 +139,12 @@ public class SkyColors : MonoBehaviour
     {
         if (PlayerController.instance != null && GameStateController.current != null)
         {
-            stop = (PlayerController.instance.TalkingPartner != null && time == Passout-1) || GameStateController.current.Paused;
+            stop = (PlayerController.instance.TalkingPartner != null) || GameStateController.current.Paused;
         }
 
         if (!stop)
         {
-//            Debug.Log("time keeps going at " + time); 
+            Debug.Log("time keeps going at " + time); 
             if (transitionRate < 1)
             {
                 thisRend.material.SetColor("_TintColor", Color.Lerp(thisRend.material.GetColor("_TintColor"), newColor, Time.deltaTime * transitionRate));
@@ -202,6 +202,13 @@ public class SkyColors : MonoBehaviour
     public int GetTime()
     {
         return time;
+    }
+
+
+    public void SkipAhead()
+    {
+        if(GameStateController.current.Passed || (time != Passout - 1 && time != Passout))
+            time++; 
     }
 
     //Pause or resume passing of time (also pauses/resumes lighting)

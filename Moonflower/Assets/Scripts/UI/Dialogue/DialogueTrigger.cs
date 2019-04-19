@@ -44,7 +44,9 @@ public class DialogueTrigger : MonoBehaviour
     private static List<int> offsets = new List<int>();
     private List<int> order = new List<int>();
 
-    private Dictionary<int, Button> buttonIndex = new Dictionary<int, Button>(); 
+    private Dictionary<int, Button> buttonIndex = new Dictionary<int, Button>();
+
+    SkyColors sky; 
 
     //string gName;
 
@@ -231,7 +233,8 @@ public class DialogueTrigger : MonoBehaviour
         destroyButtons();
         pState = PanelState.falling; 
         engaged = false;
-
+        if (sky != null)
+            sky.SkipAhead(); 
         // Exit dialogue camera 
         LevelManager.current.ReturnDialogueCamera();
 
@@ -397,6 +400,11 @@ public class DialogueTrigger : MonoBehaviour
 
        // if(order.Count == 3)
 //            Debug.Log("Order is: " + order[0] + " " + order[1] + " " + order[2]); 
+    }
+
+    public void SetSky(SkyColors skyCol)
+    {
+        sky = skyCol; 
     }
 
     private bool hasOptions()

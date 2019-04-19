@@ -323,7 +323,8 @@ public class NPCMovementController : MonoBehaviour, IMovement
                     {
                         //Debug.Log("I'm wandering!!");
                         go.UpdateMovement();
-                        Action = follow.Action;
+                        if(follow != null)
+                            Action = follow.Action;
                         if(go.There)
                         {
                             state = MoveState.chill; 
