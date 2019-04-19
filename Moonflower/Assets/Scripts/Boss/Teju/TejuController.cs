@@ -39,7 +39,8 @@ public class TejuController : MonoBehaviour, INPCController
     enum Convo { start, rep }
     Convo currConvo;
 
-    bool subdued = false; 
+    bool subdued = false;
+    bool aboutToReset = false; 
 
     private void Awake()
     {
@@ -113,6 +114,12 @@ public class TejuController : MonoBehaviour, INPCController
 
         }
 
+        if (currTalk.Complete && !aboutToReset && !subdued)
+        {
+            aboutToReset = true;
+            Invoke("ResetConvo", 2f);
+        }
+
     }
 
     public void Talk()
@@ -133,7 +140,7 @@ public class TejuController : MonoBehaviour, INPCController
     {
         if(giftName.Equals(Constants.HONEY_NAME))
         {
-            displayFeedback("Teju loves the "+ giftName+" and has stopped crying!");
+            displayFeedback("Teju loves the " + giftName + " and has stopped crying!");
             GameStateController.current.dialogueEvents.IncreasePlayerCharisma(true);
             Subdue();
         }
@@ -168,14 +175,18 @@ public class TejuController : MonoBehaviour, INPCController
 
     public void FailConvo()
     {
-        StartCoroutine(combatController.AreaCryAttack()); 
-        if(currConvo == Convo.rep)
-            Invoke("ResetConvo", 2f); 
+        StartCoroutine(combatController.AreaCryAttack());
+        if (currConvo == Convo.rep)
+        {
+            aboutToReset = true; 
+            Invoke("ResetConvo", 2f);
+        }
     }
 
     private void ResetConvo()
     {
         currTalk.Reset();
+        aboutToReset = false;
     }
 
     private void StartEngagement()
