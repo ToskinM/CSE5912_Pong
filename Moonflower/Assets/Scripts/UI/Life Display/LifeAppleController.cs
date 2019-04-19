@@ -25,12 +25,14 @@ public class LifeAppleController : MonoBehaviour
     private int shakeCount = 0;
     private int maxShake = 20;
     private int healCount = 0; 
-    private Vector3 initPosition; 
+    private Vector3 initPosition;
+    private float positionShakeInc; 
 
 
     // Start is called before the first frame update
     public LifeAppleController(GameObject flowerOb)
     {
+        positionShakeInc = Screen.width / 400f;
         Apple = flowerOb;
         appleImage = Apple.GetComponent<Image>(); 
         factory = new AppleFactory();
@@ -93,11 +95,11 @@ public class LifeAppleController : MonoBehaviour
             {
                 if (shakeCount < 5 || (shakeCount > 10 && shakeCount < 15))
                 {
-                    Apple.transform.position = new Vector3(Apple.transform.position.x - 0.3f, Apple.transform.position.y);
+                    Apple.transform.position = new Vector3(Apple.transform.position.x - positionShakeInc, Apple.transform.position.y);
                 }
                 else
                 {
-                    Apple.transform.position = new Vector3(Apple.transform.position.x + 0.3f, Apple.transform.position.y);
+                    Apple.transform.position = new Vector3(Apple.transform.position.x + positionShakeInc, Apple.transform.position.y);
 
                 }
                 shakeCount++; 

@@ -10,6 +10,7 @@ public class PlayerIconDisplay : MonoBehaviour
 
     GameObject ActiveIcon;
     GameObject CompanionIcon;
+    GameObject CompanionPortrait; 
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class PlayerIconDisplay : MonoBehaviour
 
         ActiveIcon = GameObject.Find("Active Player Icon");
         CompanionIcon = GameObject.Find("Companion Icon");
+        CompanionPortrait = GameObject.Find("Companion Portrait"); 
 
         if (PlayerController.instance.AnaiIsActive())
         {
@@ -32,6 +34,24 @@ public class PlayerIconDisplay : MonoBehaviour
             CompanionIcon.GetComponent<Image>().sprite = AnaiIcon;
         }
 
+        if(!PlayerController.instance.canSwitchCharacters)
+        {
+            CompanionPortrait.SetActive(false); 
+        }
+
+    }
+
+    void Update()
+    {
+        if (!PlayerController.instance.canSwitchCharacters && CompanionPortrait.activeSelf)
+        {
+            CompanionPortrait.SetActive(false);
+        }
+
+        if (PlayerController.instance.canSwitchCharacters && !CompanionPortrait.activeSelf)
+        {
+            CompanionPortrait.SetActive(true);
+        }
     }
 
     void OnEnable()
