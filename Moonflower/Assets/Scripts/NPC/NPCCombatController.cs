@@ -148,7 +148,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
             string tag = other.tag;
 
             // Handle Hurtboxes
-            if (tag == "PlayerHurtbox" || tag == "Hurtbox")
+            if (tag == "PlayerHurtbox" || tag == "Hurtbox" || tag == "EnvironmentHurtbox")
             {
                 // Ignore this hit if group behavior disallows hurting eachother
                 if (!HitAllowedByGroupBehavior(other.gameObject.transform.root.gameObject))
