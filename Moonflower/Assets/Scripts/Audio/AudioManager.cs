@@ -286,8 +286,9 @@ public class AudioManager : MonoBehaviour
         s.source = audioSources.AddCurrentPlayerAudioSource();
         else
         {
+            GameObject x = GameObject.Find("Audio");
             //Add audio source on audio object
-            s.source = gameObject.AddComponent<AudioSource>();
+            s.source = x.AddComponent<AudioSource>();
         }
             
     }
@@ -345,10 +346,5 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        //backgroundVol = PlayerPrefs.GetFloat("volumeMusic", 0.75f);
-        //soundVol = PlayerPrefs.GetFloat("volumeEffects", 0.75f);
-    }
 
 }
