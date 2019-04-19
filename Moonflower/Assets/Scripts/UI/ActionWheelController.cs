@@ -335,7 +335,7 @@ public class ActionWheelController : MonoBehaviour
         outlined = true;
         foreach (Renderer renderer in npc.GetComponentsInChildren<Renderer>())
         {
-            Debug.Log(renderer.gameObject.layer);
+            //Debug.Log(renderer.gameObject.layer);
             if (renderer.gameObject.layer != 13)
             {
                 renderer.gameObject.AddComponent<Outline>();
