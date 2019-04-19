@@ -44,6 +44,7 @@ public static class Constants
     public const string MOUSE_ICON = characterFolder + "Mousy Boi";
     public const string MONAI_ICON = characterFolder + "Monai";
     public const string CATBAT_ICON = characterFolder + "Catbat";
+    public const string BRIMP_ICON = characterFolder + "Brimp";
     public const string ORBY_ICON = characterFolder + "Orby";
     public const string ORBYJR_ICON = characterFolder + "Orby Jr.";
     const string itemFolder = "Icons/Items/";
@@ -148,6 +149,7 @@ public static class Constants
 
     public const string CATBAT_NAME = "Catbat";
     public const string ORBY_NAME = "Orby";
+    public const string BRIMP_NAME = "Brimp";
     public const string ORBYJR_NAME = "Orby Jr.";
     public const string ORBYJR_DIALOGUE = dialogueFolder + cave + "Orby Jr";
 
