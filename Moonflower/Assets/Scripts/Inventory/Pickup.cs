@@ -19,6 +19,7 @@ public class Pickup : MonoBehaviour
     public IItems sceneItem;
     public IItems DummyItem;
 
+    private GameObject currentClosest;
 
     //public TextMeshProUGUI inventoryAdd;
 
@@ -69,24 +70,32 @@ public class Pickup : MonoBehaviour
     private void DecidePickup()
     {
         GameObject closest = FindClosest();
-        if (closest != null)
+
+        if (closest != currentClosest)
         {
-            float dist = Vector3.Distance(closest.transform.position, PlayerController.instance.GetActivePlayerObject().transform.position);
+            if (currentClosest != null)
+                currentClosest.GetComponent<InventoryStat>().SetHalo(false);
+            currentClosest = closest;
+        }
+
+        if (currentClosest != null)
+        {
+            float dist = Vector3.Distance(currentClosest.transform.position, PlayerController.instance.GetActivePlayerObject().transform.position);
             if (dist <= distanceToPickup && !interaction.NotAllowed)
             {
-                if (closest != null)
+                if (currentClosest != null)
                 {
-                    InventoryStat stat = closest.GetComponent<InventoryStat>();
+                    InventoryStat stat = currentClosest.GetComponent<InventoryStat>();
                     //if (!(stat.AnaiObject && !PlayerController.instance.AnaiIsActive()) && !(stat.MimbiObject && PlayerController.instance.AnaiIsActive()))
                     {
-                        closest.GetComponent<InventoryStat>().SetHalo(true);
+                        stat.SetHalo(true);
                         interaction.EnableItem(dist, stat.Name);
                     }
 
                     if (Input.GetButtonDown("Interact"))
                     {
                         Debug.Log("interact"); 
-                        DoPickup(closest);
+                        DoPickup(currentClosest);
                         interaction.DisableItem();
                     }
                 }
@@ -94,8 +103,9 @@ public class Pickup : MonoBehaviour
             }
             else
             {
-                if (closest != null)
-                    closest.GetComponent<InventoryStat>().SetHalo(false);
+                if (currentClosest != null)
+                    currentClosest.GetComponent<InventoryStat>().SetHalo(false);
+
                 interaction.DisableItem();
             }
         }

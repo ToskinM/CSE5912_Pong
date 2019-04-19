@@ -69,7 +69,7 @@ namespace cakeslice
 
         private IEnumerator AutoDisableCountdown()
         {
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(15);
             enabled = false;
         }
 
