@@ -46,7 +46,7 @@ public class ShowInventory : MonoBehaviour
 
     void Update()
     {
-        if(!isGift && Input.GetButton("Inventory"))
+        if(!isGift && Input.GetButtonDown("Inventory"))
         {
             if (!Shown && !GameStateController.current.Paused && PlayerController.instance.TalkingPartner == null)
                 ToggleInv();
