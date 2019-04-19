@@ -44,7 +44,7 @@ public class NPCDialogueEvents : MonoBehaviour
 
     public bool WasMorePeaceful()
     {
-        return PlayerController.instance.ActivePlayerStats.Charisma > PlayerController.instance.ActivePlayerStats.Strength;
+        return PlayerController.instance.ActivePlayerStats.Charisma >= PlayerController.instance.ActivePlayerStats.Strength;
     }
 
     public bool IsNotArmed()
