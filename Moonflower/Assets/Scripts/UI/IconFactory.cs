@@ -30,6 +30,8 @@ public class IconFactory
                 return Resources.Load<Sprite>(Constants.MOUSE_ICON);
             case Constants.CATBAT_NAME:
                 return Resources.Load<Sprite>(Constants.CATBAT_ICON);
+            case Constants.BRIMP_NAME:
+                return Resources.Load<Sprite>(Constants.BRIMP_ICON);
             case Constants.ORBY_NAME:
                 return Resources.Load<Sprite>(Constants.ORBY_ICON);
             case Constants.ORBYJR_NAME:

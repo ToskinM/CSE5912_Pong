@@ -4999,6 +4999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1c7728fb7784c4885a8c6c6a378b63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sleeping: 0
   attackHurtboxes:
   - {fileID: 327841386318480514}
 --- !u!114 &2715235407244155339
@@ -5014,12 +5015,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialoguePanel: {fileID: 0}
-  iconOb: {fileID: 0}
+  iconOb: {fileID: 21300000, guid: 65f21e74bad424fd08d814d7151bad20, type: 3}
+  CharacterName: 
   canSeePlayer: 0
   canInspect: 1
   canTalk: 1
   canDistract: 1
   canGift: 1
+  WanderOrigin: {fileID: 0}
+  WanderRange: 0
+  FollowRange: 0
   inspectText: 
   engagementRadius: 15
   tooCloseRad: 4
@@ -5042,7 +5047,6 @@ MonoBehaviour:
   Defense: 0
   MaxHealth: 10
   CurrentHealth: 10
-  Cunning: 0
   Charisma: 0
   Stealth: 0
   strengthExperience: 0

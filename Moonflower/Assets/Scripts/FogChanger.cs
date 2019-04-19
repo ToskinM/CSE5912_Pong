@@ -11,10 +11,10 @@ public class FogChanger : MonoBehaviour
     Color lavaColor;
     Color shadowColor;
     CurrentPlayer player;
-    public GameObject light;
+    private GameObject light;
+    private bool lightsOn = false;
     void Start()
     {
-        
         normalColor = new Color(.42f, .82f, .79f);
         lavaColor = new Color(.47f, .32f, .56f);
         shadowColor = new Color(.03f, .03f, .03f);
@@ -39,6 +39,13 @@ public class FogChanger : MonoBehaviour
                 }
                 else
                 {
+                    if (collider.gameObject.name.Equals("Anai"))
+                    {
+                        print("hi");
+                        light = collider.gameObject.transform.GetChild(5).gameObject;
+                        light.SetActive(true);
+                        lightsOn = true;
+                    }
                     RenderSettings.fogColor = shadowColor;
                     RenderSettings.ambientIntensity = 0.3f;
                 }
@@ -46,7 +53,11 @@ public class FogChanger : MonoBehaviour
             }
             else
             {
-
+                if(lightsOn)
+                {
+                    lightsOn = false;
+                    light.SetActive(false);
+                }
                 RenderSettings.fogColor = normalColor;
                 isNormal = true;
                 RenderSettings.ambientIntensity = 0.8f;

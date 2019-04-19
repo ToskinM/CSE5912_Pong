@@ -40,6 +40,7 @@ public class InspectFactory
         GetName.Add(fac.GetIcon(Constants.MOUSE_ICON), Constants.MOUSE_NAME);
         GetName.Add(fac.GetIcon(Constants.CATBAT_ICON), Constants.CATBAT_NAME);
         GetName.Add(fac.GetIcon(Constants.ORBY_ICON), Constants.ORBY_NAME);
+        GetName.Add(fac.GetIcon(Constants.BRIMP_ICON), Constants.BRIMP_NAME);
         GetName.Add(fac.GetIcon(Constants.ORBYJR_ICON), Constants.ORBYJR_NAME);
     }
 
@@ -79,13 +80,26 @@ public class InspectFactory
             case Constants.CATBAT_NAME:
                 if (pronouns[0] == 'T' || pronouns[pronouns.IndexOf('/') + 1] == 'T')
                 {
-                    return pronouns + "\nFlying Kitty\n\nTheir diving and dodging can cause you a fright, but they only seek water bait to bite.";
+                    return pronouns + "\nFlying Kitty\n\nThis nightcrawling creature can cause you a fright, but they only seek water bait to bite.";
                 }
                 else
                 {
                     string sub = pronouns.Substring(0, pronouns.IndexOf('/'));
                     string pos = pronouns.Substring(pronouns.IndexOf('/') + 1);
-                    return pronouns + "\nFlying Kitty\n\n" + pos + " diving and dodging can cause you a fright, but " + sub.ToLower() + " only seeks water bait to bite.";
+                    return pronouns + "\nFlying Kitty\n\nThis nightcrawling creature can cause you a fright, but " + sub.ToLower() + " only seeks water bait to bite.";
+                }
+            case Constants.BRIMP_NAME:
+                if (pronouns[0] == 'T' || pronouns[pronouns.IndexOf('/') + 1] == 'T')
+                {
+                    return pronouns + "\nBrimp\n\nTheir diving and dodging will give you a scare. It's best if you see them to wind up elsewhere.";
+                }
+                else
+                {
+                    string sub = pronouns.Substring(0, pronouns.IndexOf('/'));
+                    string pos = pronouns.Substring(pronouns.IndexOf('/') + 1);
+                    if (pos[0] == 'H')
+                        return pronouns + "\nBrimp\n\nHis diving and dodging diving and dodging will give you a scare. It's best if you see " + sub.ToLower() + " to wind up elsewhere";
+                    return pronouns + "\nBrimp\n\n" + pos + " diving and dodging diving and dodging will give you a scare. It's best if you see "+sub.ToLower()+" to wind up elsewhere";
                 }
             case Constants.ORBY_NAME:
                 if (pronouns[0] == 'T' || pronouns[pronouns.IndexOf('/') + 1] == 'T')
