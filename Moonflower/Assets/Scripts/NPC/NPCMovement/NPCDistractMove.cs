@@ -23,7 +23,6 @@ public class NPCDistractMove : MonoBehaviour, IMovement, INPCMovement
 
     void Start()
     {
-        GameStateController.OnPaused += HandlePauseEvent;
         //agent = self.GetComponent<NavMeshAgent>();
         agent = GetComponent<NavMeshAgent>();
     }
@@ -91,12 +90,4 @@ public class NPCDistractMove : MonoBehaviour, IMovement, INPCMovement
     public void GoHere(Vector3 loc)
     {
     }
-
-
-    // Disable player combat controls when game is paused
-    void HandlePauseEvent(bool isPaused)
-    {
-        enabled = !isPaused;
-    }
-
 }
