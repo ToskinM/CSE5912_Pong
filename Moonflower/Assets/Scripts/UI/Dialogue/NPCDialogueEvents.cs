@@ -57,6 +57,11 @@ public class NPCDialogueEvents : MonoBehaviour
         GameObject.Find("BigMouse").GetComponent<TuvichaDialogueController>().Move();
     }
 
+    public void PeeveIjapuva()
+    {
+        GameObject.Find("MouseKnight - Ijapuva").GetComponent<IjapuvaDialogueController>().Peeve(); 
+    }
+
     private void fight()
     {
         GameObject.Find("Naia").GetComponent<NaiaController>().Fight();
