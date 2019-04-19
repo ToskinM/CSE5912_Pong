@@ -198,6 +198,7 @@ public class PlayerCombatController : MonoBehaviour
 
     public void SaveSheath()
     {
+        //Debug.Log("weapon is out " + HasWeaponOut.ToString()); 
         oldWeaponOut = HasWeaponOut; 
     }
     public void RestoreSheath()
