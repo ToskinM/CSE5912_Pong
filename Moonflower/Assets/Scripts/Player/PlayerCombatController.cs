@@ -113,15 +113,15 @@ public class PlayerCombatController : MonoBehaviour
             if (currentAggressor)
                 CheckAggressorDistance();
 
-            if (inCombat)
-            {
+            //if (inCombat)
+            //{
                 timeSinceLastHurt += Time.deltaTime;
 
                 if (timeSinceLastHurt > hurtDelay)
                 {
                     isInvulnerable = false;
                 }
-            }
+            //}
 
             if (canAttack)
             {
@@ -277,7 +277,6 @@ public class PlayerCombatController : MonoBehaviour
     void HandleHurtboxCollision(Collider other)
     {
         if (isInvulnerable) return;
-
         OnHit?.Invoke(other.gameObject);
         currentAggressor = other.gameObject;
         PlayerController.instance.DisableSwitching();
