@@ -90,6 +90,11 @@ public class PlayerMovementController : MonoBehaviour
 
         cameraForwardAngle = Quaternion.RotateTowards(cameraForwardAngle, cameraScript.transform.rotation, Time.deltaTime * 150);
 
+        if (GameStateController.current.Passed && MimbiPassiveController.defaultState != NPCMovementController.MoveState.follow)
+        {
+            MimbiPassiveController.SetDefault(NPCMovementController.MoveState.follow);
+            MimbiPassiveController.Reset(); 
+        }
         //Debug.Log(cameraForwardAngle.eulerAngles + "   " + cameraScript.transform.rotation.eulerAngles);
         //cameraForwardAngle = Mathf.LerpAngle(cameraForwardAngle, cameraScript.transform.rotation.eulerAngles.y, );
     }
@@ -352,12 +357,14 @@ public class PlayerMovementController : MonoBehaviour
     private void SetAnaiPassiveMovement()
     {
         AnaiPassiveController = new NPCMovementController(playerController.AnaiObject, "Anai");
-        AnaiPassiveController.FollowPlayer(followDist, tooCloseRadius);
+        AnaiPassiveController.Follow(PlayerController.instance.MimbiObject, followDist, tooCloseRadius);
+        AnaiPassiveController.SetDefault(NPCMovementController.MoveState.follow); 
     }
 
     private void SetMimbiPassiveMovement()
     {
         MimbiPassiveController = new NPCMovementController(playerController.MimbiObject, "Mimbi");
+        MimbiPassiveController.Follow(PlayerController.instance.AnaiObject, followDist, tooCloseRadius); 
         MimbiPassiveController.WanderFollowPlayer(wanderRadius);
         MimbiPassiveController.SetDefault(NPCMovementController.MoveState.wanderfollow);
     }
