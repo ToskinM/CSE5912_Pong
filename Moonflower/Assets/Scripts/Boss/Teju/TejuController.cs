@@ -166,6 +166,8 @@ public class TejuController : MonoBehaviour, INPCController
 
     public void Subdue()
     {
+        Debug.Log("end");
+        animationtController.SetTalking(false);
         if (!feedback.IsDisplaying())
             displayFeedback("Teju has stopped crying!");
 
@@ -175,6 +177,8 @@ public class TejuController : MonoBehaviour, INPCController
 
     public void FailConvo()
     {
+        Debug.Log("end");
+        animationtController.SetTalking(false);
         StartCoroutine(combatController.AreaCryAttack());
         if (currConvo == Convo.rep)
         {
@@ -191,6 +195,7 @@ public class TejuController : MonoBehaviour, INPCController
 
     private void StartEngagement()
     {
+        animationtController.SetTalking(true);
         if (!currTalk.DialogueActive())
             currTalk.StartDialogue();
     }
