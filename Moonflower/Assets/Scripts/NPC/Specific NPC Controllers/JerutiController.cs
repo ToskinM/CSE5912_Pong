@@ -26,6 +26,7 @@ public class JerutiController : MonoBehaviour, INPCController
     CurrentPlayer playerInfo;
     //private GameObject anai;
     public NPCMovementController movement { get; set; }
+    Vector3 startLoc; 
     NavMeshAgent agent;
     DialogueTrigger currTalk;
     DialogueTrigger intro;
@@ -50,6 +51,7 @@ public class JerutiController : MonoBehaviour, INPCController
     // Start is called before the first frame update
     void Start()
     {
+        startLoc = gameObject.transform.position; 
         //if (DialoguePanel == null) DialoguePanel = GameObject.Find("Dialogue Panel");
         sky = GameObject.Find("Sky").GetComponent<SkyColors>();
 
@@ -168,6 +170,9 @@ public class JerutiController : MonoBehaviour, INPCController
                     }
                     break;
             }
+
+            if (currTalk.Complete && movement.state == NPCMovementController.MoveState.follow)
+                movement.GoToLoc(startLoc); 
         }
         else
         {
@@ -216,6 +221,7 @@ public class JerutiController : MonoBehaviour, INPCController
         else
         {
             StartTalk();
+            movement.Follow(); 
         }
     }
     public void Gift(string giftName)

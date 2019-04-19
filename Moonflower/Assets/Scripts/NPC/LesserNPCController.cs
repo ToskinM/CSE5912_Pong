@@ -174,10 +174,13 @@ public class LesserNPCController : MonoBehaviour, INPCController
         {
             string start = "";
             if (CharacterName != "")
+            {
                 start = CharacterName + " loves";
+                GameStateController.current.dialogueEvents.IncreasePlayerCharisma(true);
+            }
             else
             {
-                start = pronoun; 
+                start = pronoun;
                 if (pronoun == "They")
                 {
                     start += " love";
