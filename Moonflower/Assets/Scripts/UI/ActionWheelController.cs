@@ -161,6 +161,7 @@ public class ActionWheelController : MonoBehaviour
             }
             else
             {
+                PlayerController.instance.SaveSheathState();
                 interaction.DisableNPC();
             }
         }
