@@ -26,12 +26,14 @@ public class LifeFlowerController : MonoBehaviour
     private int shakeCount = 0;
     private  const int maxShake = 24; 
     private Vector3 initPosition;
+    private float positionShakeInc;
 
     int currPetalIndex = 0;
 
     // Start is called before the first frame update
     public LifeFlowerController(GameObject flowerOb)
     {
+        positionShakeInc = Screen.width / 400f;
         Flower = flowerOb;
         petalFactory = new PetalFactory();
 
@@ -174,11 +176,11 @@ public class LifeFlowerController : MonoBehaviour
                 int shakeSegment = maxShake / 4; 
                 if (shakeCount < shakeSegment || (shakeCount > shakeSegment*2 && shakeCount < shakeSegment*3))
                 {
-                    Flower.transform.position = new Vector3(Flower.transform.position.x - 0.3f, Flower.transform.position.y);
+                    Flower.transform.position = new Vector3(Flower.transform.position.x - positionShakeInc, Flower.transform.position.y);
                 }
                 else
                 {
-                    Flower.transform.position = new Vector3(Flower.transform.position.x + 0.3f, Flower.transform.position.y);
+                    Flower.transform.position = new Vector3(Flower.transform.position.x + positionShakeInc, Flower.transform.position.y);
 
                 }
                 shakeCount++; 
