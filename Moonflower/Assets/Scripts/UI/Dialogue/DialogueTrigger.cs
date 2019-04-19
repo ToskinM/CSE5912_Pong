@@ -103,7 +103,7 @@ public class DialogueTrigger : MonoBehaviour
             case PanelState.up:
                 panelInfo.IsUp = true;
                 //easy exit 
-                if (Input.GetKeyDown(KeyCode.X))
+                if (Input.GetButtonDown("Back"))//Input.GetKeyDown(KeyCode.X))
                 {
                     endConvo();
                 }
@@ -127,7 +127,7 @@ public class DialogueTrigger : MonoBehaviour
                 }
 
                 //easy skip through
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetButtonDown("Jump"))//Input.GetKeyDown(KeyCode.Space))
                 {
                     switch (tState)
                     {

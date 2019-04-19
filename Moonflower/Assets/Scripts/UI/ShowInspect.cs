@@ -34,7 +34,7 @@ public class ShowInspect : MonoBehaviour
 
     void Update()
     {
-        if(Shown && Input.GetKeyDown(KeyCode.X))
+        if(Shown && Input.GetButton("Back"))//Input.GetKeyDown(KeyCode.X))
         {
             Hide();
         }
