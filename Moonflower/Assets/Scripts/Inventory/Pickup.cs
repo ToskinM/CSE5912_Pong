@@ -12,8 +12,6 @@ public class Pickup : MonoBehaviour
 
     public CharacterStats Stats { get; private set; }
 
-    private CharacterStats playerStats;
-    private PlayerInventory playerInventory;
     private PlayerSoundEffect soundEffect;
     private InteractionPopup interaction;
     private FeedbackText feedback;
@@ -28,8 +26,6 @@ public class Pickup : MonoBehaviour
     {
         //StartCoroutine(GetAudioManager());
         //inventoryManager = FindObjectOfType<InventoryManager>();
-        playerStats = GetComponent<CharacterStats>();
-        playerInventory = GetComponent<PlayerInventory>();
 
         soundEffect = PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>();
         interaction = GameObject.Find("HUD").GetComponent<ShowInspect>().interaction;
@@ -62,7 +58,7 @@ public class Pickup : MonoBehaviour
                     nearest = Vector3.Distance(g.transform.position, PlayerController.instance.GetActivePlayerObject().transform.position);
                     nearestObj = g;
                 }
-                g.GetComponent<InventoryStat>().SetHalo(false);
+                //g.GetComponent<InventoryStat>().SetHalo(false);
 
             }
             return nearestObj;
@@ -84,13 +80,15 @@ public class Pickup : MonoBehaviour
                     //if (!(stat.AnaiObject && !PlayerController.instance.AnaiIsActive()) && !(stat.MimbiObject && PlayerController.instance.AnaiIsActive()))
                     {
                         closest.GetComponent<InventoryStat>().SetHalo(true);
-                        interaction.EnableItem(dist);
+                        interaction.EnableItem(dist, stat.Name);
                     }
-                }
-                if (Input.GetButtonDown("Interact"))
-                {
-                    DoPickup(closest);
-                    interaction.DisableItem();
+
+                    if (Input.GetButtonDown("Interact"))
+                    {
+                        Debug.Log("interact"); 
+                        DoPickup(closest);
+                        interaction.DisableItem();
+                    }
                 }
 
             }
@@ -121,11 +119,11 @@ public class Pickup : MonoBehaviour
             Invoke("DelayMethod", 2f);
             string objName = obj.GetComponent<InventoryStat>().Name;
             feedback.ShowText("You have found a " + objName.ToLower());
-            objectUsedImmediately = playerStats.AddHealth(health);
+            objectUsedImmediately = PlayerController.instance.ActivePlayerStats.AddHealth(health);
 
             //Add to inventory
             if (!objectUsedImmediately)
-                playerInventory.AddObj(obj.gameObject);
+                PlayerController.instance.ActivePlayerInventory.AddObj(obj.gameObject);
             if (SceneManager.GetActiveScene().name == Constants.SCENE_ANAIHOUSE)
             {
                 FindScene();
@@ -160,7 +158,9 @@ public class Pickup : MonoBehaviour
                 //Remove the text update
                 Invoke("DelayMethod", 2f);
                 string objName = obj.GetComponent<InventoryStat>().Name;
-                feedback.ShowText("You have found a " + objName.ToLower());
+                string textToShow = "You have found a " + objName.ToLower() + ".";
+                if (!feedback.IsRepeat(textToShow))
+                    feedback.ShowText(textToShow);
 
                 if (SceneManager.GetActiveScene().name == Constants.SCENE_ANAIHOUSE)
                 {
@@ -173,7 +173,10 @@ public class Pickup : MonoBehaviour
                     sceneItem.RemoveItem(obj.name,obj.gameObject);
                 }
                 //Add to inventory
-                playerInventory.AddObj(obj.gameObject);
+                if(obj.gameObject != null)
+                    PlayerController.instance.ActivePlayerInventory.AddObj(obj.gameObject);
+                //else
+                    //PlayerController.instance.ActivePlayerInventory.AddObj(objName);
                 //Destroy Gameobject after collect
                 Destroy(obj.gameObject);
                 //Play Pickup audio clip;

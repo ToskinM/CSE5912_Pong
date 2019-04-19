@@ -198,6 +198,7 @@ public class PlayerCombatController : MonoBehaviour
 
     public void SaveSheath()
     {
+        //Debug.Log("weapon is out " + HasWeaponOut.ToString()); 
         oldWeaponOut = HasWeaponOut; 
     }
     public void RestoreSheath()
@@ -279,9 +280,14 @@ public class PlayerCombatController : MonoBehaviour
 
         OnHit?.Invoke(other.gameObject);
         currentAggressor = other.gameObject;
-        InCombat = true;
         PlayerController.instance.DisableSwitching();
-        EngageInCombat?.Invoke();
+
+        // Dont become in combat if hit by the environment
+        if (other.tag != "EnvironmentHurtbox")
+        {
+            EngageInCombat?.Invoke();
+            InCombat = true;
+        }
 
         // cancel combat loss because we got hit
         if (stopCombatCoroutine != null)

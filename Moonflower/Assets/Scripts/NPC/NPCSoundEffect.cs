@@ -96,7 +96,7 @@ public class NPCSoundEffect : MonoBehaviour
             audioManager.Play(DecideWhichNPC(), "Spell(1)");
         else
             audioManager.Play(DecideWhichNPC(), "Spell(2)");
-        Debug.Log("playing");
+        //Debug.Log("playing");
     }
 
     public void NPCSnoringSFX()
@@ -130,6 +130,7 @@ public class NPCSoundEffect : MonoBehaviour
         if (gameObject.GetComponent<AudioSource>() == null)
             audioManager.ReAddAllAudioSource(gameObject, DecideWhichNPC());
         audioManager.Play(category, clip);
+        Debug.Log("I am playing");
     }
 
     public string DecideWhichNPC()

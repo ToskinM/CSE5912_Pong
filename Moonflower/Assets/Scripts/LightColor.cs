@@ -5,6 +5,8 @@ using UnityEngine;
 public class LightColor : MonoBehaviour
 {
     public int dayCycleSeconds = 120;
+    public SkyColors skyColors; 
+
     int[] times;
     Color[] colors;
     Color[] colorCategories;
@@ -27,6 +29,8 @@ public class LightColor : MonoBehaviour
     void Start()
 
     {
+        if(skyColors != null)
+            dayCycleSeconds = skyColors.dayCycleSeconds; 
         transitionTime = dayCycleSeconds / 24f;
         colorCategories = new Color[] { new Color(.3f, .3f, .5f), new Color(1, .2f, 0), new Color(.8f, .7f, .9f), new Color(1, 1, .8f), new Color(.9f, 1, .5f), new Color(1, 0, .2f), new Color(.3f, .15f, .5f), new Color(.3f, .3f, .5f) };
         positionCategories = new Vector3[] { new Vector3(-30, 49, 104), new Vector3(-24, 24, 104), new Vector3(-30, 49, 104), new Vector3(-30, 134, -3), new Vector3(-30, 134, -140), new Vector3(-30, 29, -202), new Vector3(-30, 134, -3), new Vector3(-30, 49, 104) };

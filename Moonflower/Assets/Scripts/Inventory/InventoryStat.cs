@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using cakeslice;
 
 public class InventoryStat : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class InventoryStat : MonoBehaviour
     SkyColors.SkyCategory currentTime;
     public VillageItem villageItem;
 
+    private bool outlined;
+
     void Start()
     {
         //sceneController = GameObject.Find("SceneController").GetComponent<SceneController>();
@@ -44,9 +47,50 @@ public class InventoryStat : MonoBehaviour
 
 
     }
-    public void SetHalo(bool decide)
+    public void SetHalo(bool enableHalo)
     {
-        halo.enabled = decide;
+        //halo.enabled = enableHalo;
+
+        // Outline effect instead
+        if (enableHalo)
+        {
+            // apply outline if there isnt already one
+            if (!outlined)
+            {
+                Debug.Log("add");
+
+                outlined = true;
+                cakeslice.Outline[] outlines = gameObject.GetComponentsInChildren<cakeslice.Outline>();
+                if (outlines.Length > 0)
+                {
+                    foreach (cakeslice.Outline outline in outlines)
+                    {
+                        outline.enabled = true;
+                    }
+                }
+                else
+                {
+                    foreach (Renderer renderer in gameObject.GetComponentsInChildren<Renderer>())
+                    {
+                        renderer.gameObject.AddComponent<cakeslice.Outline>();
+                    }
+                }
+            }
+        }
+        else
+        {
+            // remove outline if there is one
+            if (outlined)
+            {
+                Debug.Log("remove");
+                foreach (Renderer renderer in gameObject.GetComponentsInChildren<Renderer>())
+                {
+                    Destroy(renderer.gameObject.GetComponent<cakeslice.Outline>());
+                }
+                outlined = false;
+            }
+        }
+
     }
 
     public int GetHealth ()

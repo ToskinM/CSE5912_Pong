@@ -40,6 +40,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
     private NavMeshAgent agent;
     private DialogueTrigger talkTrig;
+    private IDialogueController dialogueController; 
     private FeedbackText feedback;
 
     private Vector3 startPosition;
@@ -92,6 +93,8 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
     void Start()
     {
+        if (charName != null)
+            dialogueController = GetComponent<IDialogueController>(); 
         startPosition = transform.position;
 
         // Setup Movement
@@ -174,10 +177,14 @@ public class LesserNPCController : MonoBehaviour, INPCController
         {
             string start = "";
             if (CharacterName != "")
+            {
                 start = CharacterName + " loves";
+                GameStateController.current.dialogueEvents.IncreasePlayerCharisma(true);
+                dialogueController.Peeved = false; 
+            }
             else
             {
-                start = pronoun; 
+                start = pronoun;
                 if (pronoun == "They")
                 {
                     start += " love";

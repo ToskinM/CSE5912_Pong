@@ -45,7 +45,7 @@ public class InspectFactory
 
     public string Get(string name)
     {
-        switch(name)
+        switch (name)
         {
             case Constants.NAIA_NAME:
                 return "She/Her\nScavenger\n\nBelieve her bark is as bad as her bite, and she is always ready to fight.";
@@ -54,23 +54,61 @@ public class InspectFactory
             case Constants.PINON_NAME:
                 return "He/Him\nChild\n\nEager to sneak, this little brother gets you in trouble with your mother.";
             case Constants.SYPAVE_NAME:
-                return "She/They\nShaman\n\nHealer and leader to all around, personal attention does not abound.";
+                return "She/They\nShaman\n\nHealer and leader to all around, motherly attention does not abound.";
             case Constants.JERUTI_NAME:
                 return "She/Her\nCrafter\n\nHer heart may be bitter with grief, but her hands still long for creative relief.";
             case Constants.YSAPY_NAME:
                 return "He/Him\nScavenger\n\nAlways finding a way to get away, maybe he'll say why he ventures one day.";
             case Constants.MOUSE_NAME:
-                return pronouns + "\nRambunctious Rodent\n\nEasily frightened and easily quelled, they'd love a quick nibble before they are felled.";
+                if (pronouns[0] == 'T' || pronouns[pronouns.IndexOf('/') + 1] == 'T')
+                {
+                    return pronouns + "\nRambunctious Rodent\n\nEasily frightened and easily quelled, they'd love a quick nibble before they are felled.";
+                }
+                else
+                {
+                    string sub = pronouns.Substring(0, pronouns.IndexOf('/'));
+                    string pos = pronouns.Substring(pronouns.IndexOf('/') + 1);
+                    return pronouns + "\nRambunctious Rodent\n\nEasily frightened and easily quelled, "+sub.ToLower()+"'d love a quick nibble before "+sub.ToLower()+" is felled.";
+                }
             case Constants.ANGUJA_NAME:
                 return "They/Them\nRambunctious Rodent\n\nEars are large and ready to hear, they would never be insincere.";
             case Constants.IJAPUVA_NAME:
                 return "He/Him\nRambunctious Rodent\n\nTelling tales much taller than he, be warned of what he claims to see.";
+            case Constants.EKIRIRI_NAME:
+                return "Ze/Zir\nRambunctious Rodent\n\nDeaf to your words, ze can't comprehend why some noisy roommate would start to offend.";
             case Constants.CATBAT_NAME:
-                return pronouns + "\nFlying Kitty\n\nTheir diving and dodging can cause you a fright, but they only seek water bait to bite.";
+                if (pronouns[0] == 'T' || pronouns[pronouns.IndexOf('/') + 1] == 'T')
+                {
+                    return pronouns + "\nFlying Kitty\n\nTheir diving and dodging can cause you a fright, but they only seek water bait to bite.";
+                }
+                else
+                {
+                    string sub = pronouns.Substring(0, pronouns.IndexOf('/'));
+                    string pos = pronouns.Substring(pronouns.IndexOf('/') + 1);
+                    return pronouns + "\nFlying Kitty\n\n" + pos + " diving and dodging can cause you a fright, but " + sub.ToLower() + " only seeks water bait to bite.";
+                }
             case Constants.ORBY_NAME:
-                return pronouns + "\nFireball\n\nDefinitely volatile, they might be unstable. Be cautious and aware they portend a fable.";
+                if (pronouns[0] == 'T' || pronouns[pronouns.IndexOf('/') + 1] == 'T')
+                {
+                    return pronouns + "\nFireball\n\nDefinitely volatile, they might be unstable. Be cautious and aware they portend a fable.";
+                }
+                else
+                {
+                    string sub = pronouns.Substring(0, pronouns.IndexOf('/'));
+                    string pos = pronouns.Substring(pronouns.IndexOf('/') + 1);
+                    return pronouns + "\nFireball\n\nDefinitely volatile, "+sub.ToLower()+" might be unstable. Be cautious and aware "+sub.ToLower()+" portends a fable.";
+                }
             case Constants.ORBYJR_NAME:
-                return pronouns + "\nBaby Fireball\n\nThey tend to be curious and love to befriend, though parents flare out these buds don't offend.";
+                if (pronouns[0] == 'T' || pronouns[pronouns.IndexOf('/') + 1] == 'T')
+                {
+                    return pronouns + "\nBaby Fireball\n\nThey tend to be curious and love to befriend, though parents flare out, this bud won't offend.";
+                }
+                else
+                {
+                    string sub = pronouns.Substring(0, pronouns.IndexOf('/'));
+                    string pos = pronouns.Substring(pronouns.IndexOf('/') + 1);
+                    return pronouns +"\nBaby Fireball\n\n"+sub+" tends to be curious and loves to befriend, though parents flare out, this bud won't offend.";
+                }
             case Constants.TEJU_NAME:
                 return "He/Him\nMonster God\n\nWhen left unchecked, the fires rain while yearning for sweet and receiving distain.";
             case Constants.TUVICHA_NAME:

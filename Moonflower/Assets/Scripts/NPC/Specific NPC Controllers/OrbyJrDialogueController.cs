@@ -10,6 +10,9 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
     //public GameObject Player;
     private Sprite icon { get; set; }
     public bool DialogueActive { get; set; } = false;
+    public bool Peeved { get; set; } = false; 
+
+    public BossDoor bossDoor; 
 
     const float tooCloseRad = 3f;
     const float bufferDist = 4f;
@@ -71,6 +74,9 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
     // Update is called once per frame
     void Update()
     {
+        if (bossDoor.Open)
+            gameObject.SetActive(false); 
+
         if (PlayerController.instance.AnaiIsActive())
         {
             currTalk.Update();
@@ -93,7 +99,7 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
 //        Debug.Log("to dialogue controller"); 
         if (currTalk.Complete)
         {
-            displayFeedback("Orby Jr. told you to find the crystals.");
+            displayFeedback("Junior told you to find the crystals.");
         }
         else
         {

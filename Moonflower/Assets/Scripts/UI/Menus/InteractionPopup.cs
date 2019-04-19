@@ -34,14 +34,14 @@ public class InteractionPopup : MonoBehaviour
         }
     }
 
-    public void EnableItem(float dist)
+    public void EnableItem(float dist, string name)
     {
         if (!NotAllowed && dist < currDist)
         {
             gameObject.SetActive(true);
             itemUsing = true; 
             currDist = dist;
-            text.text = "'E' to Pickup";
+            text.text = "'E' to pickup " + name.ToLower();
         }
     }
 

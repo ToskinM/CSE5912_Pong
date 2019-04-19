@@ -46,7 +46,7 @@ public class ShowInventory : MonoBehaviour
 
     void Update()
     {
-        if(!isGift && Input.GetKeyDown(KeyCode.I))
+        if(!isGift && Input.GetButton("Inventory"))
         {
             if (!Shown && !GameStateController.current.Paused && PlayerController.instance.TalkingPartner == null)
                 ToggleInv();
@@ -55,12 +55,12 @@ public class ShowInventory : MonoBehaviour
             //toggleEnabled = false;
 
         }
-        if(Shown && Input.GetKeyDown(KeyCode.X))
+        if(Shown && Input.GetButton("Back"))//Input.GetKeyDown(KeyCode.X))
         {
             HideInvList(); 
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Jump"))//Input.GetKeyDown(KeyCode.Space))
         {
             inEnglish = !inEnglish;
             foreach (GameObject item in items)

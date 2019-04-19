@@ -411,7 +411,7 @@ public class StealthDetection : MonoBehaviour
 
     private void SpawnIndicator()
     {
-        Debug.Log("Indicator spawned: " + Awareness);
+        //Debug.Log("Indicator spawned: " + Awareness);
         if (indicator != null)
         {
             Destroy(indicator);
