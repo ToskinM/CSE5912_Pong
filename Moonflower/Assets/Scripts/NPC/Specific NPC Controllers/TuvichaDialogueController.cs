@@ -10,6 +10,7 @@ public class TuvichaDialogueController : MonoBehaviour, IDialogueController
     //public GameObject Player;
     private Sprite icon { get; set; }
     public bool DialogueActive { get; set; } = false;
+    public bool Peeved { get; set; } = false; 
     public GameObject Location; 
 
     const float tooCloseRad = 3f;

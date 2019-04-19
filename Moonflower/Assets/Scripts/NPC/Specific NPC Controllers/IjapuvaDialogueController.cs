@@ -10,6 +10,7 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
     //public GameObject Player;
     private Sprite icon { get; set; }
     public bool DialogueActive { get; set; } = false;
+    public bool Peeved { get; set; } = false;
     public GameObject Fire; 
 
     const float tooCloseRad = 3f;
@@ -28,7 +29,8 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
     enum Convo { talk }
     Convo currConvo;
 
-    string charName; 
+    string charName;
+
 
     void Awake()
     {
@@ -104,7 +106,10 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
 //        Debug.Log("start talking");
         if (currTalk.Complete)
         {
-            displayFeedback("Ijapuva is grinning at the fire.");
+            if(Peeved)
+                displayFeedback("You have irritated Ijapuva.");
+            else
+                displayFeedback("Ijapuva is grinning at the fire.");
         }
         else
         {
@@ -132,6 +137,11 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
             //playerController.TalkingPartner = null;
             currTalk.EndDialogue();
         }
+    }
+
+    public void Peeve()
+    {
+        Peeved = true; 
     }
 
     private void displayFeedback(string text)
