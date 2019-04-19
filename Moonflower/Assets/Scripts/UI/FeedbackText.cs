@@ -13,6 +13,7 @@ public class FeedbackText : MonoBehaviour
     const float inc = 0.05f;
 
     const int timerMax = 80;
+    const int timerMaxMax = 140; 
     int timerCount = 0; 
 
     // Start is called before the first frame update
@@ -56,11 +57,17 @@ public class FeedbackText : MonoBehaviour
                     state = State.displayed;
                 }
                 timerCount++;
-                if (timerCount >= timerMax)
+                int max = timerMax;
+                if (text.text.Length > 45)
+                {
+                    max = timerMaxMax; 
+                }
+                if (timerCount >= max)
                 {
                     state = State.fadingOut;
                     timerCount = 0;
                 }
+                
                 break;
             case State.gone:
                 color = text.color;
