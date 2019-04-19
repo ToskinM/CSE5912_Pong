@@ -243,7 +243,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
                 movement.SetDefault(NPCMovementController.MoveState.follow);
                 break;
             case NPCMovementController.MoveState.pace:
-                Debug.Log("set to pace");
+                //Debug.Log("set to pace");
                 movement.Pace(origin, dist);
                 movement.SetDefault(NPCMovementController.MoveState.pace);
                 break;

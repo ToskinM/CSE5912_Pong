@@ -60,6 +60,13 @@ public class DialogueCamera : MonoBehaviour
 
     private Vector3 GetFocusPoint()
     {
+        foreach (Transform transform in dialogueTarget)
+        {
+            if (transform.tag == "DialogueCameraTarget")
+            {
+                return transform.position;
+            }
+        }
         return dialogueTarget.position + Vector3.up;
         //return ((dialogueTarget.position + playerTransform.position) / 2) + Vector3.up;
     }
@@ -91,6 +98,8 @@ public class DialogueCamera : MonoBehaviour
         gameStateController.SetPlayerFrozen(true);
 
         this.dialogueTarget = dialogueTarget;
+
+        
         SetRendering(true);
 
         // Look transition camera to look at who we're talking to

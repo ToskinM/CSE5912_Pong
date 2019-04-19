@@ -6,13 +6,11 @@ using UnityEngine.Video;
 
 public class MemoryScene : MonoBehaviour
 {
-    public VideoPlayer VideoPlayer; // Drag & Drop the GameObject holding the VideoPlayer component
-    public string SceneName;
 
     IEnumerator Start()
     {
         // Wait for gag
-        yield return new WaitForSeconds(17f);
+        yield return new WaitForSeconds(20f);
 
         // Load main menu
         SceneController.current.FadeAndLoadSceneNoLS("Skyrim");

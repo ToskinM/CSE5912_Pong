@@ -79,11 +79,18 @@ public class TuvichaDialogueController : MonoBehaviour, IDialogueController
             currTalk.Update();
         }
         DialogueActive = currTalk.DialogueActive();
-        if (currTalk.Complete && movement.state == NPCMovementController.MoveState.chill)
+        if (currTalk.Complete) 
         {
-//            Debug.Log("Go back to sleep"); 
-            animate.sleeping = true;
-         }
+            if (movement.state == NPCMovementController.MoveState.chill)
+            {
+                animate.sleeping = true;
+            }
+            else if(movement.state == NPCMovementController.MoveState.follow)
+            {
+                Move(); 
+            }
+        }
+
 
     }
 
