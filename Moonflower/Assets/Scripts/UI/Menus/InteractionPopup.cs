@@ -41,7 +41,7 @@ public class InteractionPopup : MonoBehaviour
             gameObject.SetActive(true);
             itemUsing = true; 
             currDist = dist;
-            text.text = "'E' to pickup " + name;
+            text.text = "'E' to pickup " + name.ToLower();
         }
     }
 
