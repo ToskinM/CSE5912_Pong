@@ -57,7 +57,7 @@ public class InventoryStat : MonoBehaviour
             // apply outline if there isnt already one
             if (!outlined)
             {
-                Debug.Log("add");
+                //Debug.Log("add");
 
                 outlined = true;
                 cakeslice.Outline[] outlines = gameObject.GetComponentsInChildren<cakeslice.Outline>();
@@ -82,7 +82,7 @@ public class InventoryStat : MonoBehaviour
             // remove outline if there is one
             if (outlined)
             {
-                Debug.Log("remove");
+                //Debug.Log("remove");
                 foreach (Renderer renderer in gameObject.GetComponentsInChildren<Renderer>())
                 {
                     Destroy(renderer.gameObject.GetComponent<cakeslice.Outline>());
