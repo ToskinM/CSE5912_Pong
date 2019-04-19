@@ -25,6 +25,8 @@ public class FollowCamera : MonoBehaviour
 
     private bool lockedOn;
 
+    private float shakeAmount;
+
     private Quaternion rotation = Quaternion.identity;
     [HideInInspector] public float yRotation;
     [HideInInspector] public float xRotation;
@@ -70,10 +72,12 @@ public class FollowCamera : MonoBehaviour
     private void OnEnable()
     {
         GameStateController.OnPaused += HandlePauseEvent;
+        PlayerController.instance.ActivePlayerCombatControls.OnHit += HandleCameraShake;
     }
     private void OnDisable()
     {
         GameStateController.OnPaused -= HandlePauseEvent;
+        PlayerController.instance.ActivePlayerCombatControls.OnHit -= HandleCameraShake;
     }
 
     void Update()
@@ -141,11 +145,22 @@ public class FollowCamera : MonoBehaviour
             }
 
             // update position
-            transform.position = GetNewPosition();
+            transform.position = GetNewPosition() + (Random.insideUnitSphere * shakeAmount);
 
             // Look at the target
             transform.LookAt(target);
         }
+
+        shakeAmount *= 0.9f;
+        if (shakeAmount < 0.02f)
+        {
+            shakeAmount = 0;
+        }
+    }
+
+    private void HandleCameraShake(GameObject aggressor)
+    {
+        shakeAmount = 0.3f;
     }
 
     private Vector3 GetNewPosition()

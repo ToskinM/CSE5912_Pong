@@ -335,10 +335,10 @@ public class LesserNPCController : MonoBehaviour, INPCController
 
         while (parent != gameObject)
         {
-            Debug.Log(LayerMask.NameToLayer(layer2));
+            //Debug.Log(LayerMask.NameToLayer(layer2));
             if (parent.gameObject.layer == LayerMask.NameToLayer(layer) || parent.gameObject.layer == LayerMask.NameToLayer(layer2))
             {
-                Debug.Log(parent.gameObject);
+                //Debug.Log(parent.gameObject);
                 return parent.gameObject;
             }
             else

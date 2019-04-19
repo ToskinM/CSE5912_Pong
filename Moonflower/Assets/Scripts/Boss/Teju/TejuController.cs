@@ -116,7 +116,7 @@ public class TejuController : MonoBehaviour, INPCController
 
         if (currTalk.Complete && !aboutToReset && !subdued)
         {
-            Debug.Log("end");
+            //Debug.Log("end");
             animationtController.SetTalking(false);
             aboutToReset = true;
             Invoke("ResetConvo", 2f);

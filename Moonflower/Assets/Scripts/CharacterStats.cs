@@ -94,7 +94,7 @@ public class CharacterStats : MonoBehaviour
 
         if (display != null)
             display.HitHealth(CurrentHealth, MaxHealth);
-        Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
+        //Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
     }
 
     public void TakeDamage(int damage, string sourceName, CharacterStats sourceCharacterStats, ICombatController combatController, Vector3 hitPoint, bool blocked)

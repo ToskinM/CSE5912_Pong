@@ -369,7 +369,7 @@ public class PlayerCombatController : MonoBehaviour
     // Death cleanup and Sequence
     private void Die()
     {
-        Debug.Log(gameObject.name + " has died");
+        //Debug.Log(gameObject.name + " has died");
         SetStunned(1);
         animator.TriggerDeath();
 

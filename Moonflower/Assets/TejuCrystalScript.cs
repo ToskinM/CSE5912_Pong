@@ -52,7 +52,7 @@ public class TejuCrystalScript : MonoBehaviour
                 GameObject source = hurtboxController.Source;
                 health -= hurtboxController.Damage;
 
-                Debug.Log(gameObject.name + " took <color=red>" + hurtboxController.Damage + "</color> damage");
+                //Debug.Log(gameObject.name + " took <color=red>" + hurtboxController.Damage + "</color> damage");
 
                 OnHit?.Invoke(source, false);
             }
