@@ -21,7 +21,7 @@ public class TejuController : MonoBehaviour, INPCController
     public TejuCombatController combatController;
     public TejuAnimationController animationtController;
 
-    private NavMeshAgent agent;
+    //private NavMeshAgent agent;
     private PlayerController playerController;
     private FeedbackText feedback;
 
@@ -45,8 +45,8 @@ public class TejuController : MonoBehaviour, INPCController
     private void Awake()
     {
         // Initialize Components
-        agent = GetComponent<NavMeshAgent>();
-        movement = new NPCMovementController(gameObject, Constants.TEJU_NAME);
+        //agent = GetComponent<NavMeshAgent>();
+        //movement = new NPCMovementController(gameObject, Constants.TEJU_NAME);
 
         combatController = GetComponent<TejuCombatController>();
         animationtController = GetComponent<TejuAnimationController>();
@@ -104,7 +104,7 @@ public class TejuController : MonoBehaviour, INPCController
 
     void Update()
     {
-        movement.UpdateMovement();
+        //movement.UpdateMovement();
         currTalk.Update(); 
         if(currConvo == Convo.start && start.Complete && !start.panelInfo.IsUp)
         {
@@ -117,9 +117,10 @@ public class TejuController : MonoBehaviour, INPCController
         if (currTalk.Complete && !aboutToReset && !subdued)
         {
             //Debug.Log("end");
-            animationtController.SetTalking(false);
-            aboutToReset = true;
-            Invoke("ResetConvo", 2f);
+            //animationtController.SetTalking(false);
+            //aboutToReset = true;
+            //Invoke("ResetConvo", 2f);
+            FailConvo(); 
         }
 
     }
@@ -153,12 +154,12 @@ public class TejuController : MonoBehaviour, INPCController
     }
     public void Distract(GameObject distractedBy)
     {
-        movement.Distracted(distractedBy);
+        //movement.Distracted(distractedBy);
     }
 
     public void EndDistract()
     {
-        movement.Reset();
+        //movement.Reset();
     }
 
     public string Inspect()
@@ -169,7 +170,7 @@ public class TejuController : MonoBehaviour, INPCController
     public void Subdue()
     {
         Debug.Log("end");
-        animationtController.SetTalking(false);
+        //animationtController.SetTalking(false);
         if (!feedback.IsDisplaying())
             displayFeedback("Teju has stopped crying!");
 
@@ -180,7 +181,7 @@ public class TejuController : MonoBehaviour, INPCController
     public void FailConvo()
     {
         Debug.Log("end");
-        animationtController.SetTalking(false);
+        //animationtController.SetTalking(false);
         StartCoroutine(combatController.AreaCryAttack());
         if (currConvo == Convo.rep)
         {
@@ -212,7 +213,7 @@ public class TejuController : MonoBehaviour, INPCController
         if (aggroed)
         {
             //movement.Follow(aggroTarget, combatController.attackDistance, 0.5f);
-            movement.SetHoldGround(true);
+            //movement.SetHoldGround(true);
             animationtController.SetSleeping(false);
             GetComponent<NPCSoundEffect>().NPCStop("Snoring");
             spawnerController.ActivateAll();
@@ -220,7 +221,7 @@ public class TejuController : MonoBehaviour, INPCController
         else
         {
             animationtController.SetSleeping(true);
-            movement.Reset();
+            //movement.Reset();
             spawnerController.DeactivateAll();
         }
     }

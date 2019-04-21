@@ -102,6 +102,8 @@ public class TejuAnimationController : MonoBehaviour
     public void TriggerAttack()
     {
         animator.SetTrigger(key_AttackTrigger);
+        animator.SetBool(key_IsTalking, false);
+        animator.SetBool(key_IsSleeping, false);
     }
     public void TriggerAttackRanged()
     {
