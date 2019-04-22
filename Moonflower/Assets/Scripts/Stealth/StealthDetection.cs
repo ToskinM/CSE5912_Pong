@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class StealthDetection : MonoBehaviour
 {
@@ -32,7 +33,11 @@ public class StealthDetection : MonoBehaviour
     public SphereCollider stealthCollider;
     private Renderer renderer;
     private ICombatController npcCombatController;
-    private GameObject indicator;
+
+    public Image indicatorImage;
+    public Sprite alertedSprite;
+    public Sprite suspiciousSprite;
+    public Sprite distractedSprite;
 
     private float timeSinceLastAction = 0f;
 
@@ -411,29 +416,29 @@ public class StealthDetection : MonoBehaviour
 
     private void SpawnIndicator()
     {
-        //Debug.Log("Indicator spawned: " + Awareness);
-        if (indicator != null)
-        {
-            Destroy(indicator);
-            indicator = null;
-        }
-        
         switch (Awareness)
         {
             case AwarenessLevel.Distracted:
-                indicator = Instantiate((GameObject)Resources.Load("Icons/DistractedIndicator"), transform);
-                indicator.transform.position += new Vector3(0, 2, 0);
+                //indicatorImage.sprite = Instantiate((Sprite)Resources.Load("Icons/DistractedIconPinkish"), transform);
+                indicatorImage.gameObject.SetActive(true);
+                indicatorImage.sprite = Instantiate(distractedSprite, transform);
+                //indicator.transform.position += new Vector3(0, 2, 0);
                 break;
             case AwarenessLevel.Neutral:
+                indicatorImage.gameObject.SetActive(false);
                 break;
             case AwarenessLevel.Suspicious:
-                indicator = Instantiate((GameObject)Resources.Load("Icons/SuspiciousIndicator"), transform);
-                indicator.transform.position += new Vector3(0, 2, 0);
+                //indicatorImage.sprite = Instantiate((Sprite)Resources.Load("Icons/SuspiciousIconYellow"), transform);
+                indicatorImage.gameObject.SetActive(true);
+                indicatorImage.sprite = Instantiate(suspiciousSprite, transform);
+                //indicator.transform.position += new Vector3(0, 2, 0);
                 //Destroy(indicator, 3);
                 break;
             case AwarenessLevel.Alerted:
-                indicator = Instantiate((GameObject)Resources.Load("Icons/AlertedIndicator"), transform);
-                indicator.transform.position += new Vector3(0, 2, 0);
+                //indicatorImage.sprite = Instantiate((Sprite)Resources.Load("Icons/AlertedIconRed"), transform);
+                indicatorImage.gameObject.SetActive(true);
+                indicatorImage.sprite = Instantiate(alertedSprite, transform);
+                //indicator.transform.position += new Vector3(0, 2, 0);
                 //Destroy(indicator, 3);
                 break;
             default:
