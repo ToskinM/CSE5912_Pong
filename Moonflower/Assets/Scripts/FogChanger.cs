@@ -6,11 +6,7 @@ public class FogChanger : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool lavaTrigger;
-    bool isNormal = true;
-    bool anaiLavaTriggered = false;
-    bool mimbiLavaTriggered = false;
-    bool anaiMazeTriggered = false;
-    bool mimbiMazeTriggered = false;
+    public FogChangerInfo fogInfo;
     Color normalColor;
     Color lavaColor;
     Color shadowColor;
@@ -23,6 +19,8 @@ public class FogChanger : MonoBehaviour
         lavaColor = new Color(.47f, .32f, .56f);
         shadowColor = new Color(.03f, .03f, .03f);
         RenderSettings.ambientIntensity = 0.8f;
+        player = GameObject.Find("Player").GetComponent<PlayerMovementController>();
+        fogInfo = GameObject.Find("FogChangerInfo").GetComponent<FogChangerInfo>();
     }
 
     // Update is called once per frame
@@ -36,20 +34,20 @@ public class FogChanger : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        player = GameObject.Find("Player").GetComponent<PlayerMovementController>();
+        
         string name = collider.gameObject.name;
         if (name == "Anai")
             {
-                if (!anaiLavaTriggered && !anaiMazeTriggered)
+                if (!fogInfo.anaiLavaTriggered && !fogInfo.anaiMazeTriggered)
                 {
-                    anaiLavaTriggered = lavaTrigger;
+                    fogInfo.anaiLavaTriggered = lavaTrigger;
 
                     if (!lavaTrigger)
                     {
                         light = collider.gameObject.transform.GetChild(5).gameObject;
                         light.SetActive(true);
                         lightsOn = true;
-                        anaiMazeTriggered = true;
+                        fogInfo.anaiMazeTriggered = true;
                     }
                 } else
                 {
@@ -57,28 +55,28 @@ public class FogChanger : MonoBehaviour
                     {
                         lightsOn = false;
                         light.SetActive(false);
-                        anaiMazeTriggered = false;
-                        anaiLavaTriggered = false;
+                        fogInfo.anaiMazeTriggered = false;
+                        fogInfo.anaiLavaTriggered = false;
                     }
                 }
          }
          else if (name=="Mimbi") {
 
-            if (!mimbiLavaTriggered && !mimbiMazeTriggered)
+            if (!fogInfo.mimbiLavaTriggered && !fogInfo.mimbiMazeTriggered)
             {
-                mimbiLavaTriggered = lavaTrigger;
-                mimbiMazeTriggered = !lavaTrigger;
+                fogInfo.mimbiLavaTriggered = lavaTrigger;
+                fogInfo.mimbiMazeTriggered = !lavaTrigger;
             }
             else
             {
-                mimbiMazeTriggered = false;
-                mimbiLavaTriggered = false;
+                fogInfo.mimbiMazeTriggered = false;
+                fogInfo.mimbiLavaTriggered = false;
             }
 
         }
         if (name == player.playerObject.name)
         {
-            if (isNormal)
+            if (fogInfo.isNormal)
             {
                 if (lavaTrigger)
                 {
@@ -89,12 +87,12 @@ public class FogChanger : MonoBehaviour
                     RenderSettings.fogColor = shadowColor;
                     RenderSettings.ambientIntensity = 0.3f;
                 }
-                isNormal = false;
+                fogInfo.isNormal = false;
             }
             else
             {
                 RenderSettings.fogColor = normalColor;
-                isNormal = true;
+                fogInfo.isNormal = true;
                 RenderSettings.ambientIntensity = 0.8f;
             }
         }
@@ -104,9 +102,9 @@ public class FogChanger : MonoBehaviour
     {
         if (player.playerObject.name == "Anai")
         {
-            if (isNormal && anaiLavaTriggered || anaiMazeTriggered)
+            if (fogInfo.isNormal && fogInfo.anaiLavaTriggered || fogInfo.anaiMazeTriggered)
             {
-                if (anaiLavaTriggered)
+                if (fogInfo.anaiLavaTriggered)
                 {
                     RenderSettings.fogColor = lavaColor;
                     RenderSettings.ambientIntensity = 0.8f;
@@ -115,19 +113,19 @@ public class FogChanger : MonoBehaviour
                     RenderSettings.fogColor = shadowColor;
                     RenderSettings.ambientIntensity = 0.3f;
                 }
-                isNormal = false;
-            } else if (!isNormal && (!anaiLavaTriggered && !anaiMazeTriggered))
+                fogInfo.isNormal = false;
+            } else if (!fogInfo.isNormal && (!fogInfo.anaiLavaTriggered && !fogInfo.anaiMazeTriggered))
             {
                 RenderSettings.fogColor = normalColor;
-                isNormal = true;
+                fogInfo.isNormal = true;
                 RenderSettings.ambientIntensity = 0.8f;
             }
         }
         else
         {
-            if (isNormal && mimbiLavaTriggered || mimbiMazeTriggered)
+            if (fogInfo.isNormal && fogInfo.mimbiLavaTriggered || fogInfo.mimbiMazeTriggered)
             {
-                if (mimbiLavaTriggered)
+                if (fogInfo.mimbiLavaTriggered)
                 {
                     RenderSettings.fogColor = lavaColor;
                     RenderSettings.ambientIntensity = 0.8f;
@@ -137,12 +135,12 @@ public class FogChanger : MonoBehaviour
                     RenderSettings.fogColor = shadowColor;
                     RenderSettings.ambientIntensity = 0.3f;
                 }
-                isNormal = false;
+                fogInfo.isNormal = false;
             }
-            else if (!isNormal && (!mimbiLavaTriggered && !mimbiMazeTriggered))
+            else if (!fogInfo.isNormal && (!fogInfo.mimbiLavaTriggered && !fogInfo.mimbiMazeTriggered))
             {
                 RenderSettings.fogColor = normalColor;
-                isNormal = true;
+                fogInfo.isNormal = true;
                 RenderSettings.ambientIntensity = 0.8f;
             }
         }
