@@ -7,10 +7,14 @@ public class FogChanger : MonoBehaviour
     // Start is called before the first frame update
     public bool lavaTrigger;
     bool isNormal = true;
+    bool anaiLavaTriggered = false;
+    bool mimbiLavaTriggered = false;
+    bool anaiMazeTriggered = false;
+    bool mimbiMazeTriggered = false;
     Color normalColor;
     Color lavaColor;
     Color shadowColor;
-    CurrentPlayer player;
+    PlayerMovementController player;
     private GameObject light;
     private bool lightsOn = false;
     void Start()
@@ -24,12 +28,55 @@ public class FogChanger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            CheckLights();
+        }
     }
 
     void OnTriggerEnter(Collider collider)
     {
-        player = GameObject.Find("Player").GetComponent<CurrentPlayer>();
-        if (collider.gameObject.name == player.CurrentPlayerObj.name)
+        player = GameObject.Find("Player").GetComponent<PlayerMovementController>();
+        string name = collider.gameObject.name;
+        if (name == "Anai")
+            {
+                if (!anaiLavaTriggered && !anaiMazeTriggered)
+                {
+                    anaiLavaTriggered = lavaTrigger;
+
+                    if (!lavaTrigger)
+                    {
+                        light = collider.gameObject.transform.GetChild(5).gameObject;
+                        light.SetActive(true);
+                        lightsOn = true;
+                        anaiMazeTriggered = true;
+                    }
+                } else
+                {
+                    if (lightsOn)
+                    {
+                        lightsOn = false;
+                        light.SetActive(false);
+                        anaiMazeTriggered = false;
+                        anaiLavaTriggered = false;
+                    }
+                }
+         }
+         else if (name=="Mimbi") {
+
+            if (!mimbiLavaTriggered && !mimbiMazeTriggered)
+            {
+                mimbiLavaTriggered = lavaTrigger;
+                mimbiMazeTriggered = !lavaTrigger;
+            }
+            else
+            {
+                mimbiMazeTriggered = false;
+                mimbiLavaTriggered = false;
+            }
+
+        }
+        if (name == player.playerObject.name)
         {
             if (isNormal)
             {
@@ -39,13 +86,6 @@ public class FogChanger : MonoBehaviour
                 }
                 else
                 {
-                    if (collider.gameObject.name.Equals("Anai"))
-                    {
-                        print("hi");
-                        light = collider.gameObject.transform.GetChild(5).gameObject;
-                        light.SetActive(true);
-                        lightsOn = true;
-                    }
                     RenderSettings.fogColor = shadowColor;
                     RenderSettings.ambientIntensity = 0.3f;
                 }
@@ -53,16 +93,57 @@ public class FogChanger : MonoBehaviour
             }
             else
             {
-                if(lightsOn)
-                {
-                    lightsOn = false;
-                    light.SetActive(false);
-                }
                 RenderSettings.fogColor = normalColor;
                 isNormal = true;
                 RenderSettings.ambientIntensity = 0.8f;
+            }
+        }
+    }
 
-
+    void CheckLights()
+    {
+        if (player.playerObject.name == "Anai")
+        {
+            if (isNormal && anaiLavaTriggered || anaiMazeTriggered)
+            {
+                if (anaiLavaTriggered)
+                {
+                    RenderSettings.fogColor = lavaColor;
+                    RenderSettings.ambientIntensity = 0.8f;
+                } else
+                {
+                    RenderSettings.fogColor = shadowColor;
+                    RenderSettings.ambientIntensity = 0.3f;
+                }
+                isNormal = false;
+            } else if (!isNormal && (!anaiLavaTriggered && !anaiMazeTriggered))
+            {
+                RenderSettings.fogColor = normalColor;
+                isNormal = true;
+                RenderSettings.ambientIntensity = 0.8f;
+            }
+        }
+        else
+        {
+            if (isNormal && mimbiLavaTriggered || mimbiMazeTriggered)
+            {
+                if (mimbiLavaTriggered)
+                {
+                    RenderSettings.fogColor = lavaColor;
+                    RenderSettings.ambientIntensity = 0.8f;
+                }
+                else
+                {
+                    RenderSettings.fogColor = shadowColor;
+                    RenderSettings.ambientIntensity = 0.3f;
+                }
+                isNormal = false;
+            }
+            else if (!isNormal && (!mimbiLavaTriggered && !mimbiMazeTriggered))
+            {
+                RenderSettings.fogColor = normalColor;
+                isNormal = true;
+                RenderSettings.ambientIntensity = 0.8f;
             }
         }
     }
