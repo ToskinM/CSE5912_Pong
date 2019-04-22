@@ -44,16 +44,28 @@ public class AudioOptions : MonoBehaviour
     private void BGMChangeCheck()
     {
         PlayerPrefs.SetFloat("volumeMusic", musicSlider.value);
+        if (audioManager == null)
+        {
+            audioManager = GameObject.Find("Audio").GetComponent<AudioManager>();
+        }
         audioManager.ChangeBGMVol(musicSlider.value);
     }
     private void EnivronmentChangeCheck()
     {
         PlayerPrefs.SetFloat("volumeEnivronment", enivronmentSlider.value);
+        if (audioManager == null)
+        {
+            audioManager = GameObject.Find("Audio").GetComponent<AudioManager>();
+        }
         audioManager.ChangeBackgroundVol(enivronmentSlider.value);
     }
     private void EffectsChangeCheck()
     {
         PlayerPrefs.SetFloat("volumeEffects", effectsSlider.value);
+        if (audioManager == null)
+        {
+            audioManager = GameObject.Find("Audio").GetComponent<AudioManager>();
+        }
         audioManager.ChangeSoundVol(effectsSlider.value);
     }
 
