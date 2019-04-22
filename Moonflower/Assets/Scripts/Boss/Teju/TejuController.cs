@@ -54,9 +54,9 @@ public class TejuController : MonoBehaviour, INPCController
         //playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
 
         icon = new IconFactory().GetIcon(Constants.TEJU_ICON);
-        start = new DialogueTrigger(gameObject, icon, Constants.TEJU_START_DIALOGUE);
+        start = new DialogueTrigger(gameObject, icon, Constants.TEJU_START_BACKUP_DIALOGUE);
         start.SetExitText("I'm not even worth a full conversation...");
-        rep = new DialogueTrigger(gameObject, icon, Constants.TEJU_REP_DIALOGUE);
+        rep = new DialogueTrigger(gameObject, icon, Constants.TEJU_REP_BACKUP_DIALOGUE);
         rep.SetExitText("I'm not even worth a full conversation...");
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.TEJU_NAME))

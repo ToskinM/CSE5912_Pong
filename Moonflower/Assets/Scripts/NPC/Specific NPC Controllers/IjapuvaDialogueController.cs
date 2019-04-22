@@ -52,7 +52,7 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
 
         icon = mainController.icon;
 
-        talk = new DialogueTrigger(gameObject, icon, Constants.IJAPUVA_DIALOGUE);
+        talk = new DialogueTrigger(gameObject, icon, Constants.IJAPUVA_BACKUP_DIALOGUE);
         talk.SetExitText("Too busy for stories, eh? Pity. Kids these days will never know...");
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(charName))

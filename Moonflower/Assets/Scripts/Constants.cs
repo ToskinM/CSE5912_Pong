@@ -143,6 +143,7 @@ public static class Constants
     public const string ANGUJA_DIALOGUE = dialogueFolder + cave + "Anguja";
     public const string IJAPUVA_NAME = "Ijapuva";
     public const string IJAPUVA_DIALOGUE = dialogueFolder + cave + "Ijapuva";
+    public const string IJAPUVA_BACKUP_DIALOGUE = dialogueFolder + cave + "Ijapuva NoB";
     public const string TUVICHA_NAME = "Tuvicha";
     public const string TUVICHA_DIALOGUE = dialogueFolder + cave + "Tuvicha";
     public const string EKIRIRI_NAME = "Ekiriri"; 
@@ -152,11 +153,14 @@ public static class Constants
     public const string BRIMP_NAME = "Brimp";
     public const string ORBYJR_NAME = "Orby Jr.";
     public const string ORBYJR_DIALOGUE = dialogueFolder + cave + "Orby Jr";
+    public const string ORBYJR_BACKUP_DIALOGUE = dialogueFolder + cave + "Orby Jr NoB";
 
     //monsters
     public const string TEJU_NAME = "Teju Jagua";
     public const string TEJU_START_DIALOGUE = dialogueFolder + cave + "Teju Start";
     public const string TEJU_REP_DIALOGUE = dialogueFolder + cave + "Teju Repeat";
+    public const string TEJU_START_BACKUP_DIALOGUE = dialogueFolder + cave + "Teju Start NoB";
+    public const string TEJU_REP_BACKUP_DIALOGUE = dialogueFolder + cave + "Teju Repeat NoB";
 
     //heal objects
     public const string MOONFLOWER_NAME = "Moonflower";

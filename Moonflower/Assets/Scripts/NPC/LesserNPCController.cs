@@ -46,7 +46,8 @@ public class LesserNPCController : MonoBehaviour, INPCController
     private Vector3 startPosition;
     string charName;
     string descrip;
-    string pronoun; 
+    string pronoun;
+    public bool inDialogue = false; 
 
     private Vector3 defaultVector = new Vector3(0,0,0); 
 
@@ -151,7 +152,7 @@ public class LesserNPCController : MonoBehaviour, INPCController
         {
             float distFromOrigin = movement.DistanceFrom(WanderOrigin);
 
-            if (distFromOrigin >= FollowRange && !movement.IsDefault)
+            if (!inDialogue && distFromOrigin >= FollowRange && !movement.IsDefault)
             {
                 movement.Reset(); 
             }

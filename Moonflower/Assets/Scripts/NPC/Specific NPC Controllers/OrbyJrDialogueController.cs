@@ -24,6 +24,7 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
     DialogueTrigger currTalk;
     DialogueTrigger talk; 
     private FeedbackText feedbackText;
+    LesserNPCController mainController;
 
     enum Convo { talk }
     Convo currConvo;
@@ -41,7 +42,7 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
         agent = GetComponent<NavMeshAgent>();
         charName = Constants.ORBYJR_NAME;
 
-        LesserNPCController mainController = GetComponent<LesserNPCController>();
+        mainController = GetComponent<LesserNPCController>();
         movement = mainController.movement;// new NPCMovementController(gameObject, Constants.AMARU_NAME);
         movement.FollowPlayer(bufferDist, tooCloseRad);
         movement.Pace(mainController.WanderOrigin.transform.position, mainController.WanderRange); 
@@ -50,7 +51,7 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
 
         icon = mainController.icon;
 
-        talk = new DialogueTrigger(gameObject, icon, Constants.ORBYJR_DIALOGUE);
+        talk = new DialogueTrigger(gameObject, icon, Constants.ORBYJR_BACKUP_DIALOGUE);
         talk.SetExitText("I don't like it out here...");
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(charName))
@@ -85,6 +86,7 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
         if (currTalk.Complete)
         {
             movement.Reset();
+            mainController.inDialogue = false; 
         }
     }
 
@@ -104,6 +106,7 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
         else
         {
             StartTalk();
+            mainController.inDialogue = true;
         }
         movement.Follow(); 
     }
