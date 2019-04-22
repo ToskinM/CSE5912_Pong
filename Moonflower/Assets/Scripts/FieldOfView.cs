@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class FieldOfView : MonoBehaviour
 {
@@ -34,6 +35,11 @@ public class FieldOfView : MonoBehaviour
 
     void Start()
     {
+        if (SceneManager.GetActiveScene().name == Constants.SCENE_CAVEBOSS)
+        {
+            viewRadius *= 2;
+        }
+
         startingViewAngle = viewAngle;
 
         viewMeshFilter = Instantiate(Resources.Load<GameObject>("Debug/FieldOfViewMesh"), transform).GetComponent<MeshFilter>();
