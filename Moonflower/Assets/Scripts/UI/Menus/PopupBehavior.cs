@@ -30,6 +30,7 @@ public class PopupBehavior : MonoBehaviour
         //MusicSource.Play();
         //SceneManager.UnloadScene(SceneManager.GetActiveScene().buildIndex);
         cont.Execute();
+        GameObject.Find("UI Canvas").GetComponent<MainMenuBehavior>().GoBack();
     }
 
 }
