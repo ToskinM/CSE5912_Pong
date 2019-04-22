@@ -46,11 +46,6 @@ public class ActionWheelController : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (SceneManager.GetActiveScene().name == "The Cave Boss")
-        {
-            activationRange = 8f;
-        }
-
         activeWheel = ActionWheelPrefab.GetComponent<ActionWheel>();
         gameStateController = GameStateController.current;
         followCamera = LevelManager.current.mainCamera;
@@ -149,7 +144,11 @@ public class ActionWheelController : MonoBehaviour
             float dist = float.MaxValue;
             if (target)
                 dist = Vector3.Distance(target.transform.position, PlayerController.instance.GetActivePlayerObject().transform.position);
-            if (target && dist <= activationRange)
+            if (target)
+                Debug.Log(dist + ", " + activationRange);
+
+            //if (target && dist <= activationRange)
+            if (target)
             {
                 if (!wheelShowing)
                 {

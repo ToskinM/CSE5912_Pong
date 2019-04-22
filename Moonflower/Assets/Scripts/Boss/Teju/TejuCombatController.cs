@@ -282,8 +282,9 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     }
     public void LaunchAreaCryProjectile(Transform projectileNode, float radius)
     {
+        Vector3 playerPoition = PlayerController.instance.GetActivePlayerObject().transform.position;
         GameObject projectile = Instantiate(areaCryProjectile, projectileNode.position, Quaternion.LookRotation(transform.position + new Vector3(Random.Range(-areaCryChaos, areaCryChaos), 0f, Random.Range(-areaCryChaos, areaCryChaos))));
-        projectile.transform.LookAt(transform.position + new Vector3(Random.Range(-areaCryChaos, areaCryChaos), Random.Range(-areaCryChaos, areaCryChaos), Random.Range(-areaCryChaos, areaCryChaos)));
+        projectile.transform.LookAt(playerPoition + new Vector3(Random.Range(-areaCryChaos, areaCryChaos), Random.Range(-areaCryChaos, areaCryChaos), Random.Range(-areaCryChaos, areaCryChaos)));
         IProjectile proj = projectile.GetComponent<IProjectile>();
         proj.Hurtbox.SourceCharacterStats = Stats;
         proj.Hurtbox.Source = this.gameObject;
