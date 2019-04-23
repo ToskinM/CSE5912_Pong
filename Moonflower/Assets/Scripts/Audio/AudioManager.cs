@@ -81,8 +81,10 @@ public class AudioManager : MonoBehaviour
         if (s != null & s.source != null)
         {
             s.source.mute = false;
-            if (s.source.gameObject.name != "BigMouse" && name == "Snoring")
+            if (name == "Snoring")
             {//don't play snoring
+                if ((s.source.gameObject.name == "BigMouse" )|| (s.source.gameObject.name == "Teju"))
+                    s.source.Play();
             }
             else
                 s.source.Play();
