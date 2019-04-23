@@ -91,10 +91,8 @@ public class Pickup : MonoBehaviour
                         stat.SetHalo(true);
                         interaction.EnableItem(dist, stat.Name);
                     }
-
                     if (Input.GetButtonDown("Interact"))
                     {
-                        Debug.Log("interact"); 
                         DoPickup(currentClosest);
                         interaction.DisableItem();
                     }
