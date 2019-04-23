@@ -8,6 +8,7 @@ public class AudioSourceManager : MonoBehaviour
     private GameObject Mimbi;
     private List<GameObject> NPCs;
     private GameObject CurrentPlayer;
+    private GameObject BigMouse;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +31,11 @@ public class AudioSourceManager : MonoBehaviour
     {
         CurrentPlayer = PlayerController.instance.GetActivePlayerObject();
         return CurrentPlayer.AddComponent<AudioSource>();
+    }
+    public AudioSource AddBigMouseSource()
+    {
+        BigMouse = GameObject.Find("BigMouse");
+        return BigMouse.AddComponent<AudioSource>();
     }
 
     //public AudioSource AddNPCPlayerAudioSource()

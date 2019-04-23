@@ -83,8 +83,13 @@ public class AudioManager : MonoBehaviour
             s.source.mute = false;
             if (name == "Snoring")
             {//don't play snoring
-                if ((s.source.gameObject.name == "BigMouse" )|| (s.source.gameObject.name == "Teju"))
+                if ((s.source.gameObject.name == "BigMouse") || (s.source.gameObject.name == "Teju"))
+                {
                     s.source.Play();
+                    //Debug.Log("I am Playing " + name + s.source.clip + s.source.gameObject.name);
+                }
+                else
+                    //Debug.Log("I am not Playing " + name + s.source.clip + s.source.gameObject.name);
             }
             else
                 s.source.Play();
@@ -279,6 +284,8 @@ public class AudioManager : MonoBehaviour
             s.source = audioSources.AddAnaiAudioSource();
         else if (a.categoryName.Contains("Mimbi"))
             s.source = audioSources.AddMimbiAudioSource();
+        else if (a.categoryName.Contains("BigBig"))
+            s.source = audioSources.AddBigMouseSource();
         else if (a.categoryName.Contains("Mouse"))
         {
             //do nothing for now

@@ -10,6 +10,7 @@ public class NPCSoundEffect : MonoBehaviour
     private readonly string NPC_Human = "NPC Human";
     private readonly string NPC_Orby = "NPC Orby";
     private readonly string NPC_Teju = "NPC BigMouse";
+    private readonly string NPC_BigBigMouse = "NPC BigBigMouse";
 
     // Start is called before the first frame update
     void Start()
@@ -137,6 +138,8 @@ public class NPCSoundEffect : MonoBehaviour
     {
         if (gameObject.name.Contains("Teju"))
             return NPC_Teju;
+        else if (gameObject.name.Contains("BigMouse"))
+            return NPC_BigBigMouse;
         else if (gameObject.name.Contains("Mouse"))
             return NPC;
         else if (gameObject.name.Contains("Bat"))

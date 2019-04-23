@@ -56,6 +56,7 @@ public class NPCAnimationController : MonoBehaviour
             if (sleeping)
             {
                 animator.SetBool(key_IsSleeping, true);
+
             }
             else
             {
