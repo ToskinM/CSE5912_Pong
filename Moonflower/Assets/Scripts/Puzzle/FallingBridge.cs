@@ -27,7 +27,7 @@ public class FallingBridge : MonoBehaviour
     {
 
         player = GameObject.Find("Player").GetComponent<CurrentPlayer>();
-        if (collider.gameObject.name == player.CurrentPlayerObj.name && !fall)
+        if (collider.gameObject == PlayerController.instance.GetActivePlayerObject() && !fall)
         {
             fall = true;
         }

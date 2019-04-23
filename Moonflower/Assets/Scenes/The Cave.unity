@@ -7623,6 +7623,38 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1263301994}
   m_PrefabAsset: {fileID: 0}
+--- !u!84 &153919428
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 836
+  m_Height: 470
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 7
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!33 &154094851
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -19480,6 +19512,11 @@ PrefabInstance:
         type: 3}
       propertyPath: far clip plane
       value: 750
+      objectReference: {fileID: 0}
+    - target: {fileID: 8638817210823638473, guid: 0f92bfc05c7e8464698afbaa3a466947,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f92bfc05c7e8464698afbaa3a466947, type: 3}
@@ -51593,6 +51630,38 @@ Transform:
   m_Father: {fileID: 821340973}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!84 &1158911524
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 836
+  m_Height: 470
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 7
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!4 &1159730966 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 8f7c2d91bbe1cfc4aa5947b383adb7bf,
@@ -68071,6 +68140,21 @@ PrefabInstance:
       propertyPath: m_BackGroundColor.b
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7348815995292688435, guid: ccceb218af17c33438251bd503f0d6c1,
+        type: 3}
+      propertyPath: far clip plane
+      value: 750
+      objectReference: {fileID: 0}
+    - target: {fileID: 7348815995292688435, guid: ccceb218af17c33438251bd503f0d6c1,
+        type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 1868141004}
+    - target: {fileID: 7348815995292688435, guid: ccceb218af17c33438251bd503f0d6c1,
+        type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 153919428}
     - target: {fileID: 9223168436455768625, guid: ccceb218af17c33438251bd503f0d6c1,
         type: 3}
       propertyPath: m_Enabled
@@ -68086,16 +68170,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7348815995292688435, guid: ccceb218af17c33438251bd503f0d6c1,
-        type: 3}
-      propertyPath: far clip plane
-      value: 750
-      objectReference: {fileID: 0}
-    - target: {fileID: 7348815995292688435, guid: ccceb218af17c33438251bd503f0d6c1,
-        type: 3}
-      propertyPath: m_TargetTexture
-      value: 
-      objectReference: {fileID: 1868141004}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccceb218af17c33438251bd503f0d6c1, type: 3}
 --- !u!114 &1560103855 stripped
