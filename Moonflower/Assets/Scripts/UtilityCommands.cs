@@ -28,23 +28,23 @@ public class UtilityCommands : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F12))
         {
-            gameStateController.ToggleDebugMode();
+            //gameStateController.ToggleDebugMode();
         }
         if (Input.GetKeyDown(KeyCode.F10))
         {
-            screencapCmd.Execute();
+            //screencapCmd.Execute();
         }
         if (Input.GetKeyDown(KeyCode.F11))
         {
-            videocapCmd.Execute();
+            //videocapCmd.Execute();
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
-            DebugViewCmd.Execute();
+            //DebugViewCmd.Execute();
         }
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            PlayerKillCmd.Execute();
+            //PlayerKillCmd.Execute();
         }
         //if (Input.GetKeyDown(KeyCode.F5))
         //{

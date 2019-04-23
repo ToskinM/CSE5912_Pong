@@ -85,8 +85,8 @@ public class PlayerController : MonoBehaviour
         {
             DetectPlayerSwitchInput();
             DetectSummonCompanionInput();
-            DetectHealthRestoreInput();
-            DetectGiveHoneyInput();
+            //DetectHealthRestoreInput();
+            //DetectGiveHoneyInput();
         }
 
         UpdateCompanionCharacter();
