@@ -235,7 +235,7 @@ public class PlayerCombatController : MonoBehaviour
 
     public void GoHurt()
     {
-        playerMovement.body.AddForce(transform.forward * 30f, ForceMode.Impulse);
+        playerMovement.body.AddForce(currentPlayer.transform.forward * 30f, ForceMode.Impulse);
         playerMovement.body.AddForce(new Vector3(0, 2, 0), ForceMode.Impulse);
     }
 
