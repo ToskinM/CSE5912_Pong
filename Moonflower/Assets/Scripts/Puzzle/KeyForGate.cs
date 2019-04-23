@@ -29,6 +29,8 @@ public class KeyForGate : MonoBehaviour
 
         activateSound = Resources.Load("Audio/Misc/Rune5") as AudioClip;
         deactivateSound = Resources.Load("Audio/Misc/Rune3") as AudioClip;
+
+
     }
 
     // Update is called once per frame
@@ -44,7 +46,7 @@ public class KeyForGate : MonoBehaviour
         if (other.Equals(player.GetComponent<BoxCollider>()))
         {
             audioSource.clip = activateSound;
-            audioSource.Play();
+            audioSource.spatialBlend = 1;
             if (time != 0)
             {
                 gate.TimedOpenUp(time);
@@ -61,6 +63,7 @@ public class KeyForGate : MonoBehaviour
         if (other.Equals(player.GetComponent<BoxCollider>()))
         {
             audioSource.clip = deactivateSound;
+            audioSource.spatialBlend = 1;
             audioSource.Play();
         }
     }
