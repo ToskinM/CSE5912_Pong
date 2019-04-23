@@ -182,7 +182,10 @@ public class TejuController : MonoBehaviour, INPCController
     {
         Debug.Log("end");
         //animationtController.SetTalking(false);
-        StartCoroutine(combatController.AreaCryAttack());
+
+        if (combatController.areaCryCoroutine == null)
+            combatController.areaCryCoroutine = StartCoroutine(combatController.AreaCryAttack());
+
         if (currConvo == Convo.rep)
         {
             aboutToReset = true; 

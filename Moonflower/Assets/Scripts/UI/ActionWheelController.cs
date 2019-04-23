@@ -144,8 +144,6 @@ public class ActionWheelController : MonoBehaviour
             float dist = float.MaxValue;
             if (target)
                 dist = Vector3.Distance(target.transform.position, PlayerController.instance.GetActivePlayerObject().transform.position);
-            if (target)
-                Debug.Log(dist + ", " + activationRange);
 
             //if (target && dist <= activationRange)
             if (target)

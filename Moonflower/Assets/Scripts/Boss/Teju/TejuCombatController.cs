@@ -65,7 +65,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     public float areaCryBarrageCount = 35f;
     public float areaCryFireRate = 0.1f;
     public float areaCryChaos = 5f;
-    private Coroutine areaCryCoroutine = null;
+    public Coroutine areaCryCoroutine = null;
     public bool areaCryReady;
 
     private float[] cooldowns;
@@ -252,6 +252,7 @@ public class TejuCombatController : MonoBehaviour, ICombatController
     }
     public IEnumerator AreaCryAttack()
     {
+        Debug.Log("area cry");
         animationController.TriggerAttack();
 
         isAttacking = true;
