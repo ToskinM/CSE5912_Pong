@@ -69,6 +69,8 @@ public static class Constants
     public const string FEATHER_ICON = itemFolder + "Feather";
     public const string NECKLACE_ICON = itemFolder + "Necklace";
     public const string MUSHROOM_ICON = itemFolder + "Mushrooms";
+    const string keyFolder = "Icons/Keys/";
+    public const string FULL_KEY_ICON = keyFolder + "KeyCrystalFull";
 
 
     //life petal names

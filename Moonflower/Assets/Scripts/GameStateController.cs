@@ -31,6 +31,7 @@ public class GameStateController : MonoBehaviour
 
     int time = 8;
     public bool Passed = false;
+    public bool CaveComplete = false; 
 
     void Awake()
     {
