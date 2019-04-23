@@ -127,9 +127,9 @@ public class PlayerSoundEffect : MonoBehaviour
         audioManager.ResumeNormal(mimbi, "MimbiWalking(2)");
         int x = Random.Range(1, 3);
         if (x == 1)
-            audioManager.Play(mimbi, "MimbiWalking(1)");
+            audioManager.PlayFootStep(mimbi, "MimbiWalking(1)");
         else
-            audioManager.Play(mimbi, "MimbiWalking(2)");
+            audioManager.PlayFootStep(mimbi, "MimbiWalking(2)");
     }
     public void MimbiSneakingSFX()
     {
