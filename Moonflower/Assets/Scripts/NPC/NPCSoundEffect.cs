@@ -32,9 +32,9 @@ public class NPCSoundEffect : MonoBehaviour
         for (int i = 0; i < 2; i++)
         {
             if (i == 0)
-                audioManager.Play(DecideWhichNPC(), "Walking(1)");
+                audioManager.PlayFootStep(DecideWhichNPC(), "Walking(1)");
             else
-                audioManager.Play(DecideWhichNPC(), "Walking(2)");
+                audioManager.PlayFootStep(DecideWhichNPC(), "Walking(2)");
         }
 
     }

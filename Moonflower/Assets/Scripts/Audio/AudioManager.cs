@@ -89,12 +89,14 @@ public class AudioManager : MonoBehaviour
                     //Debug.Log("I am Playing " + name + s.source.clip + s.source.gameObject.name);
                 }
                 else
-                {}
-                    //Debug.Log("I am not Playing " + name + s.source.clip + s.source.gameObject.name);
+                { }
+                //Debug.Log("I am not Playing " + name + s.source.clip + s.source.gameObject.name);
             }
             else
+            {
                 s.source.Play();
-            //Debug.Log("I am Playing " + name + s.source.clip + s.source.gameObject.name);
+                //Debug.Log("I am Playing " + name + s.source.clip + s.source.gameObject.name);
+            }
         }
     }
     public void PlayBackground(string category, string name)
