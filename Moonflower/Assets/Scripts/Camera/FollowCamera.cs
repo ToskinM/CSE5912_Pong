@@ -288,7 +288,10 @@ public class FollowCamera : MonoBehaviour
         if (lockedOn)
             LockOff();
 
-        StartCoroutine(MoveCameraToNewTarget(GetCameraTarget(GameObject.FindGameObjectWithTag("Player"))));
+        if (Vector3.Distance(GetCameraTarget(GameObject.FindGameObjectWithTag("Player")).position, transform.position) > 30)
+            StartCoroutine(BlinkCameraToNewTarget(GetCameraTarget(GameObject.FindGameObjectWithTag("Player"))));
+        else
+            StartCoroutine(MoveCameraToNewTarget(GetCameraTarget(GameObject.FindGameObjectWithTag("Player"))));
     }
     private IEnumerator MoveCameraToNewTarget(Transform newCameraTarget)
     {
@@ -319,6 +322,17 @@ public class FollowCamera : MonoBehaviour
         //switchTransform.position = transform.position;
         switching = false;
     }
+    private IEnumerator BlinkCameraToNewTarget(Transform newCameraTarget)
+    {
+        switching = true;
+
+        yield return SceneController.current.BlinkIn(0.3f);
+        target = newCameraTarget;
+        yield return SceneController.current.BlinkOut(0.3f);
+
+        switching = false;
+    }
+
     public IEnumerator TransitionFromDialogue(Vector3 startingPosition)
     {
         switching = true;
