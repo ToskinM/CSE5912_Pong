@@ -119,7 +119,7 @@ public class CharacterStats : MonoBehaviour
                 ObjectPoolController.current.CheckoutTemporary((GameObject)Resources.Load("Effects/HitEffect_Blocked"), hitPoint, 1);
         }
 
-        if (sourceName == "Lava" && PlayerController.instance.AnaiIsActive())
+        if (((sourceName == "Lava") || sourceName == "LavaPlane1" || sourceName == "LavaPlane1 (1)") && PlayerController.instance.AnaiIsActive())
         {
         //    Debug.Log("I did it ");
             PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>().AnaiIntoLava();
