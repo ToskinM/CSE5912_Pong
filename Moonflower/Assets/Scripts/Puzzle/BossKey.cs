@@ -19,7 +19,9 @@ public class BossKey : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bossDoor = GameObject.Find("BossDoor").GetComponent<BossDoor>();
+        if (GameStateController.current.CaveComplete)
+            gameObject.SetActive(false); 
+        bossDoor = GameObject.Find("BossDoor").GetComponent<BossDoor>(); 
     }
 
     // Update is called once per frame
