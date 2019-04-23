@@ -102,21 +102,34 @@ public class ActionWheelController : MonoBehaviour
         {
             //Debug.Log("Got a target!"); 
             INPCController targetNPC = closestNPC.GetComponent<INPCController>();
+
+
             if (targetNPC != null)
             {
                 //Debug.Log("Target has controller!"); 
                 //Debug.Log("valid npc!");
+
+                if (closestNPC != target)
+                {
+                    if (outlined)
+                        RemoveOutlineToNPC(target);
+                }
+
                 target = closestNPC;
                 targetController = targetNPC;
 
                 activeWheel.Initialize(targetNPC.icon, targetNPC.actionsAvailable);
                 activeWheel.gameObject.SetActive(false);
+
+                if (!outlined)
+                    ApplyOutlineToNPC(target);
             }
             else
             {
                 //Debug.Log("No controller :("); 
                 if (outlined)
                     RemoveOutlineToNPC(target);
+
                 target = null;
                 targetController = null;
             }
@@ -125,6 +138,7 @@ public class ActionWheelController : MonoBehaviour
         {
             if (outlined)
                 RemoveOutlineToNPC(target);
+
             target = null;
             targetController = null;
             //Debug.Log("No target :((");
@@ -151,8 +165,7 @@ public class ActionWheelController : MonoBehaviour
                 if (!wheelShowing)
                 {
 
-                    if (!outlined)
-                        ApplyOutlineToNPC(target);
+
                     interaction.EnableNPC(dist);
                     PlayerController.instance.SaveSheathState(); 
                 }
