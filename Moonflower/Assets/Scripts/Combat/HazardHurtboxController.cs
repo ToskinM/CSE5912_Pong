@@ -21,4 +21,9 @@ public class HazardHurtboxController : MonoBehaviour, IHurtboxController
     void Start()
     {
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (PlayerController.instance.AnaiIsActive())
+            PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>().AnaiIntoLava();
+    }
 }
