@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.255
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18726468, g: 0.19157696, b: 0.17912021, a: 0.255}
+  m_IndirectSpecularColor: {r: 0.18726447, g: 0.19157684, b: 0.17912033, a: 0.255}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2100,10 +2100,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 137970135}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (6)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.023
@@ -2159,6 +2155,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (6)
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -4072,6 +4072,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1211463791, guid: 51c8baa03be78fc46a1c9f85a59c1b6c, type: 3}
+      propertyPath: source
+      value: 
+      objectReference: {fileID: 1739264193}
+    - target: {fileID: 632203327, guid: 51c8baa03be78fc46a1c9f85a59c1b6c, type: 3}
+      propertyPath: source
+      value: 
+      objectReference: {fileID: 1739264193}
     - target: {fileID: 1438201455, guid: 51c8baa03be78fc46a1c9f85a59c1b6c, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -4125,14 +4133,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1438201454, guid: a027ac0d62ba08b4b893fa689b37b8cc,
         type: 3}
-    - target: {fileID: 1211463791, guid: 51c8baa03be78fc46a1c9f85a59c1b6c, type: 3}
-      propertyPath: source
-      value: 
-      objectReference: {fileID: 1739264193}
-    - target: {fileID: 632203327, guid: 51c8baa03be78fc46a1c9f85a59c1b6c, type: 3}
-      propertyPath: source
-      value: 
-      objectReference: {fileID: 1739264193}
     - target: {fileID: 1624197064987813418, guid: 51c8baa03be78fc46a1c9f85a59c1b6c,
         type: 3}
       propertyPath: m_RootOrder
@@ -5325,12 +5325,37 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8145140613505230929, guid: ef128fd896af0ac40971b0637fde6a15,
+        type: 3}
+      propertyPath: GameStateManager
+      value: 
+      objectReference: {fileID: 281010372}
     - target: {fileID: 8145140613549664087, guid: ef128fd896af0ac40971b0637fde6a15,
         type: 3}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8145140613549664087, guid: ef128fd896af0ac40971b0637fde6a15,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145140613526385537, guid: ef128fd896af0ac40971b0637fde6a15,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145140613526385537, guid: ef128fd896af0ac40971b0637fde6a15,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145140614513986855, guid: ef128fd896af0ac40971b0637fde6a15,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145140614513986855, guid: ef128fd896af0ac40971b0637fde6a15,
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
@@ -5340,35 +5365,10 @@ PrefabInstance:
       propertyPath: gameController
       value: 
       objectReference: {fileID: 281010371}
-    - target: {fileID: 8145140613505230929, guid: ef128fd896af0ac40971b0637fde6a15,
-        type: 3}
-      propertyPath: GameStateManager
-      value: 
-      objectReference: {fileID: 281010372}
     - target: {fileID: 8145140613891442221, guid: ef128fd896af0ac40971b0637fde6a15,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8145140613526385537, guid: ef128fd896af0ac40971b0637fde6a15,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8145140613526385537, guid: ef128fd896af0ac40971b0637fde6a15,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8145140614513986855, guid: ef128fd896af0ac40971b0637fde6a15,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8145140614513986855, guid: ef128fd896af0ac40971b0637fde6a15,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef128fd896af0ac40971b0637fde6a15, type: 3}
@@ -7623,38 +7623,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1263301994}
   m_PrefabAsset: {fileID: 0}
---- !u!84 &153919428
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_Width: 836
-  m_Height: 470
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 7
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!33 &154094851
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -16601,10 +16569,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1220431937}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 153.2927
@@ -16648,6 +16612,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
@@ -26150,11 +26118,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 745286107}
     m_Modifications:
-    - target: {fileID: 8006987359670897761, guid: f5dbc2aade5215947862bb712b81ca07,
-        type: 3}
-      propertyPath: m_Name
-      value: SoulCrystalLight
-      objectReference: {fileID: 0}
     - target: {fileID: 8000901554707455759, guid: f5dbc2aade5215947862bb712b81ca07,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26209,6 +26172,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006987359670897761, guid: f5dbc2aade5215947862bb712b81ca07,
+        type: 3}
+      propertyPath: m_Name
+      value: SoulCrystalLight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5dbc2aade5215947862bb712b81ca07, type: 3}
@@ -28123,10 +28091,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 745286107}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -28182,6 +28146,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -29137,6 +29105,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.0020600006
       objectReference: {fileID: 0}
+    - target: {fileID: 2747497170271713436, guid: c54a3408b5ffd2f46a0f3a566688594d,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 582f14a20ccdab84da619546e247a431, type: 3}
     - target: {fileID: 771196952918974433, guid: c54a3408b5ffd2f46a0f3a566688594d,
         type: 3}
       propertyPath: m_Size
@@ -29147,11 +29120,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2747497170271713436, guid: c54a3408b5ffd2f46a0f3a566688594d,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 4300000, guid: 582f14a20ccdab84da619546e247a431, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c54a3408b5ffd2f46a0f3a566688594d, type: 3}
 --- !u!4 &510250326 stripped
@@ -31755,10 +31723,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 137970135}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.014
@@ -31814,6 +31778,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (3)
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -32640,10 +32608,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 745286107}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (6)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.023
@@ -32699,6 +32663,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (6)
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -42211,7 +42179,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4119
+    m_Bits: 4103
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
@@ -44876,10 +44844,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 137970135}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -44935,6 +44899,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -50844,10 +50812,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 137970135}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.007
@@ -50903,6 +50867,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (5)
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -51630,38 +51598,6 @@ Transform:
   m_Father: {fileID: 821340973}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!84 &1158911524
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_Width: 836
-  m_Height: 470
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 7
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!4 &1159730966 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 8f7c2d91bbe1cfc4aa5947b383adb7bf,
@@ -55463,10 +55399,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 73537032}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -215.18097
@@ -55522,6 +55454,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalScale.z
       value: 2.9499
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
@@ -58172,10 +58108,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 137970135}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (8)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.015
@@ -58231,6 +58163,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (8)
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -59003,11 +58939,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 137970135}
     m_Modifications:
-    - target: {fileID: 8006987359670897761, guid: f5dbc2aade5215947862bb712b81ca07,
-        type: 3}
-      propertyPath: m_Name
-      value: SoulCrystalLight
-      objectReference: {fileID: 0}
     - target: {fileID: 8000901554707455759, guid: f5dbc2aade5215947862bb712b81ca07,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -59062,6 +58993,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006987359670897761, guid: f5dbc2aade5215947862bb712b81ca07,
+        type: 3}
+      propertyPath: m_Name
+      value: SoulCrystalLight
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5dbc2aade5215947862bb712b81ca07, type: 3}
@@ -66820,6 +66756,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2479558356945616282, guid: 24bae5f0d34626a459d9f0f207247a1a,
+        type: 3}
+      propertyPath: source
+      value: 
+      objectReference: {fileID: 1739264193}
     - target: {fileID: 2077725483, guid: 24bae5f0d34626a459d9f0f207247a1a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 32.584003
@@ -67409,11 +67350,6 @@ PrefabInstance:
       propertyPath: weapon
       value: 
       objectReference: {fileID: 1537807909}
-    - target: {fileID: 2479558356945616282, guid: 24bae5f0d34626a459d9f0f207247a1a,
-        type: 3}
-      propertyPath: source
-      value: 
-      objectReference: {fileID: 1739264193}
     m_RemovedComponents:
     - {fileID: 574423210, guid: 24bae5f0d34626a459d9f0f207247a1a, type: 3}
     - {fileID: 574423213, guid: 24bae5f0d34626a459d9f0f207247a1a, type: 3}
@@ -68140,21 +68076,6 @@ PrefabInstance:
       propertyPath: m_BackGroundColor.b
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7348815995292688435, guid: ccceb218af17c33438251bd503f0d6c1,
-        type: 3}
-      propertyPath: far clip plane
-      value: 750
-      objectReference: {fileID: 0}
-    - target: {fileID: 7348815995292688435, guid: ccceb218af17c33438251bd503f0d6c1,
-        type: 3}
-      propertyPath: m_TargetTexture
-      value: 
-      objectReference: {fileID: 1868141004}
-    - target: {fileID: 7348815995292688435, guid: ccceb218af17c33438251bd503f0d6c1,
-        type: 3}
-      propertyPath: m_TargetTexture
-      value: 
-      objectReference: {fileID: 153919428}
     - target: {fileID: 9223168436455768625, guid: ccceb218af17c33438251bd503f0d6c1,
         type: 3}
       propertyPath: m_Enabled
@@ -68170,6 +68091,21 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7348815995292688435, guid: ccceb218af17c33438251bd503f0d6c1,
+        type: 3}
+      propertyPath: far clip plane
+      value: 750
+      objectReference: {fileID: 0}
+    - target: {fileID: 7348815995292688435, guid: ccceb218af17c33438251bd503f0d6c1,
+        type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 1651510654}
+    - target: {fileID: 7348815995292688435, guid: ccceb218af17c33438251bd503f0d6c1,
+        type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 1651510654}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccceb218af17c33438251bd503f0d6c1, type: 3}
 --- !u!114 &1560103855 stripped
@@ -69122,6 +69058,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.0020600006
       objectReference: {fileID: 0}
+    - target: {fileID: 2747497170271713436, guid: c54a3408b5ffd2f46a0f3a566688594d,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 582f14a20ccdab84da619546e247a431, type: 3}
     - target: {fileID: 771196952918974433, guid: c54a3408b5ffd2f46a0f3a566688594d,
         type: 3}
       propertyPath: m_Size
@@ -69132,11 +69073,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2747497170271713436, guid: c54a3408b5ffd2f46a0f3a566688594d,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 4300000, guid: 582f14a20ccdab84da619546e247a431, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c54a3408b5ffd2f46a0f3a566688594d, type: 3}
 --- !u!4 &1591549401 stripped
@@ -70629,7 +70565,7 @@ GameObject:
   - component: {fileID: 1614054695}
   - component: {fileID: 1614054694}
   - component: {fileID: 1614054691}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: water (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71883,6 +71819,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f7c2d91bbe1cfc4aa5947b383adb7bf, type: 3}
+--- !u!84 &1651510654
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 715
+  m_Height: 402
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 7
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!4 &1654832634 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 248e33056c8833f42bd5572897abcb9a,
@@ -73679,10 +73647,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 745286107}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.014
@@ -73738,6 +73702,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (3)
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -77894,16 +77862,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4709228539241129277, guid: ceb826367ceebf4409a36671169c10de,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4709228539241129277, guid: ceb826367ceebf4409a36671169c10de,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4709228538219515474, guid: ceb826367ceebf4409a36671169c10de,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -77913,6 +77871,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4709228539241129277, guid: ceb826367ceebf4409a36671169c10de,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4709228539241129277, guid: ceb826367ceebf4409a36671169c10de,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4709228537802548753, guid: ceb826367ceebf4409a36671169c10de,
         type: 3}
@@ -78781,38 +78749,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea6e3674b3db3334eafd76f13a599cc1, type: 3}
---- !u!84 &1868141004
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_Width: 466
-  m_Height: 262
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 7
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1 &1874436066
 GameObject:
   m_ObjectHideFlags: 0
@@ -80261,6 +80197,38 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1887565387}
   m_PrefabAsset: {fileID: 0}
+--- !u!84 &1891007615
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 715
+  m_Height: 402
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 7
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1 &1892610929
 GameObject:
   m_ObjectHideFlags: 0
@@ -90171,38 +90139,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d174ccaafd33da6438fa6183a8cbfee1, type: 3}
---- !u!84 &2023700554
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_Width: 466
-  m_Height: 262
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 7
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!4 &2025712858 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: e306b951066ad28478b73b982c5445e6,
@@ -93011,10 +92947,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 745286107}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.007
@@ -93070,6 +93002,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (5)
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -113641,11 +113577,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891050923201237}
     m_Modifications:
-    - target: {fileID: 8006987359670897761, guid: f5dbc2aade5215947862bb712b81ca07,
-        type: 3}
-      propertyPath: m_Name
-      value: SoulCrystalLight
-      objectReference: {fileID: 0}
     - target: {fileID: 8000901554707455759, guid: f5dbc2aade5215947862bb712b81ca07,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -113701,6 +113632,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8006987359670897761, guid: f5dbc2aade5215947862bb712b81ca07,
+        type: 3}
+      propertyPath: m_Name
+      value: SoulCrystalLight
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5dbc2aade5215947862bb712b81ca07, type: 3}
 --- !u!114 &8112892865029464205
@@ -113723,10 +113659,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891050923201237}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (8)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.015
@@ -113783,6 +113715,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.07
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (8)
+      objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -113796,10 +113732,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891050923201237}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (6)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.023
@@ -113855,6 +113787,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (6)
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -113946,10 +113882,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891050923201237}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.007
@@ -114006,6 +113938,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.07
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (5)
+      objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -114019,10 +113955,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891050923201237}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -114079,6 +114011,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1
+      objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -114092,10 +114028,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8175891050923201237}
     m_Modifications:
-    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
-      propertyPath: m_Name
-      value: mana_crystal1 (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.014
@@ -114151,6 +114083,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
+      propertyPath: m_Name
+      value: mana_crystal1 (3)
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f22f2c3172d02ac48aef2643a6ec1ff3, type: 3}
       propertyPath: m_Materials.Array.data[0]
