@@ -170,7 +170,7 @@ public class SceneController : MonoBehaviour
 
 
         // Fade to new scene
-        yield return StartCoroutine(Fade(0f, 5f));
+        yield return StartCoroutine(Fade(0f, 0.5f));
     }
 
     public void WentedScene()
