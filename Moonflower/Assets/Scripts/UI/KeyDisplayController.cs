@@ -20,6 +20,15 @@ public class KeyDisplayController : MonoBehaviour
         Keys.Add(GameObject.Find("key 1").GetComponent<Image>());
         Keys.Add(GameObject.Find("key 2").GetComponent<Image>());
         Keys.Add(GameObject.Find("key 3").GetComponent<Image>());
+
+        if(GameStateController.current.CaveComplete)
+        {
+            foreach(Image key in Keys)
+            {
+                key.sprite = full; 
+            }
+            currIndex = numKeys; 
+        }
     }
 
     void Update()

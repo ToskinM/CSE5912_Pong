@@ -36,6 +36,7 @@ public class BossDoor : MonoBehaviour
 
     public void Unlock()
     {
+        GameStateController.current.CaveComplete = true; 
         bossEntrance.SetActive(true);
     }
 }
