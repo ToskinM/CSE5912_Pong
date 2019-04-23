@@ -6,10 +6,13 @@ public class BossDoor : MonoBehaviour
 {
     private int numKeys;
     GameObject bossEntrance;
-    public bool Open = false; 
+    public bool Open = false;
+    public KeyDisplayController display;
+
     // Start is called before the first frame update
     void Start()
     {
+        display = GameObject.Find("Key Display").GetComponent<KeyDisplayController>();
         numKeys = GameObject.FindGameObjectsWithTag("BossKey").Length;
         bossEntrance = GameObject.Find("BossEntrance");
         bossEntrance.SetActive(false);
@@ -28,6 +31,7 @@ public class BossDoor : MonoBehaviour
     public void KeyOpen()
     {
         numKeys--;
+        display.GetKey(); 
     }
 
     public void Unlock()
