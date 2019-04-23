@@ -21,5 +21,10 @@ public class BottomlessSteakFries : MonoBehaviour
     {
         player = other.gameObject;
         player.transform.position = new Vector3(230, 22, 265);
+
+        if (other.gameObject == PlayerController.instance.GetActivePlayerObject())
+        {
+            PlayerController.instance.ActivePlayerStats.TakeDamage(10, "PlatformLava");
+        }
     }
 }

@@ -26,8 +26,8 @@ public class FallingBridge : MonoBehaviour
     void OnTriggerStay(Collider collider)
     {
 
-        player = GameObject.Find("Player").GetComponent<CurrentPlayer>();
-        if (collider.gameObject.name == player.CurrentPlayerObj.name && !fall)
+//        player = GameObject.Find("Player").GetComponent<CurrentPlayer>();
+        if (collider.gameObject == PlayerController.instance.GetActivePlayerObject() && !fall)
         {
             fall = true;
         }

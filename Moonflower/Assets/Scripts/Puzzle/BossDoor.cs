@@ -15,7 +15,8 @@ public class BossDoor : MonoBehaviour
         display = GameObject.Find("Key Display").GetComponent<KeyDisplayController>();
         numKeys = GameObject.FindGameObjectsWithTag("BossKey").Length;
         bossEntrance = GameObject.Find("BossEntrance");
-        bossEntrance.SetActive(false);
+        bossEntrance.SetActive(GameStateController.current.CaveComplete); 
+
     }
 
     // Update is called once per frame
