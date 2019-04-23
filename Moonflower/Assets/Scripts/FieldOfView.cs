@@ -115,15 +115,19 @@ public class FieldOfView : MonoBehaviour
     {
         while (true)
         {
+
             if (npcCombatController)
             {
                 SetAggressionMode();
             }
 
             yield return new WaitForSeconds(delay);
-            FindVisibleTargets();
-            GetClosestTarget();
-            GetFocusedTarget();
+            if (enabled)
+            {
+                FindVisibleTargets();
+                GetClosestTarget();
+                GetFocusedTarget();
+            }
 
             if (viewMeshFilter)
                 if (visibleTargets.Count > 0)

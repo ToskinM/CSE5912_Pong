@@ -91,7 +91,7 @@ public class ActionWheelController : MonoBehaviour
 
     private void SwitchInteractionFOV(PlayerController.PlayerCharacter activeChar)
     {
-        PlayerController.instance.ActivePlayerInteractionFOV.OnNewClosestTarget -= HandleInteractionFOVTargetUpdate;
+        //PlayerController.instance.ActivePlayerInteractionFOV.OnNewClosestTarget -= HandleInteractionFOVTargetUpdate;
         PlayerController.instance.ActivePlayerInteractionFOV.OnNewClosestTarget += HandleInteractionFOVTargetUpdate;
     }
     private void HandleInteractionFOVTargetUpdate(GameObject closestNPC)
