@@ -95,6 +95,7 @@ public class CharacterStats : MonoBehaviour
         if (display != null)
             display.HitHealth(CurrentHealth, MaxHealth);
         //Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
+
     }
 
     public void TakeDamage(int damage, string sourceName, CharacterStats sourceCharacterStats, ICombatController combatController, Vector3 hitPoint, bool blocked)
@@ -118,10 +119,10 @@ public class CharacterStats : MonoBehaviour
             if (hitPoint != Vector3.zero)
                 ObjectPoolController.current.CheckoutTemporary((GameObject)Resources.Load("Effects/HitEffect_Blocked"), hitPoint, 1);
         }
-
-        if (((sourceName == "Lava") || sourceName == "LavaPlane1" || sourceName == "LavaPlane1 (1)") && PlayerController.instance.AnaiIsActive())
+        Debug.Log(sourceName);
+        if (((sourceName == "Lava") || (sourceName == "LavaPlane1") || (sourceName == "LavaPlane1 (1)")) && PlayerController.instance.AnaiIsActive())
         {
-        //    Debug.Log("I did it ");
+            Debug.Log("I did it ");
             PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>().AnaiIntoLava();
             //GameObject.Find("Audio").GetComponent<AudioManager>().Play("Anai", "");
         }
@@ -167,6 +168,13 @@ public class CharacterStats : MonoBehaviour
             sourceCharacterStats.TrainStrengthKill();
         else
             sourceCharacterStats.TrainStrengthHit();
+        Debug.Log(sourceName);
+        if (((sourceName == "Lava") || (sourceName == "LavaPlane1") || (sourceName == "LavaPlane1 (1)")) && PlayerController.instance.AnaiIsActive())
+        {
+            Debug.Log("I did it ");
+            PlayerController.instance.GetActivePlayerObject().GetComponent<PlayerSoundEffect>().AnaiIntoLava();
+            //GameObject.Find("Audio").GetComponent<AudioManager>().Play("Anai", "");
+        }
     }
 
     public void UpdateCharisma(int change)
