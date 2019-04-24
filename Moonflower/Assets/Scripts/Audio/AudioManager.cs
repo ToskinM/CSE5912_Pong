@@ -95,7 +95,7 @@ public class AudioManager : MonoBehaviour
             else
             {
                 s.source.Play();
-                Debug.Log("I am Playing " + name + s.source.clip + s.source.gameObject.name);
+//                Debug.Log("I am Playing " + name + s.source.clip + s.source.gameObject.name);
             }
         }
     }

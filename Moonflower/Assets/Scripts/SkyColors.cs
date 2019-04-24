@@ -13,7 +13,7 @@ public class SkyColors : MonoBehaviour
     float[] fogHeights;
     bool stop = false;
     LightColor lightColor;
-    public int dayCycleSeconds=2000;
+    public int dayCycleSeconds=1200;
     MeshRenderer thisRend;
     float transitionTime; // Amount of time it takes to fade between colors
     int time = 0;
@@ -144,7 +144,7 @@ public class SkyColors : MonoBehaviour
 
         if (!stop)
         {
-            Debug.Log("time keeps going at " + time); 
+//            Debug.Log("time keeps going at " + time); 
             if (transitionRate < 1)
             {
                 thisRend.material.SetColor("_TintColor", Color.Lerp(thisRend.material.GetColor("_TintColor"), newColor, Time.deltaTime * transitionRate));

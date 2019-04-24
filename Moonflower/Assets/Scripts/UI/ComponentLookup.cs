@@ -7,5 +7,6 @@ using UnityEngine.UI;
 public class ComponentLookup : MonoBehaviour
 {
     public InteractionPopup InteractionPopup;
+    public KeyDisplayController KeyDisplay; 
 
 }

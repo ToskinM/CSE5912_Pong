@@ -11,8 +11,8 @@ public class KeyDisplayController : MonoBehaviour
     List<Image> Keys = new List<Image>(); 
     int currIndex = 0;
     const int numKeys = 3; 
-    Sprite full; 
-
+    Sprite full;
+    GameObject bossDoor; 
 
     void Start()
     {
@@ -33,8 +33,17 @@ public class KeyDisplayController : MonoBehaviour
 
     void Update()
     {
+        if (bossDoor == null)
+        {
+            //Debug.Log("turn off"); 
+            gameObject.SetActive(false);
+        }
 
+    }
 
+    public void SetBossDoor(GameObject door)
+    {
+        bossDoor = door; 
     }
 
     public void GetKey()

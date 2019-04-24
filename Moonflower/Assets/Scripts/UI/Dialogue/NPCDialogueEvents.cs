@@ -93,6 +93,7 @@ public class NPCDialogueEvents : MonoBehaviour
         }
     }
 
+
     private void displayFeedback(string text)
     {
         GameObject.Find("FeedbackText").GetComponent<FeedbackText>().ShowText(text); 

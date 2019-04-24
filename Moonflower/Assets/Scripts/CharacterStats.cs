@@ -119,7 +119,7 @@ public class CharacterStats : MonoBehaviour
             if (hitPoint != Vector3.zero)
                 ObjectPoolController.current.CheckoutTemporary((GameObject)Resources.Load("Effects/HitEffect_Blocked"), hitPoint, 1);
         }
-        Debug.Log(sourceName);
+//        Debug.Log(sourceName);
         if (((sourceName == "Lava") || (sourceName == "LavaPlane1") || (sourceName == "LavaPlane1 (1)")) && PlayerController.instance.AnaiIsActive())
         {
             Debug.Log("I did it ");
@@ -168,7 +168,7 @@ public class CharacterStats : MonoBehaviour
             sourceCharacterStats.TrainStrengthKill();
         else
             sourceCharacterStats.TrainStrengthHit();
-        Debug.Log(sourceName);
+//        Debug.Log(sourceName);
         if (((sourceName == "Lava") || (sourceName == "LavaPlane1") || (sourceName == "LavaPlane1 (1)")) && PlayerController.instance.AnaiIsActive())
         {
             Debug.Log("I did it ");

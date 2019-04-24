@@ -146,6 +146,10 @@ public class LifeAppleController : MonoBehaviour
     {
         int index = (int)Math.Round(healthFrac * apples.Count);
         goalRotIndex = apples.Count - index;
+        if (healthFrac > 0 && goalRotIndex > apples.Count - 2)
+        {
+            goalRotIndex = apples.Count - 2;
+        }
 
     }
 

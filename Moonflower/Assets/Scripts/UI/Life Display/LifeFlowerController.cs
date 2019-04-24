@@ -56,8 +56,22 @@ public class LifeFlowerController : MonoBehaviour
 
     public void UpdateFlower(float healthFraction)
     {
+
+
         float newFrac = determineCurrentPetal(healthFraction); //currPetalIndex is now updated
         //Debug.Log("Current index " + currPetalIndex);
+        if (currPetalIndex == 4)
+        {
+            petalState newState = getNewState(newFrac);
+            if (newState == petalState.gone && newFrac > 0)
+            {
+                Debug.Log("near death");
+                Image petal = petals[currPetalIndex];
+                petal.sprite = getPetal(petalState.down3);
+                updatePetalState(petal, petalState.down3);
+                return;
+            }
+        }
 
         for (int i = 0; i < petals.Count; i++)
         {

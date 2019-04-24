@@ -132,7 +132,7 @@ public class TejuController : MonoBehaviour, INPCController
             if(subdued)
                 displayFeedback("Teju invited you to touch the soul crystal.");
             else
-                displayFeedback("Teju is still devastated.");
+                displayFeedback("Teju is still devastated and crying.");
         }
         else
         {
@@ -169,18 +169,20 @@ public class TejuController : MonoBehaviour, INPCController
 
     public void Subdue()
     {
-        Debug.Log("end");
         //animationtController.SetTalking(false);
         if (!feedback.IsDisplaying())
             displayFeedback("Teju has stopped crying!");
 
         combatController.Subdue();
-        subdued = true; 
+        subdued = true;
+
+        start.SetExitText("Thank you for helping me connect to my soul crystal.");
+        rep.SetExitText("Thank you for helping me connect to my soul crystal.");
     }
 
     public void FailConvo()
     {
-        Debug.Log("end");
+        //Debug.Log("end");
         //animationtController.SetTalking(false);
 
         if (combatController.areaCryCoroutine == null)
@@ -230,7 +232,7 @@ public class TejuController : MonoBehaviour, INPCController
     }
     private void HandleOnSubdue()
     {
-        Debug.Log("Teju has been Subdued");
+        //Debug.Log("Teju has been Subdued");
         soulCrystal.blocked = false;
         soulCrystalBarrier.SetActive(false);
     }
