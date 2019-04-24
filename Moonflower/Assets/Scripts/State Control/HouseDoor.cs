@@ -31,6 +31,9 @@ public class HouseDoor : MonoBehaviour
         {
             //Debug.Log("try to save time " + GameStateController.current.SaveTime() + "")
 
+            if (targetScene == Constants.SCENE_CAVEENTRANCE && !GameStateController.current.Passed)
+                GameStateController.current.Passed = true; 
+
             player = other.gameObject;
             spawn = GameObject.Find("Spawner");
             spawn.GetComponent<SpawnPoint>().thisScene = targetScene;
