@@ -18,6 +18,8 @@ public class CharacterStats : MonoBehaviour
     public int Charisma;
     public int Stealth;
 
+    public bool isPlayer = false; 
+
     public float strengthExperience;
 
     public GameObject HUD;
@@ -92,7 +94,7 @@ public class CharacterStats : MonoBehaviour
 
         OnCharacterDamage?.Invoke(postCalcDamage);
 
-        if (display != null)
+        if (display != null && isPlayer)
             display.HitHealth(CurrentHealth, MaxHealth);
         //Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
 
@@ -107,7 +109,7 @@ public class CharacterStats : MonoBehaviour
 
             OnCharacterDamage?.Invoke(postCalcDamage);
 
-            if (display != null)
+            if (display != null && isPlayer)
                 display.HitHealth(CurrentHealth, MaxHealth);
 //            Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
 
@@ -148,7 +150,7 @@ public class CharacterStats : MonoBehaviour
 
             OnCharacterDamage?.Invoke(postCalcDamage);
 
-            if (display != null)
+            if (display != null && isPlayer)
                 display.HitHealth(CurrentHealth, MaxHealth);
             //Debug.Log(gameObject.name + " took <color=red>" + damage + "</color> damage from " + sourceName);
 

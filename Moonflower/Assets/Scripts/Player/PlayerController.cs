@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour
         ActivePlayerCombatControls = GetComponent<PlayerCombatController>();
         ActivePlayerInventory = GetComponent<PlayerInventory>();
         ActivePlayerStats = GetComponent<CharacterStats>();
+        if (ActivePlayerStats.isPlayer != true)
+            ActivePlayerStats.isPlayer = true; 
 
         // Set up reference in Awake so that other scripts can reference it during Start()
         ActivePlayerObject = AnaiObject;
