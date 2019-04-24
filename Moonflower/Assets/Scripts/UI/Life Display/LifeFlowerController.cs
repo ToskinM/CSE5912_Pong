@@ -65,7 +65,7 @@ public class LifeFlowerController : MonoBehaviour
             petalState newState = getNewState(newFrac);
             if (newState == petalState.gone && newFrac > 0)
             {
-                Debug.Log("near death");
+               
                 Image petal = petals[currPetalIndex];
                 petal.sprite = getPetal(petalState.down3);
                 updatePetalState(petal, petalState.down3);

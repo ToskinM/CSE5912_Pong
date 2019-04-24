@@ -16,7 +16,7 @@ public class ShowInspect : MonoBehaviour
     public Image icon;
 
     public bool Shown = false;
-    private bool buttonActive = false;
+    private bool clickActive = false;
     private InspectFactory descripFactory;
     private IconFactory iconFactory;
 
@@ -34,11 +34,16 @@ public class ShowInspect : MonoBehaviour
 
     void Update()
     {
-        if(Shown && Input.GetButton("Back"))//Input.GetKeyDown(KeyCode.X))
+        if(Shown && Input.GetButtonDown("Back"))//Input.GetKeyDown(KeyCode.X))
         {
             Hide();
         }
 
+        //if (Shown && Input.GetButtonUp("Back Click"))//Input.GetKeyDown(KeyCode.X))
+        //{
+        //    Debug.Log("click");
+        //    Hide(); 
+        //}
     }
 
     public void Show(string name)
