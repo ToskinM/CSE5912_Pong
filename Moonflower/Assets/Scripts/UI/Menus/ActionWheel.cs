@@ -13,6 +13,7 @@ public class ActionWheel : MonoBehaviour
     //public Button giveButton;
     [Header("Inspect, Talk, Distract, Give")]
     public Button[] buttons;
+    public GameObject[] Inactives;
 
     public delegate void SelectionUpdate(int buttonIndex);
     public event SelectionUpdate OnSelectOption;
@@ -48,6 +49,7 @@ public class ActionWheel : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             buttons[i].transform.parent.gameObject.SetActive(actionsAvailable[i]);
+            Inactives[i].SetActive(!actionsAvailable[i]);
         }
     }
 
