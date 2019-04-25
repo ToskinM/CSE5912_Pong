@@ -17,6 +17,10 @@ public class NPCAnimationController : MonoBehaviour
     private const string key_IsDead = "IsDead";
     private const string key_IsSleeping = "IsSleeping";
 
+    private bool isWalk;
+    private bool isRun;
+    private bool isSleeping;
+
     private Animator animator;
     private NavMeshAgent agent;
     private NPCCombatController combatController;
@@ -51,54 +55,61 @@ public class NPCAnimationController : MonoBehaviour
         //    animator.SetBool(key_IsRun, movement.Action == Actions.Running);
         //    animator.SetBool(key_IsJump, movement.Jumping);
         //}
-        if(this.gameObject.name.Equals("BigMouse"))
+        if (this.gameObject.name.Equals("BigMouse"))
         {
             if (sleeping)
             {
-                animator.SetBool(key_IsSleeping, true);
-
+                SetIsSleeping(true);
             }
             else
             {
-                animator.SetBool(key_IsSleeping, false);
+                SetIsSleeping(false);
             }
         }
 
-        if (agent != null )//&& agent.isActiveAndEnabled)
+        if (agent != null)//&& agent.isActiveAndEnabled)
         {
             if (agent.isStopped)
             {
-                animator.SetBool(key_IsRun, false);
-                animator.SetBool(key_IsWalk, false);
-
+                SetRun(false);
+                SetWalk(false);
                 return;
             }
 
-            if (agent.velocity.magnitude > agent.speed * (2f/3f)) // Run
+            if (agent.velocity.magnitude > agent.speed * (2f / 3f)) // Run
             {
-                animator.SetBool(key_IsRun, true);
-                animator.SetBool(key_IsWalk, false);
+                SetRun(true);
+                SetWalk(false);
             }
             else if (agent.velocity.magnitude > 0.1f)  // Walk
             {
-                animator.SetBool(key_IsRun, false);
-                animator.SetBool(key_IsWalk, true);
+                SetRun(false);
+                SetWalk(true);
             }
             else                                    // Idle
             {
-                animator.SetBool(key_IsRun, false);
-                animator.SetBool(key_IsWalk, false);
+                SetRun(false);
+                SetWalk(false);
             }
         }
     }
 
     public void SetWalk(bool walking)
     {
-        animator.SetBool(key_IsWalk, walking);
+        if (isWalk != walking)
+        {
+            isWalk = walking;
+            animator.SetBool(key_IsWalk, walking);
+        }
+
     }
     public void SetRun(bool running)
     {
-        animator.SetBool(key_IsRun, running);
+        if (isRun != running)
+        {
+            isRun = running;
+            animator.SetBool(key_IsRun, running);
+        }
     }
 
     public void TriggerAttack()
@@ -125,7 +136,11 @@ public class NPCAnimationController : MonoBehaviour
 
     public void SetIsSleeping(bool isSleeping)
     {
-        animator.SetBool(key_IsSleeping, isSleeping);
+        if (this.isSleeping != isSleeping)
+        {
+            this.isSleeping = isSleeping;
+            animator.SetBool(key_IsSleeping, isSleeping);
+        }
     }
 
     public void EnableHurtbox(int index)
