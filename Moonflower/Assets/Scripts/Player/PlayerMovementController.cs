@@ -18,7 +18,7 @@ public class PlayerMovementController : MonoBehaviour
     private bool onGround;
     private bool returnGrav = false;
     private Quaternion rotation = Quaternion.identity;
-    private float rotateSpeed = 5f;
+    private float rotateSpeed = 15f;
     private float blockCooldownTime = 0.5f;
     private float blockCooldown;
     private bool blockOffCooldown;
@@ -230,8 +230,8 @@ public class PlayerMovementController : MonoBehaviour
 
             // Dertermine angle we should face from input angle
             float angle = Mathf.Atan2(horizontalInput, verticalInput) * (180 / Mathf.PI);
-            angle += cameraForwardAngle.eulerAngles.y;
-            //angle += cameraScript.transform.rotation.eulerAngles.y;
+            //angle += cameraForwardAngle.eulerAngles.y;
+            angle += cameraScript.transform.rotation.eulerAngles.y;
             //Debug.Log(angle);
             rotation = Quaternion.AngleAxis(angle, Vector3.up);
         }
@@ -251,6 +251,7 @@ public class PlayerMovementController : MonoBehaviour
         // Only rotate with camera while we have movement input
         if (Action != Actions.Chilling)
         {
+            //playerObject.transform.rotation = rotation;
             playerObject.transform.rotation = Quaternion.Lerp(playerObject.transform.rotation, rotation, rotateSpeed * Time.deltaTime);
         }
     }
