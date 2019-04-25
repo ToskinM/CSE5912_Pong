@@ -12,7 +12,7 @@ public class CaveEntranceCamera : MonoBehaviour
     public float yRotationClamp = 15; // degrees
     public float xRotationClamp = 15; // degrees
 
-    private Transform player;
+    //private Transform player;
     private Vector3 playerStartPosition;
 
     private float cameraPanDistance;
@@ -25,7 +25,7 @@ public class CaveEntranceCamera : MonoBehaviour
         // Get max distance for normalizing interpolation 
         cameraPanDistance = Vector3.Distance(startPoint.position, endPoint.position);
         // Get player Info
-        player = PlayerController.instance.AnaiObject.transform;
+        //player = PlayerController.instance.AnaiObject.transform;
         playerStartPosition = new Vector3(2,2, -95);
         print(playerStartPosition);
         // Go to Start Position
@@ -45,7 +45,7 @@ public class CaveEntranceCamera : MonoBehaviour
             inputRotationY = Mathf.Clamp(inputRotationY + Input.GetAxis("Mouse X"), -xRotationClamp, xRotationClamp);
 
             // At what percentage from the start to end should we be on? Based on player's position
-            float interpolation = Mathf.Clamp(Vector3.Distance(playerStartPosition, player.position), 0f, cameraPanDistance) / cameraPanDistance;
+            float interpolation = Mathf.Clamp(Vector3.Distance(playerStartPosition, PlayerController.instance.GetActivePlayerObject().transform.position), 0f, cameraPanDistance) / cameraPanDistance;
 
             // Get the position and rotation at that percentage
             Vector3 newPosition = Vector3.Lerp(startPoint.position, endPoint.position, interpolation);
