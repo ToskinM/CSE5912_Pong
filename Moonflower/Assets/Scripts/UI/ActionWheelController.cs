@@ -230,17 +230,17 @@ public class ActionWheelController : MonoBehaviour
                 otherWindowUp = true;
                 break;
             case 1:
-                if (PlayerController.instance.GetActiveCharacter() != PlayerController.PlayerCharacter.Mimbi)
+                if (PlayerController.instance.AnaiIsActive())
                 {
 //                    Debug.Log("Selected"); 
                     targetController.Talk();
                     followCamera.LockOff();
                 }
                 else
-                    feedback.ShowText("Sorry " + targetController.Inspect() + "  can't understand Mimbi.");
+                    feedback.ShowText("Sorry, they cannot understand Mimbi.");
                 break;
             case 2:
-                if (PlayerController.instance.GetActiveCharacter() == PlayerController.PlayerCharacter.Mimbi)
+                if (!PlayerController.instance.AnaiIsActive())
                 {
                     targetController.Distract(PlayerController.instance.GetActivePlayerObject());
                     StartCoroutine(DistractionEnd(distractTime, targetController));

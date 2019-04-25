@@ -34,7 +34,11 @@ public class SpawnPoint : MonoBehaviour
         //PlayerController.instance.GetActivePlayerObject().transform.rotation = this.transform.rotation;
         //PlayerController.instance.GetActivePlayerObject().transform.Rotate()
 
-        PlayerController.instance.GetCompanionObject().GetComponent<NavMeshAgent>().Warp(this.transform.position + new Vector3(0, 0, -5));
+        GameObject companionSpawnPoint = GameObject.Find("Companion Spawn Point");
+        if (companionSpawnPoint != null)
+            PlayerController.instance.GetCompanionObject().GetComponent<NavMeshAgent>().Warp(companionSpawnPoint.transform.position);
+        else
+            PlayerController.instance.GetCompanionObject().GetComponent<NavMeshAgent>().Warp(this.transform.position + new Vector3(0, 0, -5));
     }
 
     public void ResetScenes()

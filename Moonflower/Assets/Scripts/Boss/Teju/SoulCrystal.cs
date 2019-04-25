@@ -21,7 +21,7 @@ public class SoulCrystal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!blocked && !triggered && other.gameObject == PlayerController.instance.AnaiObject)
+        if (!blocked && !triggered && other.gameObject == PlayerController.instance.GetActivePlayerObject())
         {
             triggered = true;
             TriggerMemory();

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossDoor : MonoBehaviour
 {
     private int numKeys;
-    GameObject bossEntrance;
+    public GameObject bossEntrance;
     public bool Open = false;
     public KeyDisplayController display;
 
@@ -14,7 +14,7 @@ public class BossDoor : MonoBehaviour
     {
         display = GameObject.Find("HUD").GetComponent<ComponentLookup>().KeyDisplay;
         numKeys = GameObject.FindGameObjectsWithTag("BossKey").Length;
-        bossEntrance = GameObject.Find("BossEntrance");
+        //bossEntrance = GameObject.Find("BossEntrance");
         bossEntrance.SetActive(GameStateController.current.CaveComplete);
         display.SetBossDoor(gameObject); 
         display.gameObject.SetActive(true);
