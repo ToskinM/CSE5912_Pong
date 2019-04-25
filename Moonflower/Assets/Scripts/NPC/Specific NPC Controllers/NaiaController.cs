@@ -70,9 +70,9 @@ public class NaiaController : MonoBehaviour, INPCController
         icon = new IconFactory().GetIcon(Constants.NAIA_ICON);
         intro = new DialogueTrigger(gameObject, icon, Constants.NAIA_INTRO_DIALOGUE);
         intro.SetExitText("See you around, I guess.");
-        intro.SetSky(sky);
         postFight = new DialogueTrigger(gameObject, icon, Constants.NAIA_POSTFIGHT_DIALOGUE);
-        postFight.SetExitText("Oh, come on. Is this because I hit too hard? I was trying to pull my punches..."); 
+        postFight.SetExitText("Oh, come on. Is this because I hit too hard? I was trying to pull my punches...");
+        postFight.SetSky(sky);
         advice = new DialogueTrigger(gameObject, icon, Constants.NAIA_ADVICE_DIALOGUE);
         advice.SetExitText("You can't keep running away from this.");
 
@@ -198,7 +198,7 @@ public class NaiaController : MonoBehaviour, INPCController
             beforeNoon = false; 
         }
 
-        if (beforeNoon && goingInside)
+        if (beforeNoon && goingInside && currState != NaiaEngageType.fight)
         {
             if (movement.state == NPCMovementController.MoveState.chill)
                 gameObject.SetActive(false);
