@@ -10,8 +10,7 @@ public class MainMenuCamera : MonoBehaviour
     public CanvasGroup optionsCanvasGroup;
 
     public CanvasGroup faderCanvasGroup;
-    public float fadeDuration = 1f;
-    private const float pseudoDeltaTime = 0.025f;
+    private float fadeDuration = 0.5f;
     private bool isFading;
     public bool isMoving;
     private Coroutine fadeCoroutine = null;
@@ -120,9 +119,9 @@ public class MainMenuCamera : MonoBehaviour
         float fadeSpeed = Mathf.Abs(faderCanvasGroup.alpha - finalAlpha) / duration;
         while (!Mathf.Approximately(faderCanvasGroup.alpha, finalAlpha))
         {
-            faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, finalAlpha, fadeSpeed * pseudoDeltaTime);
-            mainCanvasGroup.alpha = Mathf.MoveTowards(mainCanvasGroup.alpha, 1 - finalAlpha, fadeSpeed * pseudoDeltaTime);
-            optionsCanvasGroup.alpha = Mathf.MoveTowards(optionsCanvasGroup.alpha, 1 - finalAlpha, fadeSpeed * pseudoDeltaTime);
+            faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, finalAlpha, fadeSpeed * Time.unscaledDeltaTime);
+            mainCanvasGroup.alpha = Mathf.MoveTowards(mainCanvasGroup.alpha, 1 - finalAlpha, fadeSpeed * Time.unscaledDeltaTime);
+            optionsCanvasGroup.alpha = Mathf.MoveTowards(optionsCanvasGroup.alpha, 1 - finalAlpha, fadeSpeed * Time.unscaledDeltaTime);
             yield return null;
         }
 

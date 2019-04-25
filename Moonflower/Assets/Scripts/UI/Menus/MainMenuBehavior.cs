@@ -16,7 +16,6 @@ public class MainMenuBehavior : MonoBehaviour
     public MainMenuCamera mainMenuCamera;
 
     private bool fading = false;
-    private const float pseudoDeltaTime = 0.05f;
     private readonly string MenuSFX = "Menu";
 
     //private AudioManager audioManager;
@@ -150,7 +149,7 @@ public class MainMenuBehavior : MonoBehaviour
         while (!Mathf.Approximately(Title.alpha, finalAlpha))
         {
             //Debug.Log("k");
-            Title.alpha = Mathf.MoveTowards(Title.alpha, finalAlpha, fadeSpeed * pseudoDeltaTime);
+            Title.alpha = Mathf.MoveTowards(Title.alpha, finalAlpha, fadeSpeed * Time.unscaledDeltaTime);
             yield return null;
         }
 

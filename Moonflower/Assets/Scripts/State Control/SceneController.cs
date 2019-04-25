@@ -19,7 +19,6 @@ public class SceneController : MonoBehaviour
     [Header("Fade To/From Black")]
     public CanvasGroup faderCanvasGroup;
     public float fadeDuration = 1f;
-    private const float pseudoDeltaTime = 0.05f;
     private bool isFading;
     public bool isLoading;
 
@@ -243,8 +242,7 @@ public class SceneController : MonoBehaviour
         float fadeSpeed = Mathf.Abs(faderCanvasGroup.alpha - finalAlpha) / (fadeDuration * speedMultiplier);
         while (!Mathf.Approximately(faderCanvasGroup.alpha, finalAlpha))
         {
-            faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, finalAlpha,
-                fadeSpeed * pseudoDeltaTime);
+            faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, finalAlpha, fadeSpeed * Time.unscaledDeltaTime);
             yield return null;
         }
         isFading = false;
@@ -258,8 +256,7 @@ public class SceneController : MonoBehaviour
         float fadeSpeed = Mathf.Abs(loadscreenCanvasGroup.alpha - finalAlpha) / (fadeDuration / 3);
         while (!Mathf.Approximately(loadscreenCanvasGroup.alpha, finalAlpha))
         {
-            loadscreenCanvasGroup.alpha = Mathf.MoveTowards(loadscreenCanvasGroup.alpha, finalAlpha,
-                fadeSpeed * pseudoDeltaTime);
+            loadscreenCanvasGroup.alpha = Mathf.MoveTowards(loadscreenCanvasGroup.alpha, finalAlpha, fadeSpeed * Time.unscaledDeltaTime);
             yield return null;
         }
         isFading = false;
@@ -300,7 +297,7 @@ public class SceneController : MonoBehaviour
         float fadeSpeed = Mathf.Abs(faderCanvasGroup.alpha - 1) / (speed);
         while (!Mathf.Approximately(faderCanvasGroup.alpha, 1))
         {
-            faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, 1, fadeSpeed * Time.deltaTime);
+            faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, 1, fadeSpeed * Time.unscaledDeltaTime);
             yield return null;
         }
 
@@ -316,7 +313,7 @@ public class SceneController : MonoBehaviour
         float fadeSpeed = Mathf.Abs(faderCanvasGroup.alpha - 0) / (speed);
         while (!Mathf.Approximately(faderCanvasGroup.alpha, 0))
         {
-            faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, 0, fadeSpeed * Time.deltaTime);
+            faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, 0, fadeSpeed * Time.unscaledDeltaTime);
             yield return null;
         }
 
