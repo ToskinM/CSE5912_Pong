@@ -49,6 +49,7 @@ public class SceneController : MonoBehaviour
         faderCanvasGroupWhite.alpha = 0f;
         loadscreenCanvasGroup.alpha = 0f;
         StartCoroutine(Fade(0f));
+        WentScene = new List<string>();
     }
 
     // Call these to switch scenes (NOT ADDITIVE)
@@ -328,6 +329,7 @@ public class SceneController : MonoBehaviour
 
     public void DestroySingletons()
     {
+        WentScene.Clear();
         Destroy(PlayerController.instance.GetActivePlayerObject());
         Destroy(PlayerController.instance.GetCompanionObject());
         Destroy(PlayerController.instance.gameObject);
@@ -335,6 +337,10 @@ public class SceneController : MonoBehaviour
         Destroy(UISingleton.instance.gameObject);
         Destroy(GameStateController.current.gameObject);
         Destroy(AudioManager.instance.gameObject);
+        Destroy(AnaiHouseItem.instance.gameObject);
+        Destroy(VillageItem.instance.gameObject);
+        Destroy(NaiaHouseItem.instance.gameObject);
+        Destroy(AmaruHouseItem.instance.gameObject);
     }
 
     public IEnumerator BlinkIn(float speed)
