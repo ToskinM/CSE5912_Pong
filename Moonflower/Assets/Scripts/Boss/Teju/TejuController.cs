@@ -33,8 +33,14 @@ public class TejuController : MonoBehaviour, INPCController
     public GameObject soulCrystalBarrier;
     public SpawnerController spawnerController;
 
-    private DialogueTrigger start;
-    private DialogueTrigger rep;
+    NPCDialogueEvents diaEvent; 
+
+    private DialogueTrigger startPeace;
+    private DialogueTrigger startAttack;
+    private DialogueTrigger startAttackWeap;
+    private DialogueTrigger repPeace;
+    private DialogueTrigger repAttack;
+    private DialogueTrigger repAttackWeap;
     private DialogueTrigger currTalk;
     enum Convo { start, rep }
     Convo currConvo;
@@ -50,18 +56,27 @@ public class TejuController : MonoBehaviour, INPCController
 
         combatController = GetComponent<TejuCombatController>();
         animationtController = GetComponent<TejuAnimationController>();
+        diaEvent = GameStateController.current.gameObject.GetComponent<NPCDialogueEvents>();
 
         //playerController = PlayerController.instance.gameObject.GetComponent<PlayerController>();
 
         icon = new IconFactory().GetIcon(Constants.TEJU_ICON);
-        start = new DialogueTrigger(gameObject, icon, Constants.TEJU_START_BACKUP_DIALOGUE);
-        start.SetExitText("I'm not even worth a full conversation...");
-        rep = new DialogueTrigger(gameObject, icon, Constants.TEJU_REP_BACKUP_DIALOGUE);
-        rep.SetExitText("I'm not even worth a full conversation...");
+        startPeace = new DialogueTrigger(gameObject, icon, Constants.TEJU_START_PEACE_DIALOGUE);
+        startPeace.SetExitText("I'm not even worth a full conversation...");
+        startAttack = new DialogueTrigger(gameObject, icon, Constants.TEJU_START_ATTACK_DIALOGUE);
+        startAttack.SetExitText("I'm not even worth a full conversation...");
+        startAttackWeap = new DialogueTrigger(gameObject, icon, Constants.TEJU_START_ATTACKWEAP_DIALOGUE);
+        startAttackWeap.SetExitText("I'm not even worth a full conversation...");
+        repPeace = new DialogueTrigger(gameObject, icon, Constants.TEJU_REP_PEACE_DIALOGUE);
+        repPeace.SetExitText("I'm not even worth a full conversation...");
+        repAttack = new DialogueTrigger(gameObject, icon, Constants.TEJU_REP_ATTACK_DIALOGUE);
+        repAttack.SetExitText("I'm not even worth a full conversation...");
+        repAttackWeap = new DialogueTrigger(gameObject, icon, Constants.TEJU_REP_ATTACKWEAP_DIALOGUE);
+        repAttackWeap.SetExitText("I'm not even worth a full conversation...");
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(Constants.TEJU_NAME))
         {
-            currTalk = start;
+            currTalk = startPeace;
             currConvo = Convo.start; 
             GameStateController.current.SaveNPCDialogues(Constants.TEJU_NAME, currConvo.ToString(), currTalk);
         }
@@ -73,12 +88,12 @@ public class TejuController : MonoBehaviour, INPCController
             if (convo.Equals(Convo.start.ToString()))
             {
                 currConvo = Convo.start;
-                start = currTalk; 
+                startPeace = currTalk; 
             }
             else
             {
                 currConvo = Convo.rep;
-                rep = currTalk;
+                repPeace = currTalk;
             }
 
             GameStateController.current.SaveNPCDialogues(Constants.TEJU_NAME, currConvo.ToString(), currTalk);
@@ -106,20 +121,16 @@ public class TejuController : MonoBehaviour, INPCController
     {
         //movement.UpdateMovement();
         currTalk.Update(); 
-        if(currConvo == Convo.start && start.Complete && !start.panelInfo.IsUp)
+        if(currConvo == Convo.start && currTalk.Complete && !currTalk.panelInfo.IsUp)
         {
             currConvo = Convo.rep;
-            currTalk = rep;
+            currTalk = repPeace;
             GameStateController.current.SaveNPCDialogues(Constants.TEJU_NAME, currConvo.ToString(), currTalk);
 
         }
 
         if (currTalk.Complete && !aboutToReset && !subdued)
         {
-            //Debug.Log("end");
-            //animationtController.SetTalking(false);
-            //aboutToReset = true;
-            //Invoke("ResetConvo", 2f);
             FailConvo(); 
         }
 
@@ -136,6 +147,39 @@ public class TejuController : MonoBehaviour, INPCController
         }
         else
         {
+            switch(currConvo)
+            {
+                case Convo.start:
+                    if(!diaEvent.WasMorePeaceful() || !diaEvent.IsNotArmed())
+                    {
+                        if(diaEvent.IsNotArmed())
+                        {
+                            currTalk = startAttack; 
+                        }
+                        else
+                        {
+                            currTalk = startAttackWeap;
+                        }
+
+                    }
+                    break;
+                case Convo.rep:
+                    if (!diaEvent.WasMorePeaceful() || !diaEvent.IsNotArmed())
+                    {
+                        if (diaEvent.IsNotArmed())
+                        {
+                            currTalk = repAttack;
+                        }
+                        else
+                        {
+                            currTalk = repAttackWeap;
+                        }
+
+                    }
+                    break;
+
+            }
+
             StartEngagement();
         }
     }
@@ -176,8 +220,12 @@ public class TejuController : MonoBehaviour, INPCController
         combatController.Subdue();
         subdued = true;
 
-        start.SetExitText("Thank you for helping me connect to my soul crystal.");
-        rep.SetExitText("Thank you for helping me connect to my soul crystal.");
+        startPeace.SetExitText("Thank you for helping me connect to my soul crystal.");
+        startAttack.SetExitText("Thank you for helping me connect to my soul crystal.");
+        startAttackWeap.SetExitText("Thank you for helping me connect to my soul crystal.");
+        repPeace.SetExitText("Thank you for helping me connect to my soul crystal.");
+        repAttack.SetExitText("Thank you for helping me connect to my soul crystal.");
+        repAttackWeap.SetExitText("Thank you for helping me connect to my soul crystal.");
     }
 
     public void FailConvo()
@@ -197,7 +245,8 @@ public class TejuController : MonoBehaviour, INPCController
 
     private void ResetConvo()
     {
-        currTalk.Reset();
+        currTalk.Reset(); 
+        currTalk = repPeace; 
         aboutToReset = false;
     }
 

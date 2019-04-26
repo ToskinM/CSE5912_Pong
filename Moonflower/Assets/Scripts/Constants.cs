@@ -161,8 +161,12 @@ public static class Constants
     public const string TEJU_NAME = "Teju Jagua";
     public const string TEJU_START_DIALOGUE = dialogueFolder + cave + "Teju Start";
     public const string TEJU_REP_DIALOGUE = dialogueFolder + cave + "Teju Repeat";
-    public const string TEJU_START_BACKUP_DIALOGUE = dialogueFolder + cave + "Teju Start NoB";
-    public const string TEJU_REP_BACKUP_DIALOGUE = dialogueFolder + cave + "Teju Repeat NoB";
+    public const string TEJU_START_PEACE_DIALOGUE = dialogueFolder + cave + "Teju Start Peaceful";
+    public const string TEJU_START_ATTACK_DIALOGUE = dialogueFolder + cave + "Teju Start Violent";
+    public const string TEJU_START_ATTACKWEAP_DIALOGUE = dialogueFolder + cave + "Teju Start Violent Weapon";
+    public const string TEJU_REP_PEACE_DIALOGUE = dialogueFolder + cave + "Teju Repeat Peaceful";
+    public const string TEJU_REP_ATTACK_DIALOGUE = dialogueFolder + cave + "Teju Repeat Violent";
+    public const string TEJU_REP_ATTACKWEAP_DIALOGUE = dialogueFolder + cave + "Teju Repeat Violent Weapon";
 
     //heal objects
     public const string MOONFLOWER_NAME = "Moonflower";
