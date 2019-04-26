@@ -244,9 +244,9 @@ public class SceneController : MonoBehaviour
     //
     private IEnumerator LoadSceneAndSetActive(string sceneName)
     {
+        loadingBar.value = 0f;
         loadscreen.SetActive(true);
         yield return StartCoroutine(FadeLoadingBackground(1f));
-        loadingBar.value = 0f;
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
