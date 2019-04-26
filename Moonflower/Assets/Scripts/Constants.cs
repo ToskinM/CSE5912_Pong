@@ -145,7 +145,9 @@ public static class Constants
     public const string ANGUJA_DIALOGUE = dialogueFolder + cave + "Anguja";
     public const string IJAPUVA_NAME = "Ijapuva";
     public const string IJAPUVA_DIALOGUE = dialogueFolder + cave + "Ijapuva";
-    public const string IJAPUVA_BACKUP_DIALOGUE = dialogueFolder + cave + "Ijapuva NoB";
+    public const string IJAPUVA_PEACE_DIALOGUE = dialogueFolder + cave + "Ijapuva Peaceful";
+    public const string IJAPUVA_ATTACK_DIALOGUE = dialogueFolder + cave + "Ijapuva Violent";
+    public const string IJAPUVA_ATTACKWEAP_DIALOGUE = dialogueFolder + cave + "Ijapuva Violent Weapon";
     public const string TUVICHA_NAME = "Tuvicha";
     public const string TUVICHA_DIALOGUE = dialogueFolder + cave + "Tuvicha";
     public const string EKIRIRI_NAME = "Ekiriri"; 
@@ -155,14 +157,20 @@ public static class Constants
     public const string BRIMP_NAME = "Brimp";
     public const string ORBYJR_NAME = "Orby Jr.";
     public const string ORBYJR_DIALOGUE = dialogueFolder + cave + "Orby Jr";
-    public const string ORBYJR_BACKUP_DIALOGUE = dialogueFolder + cave + "Orby Jr NoB";
+    public const string ORBYJR_PEACE_DIALOGUE = dialogueFolder + cave + "Orby Jr Peaceful";
+    public const string ORBYJR_ATTACK_DIALOGUE = dialogueFolder + cave + "Orby Jr Violent";
+    public const string ORBYJR_ATTACKWEAP_DIALOGUE = dialogueFolder + cave + "Orby Jr Violent Weapon";
 
     //monsters
     public const string TEJU_NAME = "Teju Jagua";
     public const string TEJU_START_DIALOGUE = dialogueFolder + cave + "Teju Start";
     public const string TEJU_REP_DIALOGUE = dialogueFolder + cave + "Teju Repeat";
-    public const string TEJU_START_BACKUP_DIALOGUE = dialogueFolder + cave + "Teju Start NoB";
-    public const string TEJU_REP_BACKUP_DIALOGUE = dialogueFolder + cave + "Teju Repeat NoB";
+    public const string TEJU_START_PEACE_DIALOGUE = dialogueFolder + cave + "Teju Start Peaceful";
+    public const string TEJU_START_ATTACK_DIALOGUE = dialogueFolder + cave + "Teju Start Violent";
+    public const string TEJU_START_ATTACKWEAP_DIALOGUE = dialogueFolder + cave + "Teju Start Violent Weapon";
+    public const string TEJU_REP_PEACE_DIALOGUE = dialogueFolder + cave + "Teju Repeat Peaceful";
+    public const string TEJU_REP_ATTACK_DIALOGUE = dialogueFolder + cave + "Teju Repeat Violent";
+    public const string TEJU_REP_ATTACKWEAP_DIALOGUE = dialogueFolder + cave + "Teju Repeat Violent Weapon";
 
     //heal objects
     public const string MOONFLOWER_NAME = "Moonflower";

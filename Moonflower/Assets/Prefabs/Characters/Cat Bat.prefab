@@ -316,7 +316,7 @@ MonoBehaviour:
   canInspect: 1
   canTalk: 0
   canDistract: 1
-  canGift: 0
+  canGift: 1
   WanderOrigin: {fileID: 0}
   WanderRange: 0
   FollowRange: 0
@@ -371,6 +371,7 @@ MonoBehaviour:
   CurrentHealth: 3
   Charisma: 0
   Stealth: 0
+  isPlayer: 0
   strengthExperience: 0
   HUD: {fileID: 0}
 --- !u!114 &7562854943376789846
@@ -1549,11 +1550,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hurtbox
       objectReference: {fileID: 0}
-    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
-        type: 3}
-      propertyPath: source
-      value: 
-      objectReference: {fileID: 1321783480152984}
     - target: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1624,14 +1620,13 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.20146956
       objectReference: {fileID: 0}
+    - target: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
+        type: 3}
+      propertyPath: source
+      value: 
+      objectReference: {fileID: 1321783480152984}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e191d953f9f69b468286e1cae6a7f57, type: 3}
---- !u!4 &2895880427669899949 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
-    type: 3}
-  m_PrefabInstance: {fileID: 5885381826898181787}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8341856896986792734 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2479558358122921349, guid: 3e191d953f9f69b468286e1cae6a7f57,
@@ -1644,3 +1639,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7816da57fe59251489a2c43e5a3e7048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &2895880427669899949 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8763204915939734582, guid: 3e191d953f9f69b468286e1cae6a7f57,
+    type: 3}
+  m_PrefabInstance: {fileID: 5885381826898181787}
+  m_PrefabAsset: {fileID: 0}

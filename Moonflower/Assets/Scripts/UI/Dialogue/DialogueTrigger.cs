@@ -210,7 +210,7 @@ public class DialogueTrigger : MonoBehaviour
         else if (PlayerController.instance.ActivePlayerCombatControls.InCombat)
         {
             //Debug.Log("Can't talk. In combat");
-            displayFeedback("You've been attacked! Wait to talk until you are safe."); 
+            displayFeedback("You've been attacked! Try again when you are safe."); 
 
         }
     }
@@ -347,6 +347,12 @@ public class DialogueTrigger : MonoBehaviour
     {
         tState = TextState.options;
         order.Clear();
+        if(graph.current.answers.Count == 0)
+        {
+            tState = TextState.done;
+            return; 
+        }
+
         if (graph.current.answers.Count > 2)
         {
             int index = Random.Range(0, 3);

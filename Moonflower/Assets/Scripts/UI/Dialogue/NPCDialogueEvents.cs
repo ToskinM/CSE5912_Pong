@@ -62,6 +62,11 @@ public class NPCDialogueEvents : MonoBehaviour
         GameObject.Find("MouseKnight - Ijapuva").GetComponent<IjapuvaDialogueController>().Peeve(); 
     }
 
+    public void OrbyJrTold()
+    {
+        GameObject.Find("Lil Orby").GetComponent<OrbyJrDialogueController>().GotInfo = true;
+    }
+
     private void fight()
     {
         GameObject.Find("Naia").GetComponent<NaiaController>().Fight();

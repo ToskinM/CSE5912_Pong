@@ -12,7 +12,8 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
     public bool DialogueActive { get; set; } = false;
     public bool Peeved { get; set; } = false; 
 
-    public BossDoor bossDoor; 
+    public BossDoor bossDoor;
+    public bool GotInfo = false; 
 
     const float tooCloseRad = 3f;
     const float bufferDist = 4f;
@@ -21,10 +22,16 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
     //private GameObject anai;
     NPCMovementController movement;
     NavMeshAgent agent;
+
+    NPCDialogueEvents diaEvent; 
+
     DialogueTrigger currTalk;
-    DialogueTrigger talk; 
+    DialogueTrigger peace;
+    DialogueTrigger attack;
+    DialogueTrigger attackWeap; 
     private FeedbackText feedbackText;
     LesserNPCController mainController;
+    
 
     enum Convo { talk }
     Convo currConvo;
@@ -42,6 +49,8 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
         agent = GetComponent<NavMeshAgent>();
         charName = Constants.ORBYJR_NAME;
 
+        diaEvent = GameStateController.current.gameObject.GetComponent<NPCDialogueEvents>(); 
+
         mainController = GetComponent<LesserNPCController>();
         movement = mainController.movement;// new NPCMovementController(gameObject, Constants.AMARU_NAME);
         movement.FollowPlayer(bufferDist, tooCloseRad);
@@ -51,12 +60,16 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
 
         icon = mainController.icon;
 
-        talk = new DialogueTrigger(gameObject, icon, Constants.ORBYJR_BACKUP_DIALOGUE);
-        talk.SetExitText("I don't like it out here...");
+        peace = new DialogueTrigger(gameObject, icon, Constants.ORBYJR_PEACE_DIALOGUE);
+        peace.SetExitText("I don't like it out here...");
+        attack = new DialogueTrigger(gameObject, icon, Constants.ORBYJR_ATTACK_DIALOGUE);
+        attack.SetExitText("I don't like it out here...");
+        attackWeap = new DialogueTrigger(gameObject, icon, Constants.ORBYJR_ATTACKWEAP_DIALOGUE);
+        attackWeap.SetExitText("I don't like it out here...");
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(charName))
         {
-            currTalk = talk;
+            currTalk = peace;
             currConvo = Convo.talk; 
             GameStateController.current.SaveNPCDialogues(charName, currConvo.ToString(), currTalk);
         }
@@ -65,7 +78,6 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
             currTalk = GameStateController.current.GetNPCDialogue(charName);
             currTalk.SetSelf(gameObject);
             currConvo = Convo.talk;
-            talk = currTalk;
         }
 
 
@@ -101,10 +113,25 @@ public class OrbyJrDialogueController : MonoBehaviour, IDialogueController
 //        Debug.Log("to dialogue controller"); 
         if (currTalk.Complete)
         {
-            displayFeedback("Junior told you to find the crystals.");
+            if(GotInfo)
+                displayFeedback("Junior told you to find the crystals.");
+            else
+                displayFeedback("Junior doesn't like it out here.");
         }
         else
         {
+            if (!diaEvent.WasMorePeaceful() || !diaEvent.IsNotArmed())
+            {
+                if (diaEvent.IsNotArmed())
+                {
+                    currTalk = attack;
+                }
+                else
+                {
+                    currTalk = attackWeap;
+                }
+
+            }
             StartTalk();
             mainController.inDialogue = true;
         }
