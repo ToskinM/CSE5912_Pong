@@ -17,7 +17,8 @@ public class SceneController : MonoBehaviour
     public string sceneDiedAt;
 
     [Header("Fade To/From Black")]
-    public CanvasGroup faderCanvasGroup;
+    public CanvasGroup faderCanvasGroupBlack;
+    public CanvasGroup faderCanvasGroupWhite;
     public float fadeDuration = 1f;
     private bool isFading;
     public bool isLoading;
@@ -44,7 +45,8 @@ public class SceneController : MonoBehaviour
         }
 
         loadscreen.SetActive(false);
-        faderCanvasGroup.alpha = 1f;
+        faderCanvasGroupBlack.alpha = 1f;
+        faderCanvasGroupWhite.alpha = 0f;
         loadscreenCanvasGroup.alpha = 0f;
         StartCoroutine(Fade(0f));
     }
@@ -72,6 +74,13 @@ public class SceneController : MonoBehaviour
         if (!isFading && !isLoading)
         {
             StartCoroutine(FadeAndSwitchScenesGameOver(sceneName));
+        }
+    }
+    public void FadeAndLoadSceneVision(String sceneName)
+    {
+        if (!isFading && !isLoading)
+        {
+            StartCoroutine(FadeAndSwitchScenesVision(sceneName));
         }
     }
 
@@ -171,6 +180,33 @@ public class SceneController : MonoBehaviour
         // Fade to new scene
         yield return StartCoroutine(Fade(0f, 0.5f));
     }
+    private IEnumerator FadeAndSwitchScenesVision(string sceneName)
+    {
+        isLoading = true;
+        sceneDiedAt = SceneManager.GetActiveScene().name;
+
+        // Fade to black
+        yield return StartCoroutine(FadeWhite(1f, 5f));
+        BeforeSceneUnload?.Invoke();
+        GameStateController.current?.ForceUnpause();
+
+        // load loading scene
+        yield return SceneManager.LoadSceneAsync(Constants.SCENE_LOADING, LoadSceneMode.Additive);
+
+        // Unload previous scene (without loadscreen)
+        yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        DestroySingletons();
+        yield return StartCoroutine(LoadSceneAndSetActiveNoLS(sceneName));
+
+        // Unload loading scene
+        yield return SceneManager.UnloadSceneAsync(Constants.SCENE_LOADING);
+        AfterSceneLoad?.Invoke();
+        isLoading = false;
+
+
+        // Fade to new scene
+        yield return StartCoroutine(FadeWhite(0f, 0.5f));
+    }
 
     public void WentedScene()
     {
@@ -238,15 +274,28 @@ public class SceneController : MonoBehaviour
     private IEnumerator Fade(float finalAlpha, float speedMultiplier = 1)
     {
         isFading = true;
-        faderCanvasGroup.blocksRaycasts = true;
-        float fadeSpeed = Mathf.Abs(faderCanvasGroup.alpha - finalAlpha) / (fadeDuration * speedMultiplier);
-        while (!Mathf.Approximately(faderCanvasGroup.alpha, finalAlpha))
+        faderCanvasGroupBlack.blocksRaycasts = true;
+        float fadeSpeed = Mathf.Abs(faderCanvasGroupBlack.alpha - finalAlpha) / (fadeDuration * speedMultiplier);
+        while (!Mathf.Approximately(faderCanvasGroupBlack.alpha, finalAlpha))
         {
-            faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, finalAlpha, fadeSpeed * Time.unscaledDeltaTime);
+            faderCanvasGroupBlack.alpha = Mathf.MoveTowards(faderCanvasGroupBlack.alpha, finalAlpha, fadeSpeed * Time.unscaledDeltaTime);
             yield return null;
         }
         isFading = false;
-        faderCanvasGroup.blocksRaycasts = false;
+        faderCanvasGroupBlack.blocksRaycasts = false;
+    }
+    private IEnumerator FadeWhite(float finalAlpha, float speedMultiplier = 1)
+    {
+        isFading = true;
+        faderCanvasGroupWhite.blocksRaycasts = true;
+        float fadeSpeed = Mathf.Abs(faderCanvasGroupWhite.alpha - finalAlpha) / (fadeDuration * speedMultiplier);
+        while (!Mathf.Approximately(faderCanvasGroupWhite.alpha, finalAlpha))
+        {
+            faderCanvasGroupWhite.alpha = Mathf.MoveTowards(faderCanvasGroupWhite.alpha, finalAlpha, fadeSpeed * Time.unscaledDeltaTime);
+            yield return null;
+        }
+        isFading = false;
+        faderCanvasGroupWhite.blocksRaycasts = false;
     }
 
     private IEnumerator FadeLoadingBackground(float finalAlpha)
@@ -291,33 +340,33 @@ public class SceneController : MonoBehaviour
     public IEnumerator BlinkIn(float speed)
     {
         isFading = true;
-        faderCanvasGroup.blocksRaycasts = true;
+        faderCanvasGroupBlack.blocksRaycasts = true;
 
         // Fade to black
-        float fadeSpeed = Mathf.Abs(faderCanvasGroup.alpha - 1) / (speed);
-        while (!Mathf.Approximately(faderCanvasGroup.alpha, 1))
+        float fadeSpeed = Mathf.Abs(faderCanvasGroupBlack.alpha - 1) / (speed);
+        while (!Mathf.Approximately(faderCanvasGroupBlack.alpha, 1))
         {
-            faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, 1, fadeSpeed * Time.unscaledDeltaTime);
+            faderCanvasGroupBlack.alpha = Mathf.MoveTowards(faderCanvasGroupBlack.alpha, 1, fadeSpeed * Time.unscaledDeltaTime);
             yield return null;
         }
 
         isFading = false;
-        faderCanvasGroup.blocksRaycasts = false;
+        faderCanvasGroupBlack.blocksRaycasts = false;
     }
     public IEnumerator BlinkOut(float speed)
     {
         isFading = true;
-        faderCanvasGroup.blocksRaycasts = true;
+        faderCanvasGroupBlack.blocksRaycasts = true;
 
         // Fade from black
-        float fadeSpeed = Mathf.Abs(faderCanvasGroup.alpha - 0) / (speed);
-        while (!Mathf.Approximately(faderCanvasGroup.alpha, 0))
+        float fadeSpeed = Mathf.Abs(faderCanvasGroupBlack.alpha - 0) / (speed);
+        while (!Mathf.Approximately(faderCanvasGroupBlack.alpha, 0))
         {
-            faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, 0, fadeSpeed * Time.unscaledDeltaTime);
+            faderCanvasGroupBlack.alpha = Mathf.MoveTowards(faderCanvasGroupBlack.alpha, 0, fadeSpeed * Time.unscaledDeltaTime);
             yield return null;
         }
 
         isFading = false;
-        faderCanvasGroup.blocksRaycasts = false;
+        faderCanvasGroupBlack.blocksRaycasts = false;
     }
 }

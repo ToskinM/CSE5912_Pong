@@ -31,6 +31,6 @@ public class SoulCrystal : MonoBehaviour
     private void TriggerMemory()
     {
         // Start memory sequence here?
-        SceneController.current.FadeAndLoadSceneGameOver("Memory Vision");
+        SceneController.current.FadeAndLoadSceneVision("Memory Vision");
     }
 }
