@@ -119,6 +119,15 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
         if (Active)
         {
+            if (CombatTarget == PlayerController.instance.GetActivePlayerObject() && PlayerController.instance.TalkingPartner != null)
+            {
+                DeAggro();
+            }
+            if(CombatTarget == PlayerController.instance.GetCompanionObject())
+            {
+                DeAggro(); 
+            }
+
             //npcMovement.Update();
 
             // Ensure weapon state is correct based on aggro
@@ -135,6 +144,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
                 ManageCombat();
             }
         }
+
 
         CheckDeath();
     }
@@ -426,8 +436,9 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
         // Search for a target OR closer target
         Transform possibleTarget = fieldOfView?.closestTarget;
-        if (possibleTarget != null && possibleTarget != PlayerController.instance.GetCompanionObject())
-        {
+        bool targetTalking = possibleTarget != null && possibleTarget.tag == "Player" && PlayerController.instance.TalkingPartner != null;
+        if (possibleTarget != null && possibleTarget != PlayerController.instance.GetCompanionObject() && !targetTalking)
+        { 
             if (aggression == Aggression.Aggressive)
             {
                 if (possibleTarget.tag == "Player" && CombatTarget != possibleTarget)

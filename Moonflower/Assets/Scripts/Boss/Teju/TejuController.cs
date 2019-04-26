@@ -82,18 +82,16 @@ public class TejuController : MonoBehaviour, INPCController
         }
         else
         {
-            currTalk = GameStateController.current.GetNPCDialogue(Constants.TEJU_NAME);
-            currTalk.SetSelf(gameObject);
             string convo = GameStateController.current.GetNPCDiaLabel(Constants.TEJU_NAME);
             if (convo.Equals(Convo.start.ToString()))
             {
                 currConvo = Convo.start;
-                startPeace = currTalk; 
+                currTalk = startPeace; 
             }
             else
             {
                 currConvo = Convo.rep;
-                repPeace = currTalk;
+                currTalk = repPeace; 
             }
 
             GameStateController.current.SaveNPCDialogues(Constants.TEJU_NAME, currConvo.ToString(), currTalk);

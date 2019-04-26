@@ -18,10 +18,14 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
 
     CurrentPlayer playerInfo;
     //private GameObject anai;
+    NPCDialogueEvents diaEvent; 
+
     NPCMovementController movement;
     NavMeshAgent agent;
     DialogueTrigger currTalk;
-    DialogueTrigger talk; 
+    DialogueTrigger peace;
+    DialogueTrigger attack;
+    DialogueTrigger attackWeap;
     private FeedbackText feedbackText;
 
     Vector3 startLoc; 
@@ -44,6 +48,8 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
         agent = GetComponent<NavMeshAgent>();
         charName = Constants.IJAPUVA_NAME;
 
+        diaEvent = GameStateController.current.gameObject.GetComponent<NPCDialogueEvents>(); 
+
         INPCController mainController = GetComponent<INPCController>();
         movement = mainController.movement;// new NPCMovementController(gameObject, Constants.AMARU_NAME);
         movement.FollowPlayer(bufferDist, tooCloseRad);
@@ -52,12 +58,16 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
 
         icon = mainController.icon;
 
-        talk = new DialogueTrigger(gameObject, icon, Constants.IJAPUVA_BACKUP_DIALOGUE);
-        talk.SetExitText("Too busy for stories, eh? Pity. Kids these days will never know...");
+        peace = new DialogueTrigger(gameObject, icon, Constants.IJAPUVA_PEACE_DIALOGUE);
+        peace.SetExitText("Too busy for stories, eh? Pity. Kids these days will never know...");
+        attack = new DialogueTrigger(gameObject, icon, Constants.IJAPUVA_ATTACK_DIALOGUE);
+        attack.SetExitText("You kids can't even stay for a full conversation anymore without getting bored.");
+        attackWeap = new DialogueTrigger(gameObject, icon, Constants.IJAPUVA_ATTACKWEAP_DIALOGUE);
+        attackWeap.SetExitText("Maybe think before you wave that stick around. Kids these days always hit first and ask questions later.");
 
         if (!GameStateController.current.NPCDialogues.ContainsKey(charName))
         {
-            currTalk = talk;
+            currTalk = peace;
             currConvo = Convo.talk; 
             GameStateController.current.SaveNPCDialogues(charName, currConvo.ToString(), currTalk);
         }
@@ -66,7 +76,7 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
             currTalk = GameStateController.current.GetNPCDialogue(charName);
             currTalk.SetSelf(gameObject);
             currConvo = Convo.talk;
-            talk = currTalk;
+            //peace = currTalk;
         }
 
 
@@ -113,6 +123,18 @@ public class IjapuvaDialogueController : MonoBehaviour, IDialogueController
         }
         else
         {
+            if (!diaEvent.WasMorePeaceful() || !diaEvent.IsNotArmed())
+            {
+                if (diaEvent.IsNotArmed())
+                {
+                    currTalk = attack;
+                }
+                else
+                {
+                    currTalk = attackWeap;
+                }
+
+            }
             StartTalk();
         }
     }

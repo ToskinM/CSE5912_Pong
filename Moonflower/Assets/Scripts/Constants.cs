@@ -145,7 +145,9 @@ public static class Constants
     public const string ANGUJA_DIALOGUE = dialogueFolder + cave + "Anguja";
     public const string IJAPUVA_NAME = "Ijapuva";
     public const string IJAPUVA_DIALOGUE = dialogueFolder + cave + "Ijapuva";
-    public const string IJAPUVA_BACKUP_DIALOGUE = dialogueFolder + cave + "Ijapuva NoB";
+    public const string IJAPUVA_PEACE_DIALOGUE = dialogueFolder + cave + "Ijapuva Peaceful";
+    public const string IJAPUVA_ATTACK_DIALOGUE = dialogueFolder + cave + "Ijapuva Violent";
+    public const string IJAPUVA_ATTACKWEAP_DIALOGUE = dialogueFolder + cave + "Ijapuva Violent Weapon";
     public const string TUVICHA_NAME = "Tuvicha";
     public const string TUVICHA_DIALOGUE = dialogueFolder + cave + "Tuvicha";
     public const string EKIRIRI_NAME = "Ekiriri"; 
@@ -155,7 +157,9 @@ public static class Constants
     public const string BRIMP_NAME = "Brimp";
     public const string ORBYJR_NAME = "Orby Jr.";
     public const string ORBYJR_DIALOGUE = dialogueFolder + cave + "Orby Jr";
-    public const string ORBYJR_BACKUP_DIALOGUE = dialogueFolder + cave + "Orby Jr NoB";
+    public const string ORBYJR_PEACE_DIALOGUE = dialogueFolder + cave + "Orby Jr Peaceful";
+    public const string ORBYJR_ATTACK_DIALOGUE = dialogueFolder + cave + "Orby Jr Violent";
+    public const string ORBYJR_ATTACKWEAP_DIALOGUE = dialogueFolder + cave + "Orby Jr Violent Weapon";
 
     //monsters
     public const string TEJU_NAME = "Teju Jagua";
