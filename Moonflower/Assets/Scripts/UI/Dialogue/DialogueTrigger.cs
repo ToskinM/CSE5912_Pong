@@ -209,7 +209,8 @@ public class DialogueTrigger : MonoBehaviour
         }
         else if (PlayerController.instance.ActivePlayerCombatControls.InCombat)
         {
-            Debug.Log("Can't talk. In combat");
+            //Debug.Log("Can't talk. In combat");
+            displayFeedback("You've been attacked! Wait to talk until you are safe."); 
 
         }
     }
@@ -225,6 +226,12 @@ public class DialogueTrigger : MonoBehaviour
     {
         EndDialogue();
     }
+
+    private void displayFeedback(string text)
+    {
+        GameObject.Find("FeedbackText").GetComponent<FeedbackText>().ShowText(text);
+    }
+
 
     public void EndDialogue()
     {
