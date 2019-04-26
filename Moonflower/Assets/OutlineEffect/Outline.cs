@@ -30,6 +30,7 @@ using System.Collections.Generic;
 namespace cakeslice
 {
     [ExecuteInEditMode]
+    [DisallowMultipleComponent]
     [RequireComponent(typeof(Renderer))]
     public class Outline : MonoBehaviour
     {
@@ -61,10 +62,10 @@ namespace cakeslice
                 effect.AddOutline(this);
             }
 
-            if (autoDisableCoroutine == null)
-            {
-                autoDisableCoroutine = StartCoroutine(AutoDisableCountdown());
-            }
+            //if (autoDisableCoroutine == null)
+            //{
+            //    autoDisableCoroutine = StartCoroutine(AutoDisableCountdown());
+            //}
         }
 
         private IEnumerator AutoDisableCountdown()
