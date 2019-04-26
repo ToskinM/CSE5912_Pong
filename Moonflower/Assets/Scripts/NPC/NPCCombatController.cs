@@ -267,7 +267,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
         SetWeaponSheathed(false);
         InCombat = true;
         //isAttacking = true;
-        CombatTarget = PlayerController.instance.AnaiObject;
+        CombatTarget = PlayerController.instance.GetActivePlayerObject();
     }
 
     public void EndFight()
@@ -426,7 +426,7 @@ public class NPCCombatController : MonoBehaviour, ICombatController
 
         // Search for a target OR closer target
         Transform possibleTarget = fieldOfView?.closestTarget;
-        if (possibleTarget != null)
+        if (possibleTarget != null && possibleTarget != PlayerController.instance.GetCompanionObject())
         {
             if (aggression == Aggression.Aggressive)
             {
