@@ -10,7 +10,7 @@ public class FogChanger : MonoBehaviour
     Color normalColor;
     Color lavaColor;
     Color shadowColor;
-    PlayerMovementController player;
+    PlayerController player;
     private GameObject light;
     private bool lightsOn = false;
     void Start()
@@ -19,7 +19,7 @@ public class FogChanger : MonoBehaviour
         lavaColor = new Color(.47f, .32f, .56f);
         shadowColor = new Color(.03f, .03f, .03f);
         RenderSettings.ambientIntensity = 0.8f;
-        player = GameObject.Find("Player").GetComponent<PlayerMovementController>();
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
         fogInfo = GameObject.Find("FogChangerInfo").GetComponent<FogChangerInfo>();
     }
 
@@ -74,7 +74,7 @@ public class FogChanger : MonoBehaviour
             }
 
         }
-        if (name == player.playerObject.name)
+        if ((name == "Anai" && player.AnaiIsActive()) || (name == "Mimbi" && !player.AnaiIsActive()))
         {
             if (fogInfo.isNormal)
             {
@@ -100,7 +100,7 @@ public class FogChanger : MonoBehaviour
 
     void CheckLights()
     {
-        if (player.playerObject.name == "Anai")
+        if (player.AnaiIsActive())
         {
             if (fogInfo.isNormal && fogInfo.anaiLavaTriggered || fogInfo.anaiMazeTriggered)
             {

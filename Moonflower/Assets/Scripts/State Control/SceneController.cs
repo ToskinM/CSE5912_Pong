@@ -45,8 +45,10 @@ public class SceneController : MonoBehaviour
         }
 
         loadscreen.SetActive(false);
-        faderCanvasGroupBlack.alpha = 1f;
-        faderCanvasGroupWhite.alpha = 0f;
+        if(faderCanvasGroupBlack)
+            faderCanvasGroupBlack.alpha = 1f;
+        if(faderCanvasGroupWhite)
+            faderCanvasGroupWhite.alpha = 0f;
         loadscreenCanvasGroup.alpha = 0f;
         StartCoroutine(Fade(0f));
         WentScene = new List<string>();
@@ -274,6 +276,9 @@ public class SceneController : MonoBehaviour
     //
     private IEnumerator Fade(float finalAlpha, float speedMultiplier = 1)
     {
+        if (!faderCanvasGroupBlack)
+            yield return null;
+
         isFading = true;
         faderCanvasGroupBlack.blocksRaycasts = true;
         float fadeSpeed = Mathf.Abs(faderCanvasGroupBlack.alpha - finalAlpha) / (fadeDuration * speedMultiplier);
@@ -287,6 +292,9 @@ public class SceneController : MonoBehaviour
     }
     private IEnumerator FadeWhite(float finalAlpha, float speedMultiplier = 1)
     {
+        if (!faderCanvasGroupWhite)
+            yield return null;
+
         isFading = true;
         faderCanvasGroupWhite.blocksRaycasts = true;
         float fadeSpeed = Mathf.Abs(faderCanvasGroupWhite.alpha - finalAlpha) / (fadeDuration * speedMultiplier);

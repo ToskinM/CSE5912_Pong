@@ -78,6 +78,7 @@ public class PlayerMovementController : MonoBehaviour
 
     void Update()
     {
+
         if (cameraScript == null) cameraScript = LevelManager.current.mainCamera;
 
         // Damping
@@ -198,7 +199,7 @@ public class PlayerMovementController : MonoBehaviour
             DetectDodgeInput(new Vector3(0f, 0f, Mathf.Sign(verticalInput) * 10f));
 
             Vector3 vertDirection = new Vector3(0, 0, Mathf.Sign(verticalInput));
-            playerObject.transform.Translate(vertDirection * Time.deltaTime * MovementSpeed);
+            playerController.GetActivePlayerObject().transform.Translate(vertDirection * Time.deltaTime * MovementSpeed);
         }
 
         if (horizontalInput != 0f)
@@ -208,7 +209,8 @@ public class PlayerMovementController : MonoBehaviour
             DetectDodgeInput(new Vector3(Mathf.Sign(horizontalInput) * 30f, 0f, 0f));
 
             Vector3 horiDirection = new Vector3(Mathf.Sign(horizontalInput), 0, 0);
-            playerObject.transform.Translate(horiDirection * Time.deltaTime * MovementSpeed);
+            playerController.GetActivePlayerObject().transform.Translate(horiDirection * Time.deltaTime * MovementSpeed);
+            //playerObject.transform.Translate(horiDirection * Time.deltaTime * MovementSpeed);
         }
 
         SetJump();
@@ -252,7 +254,8 @@ public class PlayerMovementController : MonoBehaviour
         if (Action != Actions.Chilling)
         {
             //playerObject.transform.rotation = rotation;
-            playerObject.transform.rotation = Quaternion.Lerp(playerObject.transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+            GameObject playerOb = playerController.GetActivePlayerObject(); 
+            playerOb.transform.rotation = Quaternion.Lerp(playerOb.transform.rotation, rotation, rotateSpeed * Time.deltaTime);
         }
     }
 
@@ -260,11 +263,12 @@ public class PlayerMovementController : MonoBehaviour
     void RotateCameraLocked()
     {
         // look at lock on target
-        Vector3 relative = cameraScript.lockOnTarget.transform.position - playerObject.transform.position;
+        GameObject playerOb = playerController.GetActivePlayerObject();
+        Vector3 relative = cameraScript.lockOnTarget.transform.position - playerOb.transform.position;
         float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
         rotation = Quaternion.Euler(0, angle, 0);
 
-        playerObject.transform.rotation = Quaternion.Lerp(playerObject.transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+        playerOb.transform.rotation = Quaternion.Lerp(playerOb.transform.rotation, rotation, rotateSpeed * Time.deltaTime);
     }
 
     // Handle player jump movements
@@ -341,7 +345,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         // Move foreward in the direction of input
         Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput);
-        playerObject.transform.Translate(new Vector3(0f, 0f, Vector3.Magnitude(direction)) * Time.deltaTime * MovementSpeed);
+        playerController.GetActivePlayerObject().transform.Translate(new Vector3(0f, 0f, Vector3.Magnitude(direction)) * Time.deltaTime * MovementSpeed);
     }
 
     public void KickJump()
